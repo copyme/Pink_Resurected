@@ -21,7 +21,7 @@ Below is a list of environment variables that should be set in your `~/.bashrc` 
 ```bash
 export PINK="$HOME/Projects/Pink_Resurected" # <--------- Edit this to your Pink project root
 
-# Depends on which packages you compiled — listed below. Comment out the ones you do not use.
+# Depends on which packages you compiled.
 export PINK_ARITH="$PINK/build/tools/ARITH"
 export PINK_CONVERT="$PINK/build/tools/CONVERT"
 export PINK_MORPHO="$PINK/build/tools/MORPHO"
