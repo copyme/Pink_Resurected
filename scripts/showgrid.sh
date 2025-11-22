@@ -1,3 +1,4 @@
+#!/bin/sh
 grid        $1           10         _$1.showgrid
 xv         _$1.showgrid
 rm         _$1.showgrid
