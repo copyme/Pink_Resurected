@@ -89,7 +89,7 @@ ElementDataFile = Axial_Arterial_3mm_ST_130f_2.raw
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t rs, cs, ds, N, i, ndims;
   int littleendian = 0, datatype = 1, t; 
   char *ret, *s;
@@ -319,6 +319,9 @@ int main(int argc, char **argv)
       fread(FLOATDATA(image), sizeof(float), N, fd);
     }
   }
+
+  if (image == NULL)
+    exit(1);
 
   image->xdim = xdim;
   image->ydim = ydim;
