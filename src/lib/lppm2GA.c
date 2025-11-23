@@ -649,27 +649,27 @@ int32_t laffinitynetwork(struct xvimage *r, struct xvimage *v, struct xvimage *b
   int32_t tti1,tti2,i,j,k,l,xx,yy,x,y;
   int32_t feature_thr[3];
   int32_t homo_sigma;
-  int32_t ***ppptti1;
-  int32_t **histogram;
+  int32_t ***ppptti1 = NULL;
+  int32_t **histogram = NULL;
   int32_t diff_value_max[3];
   int32_t hist_sum[3];
   int32_t pow_value[3];
   double anisotropy_row, anisotropy_col,tt1,tt2, mask_total;
   double homogeneity_cov[3][3];
   double matrixA[1][3], matrixB[1][3],matrixC[3][1],result;
-  float  **homogeneity_map, *scale_map;
+  float  **homogeneity_map = NULL, *scale_map = NULL;
   // int16_t (**sphere_points)[3];
   int32_t *sphere_no_points;
-  uint8_t *image[3];                /*tableau des 3 bandes */
+  uint8_t *image[3] = {0};                /*tableau des 3 bandes */
   int32_t largest_density_value;
-  int32_t count;
+  int32_t count = 0;
   double feature_mean[3];                 /* moyenne des 3 bandes */
   int32_t rs = rowsize(ga);                   /* taille ligne */ 
   int32_t cs = colsize(ga);                   /* taille colone */
   int32_t N = rs * cs;                        /* taille image */
   uint8_t *x_affinity = UCHARDATA(ga);
   uint8_t *y_affinity = &x_affinity[N];
-  uint8_t *scale_image;
+  uint8_t *scale_image = NULL;
   image[0] = UCHARDATA(r);
   image[1] = UCHARDATA(v);
   image[2] = UCHARDATA(b);
@@ -860,7 +860,7 @@ int32_t laffinitynetwork(struct xvimage *r, struct xvimage *v, struct xvimage *b
     {
       homogeneity_cov[x][y] = 0;
       tt1 = tt2 = 0;
-      count = 0.0001;   // pr eviter les divisions par 0 ...
+      count = 0;
       // pour les aretes horizontales
 	for (j = 0;j< cs; j++)
 	  for (k = 0;k < rs-1; k++)
@@ -881,6 +881,7 @@ int32_t laffinitynetwork(struct xvimage *r, struct xvimage *v, struct xvimage *b
 	  }	
 	// pour les aretes verticales
 	for (j = 0;j< cs-1; j++)
+    {
 	  for (k = 0;k < rs; k++)
 	  {
 	    yy = j+1; xx = k;
@@ -896,7 +897,9 @@ int32_t laffinitynetwork(struct xvimage *r, struct xvimage *v, struct xvimage *b
 	      count=count+1;
 	    }
 	  }
-	homogeneity_cov[x][y] = homogeneity_cov[x][y]/(double)count;
+    }
+    if(count > 0)
+      homogeneity_cov[x][y] = homogeneity_cov[x][y]/(double)count;
     }
   // la matrice de covariance est symetrique
   for (x = 0;x < 3; x++)
