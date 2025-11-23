@@ -78,10 +78,7 @@ References:<BR>
 #include <mcimage.h>
 #include "mcskel2d.h"
 
-/* =============================================================== */
 int main(int argc, char **argv)
-/* =============================================================== */
-  int argc; char **argv; 
 {
   struct xvimage * k;
   struct xvimage * inhi = NULL;

@@ -74,10 +74,7 @@ is used (usefull for representing regions).
 #include <jcimage.h>
 #include <lga2khalimsky.h>
 
-/* =============================================================== */
 int main(int argc, char **argv)
-/* =============================================================== */
-  int32_t argc; char **argv; 
 {
   struct xvimage * ga;
   struct xvimage * out;

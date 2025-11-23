@@ -100,11 +100,7 @@ connect
 #include <time.h>
 #endif
 
-
-/* =============================================================== */
 int main(int argc, char **argv)
-/* =============================================================== */
-  int32_t argc; char **argv; 
 {
   FILE *fd = NULL;
   struct xvimage *image;
