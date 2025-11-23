@@ -64,7 +64,7 @@ int main(int argc, char **argv)
 /* =============================================================== */
 {
   struct xvimage * image;
-  int32_t * IL;
+  int32_t * IL = NULL;
   int32_t N, i;
 
   if (argc != 4)
@@ -89,8 +89,11 @@ int main(int argc, char **argv)
   // if the image type is int, than we convert it to byte
   if (datatype(image) == VFF_TYP_4_BYTE)
   {
-    struct xvimage *im2;
-    uint8_t *I2;
+    struct xvimage *im2 = NULL;
+    uint8_t *I2 = NULL;
+    N = rowsize(image) * colsize(image) * depth(image);
+    IL = SLONGDATA(image);
+
     im2 = allocimage(NULL, rowsize(image), colsize(image), depth(image), VFF_TYP_1_BYTE);
     if (im2 == NULL)
     {   
@@ -98,7 +101,8 @@ int main(int argc, char **argv)
       exit(1);
     }
     I2 = UCHARDATA(im2);
-    for (i = 0; i < N; i++) I2[i] = (uint8_t)IL[i];
+    for (i = 0; i < N; i++)
+      I2[i] = (uint8_t)IL[i];
     writeimage(im2, argv[3]);
   }
   else
