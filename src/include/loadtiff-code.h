@@ -151,16 +151,16 @@ KEYWORDS: input/output
 
     TIFF        *tif;
     void        **buffp;
-    uint8       *bufIn, *cp, *cpi;
-    uint16      *sp, *spi, photometric, sampleformat;
-    uint16      *red_cm, *green_cm, *blue_cm;
-    uint32      *lp, *lpi;
+    uint8_t       *bufIn, *cp, *cpi;
+    uint16_t      *sp, *spi, photometric, sampleformat;
+    uint16_t      *red_cm, *green_cm, *blue_cm;
+    uint32_t      *lp, *lpi;
     double      *dp, *dpi;
     tsize_t     tf_bytesperrow;
-    uint16      config;
-    uint32      imWidth, imLength;
-    uint16	samplesperpixel;
-    uint16	bitspersample;
+    uint16_t      config;
+    uint32_t      imWidth, imLength;
+    uint16_t	samplesperpixel;
+    uint16_t	bitspersample;
     float       imXposition, imYposition;
     unsigned int 	i, j, jj, k, l;
     int         n, range, nbcols;
@@ -234,7 +234,7 @@ KEYWORDS: input/output
     buffp = (void **) malloc(samplesperpixel * sizeof(void *));
     
     /* allocate the input buffer (must be known to the TIFF system) */
-    if ((bufIn = (uint8 *)_TIFFmalloc((tf_bytesperrow+1) * sizeof(uint8))) == NULL) {
+    if ((bufIn = (uint8_t *)_TIFFmalloc((tf_bytesperrow+1) * sizeof(uint8_t))) == NULL) {
 	LIARerror("Error(TIFFRead): Not enough memory");
 	TIFFClose(tif);
 	return(2);
@@ -246,7 +246,7 @@ KEYWORDS: input/output
              /* smaller than 8-bit must be expanded */
 	  case 1:
 	  case 4:
-	    if ((buffp[i] = malloc(imLength * imWidth *  sizeof(uint8))) == NULL) {
+	    if ((buffp[i] = malloc(imLength * imWidth *  sizeof(uint8_t))) == NULL) {
 		LIARerror("Error(TIFFRead): Not enough memory");
 		_TIFFfree(bufIn);
 		TIFFClose(tif);
@@ -255,7 +255,7 @@ KEYWORDS: input/output
 	    break;
             /* these must be expanded to 16 bits */
         case 12:
-            if ((buffp[i] = malloc(imLength * imWidth *  sizeof(uint16))) == NULL) {
+            if ((buffp[i] = malloc(imLength * imWidth *  sizeof(uint16_t))) == NULL) {
 		LIARerror("Error(TIFFRead): Not enough memory");
 		_TIFFfree(bufIn);
 		TIFFClose(tif);
@@ -311,25 +311,25 @@ KEYWORDS: input/output
 	    switch (bitspersample) {
 	      case 1:
 		for (k = 0 ; k < samplesperpixel ; k++) {
-		    cp = (uint8*)(buffp[k]);
+		    cp = (uint8_t*)(buffp[k]);
 		    for (j = 0 ; j < imWidth ; j++) {
 			jj = k + j*samplesperpixel; 
-			cp[j + l*imWidth] = (uint8) ((uint8)(bufIn[jj>>3] & (1 << (7-jj%8))) > 0);
+			cp[j + l*imWidth] = (uint8_t) ((uint8_t)(bufIn[jj>>3] & (1 << (7-jj%8))) > 0);
 		    }
 		}
 		break;
 	      case 4:
 		for (k = 0 ; k < samplesperpixel ; k++) {
-		    cp = (uint8*)(buffp[k]);
+		    cp = (uint8_t*)(buffp[k]);
 		    for (j = 0 ; j < imWidth ; j++) {
 			jj = k + j*samplesperpixel; 
-			cp[j + l*imWidth] = (uint8) ((uint8)(bufIn[jj>>1] << 4));
+			cp[j + l*imWidth] = (uint8_t) ((uint8_t)(bufIn[jj>>1] << 4));
 		    }
 		}
 		break;
 	      case 8:
 		for (k = 0 ; k < samplesperpixel ; k++) {
-		    cp = (uint8*)(buffp[k]) + l*imWidth;
+		    cp = (uint8_t*)(buffp[k]) + l*imWidth;
 		    cpi = bufIn + k;
 		    for (j = 0 ; j < imWidth ; j++) {
 			*cp++ = *cpi;
@@ -341,7 +341,7 @@ KEYWORDS: input/output
                 /* assuming 2*12bits packed in 3*8-bits variables */
                 int linelength = samplesperpixel * imWidth;
                 int b, p,  byteindex;
-                uint16 msb, lsb, val;
+                uint16_t msb, lsb, val;
 
                 for (b = 0, p = 0 ; b < linelength ; ++b) {
                     byteindex = (b * 3) / 2;
@@ -356,7 +356,7 @@ KEYWORDS: input/output
                     }
                     /* find component */
                     k = b % samplesperpixel; /* should work when samplesperpixel == 1 */
-                    sp = (uint16*)(buffp[k]) + l*imWidth;
+                    sp = (uint16_t*)(buffp[k]) + l*imWidth;
                     sp[p++] = val;
                 }
             }
@@ -364,8 +364,8 @@ KEYWORDS: input/output
                 
 	      case 16:
 		for (k = 0 ; k < samplesperpixel ; k++) {
-		    sp = (uint16*)(buffp[k]) + l*imWidth;
-		    spi = (uint16*)bufIn + k;
+		    sp = (uint16_t*)(buffp[k]) + l*imWidth;
+		    spi = (uint16_t*)bufIn + k;
 		    for (j = 0 ; j < imWidth ; j++) {
 			*sp++ = *spi;
 			spi += samplesperpixel;
@@ -374,8 +374,8 @@ KEYWORDS: input/output
 		break;
 	      case 32:
 		for (k = 0 ; k < samplesperpixel ; k++) {
-		    lp = (uint32*)(buffp[k]) + l*imWidth;
-		    lpi = (uint32*)bufIn + k;
+		    lp = (uint32_t*)(buffp[k]) + l*imWidth;
+		    lpi = (uint32_t*)bufIn + k;
 		    for (j = 0 ; j < imWidth ; j++) {
 			*lp++ = *lpi;
 			lpi += samplesperpixel;
@@ -416,19 +416,19 @@ KEYWORDS: input/output
 		/* write this line out */
 		switch (bitspersample) {
                 case 1:
-		    cp = (uint8*)(buffp[k]);
+		    cp = (uint8_t*)(buffp[k]);
 		    for (j = 0 ; j < imWidth ; j++) {
-			cp[j + l*imWidth] = (uint8) ((uint8)(bufIn[j>>3] & (1 << (7-j%8))) > 0);
+			cp[j + l*imWidth] = (uint8_t) ((uint8_t)(bufIn[j>>3] & (1 << (7-j%8))) > 0);
 		    }
 		    break;
                 case 4:
-		    cp = (uint8*)(buffp[k]);
+		    cp = (uint8_t*)(buffp[k]);
 		    for (j = 0 ; j < imWidth ; j++) {
-			cp[j + l*imWidth] = (uint8) ((uint8)(bufIn[j>>1] << 4));
+			cp[j + l*imWidth] = (uint8_t) ((uint8_t)(bufIn[j>>1] << 4));
 		    }
 		    break;
                 case 8:
-		    cp = (uint8*)(buffp[k]) + l*imWidth;
+		    cp = (uint8_t*)(buffp[k]) + l*imWidth;
 		    cpi = bufIn;
 		    for (j = 0 ; j < imWidth ; j++)
 			*cp++ = *cpi++;
@@ -438,7 +438,7 @@ KEYWORDS: input/output
                     /* assuming 2*12bits packed in 3*8-bits variables */
                     int linelength = imWidth;
                     int b, p, byteindex;
-                    uint16 msb, lsb, val;
+                    uint16_t msb, lsb, val;
                     
                     for (b = 0, p = 0 ; b < linelength ; ++b) {
                         byteindex = (b * 3) / 2;
@@ -452,20 +452,20 @@ KEYWORDS: input/output
                             val = (msb << 8) + lsb;
                         }
                         /* find component */
-                        sp = (uint16*)(buffp[k]) + l*imWidth;
+                        sp = (uint16_t*)(buffp[k]) + l*imWidth;
                         sp[p++] = val;
                     }
                 }
                     break;
                 case 16:
-		    sp = (uint16*)(buffp[k]) + l*imWidth;
-		    spi = (uint16*)bufIn;
+		    sp = (uint16_t*)(buffp[k]) + l*imWidth;
+		    spi = (uint16_t*)bufIn;
 		    for (j = 0 ; j < imWidth ; j++)
 			*sp++ = *spi++;
 		    break;
                 case 32:
-		    lp = (uint32*)(buffp[k]) + l*imWidth;
-		    lpi = (uint32*)bufIn;
+		    lp = (uint32_t*)(buffp[k]) + l*imWidth;
+		    lpi = (uint32_t*)bufIn;
 		    for (j = 0 ; j < imWidth ; j++)
 			*lp++ = *lpi++;
 		    break;
@@ -493,14 +493,14 @@ KEYWORDS: input/output
     /* reduce everything to an 8bit RGB image. Too hard otherwise */
     if ((photometric == PHOTOMETRIC_PALETTE) &&
 	(*bps == 8) && (*spp == 1)) {
-	uint8 *pR, *pG, *pB, *q;
-	uint8 **outbuffp;
+	uint8_t *pR, *pG, *pB, *q;
+	uint8_t **outbuffp;
 	
-	outbuffp = (uint8 **) malloc(3 * sizeof(void *));
-	pR = outbuffp[0] = (uint8 *)malloc(imLength*imWidth*sizeof(uint8));
-	pG = outbuffp[1] = (uint8 *)malloc(imLength*imWidth*sizeof(uint8));
-	pB = outbuffp[2] = (uint8 *)malloc(imLength*imWidth*sizeof(uint8));
-	q = (uint8*)(buffp[0]);
+	outbuffp = (uint8_t **) malloc(3 * sizeof(void *));
+	pR = outbuffp[0] = (uint8_t *)malloc(imLength*imWidth*sizeof(uint8_t));
+	pG = outbuffp[1] = (uint8_t *)malloc(imLength*imWidth*sizeof(uint8_t));
+	pB = outbuffp[2] = (uint8_t *)malloc(imLength*imWidth*sizeof(uint8_t));
+	q = (uint8_t*)(buffp[0]);
 	for (i = 0 ; i < imLength * imWidth ; i++) {
 	    (*pR) = (255*red_cm[*q])/range;
 	    (*pG) = (255*green_cm[*q])/range;

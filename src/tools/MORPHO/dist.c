@@ -43,10 +43,10 @@ Distance to the object X defined by the binary image \b in.pgm .
 The result function DX(x) is defined by: DX(x) = min {d(x,y), y in X}.
 
 The distance d used depends on the parameter \b mode:
-\li 0: euclidean distance (rounded to the nearest int32)
+\li 0: euclidean distance (rounded to the nearest int32_t)
 \li 1: approximate quadratic euclidean distance (Danielsson)
 \li 2: chamfer distance ([5,7] in 2D; [4,5,6] in 3D)
-\li 3: exact quadratic euclidean distance (int32)
+\li 3: exact quadratic euclidean distance (int32_t)
 \li 4: 4-distance in 2d
 \li 5: exact euclidean distance (float)
 \li 8: 8-distance in 2d

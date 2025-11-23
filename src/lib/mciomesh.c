@@ -817,10 +817,10 @@ file :=
   tri*
 
 fileheader   := (string32) "IFS" + (float32)1.0 + (string32)modelname
-vertexheader := (string32) "VERTICES" + (uint32)numVertices
+vertexheader := (string32) "VERTICES" + (uint32_t)numVertices
 vertex       := (float32)x + (float32)y + (float32)z
-triheader    := (string32)"TRIANGLES" + (uint32)numFaces
-tri          := (uint32)v0 + (uint32)v1 + (uint32)v2
+triheader    := (string32)"TRIANGLES" + (uint32_t)numFaces
+tri          := (uint32_t)v0 + (uint32_t)v1 + (uint32_t)v2
 
 Where string32 is an unsigned 32-bit integer length (which includes null termina
 tor) followed by a string of that many uint8_t's.  The strings above all i
@@ -906,9 +906,9 @@ file :=
   vertex* +
   tri*
 
-fileheader   := (uint32)numVertices+1  (uint32)numFaces  (uint32)dim
+fileheader   := (uint32_t)numVertices+1  (uint32_t)numFaces  (uint32_t)dim
 vertex       := (float32)x  (float32)y [ (float32)z ]
-tri          := (uint32)v0 + (uint32)v1 + (uint32)v2
+tri          := (uint32_t)v0 + (uint32_t)v1 + (uint32_t)v2
 */
 {
   int32_t i, nvert=-1, nfaces=-1, dim;
@@ -1158,10 +1158,10 @@ file :=
   tri*
 
 fileheader   := (string32) "IFS" + (float32)1.0 + (string32)modelname
-vertexheader := (string32) "VERTICES" + (uint32)numVertices
+vertexheader := (string32) "VERTICES" + (uint32_t)numVertices
 vertex       := (float32)x + (float32)y + (float32)z
-triheader    := (string32)"TRIANGLES" + (uint32)numFaces
-tri          := (uint32)v0 + (uint32)v1 + (uint32)v2
+triheader    := (string32)"TRIANGLES" + (uint32_t)numFaces
+tri          := (uint32_t)v0 + (uint32_t)v1 + (uint32_t)v2
 
 Where string32 is an unsigned 32-bit integer length (which includes null termina
 tor) followed by a string of that many uint8_t's.  The strings above all i
@@ -1257,9 +1257,9 @@ file :=
   vertex* +
   tri*
 
-fileheader   := (uint32)numVertices+1  (uint32)numFaces  (uint32)dummy
+fileheader   := (uint32_t)numVertices+1  (uint32_t)numFaces  (uint32_t)dummy
 vertex       := (float32)x + (float32)y + (float32)z
-tri          := (uint32)v0 + (uint32)v1 + (uint32)v2
+tri          := (uint32_t)v0 + (uint32_t)v1 + (uint32_t)v2
 
 
 A FINIR !!!!!!!!!!

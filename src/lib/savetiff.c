@@ -164,13 +164,13 @@ int save_tiff(void **outbuffp,	   /* output buffer  */
 	      int    compression)  /* compression scheme */
 {
     TIFF        *tif;
-    uint32	 rowsperstrip;
+    uint32_t	 rowsperstrip;
     int          linebytes, sample;
-    uint32	 i, j;
-    uint32       nbcols, nbrows;
-    uint8	*theBufc, *pc;
-    int16	*theBufs, *ps;
-    int32	*theBufl, *pl;   /* will serve for float and 32 bit ints */
+    uint32_t	 i, j;
+    uint32_t       nbcols, nbrows;
+    uint8_t	*theBufc, *pc;
+    int16_t	*theBufs, *ps;
+    int32_t	*theBufl, *pl;   /* will serve for float and 32 bit ints */
     double      *theBufd, *pd;   /* will serve for doubles and 64 bit ints */
     int          result=0;
 
@@ -202,9 +202,9 @@ int save_tiff(void **outbuffp,	   /* output buffer  */
 	TIFFSetField(tif, TIFFTAG_IMAGEWIDTH, nbcols);
 	TIFFSetField(tif, TIFFTAG_IMAGELENGTH, nbrows);
 	TIFFSetField(tif, TIFFTAG_ORIENTATION, ORIENTATION_TOPLEFT);
-	TIFFSetField(tif, TIFFTAG_SAMPLESPERPIXEL, (uint16)spp);
-	TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE, (uint16)bps);
-	TIFFSetField(tif, TIFFTAG_PHOTOMETRIC, (uint16)pi);
+	TIFFSetField(tif, TIFFTAG_SAMPLESPERPIXEL, (uint16_t)spp);
+	TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE, (uint16_t)bps);
+	TIFFSetField(tif, TIFFTAG_PHOTOMETRIC, (uint16_t)pi);
         // for some reason this is NOT optional!
 	TIFFSetField(tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_SEPARATE);
 	// optional stuff
@@ -215,7 +215,7 @@ int save_tiff(void **outbuffp,	   /* output buffer  */
 	// we only output the sample format if bps > 8
 	// many tiff readers are put off by sf.
 	if (bps > 8)
-	    TIFFSetField(tif, TIFFTAG_SAMPLEFORMAT, (uint16)sf);
+	    TIFFSetField(tif, TIFFTAG_SAMPLEFORMAT, (uint16_t)sf);
 
 	/* compression scheme */
 	switch (compression) {
@@ -262,11 +262,11 @@ int save_tiff(void **outbuffp,	   /* output buffer  */
 	/* a little bit of black magic from ras2tiff.c */
 	linebytes = ((bps * nbcols + 15)>> 3) &~ 1;
 	if (TIFFScanlineSize(tif) > linebytes)
-	    theBufc = (uint8 *)_TIFFmalloc(linebytes*sizeof(uint8));
+	    theBufc = (uint8_t *)_TIFFmalloc(linebytes*sizeof(uint8_t));
 	else
-	    theBufc = (uint8 *)_TIFFmalloc(TIFFScanlineSize(tif));
-	rowsperstrip = (uint32) (8196/linebytes);
-	TIFFSetField(tif, TIFFTAG_ROWSPERSTRIP, rowsperstrip == 0 ? (uint32)1 :
+	    theBufc = (uint8_t *)_TIFFmalloc(TIFFScanlineSize(tif));
+	rowsperstrip = (uint32_t) (8196/linebytes);
+	TIFFSetField(tif, TIFFTAG_ROWSPERSTRIP, rowsperstrip == 0 ? (uint32_t)1 :
 		     rowsperstrip);
 	if (compression != 0) {
 	    dbgprintf("TIFFwrite : Writing %d-bit, %d-component TIFF "
@@ -285,13 +285,13 @@ int save_tiff(void **outbuffp,	   /* output buffer  */
 		switch (bps) {
 		  case 1:
 		  case 8:
-		    pc = (uint8 *)outbuffp[sample];
+		    pc = (uint8_t *)outbuffp[sample];
 		    break;
 		  case 16:
-		    ps = (int16 *)outbuffp[sample];
+		    ps = (int16_t *)outbuffp[sample];
 		    break;
 		  case 32:
-		    pl = (int32 *)outbuffp[sample];
+		    pl = (int32_t *)outbuffp[sample];
 		    break;
 		  case 64:
 		    pd = (double *)outbuffp[sample];
@@ -315,19 +315,19 @@ int save_tiff(void **outbuffp,	   /* output buffer  */
 			break;
 		      case 8:
 			for (j = 0 ; j < nbcols ; j++) {
-			    theBufc[j] = (uint8) *pc++;
+			    theBufc[j] = (uint8_t) *pc++;
 			}
 			break;
 		      case 16:
-			theBufs = (int16 *)theBufc;
+			theBufs = (int16_t *)theBufc;
 			for (j = 0 ; j < nbcols ; j++) {
-			    theBufs[j] = (uint16) *ps++;
+			    theBufs[j] = (uint16_t) *ps++;
 			}
 			break;
 		      case 32:
-			theBufl = (int32 *)theBufc;
+			theBufl = (int32_t *)theBufc;
 			for (j = 0 ; j < nbcols ; j++) {
-			    theBufl[j] = (uint32) *pl++;
+			    theBufl[j] = (uint32_t) *pl++;
 			}
 			break;
 		      case 64:
