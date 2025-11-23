@@ -641,25 +641,28 @@ printf("Set TRAITE1 %d (%d,%d)\n",x, x%rs, x/rs);
 
   if (function == MIN1)
     for (x = 0; x < N; x++)
+	{
       if (IsSet(x, MINIMUM))
         SOURCE[x] = NDG_MAX;
       else
         SOURCE[x] = NDG_MIN;
-
+	}
   if (function == MAX1)
     for (x = 0; x < N; x++)
+	{
       if (IsSet(x, MAXIMUM))
         SOURCE[x] = NDG_MAX;
       else
         SOURCE[x] = NDG_MIN;
-
+	}
   if (function == MOY1)
     for (x = 0; x < N; x++)
+	{
       if (IsSet(x, MOYEN))
         SOURCE[x] = NDG_MAX;
       else
         SOURCE[x] = NDG_MIN;
-
+	}
   LifoTermine(LIFO);
   IndicsTermine();
   return(1);

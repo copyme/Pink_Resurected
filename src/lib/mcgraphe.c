@@ -3188,12 +3188,13 @@ void EPSGraphe(graphe * g, const char *filename, double s, double r, double t, d
 
   /* dessine les sommets */
   if (r > 0.0)
-  for (i = 0; i < n; i++) 
+  for (i = 0; i < n; i++)
+  {
     if (col_sommets && (g->v_sommets[i] != 0)) 
       PSDrawdisc(fd, s*g->x[i]-xmin+marge, s*g->y[i]-ymin+marge, r);
     else
       PSDrawcircle(fd, s*g->x[i]-xmin+marge, s*g->y[i]-ymin+marge, r);
-
+  }
   if (noms_sommets && g->nomsommet)
     for (i = 0; i < n; i++) 
       PSString(fd, s*g->x[i]-xmin+marge+2*r, s*g->y[i]-ymin+marge-2*r, g->nomsommet[i]);
