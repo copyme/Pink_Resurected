@@ -80,7 +80,7 @@ int main(int argc, char **argv)
   FILE *fd = NULL;
   index_t rs, cs, ds, N, headersize, i;
   int32_t littleendian, datatype;
-  struct xvimage * image;
+  struct xvimage * image = NULL;
 
   if ((argc != 9) && (argc != 12))
   {
@@ -245,6 +245,9 @@ int main(int argc, char **argv)
       fread(FLOATDATA(image), sizeof(float), N, fd);
     }
   }
+
+  if (image == NULL)
+    exit(1);
 
   if (argc == 12)
   {
