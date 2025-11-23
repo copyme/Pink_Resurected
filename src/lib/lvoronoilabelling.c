@@ -468,6 +468,12 @@ int32_t lvoronoilabelling(struct xvimage *img,   /* donnee: image binaire */
   return(1);
 } // lvoronoilabelling()
 
+/*
+ * TODO: This algorithm seems to be full of bugs. medax never initliazed but used in if statements!
+ * TODO: Set to 0. But not sure if this fixes the problem.
+ *
+ *
+ */
 /* ======================================================== */
 int32_t lmedax_Hesselink(struct xvimage* f, struct xvimage* res)
 /* ======================================================== */
@@ -494,6 +500,8 @@ Mathematical Morphology: 40 Years On, Springer, 2005, pp. 259-268
   int32_t *X, *Y, *Z;
   double mx, my, mz;
   float max, t;
+
+  medax = 0;
 
   if ((rowsize(res) != rs) || (colsize(res) != cs) || (depth(res) != ds))
   {
