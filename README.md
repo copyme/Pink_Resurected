@@ -1,4 +1,4 @@
-Pink is an image-processing library developed at ESIEE Engineering for research and teaching purposes. It contains implementations of over 200 algorithms for image segmentation and filtering. Most operators come from mathematical morphology, but the library also includes operators from other fields. Pink is free software released under the CeCILL license.
+Pink is an image-processing library developed at ESIEE Paris for research and teaching purposes. It contains implementations of over 200 algorithms for image segmentation and filtering. Most operators come from mathematical morphology, but the library also includes operators from other fields. Pink is free software released under the CeCILL license.
 
 ## History
 
