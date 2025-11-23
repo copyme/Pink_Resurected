@@ -20,6 +20,18 @@ endif()
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
 option(PINK_WITH_TIFF "Build with TIFF support" ON)
 
+
+if(UNIX)
+    add_compile_definitions(_FILE_OFFSET_BITS=64)
+    add_compile_definitions(_LARGEFILE_SOURCE)
+
+    # This tells the compiler: "Enable POSIX 2008 features" (includes fseeko)
+    add_compile_definitions(_POSIX_C_SOURCE=200809L)
+    # Enable standard Linux/BSD legacy definitions (struct timezone)
+    add_compile_definitions(_DEFAULT_SOURCE)
+endif()
+
+
 # ==============================================================================
 # 2. BUILD LIBRARY
 # ==============================================================================
