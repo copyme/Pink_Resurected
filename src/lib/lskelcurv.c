@@ -1840,9 +1840,9 @@ skel * lskelsmoothing(skel *S, int32_t mode, double param)
 
       switch (mode)
       {
-	int32_t pt, lastpt;
       case 0:
 	nseg = CoverByDSSs(npoints, X, Y, param);
+	int32_t pt, lastpt;
 	for (i = 0; i < nseg-1; i++)
 	{ // draws a straight line segment between points i and i+1
 	  Np = MAXNCURVEPOINTS;
@@ -1995,9 +1995,9 @@ skel * lskelsmoothing(skel *S, int32_t mode, double param)
 
       switch (mode)
       {
-	int32_t pt, lastpt;
       case 0:
 	nseg = CoverByDSSs3D(npoints, X, Y, Z, param);
+	int32_t pt, lastpt;
 	for (i = 0; i < nseg-1; i++)
 	{ // draws a straight line segment between points i and i+1
 	  Np = MAXNCURVEPOINTS;
