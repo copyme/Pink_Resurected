@@ -51,6 +51,7 @@ knowledge of the CeCILL license and that you accept its terms.
 #include <stdint.h>
 #include <sys/types.h>
 #include <stdlib.h>
+#include <lsegmentlignes.h>
 #include <mccodimage.h>
 #include <mcimage.h>
 #include <lsegment.h>
