@@ -86,7 +86,7 @@ int main(int argc, char **argv)
   cs = colsize(in);
   ds = depth(in);
   
-  if ((ds == 1)) /* 2D case */
+  if (ds == 1) /* 2D case */
   {
     out = lcrop(in, 1, 1, rs-2, cs-2);
   }

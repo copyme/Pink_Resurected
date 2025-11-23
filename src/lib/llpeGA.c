@@ -169,7 +169,7 @@ struct xvimage *mBorderWshed2d(struct xvimage *ga)
        Vminima[y] = Vminima[x];
        for(k = 0; k < 8; k +=2){
 	 if( (z = voisin(y, k, rs, N)) != -1)
-	   if( (Vminima[z] == 0))
+	   if(Vminima[z] == 0)
 	     LifoPush(L, Arete(y,z,rs,N));
        } /* for(k = 0 .. */
      } /* if( (VF[x] < ... */
@@ -299,7 +299,7 @@ struct xvimage *mBorderWshed2drapide(struct xvimage *ga)
        Vminima[y] = Vminima[x];
        for(k = 0; k < 8; k +=2){
 	 if( (z = voisin(y, k, rs, N)) != -1)
-	   if( (Vminima[z] == 0))
+	   if(Vminima[z] == 0)
 	     LifoPush(L, Arete(y,z,rs,N));
        } /* for(k = 0 .. */
      } /* if( (VF[x] < ... */

@@ -133,7 +133,7 @@ int setTifftype(int pixeltype,     /* pixel type */
             *pi = 1; /* min is black */
     }
     /* number of component if not explicitely known */
-    if ((imagetype == IM_RGB) ) {
+    if (imagetype == IM_RGB) {
         *spp = 3;
         *pi = 2;
     }
