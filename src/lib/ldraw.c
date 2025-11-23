@@ -338,7 +338,7 @@ int32_t ldrawline2(struct xvimage * image1)
 #undef F_NAME
 #define F_NAME "ldrawline2"
 {
-  int32_t i, first = -1, last;
+  int32_t i, first = -1, last = -1;
   uint8_t *F;
   int32_t rs, cs, N;
 
@@ -351,8 +351,13 @@ int32_t ldrawline2(struct xvimage * image1)
   {
     if (F[i])
     {
-      if (first == -1) first = i;
-      else {last = i; break;}
+      if (first == -1)
+        first = i;
+      else
+      {
+        last = i;
+        break;
+      }
     }
   }
   lbresen(F, rs, first%rs, first/rs, last%rs, last/rs);
