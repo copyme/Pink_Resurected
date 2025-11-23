@@ -223,8 +223,10 @@ double *lrecalagerigide_lrecalagerigidesanszoom2d(double *X, int32_t n, double *
 
   powell(lrecalagerigide_F, &ens, G, 3, PRECISION, 0.1, MAXITER, &fmin);
 
+  //BUG: G spans indices from 0 to 2 !!!!
   G[3] += BY1; G[4] += BY2;
   lrecalagerigide_Tgamma(X, n, G, ens.Tmp);
+  //BUG: G spans indices from 0 to 2 !!!!
   G[3] -= BX1; G[4] -= BX2;
 
   for (i = 0; i < n+n; i++) X[i] = ens.Tmp[i]; 
