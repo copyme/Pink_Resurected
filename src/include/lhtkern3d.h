@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef LHTKERN3D__H__
+#define LHTKERN3D__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -62,3 +66,5 @@ extern int32_t lsurfacerestoration(struct xvimage *image, int32_t nitermax, int3
 #ifdef __cplusplus
 }
 #endif
+
+#endif // LHTKERN3D__H__

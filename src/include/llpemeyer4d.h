@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef LLPEMEYER4D__H__
+#define LLPEMEYER4D__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -39,3 +43,5 @@ int32_t llpemeyer4d(struct xvimage4D *image, struct xvimage4D *marqueurs, struct
 #ifdef __cplusplus
 }
 #endif
+
+#endif // LLPEMEYER4D__H__

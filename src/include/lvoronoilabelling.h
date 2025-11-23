@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef LVORONOILABELLING__H__
+#define LVORONOILABELLING__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -43,3 +47,5 @@ extern int32_t lmedax_Hesselink(struct xvimage* f, struct xvimage* res);
 #ifdef __cplusplus
 }
 #endif
+
+#endif // LVORONOILABELLING__H__

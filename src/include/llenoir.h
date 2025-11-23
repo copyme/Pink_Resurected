@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef LLENOIR__H__
+#define LLENOIR__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -39,7 +43,7 @@ extern "C" {
 extern void lenoir1(struct xvimage * image,//xvimage entree
 	     int32_t x,
 	     int32_t y,
-	     int32_t connex, //connexité (4 ou 8 connexité)
+	     int32_t connex, //connexit (4 ou 8 connexit)
 	     struct xvimage * etat,//xvimage contenant la propriete etat pour tous les pixels  
 	     struct xvimage * distance,//xvimage contenant la propriete distance pour tous les pixels
 	     struct xvimage * path,//xvimage contenant la propriete path pour tous les pixels  
@@ -48,9 +52,11 @@ extern void lenoir1(struct xvimage * image,//xvimage entree
 extern void Lenoir(struct xvimage * image, 
             int32_t x, 
 	    int32_t y, 
-	    int32_t connex, //type de connexité (4 6 8 18 26)
+	    int32_t connex, //type de connexit (4 6 8 18 26)
 	    struct xvimage * out) //image contenant la geodesique
 ;
 #ifdef __cplusplus
 }
 #endif
+
+#endif // LLENOIR__H__

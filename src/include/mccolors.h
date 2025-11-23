@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef MCCOLORS__H__
+#define MCCOLORS__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -56,3 +60,5 @@ int32_t circulardiff(int32_t h1, int32_t h2);
 #ifdef __cplusplus
 }
 #endif
+
+#endif // MCCOLORS__H__

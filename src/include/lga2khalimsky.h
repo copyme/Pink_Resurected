@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef LGA2KHALIMSKY__H__
+#define LGA2KHALIMSKY__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -40,3 +44,5 @@ extern int32_t lga2khalimsky3d(struct xvimage *ga, struct xvimage *out, int32_t 
 #ifdef __cplusplus
 }
 #endif
+
+#endif // LGA2KHALIMSKY__H__

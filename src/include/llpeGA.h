@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef LLPEGA__H__
+#define LLPEGA__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -68,3 +72,5 @@ extern int32_t altitudePoint(struct xvimage *ga, int32_t i);
 #ifdef __cplusplus
 }
 #endif
+
+#endif // LLPEGA__H__

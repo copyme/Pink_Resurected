@@ -1,6 +1,9 @@
 //---------------------------------------------------------------------------
 // Code written by Lilan Buzer - http://www.esiee.fr/~buzerl/DG/
 
+#ifndef LBDIGITALLINE__H__
+#define LBDIGITALLINE__H__
+
 #ifndef lbdigitalline_h
 #define lbdigitalline_h
 
@@ -138,3 +141,5 @@ class RecoBT : public Reco { public : point Sym(point &P) { return point( P.y, P
 class RecoTB : public Reco { public : point Sym(point &P) { return point(-P.y,-P.x); } };
 
 #endif
+
+#endif // LBDIGITALLINE__H__

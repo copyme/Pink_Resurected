@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef L2DCOLLAPSE__H__
+#define L2DCOLLAPSE__H__
+
 #define TF_NOT_IN_I  0
 #define TF_HEAD      1
 #define TF_TAIL      2
@@ -51,3 +55,5 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
+
+#endif // L2DCOLLAPSE__H__

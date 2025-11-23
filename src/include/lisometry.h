@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef LISOMETRY__H__
+#define LISOMETRY__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -39,3 +43,5 @@ extern int32_t lisometry(struct xvimage * image1, char *mode, struct xvimage **i
 #ifdef __cplusplus
 }
 #endif
+
+#endif // LISOMETRY__H__

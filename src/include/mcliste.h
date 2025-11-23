@@ -32,10 +32,15 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+
+#ifndef _MC_LISTE_H_
+#define _MC_LISTE_H_
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-#ifndef _mcliste_h
+
 typedef struct {
   int32_t Max;          /* taille max de la Liste */
   int32_t Sp;           /* index de pile (pointe la 1ere case libre) */
@@ -54,8 +59,9 @@ extern int32_t ListeIn(Liste * L, int32_t e);
 extern void ListePrint(Liste * L);
 extern void ListePrintLine(Liste * L);
 extern void ListeTermine(Liste * L);
-#endif
-#define _mcliste_h
+
 #ifdef __cplusplus
 }
 #endif
+
+#endif // _MC_LISTE_H_

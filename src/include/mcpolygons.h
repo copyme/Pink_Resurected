@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef MCPOLYGONS__H__
+#define MCPOLYGONS__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -118,3 +122,5 @@ extern MCP * MCP_LoadVTK(FILE *fileout);
 #ifdef __cplusplus
 }
 #endif
+
+#endif // MCPOLYGONS__H__

@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef LRECALAGERIGIDE_TRANSLATEPLANE__H__
+#define LRECALAGERIGIDE_TRANSLATEPLANE__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -41,3 +45,5 @@ double *lrecalagerigide3d_translate(double *X, int n, double *Y, int m);
 #ifdef __cplusplus
 }
 #endif
+
+#endif // LRECALAGERIGIDE_TRANSLATEPLANE__H__

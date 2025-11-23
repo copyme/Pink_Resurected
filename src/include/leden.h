@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef LEDEN__H__
+#define LEDEN__H__
+
 extern int32_t ledengrowth(uint8_t *in,
 			   index_t dimx,
 			   index_t dimy,
@@ -40,3 +44,5 @@ extern int32_t ledengrowth(uint8_t *in,
 			   int32_t  grow,
 			   int32_t  shrink,
 			   int32_t  topo);
+
+#endif // LEDEN__H__

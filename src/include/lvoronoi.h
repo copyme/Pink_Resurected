@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef LVORONOI__H__
+#define LVORONOI__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -40,3 +44,5 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
+
+#endif // LVORONOI__H__

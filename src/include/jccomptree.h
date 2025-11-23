@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef JCCOMPTREE__H__
+#define JCCOMPTREE__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -45,9 +49,9 @@ extern "C" {
 
   Une composante (sommet) est representee par une structure ctreenode.
   +
-  arbre des composantes d'un graphe d'adjacence valué
+  arbre des composantes d'un graphe d'adjacence valu
   +
-  arbre de fusion d'un graphe d'adjacence valué 
+  arbre de fusion d'un graphe d'adjacence valu 
   +
   un arbre de saillance
 */
@@ -105,3 +109,5 @@ int32_t jcSaliencyTree_b (JCctree ** SaliencyTree, int32_t *MST, int32_t *Valeur
 #ifdef __cplusplus
 }
 #endif
+
+#endif // JCCOMPTREE__H__

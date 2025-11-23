@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef LDIRECTIONS__H__
+#define LDIRECTIONS__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -44,3 +48,5 @@ extern int32_t ldirections(
 #ifdef __cplusplus
 }
 #endif
+
+#endif // LDIRECTIONS__H__

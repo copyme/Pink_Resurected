@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef LDISTGEO__H__
+#define LDISTGEO__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -45,13 +49,15 @@ extern int32_t ldistgeo(
 extern int32_t ldistgeo2d(struct xvimage *imgx,   /* donnee: image binaire */       
                struct xvimage *imgy,   /* donnee: image binaire (masque) */
                int32_t connex,
-               struct xvimage *res     /* resultat: distances (doit être allouée) */
+               struct xvimage *res     /* resultat: distances (doit tre alloue) */
 		   );
 extern int32_t ldistgeo3d(struct xvimage *imgx,   /* donnee: image binaire */       
                struct xvimage *imgy,   /* donnee: image binaire (masque) */
                int32_t connex,
-               struct xvimage *res     /* resultat: distances (doit être allouée) */
+               struct xvimage *res     /* resultat: distances (doit tre alloue) */
 		   );
 #ifdef __cplusplus
 }
 #endif
+
+#endif // LDISTGEO__H__

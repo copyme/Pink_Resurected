@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef JCLDERICHE__H__
+#define JCLDERICHE__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -59,3 +63,5 @@ extern void derichegen(double *x,               /* image a traiter */
 #ifdef __cplusplus
 }
 #endif
+
+#endif // JCLDERICHE__H__

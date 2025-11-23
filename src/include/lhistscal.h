@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef LHISTSCAL__H__
+#define LHISTSCAL__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -60,3 +64,5 @@ extern int32_t lhistscal3(
 #ifdef __cplusplus
 }
 #endif
+
+#endif // LHISTSCAL__H__

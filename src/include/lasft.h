@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef LASFT__H__
+#define LASFT__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -68,3 +72,5 @@ int32_t lasft_2D3D(struct xvimage * image, struct xvimage * imagec, struct xvima
 #ifdef __cplusplus
 }
 #endif
+
+#endif // LASFT__H__

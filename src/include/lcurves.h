@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef LCURVES__H__
+#define LCURVES__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -42,3 +46,5 @@ extern int32_t lcurves_extractcurve3dlab( int32_t *B, int32_t i, int32_t rs, int
 #ifdef __cplusplus
 }
 #endif
+
+#endif // LCURVES__H__

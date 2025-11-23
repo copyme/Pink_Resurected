@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef LATTRIBVOL__H__
+#define LATTRIBVOL__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -41,3 +45,5 @@ extern int32_t lvolmaxima(struct xvimage *image, int32_t connex, int32_t param);
 #ifdef __cplusplus
 }
 #endif
+
+#endif // LATTRIBVOL__H__

@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef LGEO__H__
+#define LGEO__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -87,3 +91,5 @@ extern cercle *AjusteCercle2(struct xvimage *img, double xc, double yc, double r
 #ifdef __cplusplus
 }
 #endif
+
+#endif // LGEO__H__

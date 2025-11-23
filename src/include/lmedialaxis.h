@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef LMEDIALAXIS__H__
+#define LMEDIALAXIS__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -100,3 +104,5 @@ extern int32_t lmedialaxis_scalefilteredmedialaxis(struct xvimage *image, double
 #ifdef __cplusplus
 }
 #endif
+
+#endif // LMEDIALAXIS__H__

@@ -44,6 +44,8 @@
  *      
  *-----------------------------------------------------------------------*/
 
+#ifndef LOADTIFF-CODE__H__
+#define LOADTIFF-CODE__H__
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -528,5 +530,4 @@ KEYWORDS: input/output
     return 0;
 }
 
-
-
+#endif // LOADTIFF-CODE__H__

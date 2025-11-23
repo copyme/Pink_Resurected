@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef MCTOPO3D_TABLE__H__
+#define MCTOPO3D_TABLE__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -449,3 +453,5 @@ extern int32_t mctopo3d_table_curve26(uint8_t *img, index_t p, index_t rs, index
 #ifdef __cplusplus
 }
 #endif
+
+#endif // MCTOPO3D_TABLE__H__

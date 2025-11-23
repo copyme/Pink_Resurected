@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef LZOOMINT__H__
+#define LZOOMINT__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -54,3 +58,5 @@ extern struct xvimage* lzoomintxyz(
 #ifdef __cplusplus
 }
 #endif
+
+#endif // LZOOMINT__H__

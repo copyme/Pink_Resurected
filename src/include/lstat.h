@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef LSTAT__H__
+#define LSTAT__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -49,3 +53,5 @@ extern double lvariance2(struct xvimage * image1, struct xvimage * mask);
 #ifdef __cplusplus
 }
 #endif
+
+#endif // LSTAT__H__

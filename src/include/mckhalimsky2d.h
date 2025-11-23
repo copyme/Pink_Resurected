@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef MCKHALIMSKY2D__H__
+#define MCKHALIMSKY2D__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -114,3 +118,5 @@ extern int32_t Collapse2d(struct xvimage *b, index_t i, index_t j);
 #ifdef __cplusplus
 }
 #endif
+
+#endif // MCKHALIMSKY2D__H__

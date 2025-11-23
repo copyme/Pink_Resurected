@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef MCSPLINES__H__
+#define MCSPLINES__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -99,3 +103,5 @@ extern void scn_drawspline3dlist(int32_t *lx, int32_t *ly, int32_t *lz, int32_t 
 #ifdef __cplusplus
 }
 #endif
+
+#endif // MCSPLINES__H__

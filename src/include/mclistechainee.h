@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef MCLISTECHAINEE__H__
+#define MCLISTECHAINEE__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -57,3 +61,5 @@ extern TypListechainee * UnionListechainee (TypListechainee * lis1, TypListechai
 #ifdef __cplusplus
 }
 #endif
+
+#endif // MCLISTECHAINEE__H__

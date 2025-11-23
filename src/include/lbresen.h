@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef LBRESEN__H__
+#define LBRESEN__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -70,3 +74,5 @@ extern void lplotellipseliste(Liste *lp, uint8_t *I);
 #ifdef __cplusplus
 }
 #endif
+
+#endif // LBRESEN__H__

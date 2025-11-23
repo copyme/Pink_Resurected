@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef LROTATIONS__H__
+#define LROTATIONS__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -46,3 +50,5 @@ extern int32_t laffinetransformation(struct xvimage * image, double hx, double h
 #ifdef __cplusplus
 }
 #endif
+
+#endif // LROTATIONS__H__

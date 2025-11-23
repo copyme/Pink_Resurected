@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef LLABELTREE__H__
+#define LLABELTREE__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -43,56 +47,58 @@ extern int32_t llabeltree(
 
 extern int32_t llabeltree2d(struct xvimage *imgx,   /* donnee: image binaire */       
                  int32_t connex,
-                 struct xvimage *res     /* resultat: distances (doit être allouée) */
+                 struct xvimage *res     /* resultat: distances (doit tre alloue) */
 		     );
 
 extern int32_t llabeltree3d(struct xvimage *imgx,   /* donnee: image binaire */       
                  int32_t connex,
-                 struct xvimage *res     /* resultat: distances (doit être allouée) */
+                 struct xvimage *res     /* resultat: distances (doit tre alloue) */
 		     );
 
 extern int32_t labelbranch2d4(uint8_t *X,  /* donnee: pointeur sur l'image x */
                    int32_t rs,            /* donnee: taille ligne */
 		   int32_t N,             /* donnee: taille image */
-                   int32_t current_pixel, /* donnee: numéro pixel courant */  
+                   int32_t current_pixel, /* donnee: numro pixel courant */  
                    int32_t intersection,  /* donnee: flag d'intersection */  
                    uint32_t *D        /* resultat: pointeur sur distances */
-); /* Etiquette les branches avec la 4-connexité */
+); /* Etiquette les branches avec la 4-connexit */
 
 extern int32_t labelbranch2d8(uint8_t *X,  /* donnee: pointeur sur l'image x */
                    int32_t rs,            /* donnee: taille ligne */
 		   int32_t N,             /* donnee: taille image */
-                   int32_t current_pixel, /* donnee: numéro pixel courant */  
+                   int32_t current_pixel, /* donnee: numro pixel courant */  
                    int32_t intersection,  /* donnee: flag d'intersection */  
                    uint32_t *D        /* resultat: pointeur sur distances */
-); /* Etiquette les branches avec la 8-connexité */
+); /* Etiquette les branches avec la 8-connexit */
 
 extern int32_t labelbranch3d6(uint8_t *X,  /* donnee: pointeur sur l'image x */
                    int32_t rs,            /* donnee: taille ligne */
                    int32_t ps,            /* donnee: taille plan */
 		   int32_t N,             /* donnee: taille image */
-                   int32_t current_pixel, /* donnee: numéro pixel courant */  
+                   int32_t current_pixel, /* donnee: numro pixel courant */  
                    int32_t intersection,  /* donnee: flag d'intersection */  
                    uint32_t *D        /* resultat: pointeur sur distances */
-); /* Etiquette les branches avec la 6-connexité */
+); /* Etiquette les branches avec la 6-connexit */
 
 extern int32_t labelbranch3d18(uint8_t *X,  /* donnee: pointeur sur l'image x */
                     int32_t rs,            /* donnee: taille ligne */
                     int32_t ps,            /* donnee: taille plan */
 		    int32_t N,             /* donnee: taille image */
-                    int32_t current_pixel, /* donnee: numéro pixel courant */  
+                    int32_t current_pixel, /* donnee: numro pixel courant */  
                     int32_t intersection,  /* donnee: flag d'intersection */  
                     uint32_t *D        /* resultat: pointeur sur distances */
-); /* Etiquette les branches avec la 18-connexité */
+); /* Etiquette les branches avec la 18-connexit */
 
 extern int32_t labelbranch3d26(uint8_t *X,  /* donnee: pointeur sur l'image x */
                     int32_t rs,            /* donnee: taille ligne */
                     int32_t ps,            /* donnee: taille plan */
 		    int32_t N,             /* donnee: taille image */
-                    int32_t current_pixel, /* donnee: numéro pixel courant */  
+                    int32_t current_pixel, /* donnee: numro pixel courant */  
                     int32_t intersection,  /* donnee: flag d'intersection */  
                     uint32_t *D        /* resultat: pointeur sur distances */
-); /* Etiquette les branches avec la 26-connexité */
+); /* Etiquette les branches avec la 26-connexit */
 #ifdef __cplusplus
 }
 #endif
+
+#endif // LLABELTREE__H__

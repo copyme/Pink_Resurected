@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef JCGRAPHES__H__
+#define JCGRAPHES__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -57,11 +61,11 @@ typedef struct GrapheBasic {
   //!  nombre d'arcs
   int32_t narc; // Ah les hauts fonctionnaires !!
   /* representation par listes chainees de successeurs (application gamma) */
-  //!  tableau des cellules en réserve 
+  //!  tableau des cellules en rserve 
   PBasicCell reserve;
-  //!  liste des cellules libres gérée en pile lifo 
+  //!  liste des cellules libres gre en pile lifo 
   PBasicCell libre;
-  //!  tableau des listes de successeurs indexé par les sommets 
+  //!  tableau des listes de successeurs index par les sommets 
   PBasicCell *gamma;     
 } GrapheBasic; 
 
@@ -100,9 +104,11 @@ extern RAG *initRAG(int32_t nsom, int32_t nmaxarc);
 extern void termineRAG(RAG * rag);
 extern int32_t updateRAGArc(RAG *rag, int32_t i, int32_t s, uint8_t val);
 
-// Les deux fonctions suivantes vont plutot dans la bibliothèque
+// Les deux fonctions suivantes vont plutot dans la bibliothque
 // hierarchie
 extern void attributNoeud(RAG *rag, struct xvimage *label, struct xvimage *ga, struct xvimage *annexe);
 #ifdef __cplusplus
 }
 #endif
+
+#endif // JCGRAPHES__H__

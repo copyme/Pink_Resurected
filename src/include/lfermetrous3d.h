@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef LFERMETROUS3D__H__
+#define LFERMETROUS3D__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -41,3 +45,5 @@ extern int32_t lfermetrous3dbin2(struct xvimage *in,struct xvimage *g, int32_t c
 #ifdef __cplusplus
 }
 #endif
+
+#endif // LFERMETROUS3D__H__

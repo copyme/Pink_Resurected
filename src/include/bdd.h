@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef BDD__H__
+#define BDD__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -69,3 +73,5 @@ extern int bddSurfsingCube(
 #ifdef __cplusplus
 }
 #endif
+
+#endif // BDD__H__

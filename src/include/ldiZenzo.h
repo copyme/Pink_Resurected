@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef LDIZENZO__H__
+#define LDIZENZO__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -46,3 +50,5 @@ int32_t ldiZenzoDirection(struct xvimage *imageR, struct xvimage *imageV, struct
 #ifdef __cplusplus
 }
 #endif
+
+#endif // LDIZENZO__H__

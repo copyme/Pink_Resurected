@@ -44,6 +44,8 @@ knowledge of the CeCILL license and that you accept its terms.
 
 //#define VERBOSE
 
+#ifndef LATTRIB__H__
+#define LATTRIB__H__
 
 #include <string.h>
 #include <assert.h>
@@ -1477,7 +1479,7 @@ static int32_t flood(int32_t h,        /* niveau a inonder */
 {
   index_t p, q;
   int32_t k;
-  int32_t m; // attention : ne doit pas être unsigned car test >= 0
+  int32_t m; // attention : ne doit pas tre unsigned car test >= 0
   indexcomp_t i, j;
 #ifdef ATTR_SURF
   attrsurf_t surf = 0;
@@ -1586,7 +1588,7 @@ static int32_t floodb(int32_t h,     /* niveau a inonder */
           indexcomp_t *number_nodes, /* nombre de composantes par niveau */
           uint8_t *node_at_level,    /* tableau de booleens */
           CompTree * tree,           /* l'arbre en construction */
-          int32_t connex,            /* = 0 pour première case vide, 
+          int32_t connex,            /* = 0 pour premire case vide, 
                                         = 1 pour la translation */ 
           index_t rs, index_t N, 
           level_t *ORI               /* informations sur l'image originale */
@@ -1595,7 +1597,7 @@ static int32_t floodb(int32_t h,     /* niveau a inonder */
 {
   index_t p, q;
   int32_t k;
-  int32_t m; // attention : ne doit pas être unsigned car test >= 0
+  int32_t m; // attention : ne doit pas tre unsigned car test >= 0
   indexcomp_t i, j;
 #ifdef ATTR_SURF
   attrsurf_t surf = 0;
@@ -1715,7 +1717,7 @@ static int32_t flood3d(
 {
   index_t p, q;
   int32_t k;
-  int32_t m; // attention : ne doit pas être unsigned car test >= 0
+  int32_t m; // attention : ne doit pas tre unsigned car test >= 0
   indexcomp_t i, j;
 #ifdef ATTR_SURF
   attrsurf_t surf = 0;
@@ -1995,3 +1997,5 @@ static int32_t Ancestor(CompactTree * cpct, indexcomp_t c1, indexcomp_t c2)
 #include <stdint.h>
 #include <sys/types.h>
 #include <stdlib.h>
+
+#endif // LATTRIB__H__

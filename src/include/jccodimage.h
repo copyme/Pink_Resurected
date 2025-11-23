@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef JCCODIMAGE__H__
+#define JCCODIMAGE__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -98,3 +102,5 @@ extern int32_t voisin4D8(int32_t i, int32_t k, int32_t rs, int32_t ps, int32_t N
 #ifdef __cplusplus
 }
 #endif
+
+#endif // JCCODIMAGE__H__

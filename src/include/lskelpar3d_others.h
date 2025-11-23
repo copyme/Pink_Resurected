@@ -33,6 +33,9 @@ The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
 
+#ifndef LSKELPAR3D_OTHERS__H__
+#define LSKELPAR3D_OTHERS__H__
+
 #define ISTHMUS 0
 #define ENDS    1
 
@@ -203,3 +206,5 @@ extern int32_t lpalagyi2015(      struct xvimage *image,
 #ifdef __cplusplus
 }
 #endif
+
+#endif // LSKELPAR3D_OTHERS__H__

@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef JCLABELEXTREMA__H__
+#define JCLABELEXTREMA__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -45,7 +49,7 @@ int32_t jclabelextrema(struct xvimage *in,         /* GA de depart */
 		   );
 
 int32_t jcfindextrema(struct xvimage *in,         /* GA de depart */
-		  struct xvimage *out,        /* resultat: GA tq les aretes appartenant a des extrema sont à 255 */
+		  struct xvimage *out,        /* resultat: GA tq les aretes appartenant a des extrema sont  255 */
 		  int32_t minimum,                /* booleen, 1: on recherche les minima, 0: on recherche les maxima */
 		  int32_t *nlabels               /* resultat: le nombre d'extrema*/
 		  );
@@ -57,3 +61,5 @@ int32_t jcfindextrema(struct xvimage *in,         /* GA de depart */
 #ifdef __cplusplus
 }
 #endif
+
+#endif // JCLABELEXTREMA__H__

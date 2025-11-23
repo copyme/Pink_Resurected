@@ -1,9 +1,5 @@
-/* typedef unsigned char uint8_t; */
-/* typedef char int8_t; */
-/* typedef unsigned short uint16_t; */
-/* typedef short int16_t; */
-/* typedef unsigned int uint32_t; */
-/* typedef int int32_t; */
+#ifndef _PINK_TYPES_H_
+#define _PINK_TYPES_H_
 
 #ifndef  INT8_MIN
 #  define INT8_MIN	(-INT8_MAX - 1)
@@ -53,3 +49,5 @@
 #ifndef  DOUBLE_MAX
 #  define DOUBLE_MAX    1.7976931348623157e+308       
 #endif
+
+#endif // _PINK_TYPES_H_

@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef LLOCALEXTREMA__H__
+#define LLOCALEXTREMA__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -49,3 +53,5 @@ int32_t llocalextrema(
 #ifdef __cplusplus
 }
 #endif
+
+#endif // LLOCALEXTREMA__H__

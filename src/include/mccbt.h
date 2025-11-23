@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef MCCBT__H__
+#define MCCBT__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -130,3 +134,5 @@ extern int32_t * InverseCBT(
 #ifdef __cplusplus
 }
 #endif
+
+#endif // MCCBT__H__

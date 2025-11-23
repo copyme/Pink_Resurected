@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef JCIMAGE__H__
+#define JCIMAGE__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -40,7 +44,7 @@ extern "C" {
 /* ============== */
 
 // ! jcimage s'ajoute mcimage!
-// Les deux deux fichiers doivent etre utilisés conjointement
+// Les deux deux fichiers doivent etre utiliss conjointement
 
 extern struct xvimage4D *allocimage4D(int32_t ss);
 extern struct xvimage *allocGAimage(char * name, int32_t rs, int32_t cs, int32_t d, int32_t t);
@@ -56,3 +60,5 @@ void writeimage4D(struct xvimage4D * image, char *prefix, int32_t first, int32_t
 #ifdef __cplusplus
 }
 #endif
+
+#endif // JCIMAGE__H__

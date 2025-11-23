@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef LCROP__H__
+#define LCROP__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -50,3 +54,5 @@ extern struct xvimage * lexpandframe(struct xvimage *image1, int32_t n);
 #ifdef __cplusplus
 }
 #endif
+
+#endif // LCROP__H__

@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef MCKHALIMSKY3D__H__
+#define MCKHALIMSKY3D__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -159,3 +163,5 @@ extern int32_t pairesimple_26_z(uint8_t *img, index_t p, index_t rs, index_t ps,
 #ifdef __cplusplus
 }
 #endif
+
+#endif // MCKHALIMSKY3D__H__

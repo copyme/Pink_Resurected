@@ -32,6 +32,10 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
+
+#ifndef MCFAHPURE__H__
+#define MCFAHPURE__H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -111,3 +115,5 @@ extern void FahpPrint(
 #ifdef __cplusplus
 }
 #endif
+
+#endif // MCFAHPURE__H__
