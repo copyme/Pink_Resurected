@@ -20,17 +20,7 @@
 // ********************************************************************************************
 // ********************************************************************************************
 
-// #include <unistd.h> in Microsoft Windows it does not exist, but we only need a subset of it
-#ifdef UNIXIO
-#  include <unistd.h>
-#  define __pink__fseeko fseeko
-#else /* NOT UNIXIO */
-#  define __pink__fseeko _fseeki64
-#  define __pink__ftello _ftelli64
-#  include <stdlib.h>
-#  include <io.h>
-#endif /* NOT UNIXIO */
-
+#include <pink_fseek.h>
 #include <mcimage.h>
 #include <mccodimage.h>
 
