@@ -66,7 +66,7 @@ int main(int argc, char **argv)
 {
   struct xvimage * image1;
   double alpha;
-  double dummy;
+  double dummy = 0.0;
 
   if (argc != 4)
   {
