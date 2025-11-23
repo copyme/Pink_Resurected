@@ -96,7 +96,7 @@ int32_t lzoomint(
             for (xx = 0; xx < rs; xx++)
               for (i = 0; i < z; i++)
               {
-                ptout[(yy*z+j)*rs*z + xx*z+i] = ptin[zz*ps + yy*rs + xx];
+                ptout[(yy*z+j)*rs*z + xx*z+i] = ptin[zz*ps + yy*rs + xx]; // BUG: Memory corruption! zz is not set when used here!
  	      }
       else
         for (yy = 0; yy < cs; yy++)
