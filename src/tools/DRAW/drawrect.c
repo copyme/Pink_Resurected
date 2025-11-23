@@ -69,8 +69,8 @@ The rectangle is surimposed to the contents of <B>in.pgm</B>.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  uint8_t *Im;
+  struct xvimage * image = NULL;
+  uint8_t * Im = NULL;
   int32_t rs, cs, ds, ps, N;
   int32_t x, y, z, x1, y1, z1, x2, y2, z2;
 

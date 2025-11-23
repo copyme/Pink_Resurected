@@ -711,7 +711,7 @@ void LoadMeshMCM(FILE *filein)
   double x, y, z;
 #define sbuf 1024
   char buf[sbuf];
-  char *ret;
+  char * ret = NULL;
 
   while (1)
   {
@@ -1016,7 +1016,7 @@ void LoadBuildMCM(FILE *filein)
   double x, y, z;
 #define sbuf 1024
   char buf[sbuf];
-  char *ret;
+  char * ret = NULL;
   double *vx, *vy, *vz;
   int32_t f1, f2, f3;
   while (1)
@@ -1084,7 +1084,7 @@ POLYGONS %d %d     (Faces - champ obligatoire)
   double x, y, z;
 #define sbuf 1024
   char buf[sbuf];
-  char *ret;
+  char * ret = NULL;
   double *vx, *vy, *vz;
   int32_t nf, f1, f2, f3;
   while (1)

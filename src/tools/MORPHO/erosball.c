@@ -105,7 +105,7 @@ erosball cells 3 cells_erosball
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t r;
   int32_t mode;
 

@@ -402,7 +402,7 @@ int main()
 	double c_x, c_y, c_r, c_z;
 	uint32_t i;
 	double *tab=calloc(150, sizeof(double));
-	struct xvimage *temp;
+	struct xvimage * temp = NULL;
 
 	temp=allocimage(NULL, 300, 300, 300, VFF_TYP_1_BYTE);
 

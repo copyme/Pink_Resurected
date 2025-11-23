@@ -85,7 +85,7 @@ HEAPSTRUCT * HEAPSTRUCT_constructor(
 )
 {
 	int i, num_pixels;
-	HEAPSTRUCT * heapStruct;
+	HEAPSTRUCT * heapStruct = NULL;
 
 	num_pixels = BVECT_prod(dim);
 
@@ -283,7 +283,7 @@ FLOATVECT * FLOATVECT_constructor(
 	int length					/* The length of the vector to create */
 )
 {
-	FLOATVECT * vect;
+	FLOATVECT * vect = NULL;
 
 	vect = (FLOATVECT *)malloc(sizeof(FLOATVECT));
 	vect->length = length;
@@ -304,7 +304,7 @@ FLOATMATRIX * FLOATMATRIX_constructor(
 	int cols
 )
 {
-	FLOATMATRIX * matrix;
+	FLOATMATRIX * matrix = NULL;
 
 	matrix = (FLOATMATRIX *)malloc(sizeof(FLOATMATRIX));
 	matrix->rows = rows;
@@ -408,7 +408,7 @@ void FLOATMATRIX_mul(
 		A[i][j] = (A[i])[j] =  *(A + i*ni + j) = A[i*ni + j];
 	*/
 	int i, j, k;
-	FLOATMATRIX * temp;
+	FLOATMATRIX * temp = NULL;
 
 	temp = FLOATMATRIX_constructor(dest->rows, dest->cols);
 
@@ -450,7 +450,7 @@ float FLOATMATRIX_inv(
 	FLOATMATRIX * source
 )
 {
-	FLOATMATRIX * temp;
+	FLOATMATRIX * temp = NULL;
 	float det;
 
 	/* Check we've been given a 2x2 matrix */
@@ -485,7 +485,7 @@ void FLOATMATRIX_transpose(
 )
 {
 	int i, j;
-	FLOATMATRIX * temp;
+	FLOATMATRIX * temp = NULL;
 
 	temp = FLOATMATRIX_constructor(dest->rows, dest->cols);
 
@@ -515,7 +515,7 @@ void FLOATVECT_premul(
 {
 	int i, j;
 
-	FLOATVECT * temp;
+	FLOATVECT * temp = NULL;
 
 	temp = FLOATVECT_constructor(dest->length);
 
@@ -546,7 +546,7 @@ void FLOATVECT_postmul(
 {
 	int i, j;
 
-	FLOATVECT * temp;
+	FLOATVECT * temp = NULL;
 
 	temp = FLOATVECT_constructor(dest->length);
 
@@ -576,7 +576,7 @@ void FLOATVECT_postmul(
 */
 RIE_INT * RIE_INT_constructor(
 ) {
-	RIE_INT * self;
+	RIE_INT * self = NULL;
 
 	self = (RIE_INT *)malloc(sizeof(RIE_INT));
 
@@ -599,7 +599,7 @@ void RIE_INT_destructor(
 */
 RIE_FLOAT * RIE_FLOAT_constructor(
 ) {
-	RIE_FLOAT * self;
+	RIE_FLOAT * self = NULL;
 
 	self = (RIE_FLOAT *)malloc(sizeof(RIE_FLOAT));
 
@@ -622,7 +622,7 @@ void RIE_FLOAT_destructor(
 */
 RIE_SURF * RIE_SURF_constructor(
 ) {
-	RIE_SURF * self;
+	RIE_SURF * self = NULL;
 
 	self = (RIE_SURF *)malloc(sizeof(RIE_SURF));
 

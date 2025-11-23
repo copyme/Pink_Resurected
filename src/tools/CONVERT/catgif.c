@@ -93,7 +93,7 @@ void read_global_color_table(FILE *fd, int32_t size, FILE *fdout)
 /* =============================================================== */
 {
   int32_t ret;
-  char * color_table;
+  char * color_table = NULL;
 
 #ifdef DEBUG
   printf("reading global color table : size = %d\n", size);
@@ -119,7 +119,7 @@ void skip_global_color_table(FILE *fd, int32_t size)
 /* =============================================================== */
 {
   int32_t ret;
-  char * color_table;
+  char * color_table = NULL;
 
 #ifdef DEBUG
   printf("reading global color table : size = %d\n", size);
@@ -144,7 +144,7 @@ void read_local_color_table(FILE *fd, int32_t size, FILE *fdout)
 /* =============================================================== */
 {
   int32_t ret;
-  char * color_table;
+  char * color_table = NULL;
 
 #ifdef DEBUG
   printf("reading local color table : size = %d\n", size);

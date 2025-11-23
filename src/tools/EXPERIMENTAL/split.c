@@ -69,15 +69,15 @@ int main(int argc, char **argv)
 /* =============================================================== */
 {
   int32_t mode;
-  struct xvimage * image;
-  struct xvimage * seed;
-  struct xvimage * restmp;
-  struct xvimage * labels;
-  struct xvimage * result;
-  uint8_t *I;
-  uint8_t *S;
-  int32_t *T;
-  int32_t *R;
+  struct xvimage * image = NULL;
+  struct xvimage * seed = NULL;
+  struct xvimage * restmp = NULL;
+  struct xvimage * labels = NULL;
+  struct xvimage * result = NULL;
+  uint8_t * I = NULL;
+  uint8_t * S = NULL;
+  int32_t * T = NULL;
+  int32_t * R = NULL;
   int32_t i, x, y, z, rs, cs, ds, ps, N, nbmax, connex;
   
   if (argc != 4)

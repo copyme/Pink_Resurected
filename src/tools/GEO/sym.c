@@ -68,7 +68,7 @@ or to <B>x</B>, <B>y</B> or <B>z</B> for 3D images.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image1;
+  struct xvimage * image1 = NULL;
   char mode;
 
   if (argc != 4)

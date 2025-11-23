@@ -76,9 +76,9 @@ If given, the parameter \b cond is a binary image (region of interest) that rest
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image1;
-  struct xvimage * image2;
-  struct xvimage * image3;
+  struct xvimage * image1 = NULL;
+  struct xvimage * image2 = NULL;
+  struct xvimage * image3 = NULL;
   int32_t connex;
   int32_t niter;
 

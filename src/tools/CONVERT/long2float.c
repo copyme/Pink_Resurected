@@ -63,10 +63,10 @@ If the last argument \b out is omitted, then out = in.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * imagefloat;
-  struct xvimage * imagelong;
-  float *L;
-  int32_t *B;
+  struct xvimage * imagefloat = NULL;
+  struct xvimage * imagelong = NULL;
+  float * L = NULL;
+  int32_t * B = NULL;
   int32_t x;
 
   int32_t rs, cs, d, N;

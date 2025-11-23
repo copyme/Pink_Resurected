@@ -61,11 +61,11 @@ IMAGE *imloadtiff(const char *path)
     int            pi, sf, spp, bps;
     unsigned short *colourmap[3] = {NULL, NULL, NULL};
     long           ncolours;
-    void          *inbuf;
+    void * inbuf = NULL;
     int            result,i;
     pixtype        pt;
     imgtype        it;
-    IMAGE         *outimage;
+    IMAGE * outimage = NULL;
     
     result = load_tiff(path,
 		       0,

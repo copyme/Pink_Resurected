@@ -67,8 +67,8 @@ from <B>in.pgm</B>.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * imgres;
+  struct xvimage * image = NULL;
+  struct xvimage * imgres = NULL;
   int32_t i, j, k, n, t, offset, rs, cs, ds;
 
   if (argc != 5)

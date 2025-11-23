@@ -61,7 +61,7 @@ for a section h of F, with h <= F(p).
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t connex;
 
   if (argc != 4)

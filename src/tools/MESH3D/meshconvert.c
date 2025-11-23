@@ -141,8 +141,8 @@ int main(int argc, char **argv)
     meshvertex V;
     double xrange, yrange, zrange;
     int32_t rs, cs, ds, ps, N, x, y, z;
-    struct xvimage *image;
-    uint8_t *F;
+    struct xvimage * image = NULL;
+    uint8_t * F = NULL;
 
     BoundingBoxMesh(&B);
 #ifdef VERBOSE    

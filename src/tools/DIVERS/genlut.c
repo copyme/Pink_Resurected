@@ -62,9 +62,9 @@ A lookup table is represented by a special ppm image with 1 row.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * lut_r;
-  struct xvimage * lut_g;
-  struct xvimage * lut_b;
+  struct xvimage * lut_r = NULL;
+  struct xvimage * lut_g = NULL;
+  struct xvimage * lut_b = NULL;
   int32_t i, ncol;
   double minhue, maxhue, minlum, maxlum, minsat, maxsat;
   double r, g, b, hue, lum, sat;

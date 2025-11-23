@@ -59,10 +59,10 @@ knowledge of the CeCILL license and that you accept its terms.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t seuilhaut;
   int32_t seuilbas;
-  char * nameout;
+  char * nameout = NULL;
 
   if (argc != 5)
   {

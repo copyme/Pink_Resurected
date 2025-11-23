@@ -122,7 +122,7 @@ RAG *construitRAG(struct xvimage *ga, struct xvimage *label, struct xvimage *ann
 /* calcul de la surface des composantes de l'arbre */
 int32_t surfaceRec(JCctree *CT, int32_t *SurfaceCompo, int32_t root)
 {
-  JCsoncell *s; 
+  JCsoncell * s = NULL;
   if(CT->tabnodes[root].nbsons != 0){
     SurfaceCompo[root] = 0;
     for(s = CT->tabnodes[root].sonlist; s != NULL; s = s->next) 
@@ -137,7 +137,7 @@ int32_t surfaceRec(JCctree *CT, int32_t *SurfaceCompo, int32_t root)
 /* calcul de omega des composantes de l'arbre */
 int32_t omegaRec(JCctree *CT, int32_t *omegaCompo, int32_t root)
 {
-  JCsoncell *s; 
+  JCsoncell * s = NULL;
   if(CT->tabnodes[root].nbsons == 0){
     //CT->tabnodes[root].max = CT->tabnodes[root].min = ;
     omegaCompo[root] = 0;
@@ -168,7 +168,7 @@ void dynaRecCompTree(JCctree *CT,  /* arbre des coupes    */
 	     )
      /* dynamic est supposé alloué */
 {
-  JCsoncell *s;
+  JCsoncell * s = NULL;
   int32_t father = CT->tabnodes[root].father;
   
   if(father == -1)
@@ -192,7 +192,7 @@ void dynaRecCompTree(JCctree *CT,  /* arbre des coupes    */
 
 void volumeRec(JCctree *CT, int32_t *SurfaceCompo, int32_t *fuzzyAreaCompo, int32_t *volumeCompo, int32_t root)
 {
-  JCsoncell *s; 
+  JCsoncell * s = NULL;
   if(CT->tabnodes[root].nbsons == 0){
     // feuille
     fuzzyAreaCompo[root] =  SurfaceCompo[root]*(int32_t)CT->tabnodes[root].data;
@@ -224,7 +224,7 @@ void volumeRec(JCctree *CT, int32_t *SurfaceCompo, int32_t *fuzzyAreaCompo, int3
 int32_t attributOpenningRec(JCctree *CT, int32_t *attributCompo, int32_t *attributMerge, int32_t root)
 {
   int32_t max,v;
-  JCsoncell *s; 
+  JCsoncell * s = NULL;
   if(CT->tabnodes[root].father == -1){
     for(s = CT->tabnodes[root].sonlist; s != NULL; s = s->next) 
       attributOpenningRec(CT, attributCompo, attributMerge, s->son);
@@ -251,7 +251,7 @@ int32_t attributOpenningRec(JCctree *CT, int32_t *attributCompo, int32_t *attrib
 int32_t surfaceOpenningRec(JCctree *CT, int32_t *SurfaceCompo, int32_t *SurfaceMerge, int32_t root)
 {
   int32_t max,v;
-  JCsoncell *s; 
+  JCsoncell * s = NULL;
   if(CT->tabnodes[root].father == -1){
     for(s = CT->tabnodes[root].sonlist; s != NULL; s = s->next) 
       surfaceOpenningRec(CT, SurfaceCompo, SurfaceMerge, s->son);
@@ -276,7 +276,7 @@ int32_t surfaceOpenningRec(JCctree *CT, int32_t *SurfaceCompo, int32_t *SurfaceM
 // Si meme altitude, meme attribut
 void propagate1(JCctree *CT, int32_t root, int32_t *omegaCompo)
 {
-  JCsoncell *s;
+  JCsoncell * s = NULL;
   // 
 
   if(CT->tabnodes[root].nbsons != 0){
@@ -299,7 +299,7 @@ void propagate1(JCctree *CT, int32_t root, int32_t *omegaCompo)
 // Valeurs extinctions
 void propagate2(JCctree *CT, int32_t root, int32_t *omegaCompo, int32_t valeur)
 {
-  JCsoncell *s;
+  JCsoncell * s = NULL;
   // 
   int32_t tmp;
 
@@ -320,8 +320,8 @@ int32_t * omegaMergeTree(JCctree *CT, RAG *rag)
 #undef F_NAME
 #define F_NAME "omegaMergeTree"
 {
-  int32_t *omegaCompo;
-  int32_t *omegaMerge;
+  int32_t * omegaCompo = NULL;
+  int32_t * omegaMerge = NULL;
   int32_t i;
 
   if( (omegaCompo = (int32_t*)malloc(sizeof(int32_t) * CT->nbnodes)) == NULL){
@@ -394,7 +394,7 @@ int32_t ordonneCompTree(int32_t *clefs,  /* tableau ordonnant les
 {
   int32_t r,x;
   int32_t m = INT32_MAX;
-  JCsoncell *s;
+  JCsoncell * s = NULL;
   if(CT->tabnodes[root].nbsons == 0){
     // root est une feuille
     minSon[root] = root;  
@@ -415,8 +415,8 @@ int32_t * surfaceMergeTree(JCctree *CT, RAG *rag)
 #undef F_NAME
 #define F_NAME "surfaceMergeTree"
 {
-  int32_t *SurfaceCompo;
-  int32_t *SurfaceMerge;
+  int32_t * SurfaceCompo = NULL;
+  int32_t * SurfaceMerge = NULL;
   int32_t i;
 
   if( (SurfaceCompo = (int32_t*)malloc(sizeof(int32_t) * CT->nbnodes)) == NULL){
@@ -440,11 +440,11 @@ int32_t *dynaMergeTree(JCctree *CT, RAG *rag)
 #undef F_NAME
 #define F_NAME "dynaMergeTree"
 {
-  int32_t *minSon;
-  int32_t *dynaMerge;
-  int32_t *clefs;
+  int32_t * minSon = NULL;
+  int32_t * dynaMerge = NULL;
+  int32_t * clefs = NULL;
   int32_t i;
-  uint8_t* F;
+  uint8_t * F = NULL;
 
   if( (minSon = (int32_t*)malloc(sizeof(int32_t) * CT->nbnodes)) == NULL){
     fprintf(stderr,"%s: erreur de malloc\n", F_NAME);
@@ -478,10 +478,10 @@ int32_t *volumeMergeTree(JCctree *CT, RAG *rag)
 #undef F_NAME
 #define F_NAME "volumeMergeTree"
 {
-  int32_t *SurfaceCompo;
-  int32_t *fuzzyAreaCompo;
-  int32_t *VolumeCompo;
-  int32_t *VolumeMerge;
+  int32_t * SurfaceCompo = NULL;
+  int32_t * fuzzyAreaCompo = NULL;
+  int32_t * VolumeCompo = NULL;
+  int32_t * VolumeMerge = NULL;
   int32_t i;
   int32_t nbsoms = rag->g->nsom;
 

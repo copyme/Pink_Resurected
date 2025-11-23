@@ -998,9 +998,9 @@ int32_t lin_inverseLUP(double * A, double * R, int32_t n)
 */
 {
   int32_t i, j, ret;
-  int32_t *pi;
-  double *x;
-  double *e;
+  int32_t * pi = NULL;
+  double * x = NULL;
+  double * e = NULL;
 
   pi = (int32_t *)calloc(1,n * sizeof(int32_t));
   if (pi == NULL)

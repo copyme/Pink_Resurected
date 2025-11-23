@@ -64,7 +64,7 @@ If the parameter \b out.list is ommitted, the result is printed on the standard 
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   double maxval;
   FILE *fd = NULL;
 

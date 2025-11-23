@@ -75,7 +75,7 @@ Connexity = <B>connex</B> ; volume threshold = <B>vol</B>.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t connex, param;
 
   if ((argc != 5) && (argc != 6))

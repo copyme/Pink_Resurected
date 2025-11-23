@@ -242,7 +242,7 @@ int32_t lcrestsegment(struct xvimage *image, int32_t connex, int32_t nitermax, i
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t connex, niter, base, incr;
 
   if (argc != 7)

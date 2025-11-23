@@ -63,7 +63,7 @@ Images must be of the same dimensions.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image1;
+  struct xvimage * image1 = NULL;
   int32_t ret;
 
   if (argc != 2)

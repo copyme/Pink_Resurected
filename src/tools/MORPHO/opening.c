@@ -67,8 +67,8 @@ is given by a comment line in the file <B>se.pgm</B>.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * elem;
+  struct xvimage * image = NULL;
+  struct xvimage * elem = NULL;
   index_t x, y, z;
   index_t rs, cs, ds;
 

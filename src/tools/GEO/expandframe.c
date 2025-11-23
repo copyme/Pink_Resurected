@@ -66,8 +66,8 @@ Expands the values of the image in a n-pixel wide band outside the image .
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image1;
-  struct xvimage * image2;
+  struct xvimage * image1 = NULL;
+  struct xvimage * image2 = NULL;
   int32_t n;
 
   if (argc != 4)

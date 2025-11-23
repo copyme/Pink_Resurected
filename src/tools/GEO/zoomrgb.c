@@ -61,12 +61,12 @@ knowledge of the CeCILL license and that you accept its terms.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * g1;
-  struct xvimage * g2;
-  struct xvimage * g3;
-  struct xvimage * go1;
-  struct xvimage * go2;
-  struct xvimage * go3;
+  struct xvimage * g1 = NULL;
+  struct xvimage * g2 = NULL;
+  struct xvimage * g3 = NULL;
+  struct xvimage * go1 = NULL;
+  struct xvimage * go2 = NULL;
+  struct xvimage * go3 = NULL;
   int32_t rs;
   double z;
 

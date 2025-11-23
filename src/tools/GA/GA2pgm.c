@@ -70,8 +70,8 @@ If param = 1, then max is used, and if param = 2, min is used.
 
 int main(int argc, char **argv)
 {
-  struct xvimage * im;
-  struct xvimage * ga;
+  struct xvimage * im = NULL;
+  struct xvimage * ga = NULL;
   int32_t param;
   if(argc != 4) {
     fprintf(stderr, "usage: %s ga.ga param out.pgm \n param = 1 max des sommets contenus dans l'arete, param = 2 min des sommets contenus dans l'aretes\n", 

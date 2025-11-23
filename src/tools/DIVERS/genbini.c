@@ -70,11 +70,11 @@ image: points, spheres (circles), balls (discs) of given sizes and positions.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * imagec;
+  struct xvimage * image = NULL;
+  struct xvimage * imagec = NULL;
   int32_t i, j, k, p;
-  uint8_t *Im;
-  uint8_t *Imc;
+  uint8_t * Im = NULL;
+  uint8_t * Imc = NULL;
   int32_t rs, cs, ds, ps, N;
   double rayon;
   double x, y, z, zmin, zmax;

@@ -97,8 +97,8 @@ In reverse mode (<B>R</B>), only the beta-terminal elements (squares) are select
 int main(int argc, char **argv) 
 /* =============================================================== */
 {
-  struct xvimage * o;
-  struct xvimage * k;
+  struct xvimage * o = NULL;
+  struct xvimage * k = NULL;
   int32_t mode;
   
   if (argc != 4)

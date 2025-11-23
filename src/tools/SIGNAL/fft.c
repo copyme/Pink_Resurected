@@ -108,8 +108,8 @@ Therefore, the transforms have these properties:
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * image2;
+  struct xvimage * image = NULL;
+  struct xvimage * image2 = NULL;
   int32_t dir = 0;
   int32_t rs, cs, cs2, rs2;
 

@@ -60,7 +60,7 @@ to file header.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
 
   if (argc != 5)
   {

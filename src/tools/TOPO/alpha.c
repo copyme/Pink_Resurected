@@ -69,7 +69,7 @@ grayscale image processing"</A>, <I> Journal of Electronic Imaging</I>, Vol.&nbs
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t connex;
   char sign;
 

@@ -61,8 +61,8 @@ Homotopic thinning for 2D grayscale images.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * imagecond;
+  struct xvimage * image = NULL;
+  struct xvimage * imagecond = NULL;
   int32_t connex, h, n;
 
   if (argc != 7)

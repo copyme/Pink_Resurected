@@ -65,7 +65,7 @@ if equal to -1 stability is reached.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t connex;
   int32_t nimax;
 

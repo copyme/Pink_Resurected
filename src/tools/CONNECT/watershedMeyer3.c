@@ -68,9 +68,9 @@ for the makers.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * marqueurs;
-  struct xvimage * masque;
+  struct xvimage * image = NULL;
+  struct xvimage * marqueurs = NULL;
+  struct xvimage * masque = NULL;
   int32_t connex;
 
   if (argc != 6)

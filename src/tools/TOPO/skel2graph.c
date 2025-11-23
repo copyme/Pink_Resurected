@@ -77,8 +77,8 @@ The parameter \b mode has the following meaning (default is 0):
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  skel * s; 
-  graphe * g; 
+  skel * s = NULL;
+  graphe * g = NULL;
   int32_t mode = 0;
   double param = 1.0;
 

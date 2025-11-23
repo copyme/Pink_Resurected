@@ -145,17 +145,17 @@ static void TriRapideStochastique (int32_t * A, index_t *T, int32_t p, int32_t r
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * imagelong;
-  struct xvimage * imagebyte;
-  int32_t *L;
-  uint8_t *B;
+  struct xvimage * imagelong = NULL;
+  struct xvimage * imagebyte = NULL;
+  int32_t * L = NULL;
+  uint8_t * B = NULL;
   int32_t i;
   int32_t mode = 0;
   int32_t Max;
-  index_t *histo;
-  index_t *newvals;
+  index_t * histo = NULL;
+  index_t * newvals = NULL;
   int32_t nbval, nbnewval;
-  int32_t *index;
+  int32_t * index = NULL;
   double t;
   index_t x, rs, cs, d, N;
 

@@ -68,7 +68,7 @@ void jccomptree_ComponentTreePrint(JCctree * CT)
 /* ==================================== */
 {
   int32_t i;
-  JCsoncell *s;
+  JCsoncell * s = NULL;
   printf("root = %d ;  nbnodes: %d ; nbsoncells: %d\n", CT->root, CT->nbnodes, CT->nbsoncells);
   for (i = 0; i < CT->nbnodes; i++) 
   {
@@ -90,9 +90,9 @@ void jccomptree_ComponentTreePrint(JCctree * CT)
 void ComponentTreeDotty(JCctree * CT)
 /* ==================================== */
 {
-  FILE *fp;
+  FILE * fp = NULL;
   int32_t i;
-  JCsoncell *s;
+  JCsoncell * s = NULL;
   fp = fopen("CT.dot", "w");
   fprintf(fp, "digraph G {\n");
   fprintf(fp, "size=\"8,6\"; ratio=fill;\n");
@@ -125,7 +125,7 @@ void mergeTreePrint(mtree * MT)
 /* ==================================== */
 {
   int32_t i;
-  JCsoncell *s;
+  JCsoncell * s = NULL;
   JCctree *CT = MT->CT;
   printf("root = %d ;  nbnodes: %d ; nbsoncells: %d\n", CT->root, CT->nbnodes, CT->nbsoncells);
   for (i = 0; i < CT->nbnodes; i++) 
@@ -199,7 +199,7 @@ int32_t LowComAncSlow(
 int32_t jccomptree_LCApreprocessDepthFirst(JCctree *CT, int32_t node, int32_t depth, int32_t *nbr, int32_t *rep, int32_t *Euler, int32_t *Represent, int32_t *Depth, int32_t *Number)
 {
   int32_t son;
-  JCsoncell *sc;
+  JCsoncell * sc = NULL;
   //  printf("jccomptree_LCApreprocessDepthFirst\n");
   if (CT->tabnodes[node].nbsons > -1) {
     (*nbr)++;
@@ -224,7 +224,7 @@ int32_t ** jccomptree_LCApreprocess(JCctree *CT, int32_t *Euler, int32_t *Depth,
   int32_t nbRepresent;
   int32_t logn;
   int32_t i,j,k1,k2;
-  int32_t *minim; 
+  int32_t * minim = NULL;
   int32_t **Minim;
 
   nbr = -1; // Initialization number of euler nodes
@@ -386,7 +386,7 @@ mtree * mergeTreeAlloc(int32_t N)
 #undef F_NAME
 #define F_NAME "mergeTreeAlloc"
 {
-  mtree *MT;
+  mtree * MT = NULL;
   MT = (mtree *)malloc(sizeof(mtree));
   MT->CT = componentTreeAlloc(N);
   if( (MT->mergeEdge = (int32_t *)malloc(sizeof(int32_t)*N)) == NULL){
@@ -402,7 +402,7 @@ JCctree * componentTreeAlloc(int32_t N)
 #undef F_NAME
 #define F_NAME "componentTreeAlloc"
 {
-  JCctree *CT;
+  JCctree * CT = NULL;
   CT = (JCctree *)malloc(sizeof(JCctree));
   CT->tabnodes = (JCctreenode *)malloc(N * sizeof(JCctreenode));
   CT->tabsoncells = (JCsoncell *)malloc(2*N * sizeof(JCsoncell));
@@ -440,7 +440,7 @@ void mergeTreeFree(mtree * MT)
 
 void calculReversePointer(JCctree *CT, int32_t root)  
 {
-  JCsoncell *s; 
+  JCsoncell * s = NULL;
   for(s = CT->tabnodes[root].sonlist; s != NULL; s = s->next) 
   {
     calculReversePointer(CT, s->son);
@@ -457,12 +457,12 @@ void calculReversePointer(JCctree *CT, int32_t root)
 int32_t jcSaliencyTree_b (JCctree ** SaliencyTree, int32_t *MST, int32_t *Valeur, RAG *rag, int32_t *STaltitude)
 {
   int32_t i,x1,x2,n1,n2,z,k, nbsoncellsloc;
-  JCctree *ST;
-  int32_t *clefs; 
-  int32_t *STmap;
-  JCsoncell * newsoncell1;
-  JCsoncell * newsoncell2;
-  Tarjan *T;
+  JCctree * ST = NULL;
+  int32_t * clefs = NULL;
+  int32_t * STmap = NULL;
+  JCsoncell * newsoncell1 = NULL;
+  JCsoncell * newsoncell2 = NULL;
+  Tarjan * T = NULL;
   int32_t taille = rag->g->nsom;
 
   if((STmap = (int32_t *)malloc(sizeof(int32_t) *taille)) == NULL){
@@ -541,15 +541,15 @@ int32_t mergeTree(RAG *rag, // inputs
 		  )
 {
   int32_t i,x1,x2,n1,n2,z,k, nbsoncellsloc;
-  mtree *MT;
-  int32_t *clefs; 
-  int32_t *CTmap;
-  JCsoncell * newsoncell1;
-  JCsoncell * newsoncell2;
-  Tarjan *T;
+  mtree * MT = NULL;
+  int32_t * clefs = NULL;
+  int32_t * CTmap = NULL;
+  JCsoncell * newsoncell1 = NULL;
+  JCsoncell * newsoncell2 = NULL;
+  Tarjan * T = NULL;
   int32_t nbarcs = rag->g->narc/2;
   int32_t nbsoms = rag->g->nsom;
-  JCctree *CT;
+  JCctree * CT = NULL;
   if( (CTmap = (int32_t *)malloc(sizeof(int32_t) *nbsoms)) == NULL){
     fprintf(stderr, "jcSalliancyTree: erreur de malloc\n"); 
   }

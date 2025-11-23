@@ -88,8 +88,8 @@ There are 3 modes, depending on the number of arguments.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * in;
-  struct xvimage * out;
+  struct xvimage * in = NULL;
+  struct xvimage * out = NULL;
   index_t rs, cs;
   double z, fx, fy, fz;
   index_t newdim;

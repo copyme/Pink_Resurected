@@ -61,12 +61,12 @@ int main(int argc, char **argv)
 /* =============================================================== */
 {
   int32_t nblabels, connex, i;
-  struct xvimage * image;
-  struct xvimage * result;
-  uint8_t * I;
-  int32_t * IL;
+  struct xvimage * image = NULL;
+  struct xvimage * result = NULL;
+  uint8_t * I = NULL;
+  int32_t * IL = NULL;
   int32_t N;
-  int32_t * R;
+  int32_t * R = NULL;
 
   if (argc != 4)
   {
@@ -136,8 +136,8 @@ int main(int argc, char **argv)
   }
   if (datatype(image) == VFF_TYP_4_BYTE)
   {
-    struct xvimage *im2;
-    uint8_t *I2;
+    struct xvimage * im2 = NULL;
+    uint8_t * I2 = NULL;
     im2 = allocimage(NULL, rowsize(image), colsize(image), depth(image), VFF_TYP_1_BYTE);
     if (im2 == NULL)
     {   

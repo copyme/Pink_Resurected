@@ -167,7 +167,7 @@ static void process_closedspline(FILE *fd, struct xvimage * image)
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t i, ret;
   FILE *fd = NULL;
   int32_t nobj;

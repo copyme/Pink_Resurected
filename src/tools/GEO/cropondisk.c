@@ -20,7 +20,7 @@
 
 int main(int argc, char* argv[])
 {
-	FILE *f;
+	FILE * f = NULL;
 	uint64_t rs, cs, d, nrs, ncs, nd, cx, cy, cz, h, b, size;
 	struct xvimage *output, *input_header;
 	char mode, type;

@@ -87,7 +87,7 @@ int main(int argc, char **argv)
   index_t N, rs, cs, ds, i, headersize;
   index_t n_w, n_r, blocksize = 1024*1024;
   double thresh1, thresh2, xdim = 0.0, ydim, zdim;
-  uint8_t * B;
+  uint8_t * B = NULL;
 
   if ((argc != 11) && (argc != 14))
   {

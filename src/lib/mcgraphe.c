@@ -174,7 +174,7 @@ graphe * InitGraphe(int32_t nsom, int32_t nmaxarc)
 #undef F_NAME
 #define F_NAME "InitGraphe"
 {
-  graphe * g;
+  graphe * g = NULL;
   int32_t i;
   
   g = (graphe *)malloc(sizeof(graphe));
@@ -313,7 +313,7 @@ graphe * CopyGraphe(graphe * g1)
 #undef F_NAME
 #define F_NAME "CopyGraphe"
 {
-  graphe * g;
+  graphe * g = NULL;
   int32_t i, j;
   TYP_VARC v;
   int32_t nsom = g1->nsom;
@@ -419,10 +419,10 @@ graphe * ReadGraphe( const char * filename )
 #define F_NAME "ReadGraphe"
 {
 #define TAILLEBUF 4096
-  graphe * g;
+  graphe * g = NULL;
   int32_t i, n, m, t, q;
   char buf[TAILLEBUF];
-  char *ret;
+  char * ret = NULL;
   int status;
 
   FILE *fd = NULL;
@@ -919,7 +919,7 @@ void AjouteArcValue(graphe * g, int32_t i, int32_t s, TYP_VARC v)
 void RetireArc(graphe * g, int32_t i, int32_t s)
 /* ====================================================================== */
 {
-  pcell * pliste;
+  pcell * pliste = NULL;
   pliste = g->gamma + i;
   while ((*pliste != NULL) && (((*pliste)->som) != s))
     pliste = &((*pliste)->next);
@@ -1008,7 +1008,7 @@ graphe * GrapheAleatoire(int32_t nsom, int32_t narc)
 #undef F_NAME
 #define F_NAME "GrapheAleatoire"
 {
-  graphe * g;
+  graphe * g = NULL;
   int32_t i, j, m;
   double mmax = ((double)nsom * ((double)nsom - 1)) / 2;
 
@@ -1142,7 +1142,7 @@ graphe * Symetrique(graphe * g)
 #undef F_NAME
 #define F_NAME "Symetrique"
 {
-  graphe *g_1;
+  graphe * g_1 = NULL;
   int32_t nsom, narc, i, j;
   pcell p;
 
@@ -1173,7 +1173,7 @@ graphe * FermetureSymetrique(graphe * g)
 #undef F_NAME
 #define F_NAME "FermetureSymetrique"
 {
-  graphe *gs;
+  graphe * gs = NULL;
   int32_t nsom, narc, i, j;
   pcell p;
 
@@ -1385,7 +1385,7 @@ boolean CircuitNiveaux(graphe * g)
 #undef F_NAME
 #define F_NAME "CircuitNiveaux"
 {
-  int32_t * D;   // pour les degrés intérieurs
+  int32_t * D = NULL;// pour les degrés intérieurs
   int32_t i, n, x, y, N;
   pcell p;
   Lifo * T, *U, *V;
@@ -1547,9 +1547,9 @@ graphe * Kruskal1(graphe * g, graphe *g_1)
 {
   int32_t n = g->nsom;
   int32_t m = g->narc;
-  graphe * apm;    /* pour le resultat */
-  graphe * apm_1;  /* pour la detection de cycles */
-  int32_t *A;          /* tableau pour ranger les index des arcs */
+  graphe * apm = NULL;/* pour le resultat */
+  graphe * apm_1 = NULL;/* pour la detection de cycles */
+  int32_t * A = NULL;/* tableau pour ranger les index des arcs */
   int32_t i, j, t, q;
   boolean *Ct = EnsembleVide(n);
 
@@ -1613,8 +1613,8 @@ graphe * Kruskal2(graphe * g, graphe *g_1)
 {
   int32_t n = g->nsom;
   int32_t msav, m = g->narc;
-  graphe * apm;    /* pour le resultat */
-  int32_t *A;          /* tableau pour ranger les index des arcs */
+  graphe * apm = NULL;/* pour le resultat */
+  int32_t * A = NULL;/* tableau pour ranger les index des arcs */
   int32_t i, j, t, q;
   msav = m;
 
@@ -1689,7 +1689,7 @@ void DepthTree(graphe * g, int32_t a, TYP_VARC *depth, int32_t *farthest)
   Lifo * T;   /* liste temporaire geree en pile (Last In, First Out) */
   int32_t i, f, n, s;
   pcell p;
-  TYP_VARC* dist;
+  TYP_VARC * dist = NULL;
   TYP_VARC d;
 
   n = g->nsom;
@@ -1734,7 +1734,7 @@ graphe * MaxDiameterTree(graphe * g)
   int32_t i, imd;
   TYP_VARC * diam, d, maxdiam = 0;
   int32_t *opp_som, f;
-  graphe *pcc;
+  graphe * pcc = NULL;
 
   diam = (TYP_VARC *)malloc(n * sizeof(TYP_VARC *));
   opp_som = (int32_t *)malloc(n * sizeof(int32_t *));
@@ -1842,8 +1842,8 @@ graphe * RootTree(graphe * g, graphe * g_1, int32_t i)
 {
   int32_t k, s, n;
   pcell p;
-  Fifo * T;
-  graphe * tree;
+  Fifo * T = NULL;
+  graphe * tree = NULL;
 
   if ((g == NULL) || (g_1 == NULL))
   {
@@ -2256,8 +2256,8 @@ void BellmanSC(graphe * g)
 #define F_NAME "BellmanSC"
 {
   int32_t x, y, i, r, rmax, cumul, n = g->nsom;
-  int32_t * T;   // pour les sommets triés
-  int32_t * H;   // histogramme des rangs
+  int32_t * T = NULL;// pour les sommets triés
+  int32_t * H = NULL;// histogramme des rangs
   graphe * g_1 = Symetrique(g);
   TYP_VARC tmp, minv;
   pcell p;
@@ -2342,8 +2342,8 @@ void BellmanSCmax(graphe * g)
 #define F_NAME "BellmanSCmax"
 {
   int32_t x, y, i, r, rmax, cumul, n = g->nsom;
-  int32_t * T;   // pour les sommets triés
-  int32_t * H;   // histogramme des rangs
+  int32_t * T = NULL;// pour les sommets triés
+  int32_t * H = NULL;// histogramme des rangs
   graphe * g_1 = Symetrique(g);
   TYP_VARC tmp, maxv;
   pcell p;
@@ -2432,8 +2432,8 @@ void BellmanSC1(graphe * g, int32_t dep)
 #define F_NAME "BellmanSC1"
 {
   int32_t x, y, i, r, rmax, cumul, n = g->nsom;
-  int32_t * T;   // pour les sommets triés
-  int32_t * H;   // histogramme des rangs
+  int32_t * T = NULL;// pour les sommets triés
+  int32_t * H = NULL;// histogramme des rangs
   graphe * g_1 = Symetrique(g);
   TYP_VARC tmp, minv;
   pcell p;
@@ -2516,9 +2516,9 @@ void AlphaTopologicalMap(graphe * g, boolean * head, TYP_VSOM alpha)
 #define F_NAME "AlphaTopologicalMap"
 {
   int32_t x, y, i, r, rmax, cumul, n = g->nsom;
-  int32_t * T;   // pour les sommets triés
-  int32_t * H;   // histogramme des rangs
-  TYP_VSOM * M;   // sauvegarde fonction sommets
+  int32_t * T = NULL;// pour les sommets triés
+  int32_t * H = NULL;// histogramme des rangs
+  TYP_VSOM * M = NULL;// sauvegarde fonction sommets
   graphe * g_1 = Symetrique(g);
   pcell p;
 
@@ -2765,8 +2765,8 @@ graphe * ForetPCC(graphe * g)
 #define F_NAME "ForetPCC"
 {
   int32_t x, y, miny, i, r, rmax, cumul, n = g->nsom;
-  int32_t * T;   // pour les sommets triés
-  int32_t * H;   // histogramme des rangs
+  int32_t * T = NULL;// pour les sommets triés
+  int32_t * H = NULL;// histogramme des rangs
   graphe * g_1 = Symetrique(g);
   graphe * foret = InitGraphe(n, n-1); // pour le resultat
   TYP_VARC tmp, minv;
@@ -3339,7 +3339,7 @@ int32_t main(int32_t argc, char **argv)
 {
   graphe * g, *g_1, *a;
   int32_t s1, s2, na, ns;
-  boolean *Cs;
+  boolean * Cs = NULL;
 
   if (argc != 3)
   {
@@ -3400,7 +3400,7 @@ int32_t main(int32_t argc, char **argv)
 #ifdef TESTCIRCUITNIVEAUX
 int32_t main(int32_t argc, char **argv)
 {
-  graphe * g;
+  graphe * g = NULL;
 
   if (argc != 2)
   {
@@ -3424,7 +3424,7 @@ int32_t main(int32_t argc, char **argv)
 #ifdef TESTBELLMANSC
 int32_t main(int32_t argc, char **argv)
 {
-  graphe * g;
+  graphe * g = NULL;
 
   if (argc != 2)
   {
@@ -3446,7 +3446,7 @@ int32_t main(int32_t argc, char **argv)
 #ifdef TEST
 int32_t main(int32_t argc, char **argv)
 {
-  graphe * g;
+  graphe * g = NULL;
 
   if (argc != 2)
   {
@@ -3469,8 +3469,8 @@ int32_t main(int32_t argc, char **argv)
 #ifdef TESTFORETPCC
 int32_t main(int32_t argc, char **argv)
 {
-  graphe * g;
-  graphe * f;
+  graphe * g = NULL;
+  graphe * f = NULL;
 
   if (argc != 2)
   {

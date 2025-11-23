@@ -133,7 +133,7 @@ int32_t lcrestheight(
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * skel;
+  struct xvimage * skel = NULL;
   int32_t connex;
 
   if (argc != 4)

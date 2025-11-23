@@ -58,7 +58,7 @@ An thick end point is a white point, which has only white n-neighbours in the sa
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
 
   if (argc != 3)
   {

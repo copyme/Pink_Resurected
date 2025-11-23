@@ -65,9 +65,9 @@ int main(int argc, char **argv)
 /* =============================================================== */
 {
   int32_t nblabels;
-  struct xvimage * image;
-  struct xvimage * result;
-  struct xvimage * se;
+  struct xvimage * image = NULL;
+  struct xvimage * result = NULL;
+  struct xvimage * se = NULL;
   index_t x, y, z;
 
   if (argc != 4)

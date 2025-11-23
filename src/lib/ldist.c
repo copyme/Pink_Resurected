@@ -627,7 +627,7 @@ int32_t ldistvect(uint8_t *F, vect2Dint *L, index_t rs, index_t cs)
 {
   uint32_t n1, n2;     /* normes des vecteurs (au carre) */
   index_t p, N= rs * cs;            /* taille de l'image */
-  uint8_t *pt;
+  uint8_t * pt = NULL;
   vect2Dint v1, v2;
   int32_t i, j; // attention: index signés (parcours inverse, petite taille)
 
@@ -1030,7 +1030,7 @@ Dcol* Dadd(Drow* r,int32_t x, int32_t y, int32_t z, int32_t dx, int32_t dy, int3
 int32_t Dcount(Drow* r,int32_t val)
 {
   int32_t nb=0;
-  Dcol* cur;
+  Dcol * cur = NULL;
   if((val>r->max)||(r->cols[val]==NULL)) return 0;
   cur=r->cols[val];
   do{

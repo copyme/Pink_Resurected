@@ -71,12 +71,12 @@ Converts a grayscale image into a latex file. The value of each pixel is printed
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   struct xvimage * bold = NULL;
   struct xvimage * underl = NULL;
   FILE *fd = NULL;
   int32_t rs, cs, x, y;
-  char *macro;
+  char * macro = NULL;
 
   if ((argc < 3) || (argc > 5))
   {

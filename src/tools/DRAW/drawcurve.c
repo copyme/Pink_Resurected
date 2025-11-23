@@ -67,7 +67,7 @@ x3 y3<br>
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t i;
   double x1, y1, x2, y2;
   int32_t X1, Y1, X2, Y2;

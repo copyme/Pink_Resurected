@@ -91,8 +91,8 @@ int main(int argc, char **argv)
 /* =============================================================== */
 {
   int32_t connex, attrib, typregion, seuil;
-  struct xvimage * image;
-  struct xvimage * result;
+  struct xvimage * image = NULL;
+  struct xvimage * result = NULL;
 
   if (argc != 7)
   {

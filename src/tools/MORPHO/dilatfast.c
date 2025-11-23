@@ -83,7 +83,7 @@ static uint8_t desc[8]  = {0, 0, 0, 1, 0, 0, 0, 1};
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   uint8_t *mask = NULL;
 
   if (argc != 4)

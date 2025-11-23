@@ -76,9 +76,9 @@ Method:
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * in;
-  struct xvimage * out;
-  struct xvimage * out_image;
+  struct xvimage * in = NULL;
+  struct xvimage * out = NULL;
+  struct xvimage * out_image = NULL;
   char type;
   FILE *fd = NULL;
   double tolerance;

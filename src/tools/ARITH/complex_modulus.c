@@ -63,8 +63,8 @@ modulus(x+iy) = sqrt(x^2 + y^2).
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image1;
-  struct xvimage * image2;
+  struct xvimage * image1 = NULL;
+  struct xvimage * image2 = NULL;
 
   if (argc != 3)
   {

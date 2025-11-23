@@ -139,7 +139,7 @@ int main(int argc, char **argv)
   int32_t i, j, npoints, format, type;
   FILE *fdout = NULL;
   double x, y, z;
-  scene *scene_in;
+  scene * scene_in = NULL;
   meshbox MB;
 
   if (argc != 4)

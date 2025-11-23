@@ -87,7 +87,7 @@ Definition Grimaud : obligation d'atteindre un maximum de niveau strictement sup
 {
   uint32_t nbcomp = cpct->nbcomp;
   int32_t i, h, ncompnivh, f, p;
-  uint8_t *tmp;
+  uint8_t * tmp = NULL;
 
   tmp = (uint8_t *)calloc(nbcomp, sizeof(char));
   if (tmp == NULL) 
@@ -147,7 +147,7 @@ Variante definition Grimaud : obligation d'atteindre un maximum de niveau superi
 {
   uint32_t nbcomp = cpct->nbcomp;
   int32_t i, h, ncompnivh, f, p, v;
-  uint8_t *tmp;
+  uint8_t * tmp = NULL;
 
   tmp = (uint8_t *)calloc(nbcomp, sizeof(char));
   if (tmp == NULL) 

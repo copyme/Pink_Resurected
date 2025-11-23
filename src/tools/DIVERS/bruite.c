@@ -112,10 +112,10 @@ void usage(int argc, char **argv)
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t i;
-  uint8_t *ImUC;
-  int32_t *ImUL;
+  uint8_t * ImUC = NULL;
+  int32_t * ImUL = NULL;
   
   int32_t rs, cs, d, N;
   int32_t n;

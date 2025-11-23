@@ -65,7 +65,7 @@ If the optional parameter \b width is given, then the border has thickness 'widt
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t width; 
  
   if ((argc != 3) && (argc != 4))

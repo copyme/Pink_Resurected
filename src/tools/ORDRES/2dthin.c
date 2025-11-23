@@ -67,7 +67,7 @@ until stability.
 int main(int argc, char **argv) 
 /* =============================================================== */
 {
-  struct xvimage * k;
+  struct xvimage * k = NULL;
   int32_t nsteps;
   
   if (argc != 4)

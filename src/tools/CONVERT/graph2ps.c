@@ -62,7 +62,7 @@ Draws a planar graph into a ps file.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  graphe * g; 
+  graphe * g = NULL;
   int i;
   double scale;
 

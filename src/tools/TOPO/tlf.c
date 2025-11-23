@@ -69,7 +69,7 @@ the original image.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t rayon;
   int32_t connexmin;
 

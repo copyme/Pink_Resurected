@@ -82,7 +82,7 @@ gene
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   char buf[4096];  
 
   if ((argc != 3) && (argc != 4))

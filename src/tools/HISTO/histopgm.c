@@ -62,10 +62,10 @@ of the histogram of \b in.pgm (masked by the binary image
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   struct xvimage * imhist = NULL;
   struct xvimage * mask = NULL;
-  index_t * histo;
+  index_t * histo = NULL;
   int32_t size;
 
   if ((argc != 3) && (argc != 4))

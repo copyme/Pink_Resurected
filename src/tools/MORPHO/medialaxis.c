@@ -83,8 +83,8 @@ The distance is indicated by the parameter <B>distance</B> :
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * res;
+  struct xvimage * image = NULL;
+  struct xvimage * res = NULL;
   int32_t distance;
 
   if (argc != 4)

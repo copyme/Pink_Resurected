@@ -137,7 +137,7 @@ index_t FahpPop(
 /* ==================================== */
 {
   index_t V;
-  FahpElt * FE;
+  FahpElt * FE = NULL;
   if (L->Queue == NULL)
   {
     fprintf(stderr, "erreur Fahp vide\n");
@@ -214,7 +214,7 @@ void FahpPush(
   }
   else /* (L->Tete[Ni] == NULL) */
   {
-    FahpElt * FE;
+    FahpElt * FE = NULL;
     int32_t NiPrec = Ni;
     while ((NiPrec >= 0) && (L->Tete[NiPrec] == NULL)) NiPrec--; 
     if (NiPrec < 0)              /* creation d'un niveau inferieur au niveau courant */
@@ -256,7 +256,7 @@ void FahpPrint(
 /* ==================================== */
 {
   int32_t i;
-  FahpElt * FE;
+  FahpElt * FE = NULL;
   if (FahpVide(L)) {printf("[]\n"); return;}
   FE = L->Queue;
   for (i = L->Niv; i < FAHP_NPRIO; i++)

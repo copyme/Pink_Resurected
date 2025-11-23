@@ -64,8 +64,8 @@ all other pixels are set to 0.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  uint8_t *Im;
+  struct xvimage * image = NULL;
+  uint8_t * Im = NULL;
   int32_t rs, cs, ds, ps, N, x, y, z;
 
   if (argc != 3)

@@ -68,8 +68,8 @@ considered.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * marker;
+  struct xvimage * image = NULL;
+  struct xvimage * marker = NULL;
   int32_t connex;
   int32_t strict = 0;
 

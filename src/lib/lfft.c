@@ -155,9 +155,9 @@ knowledge of the CeCILL license and that you accept its terms.
 /* Do something useful with an error message */
 #define handle_error(msg) fprintf(stderr,msg)
 
-DCOMPLEX *stageBuff;  /* buffer to hold a row or column at a time */
-fcomplex *bigBuff;    /* a pointer to a float input array */
-DCOMPLEX *bigBuffd;   /* a pointer to a double input array */
+DCOMPLEX * stageBuff = NULL;/* buffer to hold a row or column at a time */
+fcomplex * bigBuff = NULL;/* a pointer to a float input array */
+DCOMPLEX * bigBuffd = NULL;/* a pointer to a double input array */
 
 /* Allocate space for stageBuff */
 int allocateBuffer(int size)

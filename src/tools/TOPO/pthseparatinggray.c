@@ -62,7 +62,7 @@ such that there exists c verifying F(p)-h < c <= F(p) and
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t connex, h;
 
   if (argc != 5)

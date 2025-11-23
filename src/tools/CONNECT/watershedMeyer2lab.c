@@ -80,9 +80,9 @@ regions i,j in contact by doing: i = L%(n+1); j = L/(n+1).
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * marqueurs;
-  struct xvimage * masque;
+  struct xvimage * image = NULL;
+  struct xvimage * marqueurs = NULL;
+  struct xvimage * masque = NULL;
   int32_t connex, mode;
 
   if ((argc != 6) && (argc != 7))

@@ -67,7 +67,7 @@ int main(int argc, char **argv)
 #undef F_NAME
 #define F_NAME "printstats"
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   struct xvimage * mask = NULL;
   int32_t rs;     /* taille ligne */
   int32_t cs;     /* taille colonne */
@@ -77,10 +77,10 @@ int main(int argc, char **argv)
   int32_t min, max;
   double mean;
   int32_t i;
-  uint8_t *M;
-  uint8_t *SOURCEc;      /* l'image de depart */
-  int32_t *SOURCEi;      /* l'image de depart */
-  float *SOURCEf;      /* l'image de depart */
+  uint8_t * M = NULL;
+  uint8_t * SOURCEc = NULL;/* l'image de depart */
+  int32_t * SOURCEi = NULL;/* l'image de depart */
+  float * SOURCEf = NULL;/* l'image de depart */
   int32_t pixel;
 
 

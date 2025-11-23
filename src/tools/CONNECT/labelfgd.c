@@ -71,8 +71,8 @@ int main(int argc, char **argv)
 /* =============================================================== */
 {
   int32_t connex;
-  struct xvimage * image;
-  struct xvimage * result;
+  struct xvimage * image = NULL;
+  struct xvimage * result = NULL;
 
   if (argc != 4)
   {

@@ -65,7 +65,7 @@ Inverse of a structuring element.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image1;
+  struct xvimage * image1 = NULL;
   index_t x, y, z;
   index_t rs, cs, ds;
 

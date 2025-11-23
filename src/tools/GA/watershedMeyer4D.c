@@ -71,10 +71,10 @@ for the makers.
 int main(int32_t argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage4D * image;
-  struct xvimage4D * marqueurs;
-  struct xvimage4D * marqueursfond;
-  struct xvimage4D * masque;
+  struct xvimage4D * image = NULL;
+  struct xvimage4D * marqueurs = NULL;
+  struct xvimage4D * marqueursfond = NULL;
+  struct xvimage4D * masque = NULL;
   int32_t connex;
 
   if (argc != 9)

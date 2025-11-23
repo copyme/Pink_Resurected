@@ -67,7 +67,7 @@ The center of the ball is designated as the origin (for use as structuring eleme
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   double radius;
   int32_t cen, dim=2;
   index_t size;

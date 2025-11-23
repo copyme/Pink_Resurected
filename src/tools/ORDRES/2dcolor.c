@@ -66,7 +66,7 @@ according to their rank
 int main(int argc, char **argv) 
 /* =============================================================== */
 {
-  struct xvimage * k;
+  struct xvimage * k = NULL;
   
   if (argc != 3)
   {

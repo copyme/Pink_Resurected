@@ -72,11 +72,11 @@ in \b out.lst.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t connex, mode, S1, S2, S3, D1, D2, D3;
   int32_t debut, fin;
   int32_t rs, cs, ds, ps;
-  graphe * G;
+  graphe * G = NULL;
   int32_t n, y, x;
   pcell p;
   FILE *fd = NULL;

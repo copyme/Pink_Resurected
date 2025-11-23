@@ -159,7 +159,7 @@ RbtElt * lhthiniso_RbtSuccessor(
   Rbt * T, RbtElt * x)
 /* ==================================== */
 {
-  RbtElt * y;
+  RbtElt * y = NULL;
   if (x->right != T->nil) return lhthiniso_RbtMinimum(T, x->right);
   y = x->parent;
   while ((y != T->nil) && (x == y->right))
@@ -175,8 +175,8 @@ void lhthiniso_RbtInsertSimple(
   Rbt * T, RbtElt * z)
 /* ==================================== */
 {
-  RbtElt * x;
-  RbtElt * y;
+  RbtElt * x = NULL;
+  RbtElt * y = NULL;
 
   y = T->nil;
   x = T->root;
@@ -201,7 +201,7 @@ RbtElt * lhthiniso_RbtInsertAux(  /* allocation et insertion simple */
   Rbt * T, TypRbtKey k, TypRbtKey k2, TypRbtAuxData d)
 /* ==================================== */
 {
-  RbtElt * z;
+  RbtElt * z = NULL;
 
   if (T->libre == NULL)
   {
@@ -227,7 +227,7 @@ void LeftRotate(
   Rbt * T, RbtElt * x)
 /* ==================================== */
 {
-  RbtElt * y;
+  RbtElt * y = NULL;
 
   y = x->right;                    /* assume right(x) != NIL */
   x->right = y->left;              /* move y's child over */
@@ -251,7 +251,7 @@ void RightRotate(
   Rbt * T, RbtElt * x)
 /* ==================================== */
 {
-  RbtElt * y;
+  RbtElt * y = NULL;
 
   y = x->left;              /* assume left(x) != NIL */
   x->left = y->right;
@@ -275,9 +275,9 @@ RbtElt * lhthiniso_RbtInsert(
   Rbt * T, TypRbtKey k, TypRbtKey2 k2, TypRbtAuxData d)
 /* ==================================== */
 {
-  RbtElt * x;
-  RbtElt * xcopy;
-  RbtElt * uncle;
+  RbtElt * x = NULL;
+  RbtElt * xcopy = NULL;
+  RbtElt * uncle = NULL;
 
   xcopy = x = lhthiniso_RbtInsertAux(T, k, k2, d);          /* allocation et insertion simple */
   x->color = Red;
@@ -339,7 +339,7 @@ void lhthiniso_RbtDeleteFixup(
   Rbt * T, RbtElt * x)
 /* ==================================== */
 {
-  RbtElt * s;
+  RbtElt * s = NULL;
 
   while ((x != T->root) && (x->color == Black))
   {
@@ -414,8 +414,8 @@ RbtElt * lhthiniso_RbtDeleteAux(         /* return deleted node */
   Rbt * T, RbtElt * z, RbtElt **R)
 /* ==================================== */
 {
-  RbtElt * c;
-  RbtElt * d;
+  RbtElt * c = NULL;
+  RbtElt * d = NULL;
 
   if ((z->left == T->nil) || (z->right == T->nil))
     d = z;
@@ -531,7 +531,7 @@ void UpdateRbt4alpha(uint32_t x, uint8_t *F, uint32_t *T,
 {
   uint32_t y, z, k, kk, alpha;
   double dz, dtmp;
-  RbtElt *r;
+  RbtElt * r = NULL;
 
   if (R[x]) 
   { 
@@ -587,7 +587,7 @@ void UpdateRbt4(uint32_t x, uint8_t *F, uint32_t *T,
   uint32_t y, z, k, kk, delta;
   double dz, dtmp;
   uint8_t f;
-  RbtElt *r;
+  RbtElt * r = NULL;
 
   if (R[x]) 
   { 

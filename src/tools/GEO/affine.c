@@ -75,8 +75,8 @@ Method: interpolation.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * image2;
+  struct xvimage * image = NULL;
+  struct xvimage * image2 = NULL;
   double theta, hx, hy, tx, ty;
 
   if ((argc != 4) && (argc != 8))

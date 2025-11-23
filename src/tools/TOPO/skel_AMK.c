@@ -78,7 +78,7 @@ http://igm.univ-mlv.fr/LIGM/internal_report/pdf/2006_02.v2.pdf
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   struct xvimage * inhibit = NULL;
   int32_t nsteps;
 

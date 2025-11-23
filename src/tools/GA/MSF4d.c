@@ -89,8 +89,8 @@ connect
 int main(int32_t argc, char **argv) 
 /* =============================================================== */
 {
-  struct GA4d * ga;
-  struct xvimage4D * marqueurs;
+  struct GA4d * ga = NULL;
+  struct xvimage4D * marqueurs = NULL;
 
   /* A priori il n'y a (quasi?) rien à modifier pour passer à des
      marqueurs codés en uint32_t */

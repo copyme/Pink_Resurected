@@ -78,7 +78,7 @@ x31 y31 x32 y32<br>
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t i, j, X1, Y1, X2, Y2, X, Y;
   double x1, y1, x2, y2;
   FILE *fd = NULL;
@@ -86,7 +86,7 @@ int main(int argc, char **argv)
   int32_t *lx, *ly;
   char tag;
   int32_t rs, cs;
-  uint8_t *F;
+  uint8_t * F = NULL;
 
   if (argc != 4)
   {

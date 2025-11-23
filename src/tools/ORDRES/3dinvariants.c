@@ -66,7 +66,7 @@ cavities and tunnels of a 3D cubical complex
 int main(int argc, char **argv) 
 /* =============================================================== */
 {
-  struct xvimage * k;
+  struct xvimage * k = NULL;
   index_t nbcc, nbcav, nbtun, euler; 
 
   if (argc != 2)

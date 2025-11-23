@@ -66,7 +66,7 @@ Draws a filled triangle segment with vertices  (x1,y1), (x2,y2) and (x3,y3)
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t x1, y1, x2, y2, x3, y3;
 
   if (argc != 9)

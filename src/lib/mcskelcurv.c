@@ -59,7 +59,7 @@ knowledge of the CeCILL license and that you accept its terms.
 //#define DEBUG_skeldelete
 
 #ifdef DEBUG
-struct xvimage *DBGIM;
+struct xvimage * DBGIM = NULL;
 #endif
 
 /* ================================================ */
@@ -416,7 +416,7 @@ skel * readskel(const char *filename)
 #undef F_NAME
 #define F_NAME "readskel"
 #define BUFFERSIZE 1024
-  skel * S;
+  skel * S = NULL;
   uint32_t i, j, k, v, n;
   char buf[BUFFERSIZE];
   FILE *fd = NULL;
@@ -654,7 +654,7 @@ skel * initskel(uint32_t rs, uint32_t cs, uint32_t ds, uint32_t nbvertex, uint32
 {
 #undef F_NAME
 #define F_NAME "initskel"
-  skel * S;
+  skel * S = NULL;
   uint32_t i;
   
 #ifdef DEBUG
@@ -847,7 +847,7 @@ void skeldelete(skel * S, uint32_t i)
 #ifdef TESTSKEL
 int main()
 {
-  skel * S;
+  skel * S = NULL;
   // 0225336441 adj
   // eccjccjcce type pts
   // 0123456789 pts

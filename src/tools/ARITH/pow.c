@@ -62,7 +62,7 @@ and if out[x] exceeds 255, then out[x] is set to 255.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image1;
+  struct xvimage * image1 = NULL;
   double p;
 
   if (argc != 4)

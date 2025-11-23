@@ -84,8 +84,8 @@ dilation cells ~/Pink/masks/carre5.pgm cells_dilat
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * elem;
+  struct xvimage * image = NULL;
+  struct xvimage * elem = NULL;
   index_t x, y, z;
 
   if (argc != 4)

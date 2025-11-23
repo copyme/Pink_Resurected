@@ -131,7 +131,7 @@ http://igm.univ-mlv.fr/LabInfo/rapportsInternes/2006/01.pdf<BR>
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   struct xvimage * inhibit = NULL;
   int32_t mode, nsteps;
   double pers = 1.0;

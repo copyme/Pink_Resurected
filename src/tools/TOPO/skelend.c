@@ -69,7 +69,7 @@ See skelcurv for a more robust operator. Useful for reducing quasi-curvilinear o
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t connex;
   int32_t niseuil;
 

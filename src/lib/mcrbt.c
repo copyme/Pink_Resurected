@@ -58,9 +58,9 @@ typedef struct RBTELT {
   TypRbtAuxData auxdata;
   TypRbtKey key;
   char color;
-  struct RBTELT * left;
-  struct RBTELT * right;
-  struct RBTELT * parent;
+  struct RBTELT * left = NULL;
+  struct RBTELT * right = NULL;
+  struct RBTELT * parent = NULL;
 } RbtElt;
 
   Le classement des elements s'opere selon la valeur du champ "key", qui est par defaut 
@@ -295,7 +295,7 @@ RbtElt * mcrbt_RbtSuccessor(
   Rbt * T, RbtElt * x)
 /* ==================================== */
 {
-  RbtElt * y;
+  RbtElt * y = NULL;
   if (x->right != T->nil) return mcrbt_RbtMinimum(T, x->right);
   y = x->parent;
   while ((y != T->nil) && (x == y->right))
@@ -311,8 +311,8 @@ void mcrbt_RbtInsertSimple(
   Rbt * T, RbtElt * z)
 /* ==================================== */
 {
-  RbtElt * x;
-  RbtElt * y;
+  RbtElt * x = NULL;
+  RbtElt * y = NULL;
 
 #ifdef DEBUGINSERT
 printf("mcrbt_RbtInsertSimple  ");
@@ -343,7 +343,7 @@ RbtElt * mcrbt_RbtInsertAux(  /* allocation et insertion simple */
   Rbt ** T, TypRbtKey k, TypRbtAuxData d)
 /* ==================================== */
 {
-  RbtElt * z;
+  RbtElt * z = NULL;
 
 #ifdef DEBUGINSERT
 printf("mcrbt_RbtInsertAux\n");
@@ -372,7 +372,7 @@ static void LeftRotate(
   Rbt * T, RbtElt * x)
 /* ==================================== */
 {
-  RbtElt * y;
+  RbtElt * y = NULL;
 
   y = x->right;                    /* assume right(x) != NIL */
   x->right = y->left;              /* move y's child over */
@@ -396,7 +396,7 @@ static void RightRotate(
   Rbt * T, RbtElt * x)
 /* ==================================== */
 {
-  RbtElt * y;
+  RbtElt * y = NULL;
 
   y = x->left;              /* assume left(x) != NIL */
   x->left = y->right;
@@ -420,9 +420,9 @@ RbtElt * mcrbt_RbtInsert(
   Rbt ** T, TypRbtKey k, TypRbtAuxData d)
 /* ==================================== */
 {
-  RbtElt * x;
-  RbtElt * xc;            /* pour retourner le pointeur sur l'element alloue */
-  RbtElt * uncle;
+  RbtElt * x = NULL;
+  RbtElt * xc = NULL;/* pour retourner le pointeur sur l'element alloue */
+  RbtElt * uncle = NULL;
 
 #ifdef DEBUGINSERT
 printf("mcrbt_RbtInsert: data = %d ; key = %g\n", d, k);
@@ -495,7 +495,7 @@ void mcrbt_RbtDeleteFixup(
   Rbt * T, RbtElt * x)
 /* ==================================== */
 {
-  RbtElt * s;
+  RbtElt * s = NULL;
 
 #ifdef DEBUGDELETE
 printf("mcrbt_RbtDeleteFixup\n");
@@ -579,8 +579,8 @@ RbtElt * mcrbt_RbtDeleteAux(         /* return deleted node */
   Rbt * T, RbtElt * z)
 /* ==================================== */
 {
-  RbtElt * c;
-  RbtElt * d;
+  RbtElt * c = NULL;
+  RbtElt * d = NULL;
 
 #ifdef DEBUGDELETE
 printf("mcrbt_RbtDeleteAux\n");
@@ -702,7 +702,7 @@ int32_t main()
   Rbt * T = mcrbt_CreeRbtVide(1);
   char r[80];
   double p;
-  RbtElt * x;
+  RbtElt * x = NULL;
 
   do
   {

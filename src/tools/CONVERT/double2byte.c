@@ -78,10 +78,10 @@ Depending on the value given for the (optional) parameter <B>mode</B>:
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * imagedouble;
-  struct xvimage * imagebyte;
-  double *L;
-  uint8_t *B;
+  struct xvimage * imagedouble = NULL;
+  struct xvimage * imagebyte = NULL;
+  double * L = NULL;
+  uint8_t * B = NULL;
   int32_t x;
   int32_t mode = 0;
   double Min, Max, t;

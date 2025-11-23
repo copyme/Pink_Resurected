@@ -65,7 +65,7 @@ Default mode is 0.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t ox, oy, oz, mode = 0;
 
   if ((argc != 6) && (argc != 7))

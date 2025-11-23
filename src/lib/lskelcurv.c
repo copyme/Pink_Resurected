@@ -637,7 +637,7 @@ static void processjunc(skel *S, uint8_t *T1, uint8_t *T2, uint8_t *T3, int32_t 
 #define F_NAME "processjunc"
   int32_t j, k;
   int32_t rs = S->rs, cs = S->cs, ds = S->ds, ps = rs * cs, N = ps * ds;
-  Lifo * LIFO;
+  Lifo * LIFO = NULL;
   int32_t incr_vois, connex = S->connex;
   int32_t m = start + pos; 
 
@@ -1741,7 +1741,7 @@ skel * lskelsmoothing(skel *S, int32_t mode, double param)
   SKC_pt_pcell p;
   SKC_adj_pcell a;
   double x, y, z;
-  skel * SS; // smoothed skeleton
+  skel * SS = NULL;// smoothed skeleton
 
   SS = initskel(rs, cs, ds, S->e_junc, 2*S->nbptcell, S->nbadjcell, S->connex);
   if (SS == NULL)
@@ -2723,7 +2723,7 @@ int32_t lien(
   int32_t list[20];
   int32_t rs = S->rs, ps = rs*S->cs;
 
-  struct SKC_pt_cell * pts;
+  struct SKC_pt_cell * pts = NULL;
 
   int32_t xmin = mcmin(p1%rs,p2%rs), 
           ymin = mcmin((p1%ps)/rs,(p2%ps)/rs), 
@@ -4062,7 +4062,7 @@ static uint64_t * LigneTrianglePascal (int32_t n)
     le tableau contenant la ligne du triangle
 */
 {
-  uint64_t* t;
+  uint64_t * t = NULL;
   int32_t i, j, old, c;
   assert(n/2 < 34); // dernier entier n tel que C_n^(n/2) <= 2^64 
   t = (uint64_t*)malloc(n*sizeof(uint64_t)); assert(t != NULL);
@@ -4212,7 +4212,7 @@ static double calc_courbure(int32_t *X, int32_t *Y, int32_t *Z, int32_t n, int32
   double *D0, *D1, *D2, *D3;
   double *E0, *E1, *E2, *E3;
   double courbure;
-  int32_t *CP;
+  int32_t * CP = NULL;
   int32_t nctrlpoints, j;
 
   C0 = (double *)malloc(12 * (n-1) * sizeof(double));

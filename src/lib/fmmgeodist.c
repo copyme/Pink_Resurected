@@ -94,8 +94,8 @@ int geodist(
 )
 {
 	int i;
-	HEAPSTRUCT * heapStruct;
-	FMMSTATESTRUCT * stateStruct;
+	HEAPSTRUCT * heapStruct = NULL;
+	FMMSTATESTRUCT * stateStruct = NULL;
 	BVECT * coord, * tempCoord;
 
 	/* Allocate memory for coordinates */

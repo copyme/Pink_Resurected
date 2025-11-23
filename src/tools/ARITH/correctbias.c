@@ -70,11 +70,11 @@ The bias \b type can be:
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   char type;
   double xc, yc, a, T, R;
   int32_t rs, cs, N, x, y;
-  uint8_t *I;
+  uint8_t * I = NULL;
 
   if ((argc != 5) && (argc != 7))
   {

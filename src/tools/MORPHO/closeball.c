@@ -103,7 +103,7 @@ closeball cells 3 cells_closeball
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t r, mode;
 
   if ((argc != 4) && (argc != 5))

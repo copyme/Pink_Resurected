@@ -82,7 +82,7 @@ meshtabvertices *Vertices = NULL;
 meshtabfaces *Faces = NULL;
 meshtabedges2 *Edges = NULL;
 meshtablinks *Links = NULL;
-Rbtp * RBTP;
+Rbtp * RBTP = NULL;
 
 double normevect(double x, double y, double z)
 {
@@ -273,7 +273,7 @@ meshtablinks * MCM_AllocLinks(int32_t nvert, int32_t nedge)
 MCM * MCM_Init(int32_t taillemax)
 /* ==================================== */
 {
-  MCM *M;
+  MCM * M = NULL;
   M = (MCM *)malloc(sizeof(MCM));
   M->Vertices = MCM_AllocVertices(taillemax);
   M->Faces = MCM_AllocFaces(taillemax);
@@ -352,7 +352,7 @@ int32_t MCM_AddVertex(MCM *M, double x, double y, double z, int32_t indface)
 {
   int32_t i;
   TypRbtpKey point;
-  RbtpElt * re;
+  RbtpElt * re = NULL;
 
   /* cherche si le sommet est deja la */
   point.x = x; point.y = y; point.z = z;
@@ -602,7 +602,7 @@ int32_t AddVertex(double x, double y, double z, int32_t indface)
 {
   int32_t i;
   TypRbtpKey point;
-  RbtpElt * re;
+  RbtpElt * re = NULL;
 
   /* cherche si le sommet est deja la */
   point.x = x;
@@ -1172,7 +1172,7 @@ int32_t MCM_HealMesh(MCM *M)
 {
   int32_t i, j, k, f, f1, f2, n, near, far, third, nvertices;
   meshvertex V;
-  meshface *F;
+  meshface * F = NULL;
   int32_t link[MCM_MAXADJFACES];
   int32_t m, nheal = 0;
 
@@ -1251,8 +1251,8 @@ int32_t MCM_RemoveDegenerateFaces(MCM *M)
 #define F_NAME "MCM_RemoveDegenerateFaces"
 {
   int32_t i, j, v0, v1, v2;
-  meshface *F;
-  meshedge *E;
+  meshface * F = NULL;
+  meshedge * E = NULL;
   int32_t del, nheal = 0;
 
   for (i = 0; i < M->Faces->cur; i++)

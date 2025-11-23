@@ -78,9 +78,9 @@ See [COUSTYetAl-PAMI2009] and [COUSTYetAl-PAMI2010] for more details.
 int main(int32_t argc, char **argv) 
 /* =============================================================== */
 {
-  struct xvimage * ga;
-  struct xvimage * marqueurs;
-  struct xvimage * labels;
+  struct xvimage * ga = NULL;
+  struct xvimage * marqueurs = NULL;
+  struct xvimage * labels = NULL;
   int32_t nblabels;
 
   if ((argc != 5))

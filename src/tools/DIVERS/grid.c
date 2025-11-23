@@ -60,13 +60,13 @@ knowledge of the CeCILL license and that you accept its terms.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * in;
-  struct xvimage * temp1;
-  struct xvimage * temp2;
+  struct xvimage * in = NULL;
+  struct xvimage * temp1 = NULL;
+  struct xvimage * temp2 = NULL;
   int32_t x;
-  uint8_t *I;
-  uint8_t *T1;
-  uint8_t *T2;
+  uint8_t * I = NULL;
+  uint8_t * T1 = NULL;
+  uint8_t * T2 = NULL;
   int32_t rs, cs, N;
   int32_t gridstep;
   int32_t step5;

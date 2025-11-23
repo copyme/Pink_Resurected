@@ -73,11 +73,11 @@ This version does not create any line to separate the catchment basins.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * marqueurs;
-  struct xvimage * marqueursfond;
-  struct xvimage * masque;
-  struct xvimage * result;
+  struct xvimage * image = NULL;
+  struct xvimage * marqueurs = NULL;
+  struct xvimage * marqueursfond = NULL;
+  struct xvimage * masque = NULL;
+  struct xvimage * result = NULL;
   int32_t connex;
 
   if (argc != 7)

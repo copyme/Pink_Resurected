@@ -63,7 +63,7 @@ is deleted.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image1;
+  struct xvimage * image1 = NULL;
   int32_t x, y, z, connex;
 
   if (argc != 7)

@@ -238,13 +238,13 @@ int32_t lcrestvol(
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * orig;
-  struct xvimage * skel;
+  struct xvimage * orig = NULL;
+  struct xvimage * skel = NULL;
   int32_t radius;
   int32_t connex;
   int32_t x, y, xc, yc, r2, rs_es, cs_es;
-  struct xvimage * es;
-  uint8_t *E;
+  struct xvimage * es = NULL;
+  uint8_t * E = NULL;
 
   if (argc != 5)
   {

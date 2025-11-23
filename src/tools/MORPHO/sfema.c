@@ -70,8 +70,8 @@ References:<BR>
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * res;
+  struct xvimage * image = NULL;
+  struct xvimage * res = NULL;
   double scale;
   uint32_t rs, cs, ds, N;
 

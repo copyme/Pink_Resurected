@@ -66,10 +66,10 @@ where '-' denotes the erosion operator, and 'Xb' denotes the complementary of X.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * tmp;
-  struct xvimage * elem1;
-  struct xvimage * elem2;
+  struct xvimage * image = NULL;
+  struct xvimage * tmp = NULL;
+  struct xvimage * elem1 = NULL;
+  struct xvimage * elem2 = NULL;
   index_t x1, y1, z1;
   index_t x2, y2, z2;
 

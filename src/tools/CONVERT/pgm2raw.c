@@ -68,7 +68,7 @@ int main(int argc, char **argv)
 {
   FILE *fd = NULL;
   int32_t rs, cs, ds, N, ret = 0;
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   char pgmfilename[TAILLEBUF];
   char rawfilename[TAILLEBUF];
   char nrrdfilename[TAILLEBUF];

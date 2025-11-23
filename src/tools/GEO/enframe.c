@@ -65,8 +65,8 @@ If \b out.pgm is not specified, then out.pgm = in.pgm.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * imageout;
+  struct xvimage * image = NULL;
+  struct xvimage * imageout = NULL;
   int32_t grayval;
   int32_t width;  
 

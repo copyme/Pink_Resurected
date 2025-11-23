@@ -68,7 +68,7 @@ by performing the topological closure.
 int main(int argc, char **argv) 
 /* =============================================================== */
 {
-  struct xvimage * k;
+  struct xvimage * k = NULL;
   
   if ((argc != 3) && (argc != 4))
   {

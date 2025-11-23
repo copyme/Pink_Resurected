@@ -65,10 +65,10 @@ of the set of points represented by the list \b g.list in the set \b f.pgm .
 int main(int argc, char **argv) 
 /* =============================================================== */
 {
-  struct xvimage * k;
-  FILE *fd;
+  struct xvimage * k = NULL;
+  FILE * fd = NULL;
   int32_t i, n;
-  index_t *tab;  
+  index_t * tab = NULL;
   double xx, yy, zz;
   index_t x, y, z;
   index_t rs, cs, ds, ps, N;

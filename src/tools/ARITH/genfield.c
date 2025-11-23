@@ -67,8 +67,8 @@ The size of the result field <B>out.pgm</B> is taken from image
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * header;
-  struct xvimage * field;
+  struct xvimage * header = NULL;
+  struct xvimage * field = NULL;
   int32_t rs, cs, ds;
 
   if ((argc != 3) && (argc != 5))

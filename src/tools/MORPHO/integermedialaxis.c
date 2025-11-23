@@ -71,8 +71,8 @@ Mathematical Morphology: 40 Years On, Springer, 2005, pp. 259-268
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * resf;
+  struct xvimage * image = NULL;
+  struct xvimage * resf = NULL;
   double gamma;
   uint32_t i, N;
 

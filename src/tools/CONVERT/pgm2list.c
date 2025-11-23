@@ -84,7 +84,7 @@ Summary of list formats:
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   FILE *fd = NULL;
   int32_t rs, cs, ds, ps, N, x, y, z, n;
   char type;

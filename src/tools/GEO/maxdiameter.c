@@ -64,7 +64,7 @@ The distance d is the Euclidean distance.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t connex;
 
   if (argc != 4)

@@ -69,10 +69,10 @@ value.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * result;
+  struct xvimage * image = NULL;
+  struct xvimage * result = NULL;
   int32_t trace;
-  char * nameout;
+  char * nameout = NULL;
   int32_t mesure;
   int32_t seuil;
 

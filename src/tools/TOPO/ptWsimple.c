@@ -65,11 +65,11 @@ int main(int32_t argc, char **argv)
 {
   int32_t nblabels, connex, i,y,k;
   int32_t rs, cs, d, n, N, label;
-  uint8_t *G;
-  int32_t *LABEL;
-  struct xvimage * image;
-  struct xvimage * result;
-  struct xvimage * result2;
+  uint8_t * G = NULL;
+  int32_t * LABEL = NULL;
+  struct xvimage * image = NULL;
+  struct xvimage * result = NULL;
+  struct xvimage * result2 = NULL;
   int32_t function;
   int32_t incr;
   if (argc != 4)

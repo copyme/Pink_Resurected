@@ -60,7 +60,7 @@ is also named \b filename .
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
 
   if ((argc != 2) && (argc != 3))
   {

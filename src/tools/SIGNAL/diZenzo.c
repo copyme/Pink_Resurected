@@ -81,10 +81,10 @@ Les gradients sont calculés par les filtres de Deriche, de paramètre alpha
 int main(int argc, char **argv) 
 /* =============================================================== */
 {
-  struct xvimage * imageR;
-  struct xvimage * imageV;
-  struct xvimage * imageB;
-  struct xvimage * result;
+  struct xvimage * imageR = NULL;
+  struct xvimage * imageV = NULL;
+  struct xvimage * imageB = NULL;
+  struct xvimage * result = NULL;
   double alpha;
   int32_t mode;
 

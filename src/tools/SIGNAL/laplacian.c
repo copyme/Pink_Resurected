@@ -64,7 +64,7 @@ filter: 0 < alpha < infinity, typical value: alpha = 1
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image1;
+  struct xvimage * image1 = NULL;
   double alpha;
   double dummy = 0.0;
 

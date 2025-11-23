@@ -71,14 +71,14 @@ Experimental
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * distimage;
-  struct xvimage * lambdaimage;
-  struct xvimage * opening;	
+  struct xvimage * image = NULL;
+  struct xvimage * distimage = NULL;
+  struct xvimage * lambdaimage = NULL;
+  struct xvimage * opening = NULL;
   double lambda;
   uint32_t rs, cs, ds, N, i;
   float max, *L, *O;
-  uint8_t *I;
+  uint8_t * I = NULL;
 
   if (argc != 5)
   {

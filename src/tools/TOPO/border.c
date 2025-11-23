@@ -65,7 +65,7 @@ where nk is the complementary connectivity for k.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t connex;
 
   if (argc != 4)

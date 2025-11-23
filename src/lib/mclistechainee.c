@@ -123,7 +123,7 @@ TypListechainee * Cons (TypElement el, TypListechainee * lis)
 {
                               /* retourne la listechainee dont la tete est el
                                  et dont la Suite est lis */
-  TypListechainee * temp;
+  TypListechainee * temp = NULL;
   temp = (TypListechainee *) malloc (sizeof (TypListechainee));
   temp->elt = el;
   temp->suite = lis;

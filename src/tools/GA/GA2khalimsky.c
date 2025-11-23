@@ -76,8 +76,8 @@ is used (usefull for representing regions).
 
 int main(int argc, char **argv)
 {
-  struct xvimage * ga;
-  struct xvimage * out;
+  struct xvimage * ga = NULL;
+  struct xvimage * out = NULL;
   int32_t bar;                    /* booleen indiquant si l'on traite un objet ou un complementaire */
   if (argc != 4)
   {

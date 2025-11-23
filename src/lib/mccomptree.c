@@ -126,7 +126,7 @@ void addson(ctree *CT, int32_t node, int32_t nodeaux)
 #undef F_NAME
 #define F_NAME "addson"
 {
-  soncell * newson;
+  soncell * newson = NULL;
 #ifdef DEBUGADDSON
   printf("addson: %d %d\n", node, nodeaux);
 #endif
@@ -208,7 +208,7 @@ ctree * ComponentTreeAlloc(int32_t N)
 #undef F_NAME
 #define F_NAME "ComponentTreeAlloc"
 {
-  ctree *CT;
+  ctree * CT = NULL;
   CT = (ctree *)calloc(1,sizeof(ctree));
   CT->tabnodes = (ctreenode *)calloc(1,N * sizeof(ctreenode));
   CT->tabsoncells = (soncell *)calloc(1,N * sizeof(soncell));
@@ -239,7 +239,7 @@ void mccomptree_ComponentTreePrint(ctree * CT)
 /* ==================================== */
 {
   int32_t i;
-  soncell *s;
+  soncell * s = NULL;
   printf("root = %d ; nbnodes: %d ; nbleafs: %d ; nbsoncells: %d\n", CT->root, CT->nbnodes, CT->nbleafs, CT->nbsoncells);
   for (i = 0; i < CT->nbnodes; i++) if (CT->tabnodes[i].nbsons != -1)
   {
@@ -274,7 +274,7 @@ int32_t ComputeArea(ctree * CT, int32_t node, int32_t *na1)
 #undef F_NAME
 #define F_NAME "ComputeArea"
 {
-  soncell * s;
+  soncell * s = NULL;
   int32_t son;
   na1[node] = CT->tabnodes[node].area;
   if (CT->tabnodes[node].nbsons == 0) return na1[node];
@@ -307,7 +307,7 @@ int32_t ComputeVol(ctree * CT, int32_t node, int32_t *na1)
 #undef F_NAME
 #define F_NAME "ComputeVol"
 {
-  soncell * s;
+  soncell * s = NULL;
   int32_t son, fth;
   na1[node] = CT->tabnodes[node].area;
   fth = CT->tabnodes[node].father;
@@ -340,12 +340,12 @@ int32_t ComponentTree( uint8_t *F, int32_t rs, int32_t N, int32_t connex, // inp
 #undef F_NAME
 #define F_NAME "ComponentTree"
 {
-  ctree *CT; 
-  int32_t *CM; 
-  int32_t *S; 
+  ctree * CT = NULL;
+  int32_t * CM = NULL;
+  int32_t * S = NULL;
   int32_t i, k, p, q, incr_vois, tmp; 
   int32_t numbernodes = N; 
-  int32_t *SubtreeRoot;
+  int32_t * SubtreeRoot = NULL;
   int32_t currentSubtree;
   int32_t currentNode;
   int32_t neighbSubtree;
@@ -525,12 +525,12 @@ int32_t ComponentTree3d( uint8_t *F, int32_t rs, int32_t ps, int32_t N, int32_t 
 #undef F_NAME
 #define F_NAME "ComponentTree3d"
 {
-  ctree *CT; 
-  int32_t *CM; 
-  int32_t *S; 
+  ctree * CT = NULL;
+  int32_t * CM = NULL;
+  int32_t * S = NULL;
   int32_t i, k, p, q, tmp; 
   int32_t numbernodes = N; 
-  int32_t *SubtreeRoot;
+  int32_t * SubtreeRoot = NULL;
   int32_t currentSubtree;
   int32_t currentNode;
   int32_t neighbSubtree;
@@ -824,8 +824,8 @@ int32_t main() {
     120,  70,  80
   }; 
   int32_t i, rs = 3, cs = 5;
-  ctree *CT;
-  int32_t *CM;
+  ctree * CT = NULL;
+  int32_t * CM = NULL;
 
   ComponentTree(F, rs, rs*cs, 4, &CT, &CM);
   printf("component tree:\n");

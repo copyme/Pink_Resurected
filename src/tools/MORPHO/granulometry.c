@@ -70,12 +70,12 @@ The result <B>out.list</B> contains a list of couples <B>r a</B> where
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * temp;
+  struct xvimage * image = NULL;
+  struct xvimage * temp = NULL;
   FILE *fd = NULL;
   int32_t rayonmin, rayonmax, rayon;
   int32_t rs, cs, ds, N, i, S;
-  uint8_t *T;
+  uint8_t * T = NULL;
 
   if ((argc != 4) && (argc != 5))
   {

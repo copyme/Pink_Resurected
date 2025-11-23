@@ -219,13 +219,13 @@ int32_t uniquevoisin26(
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * sav;
+  struct xvimage * image = NULL;
+  struct xvimage * sav = NULL;
   FILE *fd = NULL;
   int32_t rs, cs, ds, ps, N, x, y, z, p, sp, n, connex, val;
-  uint8_t *F;
-  uint8_t *S;
-  int32_t *P;
+  uint8_t * F = NULL;
+  uint8_t * S = NULL;
+  int32_t * P = NULL;
 
   if ((argc != 7) && (argc != 6) && (argc != 4))
   {

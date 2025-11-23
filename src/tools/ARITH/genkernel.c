@@ -65,8 +65,8 @@ knowledge of the CeCILL license and that you accept its terms.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  float *F;
+  struct xvimage * image = NULL;
+  float * F = NULL;
   int32_t rs, cs, N;
   int32_t i, j, x, y, x0, y0, xr, yr;
   double sigma, lambda, width, length, theta;

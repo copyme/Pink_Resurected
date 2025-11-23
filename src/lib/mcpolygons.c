@@ -158,7 +158,7 @@ void MCP_ReAllocEdges(mcptabedges **A)
 MCP * MCP_Init(int32_t taillemax)
 /* ==================================== */
 {
-  MCP *P;
+  MCP * P = NULL;
   P = (MCP *)malloc(sizeof(MCP));
   P->Vertices = MCP_AllocVertices(taillemax);
   P->Faces = MCP_AllocFaces(taillemax);
@@ -335,7 +335,7 @@ void MCP_SubdivEdges(MCP *P, double param)
   mcpvertex A, B;
   mcpface F;
   mcpedge E;
-  RbtElt * re;
+  RbtElt * re = NULL;
   double x, y, z, len;
 
   if (P->Vertices->cur > P->Vertices->nsp)
@@ -410,7 +410,7 @@ POLYGONS %d %d    // Faces - champ obligatoire
 {
   int32_t i, j, k, N, nsp;
   index_t a, b;
-  RbtElt * re;
+  RbtElt * re = NULL;
   mcpface F;
   mcpedge E;
 
@@ -506,7 +506,7 @@ sorties :
 */
 {
   int32_t i, j, k, a, b, nsp, taille = *n;
-  RbtElt * re;
+  RbtElt * re = NULL;
   mcpface F;
   mcpedge E;
 
@@ -569,12 +569,12 @@ POLYGONS %d %d    // Faces - champ obligatoire
 #undef F_NAME
 #define F_NAME "MCP_LoadVTK"
 {
-  MCP *P;
+  MCP * P = NULL;
   int32_t i, j, nvert=-1, nfaces=-1, nf, indx;
   double x, y, z;
 #define sbuf 1024
   char buf[sbuf];
-  char *ret;
+  char * ret = NULL;
   Liste * Face = NULL;
   while (1)
   {
@@ -690,7 +690,7 @@ int32_t main()
   char r[80];
   Liste *L = CreeListeVide(100);
   int32_t a, b, c, d, e, f, g;
-  FILE *fd;
+  FILE * fd = NULL;
   MCP *P = MCP_Init(1);
 
   a = MCP_AddVertex(P, 0, 0, 0); ListePush(L, a);

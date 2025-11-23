@@ -67,7 +67,7 @@ The output file will be non-compressed BMP with 24 bits per pixel.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * g1;
+  struct xvimage * g1 = NULL;
 
   if (argc != 3)
   {

@@ -80,8 +80,8 @@ int main(int argc, char **argv)
 /* =============================================================== */
 {
   int32_t mode;
-  struct xvimage * image1;
-  struct xvimage * image2;
+  struct xvimage * image1 = NULL;
+  struct xvimage * image2 = NULL;
   float result, cut = 0;
   FILE *fd = NULL;
 

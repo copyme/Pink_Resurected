@@ -66,8 +66,8 @@ Draws the graph described in file <B>in.graph</B> into the image <B>in.pgm</B>
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  graphe * g; 
+  struct xvimage * image = NULL;
+  graphe * g = NULL;
 
   if (argc != 4)
   {

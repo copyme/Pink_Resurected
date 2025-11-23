@@ -69,7 +69,7 @@ The files \b in1.pgm, \b in2.pgm represent a vector field, with the origins of v
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   FILE *fd = NULL;
   int32_t rs, cs, ds, npoints, n, i; 
   char type;

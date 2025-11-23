@@ -103,11 +103,11 @@ connect
 int main(int argc, char **argv)
 {
   FILE *fd = NULL;
-  struct xvimage *image;
-  struct xvimage *ga;
-  struct xvimage *gaout;
-  struct xvimage *watershed;
-  double *F;
+  struct xvimage * image = NULL;
+  struct xvimage * ga = NULL;
+  struct xvimage * gaout = NULL;
+  struct xvimage * watershed = NULL;
+  double * F = NULL;
   double TA, TB,r,rprime;
   int32_t i,j,k,y;
 #ifdef TIME_WATERSHED_TEST
@@ -115,9 +115,9 @@ int main(int argc, char **argv)
 #endif
   int32_t rs;               /* taille ligne */
   int32_t cs;               /* taille colonne */
-  int32_t *FlowMapping; 
+  int32_t * FlowMapping = NULL;
   double max = 0;
-  double *G;
+  double * G = NULL;
   if (argc != 5 )
   {
             fprintf(stderr, "usage: %s imageRawDouble rs cs gaout\n", argv[0]); 

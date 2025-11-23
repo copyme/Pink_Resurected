@@ -74,12 +74,12 @@ References:<BR>
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * lambdaimage;
+  struct xvimage * image = NULL;
+  struct xvimage * lambdaimage = NULL;
   double lambda;
   uint32_t rs, cs, ds, N, i;
-  uint8_t *I;
-  float *L;
+  uint8_t * I = NULL;
+  float * L = NULL;
 
   if ((argc != 3) && (argc != 4))
   {

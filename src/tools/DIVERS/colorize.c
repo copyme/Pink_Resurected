@@ -61,13 +61,13 @@ Generates a color image from a grayscale image and a lookup table (see genlut.c)
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * in;
-  struct xvimage * g1;
-  struct xvimage * g2;
-  struct xvimage * g3;
-  uint8_t *r; /* la LookUp Table */
-  uint8_t *g;
-  uint8_t *b;
+  struct xvimage * in = NULL;
+  struct xvimage * g1 = NULL;
+  struct xvimage * g2 = NULL;
+  struct xvimage * g3 = NULL;
+  uint8_t * r = NULL;/* la LookUp Table */
+  uint8_t * g = NULL;
+  uint8_t * b = NULL;
   int32_t rs, cs, N, i, lutsize;
 
   if (argc != 4)

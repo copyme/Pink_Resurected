@@ -73,7 +73,7 @@ by a closing instead of an opening.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t rayonmin, rayonmax, rayon;
   int32_t d, xc, yc, zc, x, y, z, nptb;
   int32_t *tab_es_x, *tab_es_y, *tab_es_z;

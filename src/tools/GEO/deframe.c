@@ -65,8 +65,8 @@ suppress the frame from an image.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * in;
-  struct xvimage * out;
+  struct xvimage * in = NULL;
+  struct xvimage * out = NULL;
   int32_t rs, cs, ds;
 
   if ((argc != 2) && (argc != 3))

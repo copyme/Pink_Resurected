@@ -69,8 +69,8 @@ The file \b in.pgm contains a vector field. This operator generates a (binary) i
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * field;
-  struct xvimage * image;
+  struct xvimage * field = NULL;
+  struct xvimage * image = NULL;
   int32_t rs, cs, ds;
   double len = 10;
 

@@ -74,9 +74,9 @@ References:<BR>
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * dist;
-  struct xvimage * mask;
-  struct xvimage * angle;
+  struct xvimage * dist = NULL;
+  struct xvimage * mask = NULL;
+  struct xvimage * angle = NULL;
 
   if (argc != 4)
   {

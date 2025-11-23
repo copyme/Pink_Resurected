@@ -102,10 +102,10 @@ x2 y2 z2 v2<br>
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   FILE *fd = NULL;
   int32_t rs, cs, ds, ps, N, x, y, z, p, n, connex, val;
-  uint8_t *F;
+  uint8_t * F = NULL;
   int32_t *X, *Y, *Z = NULL;
 
   if ((argc != 7) && (argc != 6) && (argc != 4))

@@ -62,11 +62,11 @@ The shadow of a 2D grayscale image is a 3D binary image.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * ombre;
+  struct xvimage * image = NULL;
+  struct xvimage * ombre = NULL;
   int32_t rs, cs, ds, N, i, j, k;
-  uint8_t *I;
-  uint8_t *O;
+  uint8_t * I = NULL;
+  uint8_t * O = NULL;
 
   if (argc != 3)
   {

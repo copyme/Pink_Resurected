@@ -80,10 +80,10 @@ If im.ppm is a 2D (resp. 3D) image, then <B>out.ga</B> is a 2D (resp
 
 int main(int argc, char **argv)
 {
-  struct xvimage * r;
-  struct xvimage * v;
-  struct xvimage * b;
-  struct xvimage * ga;
+  struct xvimage * r = NULL;
+  struct xvimage * v = NULL;
+  struct xvimage * b = NULL;
+  struct xvimage * ga = NULL;
   int32_t param;
   if ( (argc != 4) && (argc != 5))
   {

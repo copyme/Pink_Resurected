@@ -97,8 +97,8 @@ static double dir[MAXDIM][MAXDIM];
 static PFNe func;		/* this stores the function name */
 static PFNn func_num;		/* this stores the function name */
 static int32_t ndim;		/* number of dimensions */
-static double *point;		/* store the address of a vector */
-static double *direc;		/* ............................. */
+static double * point = NULL;/* store the address of a vector */
+static double * direc = NULL;/* ............................. */
 static double ptrial[MAXDIM];	/* trial point. */
 
 /*

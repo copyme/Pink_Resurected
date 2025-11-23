@@ -73,8 +73,8 @@ If the parameters \b in.pgm and \b out.pgm are given, the ellipse is drawn into 
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  uint8_t *Im;
+  struct xvimage * image = NULL;
+  uint8_t * Im = NULL;
   int32_t rs, cs, d;
   FILE *fd = NULL;
   int32_t i, n;

@@ -140,7 +140,7 @@ static void barycentre(SKC_pt_pcell p, int32_t rs, int32_t ps, double *x, double
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  skel * S;
+  skel * S = NULL;
   FILE *fd = NULL;
   int32_t rs, ps, n, i, j, k;
   double x, y, z;

@@ -84,10 +84,10 @@ int main(int argc, char **argv)
 /* =============================================================== */
 {
   int32_t mode;
-  struct xvimage * image;
-  struct xvimage * result;
+  struct xvimage * image = NULL;
+  struct xvimage * result = NULL;
   index_t N, i;
-  uint8_t *F;
+  uint8_t * F = NULL;
 
   if (argc != 4)
   {
@@ -179,7 +179,7 @@ int main(int argc, char **argv)
     }
     else if (mode == 5)
     {
-      float *D;
+      float * D = NULL;
       convertfloat(&result);
       D = FLOATDATA(result);
       for (i = 0; i < N; i++) D[i] = (float)sqrt(D[i]);

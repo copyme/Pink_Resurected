@@ -80,7 +80,7 @@ nb_points_spline_3  x31 y31 z31  x32 y32 z32 ...<br>
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * field;
+  struct xvimage * field = NULL;
   int32_t j;
   FILE *fd = NULL;
   int32_t npoints, nsplines, i;

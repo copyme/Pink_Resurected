@@ -241,21 +241,21 @@ void ShowGraphe(graphe * g, char *filename, double s, double r, double t, double
 int main(int32_t argc, char **argv) 
 /* =============================================================== */
 {
-  struct xvimage * k;
-  struct xvimage * prio;
-  struct xvimage * prio2;
+  struct xvimage * k = NULL;
+  struct xvimage * prio = NULL;
+  struct xvimage * prio2 = NULL;
   struct xvimage * inhibimage = NULL;
-  uint8_t *K;
+  uint8_t * K = NULL;
   int32_t ret, priocode;
   int32_t rs, cs, N, i;
   float priomax_f;
   int32_t priomax_l;
-  float * PRIO_F;
-  int32_t * PRIO_L;
+  float * PRIO_F = NULL;
+  int32_t * PRIO_L = NULL;
   graphe * flow = NULL;
-  graphe * flow_s;
-  graphe * forest;
-  graphe * forest_s;
+  graphe * flow_s = NULL;
+  graphe * forest = NULL;
+  graphe * forest_s = NULL;
   boolean * perm = NULL;
   boolean * head = NULL;
 
@@ -294,7 +294,7 @@ int main(int32_t argc, char **argv)
     if (datatype(prio2) == VFF_TYP_1_BYTE)
     {
       uint8_t *B = UCHARDATA(prio2);
-      int32_t *L;
+      int32_t * L = NULL;
       int32_t x;
       prio = allocimage(NULL, rs, cs, 1, VFF_TYP_4_BYTE);
       if (prio == NULL)

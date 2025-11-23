@@ -61,7 +61,7 @@ For each pixel x, out[x] = in[x]
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image1;
+  struct xvimage * image1 = NULL;
 
   if (argc != 3)
   {

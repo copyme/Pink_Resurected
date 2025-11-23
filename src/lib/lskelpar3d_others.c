@@ -4268,21 +4268,21 @@ int32_t llohoubertrand12dir2004(
   unsigned long int  neighbours_NS;
   unsigned long int  neighbours_EW;
   unsigned long int  GLOBAL_direction;
-  unsigned char     *lut_deletable;
+  unsigned char * lut_deletable = NULL;
   unsigned long int  size_x;
   unsigned long int  size_y;
   unsigned long int  size_z;
   unsigned long int  size_xy;
   unsigned long int  size_xyz;
-  unsigned char     *image;
+  unsigned char * image = NULL;
   List               SurfaceVoxels;
   List               BorderVoxels;
   unsigned long int  act_addr;
-  struct xvimage *pgmimage;
-  Bordercell *borderlist;
+  struct xvimage * pgmimage = NULL;
+  Bordercell * borderlist = NULL;
   int                DEL6NEI;
   unsigned long int  endflag;
-  unsigned char      *lut_simple;
+  unsigned char * lut_simple = NULL;
   unsigned long int  z_size_xy, zm_size_xy, zp_size_xy;
   unsigned long int  y_size_x, ym_size_x, yp_size_x;
 
@@ -5140,7 +5140,7 @@ void set_char_mask( void )
 void init_lut( char* mask_name )
 {
   char  lutname [100];
-  FILE  *lutfile;
+  FILE * lutfile = NULL;
 
   /* alloc lut_deletable */
     lut_deletable = (unsigned char *)malloc(0x00400000);    /* 4 Mbyte */
@@ -5182,7 +5182,7 @@ void init_lut( char* mask_name )
 /*==================================*/
 
 void NewSurfaceVoxel( void ) {
-ListElement * LE;
+ListElement * LE = NULL;
 	LE=(ListElement *)malloc(sizeof(ListElement));
 	(*LE).addr=act_addr;
 	(*LE).next=NULL;
@@ -5193,7 +5193,7 @@ ListElement * LE;
 }
 
 void RemoveSurfaceVoxel(ListElement * LE) {
-ListElement * LE2;
+ListElement * LE2 = NULL;
 	if (SurfaceVoxels.first==LE) SurfaceVoxels.first=(*LE).next;
 	if (SurfaceVoxels.last==LE) SurfaceVoxels.last=(*LE).prev;
 	if ((*LE).next!=NULL) {
@@ -5214,7 +5214,7 @@ void CreatePointList(PointList *s) {
 }
 
 void AddToList(PointList *s, ListElement * ptr) {
-Cell * newcell;
+Cell * newcell = NULL;
 	newcell=(Cell *)malloc(sizeof(Cell));
 	newcell->addr=act_addr;
 	newcell->ptr=ptr;
@@ -5233,7 +5233,7 @@ Cell * newcell;
 
 unsigned long int GetFromList(PointList *s, ListElement **ptr) {
 unsigned long int curr_addr;
-Cell *tmp;
+Cell * tmp = NULL;
 	(*ptr)=NULL;
 	if(s->Length==0) return 0;
 	else {
@@ -5252,7 +5252,7 @@ Cell *tmp;
 }
 
 void DestroyPointList(PointList *s) {
-ListElement * ptr;
+ListElement * ptr = NULL;
 	while(s->Length>0) GetFromList(s, &ptr);
 }
 
@@ -5724,7 +5724,7 @@ int deletable( void )
 
 /*=========== function DetectDeletablePoints ===========*/
 void DetectDeletablePoints(PointList *s) {
-ListElement * LE3;
+ListElement * LE3 = NULL;
 unsigned char maybe;
 
   LE3=(ListElement *)SurfaceVoxels.first;
@@ -5800,7 +5800,7 @@ unsigned char maybe;
 unsigned int thinning_iteration_step(void)
 {
   unsigned long int i, changed;
-  ListElement * ptr;
+  ListElement * ptr = NULL;
   PointList s;
   unsigned long int  curr_addr;
 
@@ -5942,7 +5942,7 @@ int32_t palagyi_skelpar_curv_98(struct xvimage *input)
 void init_lut_simple( char* mask_name )
 {
   char  lutname [100];
-  FILE  *lutfile;
+  FILE * lutfile = NULL;
 
   /* alloc lut_simple */
     lut_simple = (unsigned char *)malloc(0x00800000);
@@ -5976,7 +5976,7 @@ void init_lut_simple( char* mask_name )
 void NewSurfaceVoxel2(unsigned long int x,
                      unsigned long int y,
 		     unsigned long int z) {
-ListElement * LE;
+ListElement * LE = NULL;
 	LE=(ListElement *)malloc(sizeof(ListElement));
 	(*LE).x=x;
 	(*LE).y=y;
@@ -5990,7 +5990,7 @@ ListElement * LE;
 
 
 void AddToList2(PointList *s,Voxel e, ListElement * ptr) {
-Cell * newcell;
+Cell * newcell = NULL;
 	newcell=(Cell *)malloc(sizeof(Cell));
 	newcell->v=e;
 	newcell->ptr=ptr;
@@ -6009,7 +6009,7 @@ Cell * newcell;
 
 Voxel GetFromList2(PointList *s, ListElement **ptr) {
 Voxel R;
-Cell *tmp;
+Cell * tmp = NULL;
         R.i = -1;
         R.j = -1;
         R.k = -1;
@@ -6069,7 +6069,7 @@ unsigned long int x,y,z;
 }
 
 void DestroyPointList2(PointList *s) {
-ListElement * ptr;
+ListElement * ptr = NULL;
 	while(s->Length>0) GetFromList2(s, &ptr);
 }
 
@@ -6253,7 +6253,7 @@ int simple_26_62(unsigned long int x,
 void DetectSimpleBorderPoints2(PointList *s) {
 unsigned char value;
 Voxel v;
-ListElement * LE3;
+ListElement * LE3 = NULL;
 unsigned long int x, y, z;
 
   LE3=(ListElement *)SurfaceVoxels.first;
@@ -6305,7 +6305,7 @@ unsigned long int x, y, z;
 unsigned int thinning_iteration_step2(void)
 {
   unsigned long int i, changed, deletable, diffnei, del6nei;
-  ListElement * ptr;
+  ListElement * ptr = NULL;
   PointList s;
   Voxel v;
 
@@ -6688,8 +6688,8 @@ int deletable3( void )
 
 /*=========== function UpdateSurfaceList ===========*/
 void UpdateSurfaceList(PointList *r) {
-ListElement *LE3;
-ListElement *ptr;
+ListElement * LE3 = NULL;
+ListElement * ptr = NULL;
 unsigned char surface_end;
 
   LE3=(ListElement *)SurfaceVoxels.first;
@@ -6739,7 +6739,7 @@ unsigned char surface_end;
 
 /*=========== function DetectDeletablePoints ===========*/
 void DetectDeletablePoints3(PointList *s) {
-ListElement * LE3;
+ListElement * LE3 = NULL;
 unsigned char maybe;
 PointList r;
 
@@ -6812,7 +6812,7 @@ PointList r;
 unsigned int thinning_iteration_step3(void)
 {
   unsigned long int i, changed;
-  ListElement * ptr;
+  ListElement * ptr = NULL;
   PointList s;
   unsigned long int  curr_addr;
 
@@ -6944,7 +6944,7 @@ int32_t palagyi_skelpar_surf_02(struct xvimage *input)
 
 
 void NewBorderVoxel( void ) {
-ListElement * LE;
+ListElement * LE = NULL;
 	LE=(ListElement *)malloc(sizeof(ListElement));
 	(*LE).addr=act_addr;
 	(*LE).next=NULL;
@@ -6955,7 +6955,7 @@ ListElement * LE;
 }
 
 void RemoveBorderVoxel(ListElement * LE) {
-ListElement * LE2;
+ListElement * LE2 = NULL;
 	if (BorderVoxels.first==LE) BorderVoxels.first=(*LE).next;
 	if (BorderVoxels.last==LE) BorderVoxels.last=(*LE).prev;
 	if ((*LE).next!=NULL) {
@@ -7276,8 +7276,8 @@ int deletable4( void )
 
 /*=========== function UpdateSurfaceList ===========*/
 void UpdateSurfaceList4(PointList *r) {
-ListElement *LE3;
-ListElement *ptr;
+ListElement * LE3 = NULL;
+ListElement * ptr = NULL;
 unsigned char int_nei_exists;
 
   LE3=(ListElement *)BorderVoxels.first;
@@ -7345,7 +7345,7 @@ unsigned char int_nei_exists;
 
 /*=========== function DetectDeletablePoints ===========*/
 void DetectDeletablePoints4(PointList *s) {
-ListElement * LE3;
+ListElement * LE3 = NULL;
 PointList r;
 
   /* update suurface list */
@@ -7374,7 +7374,7 @@ PointList r;
 unsigned int thinning_iteration_step4(void)
 {
   unsigned long int changed;
-  ListElement * ptr;
+  ListElement * ptr = NULL;
   PointList s;
   unsigned long int  curr_addr;
 

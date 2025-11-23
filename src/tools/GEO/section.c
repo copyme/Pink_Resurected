@@ -69,8 +69,8 @@ The coordinates of the basis for the plane are expressed in "real world" dimensi
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * in;
-  struct xvimage * out;
+  struct xvimage * in = NULL;
+  struct xvimage * out = NULL;
   double x0, y0, z0, x1, y1, z1, x2, y2, z2;
   int i0, j0;
 

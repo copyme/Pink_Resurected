@@ -155,7 +155,7 @@ void save_time(
 /* ==================================== */
 {
   char filename[256];
-  char *pinkdir;
+  char * pinkdir = NULL;
   FILE *fd = NULL;
 
   pinkdir = getenv("PINK");
@@ -190,7 +190,7 @@ void save_time2(
 /* ==================================== */
 {
   char filename[256];
-  char *pinkdir;
+  char * pinkdir = NULL;
   FILE *fd = NULL;
 
   pinkdir = getenv("PINK");
@@ -227,7 +227,7 @@ void save_time4(
 /* ==================================== */
 {
   char filename[256];
-  char *pinkdir;
+  char * pinkdir = NULL;
   FILE *fd = NULL;
 
   pinkdir = getenv("PINK");

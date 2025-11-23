@@ -77,8 +77,8 @@ Only modes min, max and moy are available for int32_t images.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * masque;
+  struct xvimage * image = NULL;
+  struct xvimage * masque = NULL;
   int32_t connex; 
   int32_t function;
 

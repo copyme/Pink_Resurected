@@ -228,8 +228,8 @@ int32_t image2coords3(
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * es;
+  struct xvimage * image = NULL;
+  struct xvimage * es = NULL;
   double r;
   int32_t xc, yc, zc, rs, cs, ds, nbpoints;
   int32_t *tabx, *taby, *tabz;

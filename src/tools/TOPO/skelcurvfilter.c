@@ -74,10 +74,10 @@ X = { x in E | F[x] > LMAX)
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * imagebin;
+  struct xvimage * image = NULL;
+  struct xvimage * imagebin = NULL;
   index_t rs, cs, ds, N, x;
-  uint8_t *F;
+  uint8_t * F = NULL;
 
   if (argc != 3)
   {

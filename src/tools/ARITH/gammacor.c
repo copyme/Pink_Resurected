@@ -64,7 +64,7 @@ Applies the following steps to \b in.pgm :
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image1;
+  struct xvimage * image1 = NULL;
   double p;
 
   if (argc != 4)

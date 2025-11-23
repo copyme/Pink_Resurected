@@ -65,10 +65,10 @@ If the last argument \b out is omitted, then out = in.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * imagelong;
-  struct xvimage * imagebyte;
-  int32_t *L;
-  uint8_t *B;
+  struct xvimage * imagelong = NULL;
+  struct xvimage * imagebyte = NULL;
+  int32_t * L = NULL;
+  uint8_t * B = NULL;
   index_t x, rs, cs, ds, N;
 
   if ((argc != 2) && (argc != 3))

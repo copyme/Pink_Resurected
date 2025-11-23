@@ -202,7 +202,7 @@ RbtpElt * RbtpSuccessor(
   Rbtp * T, RbtpElt * x)
 /* ==================================== */
 {
-  RbtpElt * y;
+  RbtpElt * y = NULL;
   if (x->right != T->nil) return RbtpMinimum(T, x->right);
   y = x->parent;
   while ((y != T->nil) && (x == y->right))
@@ -218,8 +218,8 @@ void RbtpInsertSimple(
   Rbtp * T, RbtpElt * z)
 /* ==================================== */
 {
-  RbtpElt * x;
-  RbtpElt * y;
+  RbtpElt * x = NULL;
+  RbtpElt * y = NULL;
 
   y = T->nil;
   x = T->root;
@@ -240,7 +240,7 @@ RbtpElt * RbtpInsertAux(  /* allocation et insertion simple */
   Rbtp ** T, TypRbtpKey k, TypRbtpAuxData d)
 /* ==================================== */
 {
-  RbtpElt * z;
+  RbtpElt * z = NULL;
 
   if ((*T)->libre == NULL) RbtpReAlloc(T);
   (*T)->util++;
@@ -260,7 +260,7 @@ static void LeftRotate(
   Rbtp * T, RbtpElt * x)
 /* ==================================== */
 {
-  RbtpElt * y;
+  RbtpElt * y = NULL;
 
   y = x->right;                    /* assume right(x) != NIL */
   x->right = y->left;              /* move y's child over */
@@ -284,7 +284,7 @@ static void RightRotate(
   Rbtp * T, RbtpElt * x)
 /* ==================================== */
 {
-  RbtpElt * y;
+  RbtpElt * y = NULL;
 
   y = x->left;              /* assume left(x) != NIL */
   x->left = y->right;
@@ -308,9 +308,9 @@ RbtpElt * RbtpInsert(
   Rbtp ** T, TypRbtpKey k, TypRbtpAuxData d)
 /* ==================================== */
 {
-  RbtpElt * x;
-  RbtpElt * xc;            /* pour retourner le pointeur sur l'element alloue */
-  RbtpElt * uncle;
+  RbtpElt * x = NULL;
+  RbtpElt * xc = NULL;/* pour retourner le pointeur sur l'element alloue */
+  RbtpElt * uncle = NULL;
 
   xc = x = RbtpInsertAux(T, k, d);          /* allocation et insertion simple */
   x->color = RBTP_Red;
@@ -372,7 +372,7 @@ void RbtpDeleteFixup(
   Rbtp * T, RbtpElt * x)
 /* ==================================== */
 {
-  RbtpElt * s;
+  RbtpElt * s = NULL;
 
   while ((x != T->root) && (x->color == RBTP_Black))
   {
@@ -447,8 +447,8 @@ RbtpElt * RbtpDeleteAux(         /* return deleted node */
   Rbtp * T, RbtpElt * z)
 /* ==================================== */
 {
-  RbtpElt * c;
-  RbtpElt * d;
+  RbtpElt * c = NULL;
+  RbtpElt * d = NULL;
 
   if ((z->left == T->nil) || (z->right == T->nil))
     d = z;
@@ -541,7 +541,7 @@ int32_t main()
   Rbtp * T = CreeRbtpVide(1);
   char r[80];
   double p;
-  RbtpElt * x;
+  RbtpElt * x = NULL;
 
   do
   {

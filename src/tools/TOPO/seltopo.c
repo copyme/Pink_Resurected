@@ -63,7 +63,7 @@ The result \b out is the set of points:
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t connex, tm, tp, tbm, tbp;
 
   if (argc != 8)

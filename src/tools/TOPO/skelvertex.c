@@ -70,8 +70,8 @@ corresponding to \b vertex_id are present.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  skel * S;
+  struct xvimage * image = NULL;
+  skel * S = NULL;
   int32_t vertex_id;
 
   if (argc != 4)

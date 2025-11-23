@@ -67,7 +67,7 @@ current xy plane.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t x, y, z, connex;
 
   if (argc != 7)

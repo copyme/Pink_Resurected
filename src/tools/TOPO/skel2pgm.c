@@ -73,8 +73,8 @@ Otherwise, points of the skeleton are labelled with:
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  skel * S;
+  struct xvimage * image = NULL;
+  skel * S = NULL;
   int32_t id;
 
   if ((argc != 3) && (argc != 4))

@@ -66,7 +66,7 @@ knowledge of the CeCILL license and that you accept its terms.
 int main(int argc, char **argv) 
 /* =============================================================== */
 {
-  struct xvimage * k;
+  struct xvimage * k = NULL;
   int32_t x0, y0, z0;
   double radius;  
 

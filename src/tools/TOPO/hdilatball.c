@@ -97,13 +97,13 @@ Result: X
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * prio;
-  struct xvimage * inhibimage;
+  struct xvimage * image = NULL;
+  struct xvimage * prio = NULL;
+  struct xvimage * inhibimage = NULL;
   int32_t connex, dist, i, N;
-  uint8_t *F;
-  int32_t *P;
-  uint8_t *I;
+  uint8_t * F = NULL;
+  int32_t * P = NULL;
+  uint8_t * I = NULL;
   double radius;
 
   if (argc != 6)

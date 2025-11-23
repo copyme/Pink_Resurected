@@ -228,7 +228,7 @@ void mctopo3d_geodesic_neighborhood(voxel * cube, uint8_t connex, uint8_t s)
 {
   uint8_t n;
   pvoxel p, pp, pc;
-  Lifo * LIFOtmp;
+  Lifo * LIFOtmp = NULL;
   
   if ((LIFO_topo3d1 == NULL) || (LIFO_topo3d2 == NULL))
   { 

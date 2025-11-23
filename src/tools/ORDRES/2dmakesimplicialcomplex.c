@@ -64,7 +64,7 @@ Makes a simplicial complex from the given set, by performing the topological clo
 int main(int argc, char **argv) 
 /* =============================================================== */
 {
-  struct xvimage * k;
+  struct xvimage * k = NULL;
   
   if (argc != 3)
   {

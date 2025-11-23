@@ -76,7 +76,7 @@ int main(int argc, char **argv)
   char buf[1024];
   scene **tabscene_in;
   scene **tabscene_out;
-  object *obj;
+  object * obj = NULL;
   double *x, *y, *z, *X, *Y, *Z;
 
   if (argc != 6)

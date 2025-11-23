@@ -82,13 +82,13 @@ gene
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image1;
-  struct xvimage * image2;
-  struct xvimage * image;
+  struct xvimage * image1 = NULL;
+  struct xvimage * image2 = NULL;
+  struct xvimage * image = NULL;
   int32_t i, n, N1, N2, rs, cs, d1, d2;
-  uint8_t *img1;
-  uint8_t *img2;
-  uint8_t *img;
+  uint8_t * img1 = NULL;
+  uint8_t * img2 = NULL;
+  uint8_t * img = NULL;
 
   if (argc != 4)
   {

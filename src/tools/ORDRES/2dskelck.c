@@ -80,7 +80,7 @@ References:<BR>
 
 int main(int argc, char **argv)
 {
-  struct xvimage * k;
+  struct xvimage * k = NULL;
   struct xvimage * inhi = NULL;
   int nsteps, mode;
 

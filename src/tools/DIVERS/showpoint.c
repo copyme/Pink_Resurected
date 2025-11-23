@@ -62,7 +62,7 @@ is printed in the standard output stream.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image1;
+  struct xvimage * image1 = NULL;
   int32_t x, y, z;
 
   if (argc != 5)

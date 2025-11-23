@@ -65,7 +65,7 @@ The parameters <B>xc, yc, zc</B> specify the center of the ball.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   double xc, yc, zc;
   double radius;
 

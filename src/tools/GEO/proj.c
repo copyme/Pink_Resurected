@@ -72,12 +72,12 @@ Projection parallel to one of the main axes.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * result;
-  struct xvimage * image;
+  struct xvimage * result = NULL;
+  struct xvimage * image = NULL;
   int32_t i, j, k;
-  uint8_t *R;
-  float *F;
-  uint8_t *I;
+  uint8_t * R = NULL;
+  float * F = NULL;
+  uint8_t * I = NULL;
   int32_t rs, cs, ds, ps, N;
   char dir;
   int32_t mode;

@@ -109,7 +109,7 @@ int32_t lsurfels(struct xvimage * f, uint8_t v,
 int main(int argc, char **argv) 
 /* =============================================================== */
 {
-  struct xvimage * f;
+  struct xvimage * f = NULL;
   FILE *fileout = NULL;
   uint8_t v;
   int32_t obj_id;

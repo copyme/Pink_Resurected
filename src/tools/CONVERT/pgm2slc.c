@@ -72,10 +72,10 @@ void C_err_msg(char *string)
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   FILE *fd = NULL;
   int32_t rs, cs, ds, ps, N;
-  uint8_t *F;
+  uint8_t * F = NULL;
   int32_t type;
   float	x_units;
   float	y_units;

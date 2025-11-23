@@ -66,7 +66,7 @@ void read_global_color_table(FILE *fd, int32_t size)
 /* =============================================================== */
 {
   int32_t ret;
-  char * color_table;
+  char * color_table = NULL;
 
   printf("reading global color table : size = %d\n", size);
   color_table = (char *)calloc(1,size * sizeof(char));  
@@ -91,7 +91,7 @@ void read_local_color_table(FILE *fd, int32_t size)
 /* =============================================================== */
 {
   int32_t ret;
-  char * color_table;
+  char * color_table = NULL;
 
   printf("reading local color table : size = %d\n", size);
   color_table = (char *)calloc(1,size * sizeof(char));  

@@ -81,11 +81,11 @@ void usage(int argc, char **argv)
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * dist;
-  struct xvimage * distc;
+  struct xvimage * image = NULL;
+  struct xvimage * dist = NULL;
+  struct xvimage * distc = NULL;
   int32_t i;
-  uint8_t *I;
+  uint8_t * I = NULL;
   uint32_t *D, *DC;
   
   int32_t rs, cs, ds, N;

@@ -72,15 +72,15 @@ int main(int argc, char **argv)
 /* =============================================================== */
 {
   int32_t seuil;
-  struct xvimage * image;
-  struct xvimage * imagebin;
+  struct xvimage * image = NULL;
+  struct xvimage * imagebin = NULL;
   index_t rs;          /* taille ligne */
   index_t cs;          /* taille colonne */
   index_t d;           /* nb. plans */
   index_t N;           /* taille image */
-  uint8_t *F;
-  int32_t *FL;
-  index_t * histo;
+  uint8_t * F = NULL;
+  int32_t * FL = NULL;
+  index_t * histo = NULL;
   index_t * histolisse, somme;
   int32_t x, y, diff, compteur, lissage;
 

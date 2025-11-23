@@ -72,8 +72,8 @@ dimension 4).
 
 int main(int argc, char **argv)
 {
-  struct xvimage4D * im;
-  struct GA4d * ga;
+  struct xvimage4D * im = NULL;
+  struct GA4d * ga = NULL;
   int32_t param;
   if (argc != 6)
   {

@@ -70,7 +70,7 @@ knowledge of the CeCILL license and that you accept its terms.
 BVECT * BVECT_constructor(
 	int length					/* The length of the BVECT */
 ) {
-	BVECT * bvect;
+	BVECT * bvect = NULL;
 
 	bvect = (BVECT *)malloc(sizeof(BVECT));
 	bvect->length = length;
@@ -327,7 +327,7 @@ int intToBvect(
 BIMAGE * BIMAGE_constructor(
 	BVECT * dim 					/* The requested dimensions */
 ) {
-	BIMAGE * bimage;
+	BIMAGE * bimage = NULL;
 	int i;
 
 	bimage = (BIMAGE *)malloc(sizeof(BIMAGE));
@@ -357,7 +357,7 @@ BIMAGE * BIMAGE_constructor_double(
 	double *in,					/* Input image to copy */
 	BVECT * dim 					/* The requested dimensions */
 ) {
-	BIMAGE * bimage;
+	BIMAGE * bimage = NULL;
 	int i;
 	int num_pixels;
 
@@ -383,7 +383,7 @@ BIMAGE * BIMAGE_constructor_float(
 	float *in,					/* Input image to copy */
 	BVECT * dim 					/* The requested dimensions */
 ) {
-	BIMAGE * bimage;
+	BIMAGE * bimage = NULL;
 	int i;
 
 	bimage = (BIMAGE *)malloc(sizeof(BIMAGE));
@@ -405,7 +405,7 @@ BIMAGE * BIMAGE_constructor_int(
 	int *in,					/* Input image to copy */
 	BVECT * dim 					/* The requested dimensions */
 ){
-	BIMAGE * bimage;
+	BIMAGE * bimage = NULL;
 	int i;
 	int num_pixels;
 
@@ -431,7 +431,7 @@ BIMAGE * BIMAGE_constructor_char(
 	char *in,					/* Input image to copy */
 	BVECT * dim 					/* The requested dimensions */
 ) {
-	BIMAGE * bimage;
+	BIMAGE * bimage = NULL;
 	int i;
 	int num_pixels;
 

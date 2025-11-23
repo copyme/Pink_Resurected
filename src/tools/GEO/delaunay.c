@@ -100,14 +100,14 @@ int main(int argc, char **argv)
   int32_t n, i, j, k, rss, css, N;
   double xx, yy, vv;
   char type;
-  mcgeo_point * S;
-  double * V;
+  mcgeo_point * S = NULL;
+  double * V = NULL;
   int32_t **v; /* la table des listes de voisins (reperes par leur indice dans S) */
-  int32_t *nv; /* la table des nombres de voisins */
-  int32_t *ec; /* table de booleens indiquant les points de l'enveloppe convexe */
-  struct xvimage * mask;	
+  int32_t * nv = NULL;/* la table des nombres de voisins */
+  int32_t * ec = NULL;/* table de booleens indiquant les points de l'enveloppe convexe */
+  struct xvimage * mask = NULL;
   int32_t Cx, Cy, Dx, Dy, vois,longlpmax;
-  uint8_t *M;
+  uint8_t * M = NULL;
   int32_t npoints;
   int32_t newnv;
   int32_t *del, *lx, *ly;

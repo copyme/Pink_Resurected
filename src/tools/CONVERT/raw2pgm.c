@@ -127,7 +127,7 @@ int main(int argc, char **argv)
   }
   else if (datatype == 2)
   {
-    int32_t * I;
+    int32_t * I = NULL;
     uint16_t tmp;
     uint8_t tmp1;
     image = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
@@ -148,9 +148,9 @@ int main(int argc, char **argv)
   }
   else if (datatype == 3)
   {
-    struct xvimage *image_S;
-    int16_t * S;
-    int32_t * I;
+    struct xvimage * image_S = NULL;
+    int16_t * S = NULL;
+    int32_t * I = NULL;
     int16_t tmp;
     uint8_t tmp1;
     int16_t Smin;
@@ -195,7 +195,7 @@ int main(int argc, char **argv)
     fseek(fd, headersize, SEEK_CUR);
     if (littleendian)
     {
-      int32_t * I;
+      int32_t * I = NULL;
       uint32_t tmp;
       uint8_t tmp1, tmp2, tmp3;
       I = SLONGDATA(image);
@@ -223,7 +223,7 @@ int main(int argc, char **argv)
     fseek(fd, headersize, SEEK_CUR);
     if (littleendian)
     {
-      float *I;
+      float * I = NULL;
       uint32_t tmp;
       uint8_t tmp1, tmp2, tmp3;
       I = FLOATDATA(image);

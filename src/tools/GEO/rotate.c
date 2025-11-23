@@ -74,8 +74,8 @@ image size is computed such that no loss of information occur.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * image2;
+  struct xvimage * image = NULL;
+  struct xvimage * image2 = NULL;
   double theta, x, y;
 
   if ((argc != 4) && (argc != 6))

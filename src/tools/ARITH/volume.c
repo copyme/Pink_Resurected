@@ -64,7 +64,7 @@ the sum of the pixel values of the image \b in.pgm .
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   double vol;
   FILE *fd = NULL;
 

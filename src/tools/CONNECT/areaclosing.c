@@ -66,7 +66,7 @@ which have an area not higher than <B>area</B>.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t connex, param;
 
   if (argc != 5)

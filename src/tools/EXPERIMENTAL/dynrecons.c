@@ -59,8 +59,8 @@ knowledge of the CeCILL license and that you accept its terms.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * imagecond;
+  struct xvimage * image = NULL;
+  struct xvimage * imagecond = NULL;
   int32_t connex;
 
   if (argc != 5)

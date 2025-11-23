@@ -65,7 +65,7 @@ Option \b axis is used to output only the big axis of the matched rectangle.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image1;
+  struct xvimage * image1 = NULL;
   int32_t connex;
   int32_t mode = 0;
 

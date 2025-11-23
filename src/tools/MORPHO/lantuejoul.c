@@ -154,7 +154,7 @@ The distance used depends on the optional parameter \b dist (default is 0) :
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t mode;
 
   if ((argc != 3) && (argc != 4))

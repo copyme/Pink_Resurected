@@ -64,7 +64,7 @@ For float images, the default values are \b nmin = 0 and \b nmax = 1.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image1;
+  struct xvimage * image1 = NULL;
   float nmin, nmax;
 
   if ((argc != 2) && (argc != 3) && (argc != 5))

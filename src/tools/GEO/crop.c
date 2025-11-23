@@ -70,8 +70,8 @@ of width <B>w</B>, height <B>h</B> and depth <B>d</B> from the image in.pgm .
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * in;
-  struct xvimage * out;
+  struct xvimage * in = NULL;
+  struct xvimage * out = NULL;
   FILE *fd = NULL;
   index_t x, y, z, w, h, d;
   int n;

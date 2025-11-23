@@ -468,7 +468,7 @@ int32_t * Regularise(
         si T[father(c)] != 0 alors father(c) <- T[father(c)]
      5/ on renvoie T
 */
-  int32_t *T;
+  int32_t * T = NULL;
   int32_t a, c;
 #ifdef TRACECBT
 printf("Regularise()");
@@ -583,8 +583,8 @@ int32_t * InverseCBT(
      libere T
      retourne I
 */
-  int32_t *I;
-  int32_t *T;
+  int32_t * I = NULL;
+  int32_t * T = NULL;
   int32_t a, c, i;
 #ifdef TRACECBT
 printf("InverseCBT()");
@@ -646,7 +646,7 @@ void main()
   char r[80];
   int32_t A, B;
   int32_t C[4];
-  int32_t *I;
+  int32_t * I = NULL;
 
   InitCbt(arbre, nbleaf);
   do

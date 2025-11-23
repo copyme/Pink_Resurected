@@ -60,7 +60,7 @@ int main(int argc, char **argv)
 /* =============================================================== */
 {
   int32_t g, k;
-  struct xvimage * image;
+  struct xvimage * image = NULL;
 
   if (argc != 5)
   {

@@ -80,11 +80,11 @@ The parameter \b mode selects the format of the result:
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  int32_t * listepoints;
+  struct xvimage * image = NULL;
+  int32_t * listepoints = NULL;
   int32_t npoints;
   int32_t i, rs, cs, N, mode;
-  uint8_t *F;
+  uint8_t * F = NULL;
 
   if (argc != 4)
   {

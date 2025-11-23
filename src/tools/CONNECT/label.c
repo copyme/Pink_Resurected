@@ -86,8 +86,8 @@ int main(int argc, char **argv)
 /* =============================================================== */
 {
   int32_t nblabels, connex;
-  struct xvimage * image;
-  struct xvimage * result;
+  struct xvimage * image = NULL;
+  struct xvimage * result = NULL;
   int32_t function;
 
   if (argc != 5)

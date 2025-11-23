@@ -62,8 +62,8 @@ Michel Couprie  -  decembre 2002
 
 int main(int argc, char **argv)
 {
-  struct xvimage * image1;
-  struct xvimage * image2;
+  struct xvimage * image1 = NULL;
+  struct xvimage * image2 = NULL;
   double x, y; 
 
   if (argc != 6)

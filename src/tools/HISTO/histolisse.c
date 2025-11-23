@@ -62,8 +62,8 @@ of the smoothed histogram of \b in.pgm (masked by the binary image
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * imhist;
+  struct xvimage * image = NULL;
+  struct xvimage * imhist = NULL;
   struct xvimage * mask = NULL;
   index_t * histo, somme;
   int32_t x, y, z, lissage;

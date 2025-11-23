@@ -132,7 +132,7 @@ Parameter \b nsteps will not be used in this case (any value can be given).
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   struct xvimage * inhibit = NULL;
   int32_t mode, nsteps;
   int32_t filter = 0;

@@ -60,10 +60,10 @@ grayscale image <b>i1.bin</b>. The result is stored as a color image <b>out.ppm<
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image1;
-  struct xvimage * image2;
-  struct xvimage * tmp;
-  struct xvimage * tmp3;
+  struct xvimage * image1 = NULL;
+  struct xvimage * image2 = NULL;
+  struct xvimage * tmp = NULL;
+  struct xvimage * tmp3 = NULL;
 
   if (argc != 4)
   {

@@ -76,8 +76,8 @@ O(n log n) where n = max(|in|,|kernel|)
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * mask;
+  struct xvimage * image = NULL;
+  struct xvimage * mask = NULL;
   int32_t mode = 0;
 
   if ((argc != 4) && (argc != 5))

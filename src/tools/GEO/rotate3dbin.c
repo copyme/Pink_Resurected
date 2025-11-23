@@ -84,8 +84,8 @@ If \b in.pgm is a structuring element, then parameters \b c1 and \b c2 are ignor
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * image2;
+  struct xvimage * image = NULL;
+  struct xvimage * image2 = NULL;
   double theta, c1, c2, newc1, newc2;
   index_t x, y, z;
   int32_t se, resize;

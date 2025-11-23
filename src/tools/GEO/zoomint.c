@@ -72,8 +72,8 @@ directions, by undersampling.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * in;
-  struct xvimage * out;
+  struct xvimage * in = NULL;
+  struct xvimage * out = NULL;
   int32_t zx,zy,zz;
   int32_t fill;
 

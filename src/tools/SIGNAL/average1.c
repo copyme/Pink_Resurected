@@ -66,7 +66,7 @@ values which correspond to non-null points of mask are averaged.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   struct xvimage * mask = NULL;
   double averageval;
   FILE *fd = NULL;

@@ -137,8 +137,8 @@ skeleton circuit1 8 8 circuit1_skeleton
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * prio;
+  struct xvimage * image = NULL;
+  struct xvimage * prio = NULL;
   int32_t connex;
   int32_t ret, priocode;
   struct xvimage * inhibimage = NULL;
@@ -171,7 +171,7 @@ int main(int argc, char **argv)
   else  // priorité : carte de distance (à calculer)
   {
     int32_t i, N;
-    uint8_t *F;
+    uint8_t * F = NULL;
     prio = allocimage(NULL, rowsize(image), colsize(image), depth(image), VFF_TYP_4_BYTE);
     if (prio == NULL)
     {   

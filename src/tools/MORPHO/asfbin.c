@@ -91,7 +91,7 @@ asfbin cells 3 cells_asf
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t rayonmin, rayonmax, rayon;
   int32_t FERMETURE_EN_1 = 0;
 

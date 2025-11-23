@@ -153,12 +153,12 @@ void voxcube (FILE * fd, double x, double y, double z, char *texture)
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  char * filename;
+  struct xvimage * image = NULL;
+  char * filename = NULL;
   FILE *fd = NULL;
   int32_t rs, cs, ps, d, N, x, y, z, k;
   int32_t mode, khalimsky = 0;
-  uint8_t * F;
+  uint8_t * F = NULL;
   int32_t xmin, xmax, ymin, ymax, zmin, zmax;
   int32_t tabdir[13];                /* tableau des "directions positives" */
   double bx, by, bz, npoints;    /* pour le calcul du barycentre global */

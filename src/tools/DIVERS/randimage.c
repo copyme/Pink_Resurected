@@ -65,7 +65,7 @@ initialize the random generator, otherwise the clock is used instead.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t i;
   int32_t rs, cs, ds, N, valmax;
 
@@ -101,7 +101,7 @@ int main(int argc, char **argv)
 
   if (valmax <= 255)
   {
-    uint8_t *Im;
+    uint8_t * Im = NULL;
     image = allocimage(NULL, rs, cs, ds, VFF_TYP_1_BYTE);
     if (image == NULL)
     {
@@ -118,7 +118,7 @@ int main(int argc, char **argv)
   }
   else
   {
-    int32_t *Im;
+    int32_t * Im = NULL;
     image = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
     if (image == NULL)
     {

@@ -63,7 +63,7 @@ A multiple point is a white point x such that Tn[x] > 2
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t connex;
 
   if (argc != 4)

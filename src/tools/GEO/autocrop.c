@@ -68,8 +68,8 @@ If \b coords.list is specified, then the parameters of the cropping are saved in
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * in;
-  struct xvimage * out;
+  struct xvimage * in = NULL;
+  struct xvimage * out = NULL;
   FILE *fd = NULL;
   double seuil;
   index_t w, h, p, xmin, ymin, zmin;

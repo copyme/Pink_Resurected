@@ -311,7 +311,7 @@ int32_t lhistdilat(index_t *histo, int32_t n)
 #undef F_NAME
 #define F_NAME "lhistdilat"
   int32_t i, j, m;
-  index_t *h;
+  index_t * h = NULL;
 
   h = (index_t *)calloc(1,(NDG_MAX + 1) * sizeof(index_t));
   if (h == NULL)

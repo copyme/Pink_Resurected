@@ -228,7 +228,7 @@ rectangle *AjusteRectangle(int32_t *pb, int32_t npb, double xc, double yc, doubl
  Retourne le rectangle obtenu.
  */
 {
-  rectangle *R;
+  rectangle * R = NULL;
   double c, cp, cm;
   double dh = INCRH;
   double dw = INCRW;
@@ -344,7 +344,7 @@ rectangle *AjusteRectangle(int32_t *pb, int32_t npb, double xc, double yc, doubl
 rectangle *RectangleIncluant(int32_t *pb, int32_t npb, double xc, double yc, double theta, int32_t rs)
 /* ==================================== */
 {
-  rectangle *R;
+  rectangle * R = NULL;
   int32_t i, p;
   double x, y, xp, yp;
   double x1, x2, x3, x4, y1, y2, y3, y4;
@@ -400,7 +400,7 @@ rectanglearrondi *AjusteRectangleArrondi(int32_t *pb, int32_t npb, double xc, do
                                   double theta, double h, double w, int32_t rs)
 /* ==================================== */
 {
-  rectanglearrondi *R;
+  rectanglearrondi * R = NULL;
   double c, cp, cm;
   double dh = INCRH;
   double dw = INCRW;

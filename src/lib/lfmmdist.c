@@ -82,7 +82,7 @@ int lfmmdist(
 	DBL_TYPE * distance_buf
 )
 {
-	BVECT * dim;
+	BVECT * dim = NULL;
 	BIMAGE * seeds, * g, * distance;
 	int i;
 	int num_pixels;

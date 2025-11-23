@@ -163,7 +163,7 @@ int save_tiff(void **outbuffp,	   /* output buffer  */
 	      const  char *fname,  /* output file name  */
 	      int    compression)  /* compression scheme */
 {
-    TIFF        *tif;
+    TIFF * tif = NULL;
     uint32_t	 rowsperstrip;
     int          linebytes, sample;
     uint32_t	 i, j;

@@ -79,13 +79,13 @@ int main(int argc, char **argv)
   int32_t i, k, connex, nblabels;
   char bufname[1024];
   int32_t namelen;
-  struct xvimage * image_in;
-  struct xvimage * image_out;
-  struct xvimage * labels;
+  struct xvimage * image_in = NULL;
+  struct xvimage * image_out = NULL;
+  struct xvimage * labels = NULL;
   int32_t rs, cs, ds, ps, N;
-  uint8_t *I;
-  uint8_t *O;
-  int32_t *L;
+  uint8_t * I = NULL;
+  uint8_t * O = NULL;
+  int32_t * L = NULL;
   int32_t function;
 
   if (argc != 5)

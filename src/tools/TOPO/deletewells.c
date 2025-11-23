@@ -64,8 +64,8 @@ References:<BR>
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * mask;
+  struct xvimage * image = NULL;
+  struct xvimage * mask = NULL;
   int32_t connexmin;
 
   if ((argc != 4) && (argc != 5))

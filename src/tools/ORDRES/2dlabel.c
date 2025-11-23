@@ -64,8 +64,8 @@ Labels the theta-connected component of a 2D Khalimsky order.
 int main(int argc, char **argv) 
 /* =============================================================== */
 {
-  struct xvimage * k;
-  struct xvimage * lab;
+  struct xvimage * k = NULL;
+  struct xvimage * lab = NULL;
   index_t nlabels;
 
   if (argc != 3)

@@ -68,7 +68,7 @@ where all pixels whose values are not in the interval, are put to 0.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t inf, sup;
 
   if (argc != 5)
@@ -96,9 +96,9 @@ int main(int argc, char **argv)
 #ifdef MODE_OBSOLETE_CONVERT_TYPE
   if (datatype(image) != VFF_TYP_1_BYTE)
   {
-    struct xvimage * imagebyte;
-    int32_t *L;
-    uint8_t *B;
+    struct xvimage * imagebyte = NULL;
+    int32_t * L = NULL;
+    uint8_t * B = NULL;
     int32_t x, rs, cs, ds, N;
     rs = rowsize(image);
     cs = colsize(image);

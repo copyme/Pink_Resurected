@@ -62,7 +62,7 @@ int main(int argc, char **argv)
 /* =============================================================== */
 {
   uint8_t seuilmin, seuilmax, valmin, valmax;
-  struct xvimage * image;
+  struct xvimage * image = NULL;
 
   if (argc != 7)
   {

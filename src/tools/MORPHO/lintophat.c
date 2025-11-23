@@ -222,19 +222,19 @@ void close_image(struct xvimage * img, struct xvimage * org_img, struct xvimage 
 int main(int argc, char **argv)
 /* =============================================================== */
 {
- struct xvimage * image; // Pointer fr das Bild
+ struct xvimage * image = NULL;// Pointer fr das Bild
  index_t rs;    // row_size ^= width, erhlt man mit(s.u.): rowsize(image)
  index_t cs;    // col_size ^= height, erhlt man mit(s.u.): colsize(image)
  index_t d;     // dimesion, erhlt man mit(s.u.): depth(image)
  index_t N;	 // number of pixels ^= rs*cs*d
  index_t length, i, j, k; 
- struct xvimage * mask;
- uint8_t * mask_data;
- struct xvimage * closed_image;
- struct xvimage * result_image;
+ struct xvimage * mask = NULL;
+ uint8_t * mask_data = NULL;
+ struct xvimage * closed_image = NULL;
+ struct xvimage * result_image = NULL;
 #ifdef DEBUG
- struct xvimage * result_imageII;
- uint8_t * result_imageII_data;
+ struct xvimage * result_imageII = NULL;
+ uint8_t * result_imageII_data = NULL;
 #endif
 
  if (argc != 4)

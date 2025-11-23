@@ -21,7 +21,7 @@
 
 int main(int argc, char* argv[])
 {
-	FILE *f;
+	FILE * f = NULL;
 	uint64_t rs, cs, d, nrs, ncs, nd, pixel, avct, h, b, i, j, k, size;
 	struct xvimage *output, *crop, *input_header;
 	double factor, factor_rs, factor_cs, factor_d, factor_x, factor_y, factor_z, fx1, fx2, fy1, fy2, fz1, fz2, v, somme_facteur;

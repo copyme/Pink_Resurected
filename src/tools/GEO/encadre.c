@@ -71,8 +71,8 @@ all other pixels are copied from <B>in.pgm</B>.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * imageout;
+  struct xvimage * image = NULL;
+  struct xvimage * imageout = NULL;
   int32_t grayval;
 
   if (argc != 4)

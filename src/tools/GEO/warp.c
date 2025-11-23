@@ -62,7 +62,7 @@ knowledge of the CeCILL license and that you accept its terms.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   triangle ts, td;
   float xa, ya, xb, yb, xc, yc;
 

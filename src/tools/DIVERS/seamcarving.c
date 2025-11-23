@@ -64,9 +64,9 @@ knowledge of the CeCILL license and that you accept its terms.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * in;
-  struct xvimage * en;
-  struct xvimage * out;
+  struct xvimage * in = NULL;
+  struct xvimage * en = NULL;
+  struct xvimage * out = NULL;
   index_t w, h;
   int32_t ret;
 

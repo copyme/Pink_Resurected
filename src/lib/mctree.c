@@ -42,8 +42,8 @@ knowledge of the CeCILL license and that you accept its terms.
 #include <mctree.h>
 
 /* var. globales (privees) pour les pages de cellules */
-static TreePage * FirstTreePage;
-static TreePage * CurTreePage;
+static TreePage * FirstTreePage = NULL;
+static TreePage * CurTreePage = NULL;
 
 /* ==================================== */
 void TreeInit()
@@ -65,7 +65,7 @@ void TreeTermine()
 /* ==================================== */
 {
   TreePage *t = FirstTreePage;
-  TreePage *tp;
+  TreePage * tp = NULL;
 
   while (t)
   {
@@ -79,7 +79,7 @@ void TreeTermine()
 TreeCell * AllocTreeCell()
 /* ==================================== */
 {
-  TreeCell *c;
+  TreeCell * c = NULL;
   if (CurTreePage->lastfreecell >= TREEPAGECELLS)
   {
     TreePage *t = (TreePage *)calloc(1,sizeof(TreePage));

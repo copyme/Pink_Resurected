@@ -98,9 +98,9 @@ then the elements with priority greater than or equal to I will be left unchange
 int main(int32_t argc, char **argv) 
 /* =============================================================== */
 {
-  struct xvimage * k;
-  struct xvimage * prio;
-  struct xvimage * prio2;
+  struct xvimage * k = NULL;
+  struct xvimage * prio = NULL;
+  struct xvimage * prio2 = NULL;
   struct xvimage * inhibimage = NULL;
   int32_t ret, priocode;
   int32_t rs, cs, ds, N;
@@ -142,7 +142,7 @@ int main(int32_t argc, char **argv)
     if (datatype(prio2) == VFF_TYP_1_BYTE)
     {
       uint8_t *B = UCHARDATA(prio2);
-      int32_t *L;
+      int32_t * L = NULL;
       int32_t x;
       prio = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
       if (prio == NULL)
@@ -171,7 +171,7 @@ int main(int32_t argc, char **argv)
   else  // priorité : carte de distance (à calculer)
   {
     int32_t i;
-    uint8_t *K;
+    uint8_t * K = NULL;
     prio = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
     if (prio == NULL)
     {   

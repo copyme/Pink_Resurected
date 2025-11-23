@@ -71,8 +71,8 @@ The result <B>out.pgm</B> contains the final result In.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * copy;
+  struct xvimage * image = NULL;
+  struct xvimage * copy = NULL;
   int32_t rs, cs, ds, ps, N;
   int32_t rayonmin, rayonmax, rayon;
   int32_t d, xc, yc, x, y, nptb;

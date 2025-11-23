@@ -72,8 +72,8 @@ Available modes: xzy, yxz, yzx, zxy, zyx, (3D), and
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image1;
-  struct xvimage * image2;
+  struct xvimage * image1 = NULL;
+  struct xvimage * image2 = NULL;
 
   if (argc != 4)
   {

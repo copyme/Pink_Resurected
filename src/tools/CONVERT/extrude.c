@@ -67,11 +67,11 @@ int main(int argc, char **argv)
 /* =============================================================== */
 {
   int32_t i, j, seqsize;
-  struct xvimage * image_in;
-  struct xvimage * image_out;
+  struct xvimage * image_in = NULL;
+  struct xvimage * image_out = NULL;
   int32_t rs, cs, N;
-  uint8_t *I;
-  uint8_t *O;
+  uint8_t * I = NULL;
+  uint8_t * O = NULL;
 
   if ((argc != 4) && (argc != 7))
   {

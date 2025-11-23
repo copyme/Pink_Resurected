@@ -103,7 +103,7 @@ graphe * lskel2graph0(skel * S)
 {
 #undef F_NAME
 #define F_NAME "lskel2graph0"
-  graphe * G;
+  graphe * G = NULL;
   int32_t i, rs, ps, v, n;
   double x, y, z;
   int32_t nsom, ncurv;
@@ -212,7 +212,7 @@ graphe * lskel2graph1(skel * S)
 {
 #undef F_NAME
 #define F_NAME "lskel2graph1"
-  graphe * G;
+  graphe * G = NULL;
   int32_t i, rs, ps, v, v2, n;
   double x, y, z;
   int32_t nsom, ncurv;
@@ -299,7 +299,7 @@ graphe * lskel2graph2(skel * S, double param)
 {
 #undef F_NAME
 #define F_NAME "lskel2graph2"
-  graphe * G;
+  graphe * G = NULL;
   int32_t i, j, rs, ps, v, n, E, E1, E2, pt;
   double x, y, z, inter;
   int32_t nsom, nextrasom, newsom, newsom2, ncurv, len;
@@ -531,7 +531,7 @@ graphe * lskel2graph3(skel * S, double param)
 {
 #undef F_NAME
 #define F_NAME "lskel2graph3"
-  graphe * G;
+  graphe * G = NULL;
   int32_t i, j, rs, ps, v, n, E, E1, E2, pt;
   double x, y, z, inter;
   int32_t nsom, newsom, newsom2, nextrasom, ncurv, len;

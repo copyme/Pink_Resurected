@@ -67,8 +67,8 @@ The result should be compiled with pdflatex to produce a pdf file.
 int main(int argc, char **argv) 
 /* =============================================================== */
 {
-  struct xvimage * ga;
-  FILE *fp;
+  struct xvimage * ga = NULL;
+  FILE * fp = NULL;
   int file;
 
   if ((argc != 3) && (argc != 4))

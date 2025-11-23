@@ -71,10 +71,10 @@ the translation of the fusion grid.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * marqueurs;
-  struct xvimage * marqueursfond;
-  struct xvimage * masque;
+  struct xvimage * image = NULL;
+  struct xvimage * marqueurs = NULL;
+  struct xvimage * marqueursfond = NULL;
+  struct xvimage * masque = NULL;
   int32_t parite;
 
   if (argc != 7)

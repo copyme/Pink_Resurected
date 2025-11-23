@@ -64,8 +64,8 @@ then the points which correspond to this distance value will be left unchanged.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * dist;
+  struct xvimage * image = NULL;
+  struct xvimage * dist = NULL;
   int32_t connex;
   int32_t inhibit;
 

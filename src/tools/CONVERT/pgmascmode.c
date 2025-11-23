@@ -139,7 +139,7 @@ void writeascimage_without_header(struct xvimage * image, char *filename)
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
 
   if ((argc != 2) && (argc != 3) && (argc != 4))
   {

@@ -418,7 +418,7 @@ uint32_t crop_raw_on_disk(FILE *fd, struct xvimage* image_decoupee, uint64_t cx,
 
 uint32_t crop_raw_on_disk_to_disk(FILE *fd, FILE *image_decoupee, uint64_t cx, uint64_t cy, uint64_t cz, uint64_t width, uint64_t height, uint64_t dpth, uint64_t rs, uint64_t cs, uint64_t d, uint64_t header_size, uint64_t size_voxel, char compteur)
 {
-	char *buffer;
+	char * buffer = NULL;
 	//uint32_t bufferlong[BUFFERSIZE];
 	uint64_t largeur_max, hauteur_max, profondeur_max;
 	uint64_t supx, supy, supz;

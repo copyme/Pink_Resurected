@@ -65,7 +65,7 @@ the result is the union of beta(x) for all x in X.
 int main(int argc, char **argv) 
 /* =============================================================== */
 {
-  struct xvimage * k;
+  struct xvimage * k = NULL;
 
   if (argc != 3)
   {

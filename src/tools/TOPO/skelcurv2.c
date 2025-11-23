@@ -106,7 +106,7 @@ References:<BR>
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   struct xvimage * prio = NULL;
   struct xvimage * inhibit = NULL;
   int32_t connex;
@@ -139,7 +139,7 @@ int main(int argc, char **argv)
   else 
   {
     int32_t i, N;
-    uint8_t *F;
+    uint8_t * F = NULL;
     prio = allocimage(NULL, rowsize(image), colsize(image), depth(image), VFF_TYP_4_BYTE);
     if (prio == NULL)
     {   

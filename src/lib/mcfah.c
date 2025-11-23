@@ -153,7 +153,7 @@ index_t FahPop(
 /* ==================================== */
 {
   index_t V;
-  FahElt * FE;
+  FahElt * FE = NULL;
   if ((L->QueueUrg == NULL) && (L->Queue == NULL))
   {
     fprintf(stderr, "erreur Fah vide\n");
@@ -262,7 +262,7 @@ void FahPush(
   }
   else /* (L->Tete[Ni] == NULL) */
   {
-    FahElt * FE;
+    FahElt * FE = NULL;
     int32_t NiPrec = Ni;
     while ((NiPrec >= 0) && (L->Tete[NiPrec] == NULL)) NiPrec--; 
     if (NiPrec < 0)
@@ -296,7 +296,7 @@ void FahPrint(
 /* ==================================== */
 {
   int32_t i;
-  FahElt * FE;
+  FahElt * FE = NULL;
   if (FahVide(L)) {printf("[]\n"); return;}
   FE = L->QueueUrg;
   if (FE != NULL)

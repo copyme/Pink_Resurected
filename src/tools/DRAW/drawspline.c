@@ -92,7 +92,7 @@ If parameter \b len is given and non-zero, the spline is extended on both sides 
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t j;
   FILE *fd = NULL;
   int32_t npoints;

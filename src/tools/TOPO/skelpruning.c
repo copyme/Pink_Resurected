@@ -79,8 +79,8 @@ Matching arcs are written in \b out.pgm.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  skel * S;
+  struct xvimage * image = NULL;
+  skel * S = NULL;
   double length;
   if (argc != 4)
   {

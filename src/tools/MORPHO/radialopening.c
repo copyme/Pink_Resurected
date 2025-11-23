@@ -128,16 +128,16 @@ void open_image(struct xvimage * img, struct xvimage * org_img, struct xvimage *
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image; 
-  struct xvimage * opened_image; 
-  struct xvimage * result_image;
-  struct xvimage * mask;
+  struct xvimage * image = NULL;
+  struct xvimage * opened_image = NULL;
+  struct xvimage * result_image = NULL;
+  struct xvimage * mask = NULL;
   struct xvimage * dilatmask=NULL;
 
   index_t i, rs, cs, ds, N, Nmask;
   index_t sex, sey, sez;
   int32_t length, nangles; 
-  uint8_t * mask_data;
+  uint8_t * mask_data = NULL;
 
   double angle=DEFAULT_ANGLE;
 

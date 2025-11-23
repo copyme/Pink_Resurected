@@ -72,7 +72,7 @@ Azimuth angles (in degrees between 0 and 180) are computed and their histogram, 
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  index_t * histo;
+  index_t * histo = NULL;
   int32_t i, nbins, nvec;
   FILE *fdin = NULL;
   FILE *fdout = NULL;

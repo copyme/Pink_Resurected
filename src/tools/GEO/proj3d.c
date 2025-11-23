@@ -65,11 +65,11 @@ knowledge of the CeCILL license and that you accept its terms.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image3d;
-  struct xvimage * image;
+  struct xvimage * image3d = NULL;
+  struct xvimage * image = NULL;
   int32_t i, j, k;
-  uint8_t *Im3d;
-  uint8_t *Im;
+  uint8_t * Im3d = NULL;
+  uint8_t * Im = NULL;
   int32_t rs, cs, d, n, N;
   float dx, dy;
   float x0, y0;

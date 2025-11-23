@@ -79,9 +79,9 @@ Repeat until stability:
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * prio;
-  struct xvimage * prio2;
+  struct xvimage * image = NULL;
+  struct xvimage * prio = NULL;
+  struct xvimage * prio2 = NULL;
   int32_t connex;
   struct xvimage * inhibimage = NULL;
   int32_t tmin, tmax, tbmin, tbmax;
@@ -113,7 +113,7 @@ int main(int argc, char **argv)
     int32_t ds = depth(prio2);
     int32_t N = rs * cs * ds;
     uint8_t *B = UCHARDATA(prio2);
-    int32_t *L;
+    int32_t * L = NULL;
     int32_t x;
     prio = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
     if (prio == NULL)

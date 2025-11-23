@@ -72,7 +72,7 @@ preserved.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t rayon;
   int32_t connexmin;
   int32_t lambdapics = 255;

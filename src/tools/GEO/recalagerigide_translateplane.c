@@ -97,11 +97,11 @@ In 3d, the parameters are:
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image1;
-  struct xvimage * image2;
+  struct xvimage * image1 = NULL;
+  struct xvimage * image2 = NULL;
   index_t n1, n2;
   double * P1, * P2, *Gamma;
-  FILE* fd;
+  FILE * fd = NULL;
   if (argc != 4)
   {
     fprintf(stderr, "usage: %s in1.pgm in2.pgm out.pgm \n", argv[0]);

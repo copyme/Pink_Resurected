@@ -219,7 +219,7 @@ static int32_t LowComAncSlow(
 int32_t LCApreprocessDepthFirst(ctree *CT, int32_t node, int32_t depth, int32_t *nbr, int32_t *rep, int32_t *Euler, int32_t *Represent, int32_t *Depth, int32_t *Number)
 {
   int32_t son;
-  soncell *sc;
+  soncell * sc = NULL;
 
   if (CT->tabnodes[node].nbsons > -1) {
     (*nbr)++;
@@ -247,7 +247,7 @@ int32_t ** LCApreprocess(ctree *CT,   int32_t *Euler, int32_t *Depth, int32_t *R
   int32_t nbRepresent;
   int32_t logn;
   int32_t i,j,k1,k2;
-  int32_t *minim;
+  int32_t * minim = NULL;
   int32_t **Minim;
 
   nbr = -1; // Initialization number of euler nodes

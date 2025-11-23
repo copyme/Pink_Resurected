@@ -577,7 +577,7 @@ int32_t lmarchingcubes2(struct xvimage * f,
 int main(int argc, char **argv) 
 /* =============================================================== */
 {
-  struct xvimage * f;
+  struct xvimage * f = NULL;
   FILE *fileout = NULL;
   uint8_t v;
   int32_t nregul;
@@ -633,7 +633,7 @@ int main(int argc, char **argv)
     int32_t connex = atoi(argv[6]);
     if (connex == 6) // inverse l'image
     {
-      uint8_t *pt;
+      uint8_t * pt = NULL;
       int32_t i, N = rowsize(f) * colsize(f) * depth(f);
       for (pt = UCHARDATA(f), i = 0; i < N; i++, pt++)
         if (*pt) *pt = 0; else *pt = NDG_MAX;  

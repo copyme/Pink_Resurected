@@ -69,7 +69,7 @@ If n2 is present, for each pixel x, out[x] = if (n <= in[x] < n2) then 255 else 
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
 
   if ((argc != 3))
   {

@@ -60,7 +60,7 @@ to file header of \b in.pgm.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   index_t x, y, z;
 
   if ((argc != 3) && (argc != 5))
@@ -78,7 +78,7 @@ int main(int argc, char **argv)
 
   if (argc == 3)
   {
-    struct xvimage * se;
+    struct xvimage * se = NULL;
     se = readse(argv[2], &x, &y, &z);  
     if (se == NULL)
     {

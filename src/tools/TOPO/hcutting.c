@@ -67,7 +67,7 @@ Reference:<BR>
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t connex, r;
 
   if (argc != 5)

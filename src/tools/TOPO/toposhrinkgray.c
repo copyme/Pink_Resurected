@@ -109,7 +109,7 @@ int32_t ltoposhrinkgray3d(struct xvimage *image,
 
 int main(int argc, char** argv)
 {
-    struct xvimage * image;
+    struct xvimage * image = NULL;
     int32_t connex;
     struct xvimage * inhibimage = NULL;
     int32_t tpmin, tpmax, tmmmin, tmmmax;

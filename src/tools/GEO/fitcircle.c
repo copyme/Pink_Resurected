@@ -73,11 +73,11 @@ Draws this circle in \b out.pgm .
 int main(int argc, char **argv) 
 /* =============================================================== */
 {
-  struct xvimage * image;
-  uint8_t *Im;
+  struct xvimage * image = NULL;
+  uint8_t * Im = NULL;
   int32_t rs, cs, d, N;
   double x, y, r;
-  cercle *C;
+  cercle * C = NULL;
 
   if ((argc != 6) && (argc != 7))
   {

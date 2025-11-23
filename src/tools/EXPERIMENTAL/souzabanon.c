@@ -66,8 +66,8 @@ the 2dkhalimskization of a binary image, with mode h.
 int main(int argc, char **argv) 
 /* =============================================================== */
 {
-  struct xvimage * imagelong;
-  int32_t *g;
+  struct xvimage * imagelong = NULL;
+  int32_t * g = NULL;
   int32_t x, y, i, rs, cs, N;
 
   if (argc != 3)

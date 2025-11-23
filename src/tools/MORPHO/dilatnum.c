@@ -85,8 +85,8 @@ morph
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * elem;
+  struct xvimage * image = NULL;
+  struct xvimage * elem = NULL;
   int32_t x, y;
 
   if (argc != 6)

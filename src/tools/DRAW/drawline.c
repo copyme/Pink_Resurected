@@ -67,7 +67,7 @@ Draws a straight line segment between (x1,y1[,z1]) and (x2,y2[,z2])
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t x1, y1, z1, x2, y2, z2;
 
   if ((argc != 7) && (argc != 9))

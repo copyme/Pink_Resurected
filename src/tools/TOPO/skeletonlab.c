@@ -138,8 +138,8 @@ int main(int argc, char **argv)
   else  // priorité : carte de distance (à calculer)
   {
     int32_t i, N;
-    int32_t *F;
-    uint8_t *B;
+    int32_t * F = NULL;
+    uint8_t * B = NULL;
     prio = allocimage(NULL, rowsize(image), colsize(image), depth(image), VFF_TYP_4_BYTE); assert(prio != NULL);
     imagebin = allocimage(NULL, rowsize(image), colsize(image), depth(image), VFF_TYP_4_BYTE); assert(imagebin != NULL);
     N = rowsize(image) * colsize(image) * depth(image);

@@ -119,7 +119,7 @@ index_t FahsPopNiveau(
 /* ==================================== */
 {
   index_t V;
-  FahsElt * FE;
+  FahsElt * FE = NULL;
   if (L->Queue[niv] == NULL)
   {
     fprintf(stderr, "erreur Fahs vide au niveau %d\n", niv);
@@ -222,7 +222,7 @@ void FahsPrint(
 /* ==================================== */
 {
   int32_t i;
-  FahsElt * FE;
+  FahsElt * FE = NULL;
   if (FahsVide(L)) {printf("[]\n"); return;}
   printf("niveau courant = %d\n", L->Niv);
   for (i = 0; i < FAHS_NPRIO; i++)

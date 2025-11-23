@@ -67,8 +67,8 @@ eventually deleted, the value of the counter is freezed.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * persistence;
+  struct xvimage * image = NULL;
+  struct xvimage * persistence = NULL;
 
   if (argc != 3)
   {

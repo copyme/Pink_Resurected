@@ -70,7 +70,7 @@ appropriate size is created.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   double xc, yc, zc;
   double xd, yd, zd;
   double t, r;

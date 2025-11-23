@@ -80,8 +80,8 @@ Parameter \b thick (thickness for DSS recognition) is given in pixels, parameter
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * res;
-  skel * S;
+  struct xvimage * res = NULL;
+  skel * S = NULL;
   double thick, angle;
 
   if (argc != 5)

@@ -69,8 +69,8 @@ EXPERIMENTAL - DO NOT USE IN APPLICATION
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * prio;
+  struct xvimage * image = NULL;
+  struct xvimage * prio = NULL;
   double val;
 
   if (argc != 5)

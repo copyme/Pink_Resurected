@@ -64,7 +64,7 @@ If \b out.pgm is not specified, then out.pgm = in.pgm.
 int main(int argc, char **argv) 
 /* =============================================================== */
 {
-  struct xvimage * image1;
+  struct xvimage * image1 = NULL;
 
   if ((argc != 3) && (argc != 4))
   {

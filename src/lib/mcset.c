@@ -61,7 +61,7 @@ Set *CreateEmptySet(int32_t setsize)
 /* ========================================== */
 /* retourne un ensemble vide taille max. setsize * 32 */
 {
-  Set * s;
+  Set * s = NULL;
   s = (Set *)calloc(sizeof(Set) + (setsize - 1) * sizeof(uint32_t), 1);
   if (s == NULL)
   {   
@@ -358,7 +358,7 @@ void PrintGraph(SetList * graph)
 SetList * InitSetList(int32_t n, int32_t setsize)
 /* ========================================== */
 {
-  SetList * l;
+  SetList * l = NULL;
   int32_t i;
   l = (SetList *)calloc(1,sizeof(SetList) + (n-1) * sizeof(Set *));
   if (l == NULL)
@@ -436,7 +436,7 @@ void CliqueMax(Set *C, Set *P, SetList *G, SetList *LC)
 */
 {
   int32_t i;
-  Set * savset;
+  Set * savset = NULL;
   if (IsEmpty(P)) 
   {
     if (!InclusSetList(LC, C))
@@ -462,8 +462,8 @@ void CliqueMax(Set *C, Set *P, SetList *G, SetList *LC)
 #ifdef DEBUGSET
 void main()
 {
-  SetList *G;
-  SetList *LC;
+  SetList * G = NULL;
+  SetList * LC = NULL;
   Set *C = CreateEmptySet(1);
   Set *P = CreateEmptySet(1);
 

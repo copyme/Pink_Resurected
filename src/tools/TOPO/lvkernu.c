@@ -80,8 +80,8 @@ grayscale image processing"</A>, <I> Journal of Electronic Imaging</I>, Vol.&nbs
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * imagecond;
+  struct xvimage * image = NULL;
+  struct xvimage * imagecond = NULL;
   int32_t connex;
 
   if (argc != 5)

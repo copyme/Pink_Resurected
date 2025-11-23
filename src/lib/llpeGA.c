@@ -318,9 +318,9 @@ int32_t lpeGrapheAreteValuee(GrapheValue *gv, int32_t* Label)
   int32_t i,som, alt, nb_labs, labstream;
   GrapheBasic *g = gv->g;
   int32_t nb_som = g->nsom;
-  Lifo *FIFO;   
+  Lifo * FIFO = NULL;
   PBasicCell p;
-  uint8_t *G;
+  uint8_t * G = NULL;
   uint8_t min_som ;
 
   FIFO = CreeLifoVide(nb_som);

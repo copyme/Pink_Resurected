@@ -69,9 +69,9 @@ The color of the result image is given by the parameter <B>col</B>.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * header;
-  struct xvimage * image;
-  uint8_t *Im;
+  struct xvimage * header = NULL;
+  struct xvimage * image = NULL;
+  uint8_t * Im = NULL;
   int32_t rs, cs, ds, N;
   uint8_t col;
   double xdim, ydim, zdim;

@@ -66,7 +66,7 @@ then the points of this image will be left unchanged.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   struct xvimage * inhibit = NULL;
   int32_t pers;
 

@@ -84,14 +84,14 @@ int main(int argc, char **argv)
   int32_t n, i, j;
   int32_t x, y, val, e, nbvois;
   char type;
-  mcgeo_point * S;
-  double * V;
+  mcgeo_point * S = NULL;
+  double * V = NULL;
   int32_t **vois; /* la table des listes de voisins (reperes par leur indice dans S) */
-  int32_t *nv; /* la table des nombres de voisins */
-  int32_t *ec; /* table de booleens indiquant les points de l'enveloppe convexe */
-  struct xvimage * image;
+  int32_t * nv = NULL;/* la table des nombres de voisins */
+  int32_t * ec = NULL;/* table de booleens indiquant les points de l'enveloppe convexe */
+  struct xvimage * image = NULL;
   int32_t rs, cs, N;
-  uint8_t *F;
+  uint8_t * F = NULL;
   int32_t Ax, Ay, Bx, By, v;
 
   if (argc != 4)

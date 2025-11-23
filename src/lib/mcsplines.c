@@ -617,7 +617,7 @@ int32_t scn_samplespline(double *x, double *y, int32_t n, int32_t m, double *X, 
 {
   double *X0, *X1, *X2, *X3;
   double *Y0, *Y1, *Y2, *Y3;
-  double *t;
+  double * t = NULL;
   double tk, tmp, L = 0;
   double sum, sumsav;
   int32_t p = m*10;
@@ -745,7 +745,7 @@ int32_t scn_samplespline3d(double *x, double *y, double *z, int32_t n, int32_t m
   double *X0, *X1, *X2, *X3;
   double *Y0, *Y1, *Y2, *Y3;
   double *Z0, *Z1, *Z2, *Z3;
-  double *t;
+  double * t = NULL;
   double tk, tmp, L = 0;
   double sum, sumsav;
   int32_t p = m*10;
@@ -990,7 +990,7 @@ int32_t scn_curvatures(double *x, double *y, int32_t n, int32_t m, double *sk, d
 #define F_NAME "scn_curvatures"
   double *X0, *X1, *X2, *X3;
   double *Y0, *Y1, *Y2, *Y3;
-  double *t;
+  double * t = NULL;
   double tk, tmp, eval, xp, yp, xs, ys, L = 0;
   double sum, sumsav;
   int32_t p = m * 10;
@@ -1077,7 +1077,7 @@ int32_t scn_curvatures3d(double *x, double *y, double *z, int32_t n, int32_t m, 
   double *X0, *X1, *X2, *X3;
   double *Y0, *Y1, *Y2, *Y3;
   double *Z0, *Z1, *Z2, *Z3;
-  double *t;
+  double * t = NULL;
   double tk, tmp, eval, xp, yp, zp, xs, ys, zs, L = 0;
   double sum, sumsav;
   int32_t p = m * 10;
@@ -1687,7 +1687,7 @@ int32_t scn_approxcurve2(int32_t *X, int32_t *Y, int32_t *N, double deltamax)
 #undef F_NAME
 #define F_NAME "scn_approxcurve2"
 {
-  int32_t *C;
+  int32_t * C = NULL;
   int32_t ret, n, i, npoints = *N;
   double *C0, *C1, *C2, *C3, *D0, *D1, *D2, *D3;
   
@@ -1919,7 +1919,7 @@ int32_t scn_approxcurve3d2(int32_t *X, int32_t *Y, int32_t *Z, int32_t *N, doubl
 #undef F_NAME
 #define F_NAME "scn_approxcurve3d2"
 {
-  int32_t *C;
+  int32_t * C = NULL;
   int32_t ret, n, i, npoints = *N;
   double *C0, *C1, *C2, *C3, *D0, *D1, *D2, *D3, *E0, *E1, *E2, *E3;
   
@@ -2529,7 +2529,7 @@ int32_t main()
   double X[6] = {1, 3, 4, 7, 11, 13};
   double Y[6] = {4, 10, 8, 5, 5, 7};
   double Z[6] = {1, 2, 3, 2, 1, 0};
-  double *t;
+  double * t = NULL;
   double *C0, *C1, *C2, *C3;
   double *D0, *D1, *D2, *D3;
   double *E0, *E1, *E2, *E3;
@@ -2576,7 +2576,7 @@ int32_t main()
   double X[7] = {1, 1, 1, 10, 2, 2, 2};
   double Y[7] = {1, 1, 1, 10, 2, 2, 2};
   double Z[7] = {1, 2, 3, 4, 3, 2, 1};
-  double *t;
+  double * t = NULL;
   double *C0, *C1, *C2, *C3;
   double *D0, *D1, *D2, *D3;
   double *E0, *E1, *E2, *E3;

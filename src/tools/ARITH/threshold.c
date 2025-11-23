@@ -69,8 +69,8 @@ int main(int argc, char **argv)
 /* =============================================================== */
 {
   double seuil, seuil2;
-  struct xvimage * image;
-  struct xvimage * imagebin;
+  struct xvimage * image = NULL;
+  struct xvimage * imagebin = NULL;
 
   if ((argc != 4) && (argc != 5))
   {
@@ -110,7 +110,7 @@ int main(int argc, char **argv)
   if (datatype(image) != VFF_TYP_1_BYTE)
   {
     index_t rs, cs, ds, N, x;
-    uint8_t *F;
+    uint8_t * F = NULL;
     rs = rowsize(image); cs = colsize(image); ds = depth(image); N = rs * cs * ds; 
     imagebin = allocimage(image->name, rs, cs, ds, VFF_TYP_1_BYTE);
     if (imagebin == NULL)

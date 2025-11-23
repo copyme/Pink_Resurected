@@ -63,7 +63,7 @@ Selects the regional minima of a grayscale image with connexity <B>connex</B>.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t * IL = NULL;
   int32_t N, i;
 

@@ -66,8 +66,8 @@ knowledge of the CeCILL license and that you accept its terms.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * masque;
+  struct xvimage * image = NULL;
+  struct xvimage * masque = NULL;
   double p;
 
   if ((argc != 4) && (argc != 5))

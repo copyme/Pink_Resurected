@@ -72,7 +72,7 @@ Connexity = <B>connex</B> ; desired number of components = <B>nb</B>.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t connex, param;
 
   if (argc != 5)

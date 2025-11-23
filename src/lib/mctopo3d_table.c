@@ -88,7 +88,7 @@ void mctopo3d_table_init_topo3d()
   {
     char tablefilename[128];
     int32_t tablesize, ret;
-    FILE *fd;
+    FILE * fd = NULL;
 
     tablesize = 1<<23; // 2^26 / 8
     table_mctopo3d_table_simple26 = (uint8_t *)malloc(tablesize);
@@ -133,7 +133,7 @@ void mctopo3d_table_init_topoCN3d()
 {
   char tablefilename[128];
   int32_t tablesize, ret;
-  FILE *fd;
+  FILE * fd = NULL;
 
   if (table_mctopo3d_table_CN26 != NULL)
   {

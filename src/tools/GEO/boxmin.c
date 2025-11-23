@@ -62,7 +62,7 @@ It contains the minimal box including the set of points in \b in.pgm
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
 
   if (argc != 3)
   {

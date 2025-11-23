@@ -782,7 +782,7 @@ static object * loadline(FILE *fd)
 {
   int32_t npoints, j;
   double x, y, z;
-  object *obj;
+  object * obj = NULL;
 
   fscanf(fd, "%d", &npoints);
   obj = (object *)calloc(1,sizeof(object));
@@ -817,7 +817,7 @@ static object * loadclosedline(FILE *fd)
 {
   int32_t npoints, j;
   double x, y, z;
-  object *obj;
+  object * obj = NULL;
 
   fscanf(fd, "%d", &npoints);
   obj = (object *)calloc(1,sizeof(object));
@@ -852,7 +852,7 @@ static object * loadspline(FILE *fd)
 {
   int32_t npoints, j;
   double x, y, z;
-  object *obj;
+  object * obj = NULL;
 
   fscanf(fd, "%d", &npoints);
   obj = (object *)calloc(1,sizeof(object));
@@ -887,7 +887,7 @@ static object * loadclosedspline(FILE *fd)
 {
   int32_t npoints, j;
   double x, y, z;
-  object *obj;
+  object * obj = NULL;
 
   fscanf(fd, "%d", &npoints);
   obj = (object *)calloc(1,sizeof(object));
@@ -922,7 +922,7 @@ scene * readscene(char *filename)
 {
   FILE *fd = NULL;
   int32_t j, nobj, ret;
-  scene *scn;
+  scene * scn = NULL;
   char buf[1024];
 
   fd = fopen(filename, "r");
@@ -991,7 +991,7 @@ object * copyline(object *o)
 #define F_NAME "copyline"
 {
   int32_t npoints, j;
-  object *oc;
+  object * oc = NULL;
 
   npoints = o->npoints;
   oc = (object *)calloc(1,sizeof(object));
@@ -1026,7 +1026,7 @@ object * copyclosedline(object *o)
 #define F_NAME "copyclosedline"
 {
   int32_t npoints, j;
-  object *oc;
+  object * oc = NULL;
 
   npoints = o->npoints;
   oc = (object *)calloc(1,sizeof(object));
@@ -1059,7 +1059,7 @@ object * copyspline(object *o)
 #define F_NAME "copyspline"
 {
   int32_t npoints, j;
-  object *oc;
+  object * oc = NULL;
 
   npoints = o->npoints;
   oc = (object *)calloc(1,sizeof(object));
@@ -1094,7 +1094,7 @@ object * copyclosedspline(object *o)
 #define F_NAME "copyclosedspline"
 {
   int32_t npoints, j;
-  object *oc;
+  object * oc = NULL;
 
   npoints = o->npoints;
   oc = (object *)calloc(1,sizeof(object));
@@ -1126,9 +1126,9 @@ scene * copyscene(scene * s)
 #undef F_NAME
 #define F_NAME "copyscene"
 {
-  scene * sc;
+  scene * sc = NULL;
   int32_t i, nobj = s->nobj;
-  object *obj;
+  object * obj = NULL;
 
   sc = (scene *)calloc(1,sizeof(scene));
   if (sc == NULL)
@@ -1198,7 +1198,7 @@ int32_t main()
 
   triangle t;
 
-  mesh * msh;
+  mesh * msh = NULL;
 
   m[0][0] = 1.0;
   m[0][1] = 2.0;

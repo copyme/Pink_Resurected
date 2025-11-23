@@ -69,8 +69,8 @@ then the iterations continue until stability.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image1;
-  struct xvimage * image2;
+  struct xvimage * image1 = NULL;
+  struct xvimage * image2 = NULL;
   int32_t connex;
   int32_t niter;
 

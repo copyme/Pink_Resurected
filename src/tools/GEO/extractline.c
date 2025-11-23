@@ -66,8 +66,8 @@ points (x1,y1) and (x2,y2) extracted from <B>in.pgm</B>.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * imgres;
+  struct xvimage * image = NULL;
+  struct xvimage * imgres = NULL;
   int32_t i, n, nn, rs, cs, x1, y1, x2, y2;
   uint8_t *I, *R;
   int32_t *lx, *ly;

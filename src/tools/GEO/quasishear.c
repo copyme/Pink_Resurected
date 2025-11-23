@@ -64,8 +64,8 @@ image size, otherwise a new image with sufficient size is created.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * image2;
+  struct xvimage * image = NULL;
+  struct xvimage * image2 = NULL;
   double theta, x, y;
 
   if ((argc != 4) && (argc != 6))

@@ -69,7 +69,7 @@ Volume-based filtering with connexity <B>connex</B> and volume <B>vol</B>.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t connex, param;
 
   if (argc != 5)

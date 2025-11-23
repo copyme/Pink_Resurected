@@ -64,8 +64,8 @@ knowledge of the CeCILL license and that you accept its terms.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * field;
-  index_t * histo;
+  struct xvimage * field = NULL;
+  index_t * histo = NULL;
   int32_t i, nbins;
   FILE *fd = NULL;
 

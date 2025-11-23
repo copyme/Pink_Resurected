@@ -72,10 +72,10 @@ a new image, the dimensions of which are <B>rs</B>, <B>cs</B>, and <B>ds</B>.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t rs, cs, ds, ps, N, i;
   char type;
-  graphe *g;
+  graphe * g = NULL;
 
   if ((argc != 4) && (argc != 6))
   {

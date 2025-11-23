@@ -68,7 +68,7 @@ point that is given the same label as the region.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
 
   if (argc != 3)
   {

@@ -82,12 +82,12 @@ The optional parameter \b scale allows to scale the coordinates.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   FILE *fd = NULL;
   int32_t rs, cs, ds, ps, N, x, y, z, n, i;
   double xx, yy, zz, vv, scale;
-  uint8_t *F;
-  float *FF;
+  uint8_t * F = NULL;
+  float * FF = NULL;
   char type;
 
   if ((argc != 4) && (argc != 6) && (argc != 5) && (argc != 7))

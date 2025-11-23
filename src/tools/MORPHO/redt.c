@@ -75,8 +75,8 @@ DGCI 2003, LNCS 2886, pp. 327-337, 2003.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * res;
+  struct xvimage * image = NULL;
+  struct xvimage * res = NULL;
 
   if (argc != 3)
   {

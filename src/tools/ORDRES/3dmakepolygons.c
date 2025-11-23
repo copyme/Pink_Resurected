@@ -300,21 +300,21 @@ int32_t scanpolygon(struct xvimage * lab, struct xvimage * b,
 int main(int argc, char **argv) 
 /* =============================================================== */
 {
-  struct xvimage * lab;
-  struct xvimage * bor;
+  struct xvimage * lab = NULL;
+  struct xvimage * bor = NULL;
   index_t rs, cs, ds, ps, N, i, j, k;
   int32_t a, b, x, indx;
-  int32_t *L;
-  uint8_t *B;
+  int32_t * L = NULL;
+  uint8_t * B = NULL;
   int32_t u, v, nl, spol, maxlab, label;
-  int8_t *marklab;
-  int32_t *markvert;
-  Liste * Face;
-  Liste * Poly;
-  Liste * Labels;
+  int8_t * marklab = NULL;
+  int32_t * markvert = NULL;
+  Liste * Face = NULL;
+  Liste * Poly = NULL;
+  Liste * Labels = NULL;
   FILE *fd = NULL;
   double subdiv, merge, x1, y1, z1, x2, y2, z2;
-  MCP *P;
+  MCP * P = NULL;
   int32_t degenerate;
 
   if (argc != 6)

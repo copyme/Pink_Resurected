@@ -66,7 +66,7 @@ of the object points which have at least one neighboring background point.
 int main(int argc, char **argv) 
 /* =============================================================== */
 {
-  struct xvimage * k;
+  struct xvimage * k = NULL;
 
   if (argc != 3)
   {

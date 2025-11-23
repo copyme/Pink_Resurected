@@ -83,8 +83,8 @@ static void inverse(struct xvimage * image)
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * marker;
+  struct xvimage * image = NULL;
+  struct xvimage * marker = NULL;
   int32_t connex;
 
   if ((argc != 5) && (argc != 6))

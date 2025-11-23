@@ -62,7 +62,7 @@ is changed to <B>v</B>.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image1;
+  struct xvimage * image1 = NULL;
   index_t x, y, z;
   float v;
 

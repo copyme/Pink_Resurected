@@ -78,14 +78,14 @@ Types supported: int32_t 2D (hue), byte 2D (others)
 
 int main(int argc, char **argv)
 {
-  struct xvimage * R;
-  struct xvimage * G;
-  struct xvimage * B;
-  struct xvimage * H;
-  struct xvimage * L;
-  struct xvimage * S;
+  struct xvimage * R = NULL;
+  struct xvimage * G = NULL;
+  struct xvimage * B = NULL;
+  struct xvimage * H = NULL;
+  struct xvimage * L = NULL;
+  struct xvimage * S = NULL;
   uint8_t *r, *g, *b;
-  int32_t *h;
+  int32_t * h = NULL;
   uint8_t *l, *s;
   int32_t rs, cs, N;
   int32_t x;

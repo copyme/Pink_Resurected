@@ -60,8 +60,8 @@ Selects the local maxima or minima of a grayscale image with connexity <B>connex
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * maxima;
+  struct xvimage * image = NULL;
+  struct xvimage * maxima = NULL;
   int32_t connex, minim;
 
   if (argc != 5)

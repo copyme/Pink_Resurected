@@ -70,9 +70,9 @@ the gammab neighborhood.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * masque;
-  struct xvimage * result;
+  struct xvimage * image = NULL;
+  struct xvimage * masque = NULL;
+  struct xvimage * result = NULL;
   int32_t connex;
 
   //if (argc != 5)

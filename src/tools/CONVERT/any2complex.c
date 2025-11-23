@@ -63,11 +63,11 @@ knowledge of the CeCILL license and that you accept its terms.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * im_complex;
-  struct xvimage * im_real;
+  struct xvimage * im_complex = NULL;
+  struct xvimage * im_real = NULL;
   struct xvimage * im_imaginary = NULL;
   int32_t x, rs, cs, ds, N;
-  fcomplex *C;
+  fcomplex * C = NULL;
   
   if ((argc != 3) && (argc != 4))
   {

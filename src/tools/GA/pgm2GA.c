@@ -82,8 +82,8 @@ If im.pgm is a 2D (resp. 3D) image, then <B>out.ga</B> is a 2D (resp
 int main(int argc, char **argv)
 {
   double alpha;
-  struct xvimage * im;
-  struct xvimage * ga;
+  struct xvimage * im = NULL;
+  struct xvimage * ga = NULL;
   int32_t param;
   if ( (argc != 4) && (argc != 5))
   {

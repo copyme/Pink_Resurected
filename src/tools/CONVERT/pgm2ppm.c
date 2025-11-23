@@ -66,9 +66,9 @@ A lookup table is represented by a special ppm image with 1 row.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * g1;
-  struct xvimage * g2;
-  struct xvimage * g3;
+  struct xvimage * g1 = NULL;
+  struct xvimage * g2 = NULL;
+  struct xvimage * g3 = NULL;
 
   if ((argc != 4) && (argc != 5))
   {
@@ -90,9 +90,9 @@ int main(int argc, char **argv)
 
   if (argc == 4)
   {
-    struct xvimage * lut_r;
-    struct xvimage * lut_g;
-    struct xvimage * lut_b;
+    struct xvimage * lut_r = NULL;
+    struct xvimage * lut_g = NULL;
+    struct xvimage * lut_b = NULL;
     int32_t ncol, i, N;
     uint8_t *G1, *G2, *G3, *R, *G, *B, c;
     g1 = readimage(argv[1]);

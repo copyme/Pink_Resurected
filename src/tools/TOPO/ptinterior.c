@@ -61,7 +61,7 @@ An interior point is a white point, all the n-neighbours of which are white
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t connex;
 
   if (argc != 4)

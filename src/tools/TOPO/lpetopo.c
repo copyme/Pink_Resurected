@@ -60,10 +60,10 @@ knowledge of the CeCILL license and that you accept its terms.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * marqueurs;
+  struct xvimage * image = NULL;
+  struct xvimage * marqueurs = NULL;
   int32_t trace;
-  char * nameout;
+  char * nameout = NULL;
 
   if ((argc < 4) || (argc > 5) || ((argc == 5) && (strcmp(argv[3], "trace") != 0)))
   {

@@ -77,7 +77,7 @@ Reference:<BR>
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   struct xvimage * imagec = NULL;
   struct xvimage * imagecc = NULL;
   int32_t rayonmax;

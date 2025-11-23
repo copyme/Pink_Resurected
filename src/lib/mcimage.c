@@ -376,7 +376,7 @@ int32_t showheader(char * name)
   FILE *fd = NULL;
   struct stat fdstat;
   index_t rs, cs, ds, nb, c, fs, es;
-  char *read;
+  char * read = NULL;
 
   fd = pink_fopen_read(name);
 

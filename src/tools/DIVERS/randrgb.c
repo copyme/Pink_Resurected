@@ -62,10 +62,10 @@ chosen color
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * in;
-  struct xvimage * g1;
-  struct xvimage * g2;
-  struct xvimage * g3;
+  struct xvimage * in = NULL;
+  struct xvimage * g1 = NULL;
+  struct xvimage * g2 = NULL;
+  struct xvimage * g3 = NULL;
   uint8_t r[256];
   uint8_t g[256];
   uint8_t b[256];

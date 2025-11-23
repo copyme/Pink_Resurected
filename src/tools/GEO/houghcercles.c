@@ -62,8 +62,8 @@ knowledge of the CeCILL license and that you accept its terms.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * accu;
+  struct xvimage * image = NULL;
+  struct xvimage * accu = NULL;
   int32_t rayonmin;
   int32_t pasrayon;
   int32_t nbpas;

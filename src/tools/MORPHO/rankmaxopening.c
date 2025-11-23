@@ -75,9 +75,9 @@ pages 77-81, 1986.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * orig;
-  struct xvimage * elem;
+  struct xvimage * image = NULL;
+  struct xvimage * orig = NULL;
+  struct xvimage * elem = NULL;
   index_t x, y, z;
   double r;
 

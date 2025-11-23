@@ -61,9 +61,9 @@ The vertices of the graph are the object pixels of the binary image \b in.pgm, a
 
 int main(int argc, char **argv)
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t connex;
-  graphe * G;
+  graphe * G = NULL;
 
   if (argc != 4)
   {

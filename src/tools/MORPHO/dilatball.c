@@ -119,8 +119,8 @@ dilatball cells 4 cells_dilatball
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * res;
+  struct xvimage * image = NULL;
+  struct xvimage * res = NULL;
   int32_t r;
   int32_t mode;
 

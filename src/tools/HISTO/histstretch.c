@@ -71,10 +71,10 @@ A linear histogram scaling is then performed.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t i;
   int32_t rs, cs, d, N;
-  uint8_t *SOURCE;      /* l'image de depart */
+  uint8_t * SOURCE = NULL;/* l'image de depart */
   int32_t histo[256];
   int32_t vmin, vmax;
   double p;

@@ -98,8 +98,8 @@ const double PRECISION = 0.0001;
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image1;
-  struct xvimage * image2;
+  struct xvimage * image1 = NULL;
+  struct xvimage * image2 = NULL;
   double Gamma[9] = {1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}; // hx, hy, theta, tx, ty
   double seuil; 
   FILE *fd = NULL;

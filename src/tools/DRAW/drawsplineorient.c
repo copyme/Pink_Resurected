@@ -85,7 +85,7 @@ C0Xn C0Yn C0Zn C1Xn C1Yn C1Zn C2Xn C2Yn C2Zn C3Xn C3Yn C3Zn<br>
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * field;
+  struct xvimage * field = NULL;
   int32_t j;
   FILE *fd = NULL;
   int32_t npoints;

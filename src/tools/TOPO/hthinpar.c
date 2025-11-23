@@ -72,8 +72,8 @@ to appear
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * imagecond;
+  struct xvimage * image = NULL;
+  struct xvimage * imagecond = NULL;
   int32_t nitermax;
 
   if (argc != 5)

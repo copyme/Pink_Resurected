@@ -69,9 +69,9 @@ int main(int argc, char **argv)
 /* =============================================================== */
 {
   int32_t mode;
-  struct xvimage * image;
-  struct xvimage * mask;
-  struct xvimage * result;
+  struct xvimage * image = NULL;
+  struct xvimage * mask = NULL;
+  struct xvimage * result = NULL;
 
   if (argc != 5)
   {

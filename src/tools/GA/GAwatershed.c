@@ -93,16 +93,16 @@ of the input GA (not available for floats).
 
 int main(int argc, char **argv)
 {
-  struct xvimage *ga;
-  struct xvimage *gaout;
-  struct xvimage *watershed;
+  struct xvimage * ga = NULL;
+  struct xvimage * gaout = NULL;
+  struct xvimage * watershed = NULL;
   int32_t type;
 #ifdef TIME_WATERSHED_TEST
   clock_t t1,t2;
 #endif
   int32_t rs;               /* taille ligne */
   int32_t cs;               /* taille colonne */
-  int32_t *FlowMapping; 
+  int32_t * FlowMapping = NULL;
 
 
   if ( (argc != 3) && (argc != 4) )

@@ -71,7 +71,7 @@ Then, the Shannon entropy of \b im.pgm is defined by: E = - SUM P(i) log_2 P(i),
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   struct xvimage * mask = NULL;
   FILE *fd = NULL;
   double E;

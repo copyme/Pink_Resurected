@@ -62,7 +62,7 @@ When the type of \b in.pgm is 4_BYTE, the image is treated as a label image, whe
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t connex;
 
   if (argc != 4)

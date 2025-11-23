@@ -63,7 +63,7 @@ Counts the number of distinct values of \b im.pgm (masked by the binary image
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   struct xvimage * mask = NULL;
   int32_t nbdiff;
   FILE *fd = NULL;

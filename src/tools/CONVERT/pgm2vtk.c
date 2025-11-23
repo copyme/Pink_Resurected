@@ -243,12 +243,12 @@ void add_cell_triang (FILE * fd, int32_t x)
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t mode;
-  char * filename;
+  char * filename = NULL;
   FILE *fd = NULL;
   int32_t rs, cs, ps, ds, x, y, z;
-  uint8_t * K;
+  uint8_t * K = NULL;
   int32_t nb_cells = 0;
   int32_t nb_points = 0;
 

@@ -71,7 +71,7 @@ If \b ne = -1, the end points are always removed.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   struct xvimage * contr = NULL;
   int32_t connex;
   int32_t niseuil;

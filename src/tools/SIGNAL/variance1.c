@@ -67,7 +67,7 @@ values which correspond to non-null points of mask are considered.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   struct xvimage * mask = NULL;
   double varianceval;
   FILE *fd = NULL;

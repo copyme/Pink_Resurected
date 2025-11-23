@@ -96,8 +96,8 @@ int32_t linterpolate(struct xvimage * image1, int32_t factor, struct xvimage ** 
 int main(int argc, char **argv) 
 /* =============================================================== */
 {
-  struct xvimage * f;
-  struct xvimage * r;
+  struct xvimage * f = NULL;
+  struct xvimage * r = NULL;
   int32_t factor;
   
   if (argc != 4)

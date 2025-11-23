@@ -76,8 +76,8 @@ Result: F
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * roi;
+  struct xvimage * image = NULL;
+  struct xvimage * roi = NULL;
   struct xvimage * inhibit = NULL;
   int32_t niter;
 

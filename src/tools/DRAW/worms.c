@@ -100,13 +100,13 @@ static double norm(double x, double y, double z)
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * img;
-  struct xvimage * tmp;
-  struct xvimage * dis;
-  struct xvimage * dil;
-  struct xvimage * dse;
+  struct xvimage * img = NULL;
+  struct xvimage * tmp = NULL;
+  struct xvimage * dis = NULL;
+  struct xvimage * dil = NULL;
+  struct xvimage * dse = NULL;
   uint8_t *I, *T, *L;
-  uint32_t *D;
+  uint32_t * D = NULL;
   index_t i, j, rs, cs, ds, N;
   int32_t n, nmax, nt, ntmax, radius, ret;
   const int32_t npoints = 3;
@@ -282,10 +282,10 @@ int main(int argc, char **argv)
 
   if (dse != NULL)
   {
-    struct xvimage * rot1;
-    struct xvimage * rot2;
-    struct xvimage * dil1;
-    uint8_t *L1;
+    struct xvimage * rot1 = NULL;
+    struct xvimage * rot2 = NULL;
+    struct xvimage * dil1 = NULL;
+    uint8_t * L1 = NULL;
     double yc1, zc1, xc2, zc2;
     dil = copyimage(img);
     L = UCHARDATA(dil);

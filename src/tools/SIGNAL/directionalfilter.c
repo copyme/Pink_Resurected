@@ -75,7 +75,7 @@ Ki(x,y) = exp(-lambda*yr*yr) *
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   double width, length;  
   int32_t ndir;
 

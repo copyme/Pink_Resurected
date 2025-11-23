@@ -78,8 +78,8 @@ IEEE Transactions on Pattern Analysis and Machine Intelligence, 21(5), 476--480,
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  uint8_t *Im;
+  struct xvimage * image = NULL;
+  uint8_t * Im = NULL;
   int32_t rs, cs, d, N;
   FILE *fd = NULL;
   int32_t i, n;

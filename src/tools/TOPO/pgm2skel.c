@@ -95,9 +95,9 @@ increase image resolution.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t connex, len = INT32_MAX;
-  skel * S;
+  skel * S = NULL;
 
   if ((argc != 4) && (argc != 5))
   {

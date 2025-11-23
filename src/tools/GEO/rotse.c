@@ -66,7 +66,7 @@ Rotation of a structuring element, by an angle of 0, 90, 180 or 270 degrees.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image1;
+  struct xvimage * image1 = NULL;
   index_t x, y, z, i1, j1, i2, j2;
   index_t rs, cs, ds;
 
@@ -104,7 +104,7 @@ int main(int argc, char **argv)
   }
   else if ((strcmp(argv[2], "90") == 0) || (strcmp(argv[2], "270") == 0))
   {
-    struct xvimage * image2;
+    struct xvimage * image2 = NULL;
     uint8_t *I1, *I2;
     image2 = allocimage(NULL, cs, rs, 1, VFF_TYP_1_BYTE);
     if (image2 == NULL)

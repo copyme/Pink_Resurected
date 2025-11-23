@@ -116,9 +116,9 @@ References:<BR>
 int main(int32_t argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * prio;
-  struct xvimage * prio2;
+  struct xvimage * image = NULL;
+  struct xvimage * prio = NULL;
+  struct xvimage * prio2 = NULL;
   struct xvimage * inhibit = NULL;
   int32_t connex;
   int32_t ret, priovalue;
@@ -158,7 +158,7 @@ int main(int32_t argc, char **argv)
       int32_t ds = depth(prio2);
       int32_t N = rs * cs * ds;
       uint8_t *B = UCHARDATA(prio2);
-      int32_t *L;
+      int32_t * L = NULL;
       int32_t x;
       prio = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
       if (prio == NULL)
@@ -183,7 +183,7 @@ int main(int32_t argc, char **argv)
   else
   {
     int32_t i, N;
-    uint8_t *F;
+    uint8_t * F = NULL;
     prio = allocimage(NULL, rowsize(image), colsize(image), depth(image), VFF_TYP_4_BYTE);
     if (prio == NULL)
     {   

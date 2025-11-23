@@ -83,8 +83,8 @@ References:<BR>
 int main(int32_t argc, char **argv) 
 /* =============================================================== */
 {
-  struct xvimage * k;
-  struct xvimage * func;
+  struct xvimage * k = NULL;
+  struct xvimage * func = NULL;
   int32_t mode;
   double level;
 

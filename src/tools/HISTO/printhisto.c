@@ -65,9 +65,9 @@ Calculates the histogram of \b im.pgm (masked by the binary image
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   struct xvimage * mask = NULL;
-  index_t * histo;
+  index_t * histo = NULL;
   int32_t i, k, s;
 
 

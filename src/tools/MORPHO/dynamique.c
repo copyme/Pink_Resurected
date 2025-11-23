@@ -70,8 +70,8 @@ References:<BR>
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * order;
+  struct xvimage * image = NULL;
+  struct xvimage * order = NULL;
   int32_t mode;
   int32_t connex;
   int32_t nblabels;

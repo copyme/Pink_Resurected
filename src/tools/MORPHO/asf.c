@@ -80,7 +80,7 @@ of beginning by a closing instead of an opening.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   int32_t rayonmin, rayonmax;
 
   if ((argc != 4) && (argc != 5))
