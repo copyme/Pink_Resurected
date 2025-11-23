@@ -175,7 +175,7 @@ int main(int argc, char **argv)
   FILE *fd = NULL;
   index_t rs, cs, ds, N, headersize, i;
   int32_t littleendian, datatype;
-  struct xvimage * image;
+  struct xvimage * image = NULL;
   struct nifti_1_header NIFTI_HEADER;
 
   if (argc != 3)
