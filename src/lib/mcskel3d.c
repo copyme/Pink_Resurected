@@ -248,7 +248,8 @@ int32_t mcskel3d_K3_CheckComplex(struct xvimage *k)
   int32_t x, y, z;
   index_t rs = rowsize(k), cs = colsize(k), ds = depth(k), ps = rs*cs;
   unsigned char *K = UCHARDATA(k);
-  int32_t tab[26], u, n;
+  index_t tab[26] = {0};
+  int32_t u, n;
   
   for (z = 0; z < ds; z++)
   for (y = 0; y < cs; y++)
@@ -275,7 +276,8 @@ void mcskel3d_K3_CloseComplex(struct xvimage *k)
   int32_t x, y, z; 
   index_t rs = rowsize(k), cs = colsize(k), ds = depth(k), ps = rs*cs;
   unsigned char *K = UCHARDATA(k);
-  int32_t tab[26], u, n;
+  index_t tab[26] = {0};
+  int32_t u, n;
   
   for (z = 0; z < ds; z++)
   for (y = 0; y < cs; y++)
@@ -362,7 +364,8 @@ void mcskel3d_K3_MarkAlphaCarre(struct xvimage *k, index_t f, unsigned char mask
 #define F_NAME "mcskel3d_K3_MarkAlphaCarre"
   index_t rs = rowsize(k), cs = colsize(k), ds = depth(k), ps = rs*cs; 
   int32_t x = f%rs, y = (f%ps)/rs, z = f/ps;
-  int32_t tab[26], u, n;
+  index_t tab[26] = {0};
+  int32_t u, n;
   unsigned char *K = UCHARDATA(k);
   Alphacarre3d(rs, cs, ds, x, y, z, tab, &n);
   for (u = 0; u < n; u++) K[tab[u]] |= mask;
@@ -382,7 +385,8 @@ void mcskel3d_K3_UnMarkAlphaCarre(struct xvimage *k, index_t f, unsigned char ma
 #define F_NAME "mcskel3d_K3_UnMarkAlphaCarre"
   index_t rs = rowsize(k), cs = colsize(k), ds = depth(k), ps = rs*cs; 
   int32_t x = f%rs, y = (f%ps)/rs, z = f/ps;
-  int32_t tab[26], u, n;
+  index_t tab[26] = {0};
+  int32_t u, n;
   unsigned char *K = UCHARDATA(k);
   Alphacarre3d(rs, cs, ds, x, y, z, tab, &n);
   for (u = 0; u < n; u++) K[tab[u]] &= ~mask;
@@ -402,7 +406,8 @@ void mcskel3d_K3_MarkPrinc(struct xvimage *k)
   int32_t card, x, y, z;
   index_t rs = rowsize(k), cs = colsize(k), ds = depth(k), ps = rs*cs, i; 
   unsigned char *K = UCHARDATA(k);
-  int32_t tab[26], u, n;
+  index_t tab[26] = {0};
+  int32_t u, n;
   for (z = 0; z < ds; z++)
   for (y = 0; y < cs; y++)
   for (x = 0; x < rs; x++)
@@ -435,7 +440,8 @@ void mcskel3d_K3_MarkEss(struct xvimage *k)
   index_t i, rs = rowsize(k), cs = colsize(k), ds = depth(k), ps = rs*cs, N = ps*ds;
   unsigned char *K = UCHARDATA(k);
   unsigned char *P;
-  int32_t ret, tab[26], u, n;
+  index_t tab[26] = {0};
+  int32_t ret, u, n;
   char tablefilename[256];
 
   if (EssTab3 == NULL) 
@@ -452,8 +458,18 @@ void mcskel3d_K3_MarkEss(struct xvimage *k)
       fprintf(stderr, "%s: malloc failed\n", F_NAME);
       exit(1);
     }
-//    sprintf(tablefilename, "%s/src/tables/%s", getenv("PINK"), ESS3DTABNAME);
+
+#ifdef _WIN32
+    char *temp_dir = getenv("TEMP");
+    if (temp_dir == NULL) {
+        temp_dir = "."; // Fallback to current directory if TEMP is missing
+    }
+    sprintf(tablefilename, "%s\\%s", temp_dir, ESS3DTABNAME);
+#else
+    // Linux / Unix / macOS: Use standard /tmp/
     sprintf(tablefilename, "/tmp/%s", ESS3DTABNAME);
+#endif
+
     fd = fopen (tablefilename, "r");
     if (fd == NULL) 
     {   
@@ -540,7 +556,8 @@ int32_t mcskel3d_K3_MarkCore(struct xvimage *k, index_t f)
 #define F_NAME "mcskel3d_K3_MarkCore"
   index_t rs = rowsize(k), cs = colsize(k), ds = depth(k), ps = rs * cs, nf = 0, i, j;
   unsigned char *K = UCHARDATA(k);
-  int32_t tab[26], tabi[26], u, v, n, ni;
+  index_t tab[26] = {0}, tabi[26] = {0};
+  int32_t u, v, n, ni;
   int32_t x = f % rs, y = (f % ps) / rs, z = f / ps, xi, yi, zi;
 
   Alphacarre3d(rs, cs, ds, x, y, z, tab, &n);
@@ -595,7 +612,8 @@ int32_t mcskel3d_K3_MarkCore2(struct xvimage *k, struct xvimage *m, index_t f)
   index_t rs = rowsize(k), cs = colsize(k), ds = depth(k), ps = rs*cs, nf = 0, i, j;
   unsigned char *K = UCHARDATA(k);
   unsigned char *M = UCHARDATA(m);
-  int32_t tab[26], tabi[26], u, v, n, ni;
+  index_t tab[26] = {0}, tabi[26] = {0};
+  int32_t u, v, n, ni;
   int32_t x = f % rs, y = (f % ps) / rs, z = f / ps, xi, yi, zi;
 
   Alphacarre3d(rs, cs, ds, x, y, z, tab, &n);
@@ -666,7 +684,8 @@ int32_t mcskel3d_K3_CardCore(struct xvimage *k, index_t f)
 #define F_NAME "mcskel3d_K3_CardCore"
   index_t rs = rowsize(k), cs = colsize(k), ds = depth(k), ps = rs*cs, nf = 0;
   unsigned char *K = UCHARDATA(k);
-  int32_t tab[26], u, n;
+  index_t tab[26] = {0};
+  int32_t u, n;
   int32_t x = f % rs, y = (f % ps) / rs, z = f / ps;
 
   Alphacarre3d(rs, cs, ds, x, y, z, tab, &n);
@@ -693,7 +712,8 @@ int32_t mcskel3d_K3_CardCore2(struct xvimage *k, struct xvimage *m, index_t f)
   index_t rs = rowsize(k), cs = colsize(k), ds = depth(k), ps = rs*cs, nf = 0;
   unsigned char *K = UCHARDATA(k);
   unsigned char *M = UCHARDATA(m);
-  int32_t tab[26], u, n;
+  index_t tab[26] = {0};
+  int32_t u, n;
   int32_t x = f % rs, y = (f % ps) / rs, z = f / ps;
 
   Alphacarre3d(rs, cs, ds, x, y, z, tab, &n);
@@ -1068,7 +1088,8 @@ void mcskel3d_K3_MarkMCritic(struct xvimage *k)
 #define F_NAME "mcskel3d_K3_MarkMCritic"
   index_t i, rs = rowsize(k), cs = colsize(k), ds = depth(k), ps = rs*cs, N = ps*ds;
   unsigned char *K = UCHARDATA(k);
-  int32_t tab[26], u, x, y, z, n, ncore;
+  index_t tab[26] = {0};
+  int32_t u, x, y, z, n, ncore;
   uint32_t mask;
 
   for (i = 0; i < N; i++) if (IS_ESS(K[i])) K[i] |= FLAG_CRITIC; 
@@ -1146,7 +1167,8 @@ void mcskel3d_K3_MarkMCritic2(struct xvimage *k, struct xvimage *m)
   index_t i, rs = rowsize(k), cs = colsize(k), ds = depth(k), ps = rs*cs, N = ps*ds;
   unsigned char *K = UCHARDATA(k);
   unsigned char *M = UCHARDATA(m);
-  int32_t tab[26], x, y, z, u, n, ncore;
+  index_t tab[26] = {0};
+  int32_t x, y, z, u, n, ncore;
   uint32_t mask;
 
   for (i = 0; i < N; i++) if (IS_ESS(K[i])) K[i] |= FLAG_CRITIC; 
@@ -1294,7 +1316,8 @@ index_t mcskel3d_K3_MCritic2Obj(struct xvimage *k)
 #define F_NAME "mcskel3d_K3_MCritic2Obj"
   index_t i, j, rs = rowsize(k), cs = colsize(k), ds = depth(k), ps = rs*cs, N = ps*ds, n = 0;
   unsigned char *K = UCHARDATA(k);
-  int32_t tab1[26], tab2[26], u, v, n1, n2, x, y, z;
+  index_t tab1[26] = {0}, tab2[26] = {0};
+  int32_t u, v, n1, n2, x, y, z;
   for (i = 0; i < N; i++) K[i] &= ~FLAG_OBJ;
 
   for (z = 0; z < ds; z++)
@@ -1343,7 +1366,8 @@ index_t mcskel3d_K3_MCriticOrMarked2Obj(struct xvimage *k, struct xvimage *m)
   index_t i, j, rs = rowsize(k), cs = colsize(k), ds = depth(k), ps = rs*cs, N = ps*ds, n = 0;
   unsigned char *K = UCHARDATA(k);
   unsigned char *M = UCHARDATA(m);
-  int32_t tab1[26], tab2[26], u, v, n1, n2, x, y, z;
+  index_t tab1[26] = {0}, tab2[26] = {0};
+  int32_t u, v, n1, n2, x, y, z;
   for (i = 0; i < N; i++) K[i] &= ~FLAG_OBJ;
 
   for (z = 0; z < ds; z++)
@@ -1404,7 +1428,8 @@ void mcskel3d_K3_HitPrinc(struct xvimage *k)
 #define F_NAME "mcskel3d_K3_HitPrinc"
   index_t i, j, rs = rowsize(k), cs = colsize(k), ds = depth(k), ps = rs*cs;
   unsigned char *K = UCHARDATA(k);
-  int32_t tab1[26], tab2[26], u, v, n1, n2, x, y, z;
+  index_t tab1[26] = {0}, tab2[26] = {0};
+  int32_t u, v, n1, n2, x, y, z;
 
   for (z = 0; z < ds; z++)
   for (y = 0; y < cs; y++)
@@ -1756,7 +1781,6 @@ void mcskel3d_K3_MarkCurveElts(struct xvimage *k, struct xvimage *m)
   index_t ps = rs*cs, N = ps*ds;
   unsigned char *K = UCHARDATA(k);
   unsigned char *M = UCHARDATA(m);
-  uint32_t mask;
 
   for (z = 0; z < ds; z++)
   for (y = 0; y < cs; y++)
@@ -1809,20 +1833,20 @@ int32_t lskeleuc3d(struct xvimage * k, struct xvimage * inhi, int32_t nsteps)
     \warning Le complexe doit être fermé, il ne doit pas toucher le bord
  */
 {
-  struct xvimage * m;
-  struct xvimage * m2;
-  struct xvimage * dist;
-  struct xvimage * prio;
+  struct xvimage * m = NULL;
+  struct xvimage * m2 = NULL;
+  struct xvimage * dist = NULL;
+  struct xvimage * prio = NULL;
 #ifdef DEBUG
   struct xvimage * k2;
 #endif
-  index_t n_new, i, j, j2, q, rs, cs, ds, ps, n, N;
+  index_t i, j, j2, q, rs, cs, ds, ps, n, N;
   int32_t l, x, y, z;
-  unsigned char *K, *M, *I = NULL;
-  double *D;
-  double *P, p, t;
-  Rbt * RBT;
-  Liste * LIST;
+  unsigned char *K = NULL, *M = NULL, *I = NULL;
+  double *D = NULL;
+  double *P = NULL, p, t;
+  Rbt * RBT = NULL;
+  Liste * LIST = NULL;
 
   ACCEPTED_TYPES1(k, VFF_TYP_1_BYTE);
   ACCEPTED_TYPES1(inhi, VFF_TYP_1_BYTE);
@@ -2075,9 +2099,9 @@ int32_t lskeleuc3d(struct xvimage * k, struct xvimage * inhi, int32_t nsteps)
       }
     } // while (!ListeVide(LIST))
 
-    n_new = mcskel3d_K3_CriticE2Obj(k);
 
 #ifdef VERBOSE
+    index_t n_new = mcskel3d_K3_CriticE2Obj(k);
     printf("  fin step : nb. points = %d\n", n_new);
 #endif
   } // while (!mcrbt_RbtVide(RBT) && (n < nsteps))
@@ -3024,7 +3048,7 @@ int32_t lskel3d21(struct xvimage * k, int32_t nsteps)
 {
 #undef F_NAME
 #define F_NAME "lskel3d21"
-  struct xvimage * m; // pour marquer les éléments "minces"
+  struct xvimage * m = NULL; // pour marquer les éléments "minces"
   index_t n_old, n_new, n;
 
 #ifdef VERBOSE
@@ -3295,7 +3319,7 @@ int32_t lskel3d5(struct xvimage * k, int32_t nsteps)
 {
 #undef F_NAME
 #define F_NAME "lskel3d5"
-  struct xvimage * m; // pour marquer les éléments "minces"
+  struct xvimage * m = NULL; // pour marquer les éléments "minces"
   index_t n_old, n_new, n;
 
 #ifdef VERBOSE
