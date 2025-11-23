@@ -157,10 +157,10 @@ int main(int argc, char **argv)
     {
       somme = somme + histo [x];   /* points déjà considérés */
       if ((histolisse[x-1]>=histolisse[x]) && (histolisse[x]<histolisse[x+1]))
-        if (abs(N-2*somme) < diff)
+        if (labs(N-2*somme) < diff)
         {
           seuil=x;
-          diff = abs(N-2*somme);
+          diff = labs(N-2*somme);
         }
     }
   }
