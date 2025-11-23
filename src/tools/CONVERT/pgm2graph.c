@@ -59,10 +59,7 @@ The vertices of the graph are the object pixels of the binary image \b in.pgm, a
 #include <mcimage.h>
 #include <mcgraphe.h>
 
-/* =============================================================== */
 int main(int argc, char **argv)
-/* =============================================================== */
-  int32_t argc; char **argv; 
 {
   struct xvimage * image;
   int32_t connex;

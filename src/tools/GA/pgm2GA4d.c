@@ -70,10 +70,7 @@ dimension 4).
 #include <jcimage.h>
 #include <lppm2GA.h>
 
-/* =============================================================== */
 int main(int argc, char **argv)
-/* =============================================================== */
-  int32_t argc; char **argv; 
 {
   struct xvimage4D * im;
   struct GA4d * ga;

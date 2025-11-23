@@ -68,10 +68,7 @@ If param = 1, then max is used, and if param = 2, min is used.
 #include <jcimage.h>
 #include <lppm2GA.h>
 
-/* =============================================================== */
 int main(int argc, char **argv)
-/* =============================================================== */
-  int32_t argc; char **argv; 
 {
   struct xvimage * im;
   struct xvimage * ga;

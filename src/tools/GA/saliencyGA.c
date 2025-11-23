@@ -93,10 +93,7 @@ connect
 #include <lhierarchie.h>
 
 
-/* =============================================================== */
 int main(int argc, char **argv)
-/* =============================================================== */
-  int32_t argc; char **argv; 
 {
   struct xvimage * ga, *annexe;
   int32_t param;

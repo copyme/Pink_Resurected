@@ -91,11 +91,7 @@ of the input GA (not available for floats).
 #include <time.h>
 #endif
 
-
-/* =============================================================== */
 int main(int argc, char **argv)
-/* =============================================================== */
-  int32_t argc; char **argv; 
 {
   struct xvimage *ga;
   struct xvimage *gaout;

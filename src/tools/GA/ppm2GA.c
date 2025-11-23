@@ -78,10 +78,7 @@ If im.ppm is a 2D (resp. 3D) image, then <B>out.ga</B> is a 2D (resp
 #include <jcimage.h>
 #include <lppm2GA.h>
 
-/* =============================================================== */
 int main(int argc, char **argv)
-/* =============================================================== */
-  int32_t argc; char **argv; 
 {
   struct xvimage * r;
   struct xvimage * v;
