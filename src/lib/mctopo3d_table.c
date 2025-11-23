@@ -37,13 +37,13 @@ Librairie mctopo3D :
 
 Calcul des nombres topologiques en 3D
 
-Version utilisant les nombres de connexité T et Tb précalculés
-et stockés dans:
+Version utilisant les nombres de connexitÃ© T et Tb prÃ©calculÃ©s
+et stockÃ©s dans:
 TabCN26.dat
 et les configurations de points 26-simples dans:
 TabSimple26.dat
 
-Les nombres de connexité sont définis dans [Ber94].
+Les nombres de connexitÃ© sont dÃ©finis dans [Ber94].
 
 [Ber94] G. Bertrand, "Simple points, topological numbers and geodesic
 neighborhoods in cubic grids", Pattern Recognition Letters, 

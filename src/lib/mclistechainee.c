@@ -37,8 +37,8 @@ knowledge of the CeCILL license and that you accept its terms.
 /* Michel COUPRIE  -  Janvier 1990 */
 /***********************************/
 
-/* ATTENTION : allocation dynamique à chaque ajout d'élément - très inefficace
-   utiliser plutôt mcliste.c
+/* ATTENTION : allocation dynamique Ã  chaque ajout d'Ã©lÃ©ment - trÃ¨s inefficace
+   utiliser plutÃ´t mcliste.c
  */
 
 /* ce module implemente le type abstrait:

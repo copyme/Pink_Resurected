@@ -60,7 +60,7 @@ knowledge of the CeCILL license and that you accept its terms.
 int32_t ldistgeo(struct xvimage *imgx,   /* donnee: image binaire */       
              struct xvimage *imgy,   /* donnee: image binaire (masque) */
              int32_t connex,
-             struct xvimage *res     /* resultat: distances (doit être allouée) */
+             struct xvimage *res     /* resultat: distances (doit Ãªtre allouÃ©e) */
 )
 /* ==================================== */
 #undef F_NAME
@@ -76,7 +76,7 @@ int32_t ldistgeo(struct xvimage *imgx,   /* donnee: image binaire */
 int32_t ldistgeo2d(struct xvimage *imgx,   /* donnee: image binaire */       
                struct xvimage *imgy,   /* donnee: image binaire (masque) */
                int32_t connex,
-               struct xvimage *res     /* resultat: distances (doit être allouée) */
+               struct xvimage *res     /* resultat: distances (doit Ãªtre allouÃ©e) */
 )
 /* ==================================== */
 #undef F_NAME
@@ -168,7 +168,7 @@ int32_t ldistgeo2d(struct xvimage *imgx,   /* donnee: image binaire */
 int32_t ldistgeo3d(struct xvimage *imgx,   /* donnee: image binaire */       
                struct xvimage *imgy,   /* donnee: image binaire (masque) */
                int32_t connex,
-               struct xvimage *res     /* resultat: distances (doit être allouée) */
+               struct xvimage *res     /* resultat: distances (doit Ãªtre allouÃ©e) */
 )
 /* ==================================== */
 #undef F_NAME

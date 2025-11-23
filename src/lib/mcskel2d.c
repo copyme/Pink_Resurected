@@ -33,9 +33,9 @@ The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
 /* \file mcskel2d.c
-    \brief algorithmes pour la squelettisation parallèle en 2D - 
+    \brief algorithmes pour la squelettisation parallÃ¨le en 2D - 
            version efficace utilisant mckhalimsky2d
-    \author Michel COUPRIE, novembre 2004, d'après Gilles Bertrand
+    \author Michel COUPRIE, novembre 2004, d'aprÃ¨s Gilles Bertrand
  */
 
 #include <stdlib.h>
@@ -51,7 +51,7 @@ knowledge of the CeCILL license and that you accept its terms.
 //#define VERBOSE
 
 // table des configurations de faces essentielles pour les singletons de Khalimsky
-// générée par GenerateEssTab() dans mcsquel2d.c
+// gÃ©nÃ©rÃ©e par GenerateEssTab() dans mcsquel2d.c
 unsigned char EssTab[256] = {
   1, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1,
   0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -74,7 +74,7 @@ unsigned char EssTab[256] = {
 /* ========================================== */
 /*! \fn int K2_CheckFrame(struct xvimage *k)
     \param k : un complexe
-    \return : booléen
+    \return : boolÃ©en
     \brief teste si le bord est vide (0)
 */
 boolean K2_CheckFrame(struct xvimage *k)
@@ -95,7 +95,7 @@ boolean K2_CheckFrame(struct xvimage *k)
 /* ========================================== */
 /*! \fn int K2_CheckComplex(struct xvimage *k)
     \param k : un sous-ensemble de H^2
-    \return : booléen
+    \return : boolÃ©en
     \brief teste si k est un complexe
 */
 boolean K2_CheckComplex(struct xvimage *k)
@@ -155,8 +155,8 @@ void K2_Binarize(struct xvimage *k)
 /* ========================================== */
 /*! \fn void K2_SelMarked(struct xvimage *k, unsigned char mask)
     \param k : un complexe
-    \param mask : une marque (mot 8 bits avec un seul bit à 1)
-    \brief met a FLAG_OBJ tous le éléments marqués, à 0 les autres
+    \param mask : une marque (mot 8 bits avec un seul bit Ã  1)
+    \brief met a FLAG_OBJ tous le Ã©lÃ©ments marquÃ©s, Ã  0 les autres
 */
 void K2_SelMarked(struct xvimage *k, unsigned char mask)
 /* ========================================== */
@@ -172,8 +172,8 @@ void K2_SelMarked(struct xvimage *k, unsigned char mask)
 /*! \fn void K2_MarkAlphaCarre(struct xvimage *k, int f, unsigned char mask)
     \param k : un complexe
     \param f : une face
-    \param mask : valeur de la marque (mot 8 bits avec un seul bit à 1)
-    \brief ajoute la marque mask à tous les éléments de alphacarre(f)
+    \param mask : valeur de la marque (mot 8 bits avec un seul bit Ã  1)
+    \brief ajoute la marque mask Ã  tous les Ã©lÃ©ments de alphacarre(f)
 */
 void K2_MarkAlphaCarre(struct xvimage *k, index_t f, unsigned char mask)
 /* ========================================== */
@@ -192,8 +192,8 @@ void K2_MarkAlphaCarre(struct xvimage *k, index_t f, unsigned char mask)
 /*! \fn void K2_UnMarkAlphaCarre(struct xvimage *k, int f, unsigned char mask)
     \param k : un complexe
     \param f : une face
-    \param mask : valeur de la marque (mot 8 bits avec un seul bit à 1)
-    \brief retire la marque mask de tous les éléments de alphacarre(f)
+    \param mask : valeur de la marque (mot 8 bits avec un seul bit Ã  1)
+    \brief retire la marque mask de tous les Ã©lÃ©ments de alphacarre(f)
 */
 void K2_UnMarkAlphaCarre(struct xvimage *k, index_t f, unsigned char mask)
 /* ========================================== */
@@ -240,7 +240,7 @@ void K2_MarkPrinc(struct xvimage *k)
 /*! \fn void K2_MarkEss(struct xvimage *k)
     \param k : un complexe
     \brief pour chaque face essentielle f de k, rajoute (OR) la marque FLAG_ESS au label de f
-    \warning les faces principales doivent avoir été marquées auparavant
+    \warning les faces principales doivent avoir Ã©tÃ© marquÃ©es auparavant
 */
 void K2_MarkEss(struct xvimage *k)
 /* ========================================== */
@@ -289,8 +289,8 @@ void K2_MarkEss(struct xvimage *k)
     \param k : un complexe
     \param f : une face de k
     \return le cardinal (nombre de faces) de la fermeture du noyau
-    \brief marque le complexe formé du noyau (core) de la face f pour le complexe k
-    \warning les faces essentielles doivent avoir été marquées auparavant
+    \brief marque le complexe formÃ© du noyau (core) de la face f pour le complexe k
+    \warning les faces essentielles doivent avoir Ã©tÃ© marquÃ©es auparavant
 */
 int K2_MarkCore(struct xvimage *k, index_t f)
 /* ========================================== */
@@ -342,11 +342,11 @@ printf("mark_core_aux : %d,%d\n", j%rs, j/rs);
     \param k : un complexe
     \param m : un complexe "marqueur"
     \param f : une face de k
-    \return le cardinal (nombre de faces) de la fermeture du noyau de f pour k, conditionné par m
-    \brief marque le complexe formé du noyau (core) de la face f pour le complexe k, conditionné par m
-    (m est un ensemble de faces qui doivent être préservées)
-    \warning les faces essentielles doivent avoir été marquées auparavant,
-    pas de vérification de compatibilité entre k et m
+    \return le cardinal (nombre de faces) de la fermeture du noyau de f pour k, conditionnÃ© par m
+    \brief marque le complexe formÃ© du noyau (core) de la face f pour le complexe k, conditionnÃ© par m
+    (m est un ensemble de faces qui doivent Ãªtre prÃ©servÃ©es)
+    \warning les faces essentielles doivent avoir Ã©tÃ© marquÃ©es auparavant,
+    pas de vÃ©rification de compatibilitÃ© entre k et m
 */
 int K2_MarkCore2(struct xvimage *k, struct xvimage *m, index_t f)
 /* ========================================== */
@@ -407,8 +407,8 @@ int K2_MarkCore2(struct xvimage *k, struct xvimage *m, index_t f)
     \param k : un complexe
     \param f : une face de k
     \return un entier 
-    \brief retourne le cardinal du noyau de f, i.e., le nombre de faces marquées MARK2_ESS du noyau 
-    \warning les faces essentielles doivent avoir été marquées auparavant
+    \brief retourne le cardinal du noyau de f, i.e., le nombre de faces marquÃ©es MARK2_ESS du noyau 
+    \warning les faces essentielles doivent avoir Ã©tÃ© marquÃ©es auparavant
 */
 int K2_CardCore(struct xvimage *k, index_t f)
 /* ========================================== */
@@ -432,11 +432,11 @@ int K2_CardCore(struct xvimage *k, index_t f)
     \param m : un complexe "marqueur"
     \param f : une face de k
     \return un entier 
-    \brief retourne le cardinal du noyau de f pour k conditionné par m, i.e.,
-    le nombre de faces marquées MARK2_ESS ou appartenant à m dans le noyau 
-    (m est un ensemble de faces qui doivent être préservées)
-    \warning les faces essentielles doivent avoir été marquées auparavant,
-    pas de vérification de compatibilité entre k et m
+    \brief retourne le cardinal du noyau de f pour k conditionnÃ© par m, i.e.,
+    le nombre de faces marquÃ©es MARK2_ESS ou appartenant Ã  m dans le noyau 
+    (m est un ensemble de faces qui doivent Ãªtre prÃ©servÃ©es)
+    \warning les faces essentielles doivent avoir Ã©tÃ© marquÃ©es auparavant,
+    pas de vÃ©rification de compatibilitÃ© entre k et m
 */
 int K2_CardCore2(struct xvimage *k, struct xvimage *m, index_t f)
 /* ========================================== */
@@ -458,9 +458,9 @@ int K2_CardCore2(struct xvimage *k, struct xvimage *m, index_t f)
 /* ========================================== */
 /*! \fn void K2_MarkRegul(struct xvimage *k)
     \param k : un complexe
-    \brief marque les faces régulières du complexe k
-    \warning les faces essentielles doivent avoir été marquées auparavant
-    \warning les points de bord ne sont pas testés
+    \brief marque les faces rÃ©guliÃ¨res du complexe k
+    \warning les faces essentielles doivent avoir Ã©tÃ© marquÃ©es auparavant
+    \warning les points de bord ne sont pas testÃ©s
 */
 void K2_MarkRegul(struct xvimage *k)
 /* ========================================== */
@@ -484,7 +484,7 @@ printf("ess : %d,%d ; n = %d, ncore = %d\n", x, y, n, ncore);
 #endif
       if (ncore == 0) goto next;
       if (ncore == n) { K2_UnMarkAlphaCarre(k, i, FLAG_CORE); goto next; }
-      //if (SINGL(x,y)) goto next; // inutile car le core d'un singl est forcément vide
+      //if (SINGL(x,y)) goto next; // inutile car le core d'un singl est forcÃ©ment vide
       if (INTERH(x,y) || INTERV(x,y))
       {
 	if (ncore == 1) K[i] |= FLAG_REGUL;
@@ -512,11 +512,11 @@ printf("ess : %d,%d ; n = %d, ncore = %d\n", x, y, n, ncore);
 /*! \fn void K2_MarkRegul2(struct xvimage *k, struct xvimage *m)
     \param k : un complexe
     \param m : un complexe "marqueur"
-    \brief marque les faces régulières du complexe k conditionné par le complexe m
-    (m est un ensemble de faces qui doivent être préservées)
-    \warning les faces essentielles doivent avoir été marquées auparavant
-    \warning les points de bord ne sont pas testés
-    pas de vérification de compatibilité entre k et m
+    \brief marque les faces rÃ©guliÃ¨res du complexe k conditionnÃ© par le complexe m
+    (m est un ensemble de faces qui doivent Ãªtre prÃ©servÃ©es)
+    \warning les faces essentielles doivent avoir Ã©tÃ© marquÃ©es auparavant
+    \warning les points de bord ne sont pas testÃ©s
+    pas de vÃ©rification de compatibilitÃ© entre k et m
 */
 void K2_MarkRegul2(struct xvimage *k, struct xvimage *m)
 /* ========================================== */
@@ -537,7 +537,7 @@ void K2_MarkRegul2(struct xvimage *k, struct xvimage *m)
       ncore = K2_MarkCore2(k, m, i);
       if (ncore == 0) goto next;
       if (ncore == n) { K2_UnMarkAlphaCarre(k, i, FLAG_CORE); goto next; }
-      //if (SINGL(x,y)) goto next; // inutile car le core d'un singl est forcément vide
+      //if (SINGL(x,y)) goto next; // inutile car le core d'un singl est forcÃ©ment vide
       if (INTERH(x,y) || INTERV(x,y))
       {
 	if (ncore == 1) K[i] |= FLAG_REGUL;
@@ -566,7 +566,7 @@ void K2_MarkRegul2(struct xvimage *k, struct xvimage *m)
     \param k : un complexe
     \brief marque FLAG_CRITIC les fermetures des faces critiques du complexe k, 
            et marque FLAG_CRITIC_T les faces critiques du complexe k
-    \warning les faces essentielles et les faces régulières doivent avoir été marquées auparavant
+    \warning les faces essentielles et les faces rÃ©guliÃ¨res doivent avoir Ã©tÃ© marquÃ©es auparavant
 */
 void K2_MarkCritic(struct xvimage *k)
 /* ========================================== */
@@ -596,7 +596,7 @@ void K2_MarkCritic(struct xvimage *k)
 /*! \fn void K2_MarkCritic1(struct xvimage *k)
     \param k : un complexe
     \brief marque FLAG_CRITIC les faces critiques du complexe k
-    \warning les faces essentielles et les faces régulières doivent avoir été marquées auparavant
+    \warning les faces essentielles et les faces rÃ©guliÃ¨res doivent avoir Ã©tÃ© marquÃ©es auparavant
 */
 void K2_MarkCritic1(struct xvimage *k)
 /* ========================================== */
@@ -624,12 +624,12 @@ void K2_MarkCritic1(struct xvimage *k)
 /*! \fn void K2_MarkCritic2(struct xvimage *k, struct xvimage *m)
     \param k : un complexe
     \param m : un complexe "marqueur"
-    \brief marque FLAG_CRITIC les fermetures des faces critiques du complexe k, conditionné par m, et 
+    \brief marque FLAG_CRITIC les fermetures des faces critiques du complexe k, conditionnÃ© par m, et 
            marque FLAG_CRITIC_T les faces critiques du complexe k (cond. m)
-    (m est un ensemble de faces qui doivent être préservées)
-    \warning les faces essentielles et les faces régulières (conditionnellement à m) 
-    doivent avoir été marquées auparavant,
-    pas de vérification de compatibilité entre k et m
+    (m est un ensemble de faces qui doivent Ãªtre prÃ©servÃ©es)
+    \warning les faces essentielles et les faces rÃ©guliÃ¨res (conditionnellement Ã  m) 
+    doivent avoir Ã©tÃ© marquÃ©es auparavant,
+    pas de vÃ©rification de compatibilitÃ© entre k et m
 */
 void K2_MarkCritic2(struct xvimage *k, struct xvimage *m)
 /* ========================================== */
@@ -660,11 +660,11 @@ void K2_MarkCritic2(struct xvimage *k, struct xvimage *m)
 /*! \fn void K2_MarkCritic3(struct xvimage *k, struct xvimage *m)
     \param k : un complexe
     \param m : un complexe "marqueur"
-    \brief marque FLAG_CRITIC les faces critiques du complexe k, conditionné par m
-    (m est un ensemble de faces qui doivent être préservées)
-    \warning les faces essentielles et les faces régulières (conditionnellement à m) 
-    doivent avoir été marquées auparavant,
-    pas de vérification de compatibilité entre k et m
+    \brief marque FLAG_CRITIC les faces critiques du complexe k, conditionnÃ© par m
+    (m est un ensemble de faces qui doivent Ãªtre prÃ©servÃ©es)
+    \warning les faces essentielles et les faces rÃ©guliÃ¨res (conditionnellement Ã  m) 
+    doivent avoir Ã©tÃ© marquÃ©es auparavant,
+    pas de vÃ©rification de compatibilitÃ© entre k et m
 */
 void K2_MarkCritic3(struct xvimage *k, struct xvimage *m)
 /* ========================================== */
@@ -693,7 +693,7 @@ void K2_MarkCritic3(struct xvimage *k, struct xvimage *m)
 /*! \fn void K2_MarkMCritic(struct xvimage *k)
     \param k : un complexe 
     \brief marque FLAG_CRITIC les faces m-critiques du complexe k
-    \warning les faces essentielles et les faces régulières doivent avoir été marquées auparavant
+    \warning les faces essentielles et les faces rÃ©guliÃ¨res doivent avoir Ã©tÃ© marquÃ©es auparavant
 */
 void K2_MarkMCritic(struct xvimage *k)
 /* ========================================== */
@@ -734,11 +734,11 @@ void K2_MarkMCritic(struct xvimage *k)
 /*! \fn void K2_MarkMCritic2(struct xvimage *k, struct xvimage *m)
     \param k : un complexe 
     \param m : un complexe "marqueur"
-    \brief marque FLAG_CRITIC les faces M-critiques du complexe k, conditionné par m
-    (m est un ensemble de faces qui doivent être préservées)
-    \warning les faces essentielles et les faces régulières (conditionnellement à m)  
-    doivent avoir été marquées auparavant,
-    pas de vérification de compatibilité entre k et m
+    \brief marque FLAG_CRITIC les faces M-critiques du complexe k, conditionnÃ© par m
+    (m est un ensemble de faces qui doivent Ãªtre prÃ©servÃ©es)
+    \warning les faces essentielles et les faces rÃ©guliÃ¨res (conditionnellement Ã  m)  
+    doivent avoir Ã©tÃ© marquÃ©es auparavant,
+    pas de vÃ©rification de compatibilitÃ© entre k et m
 */
 void K2_MarkMCritic2(struct xvimage *k, struct xvimage *m)
 /* ========================================== */
@@ -779,8 +779,8 @@ void K2_MarkMCritic2(struct xvimage *k, struct xvimage *m)
 /* ========================================== */
 /*! \fn int K2_Critic2Obj(struct xvimage *k)
     \param k : un complexe
-    \return le nombre de faces objet trouvées
-    \brief marque FLAG_OBJ les faces marquées FLAG_CRITIC du complexe k et remet à 0 les autres marques
+    \return le nombre de faces objet trouvÃ©es
+    \brief marque FLAG_OBJ les faces marquÃ©es FLAG_CRITIC du complexe k et remet Ã  0 les autres marques
 */
 int K2_Critic2Obj(struct xvimage *k)
 /* ========================================== */
@@ -803,10 +803,10 @@ int K2_Critic2Obj(struct xvimage *k)
 /* ========================================== */
 /*! \fn int K2_MCritic2Obj(struct xvimage *k)
     \param k : un complexe
-    \return le nombre de faces objet trouvées
+    \return le nombre de faces objet trouvÃ©es
     \brief marque FLAG_OBJ les fermetures des faces non nulles 
-    contenant des faces m-critiques (marquées FLAG_CRITIC) 
-    du complexe k et remet à 0 les autres marques
+    contenant des faces m-critiques (marquÃ©es FLAG_CRITIC) 
+    du complexe k et remet Ã  0 les autres marques
 */
 int K2_MCritic2Obj(struct xvimage *k)
 /* ========================================== */
@@ -849,11 +849,11 @@ int K2_MCritic2Obj(struct xvimage *k)
 /* ========================================== */
 /*! \fn int K2_MCriticSE2Obj(struct xvimage *k)
     \param k : un complexe
-    \return le nombre de faces objet trouvées
+    \return le nombre de faces objet trouvÃ©es
     \brief marque FLAG_OBJ les fermetures des faces non nulles 
-    contenant des faces m-critiques (marquées FLAG_CRITIC)
+    contenant des faces m-critiques (marquÃ©es FLAG_CRITIC)
     en position S, E pour les 1-faces et SE, SW pour les 0-faces 
-    du complexe k et remet à 0 les autres marques
+    du complexe k et remet Ã  0 les autres marques
 */
 int K2_MCriticSE2Obj(struct xvimage *k)
 /* ========================================== */
@@ -908,11 +908,11 @@ printf("  j : %d (%d %d) ih:%d iv:%d s:%d\n", j, xj, yj, INTERH(x,y), INTERV(x,y
 /*! \fn int K2_MCriticOrMarked2Obj(struct xvimage *k, struct xvimage *m)
     \param k : un complexe
     \param m : un complexe "marqueur"
-    (m est un ensemble de faces qui doivent être préservées)
-    \return le nombre de faces objet trouvées
+    (m est un ensemble de faces qui doivent Ãªtre prÃ©servÃ©es)
+    \return le nombre de faces objet trouvÃ©es
     \brief marque FLAG_OBJ les fermetures des faces 
-    contenant des faces m-critiques (marquées FLAG_CRITIC)
-    du complexe k ou des faces de m et remet à 0 les autres marques.
+    contenant des faces m-critiques (marquÃ©es FLAG_CRITIC)
+    du complexe k ou des faces de m et remet Ã  0 les autres marques.
 */
 int K2_MCriticOrMarked2Obj(struct xvimage *k, struct xvimage *m)
 /* ========================================== */
@@ -954,10 +954,10 @@ int K2_MCriticOrMarked2Obj(struct xvimage *k, struct xvimage *m)
 /*! \fn void K2_MarkThin(struct xvimage *k, struct xvimage *m)
     \param k : un complexe
     \param m : un complexe "marqueur"
-    (m est un ensemble de faces qui doivent être préservées)
-    \brief ajoute au complexe m les faces séparantes (Tb > 1) du complexe k
-    \warning les faces essentielles doivent avoir été marquées auparavant,
-    pas de vérification de compatibilité entre k et m
+    (m est un ensemble de faces qui doivent Ãªtre prÃ©servÃ©es)
+    \brief ajoute au complexe m les faces sÃ©parantes (Tb > 1) du complexe k
+    \warning les faces essentielles doivent avoir Ã©tÃ© marquÃ©es auparavant,
+    pas de vÃ©rification de compatibilitÃ© entre k et m
 */
 void K2_MarkThin(struct xvimage *k, struct xvimage *m)
 /* ========================================== */
@@ -1018,9 +1018,9 @@ printf("ess : %d,%d ; n = %d, ncore = %d\n", x, y, n, ncore);
 /*! \fn int K2_CriticOrMarked2Obj(struct xvimage *k, struct xvimage *m)
     \param k : un complexe
     \param m : un complexe "marqueur"
-    (m est un ensemble de faces qui doivent être préservées)
-    \return le nombre de faces critiques ou marquées trouvées
-    \brief marque FLAG_OBJ les faces critiques du complexe k ou marquées par m et remet à 0 les flags dans k
+    (m est un ensemble de faces qui doivent Ãªtre prÃ©servÃ©es)
+    \return le nombre de faces critiques ou marquÃ©es trouvÃ©es
+    \brief marque FLAG_OBJ les faces critiques du complexe k ou marquÃ©es par m et remet Ã  0 les flags dans k
 */
 int K2_CriticOrMarked2Obj(struct xvimage *k, struct xvimage *m)
 /* ========================================== */
@@ -1038,7 +1038,7 @@ int K2_CriticOrMarked2Obj(struct xvimage *k, struct xvimage *m)
 /* ========================================== */
 /*! \fn void K2_HitPrinc(struct xvimage *k)
     \param k : un complexe
-    \brief pour chaque face f marquée FLAG_PRINC de k, marque FLAG_OBJ le alpha du beta de f
+    \brief pour chaque face f marquÃ©e FLAG_PRINC de k, marque FLAG_OBJ le alpha du beta de f
 */
 void K2_HitPrinc(struct xvimage *k)
 /* ========================================== */
@@ -1074,20 +1074,20 @@ void K2_HitPrinc(struct xvimage *k)
 /*! \fn void K2_MarkEnd(struct xvimage *k, struct xvimage *m)
     \param k : un complexe
     \param m : un complexe "marqueur"
-    (m est un ensemble de faces qui doivent être préservées)
-    \brief ajoute au complexe m les faces extrémités du complexe k
-    \warning les faces essentielles et régulières doivent avoir été marquées auparavant,
-    pas de vérification de compatibilité entre k et m
+    (m est un ensemble de faces qui doivent Ãªtre prÃ©servÃ©es)
+    \brief ajoute au complexe m les faces extrÃ©mitÃ©s du complexe k
+    \warning les faces essentielles et rÃ©guliÃ¨res doivent avoir Ã©tÃ© marquÃ©es auparavant,
+    pas de vÃ©rification de compatibilitÃ© entre k et m
 */
 void K2_MarkEnd(struct xvimage *k, struct xvimage *m)
 /* ========================================== */
-// une face "CARRE" est extrémité si 
-//   i) elle est régulière et 
+// une face "CARRE" est extrÃ©mitÃ© si 
+//   i) elle est rÃ©guliÃ¨re et 
 //   ii) le cardinal de son core est 1 ou 2 ou 3
-// une face "INTER" est extrémité si 
-//   i) elle est régulière et  
+// une face "INTER" est extrÃ©mitÃ© si 
+//   i) elle est rÃ©guliÃ¨re et  
 //   ii) elle est sous deux CARRES qui sont dans k et
-//   iii) ces carrés sont réguliers et 
+//   iii) ces carrÃ©s sont rÃ©guliers et 
 //   iv) le cardinal du core de ces deux CARRES est de 3
 {
 #undef F_NAME
@@ -1136,15 +1136,15 @@ void K2_MarkEnd(struct xvimage *k, struct xvimage *m)
 /*! \fn void K2_MarkEnd2(struct xvimage *k, struct xvimage *m)
     \param k : un complexe
     \param m : un complexe "marqueur"
-    (m est un ensemble de faces qui doivent être préservées)
-    \brief ajoute au complexe m les faces extrémités du complexe k
-    \warning les faces principales, essentielles et régulières 
-    doivent avoir été marquées auparavant,
-    pas de vérification de compatibilité entre k et m
+    (m est un ensemble de faces qui doivent Ãªtre prÃ©servÃ©es)
+    \brief ajoute au complexe m les faces extrÃ©mitÃ©s du complexe k
+    \warning les faces principales, essentielles et rÃ©guliÃ¨res 
+    doivent avoir Ã©tÃ© marquÃ©es auparavant,
+    pas de vÃ©rification de compatibilitÃ© entre k et m
 */
 void K2_MarkEnd2(struct xvimage *k, struct xvimage *m)
 /* ========================================== */
-// une face principale, régulière f est extrémité si 
+// une face principale, rÃ©guliÃ¨re f est extrÃ©mitÃ© si 
 // si f contient exactement une face critique
 {
 #undef F_NAME
@@ -1192,10 +1192,10 @@ void K2_MarkEnd2(struct xvimage *k, struct xvimage *m)
 /*! \fn void K2_MarkSE(struct xvimage *k)
     \param k : un complexe
     \brief ajoute au complexe m les faces SE du complexe k.
-    Une face f est dite SE si elle principale et régulière et si elle 
+    Une face f est dite SE si elle principale et rÃ©guliÃ¨re et si elle 
     contient une 1-face m-critique S ou E, ou une 0-face m-critique SE ou SW.
-    \warning les faces m-critiques doivent avoir été marquées auparavant,
-    pas de vérification de compatibilité entre k et m
+    \warning les faces m-critiques doivent avoir Ã©tÃ© marquÃ©es auparavant,
+    pas de vÃ©rification de compatibilitÃ© entre k et m
 */
 void K2_MarkSE(struct xvimage *k, struct xvimage *m)
 /* ========================================== */
@@ -1228,15 +1228,15 @@ void K2_MarkSE(struct xvimage *k, struct xvimage *m)
 /*! \fn void K2_MarkNotNeighInterior(struct xvimage *k, struct xvimage *m)
     \param k : un complexe
     \param m : un complexe "marqueur"
-    (m est un ensemble de faces qui doivent être préservées)
-    \brief ajoute au complexe m les faces carrées non voisines (par un côté) 
-    d'au moins une face carrée intérieure du complexe k
-    \warning les faces essentielles et régulières doivent avoir été marquées auparavant,
-    pas de vérification de compatibilité entre k et m
+    (m est un ensemble de faces qui doivent Ãªtre prÃ©servÃ©es)
+    \brief ajoute au complexe m les faces carrÃ©es non voisines (par un cÃ´tÃ©) 
+    d'au moins une face carrÃ©e intÃ©rieure du complexe k
+    \warning les faces essentielles et rÃ©guliÃ¨res doivent avoir Ã©tÃ© marquÃ©es auparavant,
+    pas de vÃ©rification de compatibilitÃ© entre k et m
 */
 void K2_MarkNotNeighInterior(struct xvimage *k, struct xvimage *m)
 /* ========================================== */
-// une face "CARRE" est intérieure le cardinal de son core est 8
+// une face "CARRE" est intÃ©rieure le cardinal de son core est 8
 {
 #undef F_NAME
 #define F_NAME "K2_MarkNotNeighInterior"
@@ -1283,7 +1283,7 @@ void K2_MarkNotNeighInterior(struct xvimage *k, struct xvimage *m)
     \param k,m : deux complexes
     \param m : un complexe "labels"
     \brief pour chaque face dans k et pas dans m,
-    met le label "lab" dans l'élément correspondant de "l"
+    met le label "lab" dans l'Ã©lÃ©ment correspondant de "l"
 */
 void K2_LabelDifference(struct xvimage *k, struct xvimage *m, struct xvimage *l, index_t lab)
 /* ========================================== */
@@ -1309,7 +1309,7 @@ void K2_LabelDifference(struct xvimage *k, struct xvimage *m, struct xvimage *l,
 void lskel2d4(struct xvimage * k, index_t nsteps) 
 /* =============================================================== */
 /*
-    \brief Noyau homotopique, version "Z^2 directe" (sans reconstruction) - version efficace basée sur Khalimski 2D
+    \brief Noyau homotopique, version "Z^2 directe" (sans reconstruction) - version efficace basÃ©e sur Khalimski 2D
     \warning L'objet ne doit pas toucher le bord
  */
 {
@@ -1371,7 +1371,7 @@ void lskel2d4(struct xvimage * k, index_t nsteps)
 void lskel2d4b(struct xvimage * k, struct xvimage * m, index_t nsteps) 
 /* =============================================================== */
 /*
-    \brief Noyau homotopique avec contrainte, version "Z^2 directe" (sans reconstruction) - version efficace basée sur Khalimski 2D
+    \brief Noyau homotopique avec contrainte, version "Z^2 directe" (sans reconstruction) - version efficace basÃ©e sur Khalimski 2D
     \warning L'objet ne doit pas toucher le bord
  */
 {
@@ -1440,8 +1440,8 @@ void lskel2d4b(struct xvimage * k, struct xvimage * m, index_t nsteps)
 void lskel2d5(struct xvimage * k, index_t nsteps) 
 /* =============================================================== */
 /*
-  \brief Squelette curviligne, version "Z^2" avec détection de points extrémités 
-         - version efficace basée sur Khalimski 2D
+  \brief Squelette curviligne, version "Z^2" avec dÃ©tection de points extrÃ©mitÃ©s 
+         - version efficace basÃ©e sur Khalimski 2D
   \warning L'objet ne doit pas toucher le bord
  */
 {
@@ -1544,9 +1544,9 @@ void lskel2d5(struct xvimage * k, index_t nsteps)
 void lskel2d7(struct xvimage * k, index_t nsteps) 
 /* =============================================================== */
 /*
-    \brief Squelette curviligne, version "Z^2" avec détection de points extrémités 
-    et des points non voisins de points intérieurs - version efficace basée sur Khalimski 2D
-    \author Michel COUPRIE, novembre 2004, d'après Gilles Bertrand
+    \brief Squelette curviligne, version "Z^2" avec dÃ©tection de points extrÃ©mitÃ©s 
+    et des points non voisins de points intÃ©rieurs - version efficace basÃ©e sur Khalimski 2D
+    \author Michel COUPRIE, novembre 2004, d'aprÃ¨s Gilles Bertrand
     \warning L'objet ne doit pas toucher le bord
  */
 {
@@ -1651,9 +1651,9 @@ void lskel2d7(struct xvimage * k, index_t nsteps)
 void lskel2d7b(struct xvimage * k, index_t nsteps) 
 /* =============================================================== */
 /*
-    \brief Squelette curviligne, version "Z^2" avec détection
-    des points non voisins de points intérieurs - version efficace basée sur Khalimski 2D
-    \author Michel COUPRIE, novembre 2004, d'après Gilles Bertrand
+    \brief Squelette curviligne, version "Z^2" avec dÃ©tection
+    des points non voisins de points intÃ©rieurs - version efficace basÃ©e sur Khalimski 2D
+    \author Michel COUPRIE, novembre 2004, d'aprÃ¨s Gilles Bertrand
     \warning L'objet ne doit pas toucher le bord
  */
 {
@@ -1750,8 +1750,8 @@ void lskel2d7b(struct xvimage * k, index_t nsteps)
 void lskel2d9(struct xvimage * k, index_t nsteps) 
 /* =============================================================== */
 /*
-  \brief Squelette ultime asymétrique, version "Z^2" 
-         - version efficace basée sur Khalimski 2D
+  \brief Squelette ultime asymÃ©trique, version "Z^2" 
+         - version efficace basÃ©e sur Khalimski 2D
   \warning L'objet ne doit pas toucher le bord
  */
 {
@@ -1846,8 +1846,8 @@ void lskel2d9(struct xvimage * k, index_t nsteps)
 int32_t lskel2d1(struct xvimage * k, int32_t nsteps, struct xvimage * inhi) 
 /* =============================================================== */
 /*
-    \brief Squelette curviligne (dans H2) par sélection et mémorisation
-	  des isthmes 1D - version basée sur Khalimski 2D
+    \brief Squelette curviligne (dans H2) par sÃ©lection et mÃ©morisation
+	  des isthmes 1D - version basÃ©e sur Khalimski 2D
  */
 {
 #undef F_NAME
@@ -1907,7 +1907,7 @@ int32_t lskel2d1(struct xvimage * k, int32_t nsteps, struct xvimage * inhi)
 int32_t lskel2d0(struct xvimage * k, int32_t nsteps, struct xvimage * inhi) 
 /* =============================================================== */
 /*
-    \brief Squelette ultime (dans H2) - version basée sur Khalimski 2D
+    \brief Squelette ultime (dans H2) - version basÃ©e sur Khalimski 2D
  */
 {
 #undef F_NAME

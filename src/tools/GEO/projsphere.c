@@ -48,7 +48,7 @@ knowledge of the CeCILL license and that you accept its terms.
 \author Michel Couprie
 */
 
-/* Michel Couprie - décembre 2004 */
+/* Michel Couprie - dÃ©cembre 2004 */
 
 #include <stdio.h>
 #include <stdint.h>

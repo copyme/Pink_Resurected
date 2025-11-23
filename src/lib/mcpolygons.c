@@ -34,7 +34,7 @@ knowledge of the CeCILL license and that you accept its terms.
 */
 /* 
   Gestion d'un maillage polygonal
-  Michel Couprie  -  décembre 2008
+  Michel Couprie  -  dÃ©cembre 2008
 */
 
 #include <stdio.h>
@@ -245,7 +245,7 @@ int32_t MCP_AddFace(MCP *P, Liste *Face)
 void MCP_ComputeFaces(MCP *P)
 /* ==================================== */
 /*
-  Met à jour l'information "faces adjacentes" des vertices 
+  Met Ã  jour l'information "faces adjacentes" des vertices 
 */
 #undef F_NAME
 #define F_NAME "MCP_ComputeFaces"
@@ -494,14 +494,14 @@ void MCP_GetPolyPoints(MCP *P, int32_t indface, int32_t *pi, double *px, double 
 /* ==================================== */
 /*
 Extrait la liste des points d'un polygone
-entrées : 
+entrÃ©es : 
   P : un maillage polygonal
-  indface : l'index du polygone considéré
+  indface : l'index du polygone considÃ©rÃ©
   *n : la taille allouee pour les tableaux pi,px,py,pz
 
 sorties : 
-  pi : tableau des indices (dans P) des points trouvés
-  px,py,pz : tableau des coordonnées des points trouvés
+  pi : tableau des indices (dans P) des points trouvÃ©s
+  px,py,pz : tableau des coordonnÃ©es des points trouvÃ©s
   *n : le nombre de points transmis  
 */
 {
@@ -556,7 +556,7 @@ sorties :
 MCP * MCP_LoadVTK(FILE *filein)
 /* ==================================== */
 /* fileout doit avoir ete ouvert en lecture */
-/* L'appel à MCP_Init est inclus */
+/* L'appel Ã  MCP_Init est inclus */
 /* format: 
 POINTS %d float   // Sommets - champ obligatoire
 %g %g %g          // coord. vertex

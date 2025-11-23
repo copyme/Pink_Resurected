@@ -350,9 +350,9 @@ static void W_Constructible(int32_t x, uint8_t *F, int32_t rs, int32_t ps, int32
 			   )
     
 /* ==================================== */
-// Si x est W-construcible, le couple [c, lcalevel] représente la composante (avec son niveau)
-// à laquelle x peut être ajouté.
-// Sinon la valeur retournée dans c est -1
+// Si x est W-construcible, le couple [c, lcalevel] reprÃ©sente la composante (avec son niveau)
+// Ã  laquelle x peut Ãªtre ajoutÃ©.
+// Sinon la valeur retournÃ©e dans c est -1
 {
     int32_t c1, k, ncomp = TrouveComposantes(x, F, rs, ps, N, connex, CM, tabcomp);
 
@@ -580,9 +580,9 @@ static void Watershed(struct xvimage *image, int32_t connex,
 int32_t lwshedtopo_lwshedtopo(struct xvimage *image, int32_t connex)
 /* ==================================== */
 /*! \fn int32_t lwshedtopo(struct xvimage *image, int32_t connex)
-    \param image (entrée/sortie) : une image 2D ndg
-    \param connex (entrée) : 4 ou 8 (2D), 6, 18 ou 26 (3D) 
-    \return code erreur : 0 si échec, 1 sinon
+    \param image (entrÃ©e/sortie) : une image 2D ndg
+    \param connex (entrÃ©e) : 4 ou 8 (2D), 6, 18 ou 26 (3D) 
+    \return code erreur : 0 si Ã©chec, 1 sinon
     \brief ligne de partage des eaux "topologique" (algo MC, GB, LN)
 */
 #undef F_NAME
@@ -788,7 +788,7 @@ static void reconsTree(ctree *CT, int32_t *CM, int32_t *newCM, int32_t N, uint8_
   for (d = 0; d < CT->nbnodes; d++) {
     if ((CT->tabnodes[d].nbsons == 0) && (CT->flags[d] == 0)) {
       // pour toutes les feuilles non marquees 
-      c = CT->tabnodes[d].father;                   // récupère le père marqué
+      c = CT->tabnodes[d].father;                   // rÃ©cupÃ¨re le pÃ¨re marquÃ©
       while (CT->flags[c] == 0)
       {
 	c = CT->tabnodes[c].father;
@@ -930,10 +930,10 @@ int32_t lwshedtopobin(struct xvimage *image, struct xvimage *marqueur, int32_t c
 int32_t lwshedtopobin_classic(struct xvimage *image, struct xvimage *marqueur, int32_t connex)
 /* ==================================== */
 /*! \fn int32_t lwshedtopobin(struct xvimage *image, struct xvimage *marqueur, int32_t connex)
-    \param image (entrée/sortie) : une image ndg
-    \param marqueur (entrée/sortie) : une image binaire
-    \param connex (entrée) : 4 ou 8 (2D), 6, 18 ou 26 (3D)
-    \return code erreur : 0 si échec, 1 sinon
+    \param image (entrÃ©e/sortie) : une image ndg
+    \param marqueur (entrÃ©e/sortie) : une image binaire
+    \param connex (entrÃ©e) : 4 ou 8 (2D), 6, 18 ou 26 (3D)
+    \return code erreur : 0 si Ã©chec, 1 sinon
     \brief ligne de partage des eaux "topologique" binaire (algo MC, GB, LN)
 */
 #undef F_NAME

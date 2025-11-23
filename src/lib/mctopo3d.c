@@ -37,8 +37,8 @@ Librairie mctopo3D :
 
 Calcul des nombres topologiques en 3D
 
-Version calculant les nombres de connexité T et Tb directement
-d'après la definition de G. Bertrand [Ber94].
+Version calculant les nombres de connexitÃ© T et Tb directement
+d'aprÃ¨s la definition de G. Bertrand [Ber94].
 
 [Ber94] G. Bertrand, "Simple points, topological numbers and geodesic
 neighborhoods in cubic grids", Pattern Recognition Letters, 
@@ -46,8 +46,8 @@ Vol. 15, pp. 1003-1011, 1994.
 
 Michel Couprie 1998-2007
 
-Update nov. 2006 : modif mctopo3d_geodesic_neighborhood pour compatibilité 64 bits
-Update nov. 2007 : modif mctopo3d_nbcomp pour compatibilité 64 bits
+Update nov. 2006 : modif mctopo3d_geodesic_neighborhood pour compatibilitÃ© 64 bits
+Update nov. 2007 : modif mctopo3d_nbcomp pour compatibilitÃ© 64 bits
 Update sep. 2009 : ajout des tests is_on_frame()
 */
 
@@ -642,7 +642,7 @@ int32_t mctopo3d_nbvoislab6(
   index_t N)                       /* taille image */
 /* ========================================== */
 /*
-  retourne le nombre de 6-voisins du point central de même label
+  retourne le nombre de 6-voisins du point central de mÃªme label
 */
 {
   int32_t lab = B[i];
@@ -665,7 +665,7 @@ int32_t mctopo3d_nbvoislab18(
   index_t N)                       /* taille image */
 /* ========================================== */
 /*
-  retourne le nombre de 18-voisins du point central de même label
+  retourne le nombre de 18-voisins du point central de mÃªme label
 */
 {
   int32_t lab = B[i];
@@ -700,7 +700,7 @@ int32_t mctopo3d_nbvoislab26(
   index_t N)                       /* taille image */
 /* ========================================== */
 /*
-  retourne le nombre de 26-voisins du point central de même label
+  retourne le nombre de 26-voisins du point central de mÃªme label
 */
 {
   int32_t lab = B[i];
@@ -743,7 +743,7 @@ int32_t mctopo3d_nbvoislabc6(
   index_t N)                       /* taille image */
 /* ========================================== */
 /*
-  retourne le nombre de 6-voisins du point central de label différent et non nul
+  retourne le nombre de 6-voisins du point central de label diffÃ©rent et non nul
 */
 {
   int32_t lab = B[i];
@@ -766,7 +766,7 @@ int32_t mctopo3d_nbvoislabc18(
   index_t N)                       /* taille image */
 /* ========================================== */
 /*
-  retourne le nombre de 18-voisins du point central de label différent et non nul
+  retourne le nombre de 18-voisins du point central de label diffÃ©rent et non nul
 */
 {
   int32_t lab = B[i];
@@ -801,7 +801,7 @@ int32_t mctopo3d_nbvoislabc26(
   index_t N)                       /* taille image */
 /* ========================================== */
 /*
-  retourne le nombre de 26-voisins du point central de label différent et non nul
+  retourne le nombre de 26-voisins du point central de label diffÃ©rent et non nul
 */
 {
   int32_t lab = B[i];
@@ -1141,7 +1141,7 @@ static void preparecubeslab(
 /*
   Transfere le voisinage de i pour l'image 3d img dans les 
   structures cube_topo3d (vois. original) et cubec_topo3d (complementaire).
-  Les points pris en compte sont ceux qui ont le même label que i.
+  Les points pris en compte sont ceux qui ont le mÃªme label que i.
   ATTENTION: i ne doit pas etre un point de bord (test a faire avant).
 */
 {

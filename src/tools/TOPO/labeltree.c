@@ -54,7 +54,7 @@ The distance d used depends on the parameter \b connex :
 <B>Category:</B> topo
 \ingroup   topo
 
-\author Cédric Allène
+\author CÃ©dric AllÃ¨ne
 */
 #include <stdio.h>
 #include <stdint.h>

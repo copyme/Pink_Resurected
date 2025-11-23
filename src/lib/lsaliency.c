@@ -429,7 +429,7 @@ int32_t lsaliency(
     int32_t xx, yy, max;
   //printf("scs = %d, srs = %d\n", scs, srs);
   S = SLONGDATA(saliency);
-  // mettre les barres horizontales et verticales à la saillence
+  // mettre les barres horizontales et verticales Ã  la saillence
   for (i = 0; i < cs; i++) {
     for (j = 0; j < rs; j++) {
       x = i*rs + j;
@@ -448,7 +448,7 @@ int32_t lsaliency(
       }
     }
   }
-  // les points à la saillence (max des barres)
+  // les points Ã  la saillence (max des barres)
   for (i = 0; i < scs; i+=2) {
     for (j = 0; j < srs; j+=2) {
       x = i*srs + j;
@@ -563,7 +563,7 @@ int32_t lsaliency(
     printf("\n");
   }
   qsort(basins, nbmin, sizeof(basinT), compareBasin);
-  printf("Après tri\n");
+  printf("AprÃ¨s tri\n");
   for (i=0; i<nbmin; i++) {
     printf("Basin[%d] %d ; dyn = %d\n", i, basins[i].label, basins[i].dynamics);    
   }
@@ -606,7 +606,7 @@ int32_t lsaliency(
     int32_t xx, yy, max;
   //printf("scs = %d, srs = %d\n", scs, srs);
   S = SLONGDATA(saliency);
-  // mettre les barres horizontales et verticales à la saillence
+  // mettre les barres horizontales et verticales Ã  la saillence
   for (i = 0; i < cs; i++) {
     for (j = 0; j < rs; j++) {
       x = i*rs + j;
@@ -625,7 +625,7 @@ int32_t lsaliency(
       }
     }
   }
-  // les points à la saillence (max des barres)
+  // les points Ã  la saillence (max des barres)
   for (i = 0; i < scs; i+=2) {
     for (j = 0; j < srs; j+=2) {
       x = i*srs + j;

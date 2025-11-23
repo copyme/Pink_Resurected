@@ -33,16 +33,16 @@ The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
 /* 
-Fonctions pour l'axe médian exact ou approché, et
+Fonctions pour l'axe mÃ©dian exact ou approchÃ©, et
 pour la fonction bissectrice.
 
 Michel Couprie - mai 2002
 Rita Zrour - juin 2004
-  axe médian euclidien exact (algo de Rémy-Thiel) et fonction bissectrice (lmedialaxis_lbisector_Rita)
-Michel Couprie - juillet 2004 - révision lmedialaxis_lbisector
+  axe mÃ©dian euclidien exact (algo de RÃ©my-Thiel) et fonction bissectrice (lmedialaxis_lbisector_Rita)
+Michel Couprie - juillet 2004 - rÃ©vision lmedialaxis_lbisector
 Laurent Najman - lmedialaxis_lbisector_talbot
-Michel Couprie - juillet 2004 - révision lmedialaxis_lbisector_talbot
-Michel Couprie - août 2005 - variante lmedialaxis_lbisector Coeurjolly 
+Michel Couprie - juillet 2004 - rÃ©vision lmedialaxis_lbisector_talbot
+Michel Couprie - aoÃ»t 2005 - variante lmedialaxis_lbisector Coeurjolly 
 Michel Couprie - novembre 2008 - lambda medial axis
 Michel Couprie - avril 2014 - scale medial axis
 Michel Couprie - avril 2014 - scale-filtered medial axis
@@ -555,7 +555,7 @@ int32_t RadiusMax(uint32_t * gg, int32_t rs, int32_t cs, int32_t ds)  //rs=width
 //----------------------------------
 int32_t lmedialaxis_ApplySymmetries(int32_t x, int32_t y, int32_t x1, int32_t y1, int32_t rs, int32_t cs, Neighbors *Mg)
 //----------------------------------
-// ATTENTION : roles de x et y inversés (cf. Rita)
+// ATTENTION : roles de x et y inversÃ©s (cf. Rita)
 {
   int32_t vectx[8], vecty[8], i;
   int32_t count=0;
@@ -585,7 +585,7 @@ int32_t lmedialaxis_ApplySymmetries(int32_t x, int32_t y, int32_t x1, int32_t y1
 //----------------------------------
 int32_t lmedialaxis_ApplySymmetries3d(int32_t x, int32_t y, int32_t z, int32_t x1, int32_t y1, int32_t z1, int32_t rs, int32_t cs, int32_t ds, Neighbors *Mg)
 //----------------------------------
-// ATTENTION : roles de x, y, z inversés (cf. Rita)
+// ATTENTION : roles de x, y, z inversÃ©s (cf. Rita)
 {
   int32_t vectx[48], vecty[48], vectz[48], i;
   int32_t count = 0;
@@ -1369,7 +1369,7 @@ double lmedialaxis_ComputeAngle(int32_t x, int32_t y, uint32_t *image,
 // image : la carte de distance euclidinenne quadratique
 // TabIndDec, nval, ListDecs : la "table" pour calculer l'aval
 // Aval : tableau pour stocker les points de l'aval - 
-//          logiquement locale, passé en paramètre pour éviter allocations/libérations
+//          logiquement locale, passÃ© en paramÃ¨tre pour Ã©viter allocations/libÃ©rations
 {
 #undef F_NAME
 #define F_NAME "lmedialaxis_ComputeAngle"
@@ -1468,7 +1468,7 @@ double lmedialaxis_ComputeAngle_8(int32_t x, int32_t y, uint32_t *image,
 // image : la carte de distance euclidinenne quadratique
 // TabIndDec, nval, ListDecs : la "table" pour calculer l'aval
 // Aval : tableau pour stocker les points de l'aval - 
-//          logiquement locale, passé en paramètre pour éviter allocations/libérations
+//          logiquement locale, passÃ© en paramÃ¨tre pour Ã©viter allocations/libÃ©rations
 {
 #undef F_NAME
 #define F_NAME "lmedialaxis_ComputeAngle"
@@ -1544,7 +1544,7 @@ double lmedialaxis_ComputeAngle3d (int32_t x, int32_t y, int32_t z, uint32_t *im
 // image : la carte de distance euclidinenne quadratique
 // TabIndDec, nval, ListDecs : la "table" pour calculer l'aval
 // Aval : tableau pour stocker les points de l'aval - 
-//          logiquement locale, passé en paramètre pour éviter allocations/libérations
+//          logiquement locale, passÃ© en paramÃ¨tre pour Ã©viter allocations/libÃ©rations
 {
 #undef F_NAME
 #define F_NAME "lmedialaxis_ComputeAngle3d"
@@ -1644,8 +1644,8 @@ int32_t lmedialaxis_lbisector(struct xvimage *id, struct xvimage *im, struct xvi
 /*
    Calcule la fonction bissectrice pour les points non nuls de l'image 'im'. 
    'id' est une carte de distance euclidienne quadratique de l'objet. 
-   Les angles calculés (entre 0 et pi) seront stockés dans 'ia'. 
-   L'image 'ia' (type float) doit être allouée à l'avance. 
+   Les angles calculÃ©s (entre 0 et pi) seront stockÃ©s dans 'ia'. 
+   L'image 'ia' (type float) doit Ãªtre allouÃ©e Ã  l'avance. 
 */
 {
 #undef F_NAME
@@ -1904,7 +1904,7 @@ double lmedialaxis_ComputeAngle_Rita(
 // distarray, xarray, yarray : la "table" pour calculer l'aval
 // number : la taille de ladite "table"
 // Aval : tableau pour stocker les points de l'aval - 
-//  logiquement locale, passé en paramètre pour éviter allocations/libérations
+//  logiquement locale, passÃ© en paramÃ¨tre pour Ã©viter allocations/libÃ©rations
 {
   int32_t nb, i, j, xx, yy, rr, counter, k, c;
   double maxangle;
@@ -1965,8 +1965,8 @@ int32_t lmedialaxis_lbisector_Rita(struct xvimage *id, struct xvimage *im, struc
 /* ==================================== */
 /*
    Calcule la fonction bissectrice pour les points non nuls de l'image 'im'. 
-   Les angles calculés (entre 0 et pi) seront stockés dans 'ia'. 
-   L'image 'ia' (type float) doit être allouée à l'avance. 
+   Les angles calculÃ©s (entre 0 et pi) seront stockÃ©s dans 'ia'. 
+   L'image 'ia' (type float) doit Ãªtre allouÃ©e Ã  l'avance. 
 */
 {
 #undef F_NAME
@@ -2579,12 +2579,12 @@ int32_t lmedialaxis_ExtendedDownstream(int32_t x, int32_t y, uint32_t *image,
 		    int32_t *TabIndDec, int32_t nval, Coordinates *ListDecs,
 		    ListDPoint2D Aval)
 /* ==================================== */
-// Calcule l'aval étendu du point (x,y)
+// Calcule l'aval Ã©tendu du point (x,y)
 // x, y : le point de base
 // image : la carte de distance euclidinenne quadratique
 // TabIndDec, nval, ListDecs : la "table" pour calculer l'aval
-// Aval : tableau pour stocker les points de l'aval étendu
-// Retourne le nombre de points de l'aval étendu
+// Aval : tableau pour stocker les points de l'aval Ã©tendu
+// Retourne le nombre de points de l'aval Ã©tendu
 {
 #undef F_NAME
 #define F_NAME "lmedialaxis_ExtendedDownstream"
@@ -2652,12 +2652,12 @@ int32_t lmedialaxis_ExtendedDownstream3d (int32_t x, int32_t y, int32_t z, uint3
 		       int32_t *TabIndDec, int32_t nval, Coordinates *ListDecs,
 		       ListDPoint3D Aval)
 /* ==================================== */
-// Calcule l'aval étendu du point (x,y,z)
+// Calcule l'aval Ã©tendu du point (x,y,z)
 // x, y, z : le point de base
 // image : la carte de distance euclidinenne quadratique
 // TabIndDec, nval, ListDecs : la "table" pour calculer l'aval
-// Aval : tableau pour stocker les points de l'aval étendu
-// Retourne le nombre de points de l'aval étendu
+// Aval : tableau pour stocker les points de l'aval Ã©tendu
+// Retourne le nombre de points de l'aval Ã©tendu
 {
 #undef F_NAME
 #define F_NAME "lmedialaxis_ExtendedDownstream3d"
@@ -2732,9 +2732,9 @@ int32_t lmedialaxis_ExtendedDownstream3d (int32_t x, int32_t y, int32_t z, uint3
 int32_t llambdamedialaxis(struct xvimage *dist, struct xvimage *lambda)
 /* ==================================== */
 /*
-   Calcule la fonction "lambda-axe médian discret" de l'objet 
-   dont la carte de distance euclidienne au carré est dans 'dist'.
-   L'image 'lambda' (type float) doit être allouée à l'avance. 
+   Calcule la fonction "lambda-axe mÃ©dian discret" de l'objet 
+   dont la carte de distance euclidienne au carrÃ© est dans 'dist'.
+   L'image 'lambda' (type float) doit Ãªtre allouÃ©e Ã  l'avance. 
  
 */
 {
@@ -2776,7 +2776,7 @@ int32_t llambdamedialaxis(struct xvimage *dist, struct xvimage *lambda)
 
   imagedist = ULONGDATA(dist);
   imagelambda = FLOATDATA(lambda);
-  razimage(lambda); // pour stocker le résulat
+  razimage(lambda); // pour stocker le rÃ©sulat
 
   distmax = 0;  // calcule la distance max dans l'image de distance
   for (i = 0; i < N; i++)
@@ -2945,9 +2945,9 @@ printf("distmax = %d ; nval = %d ; npointsmax = %d ; npoints = %d\n", distmax, n
 int32_t lmedialaxis_lambdamedialaxis(struct xvimage *image, struct xvimage *lambdaimage)
 /* ==================================== */
 /*
-   Calcule la fonction "lambda-axe médian discret" de l'objet 
+   Calcule la fonction "lambda-axe mÃ©dian discret" de l'objet 
    dans l'image 'image'.
-   L'image 'lambda' (type float) doit être allouée à l'avance. 
+   L'image 'lambda' (type float) doit Ãªtre allouÃ©e Ã  l'avance. 
 */
 {
 #undef F_NAME
@@ -2989,12 +2989,12 @@ int32_t lmedialaxis_ExtendedDownstreamLambdaPrime(
   index_t rs, index_t cs, 
   ListDPoint2D Aval)
 /* ==================================== */
-// Calcule l'aval étendu du point (x,y)
+// Calcule l'aval Ã©tendu du point (x,y)
 // x, y : le point de base
 // image : la carte de distance euclidinenne quadratique
 // vor : le "voronoi labelling"
-// Aval : tableau pour stocker les points de l'aval étendu
-// Retourne le nombre de points de l'aval étendu
+// Aval : tableau pour stocker les points de l'aval Ã©tendu
+// Retourne le nombre de points de l'aval Ã©tendu
 {
 #undef F_NAME
 #define F_NAME "lmedialaxis_ExtendedDownstreamLambdaPrime"
@@ -3038,12 +3038,12 @@ int32_t lmedialaxis_ExtendedDownstream3dLambdaPrime(
   index_t rs, index_t cs, index_t ds,
   ListDPoint3D Aval)
 /* ==================================== */
-// Calcule l'aval étendu du point (x,y)
+// Calcule l'aval Ã©tendu du point (x,y)
 // x, y : le point de base
 // image : la carte de distance euclidinenne quadratique
 // vor : le "voronoi labelling"
-// Aval : tableau pour stocker les points de l'aval étendu
-// Retourne le nombre de points de l'aval étendu
+// Aval : tableau pour stocker les points de l'aval Ã©tendu
+// Retourne le nombre de points de l'aval Ã©tendu
 {
 #undef F_NAME
 #define F_NAME "lmedialaxis_ExtendedDownstream3dLambdaPrime"
@@ -3087,10 +3087,10 @@ int32_t lmedialaxis_ExtendedDownstream3dLambdaPrime(
 int32_t llambdaprimemedialaxis(struct xvimage *dist, struct xvimage *vor, struct xvimage *lambda)
 /* ==================================== */
 /*
-   Calcule la fonction "lambda'-axe médian discret" de l'objet 
-   dont la carte de distance euclidienne au carré est dans 'dist',
+   Calcule la fonction "lambda'-axe mÃ©dian discret" de l'objet 
+   dont la carte de distance euclidienne au carrÃ© est dans 'dist',
    et le voronoi labelling dans vor.
-   L'image 'lambda' (type float) doit être allouée à l'avance. 
+   L'image 'lambda' (type float) doit Ãªtre allouÃ©e Ã  l'avance. 
  
 */
 {
@@ -3141,7 +3141,7 @@ int32_t llambdaprimemedialaxis(struct xvimage *dist, struct xvimage *vor, struct
   imagedist = ULONGDATA(dist);
   imagevor = ULONGDATA(vor);
   imagelambda = FLOATDATA(lambda);
-  razimage(lambda); // pour stocker le résulat
+  razimage(lambda); // pour stocker le rÃ©sulat
 
   if (ds == 1) // 2D
   {
@@ -3201,8 +3201,8 @@ int32_t llambdaprimemedialaxis(struct xvimage *dist, struct xvimage *vor, struct
 int32_t lmedialaxis_openingfunction(struct xvimage *image, int32_t mode, struct xvimage *result)
 /* ==================================== */
 /*
-   Calcule la fonction d'ouverture de l'objet dans 'image' pour la distance indiquée par 'mode'
-   L'image 'result' (type VFF_TYP_4_BYTE) doit être allouée à l'avance. 
+   Calcule la fonction d'ouverture de l'objet dans 'image' pour la distance indiquÃ©e par 'mode'
+   L'image 'result' (type VFF_TYP_4_BYTE) doit Ãªtre allouÃ©e Ã  l'avance. 
  
    Auteur : Michal Postolski
 */
@@ -3363,7 +3363,7 @@ int32_t lmedialaxis_scaleaxis(struct xvimage *image, double s, struct xvimage * 
 /* ==================================== */
 /*
    Calcule le scale-axis de l'objet dans l'image 'image'.
-   D'après "Discrete scale axis representations for 3D geometry"
+   D'aprÃ¨s "Discrete scale axis representations for 3D geometry"
    Balint Miklos, Joachim Giesen, Mark Pauly
    SIGGRAPH 2010
 */
@@ -3461,13 +3461,13 @@ static uint32_t PartitionStochastique(uint32_t *A, TypeCle *T, uint32_t p, uint3
 
 /* =============================================================== */
 /*! \fn void TriRapideStochastique (int32_t * A, TypeCle *T, int32_t p, int32_t r)
-    \param A (entrée/sortie) : un tableau d'entiers
-    \param T (entrée) : un tableau de valeurs de type TypeCle.
-    \param p (entrée) : indice du début de la zone à trier.
-    \param r (entrée) : indice de fin de la zone à trier.
+    \param A (entrÃ©e/sortie) : un tableau d'entiers
+    \param T (entrÃ©e) : un tableau de valeurs de type TypeCle.
+    \param p (entrÃ©e) : indice du dÃ©but de la zone Ã  trier.
+    \param r (entrÃ©e) : indice de fin de la zone Ã  trier.
     \brief tri par ordre croissant des valeurs du tableau \b T.
            Le tri s'effectue sur un tableau \b A contenant les index
-           des elements de \b T, l'indice \b p (compris) à l'indice \b r (compris).
+           des elements de \b T, l'indice \b p (compris) Ã  l'indice \b r (compris).
 */
 static void TriRapideStochastique (uint32_t * A, TypeCle *T, uint32_t p, uint32_t r)
 /* =============================================================== */
@@ -3505,7 +3505,7 @@ int32_t lmedialaxis_scalefilteredmedialaxis(struct xvimage *image, double s, str
 /* ==================================== */
 /*
    Calcule le scale-filtered medial axis de l'objet dans l'image 'image'.
-   D'après "Scale Filtered Euclidean Medial Axis"
+   D'aprÃ¨s "Scale Filtered Euclidean Medial Axis"
    Michal Postolski, Michel Couprie, Marcin Janaszewski
    DGCI 2013
 */

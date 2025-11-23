@@ -41,7 +41,7 @@ knowledge of the CeCILL license and that you accept its terms.
 * Purpose: compute the smallest disk/ball containing a set of points
 * Input: an array of double coordinates representing the points of the set
 * Output: then coordinates of the center of the min disk/ball and its radius
-* Written By: John Chaussard - décembre 2008
+* Written By: John Chaussard - dÃ©cembre 2008
 * D'apres l'article "Smallest enclosing disks (balls and ellipsoids)" de Emo Welzl
 * Update: janvier 2010 - correction bug
 ****************************************************************/

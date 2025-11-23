@@ -42,7 +42,7 @@ knowledge of the CeCILL license and that you accept its terms.
    Utilise une File d'Attente Hierarchique.
 
    Jean Cousty -  2005 
-   d'après Michel Couprie 97
+   d'aprÃ¨s Michel Couprie 97
 */
 
 #include <stdio.h>

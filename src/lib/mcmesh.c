@@ -38,11 +38,11 @@ knowledge of the CeCILL license and that you accept its terms.
   Update Fevrier 2002 : Edges et lissage courbures
   Update Fevrier 2004 : Addition de bruit gaussien
   Update Fevrier 2004 : RegulMeshHamam
-  Update Février 2006 : mesures
-  Update Avril 2007 : harmonisation de la détection de la convergence
-    pour les méthodes Vollmer et al. et Hamam. 
-  Update Décembre 2008 : RegulMeshLaplacian2D
-  Update Janvier 2009 : versions MCM pour éviter les globales 
+  Update FÃ©vrier 2006 : mesures
+  Update Avril 2007 : harmonisation de la dÃ©tection de la convergence
+    pour les mÃ©thodes Vollmer et al. et Hamam. 
+  Update DÃ©cembre 2008 : RegulMeshLaplacian2D
+  Update Janvier 2009 : versions MCM pour Ã©viter les globales 
 */
 
 #include <stdio.h>
@@ -75,9 +75,9 @@ knowledge of the CeCILL license and that you accept its terms.
 
 #define NITERMAX 20000
 
-// Définition d'un mesh en global
-// Conservé pour la compatibilité
-// Utiliser maintenant les versions préfixées MCM (passage du mesh en argument)
+// DÃ©finition d'un mesh en global
+// ConservÃ© pour la compatibilitÃ©
+// Utiliser maintenant les versions prÃ©fixÃ©es MCM (passage du mesh en argument)
 meshtabvertices *Vertices = NULL;
 meshtabfaces *Faces = NULL;
 meshtabedges2 *Edges = NULL;
@@ -381,7 +381,7 @@ skipadd:
 /* ==================================== */
 int32_t MCM_AddVertexStraight(MCM *M, double x, double y, double z, int32_t indface)
 /* ==================================== */
-// version sans vérification de présence
+// version sans vÃ©rification de prÃ©sence
 #undef F_NAME
 #define F_NAME "MCM_AddVertexStraight"
 {
@@ -403,7 +403,7 @@ int32_t MCM_AddVertexStraight(MCM *M, double x, double y, double z, int32_t indf
 /* ==================================== */
 int32_t MCM_AddVertexStraight2(MCM *M, double x, double y, double z)
 /* ==================================== */
-// version sans vérification de présence et sans indice de face
+// version sans vÃ©rification de prÃ©sence et sans indice de face
 #undef F_NAME
 #define F_NAME "MCM_AddVertexStraight2"
 {
@@ -424,12 +424,12 @@ int32_t MCM_AddVertexStraight2(MCM *M, double x, double y, double z)
 /* ==================================== */
 void MCM_VertexAddFace(MCM *M, int32_t indvert, int32_t indface)
 /* ==================================== */
-// ajoute la face "indface" à la liste des faces adjacentes au vertex "indvert"
+// ajoute la face "indface" Ã  la liste des faces adjacentes au vertex "indvert"
 #undef F_NAME
 #define F_NAME "MCM_VertexAddFace"
 {
   if (mcmesh_NotIn(indface, M->Vertices->v[indvert].face, M->Vertices->v[indvert].nfaces)) 
-  { // si elle n'y est pas déjà
+  { // si elle n'y est pas dÃ©jÃ 
     if (M->Vertices->v[indvert].nfaces >= MCM_MAXADJFACES)
     {
       fprintf(stderr, "%s : WARNING: more than %d faces\n", F_NAME, MCM_MAXADJFACES);
@@ -444,7 +444,7 @@ void MCM_VertexAddFace(MCM *M, int32_t indvert, int32_t indface)
 void MCM_VertexRemoveFace(MCM *M, int32_t indvert, int32_t indface)
 /* ==================================== */
 // retire la face "indface" de la liste des faces adjacentes au vertex "indvert"
-// la face, si elle est présente, ne l'est qu'une fois (pas de vérification)
+// la face, si elle est prÃ©sente, ne l'est qu'une fois (pas de vÃ©rification)
 #undef F_NAME
 #define F_NAME "MCM_VertexRemoveFace"
 {
@@ -465,12 +465,12 @@ void MCM_VertexRemoveFace(MCM *M, int32_t indvert, int32_t indface)
 /* ==================================== */
 void MCM_VertexAddEdge(MCM *M, int32_t indvert, int32_t indedge)
 /* ==================================== */
-// ajoute l'edge "indedge" à la liste des edges adjacents au vertex "indvert"
+// ajoute l'edge "indedge" Ã  la liste des edges adjacents au vertex "indvert"
 #undef F_NAME
 #define F_NAME "MCM_VertexAddEdge"
 {
   if (mcmesh_NotIn(indedge, M->Vertices->v[indvert].edge, M->Vertices->v[indvert].nedges)) 
-  { // s'il n'y est pas déjà
+  { // s'il n'y est pas dÃ©jÃ 
     if (M->Vertices->v[indvert].nedges >= MCM_MAXADJEDGES)
     {
       fprintf(stderr, "%s : WARNING: more than %d edges\n", F_NAME, MCM_MAXADJEDGES);
@@ -485,7 +485,7 @@ void MCM_VertexAddEdge(MCM *M, int32_t indvert, int32_t indedge)
 void MCM_VertexRemoveEdge(MCM *M, int32_t indvert, int32_t indedge)
 /* ==================================== */
 // retire l'edge "indedge" de la liste des edges adjacents au vertex "indvert"
-// l'edge, s'il est présent, ne l'est qu'une fois (pas de vérification)
+// l'edge, s'il est prÃ©sent, ne l'est qu'une fois (pas de vÃ©rification)
 #undef F_NAME
 #define F_NAME "MCM_VertexRemoveEdge"
 {
@@ -993,14 +993,14 @@ static int32_t inclusedge(MCM *M, int32_t i, int32_t j, int32_t k)
   ijx = (xj - xi); ikx = (xk - xi);
   ijy = (yj - yi); iky = (yk - yi);
   ijz = (zj - zi); ikz = (zk - zi);
-  // calcule les produits croisés (teste la collinearité des projections)
+  // calcule les produits croisÃ©s (teste la collinearitÃ© des projections)
   pc1 = ijx * iky - ikx * ijy;
   pc2 = ijx * ikz - ikx * ijz;
   pc3 = ijz * iky - ikz * ijy;
   if (mcabs(pc1) > COLLINTEST_EPSILON) return 0;
   if (mcabs(pc2) > COLLINTEST_EPSILON) return 0;
   if (mcabs(pc3) > COLLINTEST_EPSILON) return 0;
-  // teste si les vecteurs ont des sens opposés
+  // teste si les vecteurs ont des sens opposÃ©s
   if (signe(ijx) != signe(ikx)) return 0;
   if (signe(ijy) != signe(iky)) return 0;
   if (signe(ijz) != signe(ikz)) return 0;
@@ -1009,7 +1009,7 @@ static int32_t inclusedge(MCM *M, int32_t i, int32_t j, int32_t k)
 
 static int32_t collinear(MCM *M, int32_t i, int32_t j, int32_t k)
 {
-  // teste si les sommets Vi, Vj et Vk sont alignés
+  // teste si les sommets Vi, Vj et Vk sont alignÃ©s
   double xi = M->Vertices->v[i].x;
   double yi = M->Vertices->v[i].y;
   double zi = M->Vertices->v[i].z;
@@ -1024,7 +1024,7 @@ static int32_t collinear(MCM *M, int32_t i, int32_t j, int32_t k)
   ijx = (xj - xi); ikx = (xk - xi);
   ijy = (yj - yi); iky = (yk - yi);
   ijz = (zj - zi); ikz = (zk - zi);
-  // calcule les produits croisés (teste la collinearité des projections)
+  // calcule les produits croisÃ©s (teste la collinearitÃ© des projections)
   pc1 = ijx * iky - ikx * ijy;
   pc2 = ijx * ikz - ikx * ijz;
   pc3 = ijz * iky - ikz * ijy;
@@ -1036,7 +1036,7 @@ static int32_t collinear(MCM *M, int32_t i, int32_t j, int32_t k)
 
 static int32_t nearest(MCM *M, int32_t i, int32_t j, int32_t k)
 {
-  // retourne, parmi Vj et Vk, celui qui est le plus près de Vi 
+  // retourne, parmi Vj et Vk, celui qui est le plus prÃ¨s de Vi 
   double xi = M->Vertices->v[i].x;
   double yi = M->Vertices->v[i].y;
   double zi = M->Vertices->v[i].z;
@@ -1086,7 +1086,7 @@ int32_t MCM_CheckComplex(MCM *M)
       assert(n <= MCM_MAXADJFACES);
     } /* for j */
 
-    for (j = 0; j < n; j++)   /* parcourt le link et vérifie les cotes */
+    for (j = 0; j < n; j++)   /* parcourt le link et vÃ©rifie les cotes */
       for (k = j+1; k < n; k++)
       {
 	if (inclusedge(M, i, link[j], link[k]))
@@ -1131,7 +1131,7 @@ int32_t MCM_CheckPM(MCM *M)
     V = M->Vertices->v[i];
     n = 0;
 
-    // chaque edge contenant V doit être dans exactement 2 faces contenant V
+    // chaque edge contenant V doit Ãªtre dans exactement 2 faces contenant V
 
 
     for (j = 0; j < V.nfaces; j++) /* parcourt les faces adjacentes */
@@ -1145,7 +1145,7 @@ int32_t MCM_CheckPM(MCM *M)
       assert(n <= MCM_MAXADJFACES);
     } /* for j */
 
-    for (j = 0; j < n; j++)   /* parcourt le link et vérifie les cotes */
+    for (j = 0; j < n; j++)   /* parcourt le link et vÃ©rifie les cotes */
       for (k = j+1; k < n; k++)
       {
 	if (inclusedge(M, i, link[j], link[k]))
@@ -1164,8 +1164,8 @@ int32_t MCM_CheckPM(MCM *M)
 int32_t MCM_HealMesh(MCM *M)
 /* ==================================== */
 /*
-  Réparation du mesh M pour en faire un complexe
-  Retourne le nombre de réparations
+  RÃ©paration du mesh M pour en faire un complexe
+  Retourne le nombre de rÃ©parations
 */
 #undef F_NAME
 #define F_NAME "MCM_HealMesh"
@@ -1192,7 +1192,7 @@ int32_t MCM_HealMesh(MCM *M)
       assert(n <= MCM_MAXADJFACES);
     } /* for f */
 
-    for (j = 0; j < n; j++)   /* parcourt le link et vérifie les cotes */
+    for (j = 0; j < n; j++)   /* parcourt le link et vÃ©rifie les cotes */
       for (k = j+1; k < n; k++)
       {
 	if (inclusedge(M, i, link[j], link[k]))
@@ -1225,7 +1225,7 @@ int32_t MCM_HealMesh(MCM *M)
 	      MCM_VertexRemoveFace(M, far, V.face[f]);
 	      MCM_VertexRemoveFace(M, third, V.face[f]);
 printf("effacement face avec sommets %d,%d,%d\n", i, far, third);
-	      if (third != near) // face non dégénérée
+	      if (third != near) // face non dÃ©gÃ©nÃ©rÃ©e
 	      {
                 f1 = MCM_AddFaceWithExistingVertices(M, i, near, third); 
 printf("creation nouvelle face %d avec sommets %d,%d,%d\n", f1, i, near, third);
@@ -1244,8 +1244,8 @@ printf("creation nouvelle face %d avec sommets %d,%d,%d\n", f2, near, far, third
 int32_t MCM_RemoveDegenerateFaces(MCM *M)
 /* ==================================== */
 /*
-  Retire les faces dégénérées (ie, faces dont les 3 edges sont colinéaires)
-  Retourne le nombre de face enlevées
+  Retire les faces dÃ©gÃ©nÃ©rÃ©es (ie, faces dont les 3 edges sont colinÃ©aires)
+  Retourne le nombre de face enlevÃ©es
 */
 #undef F_NAME
 #define F_NAME "MCM_RemoveDegenerateFaces"
@@ -1276,7 +1276,7 @@ int32_t MCM_RemoveDegenerateFaces(MCM *M)
     } // if (collinear(M, v0, v1, v2))
   } // for (i = 0; i < nfaces; i++)
 
-  // retire les edges n'appartenant qu'à des faces dégénérées
+  // retire les edges n'appartenant qu'Ã  des faces dÃ©gÃ©nÃ©rÃ©es
   if (M->Edges != NULL)
   {
     for (i = 0; i < M->Edges->cur; i++)
@@ -2440,7 +2440,7 @@ void RegulMeshHamam3(double theta)
 /* 
    ATTENTION : utilise et modifie les champs xp, yp, zp du vertex V.
    Les sommets dont les labels sont non nuls resteront a leur position initiale.
-   Methode de Hamam & al [HC06], variante utilisant le gradient conjugué
+   Methode de Hamam & al [HC06], variante utilisant le gradient conjuguÃ©
 */
 #undef F_NAME
 #define F_NAME "RegulMeshHamam3"
@@ -2587,7 +2587,7 @@ void RegulMeshHamam3(double theta)
       fz[i] = dz[i] + theta * sz; 
     } // for (i = 0; i < Vertices->cur; i++)
 
-    alphax = alphay = alphaz = 0; // calcule d^t f, résultat dans alpha
+    alphax = alphay = alphaz = 0; // calcule d^t f, rÃ©sultat dans alpha
     for (i = 0; i < Vertices->cur; i++)
     {
       alphax += dx[i] * fx[i];

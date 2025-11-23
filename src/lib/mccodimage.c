@@ -55,7 +55,7 @@ knowledge of the CeCILL license and that you accept its terms.
 		4	X	0
 		5	6	7
 
-		pour le voisinage étendu
+		pour le voisinage Ã©tendu
 
 	       14      13      12      11      10
 	       15       3	2	1	9	
@@ -63,14 +63,14 @@ knowledge of the CeCILL license and that you accept its terms.
 	       17       5	6	7      23
 	       18      19      20      21      22
 
-		Traduction index <-> coordonnées (2D)
+		Traduction index <-> coordonnÃ©es (2D)
 
 		i = y*rs + x
 
 		x = i % rs
 		y = i / rs;
 
-		Traduction index <-> coordonnées (3D)
+		Traduction index <-> coordonnÃ©es (3D)
 
 		i = z*ps + y*rs + x;
 
@@ -109,7 +109,7 @@ int32_t voisin(index_t i, int32_t k, index_t rs, index_t nb)
 /* ==================================== */
 int32_t voisin2(index_t i, int32_t k, index_t rs, index_t nb)   
 /* i : index du point dans l'image */
-/* k : index du voisin (24 possibilités - voisinage étendu) */
+/* k : index du voisin (24 possibilitÃ©s - voisinage Ã©tendu) */
 /* rs : taille d'une rangee */
 /* nb : taille de l'image */
 /* retourne -1 si le voisin n'existe pas */
@@ -181,7 +181,7 @@ int32_t bord(index_t i, index_t rs, index_t nb)
 
 */
 
-/* Cette fonction indique si le point appartient à un bord */
+/* Cette fonction indique si le point appartient Ã  un bord */
 /* ==================================== */
 int32_t bord3d(index_t i, index_t rs, index_t ps, index_t nb)
 /* ==================================== */
@@ -536,7 +536,7 @@ int32_t voisinNESO(index_t i, int32_t k, index_t rs, index_t nb)
 /* renvoie l'index du voisin si il      */
 /* appartient a gamma b sinon renvoie   */ 
 /*                                      */
-/* les différents cas sont traites      */
+/* les diffÃ©rents cas sont traites      */
 /* directement dans la fonction pour    */
 /* eviter de recalculer les coords du   */
 /* point courannt                       */
@@ -559,9 +559,9 @@ int32_t voisin14b(index_t i, int32_t k, index_t rs, index_t ps, index_t N)
 
 /* Soit l'ordre suivant
    d'OUEST en EST,
-   de NORD à SUD,
+   de NORD Ã  SUD,
    d'AVANT vers l'ARRIERE.
-   les voisin sont numérotés suivant cet ordre
+   les voisin sont numÃ©rotÃ©s suivant cet ordre
 */
 int32_t voisinONAV(index_t i, int32_t k, index_t rs, index_t ps, index_t N )
 #undef F_NAME
@@ -577,7 +577,7 @@ int32_t voisinONAV(index_t i, int32_t k, index_t rs, index_t ps, index_t N )
   case 4: if ((i%rs !=0)  && ((i%ps)/rs != 0)) return i-rs-1; else return -1;
   case 5: if ((i%ps)/rs != 0) return i-rs; else return -1;
   case 6: if ((i%rs !=0)) return i-1; else return -1;
-    /* Deuxième clique */
+    /* DeuxiÃ¨me clique */
   case 7: if ((i%rs < rs-1) ) return i+1; else return -1;
   case 8: if (i%ps < ps-rs) return i+rs; else return -1;
   case 9: if ( (i%rs < rs-1)  && (i%ps < ps-rs) ) return i+rs+1; else return -1;
@@ -605,7 +605,7 @@ int32_t  voisinENAR(index_t i, int32_t k, index_t rs, index_t ps, index_t N )
   case 4: if (i%rs !=0) return i-1; else return -1;
   case 5: if ( (i%rs !=0) && (i%ps<ps-rs) ) return i+rs-1; else return -1;
   case 6: if ( (i%ps<ps-rs) ) return i+rs; else return -1;
-    /* Deuxième clique */
+    /* DeuxiÃ¨me clique */
   case 7: if  ((i%ps)/rs != 0) return i-rs; else return -1;
   case 8: if ( (i%rs < rs-1) && ((i%ps)/rs != 0) ) return i-rs+1; else return -1;
   case 9: if (i%rs < rs-1) return i+1; else return -1;
@@ -633,7 +633,7 @@ int32_t voisinENAV(index_t i, int32_t k, index_t rs, index_t ps, index_t N )
   case 4: if  ((i%ps)/rs != 0) return i-rs; else return -1;
   case 5: if ( (i%rs < rs-1) &&   ((i%ps)/rs != 0)) return i-rs+1; else return -1;
   case 6: if (i%rs < rs-1) return i+1; else return -1;
-    /* Deuxième clique */
+    /* DeuxiÃ¨me clique */
   case 7: if (i%rs !=0) return i-1; else return -1;
   case 8: if ( (i%rs !=0) && (i%ps<ps-rs) ) return i+rs-1; else return -1;
   case 9: if ( i%ps<ps-rs ) return i+rs; else return -1;
@@ -661,7 +661,7 @@ int32_t voisinONAR(index_t i, int32_t k, index_t rs, index_t ps, index_t N )
   case 4: if (i%rs < rs-1) return i+1; else return -1;
   case 5: if (i%ps<ps-rs) return i+rs; else return -1;
   case 6: if  ( (i%rs < rs-1) && (i%ps<ps-rs)) return i+rs+1; else return -1;
-    /* Deuxième clique */
+    /* DeuxiÃ¨me clique */
   case 7: if ((i%rs !=0) &&  ((i%ps)/rs != 0)) return i-rs-1; else return -1;
   case 8: if ((i%ps)/rs != 0) return i-rs;else return -1;
   case 9: if (i%rs !=0) return i-1; else return -1;
@@ -678,7 +678,7 @@ int32_t voisinONAR(index_t i, int32_t k, index_t rs, index_t ps, index_t N )
 /* ==================================== */
 uint32_t maskvois26(uint8_t *F, uint32_t bitmask, index_t i, index_t rs, index_t ps, index_t N)
 /* F : pointeur de base de l'image */
-/* bitmask : masque du bit à tester */
+/* bitmask : masque du bit Ã  tester */
 /* i : index du point dans l'image */
 /* rs : taille d'une rangee */
 /* ps : taille d'un plan */

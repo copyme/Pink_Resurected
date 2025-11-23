@@ -41,9 +41,9 @@ knowledge of the CeCILL license and that you accept its terms.
    dont les deux coordonnees sont impaires, les alpha-terminaux (singletons)
    par les points dont les deux coordonnees sont paires.
 
-   la grille de khalimsky est un ordre partiel : les cotés d'un carré
-   sont inférieurs au carré, les extrémités d'un côté sont inférieures
-   au côté...
+   la grille de khalimsky est un ordre partiel : les cotÃ©s d'un carrÃ©
+   sont infÃ©rieurs au carrÃ©, les extrÃ©mitÃ©s d'un cÃ´tÃ© sont infÃ©rieures
+   au cÃ´tÃ©...
 
    explication des noms alpha, beta, theta : 
 
@@ -320,7 +320,7 @@ void Khalimskize2d_noalloc(struct xvimage *o, struct xvimage * k)
 /*            
    o: image originale
    k: resultat - chaque pixel de o est devenu un beta-terminal de k
-   \warning pas de vérification de taille
+   \warning pas de vÃ©rification de taille
 */
 {
   index_t ors = rowsize(o);
@@ -351,7 +351,7 @@ void KhalimskizeNDG2d_noalloc(struct xvimage *o, struct xvimage * k)
    k: resultat - chaque pixel de o est devenu un beta-terminal de k
                  et sa valeur de gris a ete transmise. les ndg des
                  autres points sont a 0.
-   \warning pas de vérification de taille
+   \warning pas de vÃ©rification de taille
 */
 {
   index_t ors = rowsize(o);
@@ -379,7 +379,7 @@ void DeKhalimskize2d_noalloc(struct xvimage *o, struct xvimage * r)
 /*            
    o: image originale dans la grille de Khalimsky
    r: resultat - chaque beta-terminal de k devient un pixel de r
-   \warning pas de vérification de taille
+   \warning pas de vÃ©rification de taille
 */
 {
   index_t ors = rowsize(o);
@@ -1304,8 +1304,8 @@ int32_t ExactementUnBetaTerminal2d(uint8_t *K, index_t rs, index_t cs)
 void SatureAlphacarre2d(struct xvimage *k)
 /* ==================================== */
 /*
-  met à VAL_OBJET les points de l'alphacarre de tous les 2-éléments de k
-  (et seulement des 2-éléments !)
+  met Ã  VAL_OBJET les points de l'alphacarre de tous les 2-Ã©lÃ©ments de k
+  (et seulement des 2-Ã©lÃ©ments !)
  */
 {
   index_t rs = rowsize(k);
@@ -1328,7 +1328,7 @@ void SatureAlphacarre2d(struct xvimage *k)
 void AjouteAlphacarre2d(struct xvimage *k)
 /* ==================================== */
 /*
-  retourne dans k l'ensemble des points de l'alpha de tous les éléments de k
+  retourne dans k l'ensemble des points de l'alpha de tous les Ã©lÃ©ments de k
  */
 {
   index_t rs = rowsize(k);
@@ -1351,7 +1351,7 @@ void AjouteAlphacarre2d(struct xvimage *k)
 void AjouteBetacarre2d(struct xvimage *k)
 /* ==================================== */
 /*
-  retourne dans k l'ensemble des points du beta de tous les éléments de k
+  retourne dans k l'ensemble des points du beta de tous les Ã©lÃ©ments de k
  */
 {
   index_t rs = rowsize(k);
@@ -1553,7 +1553,7 @@ int Alphacarretriang2d(index_t rs, index_t cs, index_t i, index_t j, index_t *ta
   retourne dans tab l'alpha-adherence de (i,j) privee de (i,j) DANS LA GRILLE TRIANGULAIRE.
   *n est le cardinal de cet ensemble
   tab doit etre alloue a l'avance
-  retourne 1 si tous les éléments de l'alpha-adherence sont dans le cadre, 0 sinon
+  retourne 1 si tous les Ã©lÃ©ments de l'alpha-adherence sont dans le cadre, 0 sinon
 */
 {
   int ret = 1;
@@ -1611,7 +1611,7 @@ int Alphacarretriang2d(index_t rs, index_t cs, index_t i, index_t j, index_t *ta
 void AjouteAlphacarretriang2d(struct xvimage *k)
 /* ==================================== */
 /*
-  retourne dans k l'ensemble des points de l'alpha de tous les éléments de k
+  retourne dans k l'ensemble des points de l'alpha de tous les Ã©lÃ©ments de k
  */
 {
   index_t rs = rowsize(k);
@@ -2197,7 +2197,7 @@ index_t EulerKh2d(struct xvimage *b)
 /* ==================================== */
 int32_t FaceLibre2d(struct xvimage *b, index_t i, index_t j)
 /* ==================================== */
-// Détermine si la face (i,j) est libre dans le complexe b, c'est-a-dire si 
+// DÃ©termine si la face (i,j) est libre dans le complexe b, c'est-a-dire si 
 // elle est strictement incluse dans exactement une face de b.
 {
   index_t rs = rowsize(b);
@@ -2216,7 +2216,7 @@ int32_t FaceLibre2d(struct xvimage *b, index_t i, index_t j)
 /* ==================================== */
 int32_t PaireLibre2d(struct xvimage *b, index_t i, index_t j)
 /* ==================================== */
-// Détermine si la face (i,j) est libre dans le complexe b, c'est-a-dire si 
+// DÃ©termine si la face (i,j) est libre dans le complexe b, c'est-a-dire si 
 // elle est strictement incluse dans exactement une face de b.
 // Si non, retourne -1.
 // Si oui, retourne la face contenant (i,j).

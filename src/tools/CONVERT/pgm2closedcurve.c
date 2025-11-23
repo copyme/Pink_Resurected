@@ -95,7 +95,7 @@ int32_t uniquevoisin4(
   int32_t rs,                      /* taille rangee */
   int32_t N)                       /* taille image */
 /* =============================================================== */
-/* retourne l'indice du premier voisin objet de p trouvé dans le voisinage */
+/* retourne l'indice du premier voisin objet de p trouvÃ© dans le voisinage */
 {
   register uint8_t * ptr = img+p;
   if ((p%rs!=rs-1) && (*(ptr+1))) return p+1;
@@ -112,7 +112,7 @@ int32_t uniquevoisin8(
   int32_t rs,                      /* taille rangee */
   int32_t N)                       /* taille image */
 /* =============================================================== */
-/* retourne l'indice du premier voisin objet de p trouvé dans le voisinage */
+/* retourne l'indice du premier voisin objet de p trouvÃ© dans le voisinage */
 {
   register uint8_t * ptr = img+p;
   if ((p%rs!=rs-1) && (*(ptr+1))) return p+1;
@@ -134,7 +134,7 @@ int32_t uniquevoisin6(
   int32_t ps,                      /* taille plan */
   int32_t N)                       /* taille image */
 /* ========================================== */
-/* retourne l'indice du premier voisin objet de i trouvé dans le voisinage */
+/* retourne l'indice du premier voisin objet de i trouvÃ© dans le voisinage */
 {
   if ((i%rs!=rs-1) && B[i+1]) return i+1;
   if (((i%ps)>=rs) && B[i-rs]) return i-rs;
@@ -153,7 +153,7 @@ int32_t uniquevoisin18(
   int32_t ps,                      /* taille plan */
   int32_t N)                       /* taille image */
 /* ========================================== */
-/* retourne l'indice du premier voisin objet de i trouvé dans le voisinage */
+/* retourne l'indice du premier voisin objet de i trouvÃ© dans le voisinage */
 {
   if (((i<N-ps)&&(i%rs!=rs-1)) && B[ps+i+1]) return ps+i+1;
   if (((i<N-ps)&&(i%ps>=rs)) && B[ps+i-rs]) return ps+i-rs;
@@ -184,7 +184,7 @@ int32_t uniquevoisin26(
   int32_t ps,                      /* taille plan */
   int32_t N)                       /* taille image */
 /* ========================================== */
-/* retourne l'indice du premier voisin objet de i trouvé dans le voisinage */
+/* retourne l'indice du premier voisin objet de i trouvÃ© dans le voisinage */
 {
   if (((i<N-ps)&&(i%rs!=rs-1)) && B[ps+i+1]) return ps+i+1;
   if (((i<N-ps)&&(i%rs!=rs-1)&&(i%ps>=rs)) && B[ps+i+1-rs]) return ps+i+1-rs;

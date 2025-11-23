@@ -34,11 +34,11 @@ knowledge of the CeCILL license and that you accept its terms.
 */
 /* 
 
-\brief Calcul d'une géodésique dans un espace discret (2D ou 3D)
+\brief Calcul d'une gÃ©odÃ©sique dans un espace discret (2D ou 3D)
 
 <B>Usage:</B> Lenoir in.pgm source_point_x source_point_y [source_point_z] target_point_x target_point_y [target_point_z] connex out.pgm
 
-<B>Description:</B> Calcul de la géodésique entre le point source et le point target
+<B>Description:</B> Calcul de la gÃ©odÃ©sique entre le point source et le point target
 
 <B>Types supported:</B> byte 3d
 
@@ -46,9 +46,9 @@ knowledge of the CeCILL license and that you accept its terms.
 \ingroup  
 
 \author Massieu Julien
-\author Parly Sébastien
+\author Parly SÃ©bastien
 */
-/* Massieu Julien & Parly Sébastien - Février 2005 */
+/* Massieu Julien & Parly SÃ©bastien - FÃ©vrier 2005 */
 #include <stdio.h>
 #include <stdint.h>
 #include <sys/types.h>
@@ -62,7 +62,7 @@ int main(int argc, char **argv)
 	struct xvimage *image, *out; //xvimages
 	int32_t xb,yb,zb,xe,ye,ze;
 	int32_t x,y;//Points entre lesquels on applique l'algorithme Lenoir1
-	int32_t rs, cs, ds, connex; //row-size col-size depth_size et connexité
+	int32_t rs, cs, ds, connex; //row-size col-size depth_size et connexitÃ©
 
 	if ((argc != 8) && (argc != 10))
 	{
@@ -99,7 +99,7 @@ int main(int argc, char **argv)
 	  ze = atoi(argv[7]);
 	}
 
-  	image = readimage(argv[1]); //lecture de l'image d'entrée  
+  	image = readimage(argv[1]); //lecture de l'image d'entrÃ©e  
   	if (image == NULL)
   	{
     		fprintf(stderr, "Lenoir: readimage failed\n");

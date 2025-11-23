@@ -37,7 +37,7 @@ Librairie mcsplines :
 
 fonctions pour les splines cubiques naturelles
 
-Michel Couprie, Sébastien Couprie, juin 2003
+Michel Couprie, SÃ©bastien Couprie, juin 2003
 
 scn_solvespline(
   double *x, double *y, int32_t n, 
@@ -136,15 +136,15 @@ int32_t scn_solvespline(double *x, double *y, int32_t n,
                          double *Z0, double *Z1, double *Z2, double *Z3)
 /* ==================================== */
 /*! \fn double * scn_solvespline(double *x, double *y, int32_t n, double *A, double *B)
-    \param x (entrée) : tableau des abcisses
-    \param y (entrée) : tableau des ordonnées
-    \param n (entrée) : nombre de points
-    \param Z0 (sortie) : tableau des coef. spline de degré 0 (taille n-1) 
-    \param Z1 (sortie) : tableau des coef. spline de degré 1 (taille n-1) 
-    \param Z2 (sortie) : tableau des coef. spline de degré 2 (taille n-1) 
-    \param Z3 (sortie) : tableau des coef. spline de degré 3 (taille n-1) 
-    \brief calcule la spline cubique naturelle passant par les n points de contrôle donnés par x, y
-    \warning la mémoire pour stocker les résultats Z0, Z1, Z2, Z3 doit avoir été allouée
+    \param x (entrÃ©e) : tableau des abcisses
+    \param y (entrÃ©e) : tableau des ordonnÃ©es
+    \param n (entrÃ©e) : nombre de points
+    \param Z0 (sortie) : tableau des coef. spline de degrÃ© 0 (taille n-1) 
+    \param Z1 (sortie) : tableau des coef. spline de degrÃ© 1 (taille n-1) 
+    \param Z2 (sortie) : tableau des coef. spline de degrÃ© 2 (taille n-1) 
+    \param Z3 (sortie) : tableau des coef. spline de degrÃ© 3 (taille n-1) 
+    \brief calcule la spline cubique naturelle passant par les n points de contrÃ´le donnÃ©s par x, y
+    \warning la mÃ©moire pour stocker les rÃ©sultats Z0, Z1, Z2, Z3 doit avoir Ã©tÃ© allouÃ©e
 */
 #undef F_NAME
 #define F_NAME "scn_solvespline"
@@ -226,20 +226,20 @@ int32_t scn_solvespline_noalloc(double *x, double *y, int32_t n,
 			     double *M, double *P, double *z, double *A, double*B)
 /* ==================================== */
 /*! \fn double * scn_solvespline_noalloc(double *x, double *y, int32_t n, double *A, double *B)
-    \param x (entrée) : tableau des abcisses
-    \param y (entrée) : tableau des ordonnées
-    \param n (entrée) : nombre de points
-    \param Z0 (sortie) : tableau des coef. spline de degré 0 (taille n-1) 
-    \param Z1 (sortie) : tableau des coef. spline de degré 1 (taille n-1) 
-    \param Z2 (sortie) : tableau des coef. spline de degré 2 (taille n-1) 
-    \param Z3 (sortie) : tableau des coef. spline de degré 3 (taille n-1) 
+    \param x (entrÃ©e) : tableau des abcisses
+    \param y (entrÃ©e) : tableau des ordonnÃ©es
+    \param n (entrÃ©e) : nombre de points
+    \param Z0 (sortie) : tableau des coef. spline de degrÃ© 0 (taille n-1) 
+    \param Z1 (sortie) : tableau des coef. spline de degrÃ© 1 (taille n-1) 
+    \param Z2 (sortie) : tableau des coef. spline de degrÃ© 2 (taille n-1) 
+    \param Z3 (sortie) : tableau des coef. spline de degrÃ© 3 (taille n-1) 
     \param M (sortie) : tableau provisoire de taille (n-2)*(n-2)
     \param P (sortie) : tableau provisoire de taille (n-2)
     \param z (sortie) : tableau provisoire de taille (n-2)
     \param A (sortie) : tableau provisoire de taille (n-1)
     \param B (sortie) : tableau provisoire de taille (n-1)
-    \brief calcule la spline cubique naturelle passant par les n points de contrôle donnés par x, y
-    \warning la mémoire pour stocker les résultats Z0, Z1, Z2, Z3 doit avoir été allouée
+    \brief calcule la spline cubique naturelle passant par les n points de contrÃ´le donnÃ©s par x, y
+    \warning la mÃ©moire pour stocker les rÃ©sultats Z0, Z1, Z2, Z3 doit avoir Ã©tÃ© allouÃ©e
 */
 #undef F_NAME
 #define F_NAME "scn_solvespline_noalloc"
@@ -312,14 +312,14 @@ int32_t scn_solvespline1(double *y, int32_t n,
                       double *Z0, double *Z1, double *Z2, double *Z3)
 /* ==================================== */
 /*! \fn double * scn_solvespline1(double *y, int32_t n, double *A, double *B)
-    \param y (entrée) : tableau des ordonnées
-    \param n (entrée) : nombre de points
-    \param Z0 (sortie) : tableau des coef. spline de degré 0 (taille n-1) 
-    \param Z1 (sortie) : tableau des coef. spline de degré 1 (taille n-1) 
-    \param Z2 (sortie) : tableau des coef. spline de degré 2 (taille n-1) 
-    \param Z3 (sortie) : tableau des coef. spline de degré 3 (taille n-1) 
-    \brief calcule la spline cubique naturelle passant par les n points de contrôle donnés par y[i], 0 <= i < n
-    \warning la mémoire pour stocker les résultats Z0, Z1, Z2, Z3 doit avoir été allouée
+    \param y (entrÃ©e) : tableau des ordonnÃ©es
+    \param n (entrÃ©e) : nombre de points
+    \param Z0 (sortie) : tableau des coef. spline de degrÃ© 0 (taille n-1) 
+    \param Z1 (sortie) : tableau des coef. spline de degrÃ© 1 (taille n-1) 
+    \param Z2 (sortie) : tableau des coef. spline de degrÃ© 2 (taille n-1) 
+    \param Z3 (sortie) : tableau des coef. spline de degrÃ© 3 (taille n-1) 
+    \brief calcule la spline cubique naturelle passant par les n points de contrÃ´le donnÃ©s par y[i], 0 <= i < n
+    \warning la mÃ©moire pour stocker les rÃ©sultats Z0, Z1, Z2, Z3 doit avoir Ã©tÃ© allouÃ©e
 */
 #undef F_NAME
 #define F_NAME "scn_solvespline1"
@@ -395,15 +395,15 @@ int32_t scn_solveclosedspline(double *x, double *y, int32_t n,
                            double *Z0, double *Z1, double *Z2, double *Z3)
 /* ==================================== */
 /*! \fn double * scn_solvespline(double *x, double *y, int32_t n, double *A, double *B)
-    \param x (entrée) : tableau des abcisses
-    \param y (entrée) : tableau des ordonnées
-    \param n (entrée) : nombre de points
-    \param Z0 (sortie) : tableau des coef. spline de degré 0 (taille n-1) 
-    \param Z1 (sortie) : tableau des coef. spline de degré 1 (taille n-1) 
-    \param Z2 (sortie) : tableau des coef. spline de degré 2 (taille n-1) 
-    \param Z3 (sortie) : tableau des coef. spline de degré 3 (taille n-1) 
-    \brief calcule la spline cubique naturelle passant par les n points de contrôle donnés par x, y
-    \warning la mémoire pour stocker les résultats A,B doit avoir été allouée
+    \param x (entrÃ©e) : tableau des abcisses
+    \param y (entrÃ©e) : tableau des ordonnÃ©es
+    \param n (entrÃ©e) : nombre de points
+    \param Z0 (sortie) : tableau des coef. spline de degrÃ© 0 (taille n-1) 
+    \param Z1 (sortie) : tableau des coef. spline de degrÃ© 1 (taille n-1) 
+    \param Z2 (sortie) : tableau des coef. spline de degrÃ© 2 (taille n-1) 
+    \param Z3 (sortie) : tableau des coef. spline de degrÃ© 3 (taille n-1) 
+    \brief calcule la spline cubique naturelle passant par les n points de contrÃ´le donnÃ©s par x, y
+    \warning la mÃ©moire pour stocker les rÃ©sultats A,B doit avoir Ã©tÃ© allouÃ©e
 */
 #undef F_NAME
 #define F_NAME "scn_solveclosedspline"
@@ -603,14 +603,14 @@ retourne t
 int32_t scn_samplespline(double *x, double *y, int32_t n, int32_t m, double *X, double *Y)
 /* ==================================== */
 /*! \fn double * scn_samplespline(double *x, double *y, int32_t n, int32_t m, double *X, double *Y)
-    \param x (entrée) : tableau des abcisses des points de contrôle (taille n)
-    \param y (entrée) : tableau des ordonnées des points de contrôle (taille n)
-    \param n (entrée) : nombre de points de contrôle
-    \param m (entrée) : nombre des échantillons
-    \param X (sortie) : tableau des absisses des échantillons (taille m)
-    \param Y (sortie) : tableau des ordonnées des échantillons (taille m)
-    \brief échantilonne une spline selon son abcisse curviligne
-    \warning la mémoire pour stocker les résultats X et Y doit avoir été allouée
+    \param x (entrÃ©e) : tableau des abcisses des points de contrÃ´le (taille n)
+    \param y (entrÃ©e) : tableau des ordonnÃ©es des points de contrÃ´le (taille n)
+    \param n (entrÃ©e) : nombre de points de contrÃ´le
+    \param m (entrÃ©e) : nombre des Ã©chantillons
+    \param X (sortie) : tableau des absisses des Ã©chantillons (taille m)
+    \param Y (sortie) : tableau des ordonnÃ©es des Ã©chantillons (taille m)
+    \brief Ã©chantilonne une spline selon son abcisse curviligne
+    \warning la mÃ©moire pour stocker les rÃ©sultats X et Y doit avoir Ã©tÃ© allouÃ©e
 */
 #undef F_NAME
 #define F_NAME "scn_samplespline"
@@ -728,16 +728,16 @@ int32_t scn_samplespline(double *x, double *y, int32_t n, int32_t m, double *X, 
 int32_t scn_samplespline3d(double *x, double *y, double *z, int32_t n, int32_t m, double *X, double *Y, double *Z)
 /* ==================================== */
 /*! \fn double * scn_samplespline3d(double *x, double *y, double *z, int32_t n, int32_t m, double *X, double *Y, double *Z)
-    \param x (entrée) : tableau des abcisses des points de contrôle (taille n)
-    \param y (entrée) : tableau des ordonnées des points de contrôle (taille n)
-    \param z (entrée) : tableau des cotes des points de contrôle (taille n)
-    \param n (entrée) : nombre de points de contrôle
-    \param m (entrée) : nombre des échantillons
-    \param X (sortie) : tableau des absisses des échantillons (taille m)
-    \param Y (sortie) : tableau des ordonnées des échantillons (taille m)
-    \param Z (sortie) : tableau des cotes des échantillons (taille m)
-    \brief échantilonne une spline 3d selon son abcisse curviligne
-    \warning la mémoire pour stocker les résultats X, Y et Z doit avoir été allouée
+    \param x (entrÃ©e) : tableau des abcisses des points de contrÃ´le (taille n)
+    \param y (entrÃ©e) : tableau des ordonnÃ©es des points de contrÃ´le (taille n)
+    \param z (entrÃ©e) : tableau des cotes des points de contrÃ´le (taille n)
+    \param n (entrÃ©e) : nombre de points de contrÃ´le
+    \param m (entrÃ©e) : nombre des Ã©chantillons
+    \param X (sortie) : tableau des absisses des Ã©chantillons (taille m)
+    \param Y (sortie) : tableau des ordonnÃ©es des Ã©chantillons (taille m)
+    \param Z (sortie) : tableau des cotes des Ã©chantillons (taille m)
+    \brief Ã©chantilonne une spline 3d selon son abcisse curviligne
+    \warning la mÃ©moire pour stocker les rÃ©sultats X, Y et Z doit avoir Ã©tÃ© allouÃ©e
 */
 {
 #undef F_NAME
@@ -872,15 +872,15 @@ double scn_lengthspline(double *X0, double *X1, double *X2, double *X3,
 /*! \fn double * scn_lengthspline(double *X0, double *X1, double *X2, double *X3, 
 			double *Y0, double *Y1, double *Y2, double *Y3, 
 			int32_t n)
-    \param X0 (entrée) : tableau des coef. spline de degré 0 (taille nctrl-1) 
-    \param X1 (entrée) : tableau des coef. spline de degré 1 (taille nctrl-1) 
-    \param X2 (entrée) : tableau des coef. spline de degré 2 (taille nctrl-1) 
-    \param X3 (entrée) : tableau des coef. spline de degré 3 (taille nctrl-1) 
-    \param Y0 (entrée) : tableau des coef. spline de degré 0 (taille nctrl-1) 
-    \param Y1 (entrée) : tableau des coef. spline de degré 1 (taille nctrl-1) 
-    \param Y2 (entrée) : tableau des coef. spline de degré 2 (taille nctrl-1) 
-    \param Y3 (entrée) : tableau des coef. spline de degré 3 (taille nctrl-1) 
-    \param nctrl (entrée) : nombre de points de contrôle
+    \param X0 (entrÃ©e) : tableau des coef. spline de degrÃ© 0 (taille nctrl-1) 
+    \param X1 (entrÃ©e) : tableau des coef. spline de degrÃ© 1 (taille nctrl-1) 
+    \param X2 (entrÃ©e) : tableau des coef. spline de degrÃ© 2 (taille nctrl-1) 
+    \param X3 (entrÃ©e) : tableau des coef. spline de degrÃ© 3 (taille nctrl-1) 
+    \param Y0 (entrÃ©e) : tableau des coef. spline de degrÃ© 0 (taille nctrl-1) 
+    \param Y1 (entrÃ©e) : tableau des coef. spline de degrÃ© 1 (taille nctrl-1) 
+    \param Y2 (entrÃ©e) : tableau des coef. spline de degrÃ© 2 (taille nctrl-1) 
+    \param Y3 (entrÃ©e) : tableau des coef. spline de degrÃ© 3 (taille nctrl-1) 
+    \param nctrl (entrÃ©e) : nombre de points de contrÃ´le
     \brief calcule la longueur d'une spline 2d
 */
 {
@@ -921,19 +921,19 @@ double scn_lengthspline3d(double *X0, double *X1, double *X2, double *X3,
 			double *Y0, double *Y1, double *Y2, double *Y3, 
 			double *Z0, double *Z1, double *Z2, double *Z3,
 			int32_t n)
-    \param X0 (entrée) : tableau des coef. spline de degré 0 (taille nctrl-1) 
-    \param X1 (entrée) : tableau des coef. spline de degré 1 (taille nctrl-1) 
-    \param X2 (entrée) : tableau des coef. spline de degré 2 (taille nctrl-1) 
-    \param X3 (entrée) : tableau des coef. spline de degré 3 (taille nctrl-1) 
-    \param Y0 (entrée) : tableau des coef. spline de degré 0 (taille nctrl-1) 
-    \param Y1 (entrée) : tableau des coef. spline de degré 1 (taille nctrl-1) 
-    \param Y2 (entrée) : tableau des coef. spline de degré 2 (taille nctrl-1) 
-    \param Y3 (entrée) : tableau des coef. spline de degré 3 (taille nctrl-1) 
-    \param Z0 (entrée) : tableau des coef. spline de degré 0 (taille nctrl-1) 
-    \param Z1 (entrée) : tableau des coef. spline de degré 1 (taille nctrl-1) 
-    \param Z2 (entrée) : tableau des coef. spline de degré 2 (taille nctrl-1) 
-    \param Z3 (entrée) : tableau des coef. spline de degré 3 (taille nctrl-1) 
-    \param nctrl (entrée) : nombre de points de contrôle
+    \param X0 (entrÃ©e) : tableau des coef. spline de degrÃ© 0 (taille nctrl-1) 
+    \param X1 (entrÃ©e) : tableau des coef. spline de degrÃ© 1 (taille nctrl-1) 
+    \param X2 (entrÃ©e) : tableau des coef. spline de degrÃ© 2 (taille nctrl-1) 
+    \param X3 (entrÃ©e) : tableau des coef. spline de degrÃ© 3 (taille nctrl-1) 
+    \param Y0 (entrÃ©e) : tableau des coef. spline de degrÃ© 0 (taille nctrl-1) 
+    \param Y1 (entrÃ©e) : tableau des coef. spline de degrÃ© 1 (taille nctrl-1) 
+    \param Y2 (entrÃ©e) : tableau des coef. spline de degrÃ© 2 (taille nctrl-1) 
+    \param Y3 (entrÃ©e) : tableau des coef. spline de degrÃ© 3 (taille nctrl-1) 
+    \param Z0 (entrÃ©e) : tableau des coef. spline de degrÃ© 0 (taille nctrl-1) 
+    \param Z1 (entrÃ©e) : tableau des coef. spline de degrÃ© 1 (taille nctrl-1) 
+    \param Z2 (entrÃ©e) : tableau des coef. spline de degrÃ© 2 (taille nctrl-1) 
+    \param Z3 (entrÃ©e) : tableau des coef. spline de degrÃ© 3 (taille nctrl-1) 
+    \param nctrl (entrÃ©e) : nombre de points de contrÃ´le
     \brief calcule la longueur d'une spline 3d
 */
 {
@@ -974,16 +974,16 @@ printf("i = %d t[i] = %g t[i+1] = %g\n", i, t[i], t[i+1]);
 int32_t scn_curvatures(double *x, double *y, int32_t n, int32_t m, double *sk, double *rhok)
 /* ==================================== */
 /*! \fn double * scn_curvatures(double *x, double *y, int32_t n, int32_t m, double *sk, double *rhok)
-    \param x (entrée) : tableau des abcisses des points de contrôle (taille n)
-    \param y (entrée) : tableau des ordonnées des points de contrôle (taille n)
-    \param n (entrée) : nombre de points de contrôle
-    \param m (entrée) : nombre des échantillons
+    \param x (entrÃ©e) : tableau des abcisses des points de contrÃ´le (taille n)
+    \param y (entrÃ©e) : tableau des ordonnÃ©es des points de contrÃ´le (taille n)
+    \param n (entrÃ©e) : nombre de points de contrÃ´le
+    \param m (entrÃ©e) : nombre des Ã©chantillons
     \param sk (sortie) : tableau  des absisses curvilignes (taille m)
     \param rhok (sortie) : tableau des courbures (taille m)
-    \brief calcule de la courbure le long d'une spline 2D paramétrée : 
+    \brief calcule de la courbure le long d'une spline 2D paramÃ©trÃ©e : 
            K = (x'y'' - y'x'') / (x'^2 + y'^2)^(3/2)
 	   source: http://en.wikipedia.org/wiki/Curvature
-    \warning la mémoire pour stocker les résultats sk, rhok doit avoir été allouée
+    \warning la mÃ©moire pour stocker les rÃ©sultats sk, rhok doit avoir Ã©tÃ© allouÃ©e
 */
 {
 #undef F_NAME
@@ -1058,18 +1058,18 @@ int32_t scn_curvatures(double *x, double *y, int32_t n, int32_t m, double *sk, d
 int32_t scn_curvatures3d(double *x, double *y, double *z, int32_t n, int32_t m, double *sk, double *rhok)
 /* ==================================== */
 /*! \fn double * scn_curvatures(double *x, double *y, double *z, int32_t n, int32_t m, double *sk, double *rhok)
-    \param x (entrée) : tableau des abcisses des points de contrôle (taille n)
-    \param y (entrée) : tableau des ordonnées des points de contrôle (taille n)
-    \param z (entrée) : tableau des cotes des points de contrôle (taille n)
-    \param n (entrée) : nombre de points de contrôle
-    \param m (entrée) : nombre des échantillons
+    \param x (entrÃ©e) : tableau des abcisses des points de contrÃ´le (taille n)
+    \param y (entrÃ©e) : tableau des ordonnÃ©es des points de contrÃ´le (taille n)
+    \param z (entrÃ©e) : tableau des cotes des points de contrÃ´le (taille n)
+    \param n (entrÃ©e) : nombre de points de contrÃ´le
+    \param m (entrÃ©e) : nombre des Ã©chantillons
     \param sk (sortie) : tableau  des absisses curvilignes (taille m)
     \param rhok (sortie) : tableau des courbures (taille m)
-    \brief calcule de la courbure le long d'une spline 3D paramétrée : 
+    \brief calcule de la courbure le long d'une spline 3D paramÃ©trÃ©e : 
       K = ((z''y' - y''z')^2 + (x''z' - z''x')^2 + (y''x' - x''y')^2)^(1/2) / 
           (x'^2 + y'^2 + z'^2)^(3/2)
       source: http://en.wikipedia.org/wiki/Curvature
-    \warning la mémoire pour stocker les résultats sk, rhok doit avoir été allouée
+    \warning la mÃ©moire pour stocker les rÃ©sultats sk, rhok doit avoir Ã©tÃ© allouÃ©e
 */
 {
 #undef F_NAME
@@ -1172,11 +1172,11 @@ int32_t scn_tangents3d(
 		       int32_t n, int32_t m, double *sk, 
 		       double *xk, double *yk, double *zk, 
 		       double *txk, double *tyk, double *tzk)
-    \param X0, X1, X2, X3 (entrée) : tableau des coefficients des polynomes X
-    \param Y0, Y1, Y2, Y3 (entrée) : tableau des coefficients des polynomes Y
-    \param Z0, Z1, Z2, Z3 (entrée) : tableau des coefficients des polynomes Z
-    \param n (entrée) : nombre de points de contrôle
-    \param m (entrée) : nombre des échantillons
+    \param X0, X1, X2, X3 (entrÃ©e) : tableau des coefficients des polynomes X
+    \param Y0, Y1, Y2, Y3 (entrÃ©e) : tableau des coefficients des polynomes Y
+    \param Z0, Z1, Z2, Z3 (entrÃ©e) : tableau des coefficients des polynomes Z
+    \param n (entrÃ©e) : nombre de points de contrÃ´le
+    \param m (entrÃ©e) : nombre des Ã©chantillons
     \param sk (sortie) : tableau  des absisses curvilignes (taille m)
     \param xk (sortie) :
     \param yk (sortie) :
@@ -1184,8 +1184,8 @@ int32_t scn_tangents3d(
     \param txk (sortie) :
     \param tyk (sortie) :
     \param tzk (sortie) : tableaux des tangentes (taille m)
-    \brief calcule les tangentes le long d'une spline 3D paramétrée
-    \warning la mémoire pour stocker les résultats sk, xk, yk, zk, txk, tyk, tzk doit avoir été allouée
+    \brief calcule les tangentes le long d'une spline 3D paramÃ©trÃ©e
+    \warning la mÃ©moire pour stocker les rÃ©sultats sk, xk, yk, zk, txk, tyk, tzk doit avoir Ã©tÃ© allouÃ©e
 */
 {
 #undef F_NAME
@@ -1215,7 +1215,7 @@ int32_t scn_tangents3d(
     tmp = (k*L) / m; // emplacement du k-ieme echantillon
     j = 0;
     sumsav = sum = 0; 
-    while (sum < tmp) // recherche du segment de la spline où il se trouve
+    while (sum < tmp) // recherche du segment de la spline oÃ¹ il se trouve
     {
       sumsav = sum;
       f[0] = X1[j]; f[1] = 2*X2[j]; f[2] = 3*X3[j];
@@ -1224,11 +1224,11 @@ int32_t scn_tangents3d(
       sum = sum + integrale3(f, g, h, (double)(j), (double)(j+1), p);
       j++;
     }
-    j--; // c'est le j-ème segment
+    j--; // c'est le j-Ã¨me segment
     f[0] = X1[j]; f[1] = 2*X2[j]; f[2] = 3*X3[j];
     g[0] = Y1[j]; g[1] = 2*Y2[j]; g[2] = 3*Y3[j];
     h[0] = Z1[j]; h[1] = 2*Z2[j]; h[2] = 3*Z3[j];
-    // f,g,h sont les coef des polynomes dérivée première
+    // f,g,h sont les coef des polynomes dÃ©rivÃ©e premiÃ¨re
 
     tk = dicho3(f, g, h, (double)(j), (double)(j+1), tmp-sumsav, p, SCN_EPSILON);    
     // tk est l'abcisse curviligne du k-ieme echantillon
@@ -1314,11 +1314,11 @@ void distancesegments(int32_t *X, int32_t *Y, int32_t *V, int32_t *W, int32_t i1
 void distancesegments3d(int32_t *X, int32_t *Y, int32_t *Z, int32_t *U, int32_t *V, int32_t *W, int32_t i1, int32_t i2, double *delta, int32_t *arg)
 /* ==================================== */
 /*! \fn void distancesegments3d(int32_t *X, int32_t *Y, int32_t *Z, int32_t *U, int32_t *V, int32_t *W, int32_t i1, int32_t i2, double *delta, int32_t *arg)
-    \param X,Y,Z (entrée) : courbe initiale C
-    \param U,V,W (entrée) : courbe discrétisée D
-    \param i1,i2 (entrée) : intervalle dans lequel les points des 2 courbes sont considérés
+    \param X,Y,Z (entrÃ©e) : courbe initiale C
+    \param U,V,W (entrÃ©e) : courbe discrÃ©tisÃ©e D
+    \param i1,i2 (entrÃ©e) : intervalle dans lequel les points des 2 courbes sont considÃ©rÃ©s
     \param delta (sortie) : distance maximale entre C et D
-    \param arg (sortie) : indice dans C réalisant le max
+    \param arg (sortie) : indice dans C rÃ©alisant le max
     \brief 
     \warning 
 */
@@ -1352,15 +1352,15 @@ void scn_discretisespline1(int32_t nctrl,
 			  int32_t *C, int32_t *W)
 /* ==================================== */
 /*! \fn double *scn_discretisespline1(int32_t nctrl, double *C0, double *C1, double *C2, double *C3, int32_t *C, int32_t *W)
-    \param nctrl (entrée) : nombre de points de contrôle
-    \param C0 (entrée) : tableau des coef. spline de degré 0 (taille nctrl-1) 
-    \param C1 (entrée) : tableau des coef. spline de degré 1 (taille nctrl-1) 
-    \param C2 (entrée) : tableau des coef. spline de degré 2 (taille nctrl-1) 
-    \param C3 (entrée) : tableau des coef. spline de degré 3 (taille nctrl-1) 
-    \param C (entrée) : tableau des abscisses des pts de contrôle (taille nctrl) 
-    \param W (sortie) : courbe discrétisée
-    \brief discrétise la spline
-    \warning la mémoire pour stocker le résultat W doit avoir été allouée
+    \param nctrl (entrÃ©e) : nombre de points de contrÃ´le
+    \param C0 (entrÃ©e) : tableau des coef. spline de degrÃ© 0 (taille nctrl-1) 
+    \param C1 (entrÃ©e) : tableau des coef. spline de degrÃ© 1 (taille nctrl-1) 
+    \param C2 (entrÃ©e) : tableau des coef. spline de degrÃ© 2 (taille nctrl-1) 
+    \param C3 (entrÃ©e) : tableau des coef. spline de degrÃ© 3 (taille nctrl-1) 
+    \param C (entrÃ©e) : tableau des abscisses des pts de contrÃ´le (taille nctrl) 
+    \param W (sortie) : courbe discrÃ©tisÃ©e
+    \brief discrÃ©tise la spline
+    \warning la mÃ©moire pour stocker le rÃ©sultat W doit avoir Ã©tÃ© allouÃ©e
 */
 {
   int32_t i, j;
@@ -1383,20 +1383,20 @@ void scn_discretisespline(int32_t nctrl,
 			  int32_t *C, int32_t *V, int32_t *W)
 /* ==================================== */
 /*! \fn double *scn_discretisespline(int32_t nctrl, double *C0, double *C1, double *C2, double *C3, double *D0, double *D1, double *D2, double *D3, int32_t *C, int32_t *V, int32_t *W)
-    \param nctrl (entrée) : nombre de points de contrôle
-    \param C0 (entrée) : tableau des coef. spline de degré 0 (taille nctrl-1) 
-    \param C1 (entrée) : tableau des coef. spline de degré 1 (taille nctrl-1) 
-    \param C2 (entrée) : tableau des coef. spline de degré 2 (taille nctrl-1) 
-    \param C3 (entrée) : tableau des coef. spline de degré 3 (taille nctrl-1) 
-    \param D0 (entrée) : tableau des coef. spline de degré 0 (taille nctrl-1) 
-    \param D1 (entrée) : tableau des coef. spline de degré 1 (taille nctrl-1) 
-    \param D2 (entrée) : tableau des coef. spline de degré 2 (taille nctrl-1) 
-    \param D3 (entrée) : tableau des coef. spline de degré 3 (taille nctrl-1) 
-    \param C (entrée) : tableau des index des pts de contrôle (taille nctrl) 
-    \param V (sortie) : courbe discrétisée (abscisses)
-    \param W (sortie) : courbe discrétisée (ordonnées)
-    \brief discrétise la spline paramétrique
-    \warning la mémoire pour stocker le résultat V, W doit avoir été allouée
+    \param nctrl (entrÃ©e) : nombre de points de contrÃ´le
+    \param C0 (entrÃ©e) : tableau des coef. spline de degrÃ© 0 (taille nctrl-1) 
+    \param C1 (entrÃ©e) : tableau des coef. spline de degrÃ© 1 (taille nctrl-1) 
+    \param C2 (entrÃ©e) : tableau des coef. spline de degrÃ© 2 (taille nctrl-1) 
+    \param C3 (entrÃ©e) : tableau des coef. spline de degrÃ© 3 (taille nctrl-1) 
+    \param D0 (entrÃ©e) : tableau des coef. spline de degrÃ© 0 (taille nctrl-1) 
+    \param D1 (entrÃ©e) : tableau des coef. spline de degrÃ© 1 (taille nctrl-1) 
+    \param D2 (entrÃ©e) : tableau des coef. spline de degrÃ© 2 (taille nctrl-1) 
+    \param D3 (entrÃ©e) : tableau des coef. spline de degrÃ© 3 (taille nctrl-1) 
+    \param C (entrÃ©e) : tableau des index des pts de contrÃ´le (taille nctrl) 
+    \param V (sortie) : courbe discrÃ©tisÃ©e (abscisses)
+    \param W (sortie) : courbe discrÃ©tisÃ©e (ordonnÃ©es)
+    \brief discrÃ©tise la spline paramÃ©trique
+    \warning la mÃ©moire pour stocker le rÃ©sultat V, W doit avoir Ã©tÃ© allouÃ©e
 */
 {
   int32_t i, j;
@@ -1422,25 +1422,25 @@ void scn_discretisespline3d(int32_t nctrl,
 			  double *D0, double *D1, double *D2, double *D3, 
 			  double *E0, double *E1, double *E2, double *E3, 
 			  int32_t *C, int32_t *U, int32_t *V, int32_t *W)
-    \param nctrl (entrée) : nombre de points de contrôle
-    \param C0 (entrée) : tableau des coef. spline de degré 0 (taille nctrl-1) 
-    \param C1 (entrée) : tableau des coef. spline de degré 1 (taille nctrl-1) 
-    \param C2 (entrée) : tableau des coef. spline de degré 2 (taille nctrl-1) 
-    \param C3 (entrée) : tableau des coef. spline de degré 3 (taille nctrl-1) 
-    \param D0 (entrée) : tableau des coef. spline de degré 0 (taille nctrl-1) 
-    \param D1 (entrée) : tableau des coef. spline de degré 1 (taille nctrl-1) 
-    \param D2 (entrée) : tableau des coef. spline de degré 2 (taille nctrl-1) 
-    \param D3 (entrée) : tableau des coef. spline de degré 3 (taille nctrl-1) 
-    \param E0 (entrée) : tableau des coef. spline de degré 0 (taille nctrl-1) 
-    \param E1 (entrée) : tableau des coef. spline de degré 1 (taille nctrl-1) 
-    \param E2 (entrée) : tableau des coef. spline de degré 2 (taille nctrl-1) 
-    \param E3 (entrée) : tableau des coef. spline de degré 3 (taille nctrl-1) 
-    \param C (entrée) : tableau des index des pts de contrôle (taille nctrl) 
-    \param U (sortie) : courbe discrétisée (abscisses)
-    \param V (sortie) : courbe discrétisée (ordonnées)
-    \param W (sortie) : courbe discrétisée (cotes)
-    \brief discrétise la spline paramétrique
-    \warning la mémoire pour stocker le résultat U, V, W doit avoir été allouée
+    \param nctrl (entrÃ©e) : nombre de points de contrÃ´le
+    \param C0 (entrÃ©e) : tableau des coef. spline de degrÃ© 0 (taille nctrl-1) 
+    \param C1 (entrÃ©e) : tableau des coef. spline de degrÃ© 1 (taille nctrl-1) 
+    \param C2 (entrÃ©e) : tableau des coef. spline de degrÃ© 2 (taille nctrl-1) 
+    \param C3 (entrÃ©e) : tableau des coef. spline de degrÃ© 3 (taille nctrl-1) 
+    \param D0 (entrÃ©e) : tableau des coef. spline de degrÃ© 0 (taille nctrl-1) 
+    \param D1 (entrÃ©e) : tableau des coef. spline de degrÃ© 1 (taille nctrl-1) 
+    \param D2 (entrÃ©e) : tableau des coef. spline de degrÃ© 2 (taille nctrl-1) 
+    \param D3 (entrÃ©e) : tableau des coef. spline de degrÃ© 3 (taille nctrl-1) 
+    \param E0 (entrÃ©e) : tableau des coef. spline de degrÃ© 0 (taille nctrl-1) 
+    \param E1 (entrÃ©e) : tableau des coef. spline de degrÃ© 1 (taille nctrl-1) 
+    \param E2 (entrÃ©e) : tableau des coef. spline de degrÃ© 2 (taille nctrl-1) 
+    \param E3 (entrÃ©e) : tableau des coef. spline de degrÃ© 3 (taille nctrl-1) 
+    \param C (entrÃ©e) : tableau des index des pts de contrÃ´le (taille nctrl) 
+    \param U (sortie) : courbe discrÃ©tisÃ©e (abscisses)
+    \param V (sortie) : courbe discrÃ©tisÃ©e (ordonnÃ©es)
+    \param W (sortie) : courbe discrÃ©tisÃ©e (cotes)
+    \brief discrÃ©tise la spline paramÃ©trique
+    \warning la mÃ©moire pour stocker le rÃ©sultat U, V, W doit avoir Ã©tÃ© allouÃ©e
 */
 {
   int32_t i, j;
@@ -1538,18 +1538,18 @@ void printctrlpoints3d(int32_t *C, int32_t *X, int32_t *Y, int32_t *Z, int32_t n
 int32_t scn_approxcurve1(int32_t *Y, int32_t N, double deltamax, int32_t *Z, int32_t *n, double *C0, double *C1, double *C2, double *C3)
 /* ==================================== */
 /*! \fn int32_t scn_approxcurve1(int32_t *Y, int32_t N, double deltamax, int32_t *Z, int32_t *n, double *C0, double *C1, double *C2, double *C3)
-    \param Y (entrée) : tableau des ordonnées des points du graphe de la fonction (taille N)
-    \param N (entrée) : nombre de points de la courbe
-    \param deltamax (entrée) : tolérance sur l'approximation
-    \param Z (sortie) : tableau des absisses des points de contrôle (taille N)
-    \param n (sortie) : nombre de points de contrôle
-    \param C0 (sortie) : tableau des coef. spline de degré 0 (taille *n-1) 
-    \param C1 (sortie) : tableau des coef. spline de degré 1 (taille *n-1) 
-    \param C2 (sortie) : tableau des coef. spline de degré 2 (taille *n-1) 
-    \param C3 (sortie) : tableau des coef. spline de degré 3 (taille *n-1) 
+    \param Y (entrÃ©e) : tableau des ordonnÃ©es des points du graphe de la fonction (taille N)
+    \param N (entrÃ©e) : nombre de points de la courbe
+    \param deltamax (entrÃ©e) : tolÃ©rance sur l'approximation
+    \param Z (sortie) : tableau des absisses des points de contrÃ´le (taille N)
+    \param n (sortie) : nombre de points de contrÃ´le
+    \param C0 (sortie) : tableau des coef. spline de degrÃ© 0 (taille *n-1) 
+    \param C1 (sortie) : tableau des coef. spline de degrÃ© 1 (taille *n-1) 
+    \param C2 (sortie) : tableau des coef. spline de degrÃ© 2 (taille *n-1) 
+    \param C3 (sortie) : tableau des coef. spline de degrÃ© 3 (taille *n-1) 
     \brief trouve une approximation par une spline cubique de la fonction discrete 
-           définie par Y
-    \warning la mémoire pour stocker les résultats Z, C0..C3 doit avoir été allouée
+           dÃ©finie par Y
+    \warning la mÃ©moire pour stocker les rÃ©sultats Z, C0..C3 doit avoir Ã©tÃ© allouÃ©e
 */
 #undef F_NAME
 #define F_NAME "scn_approxcurve1"
@@ -1612,7 +1612,7 @@ int32_t scn_approxcurve1(int32_t *Y, int32_t N, double deltamax, int32_t *Z, int
     {
       distancesegments1(Y, W, Z[i], Z[i+1], &delta, &arg);
       if (delta > deltamax)
-      { // insere le point arg dans Z à la position i+1 
+      { // insere le point arg dans Z Ã  la position i+1 
         continuer = 1;
         nctrl++;
         for (j = nctrl-1; j > i+1; j--) Z[j] = Z[j-1];
@@ -1644,23 +1644,23 @@ int32_t scn_approxcurve1(int32_t *Y, int32_t N, double deltamax, int32_t *Z, int
 int32_t scn_approxcurve(int32_t *X, int32_t *Y, int32_t N, double deltamax, int32_t *C, int32_t *n, double *C0, double *C1, double *C2, double *C3, double *D0, double *D1, double *D2, double *D3)
 /* ==================================== */
 /*! \fn int32_t scn_approxcurve(int32_t *X, int32_t *Y, int32_t N, double deltamax, int32_t *C, int32_t *n, double *C0, double *C1, double *C2, double *C3, double *D0, double *D1, double *D2, double *D3)
-    \param X (entrée) : tableau des abscisses des points de la courbe (taille N)
-    \param Y (entrée) : tableau des ordonnées des points de la courbe (taille N)
-    \param N (entrée) : nombre de points de la courbe
-    \param deltamax (entrée) : tolérance sur l'approximation
-    \param C (sortie) : tableau des index des points de contrôle (taille N)
-    \param n (sortie) : nombre de points de contrôle
-    \param C0 (sortie) : tableau des coef. spline X de degré 0 (taille *n-1) 
-    \param C1 (sortie) : tableau des coef. spline X de degré 1 (taille *n-1) 
-    \param C2 (sortie) : tableau des coef. spline X de degré 2 (taille *n-1) 
-    \param C3 (sortie) : tableau des coef. spline X de degré 3 (taille *n-1) 
-    \param D0 (sortie) : tableau des coef. spline Y de degré 0 (taille *n-1) 
-    \param D1 (sortie) : tableau des coef. spline Y de degré 1 (taille *n-1) 
-    \param D2 (sortie) : tableau des coef. spline Y de degré 2 (taille *n-1) 
-    \param D3 (sortie) : tableau des coef. spline Y de degré 3 (taille *n-1) 
+    \param X (entrÃ©e) : tableau des abscisses des points de la courbe (taille N)
+    \param Y (entrÃ©e) : tableau des ordonnÃ©es des points de la courbe (taille N)
+    \param N (entrÃ©e) : nombre de points de la courbe
+    \param deltamax (entrÃ©e) : tolÃ©rance sur l'approximation
+    \param C (sortie) : tableau des index des points de contrÃ´le (taille N)
+    \param n (sortie) : nombre de points de contrÃ´le
+    \param C0 (sortie) : tableau des coef. spline X de degrÃ© 0 (taille *n-1) 
+    \param C1 (sortie) : tableau des coef. spline X de degrÃ© 1 (taille *n-1) 
+    \param C2 (sortie) : tableau des coef. spline X de degrÃ© 2 (taille *n-1) 
+    \param C3 (sortie) : tableau des coef. spline X de degrÃ© 3 (taille *n-1) 
+    \param D0 (sortie) : tableau des coef. spline Y de degrÃ© 0 (taille *n-1) 
+    \param D1 (sortie) : tableau des coef. spline Y de degrÃ© 1 (taille *n-1) 
+    \param D2 (sortie) : tableau des coef. spline Y de degrÃ© 2 (taille *n-1) 
+    \param D3 (sortie) : tableau des coef. spline Y de degrÃ© 3 (taille *n-1) 
     \brief trouve une approximation par deux splines cubiques de la courbe discrete 
-           définie par X, Y
-    \warning la mémoire pour stocker les résultats C, C0..C3, D0..D3 doit avoir été allouée
+           dÃ©finie par X, Y
+    \warning la mÃ©moire pour stocker les rÃ©sultats C, C0..C3, D0..D3 doit avoir Ã©tÃ© allouÃ©e
 */
 #undef F_NAME
 #define F_NAME "scn_approxcurve"
@@ -1678,11 +1678,11 @@ int32_t scn_approxcurve(int32_t *X, int32_t *Y, int32_t N, double deltamax, int3
 int32_t scn_approxcurve2(int32_t *X, int32_t *Y, int32_t *N, double deltamax)
 /* ==================================== */
 /*! \fn int32_t scn_approxcurve2(int32_t *X, int32_t *Y, int32_t *N, double deltamax)
-    \param X (entrée/sortie) : tableau des abscisses des points (taille N)
-    \param Y (entrée/sortie) : tableau des ordonnées des points (taille N)
-    \param N (entrée/sortie) : nombre de points de la courbe
-    \param deltamax (entrée) : tolérance sur l'approximation
-    \brief trouve une approximation par deux splines cubiques de la courbe discrete définie par X, Y. Le résultat (liste de points de contrôle) est retourné dans X, Y, N.
+    \param X (entrÃ©e/sortie) : tableau des abscisses des points (taille N)
+    \param Y (entrÃ©e/sortie) : tableau des ordonnÃ©es des points (taille N)
+    \param N (entrÃ©e/sortie) : nombre de points de la courbe
+    \param deltamax (entrÃ©e) : tolÃ©rance sur l'approximation
+    \brief trouve une approximation par deux splines cubiques de la courbe discrete dÃ©finie par X, Y. Le rÃ©sultat (liste de points de contrÃ´le) est retournÃ© dans X, Y, N.
 */
 #undef F_NAME
 #define F_NAME "scn_approxcurve2"
@@ -1730,23 +1730,23 @@ int32_t scn_approxcurve2(int32_t *X, int32_t *Y, int32_t *N, double deltamax)
 int32_t scn_approxcurve_with_initial_control_points(int32_t *X, int32_t *Y, int32_t N, double deltamax, int32_t *C, int32_t *n, double *C0, double *C1, double *C2, double *C3, double *D0, double *D1, double *D2, double *D3)
 /* ==================================== */
 /*! \fn int32_t scn_approxcurve_with_initial_control_points(int32_t *X, int32_t *Y, int32_t N, double deltamax, int32_t *C, int32_t *n, double *C0, double *C1, double *C2, double *C3, double *D0, double *D1, double *D2, double *D3)
-    \param X (entrée) : tableau des abscisses des points de la courbe (taille N)
-    \param Y (entrée) : tableau des ordonnées des points de la courbe (taille N)
-    \param N (entrée) : nombre de points de la courbe
-    \param deltamax (entrée) : tolérance sur l'approximation
-    \param C (entrée/sortie) : tableau des index des points de contrôle (taille N)
-    \param n (entrée/sortie) : nombre de points de contrôle
-    \param C0 (sortie) : tableau des coef. spline X de degré 0 (taille *n-1) 
-    \param C1 (sortie) : tableau des coef. spline X de degré 1 (taille *n-1) 
-    \param C2 (sortie) : tableau des coef. spline X de degré 2 (taille *n-1) 
-    \param C3 (sortie) : tableau des coef. spline X de degré 3 (taille *n-1) 
-    \param D0 (sortie) : tableau des coef. spline Y de degré 0 (taille *n-1) 
-    \param D1 (sortie) : tableau des coef. spline Y de degré 1 (taille *n-1) 
-    \param D2 (sortie) : tableau des coef. spline Y de degré 2 (taille *n-1) 
-    \param D3 (sortie) : tableau des coef. spline Y de degré 3 (taille *n-1) 
+    \param X (entrÃ©e) : tableau des abscisses des points de la courbe (taille N)
+    \param Y (entrÃ©e) : tableau des ordonnÃ©es des points de la courbe (taille N)
+    \param N (entrÃ©e) : nombre de points de la courbe
+    \param deltamax (entrÃ©e) : tolÃ©rance sur l'approximation
+    \param C (entrÃ©e/sortie) : tableau des index des points de contrÃ´le (taille N)
+    \param n (entrÃ©e/sortie) : nombre de points de contrÃ´le
+    \param C0 (sortie) : tableau des coef. spline X de degrÃ© 0 (taille *n-1) 
+    \param C1 (sortie) : tableau des coef. spline X de degrÃ© 1 (taille *n-1) 
+    \param C2 (sortie) : tableau des coef. spline X de degrÃ© 2 (taille *n-1) 
+    \param C3 (sortie) : tableau des coef. spline X de degrÃ© 3 (taille *n-1) 
+    \param D0 (sortie) : tableau des coef. spline Y de degrÃ© 0 (taille *n-1) 
+    \param D1 (sortie) : tableau des coef. spline Y de degrÃ© 1 (taille *n-1) 
+    \param D2 (sortie) : tableau des coef. spline Y de degrÃ© 2 (taille *n-1) 
+    \param D3 (sortie) : tableau des coef. spline Y de degrÃ© 3 (taille *n-1) 
     \brief trouve une approximation par deux splines cubiques de la courbe discrete 
-           définie par X, Y
-    \warning la mémoire pour stocker les résultats C, C0..C3, D0..D3 doit avoir été allouée
+           dÃ©finie par X, Y
+    \warning la mÃ©moire pour stocker les rÃ©sultats C, C0..C3, D0..D3 doit avoir Ã©tÃ© allouÃ©e
 */
 #undef F_NAME
 #define F_NAME "scn_approxcurve_with_initial_control_points"
@@ -1803,7 +1803,7 @@ int32_t scn_approxcurve_with_initial_control_points(int32_t *X, int32_t *Y, int3
     {
       distancesegments(X, Y, V, W, C[i], C[i+1], &delta, &arg);
       if (delta > deltamax)
-      { // insere le point arg dans C à la position i+1 
+      { // insere le point arg dans C Ã  la position i+1 
         continuer = 1;
         nctrl++;
         for (j = nctrl-1; j > i+1; j--) C[j] = C[j-1];
@@ -1840,7 +1840,7 @@ int32_t scn_approxcurve_with_initial_control_points(int32_t *X, int32_t *Y, int3
 #endif
 
   // renormalisation de l'abcisse curviligne
-  // (départ à 0, incrément de 1 pour chaque point de contrôle) 
+  // (dÃ©part Ã  0, incrÃ©ment de 1 pour chaque point de contrÃ´le) 
   for (i = 0; i < nctrl; i++) x[i] = i;
   for (i = 0; i < nctrl; i++) y[i] = X[C[i]];
   if (scn_solvespline(x, y, nctrl, C0, C1, C2, C3) == 0) return 0;
@@ -1868,28 +1868,28 @@ int32_t scn_approxcurve3d(int32_t *X, int32_t *Y, int32_t *Z, int32_t N, double 
                        double *C0, double *C1, double *C2, double *C3,
                        double *D0, double *D1, double *D2, double *D3,
                        double *E0, double *E1, double *E2, double *E3)
-    \param X (entrée) : tableau des abscisses des points de la courbe (taille N)
-    \param Y (entrée) : tableau des ordonnées des points de la courbe (taille N)
-    \param Z (entrée) : tableau des cotes des points de la courbe (taille N)
-    \param N (entrée) : nombre de points de la courbe
-    \param deltamax (entrée) : tolérance sur l'approximation
-    \param C (sortie) : tableau des index des points de contrôle (taille N)
-    \param n (sortie) : nombre de points de contrôle
-    \param C0 (sortie) : tableau des coef. spline X de degré 0 (taille *n-1) 
-    \param C1 (sortie) : tableau des coef. spline X de degré 1 (taille *n-1) 
-    \param C2 (sortie) : tableau des coef. spline X de degré 2 (taille *n-1) 
-    \param C3 (sortie) : tableau des coef. spline X de degré 3 (taille *n-1) 
-    \param D0 (sortie) : tableau des coef. spline Y de degré 0 (taille *n-1) 
-    \param D1 (sortie) : tableau des coef. spline Y de degré 1 (taille *n-1) 
-    \param D2 (sortie) : tableau des coef. spline Y de degré 2 (taille *n-1) 
-    \param D3 (sortie) : tableau des coef. spline Y de degré 3 (taille *n-1) 
-    \param E0 (sortie) : tableau des coef. spline Z de degré 0 (taille *n-1) 
-    \param E1 (sortie) : tableau des coef. spline Z de degré 1 (taille *n-1) 
-    \param E2 (sortie) : tableau des coef. spline Z de degré 2 (taille *n-1) 
-    \param E3 (sortie) : tableau des coef. spline Z de degré 3 (taille *n-1) 
+    \param X (entrÃ©e) : tableau des abscisses des points de la courbe (taille N)
+    \param Y (entrÃ©e) : tableau des ordonnÃ©es des points de la courbe (taille N)
+    \param Z (entrÃ©e) : tableau des cotes des points de la courbe (taille N)
+    \param N (entrÃ©e) : nombre de points de la courbe
+    \param deltamax (entrÃ©e) : tolÃ©rance sur l'approximation
+    \param C (sortie) : tableau des index des points de contrÃ´le (taille N)
+    \param n (sortie) : nombre de points de contrÃ´le
+    \param C0 (sortie) : tableau des coef. spline X de degrÃ© 0 (taille *n-1) 
+    \param C1 (sortie) : tableau des coef. spline X de degrÃ© 1 (taille *n-1) 
+    \param C2 (sortie) : tableau des coef. spline X de degrÃ© 2 (taille *n-1) 
+    \param C3 (sortie) : tableau des coef. spline X de degrÃ© 3 (taille *n-1) 
+    \param D0 (sortie) : tableau des coef. spline Y de degrÃ© 0 (taille *n-1) 
+    \param D1 (sortie) : tableau des coef. spline Y de degrÃ© 1 (taille *n-1) 
+    \param D2 (sortie) : tableau des coef. spline Y de degrÃ© 2 (taille *n-1) 
+    \param D3 (sortie) : tableau des coef. spline Y de degrÃ© 3 (taille *n-1) 
+    \param E0 (sortie) : tableau des coef. spline Z de degrÃ© 0 (taille *n-1) 
+    \param E1 (sortie) : tableau des coef. spline Z de degrÃ© 1 (taille *n-1) 
+    \param E2 (sortie) : tableau des coef. spline Z de degrÃ© 2 (taille *n-1) 
+    \param E3 (sortie) : tableau des coef. spline Z de degrÃ© 3 (taille *n-1) 
     \brief trouve une approximation par trois splines cubiques de la courbe discrete 
-           définie par X, Y, Z
-    \warning la mémoire pour stocker les résultats C, C0..C3, D0..D3, E0..E3 doit avoir été allouée
+           dÃ©finie par X, Y, Z
+    \warning la mÃ©moire pour stocker les rÃ©sultats C, C0..C3, D0..D3, E0..E3 doit avoir Ã©tÃ© allouÃ©e
 */
 #undef F_NAME
 #define F_NAME "scn_approxcurve3d"
@@ -1909,12 +1909,12 @@ int32_t scn_approxcurve3d(int32_t *X, int32_t *Y, int32_t *Z, int32_t N, double 
 int32_t scn_approxcurve3d2(int32_t *X, int32_t *Y, int32_t *Z, int32_t *N, double deltamax)
 /* ==================================== */
 /*! \fn 
-    \param X (entrée/sortie) : tableau des abscisses des points (taille N)
-    \param Y (entrée/sortie) : tableau des ordonnées des points (taille N)
-    \param Z (entrée/sortie) : tableau des cotes des points (taille N)
-    \param N (entrée/sortie) : nombre de points de la courbe
-    \param deltamax (entrée) : tolérance sur l'approximation
-    \brief trouve une approximation par deux splines cubiques de la courbe discrete définie par X, Y, Z. Le résultat (liste de points de contrôle) est retourné dans X, Y, Z, N.
+    \param X (entrÃ©e/sortie) : tableau des abscisses des points (taille N)
+    \param Y (entrÃ©e/sortie) : tableau des ordonnÃ©es des points (taille N)
+    \param Z (entrÃ©e/sortie) : tableau des cotes des points (taille N)
+    \param N (entrÃ©e/sortie) : nombre de points de la courbe
+    \param deltamax (entrÃ©e) : tolÃ©rance sur l'approximation
+    \brief trouve une approximation par deux splines cubiques de la courbe discrete dÃ©finie par X, Y, Z. Le rÃ©sultat (liste de points de contrÃ´le) est retournÃ© dans X, Y, Z, N.
 */
 #undef F_NAME
 #define F_NAME "scn_approxcurve3d2"
@@ -1978,28 +1978,28 @@ int32_t scn_approxcurve3d_with_initial_control_points(
   double *C0, double *C1, double *C2, double *C3,
   double *D0, double *D1, double *D2, double *D3,
   double *E0, double *E1, double *E2, double *E3)
-    \param X (entrée) : tableau des abscisses des points de la courbe (taille N)
-    \param Y (entrée) : tableau des ordonnées des points de la courbe (taille N)
-    \param Z (entrée) : tableau des cotes des points de la courbe (taille N)
-    \param N (entrée) : nombre de points de la courbe
-    \param deltamax (entrée) : tolérance sur l'approximation
-    \param C (entrée/sortie) : tableau des index des points de contrôle (taille N)
-    \param n (entrée/sortie) : nombre de points de contrôle
-    \param C0 (sortie) : tableau des coef. spline X de degré 0 (taille *n-1) 
-    \param C1 (sortie) : tableau des coef. spline X de degré 1 (taille *n-1) 
-    \param C2 (sortie) : tableau des coef. spline X de degré 2 (taille *n-1) 
-    \param C3 (sortie) : tableau des coef. spline X de degré 3 (taille *n-1) 
-    \param D0 (sortie) : tableau des coef. spline Y de degré 0 (taille *n-1) 
-    \param D1 (sortie) : tableau des coef. spline Y de degré 1 (taille *n-1) 
-    \param D2 (sortie) : tableau des coef. spline Y de degré 2 (taille *n-1) 
-    \param D3 (sortie) : tableau des coef. spline Y de degré 3 (taille *n-1) 
-    \param E0 (sortie) : tableau des coef. spline Z de degré 0 (taille *n-1) 
-    \param E1 (sortie) : tableau des coef. spline Z de degré 1 (taille *n-1) 
-    \param E2 (sortie) : tableau des coef. spline Z de degré 2 (taille *n-1) 
-    \param E3 (sortie) : tableau des coef. spline Z de degré 3 (taille *n-1) 
+    \param X (entrÃ©e) : tableau des abscisses des points de la courbe (taille N)
+    \param Y (entrÃ©e) : tableau des ordonnÃ©es des points de la courbe (taille N)
+    \param Z (entrÃ©e) : tableau des cotes des points de la courbe (taille N)
+    \param N (entrÃ©e) : nombre de points de la courbe
+    \param deltamax (entrÃ©e) : tolÃ©rance sur l'approximation
+    \param C (entrÃ©e/sortie) : tableau des index des points de contrÃ´le (taille N)
+    \param n (entrÃ©e/sortie) : nombre de points de contrÃ´le
+    \param C0 (sortie) : tableau des coef. spline X de degrÃ© 0 (taille *n-1) 
+    \param C1 (sortie) : tableau des coef. spline X de degrÃ© 1 (taille *n-1) 
+    \param C2 (sortie) : tableau des coef. spline X de degrÃ© 2 (taille *n-1) 
+    \param C3 (sortie) : tableau des coef. spline X de degrÃ© 3 (taille *n-1) 
+    \param D0 (sortie) : tableau des coef. spline Y de degrÃ© 0 (taille *n-1) 
+    \param D1 (sortie) : tableau des coef. spline Y de degrÃ© 1 (taille *n-1) 
+    \param D2 (sortie) : tableau des coef. spline Y de degrÃ© 2 (taille *n-1) 
+    \param D3 (sortie) : tableau des coef. spline Y de degrÃ© 3 (taille *n-1) 
+    \param E0 (sortie) : tableau des coef. spline Z de degrÃ© 0 (taille *n-1) 
+    \param E1 (sortie) : tableau des coef. spline Z de degrÃ© 1 (taille *n-1) 
+    \param E2 (sortie) : tableau des coef. spline Z de degrÃ© 2 (taille *n-1) 
+    \param E3 (sortie) : tableau des coef. spline Z de degrÃ© 3 (taille *n-1) 
     \brief trouve une approximation par trois splines cubiques de la courbe discrete 
-           définie par X, Y, Z
-    \warning la mémoire pour stocker les résultats C, C0..C3, D0..D3, E0..E3 doit avoir été allouée
+           dÃ©finie par X, Y, Z
+    \warning la mÃ©moire pour stocker les rÃ©sultats C, C0..C3, D0..D3, E0..E3 doit avoir Ã©tÃ© allouÃ©e
 */
 #undef F_NAME
 #define F_NAME "scn_approxcurve3d_with_initial_control_points"
@@ -2053,7 +2053,7 @@ int32_t scn_approxcurve3d_with_initial_control_points(
     {
       distancesegments3d(X, Y, Z, U, V, W, C[i], C[i+1], &delta, &arg);
       if (delta > deltamax)
-      { // insere le point arg dans C à la position i+1 
+      { // insere le point arg dans C Ã  la position i+1 
         continuer = 1;
         nctrl++;
         for (j = nctrl-1; j > i+1; j--) C[j] = C[j-1];
@@ -2076,7 +2076,7 @@ int32_t scn_approxcurve3d_with_initial_control_points(
   }
 
   // renormalisation de l'abcisse curviligne
-  // (départ à 0, incrément de 1 pour chaque point de contrôle) 
+  // (dÃ©part Ã  0, incrÃ©ment de 1 pour chaque point de contrÃ´le) 
   for (i = 0; i < nctrl; i++) x[i] = i;
   for (i = 0; i < nctrl; i++) y[i] = X[C[i]];
   if (scn_solvespline(x, y, nctrl, C0, C1, C2, C3) == 0) return 0;
@@ -2105,22 +2105,22 @@ double scn_splinequerypoint3d(double x, double y, double z, double p, int32_t n,
 			       double *C0, double *C1, double *C2, double *C3,
 			       double *D0, double *D1, double *D2, double *D3,
 			       double *E0, double *E1, double *E2, double *E3)
-    \param x,y,z (entrée) : un point
-    \param p (entrée) : précision (valeur dont on incrémente l'abs. curv. à chaque étape) 
-    \param n (entrée) : nombre de points de contrôle de la spline
-    \param C0 (entrée) : tableau des coef. spline X de degré 0 (taille n-1) 
-    \param C1 (entrée) : tableau des coef. spline X de degré 1 (taille n-1) 
-    \param C2 (entrée) : tableau des coef. spline X de degré 2 (taille n-1) 
-    \param C3 (entrée) : tableau des coef. spline X de degré 3 (taille n-1) 
-    \param D0 (entrée) : tableau des coef. spline Y de degré 0 (taille n-1) 
-    \param D1 (entrée) : tableau des coef. spline Y de degré 1 (taille n-1) 
-    \param D2 (entrée) : tableau des coef. spline Y de degré 2 (taille n-1) 
-    \param D3 (entrée) : tableau des coef. spline Y de degré 3 (taille n-1) 
-    \param E0 (entrée) : tableau des coef. spline Z de degré 0 (taille n-1) 
-    \param E1 (entrée) : tableau des coef. spline Z de degré 1 (taille n-1) 
-    \param E2 (entrée) : tableau des coef. spline Z de degré 2 (taille n-1) 
-    \param E3 (entrée) : tableau des coef. spline Z de degré 3 (taille n-1) 
-    \brief retourne l'abcisse curviligne du point de la spline le plus proche du point (x,y,z) donné
+    \param x,y,z (entrÃ©e) : un point
+    \param p (entrÃ©e) : prÃ©cision (valeur dont on incrÃ©mente l'abs. curv. Ã  chaque Ã©tape) 
+    \param n (entrÃ©e) : nombre de points de contrÃ´le de la spline
+    \param C0 (entrÃ©e) : tableau des coef. spline X de degrÃ© 0 (taille n-1) 
+    \param C1 (entrÃ©e) : tableau des coef. spline X de degrÃ© 1 (taille n-1) 
+    \param C2 (entrÃ©e) : tableau des coef. spline X de degrÃ© 2 (taille n-1) 
+    \param C3 (entrÃ©e) : tableau des coef. spline X de degrÃ© 3 (taille n-1) 
+    \param D0 (entrÃ©e) : tableau des coef. spline Y de degrÃ© 0 (taille n-1) 
+    \param D1 (entrÃ©e) : tableau des coef. spline Y de degrÃ© 1 (taille n-1) 
+    \param D2 (entrÃ©e) : tableau des coef. spline Y de degrÃ© 2 (taille n-1) 
+    \param D3 (entrÃ©e) : tableau des coef. spline Y de degrÃ© 3 (taille n-1) 
+    \param E0 (entrÃ©e) : tableau des coef. spline Z de degrÃ© 0 (taille n-1) 
+    \param E1 (entrÃ©e) : tableau des coef. spline Z de degrÃ© 1 (taille n-1) 
+    \param E2 (entrÃ©e) : tableau des coef. spline Z de degrÃ© 2 (taille n-1) 
+    \param E3 (entrÃ©e) : tableau des coef. spline Z de degrÃ© 3 (taille n-1) 
+    \brief retourne l'abcisse curviligne du point de la spline le plus proche du point (x,y,z) donnÃ©
 */
 #undef F_NAME
 #define F_NAME "scn_splinequerypoint3d"
@@ -2155,27 +2155,27 @@ double scn_splinequerycurvature3d(double s, int32_t n,
 			       double *C0, double *C1, double *C2, double *C3,
 			       double *D0, double *D1, double *D2, double *D3,
 			       double *E0, double *E1, double *E2, double *E3)
-    \param s (entrée) : abcisse curviligne d'un point de la spline
-    \param n (entrée) : nombre de points de contrôle de la spline
-    \param C0 (entrée) : tableau des coef. spline X de degré 0 (taille n-1) 
-    \param C1 (entrée) : tableau des coef. spline X de degré 1 (taille n-1) 
-    \param C2 (entrée) : tableau des coef. spline X de degré 2 (taille n-1) 
-    \param C3 (entrée) : tableau des coef. spline X de degré 3 (taille n-1) 
-    \param D0 (entrée) : tableau des coef. spline Y de degré 0 (taille n-1) 
-    \param D1 (entrée) : tableau des coef. spline Y de degré 1 (taille n-1) 
-    \param D2 (entrée) : tableau des coef. spline Y de degré 2 (taille n-1) 
-    \param D3 (entrée) : tableau des coef. spline Y de degré 3 (taille n-1) 
-    \param E0 (entrée) : tableau des coef. spline Z de degré 0 (taille n-1) 
-    \param E1 (entrée) : tableau des coef. spline Z de degré 1 (taille n-1) 
-    \param E2 (entrée) : tableau des coef. spline Z de degré 2 (taille n-1) 
-    \param E3 (entrée) : tableau des coef. spline Z de degré 3 (taille n-1) 
+    \param s (entrÃ©e) : abcisse curviligne d'un point de la spline
+    \param n (entrÃ©e) : nombre de points de contrÃ´le de la spline
+    \param C0 (entrÃ©e) : tableau des coef. spline X de degrÃ© 0 (taille n-1) 
+    \param C1 (entrÃ©e) : tableau des coef. spline X de degrÃ© 1 (taille n-1) 
+    \param C2 (entrÃ©e) : tableau des coef. spline X de degrÃ© 2 (taille n-1) 
+    \param C3 (entrÃ©e) : tableau des coef. spline X de degrÃ© 3 (taille n-1) 
+    \param D0 (entrÃ©e) : tableau des coef. spline Y de degrÃ© 0 (taille n-1) 
+    \param D1 (entrÃ©e) : tableau des coef. spline Y de degrÃ© 1 (taille n-1) 
+    \param D2 (entrÃ©e) : tableau des coef. spline Y de degrÃ© 2 (taille n-1) 
+    \param D3 (entrÃ©e) : tableau des coef. spline Y de degrÃ© 3 (taille n-1) 
+    \param E0 (entrÃ©e) : tableau des coef. spline Z de degrÃ© 0 (taille n-1) 
+    \param E1 (entrÃ©e) : tableau des coef. spline Z de degrÃ© 1 (taille n-1) 
+    \param E2 (entrÃ©e) : tableau des coef. spline Z de degrÃ© 2 (taille n-1) 
+    \param E3 (entrÃ©e) : tableau des coef. spline Z de degrÃ© 3 (taille n-1) 
     \brief retourne la courbure de la spline au point d'abcisse s
 */
 #undef F_NAME
 #define F_NAME "scn_splinequerycurvature3d"
 {
-  double xp, yp, zp; // dérivées premières
-  double xs, ys, zs; // dérivées secondes
+  double xp, yp, zp; // dÃ©rivÃ©es premiÃ¨res
+  double xs, ys, zs; // dÃ©rivÃ©es secondes
   double f[3], tmp1, tmp2;
   int32_t j;
   
@@ -2216,12 +2216,12 @@ double scn_splinequerycurvature3d(double s, int32_t n,
 void scn_drawspline(struct xvimage * image, double *x, double *y, int32_t nctrl)
 /* ==================================== */
 /*! \fn void scn_drawspline(struct xvimage * image, double *x, double *y, int32_t nctrl)
-    \param image (entrée/sortie)
-    \param x (entrée) : abcisses des points de contrôle de la spline
-    \param y (entrée) : ordonnées des points de contrôle de la spline
-    \param nctrl (entrée) : nombre de points de contrôle de la spline
-    \brief dessine la spline de points de contrôle donnés dans 'image'
-    \warning le résultat n'est pas forcément une courbe discrète
+    \param image (entrÃ©e/sortie)
+    \param x (entrÃ©e) : abcisses des points de contrÃ´le de la spline
+    \param y (entrÃ©e) : ordonnÃ©es des points de contrÃ´le de la spline
+    \param nctrl (entrÃ©e) : nombre de points de contrÃ´le de la spline
+    \brief dessine la spline de points de contrÃ´le donnÃ©s dans 'image'
+    \warning le rÃ©sultat n'est pas forcÃ©ment une courbe discrÃ¨te
 */
 #undef F_NAME
 #define F_NAME "scn_drawspline"
@@ -2276,15 +2276,15 @@ void scn_drawspline(struct xvimage * image, double *x, double *y, int32_t nctrl)
 void scn_drawsplinelist(int32_t *lx, int32_t *ly, int32_t *npoints, double *x, double *y, int32_t nctrl)
 /* ==================================== */
 /*! \fn void scn_drawsplinelist(int32_t *lx, int32_t *ly, int32_t *npoints, double *x, double *y, int32_t nctrl)
-    \param lx (sortie) : liste des abcisses des points dessinés
-    \param ly (sortie) : liste des ordonnées des points dessinés
-    \param npoints (entrée) : taille des tableaux lx, ly (sortie) : nombre de points dessinés
-    \param x (entrée) : abcisses des points de contrôle de la spline
-    \param y (entrée) : ordonnées des points de contrôle de la spline
-    \param nctrl (entrée) : nombre de points de contrôle de la spline
-    \brief dessine la spline de points de contrôle donnés dans 'image'
-    \warning les tableaux lx, ly doivent avoir été alloués
-    \warning le résultat n'est pas forcément une courbe discrète
+    \param lx (sortie) : liste des abcisses des points dessinÃ©s
+    \param ly (sortie) : liste des ordonnÃ©es des points dessinÃ©s
+    \param npoints (entrÃ©e) : taille des tableaux lx, ly (sortie) : nombre de points dessinÃ©s
+    \param x (entrÃ©e) : abcisses des points de contrÃ´le de la spline
+    \param y (entrÃ©e) : ordonnÃ©es des points de contrÃ´le de la spline
+    \param nctrl (entrÃ©e) : nombre de points de contrÃ´le de la spline
+    \brief dessine la spline de points de contrÃ´le donnÃ©s dans 'image'
+    \warning les tableaux lx, ly doivent avoir Ã©tÃ© allouÃ©s
+    \warning le rÃ©sultat n'est pas forcÃ©ment une courbe discrÃ¨te
 */
 #undef F_NAME
 #define F_NAME "scn_drawsplinelist"
@@ -2354,12 +2354,12 @@ printf("j=%d ; np=%d ; npp=%d\n", j, np, npp);
 void scn_drawspline3d(struct xvimage * image, double *x, double *y, double *z, int32_t nctrl)
 /* ==================================== */
 /*! \fn void scn_drawspline3d(struct xvimage * image, double *x, double *y, double *z, int32_t nctrl)
-    \param image (entrée/sortie)
-    \param x (entrée) : abcisses des points de contrôle de la spline
-    \param y (entrée) : ordonnées des points de contrôle de la spline
-    \param z (entrée) : cotes des points de contrôle de la spline
-    \param nctrl (entrée) : nombre de points de contrôle de la spline
-    \brief dessine la spline de points de contrôle donnés dans 'image'
+    \param image (entrÃ©e/sortie)
+    \param x (entrÃ©e) : abcisses des points de contrÃ´le de la spline
+    \param y (entrÃ©e) : ordonnÃ©es des points de contrÃ´le de la spline
+    \param z (entrÃ©e) : cotes des points de contrÃ´le de la spline
+    \param nctrl (entrÃ©e) : nombre de points de contrÃ´le de la spline
+    \brief dessine la spline de points de contrÃ´le donnÃ©s dans 'image'
 */
 #undef F_NAME
 #define F_NAME "scn_drawspline3d"
@@ -2424,17 +2424,17 @@ void scn_drawspline3d(struct xvimage * image, double *x, double *y, double *z, i
 void scn_drawspline3dlist(int32_t *lx, int32_t *ly, int32_t *lz, int32_t *npoints, double *x, double *y, double *z, int32_t nctrl)
 /* ==================================== */
 /*! \fn void scn_drawspline3dlist(int32_t *lx, int32_t *ly, int32_t *lz, int32_t *npoints, double *x, double *y, double *z, int32_t nctrl)
-    \param lx (sortie) : liste des abcisses des points dessinés
-    \param ly (sortie) : liste des ordonnées des points dessinés
-    \param lz (sortie) : liste des cotes des points dessinés
-    \param npoints (entrée) : taille des tableaux lx, ly, lz (sortie) : nombre de points dessinés
-    \param x (entrée) : abcisses des points de contrôle de la spline
-    \param y (entrée) : ordonnées des points de contrôle de la spline
-    \param z (entrée) : cotes des points de contrôle de la spline
-    \param nctrl (entrée) : nombre de points de contrôle de la spline
-    \brief dessine la spline de points de contrôle donnés dans 'image'
-    \warning les tableaux lx, ly, lz doivent avoir été alloués
-    \warning le résultat n'est pas forcément une courbe discrète
+    \param lx (sortie) : liste des abcisses des points dessinÃ©s
+    \param ly (sortie) : liste des ordonnÃ©es des points dessinÃ©s
+    \param lz (sortie) : liste des cotes des points dessinÃ©s
+    \param npoints (entrÃ©e) : taille des tableaux lx, ly, lz (sortie) : nombre de points dessinÃ©s
+    \param x (entrÃ©e) : abcisses des points de contrÃ´le de la spline
+    \param y (entrÃ©e) : ordonnÃ©es des points de contrÃ´le de la spline
+    \param z (entrÃ©e) : cotes des points de contrÃ´le de la spline
+    \param nctrl (entrÃ©e) : nombre de points de contrÃ´le de la spline
+    \brief dessine la spline de points de contrÃ´le donnÃ©s dans 'image'
+    \warning les tableaux lx, ly, lz doivent avoir Ã©tÃ© allouÃ©s
+    \warning le rÃ©sultat n'est pas forcÃ©ment une courbe discrÃ¨te
 */
 #undef F_NAME
 #define F_NAME "scn_drawspline3dlist"

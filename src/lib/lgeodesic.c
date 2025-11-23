@@ -102,7 +102,7 @@ int32_t lgeodilatcond(
         struct xvimage *c,
         int32_t connex,
         int32_t niter) 
-/* dilatation geodesique de g sous f conditionnellement à c*/
+/* dilatation geodesique de g sous f conditionnellement Ã  c*/
 /* g : image marqueur */
 /* f : image masque */
 /* f : image condition */
@@ -206,7 +206,7 @@ int32_t lgeodilat2d(
       return(0);
   }
 
-  for (x = 0; x < N; x++)      /* force G à être <= F */    
+  for (x = 0; x < N; x++)      /* force G Ã  Ãªtre <= F */    
     if (G[x] > F[x]) G[x] = F[x];
 
   iter = 0;
@@ -281,7 +281,7 @@ int32_t lgeodilatcond2d(
         struct xvimage *c,
         int32_t connex,
         int32_t niter) 
-/* dilatation geodesique de g sous f, conditionnelement à c */
+/* dilatation geodesique de g sous f, conditionnelement Ã  c */
 /* g : image marqueur */
 /* f : image masque */
 /* c : image condition (ROI) */
@@ -335,7 +335,7 @@ int32_t lgeodilatcond2d(
 
   H = (uint8_t *)calloc(1,N*sizeof(char)); assert(H != NULL);
 
-  for (x = 0; x < N; x++)      /* force G à être <= F */    
+  for (x = 0; x < N; x++)      /* force G Ã  Ãªtre <= F */    
     if (G[x] > F[x]) G[x] = F[x];
 
   iter = 0;
@@ -473,7 +473,7 @@ int32_t lgeodilat2d_short(
       return(0);
   }
 
-  for (x = 0; x < N; x++)      /* force G à être <= F */    
+  for (x = 0; x < N; x++)      /* force G Ã  Ãªtre <= F */    
     if (G[x] > F[x]) G[x] = F[x];
 
   iter = 0;
@@ -611,7 +611,7 @@ int32_t lgeodilat2d_long(
       return(0);
   }
 
-  for (x = 0; x < N; x++)      /* force G à être <= F */    
+  for (x = 0; x < N; x++)      /* force G Ã  Ãªtre <= F */    
     if (G[x] > F[x]) G[x] = F[x];
 
   iter = 0;
@@ -763,7 +763,7 @@ int32_t lgeoeros(
     Set(x, 1);
   }
 
-  for (x = 0; x < N; x++)      /* force G à être >= F */    
+  for (x = 0; x < N; x++)      /* force G Ã  Ãªtre >= F */    
     if (G[x] < F[x]) G[x] = F[x];
 
   iter = 0;
@@ -1176,7 +1176,7 @@ int32_t lgeodilat3d(
       return(0);
   }
 
-  for (x = 0; x < N; x++)      /* force G à être <= F */    
+  for (x = 0; x < N; x++)      /* force G Ã  Ãªtre <= F */    
     if (G[x] > F[x]) G[x] = F[x];
 
   if (connex == 26)
@@ -1349,7 +1349,7 @@ int32_t lgeodilatcond3d(
         struct xvimage *c,
         int32_t connex,
         int32_t niter) 
-/* dilatation geodesique de g sous f, conditionnelement à c */
+/* dilatation geodesique de g sous f, conditionnelement Ã  c */
 /* g : image marqueur */
 /* f : image masque */
 /* c : image condition (ROI) */
@@ -1405,7 +1405,7 @@ int32_t lgeodilatcond3d(
       return(0);
   }
 
-  for (x = 0; x < N; x++)      /* force G à être <= F */    
+  for (x = 0; x < N; x++)      /* force G Ã  Ãªtre <= F */    
     if (G[x] > F[x]) G[x] = F[x];
 
   if (connex == 26)
@@ -1629,7 +1629,7 @@ int32_t lgeodilat3d_short(
       return(0);
   }
 
-  for (x = 0; x < N; x++)      /* force G à être <= F */    
+  for (x = 0; x < N; x++)      /* force G Ã  Ãªtre <= F */    
     if (G[x] > F[x]) G[x] = F[x];
 
   if (connex == 26)
@@ -1853,7 +1853,7 @@ int32_t lgeodilat3d_long(
       return(0);
   }
 
-  for (x = 0; x < N; x++)      /* force G à être <= F */    
+  for (x = 0; x < N; x++)      /* force G Ã  Ãªtre <= F */    
     if (G[x] > F[x]) G[x] = F[x];
 
   if (connex == 26)
@@ -2091,7 +2091,7 @@ int32_t lgeoeros3d(
       return(0);
   }
 
-  for (x = 0; x < N; x++)      /* force G à être >= F */    
+  for (x = 0; x < N; x++)      /* force G Ã  Ãªtre >= F */    
     if (G[x] < F[x]) G[x] = F[x];
 
   if (connex == 26)

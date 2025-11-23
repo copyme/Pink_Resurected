@@ -45,7 +45,7 @@ knowledge of the CeCILL license and that you accept its terms.
 
 
 int32_t jcfindextrema(struct xvimage *in,         /* GA de depart */
-		      struct xvimage *out,           /* resultat: GA tq les aretes appartenant a des extrema sont à 255 */
+		      struct xvimage *out,           /* resultat: GA tq les aretes appartenant a des extrema sont Ã  255 */
 		      int32_t minimum,                /* booleen, 1: on recherche les minima, 0: on recherche les maxima */
 		      int32_t *nlabels               /* resultat: le nombre d'extrema*/
 		   )

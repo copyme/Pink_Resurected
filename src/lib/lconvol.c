@@ -37,7 +37,7 @@ knowledge of the CeCILL license and that you accept its terms.
 /* algorithme naif */
 /* Michel Couprie - septembre 1997 */
 
-/* ldirectionalfilter: supremum  de filtres linéaires utilisant un jeu de masques */
+/* ldirectionalfilter: supremum  de filtres linÃ©aires utilisant un jeu de masques */
 /* Michel Couprie - avril 2003 */
 
 #include <stdio.h>

@@ -49,7 +49,7 @@ knowledge of the CeCILL license and that you accept its terms.
 
 
 // ! jcimage remplace mcimage!
-// Les deux deux fichiers ne peuvent pas etre utilisé en meme temps car
+// Les deux deux fichiers ne peuvent pas etre utilisÃ© en meme temps car
 // l'intersection est non vide
 
 #define BUFFERSIZE 10000
@@ -73,7 +73,7 @@ struct xvimage *allocGAimage(
   case VFF_TYP_GABYTE: if(d == 1) ts = 2; else ts = 3; break;      /* cas d'une image d'arete en 2D, chaque pixel a 2 aretes */
   case VFF_TYP_GAFLOAT: if(d == 1) ts = 2*sizeof(float); else ts = 3*sizeof(float); break;
   case VFF_TYP_GADOUBLE: if(d == 1) ts = 2*sizeof(double); else ts = 3*sizeof(float); break;
-  default: fprintf(stderr,"%s: bad data type, ne gère que les GAs %d\n", F_NAME, t);
+  default: fprintf(stderr,"%s: bad data type, ne gÃ¨re que les GAs %d\n", F_NAME, t);
     return NULL;
   } /* switch (t) */
 
@@ -348,7 +348,7 @@ struct xvimage4D *readimage4D(char *prefix,   /* prefixe des noms d'images */
   
   if( first > last)
   {
-    fprintf(stderr, "%s: première frame supérieure à dernière frame\n", F_NAME);
+    fprintf(stderr, "%s: premiÃ¨re frame supÃ©rieure Ã  derniÃ¨re frame\n", F_NAME);
     return(NULL);
   }
   seqsize = last - first + 1;

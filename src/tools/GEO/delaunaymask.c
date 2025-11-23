@@ -178,7 +178,7 @@ int main(int argc, char **argv)
   mask = readimage(argv[2]);
   if (mask == NULL)
   {
-    fprintf(stderr, "%s: lecture mask échoué\n", argv[0]);
+    fprintf(stderr, "%s: lecture mask Ã©chouÃ©\n", argv[0]);
     exit(1);
   }   
   M = UCHARDATA(mask);

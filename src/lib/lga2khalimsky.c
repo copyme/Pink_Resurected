@@ -164,8 +164,8 @@ int32_t lga2khalimsky3d(struct xvimage *ga,     /* graphe d'arete en entree */
   
   if(N_k != rowsize(out) * depth(out) * colsize(out)) printf("Erreur icompatible image size \n");
   
-  /* Les conventions adoptés (à la difference du cas 2D) sont */
-  /* celles de mckhalim3d.h c'est à dire:                     */
+  /* Les conventions adoptÃ©s (Ã  la difference du cas 2D) sont */
+  /* celles de mckhalim3d.h c'est Ã  dire:                     */
   /* (i%2) + (j%2) + (k%2) == 0 --> elmt 0D                   */
   /* (i%2) + (j%2) + (k%2) == 1 --> elmt 1D                   */
   /* (i%2) + (j%2) + (k%2) == 2 --> elmt 2D                   */

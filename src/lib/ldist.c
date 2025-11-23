@@ -49,9 +49,9 @@ knowledge of the CeCILL license and that you accept its terms.
 *              Xavier Daragon Mai 02 (distance euclidienne quadratique approx. 3D)
 *              Rita Zrour Avril 04 (SEDT exacte Saito-Toriwaki)
 *              Michel Couprie Juillet 04 (REDT exacte Coeurjolly)
-*              Michel Couprie Août 04 (SEDT exacte lineaire Meijster et al.)
+*              Michel Couprie AoÃ»t 04 (SEDT exacte lineaire Meijster et al.)
 *              Jean Cousty janvier 2005 (REDT 3D)
-*              Michel Couprie août 2009 (lopeningfunction)
+*              Michel Couprie aoÃ»t 2009 (lopeningfunction)
 *
 ****************************************************************/
 
@@ -629,7 +629,7 @@ int32_t ldistvect(uint8_t *F, vect2Dint *L, index_t rs, index_t cs)
   index_t p, N= rs * cs;            /* taille de l'image */
   uint8_t *pt;
   vect2Dint v1, v2;
-  int32_t i, j; // attention: index signés (parcours inverse, petite taille)
+  int32_t i, j; // attention: index signÃ©s (parcours inverse, petite taille)
 
   pt = F;
 
@@ -898,7 +898,7 @@ int32_t lchamfrein(struct xvimage *img,   /* donnee: image binaire */
 /*  [risque faible; mais eviter les     */
 /*  images d'arrete superieur a 256     */
 /*  (en fait tout depend du centrage... */
-/*  il serait bon néanmoins de faire    */
+/*  il serait bon nÃ©anmoins de faire    */
 /*  varier DC_SZ selon la distance      */
 /*  (pour une valeur elevee de distance */
 /*  les Dcols devraient etre            */
@@ -1212,7 +1212,7 @@ int32_t ldistquad3d_rl(struct xvimage* imgin, struct xvimage* imgout)
 #undef F_NAME
 #define F_NAME "ldistquad3d"
 {
-  int32_t w,h,d, i, j, k, b, y, m, wh;  // attention: index signés (parcours inverse, petite taille)
+  int32_t w,h,d, i, j, k, b, y, m, wh;  // attention: index signÃ©s (parcours inverse, petite taille)
   uint32_t inf=(0x7fffffff - 2048);
   uint8_t *pf,*pfj;
   uint32_t *pg,*pgj, *pgi, *paux;
@@ -1404,7 +1404,7 @@ int32_t ldistquadSaito(struct xvimage *img,   /* donnee: image binaire */
 /* 
   Call the Saito-Toriwaki algorithm
 
-  ATTENTION: calcule la distance au complémentaire
+  ATTENTION: calcule la distance au complÃ©mentaire
 */
 #undef F_NAME
 #define F_NAME "ldistquadSaito"
@@ -1496,7 +1496,7 @@ int32_t ldistSaito(struct xvimage *img,   /* donnee: image binaire */
 /* 
   Call the Saito-Toriwaki algorithm
 
-  ATTENTION: calcule la distance au complémentaire
+  ATTENTION: calcule la distance au complÃ©mentaire
 */
 #undef F_NAME
 #define F_NAME "ldistSaito"
@@ -1615,7 +1615,7 @@ int32_t ldistSaito(struct xvimage *img,   /* donnee: image binaire */
 static void REDT_line(int32_t *f, int32_t *g, index_t rs, index_t cs)
 /* ======================================================== */
 {
-  int32_t j, u, q, w; // attention: index signés (parcours inverse, petite taille)
+  int32_t j, u, q, w; // attention: index signÃ©s (parcours inverse, petite taille)
   int32_t *s, *t; //sommets des paraboles
   s = (int32_t *)calloc(1,rs * sizeof(int32_t));
   t = (int32_t *)calloc(1,rs * sizeof(int32_t));
@@ -1653,7 +1653,7 @@ static void REDT_line(int32_t *f, int32_t *g, index_t rs, index_t cs)
 static void REDT_column(int32_t *f, int32_t *g, index_t rs, index_t cs)
 /* ======================================================== */
 {
-  int32_t i, u, q, w; // attention: index signés (parcours inverse, petite taille)
+  int32_t i, u, q, w; // attention: index signÃ©s (parcours inverse, petite taille)
   int32_t *s, *t; //sommets des paraboles
   s = (int32_t *)calloc(1,cs * sizeof(int32_t));
   t = (int32_t *)calloc(1,cs * sizeof(int32_t));
@@ -1727,7 +1727,7 @@ int32_t lredt2d(struct xvimage* f, struct xvimage* res)
 static void REDT_line_3d(int32_t *f, int32_t *g, index_t rs, index_t cs, index_t ds)
 /* ======================================================== */
 {
-  int32_t j, u, q, k, ps, w; // attention: index signés (parcours inverse, petite taille)
+  int32_t j, u, q, k, ps, w; // attention: index signÃ©s (parcours inverse, petite taille)
   int32_t *s, *t; //sommets des paraboles
   s = (int32_t *)calloc(1,rs * sizeof(int32_t));
   t = (int32_t *)calloc(1,rs * sizeof(int32_t));
@@ -1769,7 +1769,7 @@ static void REDT_line_3d(int32_t *f, int32_t *g, index_t rs, index_t cs, index_t
 static void REDT_column_3d(int32_t *f, int32_t *g, index_t rs, index_t cs, index_t ds)
 /* ======================================================== */
 {
-  int32_t i, u, q, k, ps, w; // attention: index signés (parcours inverse, petite taille)
+  int32_t i, u, q, k, ps, w; // attention: index signÃ©s (parcours inverse, petite taille)
   int32_t *s, *t; //sommets des paraboles
   s = (int32_t *)calloc(1,cs * sizeof(int32_t));
   t = (int32_t *)calloc(1,cs * sizeof(int32_t));
@@ -1812,7 +1812,7 @@ static void REDT_column_3d(int32_t *f, int32_t *g, index_t rs, index_t cs, index
 static void REDT_zaxis_3d(int32_t *f, int32_t *g, index_t rs, index_t cs, index_t ds)
 /* ======================================================== */
 {
-  int32_t i, u, q, j, ps, w; // attention: index signés (parcours inverse, petite taille)
+  int32_t i, u, q, j, ps, w; // attention: index signÃ©s (parcours inverse, petite taille)
   int32_t *s, *t; //sommets des paraboles
   s = (int32_t *)calloc(1,ds * sizeof(int32_t));
   t = (int32_t *)calloc(1,ds * sizeof(int32_t));
@@ -1892,7 +1892,7 @@ int32_t lredt3d(struct xvimage* f, struct xvimage* res)
 static void ST_line(uint32_t *f, uint32_t *g, uint8_t *r, index_t rs, index_t cs)
 /* ======================================================== */
 {
-  int32_t j, u, q, w; // attention: index signés (parcours inverse, petite taille)
+  int32_t j, u, q, w; // attention: index signÃ©s (parcours inverse, petite taille)
   uint32_t *s, *t; //sommets des paraboles
   s = (uint32_t *)calloc(1,rs * sizeof(uint32_t));
   t = (uint32_t *)calloc(1,rs * sizeof(uint32_t));
@@ -1934,7 +1934,7 @@ static void ST_column(uint32_t *f, uint8_t *r, index_t rs, index_t cs)
 // input f: result of line scan
 // input/output r: binary image - positions of the skeleton points
 {
-  int32_t i, u, q, w; // attention: index signés (parcours inverse, petite taille)
+  int32_t i, u, q, w; // attention: index signÃ©s (parcours inverse, petite taille)
   uint32_t *s, *t; //sommets des paraboles
   s = (uint32_t *)calloc(1,cs * sizeof(uint32_t));
   t = (uint32_t *)calloc(1,cs * sizeof(uint32_t));
@@ -2024,7 +2024,7 @@ int32_t lskeleton_ST(struct xvimage* f, struct xvimage* res)
 void SEDT_line(uint8_t *f, uint32_t *g, index_t rs, index_t cs)
 /* ======================================================== */
 {
-  int32_t i, j; // attention: index signés (parcours inverse, petite taille)
+  int32_t i, j; // attention: index signÃ©s (parcours inverse, petite taille)
   for (j = 0; j < cs; j++)
   {
     if (f[0 + rs*j] == 0) g[0 + rs*j] = 0; else g[0 + rs*j] = rs*cs; // infinity
@@ -2037,7 +2037,7 @@ void SEDT_line(uint8_t *f, uint32_t *g, index_t rs, index_t cs)
       if (g[i+1 + rs*j] < g[i + rs*j]) g[i + rs*j] = 1 + g[i+1 + rs*j];
     for (i = 0; i < rs; i++) 
     {
-      if (g[i + rs*j] < rs*cs) // NECESSAIRE pour éviter un overflow
+      if (g[i + rs*j] < rs*cs) // NECESSAIRE pour Ã©viter un overflow
 	g[i + rs*j] = g[i + rs*j] * g[i + rs*j];
     }
   }
@@ -2047,7 +2047,7 @@ void SEDT_line(uint8_t *f, uint32_t *g, index_t rs, index_t cs)
 void SEDT_column(uint32_t *f, uint32_t *g, index_t rs, index_t cs)
 /* ======================================================== */
 {
-  int32_t i, u, q, w; // attention: index signés (parcours inverse, petite taille)
+  int32_t i, u, q, w; // attention: index signÃ©s (parcours inverse, petite taille)
   uint32_t *s, *t;
   s = (uint32_t *)calloc(1,cs * sizeof(uint32_t));
   t = (uint32_t *)calloc(1,cs * sizeof(uint32_t));
@@ -2085,7 +2085,7 @@ void SEDT_column(uint32_t *f, uint32_t *g, index_t rs, index_t cs)
 void SEDT3d_line(uint8_t *f, uint32_t *g, index_t rs, index_t cs, index_t ds)
 /* ======================================================== */
 {
-  int32_t i, j, k, ps = rs*cs; // attention: index signés (parcours inverse, petite taille)
+  int32_t i, j, k, ps = rs*cs; // attention: index signÃ©s (parcours inverse, petite taille)
   for (k = 0; k < ds; k++)
     for (j = 0; j < cs; j++)
     {
@@ -2100,7 +2100,7 @@ void SEDT3d_line(uint8_t *f, uint32_t *g, index_t rs, index_t cs, index_t ds)
 	if (g[i+1 + rs*j + ps*k] < g[i + rs*j + ps*k])
 	  g[i + rs*j + ps*k] = 1 + g[i+1 + rs*j + ps*k];
       for (i = 0; i < rs; i++)
-	if (g[i + rs*j + ps*k] < rs*cs*ds) // NECESSAIRE pour éviter un overflow
+	if (g[i + rs*j + ps*k] < rs*cs*ds) // NECESSAIRE pour Ã©viter un overflow
 	  g[i + rs*j + ps*k] = g[i + rs*j + ps*k] * g[i + rs*j + ps*k];
     }
 } //  SEDT3d_line()
@@ -2109,7 +2109,7 @@ void SEDT3d_line(uint8_t *f, uint32_t *g, index_t rs, index_t cs, index_t ds)
 void SEDT3d_column(uint32_t *f, uint32_t *g, index_t rs, index_t cs, index_t ds)
 /* ======================================================== */
 {
-  int32_t i, k, u, q, ps = rs*cs, w; // attention: index signés (parcours inverse, petite taille)
+  int32_t i, k, u, q, ps = rs*cs, w; // attention: index signÃ©s (parcours inverse, petite taille)
   uint32_t *s, *t;
   s = (uint32_t *)calloc(1,cs * sizeof(uint32_t));
   t = (uint32_t *)calloc(1,cs * sizeof(uint32_t));
@@ -2148,7 +2148,7 @@ void SEDT3d_column(uint32_t *f, uint32_t *g, index_t rs, index_t cs, index_t ds)
 void SEDT3d_planes(uint32_t *f, uint32_t *g, index_t rs, index_t cs, index_t ds)
 /* ======================================================== */
 {
-  int32_t i, j, u, q, ps = rs*cs, w; // attention: index signés (parcours inverse, petite taille)
+  int32_t i, j, u, q, ps = rs*cs, w; // attention: index signÃ©s (parcours inverse, petite taille)
   uint32_t *s, *t;
   s = (uint32_t *)calloc(1,ds * sizeof(uint32_t));
   t = (uint32_t *)calloc(1,ds * sizeof(uint32_t));
@@ -2190,7 +2190,7 @@ int32_t lsedt_meijster(struct xvimage *img,   /* donnee: image binaire */
 /* ==================================== */
 /* 
   Call the SEDT linear algorithm (Meijster & al.)
-  ATTENTION: calcule la distance au complémentaire
+  ATTENTION: calcule la distance au complÃ©mentaire
 */
 #undef F_NAME
 #define F_NAME "lsedt_meijster"
@@ -2245,7 +2245,7 @@ int32_t ldistMeijster(struct xvimage *img,   /* donnee: image binaire */
 /* 
   Call the Meijster algorithm
 
-  ATTENTION: calcule la distance au complémentaire
+  ATTENTION: calcule la distance au complÃ©mentaire
 */
 #undef F_NAME
 #define F_NAME "ldistMeijster"
@@ -2402,7 +2402,7 @@ The parameter 'cut' is required only for Baddeley distances.
 
   for (i = 0; i < N; i++) I1[i] = !I1[i];
   for (i = 0; i < N; i++) I2[i] = !I2[i];
-  // Attention : Ik représente maintenant le complémentaire de imgk
+  // Attention : Ik reprÃ©sente maintenant le complÃ©mentaire de imgk
   if (! lsedt_meijster(img1, dist1))
   {
     fprintf(stderr, "%s: lsedt_meijster img1 failed\n", F_NAME);

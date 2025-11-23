@@ -159,7 +159,7 @@ int main(int argc, char **argv)
   }
 
   ret = sscanf(argv[2], "%d", &priocode);
-  if (ret == 0) // priorité : image 
+  if (ret == 0) // prioritÃ© : image 
   {
     prio = readimage(argv[2]);
     if (prio == NULL)
@@ -168,7 +168,7 @@ int main(int argc, char **argv)
       exit(1);
     }
   }
-  else  // priorité : carte de distance (à calculer)
+  else  // prioritÃ© : carte de distance (Ã  calculer)
   {
     int32_t i, N;
     uint8_t *F;

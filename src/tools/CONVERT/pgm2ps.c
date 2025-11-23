@@ -129,7 +129,7 @@ The parameter \b maxval is an integer which indicates the maximum grayscale valu
 
 #define TRG_R    6 /* rayon des cercles */
 #define TRG_W   60 /* cote des triangles */
-#define TRG_L   12 /* largeur séparation */
+#define TRG_L   12 /* largeur sÃ©paration */
 #define TRG_GS 108 /* pas de la grille */
 #define TRG_M  108 /* marge */
 #define TRG_T    5 /* epaisseur du trait */
@@ -176,7 +176,7 @@ fprintf(fd,"newpath %d slw ", width);
 /*========================================*/
 void drawsquare (FILE *fd, double x, double y, double r, int32_t width, int32_t fill)
 /*========================================*/
-/* dessine un carré de coin inférieur gauche (x,y), de cote r */ 
+/* dessine un carrÃ© de coin infÃ©rieur gauche (x,y), de cote r */ 
 {
   fprintf(fd,"newpath %d slw ", width);
   move(fd, x, y);

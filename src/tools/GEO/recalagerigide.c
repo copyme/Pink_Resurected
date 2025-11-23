@@ -33,7 +33,7 @@ The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
 /* ATTENTION: 
-  version peu testée en 2D
+  version peu testÃ©e en 2D
   VERSION NON TESTEE EN 3D 
 */
 

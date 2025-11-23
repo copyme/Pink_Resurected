@@ -33,7 +33,7 @@ The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
 /* identification d'ellipse 
-   d'après : 
+   d'aprÃ¨s : 
 Andrew W. Fitzgibbon, Maurizio Pilu, and Robert B. Fisher
 Direct least-squares fitting of ellipses,
 IEEE Transactions on Pattern Analysis and Machine Intelligence, 21(5), 476--480, May 1999
@@ -68,8 +68,8 @@ Michel Couprie, mars 2002
 /* ==================================================================== */
 
 double elldist(double d[6], double x, double y)
-// distance algébrique du point (x,y) à l'ellipse définie par les paramètres d[0..5]
-// = A,B,C,D,E,F de l'équation Ax^2 + Bxy + Cy^2 + Dx + Ey + F de l'ellipse.
+// distance algÃ©brique du point (x,y) Ã  l'ellipse dÃ©finie par les paramÃ¨tres d[0..5]
+// = A,B,C,D,E,F de l'Ã©quation Ax^2 + Bxy + Cy^2 + Dx + Ey + F de l'ellipse.
 // la distance est simplement Ax^2 + Bxy + Cy^2 + Dx + Ey + F
 {
   return d[0]*x*x + d[1]*x*y + d[2]*y*y + d[3]*x + d[4]*y + d[5];
@@ -81,14 +81,14 @@ int32_t lellipsefit(double * x, double * y, int32_t n,
                )
 /* ==================================== */
 /*! \fn int32_t lellipsefit(double * x, double * y, int32_t n, double *x0, double *y0, double *xa, double *ya, double *xb, double *yb)
-    \param x (entrée) : liste des abcisses des n points
-    \param y (entrée) : liste des ordonnées des n points
-    \param n (entrée) : nb de points
-    \param x0, y0 (sortie) : coordonnées du centre de l'ellipse
-    \param xa, ya (sortie) : coordonnées d'une extrémité du grand axe
-    \param xb, yb (sortie) : coordonnées d'une extrémité du petit axe
+    \param x (entrÃ©e) : liste des abcisses des n points
+    \param y (entrÃ©e) : liste des ordonnÃ©es des n points
+    \param n (entrÃ©e) : nb de points
+    \param x0, y0 (sortie) : coordonnÃ©es du centre de l'ellipse
+    \param xa, ya (sortie) : coordonnÃ©es d'une extrÃ©mitÃ© du grand axe
+    \param xb, yb (sortie) : coordonnÃ©es d'une extrÃ©mitÃ© du petit axe
     \return 0 en cas d'erreur, 1 sinon
-    \brief détermine l'ellipse la plus proche des points donnés en entrée (cf. Fitzgibbon & al 96)
+    \brief dÃ©termine l'ellipse la plus proche des points donnÃ©s en entrÃ©e (cf. Fitzgibbon & al 96)
 */
 {
   double S[6][6], L[6][6], C[6][6], InvL[6][6], InvL_t[6][6], temp[6][6], V[6][6], sol[6][6];
@@ -221,7 +221,7 @@ int32_t lellipsefit(double * x, double * y, int32_t n,
       dist = elldist(d, x[k], y[k]);
       sumdist += fabs(dist);
     }
-    printf("dist. moy à l'ellipse = %g\n", sumdist/n);
+    printf("dist. moy Ã  l'ellipse = %g\n", sumdist/n);
   }
 #endif
 

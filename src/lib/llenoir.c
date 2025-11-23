@@ -33,10 +33,10 @@ The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
 /* 
-   Calcul d'une géodésique dans un espace discret (2D ou 3D)
-   à partir de algorithmes de M. Alexandre Lenoir
+   Calcul d'une gÃ©odÃ©sique dans un espace discret (2D ou 3D)
+   Ã  partir de algorithmes de M. Alexandre Lenoir
 
-   Massieu Julien & Parly Sébastien - Février 2005 
+   Massieu Julien & Parly SÃ©bastien - FÃ©vrier 2005 
 */
 #include <stdio.h>
 #include <stdint.h>
@@ -56,10 +56,10 @@ knowledge of the CeCILL license and that you accept its terms.
 void Lenoir(struct xvimage * image, 
             int32_t x, 
 	    int32_t y, 
-	    int32_t connex, //type de connexité (4 6 8 18 26)
+	    int32_t connex, //type de connexitÃ© (4 6 8 18 26)
 	    struct xvimage * out) //image contenant la geodesique
 {
-	/* Déclarations */
+	/* DÃ©clarations */
 	struct xvimage *etat, *distance, *path, *paththrough, *pathfrom; //xvimage spour stocker les proprietes des pixels
 	int32_t rs, cs, ps, ds, N, s, s1, s2, Ndim;
 	int32_t direction, i; //compteur de boucle
@@ -121,7 +121,7 @@ void Lenoir(struct xvimage * image,
 
 	while ((!FifoVide(F)) && (testY!=1) )//Tant que la liste n'est pas vide
 	{
-		s = FifoPop(F); //on recupère l'élement en tête de pile
+		s = FifoPop(F); //on recupÃ¨re l'Ã©lement en tÃªte de pile
 		if(s==y)//Si l'element depile est y
 		{
 			testY = 1;
@@ -188,9 +188,9 @@ void Lenoir(struct xvimage * image,
 	s = y;
 	testX = 0;
 
-	while ((!FifoVide(F)) && (testX!=1))//Tant que la liste n'est pas vide et que l'élément dépilé n'est pas x
+	while ((!FifoVide(F)) && (testX!=1))//Tant que la liste n'est pas vide et que l'Ã©lÃ©ment dÃ©pilÃ© n'est pas x
 	{
-		s = FifoPop(F); //on recupère l'élement en tête de pile
+		s = FifoPop(F); //on recupÃ¨re l'Ã©lement en tÃªte de pile
 		//fprintf(stdout,"%d - %d : %d\n",ptrpathfrom[s],ptrpath[s],ptrpathfrom[s]*ptrpath[s]);
 		ptrpaththrough[s] = ptrpath[s]*ptrpathfrom[s];
 		//fprintf(stdout,"%d : %d\n",s,ptrpaththrough[s]);
@@ -260,9 +260,9 @@ void Lenoir(struct xvimage * image,
 	FifoPush(F, y);
 	testX = 0;
 
-	while (testX!=1 )//Tant que la liste n'est pas vide et que l'élément dépilé n'est pas x
+	while (testX!=1 )//Tant que la liste n'est pas vide et que l'Ã©lÃ©ment dÃ©pilÃ© n'est pas x
 	{
-		s = FifoPop(F); //on recupère l'élement en tête de pile
+		s = FifoPop(F); //on recupÃ¨re l'Ã©lement en tÃªte de pile
 		maxi = 0;
 		if(s==x)//Si l'element depile est y
 		{
@@ -307,7 +307,7 @@ void Lenoir(struct xvimage * image,
 	}	
 	FifoTermine(F);//Liberer la pile
 	
-	/* Il n'y a pas de géodésique entre x et y */
+	/* Il n'y a pas de gÃ©odÃ©sique entre x et y */
 	if(ptrpath[y] < 1) 
 	{
     		fprintf(stderr, "Lenoir: Les points source et target ne sont pas connexes\n");
@@ -335,7 +335,7 @@ void Lenoir(struct xvimage * image,
 		}
 	}
 	
-	/* Libérer mémoire */
+	/* LibÃ©rer mÃ©moire */
 	freeimage(etat);
 	freeimage(distance);
 	freeimage(path);

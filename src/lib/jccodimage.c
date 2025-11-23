@@ -98,7 +98,7 @@ int32_t voisinGA(int32_t i, int32_t k, int32_t rs, int32_t nb)
 
 /* ==================================== */
 int32_t incidente(int32_t i, int32_t k, int32_t rs, int32_t nb)   
-/* ds un ga 4-connexe, retourne les index des aretes incidente à i*/
+/* ds un ga 4-connexe, retourne les index des aretes incidente Ã  i*/
 /* i : index du point dans l'image */
 /* k : direction du voisin */
 /* rs : taille d'une rangee */
@@ -122,7 +122,7 @@ int32_t incidente(int32_t i, int32_t k, int32_t rs, int32_t nb)
 
 /* ==================================== */
 int32_t incidente3d(int32_t i, int32_t k, int32_t rs, int32_t nb, int32_t ps)   
-/* ds un ga 4-connexe, retourne les index des aretes incidente à i*/
+/* ds un ga 4-connexe, retourne les index des aretes incidente Ã  i*/
 /* i : index du point dans l'image */
 /* k : direction du voisin */
 /* rs : taille d'une rangee */
@@ -150,7 +150,7 @@ int32_t incidente3d(int32_t i, int32_t k, int32_t rs, int32_t nb, int32_t ps)
 
 /* =============================================================== */
 int32_t incidente4d(int32_t i, int32_t k, int32_t rs, int32_t nb, int32_t ps, int32_t vs)   
-/* ds un ga 4-connexe, retourne les index des aretes incidente à i */
+/* ds un ga 4-connexe, retourne les index des aretes incidente Ã  i */
 /* i : index du point dans l'image                                 */
 /* k : direction du voisin                                         */
 /* rs : taille d'une rangee                                        */

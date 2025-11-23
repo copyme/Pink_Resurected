@@ -39,8 +39,8 @@ knowledge of the CeCILL license and that you accept its terms.
       Michel Couprie, septembre 1999
 
       janvier 2005 : DepthTree, MaxDiameterTree, Lee
-      février 2005 : LCA (non efficace)
-      juillet-août 2009 : CircuitsNiveaux, BellmanSC, Forêts...
+      fÃ©vrier 2005 : LCA (non efficace)
+      juillet-aoÃ»t 2009 : CircuitsNiveaux, BellmanSC, ForÃªts...
       octobre 2012 : ldrawgraph
 */
 
@@ -72,9 +72,9 @@ knowledge of the CeCILL license and that you accept its terms.
 
 /* ====================================================================== */
 /*! \fn pcell AlloueCell(pcell * plibre)
-    \param plibre (entrée) : pointeur sur une liste chaînee de cellules libres.
+    \param plibre (entrÃ©e) : pointeur sur une liste chaÃ®nee de cellules libres.
     \return pointeur sur une cellule.
-    \brief retire la premiere cellule de la liste pointée par plibre et retourne un pointeur sur cette cellule.
+    \brief retire la premiere cellule de la liste pointÃ©e par plibre et retourne un pointeur sur cette cellule.
 */
 static pcell AlloueCell(pcell * plibre)
 /* ====================================================================== */
@@ -94,9 +94,9 @@ static pcell AlloueCell(pcell * plibre)
 
 /* ====================================================================== */
 /*! \fn void LibereCell(pcell * plibre, pcell p)
-    \param plibre (entrée) : pointeur sur une liste chaînee de cellules libres.
-    \param p (entrée) : pointeur sur une cellule.
-    \brief insère la cellule p au début de la liste pointée par 'plibre'. 
+    \param plibre (entrÃ©e) : pointeur sur une liste chaÃ®nee de cellules libres.
+    \param p (entrÃ©e) : pointeur sur une cellule.
+    \brief insÃ¨re la cellule p au dÃ©but de la liste pointÃ©e par 'plibre'. 
 */
 static void LibereCell(pcell * plibre, pcell p)
 /* ====================================================================== */
@@ -107,9 +107,9 @@ static void LibereCell(pcell * plibre, pcell p)
 
 /* ====================================================================== */
 /*! \fn void RetireTete(pcell * plibre, pcell * pliste)
-    \param plibre (entrée) : pointeur sur une liste chaînee de cellules libres.
-    \param pliste (entrée) : pointeur sur une liste.
-    \brief retire la première cellule de la liste 'pliste'. La cellule est chaînee à la liste 'plibre'. 
+    \param plibre (entrÃ©e) : pointeur sur une liste chaÃ®nee de cellules libres.
+    \param pliste (entrÃ©e) : pointeur sur une liste.
+    \brief retire la premiÃ¨re cellule de la liste 'pliste'. La cellule est chaÃ®nee Ã  la liste 'plibre'. 
 */
 static void RetireTete(pcell * plibre, pcell * pliste)
 /* ====================================================================== */
@@ -122,11 +122,11 @@ static void RetireTete(pcell * plibre, pcell * pliste)
 
 /* ====================================================================== */
 /*! \fn void AjouteTete(pcell * plibre, pcell * pliste, int32_t a, TYP_VARC v)
-    \param plibre (entrée) : pointeur sur une liste chaînee de cellules libres.
-    \param pliste (entrée) : pointeur sur une liste.
-    \param a (entrée) : un sommet.
-    \param v (entrée) : une valeur.
-    \brief ajoute une cellule contenant le sommet 'a' et la valeur 'v' en tête de la liste 'pliste'. La cellule est prise dans la liste 'plibre'. 
+    \param plibre (entrÃ©e) : pointeur sur une liste chaÃ®nee de cellules libres.
+    \param pliste (entrÃ©e) : pointeur sur une liste.
+    \param a (entrÃ©e) : un sommet.
+    \param v (entrÃ©e) : une valeur.
+    \brief ajoute une cellule contenant le sommet 'a' et la valeur 'v' en tÃªte de la liste 'pliste'. La cellule est prise dans la liste 'plibre'. 
 */
 static void AjouteTete(pcell * plibre, pcell * pliste, int32_t a, TYP_VARC v)
 /* ====================================================================== */
@@ -141,9 +141,9 @@ static void AjouteTete(pcell * plibre, pcell * pliste, int32_t a, TYP_VARC v)
 
 /* ====================================================================== */
 /*! \fn int32_t EstDansListe(pcell p, int32_t a) 
-    \param p (entrée) : une liste chaînee de successeurs.
-    \param a (entrée) : un sommet.
-    \return booléen.
+    \param p (entrÃ©e) : une liste chaÃ®nee de successeurs.
+    \param a (entrÃ©e) : un sommet.
+    \return boolÃ©en.
     \brief retourne 1 si le sommet 'a' se trouve dans la liste 'p', 0 sinon. 
 */
 static int32_t EstDansListe(pcell p, int32_t a) 
@@ -162,12 +162,12 @@ static int32_t EstDansListe(pcell p, int32_t a)
 
 /* ====================================================================== */
 /*! \fn graphe * InitGraphe(int32_t nsom, int32_t nmaxarc)
-    \param   nsom (entrée) : nombre de sommets.
-    \param nmaxarc (entrée) : nombre maximum d'arcs.
+    \param   nsom (entrÃ©e) : nombre de sommets.
+    \param nmaxarc (entrÃ©e) : nombre maximum d'arcs.
     \return un graphe.
-    \brief alloue la memoire nécessaire pour représenter un graphe a 'nsom' sommets,
-              possédant au maximum 'nmaxarc' arcs. 
-              Retourne un pointeur sur la structure allouée. 
+    \brief alloue la memoire nÃ©cessaire pour reprÃ©senter un graphe a 'nsom' sommets,
+              possÃ©dant au maximum 'nmaxarc' arcs. 
+              Retourne un pointeur sur la structure allouÃ©e. 
 */
 graphe * InitGraphe(int32_t nsom, int32_t nmaxarc)
 /* ====================================================================== */
@@ -239,8 +239,8 @@ graphe * InitGraphe(int32_t nsom, int32_t nmaxarc)
 
 /* ====================================================================== */
 /*! \fn void TermineGraphe(graphe * g)
-    \param g (entrée) : un graphe.
-    \brief libère la memoire occupée par le graphe g. 
+    \param g (entrÃ©e) : un graphe.
+    \brief libÃ¨re la memoire occupÃ©e par le graphe g. 
 */
 void TermineGraphe(graphe * g)
 /* ====================================================================== */
@@ -266,9 +266,9 @@ void TermineGraphe(graphe * g)
 
 /* ====================================================================== */
 /*! \fn void CopyXY(graphe * g1, graphe * g2)
-    \param g1 (entrée) : un graphe
-    \param g2 (entrée/sortie) : un graphe
-    \brief copie les coordonnées x, y des sommets du graphe 1 dans le graphe 2
+    \param g1 (entrÃ©e) : un graphe
+    \param g2 (entrÃ©e/sortie) : un graphe
+    \brief copie les coordonnÃ©es x, y des sommets du graphe 1 dans le graphe 2
 */
 void CopyXY(graphe * g1, graphe * g2)
 /* ====================================================================== */
@@ -285,9 +285,9 @@ void CopyXY(graphe * g1, graphe * g2)
 
 /* ====================================================================== */
 /*! \fn void CopyVsom(graphe * g1, graphe * g2)
-    \param g1 (entrée) : un graphe
-    \param g2 (entrée/sortie) : un graphe
-    \brief copie les valeurs associées aux sommets du graphe 1 dans le graphe 2
+    \param g1 (entrÃ©e) : un graphe
+    \param g2 (entrÃ©e/sortie) : un graphe
+    \brief copie les valeurs associÃ©es aux sommets du graphe 1 dans le graphe 2
 */
 void CopyVsom(graphe * g1, graphe * g2)
 /* ====================================================================== */
@@ -304,7 +304,7 @@ void CopyVsom(graphe * g1, graphe * g2)
 
 /* ====================================================================== */
 /*! \fn graphe * CopyGraphe(graphe * g1)
-    \param g1 (entrée) : un graphe
+    \param g1 (entrÃ©e) : un graphe
     \return un graphe
     \brief retourne un clone du graphe g1
 */
@@ -347,9 +347,9 @@ graphe * CopyGraphe(graphe * g1)
 
 /* ====================================================================== */
 /*! \fn void UnionGraphes(graphe * g1, graphe * g2)
-    \param g1 (entrée) : un graphe
-    \param g2 (entrée) : un graphe
-    \brief calcule l'union des graphes g1 et g2, le résultat est stocké dans g1.
+    \param g1 (entrÃ©e) : un graphe
+    \param g2 (entrÃ©e) : un graphe
+    \brief calcule l'union des graphes g1 et g2, le rÃ©sultat est stockÃ© dans g1.
     Le champ v_sommet de l'union est le max des champs v_sommets des deux graphes.
 */
 void UnionGraphes(graphe * g1, graphe * g2)
@@ -386,8 +386,8 @@ void UnionGraphes(graphe * g1, graphe * g2)
 
 /* ====================================================================== */
 /*! \fn void UnitLength(graphe * g) 
-    \param g (entrée) : un graphe.
-    \brief met à 1 les longueurs de tous les arcs (représentation gamma seulement).
+    \param g (entrÃ©e) : un graphe.
+    \brief met Ã  1 les longueurs de tous les arcs (reprÃ©sentation gamma seulement).
 */
 void UnitLength(graphe * g) 
 /* ====================================================================== */
@@ -409,9 +409,9 @@ void UnitLength(graphe * g)
 
 /* ====================================================================== */
 /*! \fn graphe * ReadGraphe(char * filename)
-    \param   filename (entrée) : nom du fichier graphe.
+    \param   filename (entrÃ©e) : nom du fichier graphe.
     \return un graphe.
-    \brief Lit les données d'un graphe dans le fichier filename, retourne un pointeur sur la structure graphe construite. 
+    \brief Lit les donnÃ©es d'un graphe dans le fichier filename, retourne un pointeur sur la structure graphe construite. 
 */
 graphe * ReadGraphe( const char * filename )
 /* ====================================================================== */
@@ -519,8 +519,8 @@ graphe * ReadGraphe( const char * filename )
 
 /* ====================================================================== */
 /*! \fn void SaveGraphe(graphe * g, char *filename) 
-    \param g (entrée) : un graphe.
-    \param filename (entrée) : nom du fichier à générer.
+    \param g (entrÃ©e) : un graphe.
+    \param filename (entrÃ©e) : nom du fichier Ã  gÃ©nÃ©rer.
     \brief sauve le graphe g dans le fichier filename. 
 */
 void SaveGraphe( graphe * g, const char *filename ) 
@@ -576,11 +576,11 @@ void SaveGraphe( graphe * g, const char *filename )
 
 /* ====================================================================== */
 /*! \fn graphe * Image2Graphe(struct xvimage *image, int32_t mode, int32_t connex)
-    \param image (entrée) : structure image
-    \param mode (entrée) : mode de valuation des arcs
-    \param connex (entrée) : relation d'adjacence (4 ou 8 en 2D, 6 ou 26 en 3D)
+    \param image (entrÃ©e) : structure image
+    \param mode (entrÃ©e) : mode de valuation des arcs
+    \param connex (entrÃ©e) : relation d'adjacence (4 ou 8 en 2D, 6 ou 26 en 3D)
     \return un graphe.
-    \brief Lit les données d'une image dans la structure image, 
+    \brief Lit les donnÃ©es d'une image dans la structure image, 
     retourne un pointeur sur la structure graphe construite. 
 */
 graphe * Image2Graphe(struct xvimage *image, int32_t mode, int32_t connex)
@@ -718,10 +718,10 @@ A weight W(P,Q) is assigned to each edge, according to the value of \b mode:
 
 /* ====================================================================== */
 /*! \fn graphe * BinaryImage2Graphe(struct xvimage *image, int32_t connex)
-    \param image (entrée) : structure image
-    \param connex (entrée) : relation d'adjacence (4 ou 8 en 2D, 6 ou 18 ou 26 en 3D)
+    \param image (entrÃ©e) : structure image
+    \param connex (entrÃ©e) : relation d'adjacence (4 ou 8 en 2D, 6 ou 18 ou 26 en 3D)
     \return un graphe.
-    \brief Lit les données d'une image dans la structure image, 
+    \brief Lit les donnÃ©es d'une image dans la structure image, 
     retourne un pointeur sur la structure graphe construite. 
 */
 graphe * BinaryImage2Graphe(struct xvimage *image, int32_t connex)
@@ -831,10 +831,10 @@ and E = {(P,Q) in VxV ; P and Q are adjacent}.
 
 /* ====================================================================== */
 /*! \fn struct xvimage *Graphe2Image(graphe * g, int32_t rs)
-    \param g (entrée) : un graphe
+    \param g (entrÃ©e) : un graphe
     \return une structure image
-    \brief génère une image à partir du graphe g 
-    (d'après les valeurs associées aux sommets) 
+    \brief gÃ©nÃ¨re une image Ã  partir du graphe g 
+    (d'aprÃ¨s les valeurs associÃ©es aux sommets) 
     et retourne un pointeur sur la structure image construite. 
 */
 struct xvimage *Graphe2Image(graphe * g, int32_t rs)
@@ -879,9 +879,9 @@ struct xvimage *Graphe2Image(graphe * g, int32_t rs)
 
 /* ====================================================================== */
 /*! \fn void AjouteArc(graphe * g, int32_t i, int32_t s)
-    \param g (entrée/sortie) : un graphe.
-    \param i (entrée) : extrémité initiale de l'arc.
-    \param s (entrée) : extrémité finale de l'arc.
+    \param g (entrÃ©e/sortie) : un graphe.
+    \param i (entrÃ©e) : extrÃ©mitÃ© initiale de l'arc.
+    \param s (entrÃ©e) : extrÃ©mitÃ© finale de l'arc.
     \brief ajoute l'arc (i,s) au graphe g (application gamma seulement). 
 */
 void AjouteArc(graphe * g, int32_t i, int32_t s)
@@ -894,10 +894,10 @@ void AjouteArc(graphe * g, int32_t i, int32_t s)
 
 /* ====================================================================== */
 /*! \fn void AjouteArcValue(graphe * g, int32_t i, int32_t s, TYP_VARC v)
-    \param g (entrée/sortie) : un graphe.
-    \param i (entrée) : extrémité initiale de l'arc.
-    \param s (entrée) : extrémité finale de l'arc.
-    \param v (entrée) : une valeur pour l'arc.
+    \param g (entrÃ©e/sortie) : un graphe.
+    \param i (entrÃ©e) : extrÃ©mitÃ© initiale de l'arc.
+    \param s (entrÃ©e) : extrÃ©mitÃ© finale de l'arc.
+    \param v (entrÃ©e) : une valeur pour l'arc.
     \brief ajoute l'arc (i,s) au graphe g (application gamma seulement). 
 */
 void AjouteArcValue(graphe * g, int32_t i, int32_t s, TYP_VARC v)
@@ -910,11 +910,11 @@ void AjouteArcValue(graphe * g, int32_t i, int32_t s, TYP_VARC v)
 
 /* ====================================================================== */
 /*! \fn void RetireArc(graphe * g, int32_t i, int32_t s)
-    \param g (entrée/sortie) : un graphe.
-    \param i (entrée) : un sommet de g.
-    \param s (entrée) : un sommet de g.
+    \param g (entrÃ©e/sortie) : un graphe.
+    \param i (entrÃ©e) : un sommet de g.
+    \param s (entrÃ©e) : un sommet de g.
     \brief retire l'arc (i,s) du graphe g (application gamma seulement),
-              si celui-ci etait présent. Sinon, pas d'action. 
+              si celui-ci etait prÃ©sent. Sinon, pas d'action. 
 */
 void RetireArc(graphe * g, int32_t i, int32_t s)
 /* ====================================================================== */
@@ -929,11 +929,11 @@ void RetireArc(graphe * g, int32_t i, int32_t s)
 
 /* ====================================================================== */
 /*! \fn int32_t PopSuccesseur(graphe * g, int32_t i)
-    \param g (entrée/sortie) : un graphe.
-    \param i (entrée) : un sommet de g.
+    \param g (entrÃ©e/sortie) : un graphe.
+    \param i (entrÃ©e) : un sommet de g.
     \brief retire un arc (i,s) du graphe g (application gamma seulement),
            et retourne le sommet s
-    \warning le sommet i doit avoir au moins un successeur (pas de vérification)
+    \warning le sommet i doit avoir au moins un successeur (pas de vÃ©rification)
 */
 int32_t PopSuccesseur(graphe * g, int32_t i)
 /* ====================================================================== */
@@ -945,10 +945,10 @@ int32_t PopSuccesseur(graphe * g, int32_t i)
 
 /* ====================================================================== */
 /*! \fn int32_t EstSuccesseur(graphe *g, int32_t i, int32_t s) 
-    \param g (entrée) : un graphe.
-    \param i (entrée) : un sommet de g.
-    \param s (entrée) : un sommet de g.
-    \return booléen.
+    \param g (entrÃ©e) : un graphe.
+    \param i (entrÃ©e) : un sommet de g.
+    \param s (entrÃ©e) : un sommet de g.
+    \return boolÃ©en.
     \brief retourne 1 si le sommet 's' est un successeur du sommet 'i', 0 sinon.
 */
 int32_t EstSuccesseur(graphe *g, int32_t i, int32_t s) 
@@ -965,8 +965,8 @@ int32_t EstSuccesseur(graphe *g, int32_t i, int32_t s)
 
 /* ====================================================================== */
 /*! \fn void Gamma2ListArcs(graphe *g) 
-    \param g (entrée) : un graphe.
-    \brief génère la représentation "liste d'arcs" du graphe g.
+    \param g (entrÃ©e) : un graphe.
+    \brief gÃ©nÃ¨re la reprÃ©sentation "liste d'arcs" du graphe g.
 */
 void Gamma2ListArcs(graphe *g) 
 /* ====================================================================== */
@@ -993,15 +993,15 @@ void Gamma2ListArcs(graphe *g)
 
 /* ====================================================================== */
 /*! \fn graphe * GrapheAleatoire(int32_t nsom, int32_t narc)
-    \param nsom (entrée) : nombre de sommets.
-    \param narc (entrée) : nombre d'arcs.
+    \param nsom (entrÃ©e) : nombre de sommets.
+    \param narc (entrÃ©e) : nombre d'arcs.
     \return un graphe.
-    \brief retourne un graphe aléatoire à 'nsom' sommets et 'narc' arcs. 
-              Le graphe est antisymétrique et sans boucle.
-              Le nombre d'arcs doit être <= nsom (nsom - 1) / 2.
-              Les arcs sont pondérés (valeur aléatoire entre 0.0 et 1.0).
-    \warning la méthode employée ici est naïve, tres inefficace du point de vue
-              temps de calcul et ne garantit aucune propriété statistique. 
+    \brief retourne un graphe alÃ©atoire Ã  'nsom' sommets et 'narc' arcs. 
+              Le graphe est antisymÃ©trique et sans boucle.
+              Le nombre d'arcs doit Ãªtre <= nsom (nsom - 1) / 2.
+              Les arcs sont pondÃ©rÃ©s (valeur alÃ©atoire entre 0.0 et 1.0).
+    \warning la mÃ©thode employÃ©e ici est naÃ¯ve, tres inefficace du point de vue
+              temps de calcul et ne garantit aucune propriÃ©tÃ© statistique. 
 */
 graphe * GrapheAleatoire(int32_t nsom, int32_t narc)
 /* ====================================================================== */
@@ -1081,9 +1081,9 @@ graphe * GrapheAleatoire(int32_t nsom, int32_t narc)
 
 /* ====================================================================== */
 /*! \fn boolean * EnsembleVide(int32_t n)
-    \param n (entrée) : taille du tableau booléen.
-    \return un tableau de \b n booléens, tous égaux à FALSE.
-    \brief alloue et initialise un tableau de \b n booléens, représentant l'ensemble vide.
+    \param n (entrÃ©e) : taille du tableau boolÃ©en.
+    \return un tableau de \b n boolÃ©ens, tous Ã©gaux Ã  FALSE.
+    \brief alloue et initialise un tableau de \b n boolÃ©ens, reprÃ©sentant l'ensemble vide.
 */
 static boolean * EnsembleVide(int32_t n)
 /* ====================================================================== */
@@ -1098,7 +1098,7 @@ static boolean * EnsembleVide(int32_t n)
 
 /* ====================================================================== */
 /*! \fn int32_t * ListeVide(int32_t n)
-    \param n (entrée) : taille max de la liste.
+    \param n (entrÃ©e) : taille max de la liste.
     \return un tableau de \b n entiers
     \brief alloue et initialise un tableau de \b n entiers
 */
@@ -1115,11 +1115,11 @@ static int32_t * ListeVide(int32_t n)
 
 /* ====================================================================== */
 /*! \fn int32_t Degre(graphe * g, int32_t s)
-    \param g (entrée) : un graphe
-    \param s (entrée) : un sommet
+    \param g (entrÃ©e) : un graphe
+    \param s (entrÃ©e) : un sommet
     \return un entier
-    \brief retourne le degré du sommet s dans le graphe graphe g (nombre de successeurs)
-    \warning seule la représentation 'gamma' est utilisée
+    \brief retourne le degrÃ© du sommet s dans le graphe graphe g (nombre de successeurs)
+    \warning seule la reprÃ©sentation 'gamma' est utilisÃ©e
 */
 int32_t Degre(graphe * g, int32_t s)
 /* ====================================================================== */
@@ -1132,10 +1132,10 @@ int32_t Degre(graphe * g, int32_t s)
 
 /* ====================================================================== */
 /*! \fn graphe * Symetrique(graphe * g)
-    \param g (entrée) : un graphe
+    \param g (entrÃ©e) : un graphe
     \return un graphe
-    \brief construit et retourne le graphe g_1 symétrique du graphe g (algorithme linéaire)
-    \warning seule la représentation 'gamma' est utilisée
+    \brief construit et retourne le graphe g_1 symÃ©trique du graphe g (algorithme linÃ©aire)
+    \warning seule la reprÃ©sentation 'gamma' est utilisÃ©e
 */
 graphe * Symetrique(graphe * g)
 /* ====================================================================== */
@@ -1163,10 +1163,10 @@ graphe * Symetrique(graphe * g)
 
 /* ====================================================================== */
 /*! \fn graphe * FermetureSymetrique(graphe * g)
-    \param g (entrée) : un graphe
+    \param g (entrÃ©e) : un graphe
     \return un graphe
-    \brief construit et retourne la fermeture symétrique du graphe g (algorithme linéaire)
-    \warning seule la représentation 'gamma' est utilisée
+    \brief construit et retourne la fermeture symÃ©trique du graphe g (algorithme linÃ©aire)
+    \warning seule la reprÃ©sentation 'gamma' est utilisÃ©e
 */
 graphe * FermetureSymetrique(graphe * g)
 /* ====================================================================== */
@@ -1195,8 +1195,8 @@ graphe * FermetureSymetrique(graphe * g)
 
 /* ====================================================================== */
 /*! \fn boolean *Descendants(graphe *g, int32_t a)
-    \param g (entrée) : le graphe 
-    \param a (entrée) : un sommet du graphe g
+    \param g (entrÃ©e) : le graphe 
+    \param a (entrÃ©e) : un sommet du graphe g
     \brief retourne l'ensemble des sommets descendants de a dans le graphe g
     (le sommet a est inclus)
 */
@@ -1233,13 +1233,13 @@ boolean * Descendants(graphe * g, int32_t a)
 
 /* ====================================================================== */
 /*! \fn void CompFortConnexe(graphe * g, graphe *g_1, int32_t a, boolean * Ca)
-    \param g (entrée) : un graphe
-    \param g_1 (entrée) : le graphe symétrique de g
-    \param a (entrée) : un sommet du graphe g
-    \param Ca (sortie) : un sous-ensemble des sommets de g (tableau de booléens)
+    \param g (entrÃ©e) : un graphe
+    \param g_1 (entrÃ©e) : le graphe symÃ©trique de g
+    \param a (entrÃ©e) : un sommet du graphe g
+    \param Ca (sortie) : un sous-ensemble des sommets de g (tableau de boolÃ©ens)
     \brief retourne dans Ca la composante fortement connexe de g contenant a 
-          (sous la forme d'un tableau de booléens)
-    \warning Ca doit avoir été alloué correctement (pas de vérification)
+          (sous la forme d'un tableau de boolÃ©ens)
+    \warning Ca doit avoir Ã©tÃ© allouÃ© correctement (pas de vÃ©rification)
 */
 void CompFortConnexe(graphe * g, graphe *g_1, int32_t a, boolean * Ca)
 /* ====================================================================== */
@@ -1259,9 +1259,9 @@ void CompFortConnexe(graphe * g, graphe *g_1, int32_t a, boolean * Ca)
 
 /* ====================================================================== */
 /*! \fn boolean ExisteCircuit(graphe * g, int32_t a)
-    \param g (entrée) : un graphe
-    \param a (entrée) : un sommet du graphe g
-    \return booléen
+    \param g (entrÃ©e) : un graphe
+    \param a (entrÃ©e) : un sommet du graphe g
+    \return boolÃ©en
     \brief teste l'existence d'un circuit dans g contenant a 
 */
 boolean ExisteCircuit(graphe * g, int32_t a)
@@ -1302,12 +1302,12 @@ boolean ExisteCircuit(graphe * g, int32_t a)
 
 /* ====================================================================== */
 /*! \fn void CompConnexe(graphe * g, graphe *g_1, int32_t a, boolean * Ca)
-    \param   g (entrée) : un graphe
-    \param g_1 (entrée) : le graphe symétrique de g
-    \param a (entrée) : un sommet du graphe g
-    \return un sous-ensemble de sommets de g (tableau de booléens)
+    \param   g (entrÃ©e) : un graphe
+    \param g_1 (entrÃ©e) : le graphe symÃ©trique de g
+    \param a (entrÃ©e) : un sommet du graphe g
+    \return un sous-ensemble de sommets de g (tableau de boolÃ©ens)
     \brief retourne la composante connexe de g contenant a
-          (sous la forme d'un tableau de booléens)
+          (sous la forme d'un tableau de boolÃ©ens)
 */
 void CompConnexe(graphe * g, graphe *g_1, int32_t a, boolean * Ca)
 /* ====================================================================== */
@@ -1352,9 +1352,9 @@ void CompConnexe(graphe * g, graphe *g_1, int32_t a, boolean * Ca)
 
 /* ====================================================================== */
 /*! \fn int32_t Connexe(graphe * g, graphe *g_1)
-    \param g (entrée) : un graphe
-    \param g_1 (entrée) : le graphe symétrique de g
-    \return booléen
+    \param g (entrÃ©e) : un graphe
+    \param g_1 (entrÃ©e) : le graphe symÃ©trique de g
+    \return boolÃ©en
     \brief retourne 1 si le graphe est connexe, 0 sinon
 */
 boolean Connexe(graphe * g, graphe *g_1)
@@ -1374,9 +1374,9 @@ boolean Connexe(graphe * g, graphe *g_1)
 
 /* ====================================================================== */
 /*! \fn boolean CircuitNiveaux(graphe * g)
-    \param g (entrée) : un graphe
-    \return booléen
-    \brief si le graphe possède au moins un circuit, retourne TRUE ;
+    \param g (entrÃ©e) : un graphe
+    \return boolÃ©en
+    \brief si le graphe possÃ¨de au moins un circuit, retourne TRUE ;
            sinon, calcule les niveaux des sommets du graphes (dans v_sommets) 
            et retourne FALSE
 */
@@ -1385,7 +1385,7 @@ boolean CircuitNiveaux(graphe * g)
 #undef F_NAME
 #define F_NAME "CircuitNiveaux"
 {
-  int32_t * D;   // pour les degrés intérieurs
+  int32_t * D;   // pour les degrÃ©s intÃ©rieurs
   int32_t i, n, x, y, N;
   pcell p;
   Lifo * T, *U, *V;
@@ -1513,13 +1513,13 @@ static int32_t PartitionStochastique(int32_t *A, TypeCle *T, int32_t p, int32_t 
 
 /* =============================================================== */
 /*! \fn void TriRapideStochastique (int32_t * A, TypeCle *T, int32_t p, int32_t r)
-    \param A (entrée/sortie) : un tableau d'entiers
-    \param T (entrée) : un tableau de valeurs de type TypeCle.
-    \param p (entrée) : indice du début de la zone à trier.
-    \param r (entrée) : indice de fin de la zone à trier.
+    \param A (entrÃ©e/sortie) : un tableau d'entiers
+    \param T (entrÃ©e) : un tableau de valeurs de type TypeCle.
+    \param p (entrÃ©e) : indice du dÃ©but de la zone Ã  trier.
+    \param r (entrÃ©e) : indice de fin de la zone Ã  trier.
     \brief tri par ordre croissant des valeurs du tableau \b T.
            Le tri s'effectue sur un tableau \b A contenant les index
-           des elements de \b T, l'indice \b p (compris) à l'indice \b r (compris).
+           des elements de \b T, l'indice \b p (compris) Ã  l'indice \b r (compris).
 */
 static void TriRapideStochastique (int32_t * A, TypeCle *T, int32_t p, int32_t r)
 /* =============================================================== */
@@ -1535,8 +1535,8 @@ static void TriRapideStochastique (int32_t * A, TypeCle *T, int32_t p, int32_t r
 
 /* ====================================================================== */
 /*! \fn graphe * Kruskal1(graphe * g, graphe *g_1)
-    \param g (entrée) : un graphe pondéré connexe antisymétrique antiréflexif
-    \param g_1 (entrée) : le graphe symétrique de g
+    \param g (entrÃ©e) : un graphe pondÃ©rÃ© connexe antisymÃ©trique antirÃ©flexif
+    \param g_1 (entrÃ©e) : le graphe symÃ©trique de g
     \return un arbre
     \brief retourne un arbre de poids maximal pour g
 */
@@ -1600,11 +1600,11 @@ graphe * Kruskal1(graphe * g, graphe *g_1)
 
 /* ====================================================================== */
 /*! \fn graphe * Kruskal2(graphe * g, graphe *g_1)
-    \param g (entrée) : un graphe pondéré connexe antisymétrique antiréflexif
-    \param g_1 (entrée) : le graphe symétrique de g
+    \param g (entrÃ©e) : un graphe pondÃ©rÃ© connexe antisymÃ©trique antirÃ©flexif
+    \param g_1 (entrÃ©e) : le graphe symÃ©trique de g
     \return un arbre
     \brief retourne un arbre de poids maximal pour g
-    \warning les données du graphe d'origine seront détruites
+    \warning les donnÃ©es du graphe d'origine seront dÃ©truites
 */
 graphe * Kruskal2(graphe * g, graphe *g_1)
 /* ====================================================================== */
@@ -1675,10 +1675,10 @@ graphe * Kruskal2(graphe * g, graphe *g_1)
 
 /* ====================================================================== */
 /*! \fn void DepthTree(graphe * g, graphe *g_1, int32_t a, TYP_VARC *depth, int32_t *farthest)
-    \param g (entrée) : un graphe (arbre), symétrique ou non
-    \param a (entrée) : un sommet du graphe g
+    \param g (entrÃ©e) : un graphe (arbre), symÃ©trique ou non
+    \param a (entrÃ©e) : un sommet du graphe g
     \param depth (sortie) : la profondeur de l'arbre de racine a
-    \param farthest (sortie) : un sommet le plus éloigné de a 
+    \param farthest (sortie) : un sommet le plus Ã©loignÃ© de a 
     \brief calcule la profondeur de l'arbre de racine a
 */
 void DepthTree(graphe * g, int32_t a, TYP_VARC *depth, int32_t *farthest)
@@ -1722,7 +1722,7 @@ void DepthTree(graphe * g, int32_t a, TYP_VARC *depth, int32_t *farthest)
 
 /* ====================================================================== */
 /*! \fn void MaxDiameterTree(graphe * g)
-    \param g (entrée) : un graphe (arbre) symétrique
+    \param g (entrÃ©e) : un graphe (arbre) symÃ©trique
     \brief calcule un diametre maximal
 */
 graphe * MaxDiameterTree(graphe * g)
@@ -1755,15 +1755,15 @@ graphe * MaxDiameterTree(graphe * g)
 
 /* ====================================================================== */
 /*! \fn int32_t LCA(graphe * g, int32_t i, int32_t j)
-    \param g (entrée) : un graphe (arbre orienté des feuilles vers la racine)
-    \param i (entrée) : un sommet de \b g
-    \param j (entrée) : un sommet de \b g
-    \brief retourne le plus proche ancêtre commun de i et j (least common ancestor)
+    \param g (entrÃ©e) : un graphe (arbre orientÃ© des feuilles vers la racine)
+    \param i (entrÃ©e) : un sommet de \b g
+    \param j (entrÃ©e) : un sommet de \b g
+    \brief retourne le plus proche ancÃªtre commun de i et j (least common ancestor)
 */
 int32_t LCA(graphe * g, int32_t i, int32_t j)
 /* ====================================================================== */
-/* algorithme linéaire, efficace pour quelques requêtes mais 
-   pour un algo en temps constant avec pre-processing linéaire voir:
+/* algorithme linÃ©aire, efficace pour quelques requÃªtes mais 
+   pour un algo en temps constant avec pre-processing linÃ©aire voir:
    author = 	 {M.A. Bender and M. Farach-Colton},
    title = 	 {The {LCA} problem revisited},
    booktitle = 	 {procs. Latin American Theoretical Informatics, LNCS, Springer Verlag},
@@ -1779,7 +1779,7 @@ int32_t LCA(graphe * g, int32_t i, int32_t j)
   pcell p;
   boolean *M = EnsembleVide(n);
 
-  M[i] = TRUE; // met i et les ancêtres de i dans l'ensemble M
+  M[i] = TRUE; // met i et les ancÃªtres de i dans l'ensemble M
   p = g->gamma[i]; 
   while (p != NULL)
   {
@@ -1795,7 +1795,7 @@ int32_t LCA(graphe * g, int32_t i, int32_t j)
     p = g->gamma[i]; 
   } 
 
-  if (M[j]) k = j; // recherche un element de M parmi les ancêtres de j
+  if (M[j]) k = j; // recherche un element de M parmi les ancÃªtres de j
   else
   {
     p = g->gamma[j]; 
@@ -1828,12 +1828,12 @@ int32_t LCA(graphe * g, int32_t i, int32_t j)
 
 /* ====================================================================== */
 /*! \fn graphe * RootTree(graphe * g, graphe * g_1, int32_t i)
-    \param g (entrée) : un graphe
-    \param g_1 (entrée) : le graphe symétrique du graphe g
-    \param i (entrée) : un sommet de \b g
-    \brief retourne un arbre orienté (arboresence) de racine i
-    dont les arcs correspondent aux arêtes du graphe non-orienté représenté par g et g_1.
-    Les distances (nombre d'arcs) de la racine aux sommets sont de plus stockés dans les champs v_sommets.
+    \param g (entrÃ©e) : un graphe
+    \param g_1 (entrÃ©e) : le graphe symÃ©trique du graphe g
+    \param i (entrÃ©e) : un sommet de \b g
+    \brief retourne un arbre orientÃ© (arboresence) de racine i
+    dont les arcs correspondent aux arÃªtes du graphe non-orientÃ© reprÃ©sentÃ© par g et g_1.
+    Les distances (nombre d'arcs) de la racine aux sommets sont de plus stockÃ©s dans les champs v_sommets.
 */
 graphe * RootTree(graphe * g, graphe * g_1, int32_t i)
 /* ====================================================================== */
@@ -1884,7 +1884,7 @@ graphe * RootTree(graphe * g, graphe * g_1, int32_t i)
       }
     } // for p
     for (p = g_1->gamma[i]; p != NULL; p = p->next)
-    { /* pour tout s prédécesseur de i */
+    { /* pour tout s prÃ©dÃ©cesseur de i */
       s = p->som;
       if (tree->v_sommets[s] == -1) 
       {
@@ -1901,10 +1901,10 @@ graphe * RootTree(graphe * g, graphe * g_1, int32_t i)
 
 /* ====================================================================== */
 /*! \fn void DistRoot(graphe * g, int32_t r)
-    \param g (entrée) : un graphe (arbre orienté ou arborescence)
-    \param r (entrée) : racine de \b g
+    \param g (entrÃ©e) : un graphe (arbre orientÃ© ou arborescence)
+    \param r (entrÃ©e) : racine de \b g
     \brief calcule, pour chaque sommet x de g, la longueur (somme des poids d'arcs) d'un plus court
-           chemin de r vers x. Cette longueur est stockée dans le champ
+           chemin de r vers x. Cette longueur est stockÃ©e dans le champ
            \b v_sommets de \b g
 */
 void DistRoot(graphe * g, int32_t r)
@@ -1945,11 +1945,11 @@ void DistRoot(graphe * g, int32_t r)
 
 /* ====================================================================== */
 /* \fn void Dijkstra1(graphe * g, int32_t i)
-    \param g (entrée) : un graphe pondéré. La pondération de chaque arc doit 
+    \param g (entrÃ©e) : un graphe pondÃ©rÃ©. La pondÃ©ration de chaque arc doit 
                         se trouver dans le champ \b v_arc de la structure \b cell
-    \param i (entrée) : un sommet de \b g
+    \param i (entrÃ©e) : un sommet de \b g
     \brief calcule, pour chaque sommet x de g, la longueur d'un plus court
-           chemin de i vers x. Cette longueur est stockée dans le champ
+           chemin de i vers x. Cette longueur est stockÃ©e dans le champ
            \b v_sommets de \b g
 */
 void Dijkstra1(graphe * g, int32_t i)
@@ -1991,11 +1991,11 @@ void Dijkstra1(graphe * g, int32_t i)
 
 /* ====================================================================== */
 /*! \fn void Dijkstra(graphe * g, int32_t i)
-    \param g (entrée) : un graphe pondéré. La pondération de chaque arc doit 
+    \param g (entrÃ©e) : un graphe pondÃ©rÃ©. La pondÃ©ration de chaque arc doit 
                         se trouver dans le champ \b v_arc de la structure \b cell
-    \param i (entrée) : un sommet de \b g
+    \param i (entrÃ©e) : un sommet de \b g
     \brief calcule, pour chaque sommet x de g, la longueur d'un plus court
-           chemin de i vers x. Cette longueur est stockée dans le champ
+           chemin de i vers x. Cette longueur est stockÃ©e dans le champ
            \b v_sommets de \b g
 */
 void Dijkstra(graphe * g, int32_t i)
@@ -2062,10 +2062,10 @@ void Dijkstra(graphe * g, int32_t i)
 
 /* ====================================================================== */
 /*! \fn void Lee(graphe * g, int32_t i)
-    \param g (entrée) : un graphe
-    \param i (entrée) : un sommet de \b g
+    \param g (entrÃ©e) : un graphe
+    \param i (entrÃ©e) : un sommet de \b g
     \brief calcule, pour chaque sommet x de g, la longueur (nombre d'arcs) d'un plus court
-           chemin de i vers x. Cette longueur est stockée dans le champ
+           chemin de i vers x. Cette longueur est stockÃ©e dans le champ
            \b v_sommets de \b g
 */
 void Lee(graphe * g, int32_t i)
@@ -2100,12 +2100,12 @@ void Lee(graphe * g, int32_t i)
 
 /* ====================================================================== */
 /*! \fn void LeeNO(graphe * g, graphe * g_1, int32_t i)
-    \param g (entrée) : un graphe
-    \param g_1 (entrée) : le graphe symétrique du graphe g
-    \param i (entrée) : un sommet de \b g
-    \brief calcule, pour chaque sommet x de g, la longueur (nombre d'arêtes) 
-    d'un plus court chemin de i vers x dans le graphe non orienté représenté 
-    par (g, g_1). Cette longueur est stockée dans le champ \b v_sommets de \b g
+    \param g (entrÃ©e) : un graphe
+    \param g_1 (entrÃ©e) : le graphe symÃ©trique du graphe g
+    \param i (entrÃ©e) : un sommet de \b g
+    \brief calcule, pour chaque sommet x de g, la longueur (nombre d'arÃªtes) 
+    d'un plus court chemin de i vers x dans le graphe non orientÃ© reprÃ©sentÃ© 
+    par (g, g_1). Cette longueur est stockÃ©e dans le champ \b v_sommets de \b g
 */
 void LeeNO(graphe * g, graphe * g_1, int32_t i)
 /* ====================================================================== */
@@ -2133,7 +2133,7 @@ void LeeNO(graphe * g, graphe * g_1, int32_t i)
       }
     } // for p
     for (p = g_1->gamma[i]; p != NULL; p = p->next)
-    { /* pour tout s prédécesseur de i */
+    { /* pour tout s prÃ©dÃ©cesseur de i */
       s = p->som;
       if (g->v_sommets[s] == -1) // sic: g
       {
@@ -2148,11 +2148,11 @@ void LeeNO(graphe * g, graphe * g_1, int32_t i)
 
 /* ====================================================================== */
 /*! \fn graphe * PCC(graphe * g, int32_t d, int32_t a)
-    \param g (entrée) : un graphe pondéré, représenté par son application successeurs,
-            et dont les sommets ont été valués par la distance au sommet \b d
-    \param d (entrée) : un sommet (départ)
-    \param a (entrée) : un sommet (arrivée)
-    \return un plus court chemin de \b d vers \b a dans \b g , représenté par un graphe
+    \param g (entrÃ©e) : un graphe pondÃ©rÃ©, reprÃ©sentÃ© par son application successeurs,
+            et dont les sommets ont Ã©tÃ© valuÃ©s par la distance au sommet \b d
+    \param d (entrÃ©e) : un sommet (dÃ©part)
+    \param a (entrÃ©e) : un sommet (arrivÃ©e)
+    \return un plus court chemin de \b d vers \b a dans \b g , reprÃ©sentÃ© par un graphe
     \brief retourne un plus court chemin de \b d vers \b a dans \b g
 */
 graphe * PCC(graphe * g, int32_t d, int32_t a)
@@ -2192,12 +2192,12 @@ graphe * PCC(graphe * g, int32_t d, int32_t a)
 
 /* ====================================================================== */
 /*! \fn graphe * PCCna(graphe * g, int32_t d, int32_t a)
-    \param g (entrée) : un graphe, représenté par son application successeurs,
-            et dont les sommets ont été valués par la distance (nombre d'arcs) au sommet \b d
-    \param d (entrée) : un sommet (départ)
-    \param a (entrée) : un sommet (arrivée)
+    \param g (entrÃ©e) : un graphe, reprÃ©sentÃ© par son application successeurs,
+            et dont les sommets ont Ã©tÃ© valuÃ©s par la distance (nombre d'arcs) au sommet \b d
+    \param d (entrÃ©e) : un sommet (dÃ©part)
+    \param a (entrÃ©e) : un sommet (arrivÃ©e)
     \return un plus court chemin (au sens du nombre d'arcs) de \b d vers \b a dans \b g , 
-    représenté par un graphe
+    reprÃ©sentÃ© par un graphe
     \brief retourne un plus court chemin de \b d vers \b a dans \b g
 */
 graphe * PCCna(graphe * g, int32_t d, int32_t a)
@@ -2243,10 +2243,10 @@ graphe * PCCna(graphe * g, int32_t d, int32_t a)
 
 /* ====================================================================== */
 /*! \fn void BellmanSC(graphe * g)
-    \param g (entrée) : un graphe pondéré. La pondération de chaque arc doit 
+    \param g (entrÃ©e) : un graphe pondÃ©rÃ©. La pondÃ©ration de chaque arc doit 
                         se trouver dans le champ \b v_arc de la structure \b cell
     \brief calcule, pour chaque sommet x de g, la longueur d'un plus court
-           chemin arrivant en x. Cette longueur est stockée dans le champ
+           chemin arrivant en x. Cette longueur est stockÃ©e dans le champ
            \b v_sommets de \b g
     \warning ne s'applique qu'aux graphes sans circuit
 */
@@ -2256,7 +2256,7 @@ void BellmanSC(graphe * g)
 #define F_NAME "BellmanSC"
 {
   int32_t x, y, i, r, rmax, cumul, n = g->nsom;
-  int32_t * T;   // pour les sommets triés
+  int32_t * T;   // pour les sommets triÃ©s
   int32_t * H;   // histogramme des rangs
   graphe * g_1 = Symetrique(g);
   TYP_VARC tmp, minv;
@@ -2282,7 +2282,7 @@ void BellmanSC(graphe * g)
   for (x = 0; x < n; x++) H[(int32_t)g->v_sommets[x]]++; // calcule l'histo
   cumul = H[0];
   H[0] = 0;
-  for (i = 1; i <= rmax; i++) // calcule l'histo cumulé
+  for (i = 1; i <= rmax; i++) // calcule l'histo cumulÃ©
   {
     x = H[i];
     H[i] = cumul;
@@ -2314,7 +2314,7 @@ void BellmanSC(graphe * g)
     {
       minv = MAX_VARC; 
       for (; p != NULL; p = p->next)
-      { /* pour tout y prédécesseur de x */
+      { /* pour tout y prÃ©dÃ©cesseur de x */
 	y = p->som;
 	tmp = p->v_arc + g->v_sommets[y];
 	if (tmp < minv) minv = tmp;
@@ -2329,10 +2329,10 @@ void BellmanSC(graphe * g)
 
 /* ====================================================================== */
 /*! \fn void BellmanSCmax(graphe * g)
-    \param g (entrée) : un graphe pondéré. La pondération de chaque arc doit 
+    \param g (entrÃ©e) : un graphe pondÃ©rÃ©. La pondÃ©ration de chaque arc doit 
                         se trouver dans le champ \b v_arc de la structure \b cell
     \brief calcule, pour chaque sommet x de g, la longueur d'un plus long
-           chemin arrivant en x. Cette longueur est stockée dans le champ
+           chemin arrivant en x. Cette longueur est stockÃ©e dans le champ
            \b v_sommets de \b g
     \warning ne s'applique qu'aux graphes sans circuit
 */
@@ -2342,7 +2342,7 @@ void BellmanSCmax(graphe * g)
 #define F_NAME "BellmanSCmax"
 {
   int32_t x, y, i, r, rmax, cumul, n = g->nsom;
-  int32_t * T;   // pour les sommets triés
+  int32_t * T;   // pour les sommets triÃ©s
   int32_t * H;   // histogramme des rangs
   graphe * g_1 = Symetrique(g);
   TYP_VARC tmp, maxv;
@@ -2368,7 +2368,7 @@ void BellmanSCmax(graphe * g)
   for (x = 0; x < n; x++) H[(int32_t)g->v_sommets[x]]++; // calcule l'histo
   cumul = H[0];
   H[0] = 0;
-  for (i = 1; i <= rmax; i++) // calcule l'histo cumulé
+  for (i = 1; i <= rmax; i++) // calcule l'histo cumulÃ©
   {
     x = H[i];
     H[i] = cumul;
@@ -2400,7 +2400,7 @@ void BellmanSCmax(graphe * g)
     {
       maxv = MIN_VARC; 
       for (; p != NULL; p = p->next)
-      { /* pour tout y prédécesseur de x */
+      { /* pour tout y prÃ©dÃ©cesseur de x */
 	y = p->som;
 	tmp = p->v_arc + g->v_sommets[y];
 	if (tmp > maxv) maxv = tmp;
@@ -2415,11 +2415,11 @@ void BellmanSCmax(graphe * g)
 
 /* ====================================================================== */
 /*! \fn void BellmanSC1(graphe * g, int32_t dep)
-    \param g (entrée) : un graphe pondéré. La pondération de chaque arc doit 
+    \param g (entrÃ©e) : un graphe pondÃ©rÃ©. La pondÃ©ration de chaque arc doit 
                         se trouver dans le champ \b v_arc de la structure \b cell
-    \param dep (entrée) : un sommet de \b g
+    \param dep (entrÃ©e) : un sommet de \b g
     \brief calcule, pour chaque sommet x de g, la longueur d'un plus court
-           chemin de dep vers x. Cette longueur est stockée dans le champ
+           chemin de dep vers x. Cette longueur est stockÃ©e dans le champ
            \b v_sommets de \b g
     \warning ne s'applique qu'aux graphes sans circuit
 */
@@ -2432,7 +2432,7 @@ void BellmanSC1(graphe * g, int32_t dep)
 #define F_NAME "BellmanSC1"
 {
   int32_t x, y, i, r, rmax, cumul, n = g->nsom;
-  int32_t * T;   // pour les sommets triés
+  int32_t * T;   // pour les sommets triÃ©s
   int32_t * H;   // histogramme des rangs
   graphe * g_1 = Symetrique(g);
   TYP_VARC tmp, minv;
@@ -2458,7 +2458,7 @@ void BellmanSC1(graphe * g, int32_t dep)
   for (x = 0; x < n; x++) H[(int32_t)g->v_sommets[x]]++; // calcule l'histo
   cumul = H[0];
   H[0] = 0;
-  for (i = 1; i <= rmax; i++) // calcule l'histo cumulé
+  for (i = 1; i <= rmax; i++) // calcule l'histo cumulÃ©
   {
     x = H[i];
     H[i] = cumul;
@@ -2488,7 +2488,7 @@ void BellmanSC1(graphe * g, int32_t dep)
     x = T[i];
     minv = MAX_VARC; 
     for (p = g_1->gamma[x]; p != NULL; p = p->next)
-    { /* pour tout y prédécesseur de x */
+    { /* pour tout y prÃ©dÃ©cesseur de x */
       y = p->som;
       tmp = p->v_arc + g->v_sommets[y];
       if (tmp < minv) minv = tmp;
@@ -2506,7 +2506,7 @@ void BellmanSC1(graphe * g, int32_t dep)
 
 /* ====================================================================== */
 /*! \fn void AlphaTopologicalMap(graphe * g, boolean * Vh, TYP_VSOM alpha)
-    \param g (entrée) : un graphe pondéré sur les sommets.
+    \param g (entrÃ©e) : un graphe pondÃ©rÃ© sur les sommets.
     \brief TODO
     \warning ne s'applique qu'aux graphes sans circuit
 */
@@ -2516,7 +2516,7 @@ void AlphaTopologicalMap(graphe * g, boolean * head, TYP_VSOM alpha)
 #define F_NAME "AlphaTopologicalMap"
 {
   int32_t x, y, i, r, rmax, cumul, n = g->nsom;
-  int32_t * T;   // pour les sommets triés
+  int32_t * T;   // pour les sommets triÃ©s
   int32_t * H;   // histogramme des rangs
   TYP_VSOM * M;   // sauvegarde fonction sommets
   graphe * g_1 = Symetrique(g);
@@ -2539,7 +2539,7 @@ void AlphaTopologicalMap(graphe * g, boolean * head, TYP_VSOM alpha)
   for (x = 0; x < n; x++) H[(int32_t)g->v_sommets[x]]++; // calcule l'histo
   cumul = H[0];
   H[0] = 0;
-  for (i = 1; i <= rmax; i++) // calcule l'histo cumulé
+  for (i = 1; i <= rmax; i++) // calcule l'histo cumulÃ©
   {
     x = H[i];
     H[i] = cumul;
@@ -2563,7 +2563,7 @@ void AlphaTopologicalMap(graphe * g, boolean * head, TYP_VSOM alpha)
   {
     x = T[i];
     for (p = g_1->gamma[x]; p != NULL; p = p->next)
-    { /* pour tout y prédécesseur de x */
+    { /* pour tout y prÃ©dÃ©cesseur de x */
       y = p->som;
       if (head[y])
       {
@@ -2606,12 +2606,12 @@ static TYP_VSOM IntegreGSC_Aux(graphe * g, graphe * g_1, int32_t s)
 
 /* ====================================================================== */
 /*! \fn void IntegreGSC(graphe * g)
-    \param g (entrée) : un graphe sans circuit orienté et pondéré, 
-    représenté par son application successeurs, et dont les sommets sont valués.
-    \brief pour chaque sommet x, la nouvelle pondération est la somme 
-    des pondérations des ancêtres de x dans la forêt valuée d'origine.
+    \param g (entrÃ©e) : un graphe sans circuit orientÃ© et pondÃ©rÃ©, 
+    reprÃ©sentÃ© par son application successeurs, et dont les sommets sont valuÃ©s.
+    \brief pour chaque sommet x, la nouvelle pondÃ©ration est la somme 
+    des pondÃ©rations des ancÃªtres de x dans la forÃªt valuÃ©e d'origine.
     \warning cette fonction ne fonctionne que si le graphe g est sans circuit.
-    Aucune vérification n'est faite.
+    Aucune vÃ©rification n'est faite.
 */
 void IntegreGSC(graphe * g)
 /* ====================================================================== */
@@ -2623,15 +2623,15 @@ void IntegreGSC(graphe * g)
   graphe * g_1 = Symetrique(g);
   pcell p;
 
-  // ce champ de g_1 sera utilisé comme indicateur: 0=non traité, 1=traité
+  // ce champ de g_1 sera utilisÃ© comme indicateur: 0=non traitÃ©, 1=traitÃ©
   for (s = 0; s < n; s++) g_1->v_sommets[s] = (TYP_VSOM)0;
-  // ce champ de g_1 sera utilisé pour stocker le degré sortant (pour g) de s 
+  // ce champ de g_1 sera utilisÃ© pour stocker le degrÃ© sortant (pour g) de s 
   for (s = 0; s < n; s++)
   {  
     for (d = 0, p = g->gamma[s]; p != NULL; p = p->next) d += 1;
     g_1->x[s] = d;
   }
-  // lance la fonction récursive pour tous les sommets
+  // lance la fonction rÃ©cursive pour tous les sommets
   for (s = 0; s < n; s++)
     if (g_1->v_sommets[s] == (TYP_VSOM)0)
       IntegreGSC_Aux(g, g_1, s);
@@ -2640,9 +2640,9 @@ void IntegreGSC(graphe * g)
 
 /* ====================================================================== */
 /*! \fn boolean EstConfluent(graphe * g, graphe *g_1, int32_t a)
-    \param g (entrée) : un graphe
-    \param g_1 (entrée) : le graphe symétrique de g
-    \param a (entrée) : un sommet du graphe g
+    \param g (entrÃ©e) : un graphe
+    \param g_1 (entrÃ©e) : le graphe symÃ©trique de g
+    \param a (entrÃ©e) : un sommet du graphe g
     \brief retourne VRAI si le sommet a est confluent, ie., si 
       Succ(Anc(a)\{a}) est inclus dans Anc(a)
 */
@@ -2667,7 +2667,7 @@ boolean EstConfluent(graphe * g, graphe *g_1, int32_t a)
   {
     i = LifoPop(T);
     for (p = g_1->gamma[i]; p != NULL; p = p->next) 
-    { /* pour tout s prédécesseur de i */
+    { /* pour tout s prÃ©dÃ©cesseur de i */
       s = p->som;
       if (!A[s]) 
       {
@@ -2677,7 +2677,7 @@ boolean EstConfluent(graphe * g, graphe *g_1, int32_t a)
     } // for p
   } // while (!LifoVide(T))
 
-  // vérification de la prop.
+  // vÃ©rification de la prop.
   for (i = 0; i < n; i++) 
     if (A[i])
       for (p = g->gamma[i]; p != NULL; p = p->next) 
@@ -2694,8 +2694,8 @@ boolean EstConfluent(graphe * g, graphe *g_1, int32_t a)
 
 /* ====================================================================== */
 /*! \fn boolean *LeastDecreasingPath(graphe *g, int32_t a)
-    \param g (entrée) : le graphe valué
-    \param a (entrée) : un sommet du graphe g
+    \param g (entrÃ©e) : le graphe valuÃ©
+    \param a (entrÃ©e) : un sommet du graphe g
     \brief retourne l'ensemble des sommets descendants de a dans le graphe g
     (le sommet a est inclus) formant un chemin de moins forte pente
 */
@@ -2728,8 +2728,8 @@ boolean * LeastDecreasingPath(graphe * g, int32_t a)
 
 /* ====================================================================== */
 /*! \fn void PointsConfluents(graphe * g, graphe *g_1)
-    \param g (entrée) : un graphe
-    \param g_1 (entrée) : le graphe symétrique de g
+    \param g (entrÃ©e) : un graphe
+    \param g_1 (entrÃ©e) : le graphe symÃ©trique de g
     \brief marque l'ensemble des sommets confluents de g (utilise v_sommets)
 */
 void PointsConfluents(graphe * g, graphe *g_1)
@@ -2754,9 +2754,9 @@ void PointsConfluents(graphe * g, graphe *g_1)
 
 /* ====================================================================== */
 /*! \fn graphe * ForetPCC(graphe * g)
-    \param g (entrée) : un graphe, représenté par son application successeurs et dont les arcs sont valués
-    \return une forêt de plus courts chemins relatifs aux sources de g
-    \brief retourne une forêt de plus courts chemins relatifs aux sources de g. Les longueurs des plus courts chemins sont stockés dans le champ v_sommet du graphe d'origine et de la forêt générée.
+    \param g (entrÃ©e) : un graphe, reprÃ©sentÃ© par son application successeurs et dont les arcs sont valuÃ©s
+    \return une forÃªt de plus courts chemins relatifs aux sources de g
+    \brief retourne une forÃªt de plus courts chemins relatifs aux sources de g. Les longueurs des plus courts chemins sont stockÃ©s dans le champ v_sommet du graphe d'origine et de la forÃªt gÃ©nÃ©rÃ©e.
     \warning ne s'applique qu'aux graphes sans circuit
 */
 graphe * ForetPCC(graphe * g)
@@ -2765,7 +2765,7 @@ graphe * ForetPCC(graphe * g)
 #define F_NAME "ForetPCC"
 {
   int32_t x, y, miny, i, r, rmax, cumul, n = g->nsom;
-  int32_t * T;   // pour les sommets triés
+  int32_t * T;   // pour les sommets triÃ©s
   int32_t * H;   // histogramme des rangs
   graphe * g_1 = Symetrique(g);
   graphe * foret = InitGraphe(n, n-1); // pour le resultat
@@ -2795,7 +2795,7 @@ graphe * ForetPCC(graphe * g)
   for (x = 0; x < n; x++) H[(int32_t)g->v_sommets[x]]++; // calcule l'histo
   cumul = H[0];
   H[0] = 0;
-  for (i = 1; i <= rmax; i++) // calcule l'histo cumulé
+  for (i = 1; i <= rmax; i++) // calcule l'histo cumulÃ©
   {
     x = H[i];
     H[i] = cumul;
@@ -2829,7 +2829,7 @@ graphe * ForetPCC(graphe * g)
       minv = p->v_arc + g->v_sommets[miny];
       p = p->next; 
       for (; p != NULL; p = p->next)
-      { /* pour tout y prédécesseur de x */
+      { /* pour tout y prÃ©dÃ©cesseur de x */
 	y = p->som;
 	tmp = p->v_arc + g->v_sommets[y];
 	if (tmp < minv) { minv = tmp; miny = y; }
@@ -2846,11 +2846,11 @@ graphe * ForetPCC(graphe * g)
 
 /* ====================================================================== */
 /*! \fn graphe * ForetPCC_PoidsEntiers(graphe * g)
-    \param g (entrée) : un graphe pondéré, représenté par son application successeurs,
-            et dont les sommets ont été valués par la distance à une source
-    \return une forêt de plus courts chemins relatifs aux sources de g
-    \brief retourne une forêt de plus courts chemins relatifs aux sources de g
-    \warning convient seulement aux pondérations entières 
+    \param g (entrÃ©e) : un graphe pondÃ©rÃ©, reprÃ©sentÃ© par son application successeurs,
+            et dont les sommets ont Ã©tÃ© valuÃ©s par la distance Ã  une source
+    \return une forÃªt de plus courts chemins relatifs aux sources de g
+    \brief retourne une forÃªt de plus courts chemins relatifs aux sources de g
+    \warning convient seulement aux pondÃ©rations entiÃ¨res 
 */
 graphe * ForetPCC_PoidsEntiers(graphe * g)
 /* ====================================================================== */
@@ -2901,8 +2901,8 @@ static TYP_VSOM IntegreForet_Aux(graphe * g, graphe * g_1, int32_t s)
 
 /* ====================================================================== */
 /*! \fn void IntegreForet(graphe * g)
-    \param g (entrée) : un graphe (forêt) orienté et pondéré, représenté par son application successeurs, et dont les sommets sont valués
-    \brief pour chaque sommet x, la nouvelle pondération est la somme des pondérations des ancêtres de x dans la forêt valuée d'origine
+    \param g (entrÃ©e) : un graphe (forÃªt) orientÃ© et pondÃ©rÃ©, reprÃ©sentÃ© par son application successeurs, et dont les sommets sont valuÃ©s
+    \brief pour chaque sommet x, la nouvelle pondÃ©ration est la somme des pondÃ©rations des ancÃªtres de x dans la forÃªt valuÃ©e d'origine
 */
 void IntegreForet(graphe * g)
 /* ====================================================================== */
@@ -2927,9 +2927,9 @@ void IntegreForet(graphe * g)
 
 /* ====================================================================== */
 /*! \fn void AfficheEnsemble(boolean *s, int32_t n)
-    \brief affiche à l'écran l'ensemble representé par le tableau de booléens s.
-    \param s (entrée) : un tableau de valeurs booléennes.
-    \param n (entrée) : la taille du tableau. 
+    \brief affiche Ã  l'Ã©cran l'ensemble representÃ© par le tableau de boolÃ©ens s.
+    \param s (entrÃ©e) : un tableau de valeurs boolÃ©ennes.
+    \param n (entrÃ©e) : la taille du tableau. 
 */
 void AfficheEnsemble(boolean *s, int32_t n)
 /* ====================================================================== */
@@ -2941,7 +2941,7 @@ void AfficheEnsemble(boolean *s, int32_t n)
 
 /* ====================================================================== */
 /*! \fn void AfficheListe(pcell p) 
-    \param p (entrée) : une liste chaînee de successeurs.
+    \param p (entrÃ©e) : une liste chaÃ®nee de successeurs.
     \brief affiche le contenu de la liste p. */
 void AfficheListe(pcell p) 
 /* ====================================================================== */
@@ -2952,8 +2952,8 @@ void AfficheListe(pcell p)
 
 /* ====================================================================== */
 /*! \fn void AfficheSuccesseurs(graphe * g) 
-    \param   g (entrée) : un graphe.
-    \brief affiche le graphe dans sa représentation "listes de successeurs". 
+    \param   g (entrÃ©e) : un graphe.
+    \brief affiche le graphe dans sa reprÃ©sentation "listes de successeurs". 
 */
 void AfficheSuccesseurs(graphe * g) 
 /* ====================================================================== */
@@ -2976,8 +2976,8 @@ void AfficheSuccesseurs(graphe * g)
 
 /* ====================================================================== */
 /*! \fn void AfficheArcs(graphe * g)
-    \param   g (entrée) : un graphe.
-    \brief affiche le graphe dans sa représentation "listes d'arcs". 
+    \param   g (entrÃ©e) : un graphe.
+    \brief affiche le graphe dans sa reprÃ©sentation "listes d'arcs". 
 */
 void AfficheArcs(graphe * g)
 /* ====================================================================== */
@@ -3003,8 +3003,8 @@ void AfficheArcs(graphe * g)
 
 /* ====================================================================== */
 /*! \fn void AfficheValeursSommets(graphe * g)
-    \param   g (entrée) : un graphe.
-    \brief affiche les valeurs associées aux sommets. 
+    \param   g (entrÃ©e) : un graphe.
+    \brief affiche les valeurs associÃ©es aux sommets. 
 */
 void AfficheValeursSommets(graphe * g)
 /* ====================================================================== */
@@ -3031,12 +3031,12 @@ void AfficheValeursSommets(graphe * g)
 
 /* ====================================================================== */
 /*! \fn void PSGraphe(graphe * g, char *filename, double r, double t, double marge) 
-    \param g (entrée) : un graphe.
-    \param filename (entrée) : nom du fichier postscript à générer.
-    \param r (entrée) : rayon des cercles qui représentent les sommets (0 pour ne pas les dessiner).
-    \param t (entrée) : taille (demi-longueur) des flèches pour les arcs (0 pour ne pas les dessiner).
-    \param marge (entrée) : marge en x et en y.
-    \brief génère une figure PostScript d'après la représentation "successeurs" du graphe g. 
+    \param g (entrÃ©e) : un graphe.
+    \param filename (entrÃ©e) : nom du fichier postscript Ã  gÃ©nÃ©rer.
+    \param r (entrÃ©e) : rayon des cercles qui reprÃ©sentent les sommets (0 pour ne pas les dessiner).
+    \param t (entrÃ©e) : taille (demi-longueur) des flÃ¨ches pour les arcs (0 pour ne pas les dessiner).
+    \param marge (entrÃ©e) : marge en x et en y.
+    \brief gÃ©nÃ¨re une figure PostScript d'aprÃ¨s la reprÃ©sentation "successeurs" du graphe g. 
 */
 void PSGraphe(graphe * g, const char *filename, double r, double t, double marge) 
 /* ====================================================================== */
@@ -3130,17 +3130,17 @@ void PSGraphe(graphe * g, const char *filename, double r, double t, double marge
 
 /* ====================================================================== */
 /*! \fn void EPSGraphe(graphe * g, char *filename, double s, double r, double t, double marge, int32_t noms_sommets, int32_t v_sommets, int32_t col_sommets, int32_t v_arcs ) 
-    \param g (entrée) : un graphe.
-    \param filename (entrée) : nom du fichier postscript à générer.
-    \param s (entrée) : facteur d'échelle à appliquer aux coordonnées des sommets. 
-    \param r (entrée) : rayon des cercles qui représentent les sommets (0 pour ne pas les dessiner).
-    \param t (entrée) : taille (demi-longueur) des flèches pour les arcs (0 pour ne pas les dessiner).
-    \param marge (entrée) : marge en x et en y.
-    \param noms_sommets (entrée) : booléen indiquant s'il faut écrire les noms des sommets.
-    \param v_sommets (entrée) : booléen indiquant s'il faut écrire les valeurs des sommets.
-    \param col_sommets (entrée) : booléen indiquant s'il faut colorier les sommets.
-    \param v_arcs (entrée) : booléen indiquant s'il faut écrire les valeurs des arcs.
-    \brief génère une figure PostScript d'après la représentation "successeurs" du graphe g. 
+    \param g (entrÃ©e) : un graphe.
+    \param filename (entrÃ©e) : nom du fichier postscript Ã  gÃ©nÃ©rer.
+    \param s (entrÃ©e) : facteur d'Ã©chelle Ã  appliquer aux coordonnÃ©es des sommets. 
+    \param r (entrÃ©e) : rayon des cercles qui reprÃ©sentent les sommets (0 pour ne pas les dessiner).
+    \param t (entrÃ©e) : taille (demi-longueur) des flÃ¨ches pour les arcs (0 pour ne pas les dessiner).
+    \param marge (entrÃ©e) : marge en x et en y.
+    \param noms_sommets (entrÃ©e) : boolÃ©en indiquant s'il faut Ã©crire les noms des sommets.
+    \param v_sommets (entrÃ©e) : boolÃ©en indiquant s'il faut Ã©crire les valeurs des sommets.
+    \param col_sommets (entrÃ©e) : boolÃ©en indiquant s'il faut colorier les sommets.
+    \param v_arcs (entrÃ©e) : boolÃ©en indiquant s'il faut Ã©crire les valeurs des arcs.
+    \brief gÃ©nÃ¨re une figure PostScript d'aprÃ¨s la reprÃ©sentation "successeurs" du graphe g. 
 */
 void EPSGraphe(graphe * g, const char *filename, double s, double r, double t, double marge, int32_t noms_sommets, int32_t v_sommets, int32_t col_sommets, int32_t v_arcs) 
 /* ====================================================================== */
@@ -3281,9 +3281,9 @@ void EPSGraphe(graphe * g, const char *filename, double s, double r, double t, d
 
 /* ====================================================================== */
 /*! \fn void ldrawgraph(graphe * g, xvimage *image) 
-    \param g (entrée) : un graphe.
-    \param image (entrée) : image dans laquelle dessiner le graphe
-    \brief dessine le graphe g dans image d'après la représentation "successeurs" du graphe g. 
+    \param g (entrÃ©e) : un graphe.
+    \param image (entrÃ©e) : image dans laquelle dessiner le graphe
+    \brief dessine le graphe g dans image d'aprÃ¨s la reprÃ©sentation "successeurs" du graphe g. 
 */
 void ldrawgraph(graphe * g, xvimage *image) 
 /* ====================================================================== */

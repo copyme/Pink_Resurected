@@ -369,8 +369,8 @@ int32_t ldrawline2(struct xvimage * image1)
 void ldrawfilledellipse(struct xvimage * image, double R, double S, double T, double U, double V, double Z)
 /* =============================================================== */
 /*
-    \param image (entrée/sortie) : l'image où dessiner l'ellipse 
-    \param R,S,T,U,V,Z (entrée) : parametres de l'équation de l'ellipse (Rxx + Syy + 2Txy + 2Ux + 2Vy + Z = 0)
+    \param image (entrÃ©e/sortie) : l'image oÃ¹ dessiner l'ellipse 
+    \param R,S,T,U,V,Z (entrÃ©e) : parametres de l'Ã©quation de l'ellipse (Rxx + Syy + 2Txy + 2Ux + 2Vy + Z = 0)
 */
 #undef F_NAME
 #define F_NAME "ldrawfilledellipse"
@@ -427,13 +427,13 @@ void ldrawcubic1(struct xvimage * image1, double *x, double *y, int32_t nseg, do
 void ldrawcubic2(struct xvimage * image1, double *x, double *y, int32_t nseg, double tmin, double tmax)
 /* ==================================== */
 /*! \fn void ldrawcubic2(struct xvimage * image1, double *x, double *y, int32_t nseg, double tmin, double tmax)
-    \param image1 (entrée/sortie) : image où dessiner le résutat
-    \param x (entrée) : coefficients 0, 1, 2, 3 du polynome des abcisses
-    \param y (entrée) : coefficients 0, 1, 2, 3 du polynome des ordonnées
-    \param nseg (entrée) : nombre de pas de discrétisation
-    \param tmin, tmax (entrée) : valeurs min et max du paramètre des polynomes
+    \param image1 (entrÃ©e/sortie) : image oÃ¹ dessiner le rÃ©sutat
+    \param x (entrÃ©e) : coefficients 0, 1, 2, 3 du polynome des abcisses
+    \param y (entrÃ©e) : coefficients 0, 1, 2, 3 du polynome des ordonnÃ©es
+    \param nseg (entrÃ©e) : nombre de pas de discrÃ©tisation
+    \param tmin, tmax (entrÃ©e) : valeurs min et max du paramÃ¨tre des polynomes
     \brief draws a cubic line segment 
-    \warning le résultat n'est pas forcément une courbe discrète
+    \warning le rÃ©sultat n'est pas forcÃ©ment une courbe discrÃ¨te
 */
 #undef F_NAME
 #define F_NAME "ldrawcubic2"
@@ -463,16 +463,16 @@ printf("ldrawline %d %d ; %d %d\n", x1, y1, x2, y2);
 void ldrawcubic2list(int32_t *lx, int32_t *ly, int32_t *npoints, double *x, double *y, int32_t nseg, double tmin, double tmax)
 /* ==================================== */
 /*! \fn void ldrawcubic2list(int32_t *lx, int32_t *ly, int32_t *npoints, double *x, double *y, int32_t nseg, double tmin, double tmax)
-    \param lx (sortie) : liste des abcisses des points dessinés
-    \param ly (sortie) : liste des ordonnées des points dessinés
-    \param npoints (entrée) : taille des tableaux lx, ly ; (sortie) : nombre de points dessinés
-    \param x (entrée) : coefficients 0, 1, 2, 3 du polynome des abcisses
-    \param y (entrée) : coefficients 0, 1, 2, 3 du polynome des ordonnées
-    \param nseg (entrée) : nombre de pas de discrétisation
-    \param tmin, tmax (entrée) : valeurs min et max du paramètre des polynomes
+    \param lx (sortie) : liste des abcisses des points dessinÃ©s
+    \param ly (sortie) : liste des ordonnÃ©es des points dessinÃ©s
+    \param npoints (entrÃ©e) : taille des tableaux lx, ly ; (sortie) : nombre de points dessinÃ©s
+    \param x (entrÃ©e) : coefficients 0, 1, 2, 3 du polynome des abcisses
+    \param y (entrÃ©e) : coefficients 0, 1, 2, 3 du polynome des ordonnÃ©es
+    \param nseg (entrÃ©e) : nombre de pas de discrÃ©tisation
+    \param tmin, tmax (entrÃ©e) : valeurs min et max du paramÃ¨tre des polynomes
     \brief draws a cubic line segment 
-    \warning les tableaux lx, ly doivent avoir été alloués
-    \warning le résultat n'est pas forcément une courbe discrète
+    \warning les tableaux lx, ly doivent avoir Ã©tÃ© allouÃ©s
+    \warning le rÃ©sultat n'est pas forcÃ©ment une courbe discrÃ¨te
 */
 #undef F_NAME
 #define F_NAME "ldrawcubic2list"
@@ -511,14 +511,14 @@ printf("ldrawlinelist %d %d ; %d %d ; np=%d\n", x1, y1, x2, y2, np);
 void ldrawcubic3d(struct xvimage * image1, double *x, double *y, double *z, int32_t nseg, double tmin, double tmax)
 /* ==================================== */
 /*! \fn void ldrawcubic3d(struct xvimage * image1, double *x, double *y, double *z, int32_t nseg, double tmin, double tmax)
-    \param image1 (entrée/sortie) : image où dessiner le résutat
-    \param x (entrée) : coefficients 0, 1, 2, 3 du polynome des abcisses
-    \param y (entrée) : coefficients 0, 1, 2, 3 du polynome des ordonnées
-    \param z (entrée) : coefficients 0, 1, 2, 3 du polynome des cotes
-    \param nseg (entrée) : nombre de pas de discrétisation
-    \param tmin, tmax (entrée) : valeurs min et max du paramètre des polynomes
+    \param image1 (entrÃ©e/sortie) : image oÃ¹ dessiner le rÃ©sutat
+    \param x (entrÃ©e) : coefficients 0, 1, 2, 3 du polynome des abcisses
+    \param y (entrÃ©e) : coefficients 0, 1, 2, 3 du polynome des ordonnÃ©es
+    \param z (entrÃ©e) : coefficients 0, 1, 2, 3 du polynome des cotes
+    \param nseg (entrÃ©e) : nombre de pas de discrÃ©tisation
+    \param tmin, tmax (entrÃ©e) : valeurs min et max du paramÃ¨tre des polynomes
     \brief draws a cubic line segment 
-    \warning le résultat n'est pas forcément une courbe discrète
+    \warning le rÃ©sultat n'est pas forcÃ©ment une courbe discrÃ¨te
 */
 #undef F_NAME
 #define F_NAME "ldrawcubic3d"
@@ -558,14 +558,14 @@ void ldrawcubic3d(struct xvimage * image1, double *x, double *y, double *z, int3
 void ldrawcubic3d_val(struct xvimage * image1, double *x, double *y, double *z, int32_t nseg, double tmin, double tmax, uint8_t v)
 /* ==================================== */
 /*! \fn void ldrawcubic3d_val(struct xvimage * image1, double *x, double *y, double *z, int32_t nseg, double tmin, double tmax, uint8_t v)
-    \param image1 (entrée/sortie) : image où dessiner le résutat
-    \param x (entrée) : coefficients 0, 1, 2, 3 du polynome des abcisses
-    \param y (entrée) : coefficients 0, 1, 2, 3 du polynome des ordonnées
-    \param z (entrée) : coefficients 0, 1, 2, 3 du polynome des cotes
-    \param nseg (entrée) : nombre de pas de discrétisation
-    \param tmin, tmax (entrée) : valeurs min et max du paramètre des polynomes
+    \param image1 (entrÃ©e/sortie) : image oÃ¹ dessiner le rÃ©sutat
+    \param x (entrÃ©e) : coefficients 0, 1, 2, 3 du polynome des abcisses
+    \param y (entrÃ©e) : coefficients 0, 1, 2, 3 du polynome des ordonnÃ©es
+    \param z (entrÃ©e) : coefficients 0, 1, 2, 3 du polynome des cotes
+    \param nseg (entrÃ©e) : nombre de pas de discrÃ©tisation
+    \param tmin, tmax (entrÃ©e) : valeurs min et max du paramÃ¨tre des polynomes
     \brief draws a cubic line segment 
-    \warning le résultat n'est pas forcément une courbe discrète
+    \warning le rÃ©sultat n'est pas forcÃ©ment une courbe discrÃ¨te
 */
 #undef F_NAME
 #define F_NAME "ldrawcubic3d_val"
@@ -598,19 +598,19 @@ void ldrawcubic3d_val(struct xvimage * image1, double *x, double *y, double *z, 
 void ldrawcubic3dlist(int32_t *lx, int32_t *ly, int32_t *lz, int32_t *npoints, double *x, double *y, double *z, int32_t nseg, double tmin, double tmax)
 /* ==================================== */
 /*! \fn void ldrawcubic3dlist(int32_t *lx, int32_t *ly, int32_t *lz, int32_t *npoints, double *x, double *y, double *z, int32_t nseg, double tmin, double tmax)
-    \param lx (sortie) : liste des abcisses des points dessinés
-    \param ly (sortie) : liste des ordonnées des points dessinés
-    \param lz (sortie) : liste des ordonnées des points dessinés
-    \param npoints (entrée) : taille des tableaux lx, ly, lz ; (sortie) : nombre de points dessinés
-    \param x (entrée) : coefficients 0, 1, 2, 3 du polynome des abcisses
-    \param y (entrée) : coefficients 0, 1, 2, 3 du polynome des ordonnées
-    \param z (entrée) : coefficients 0, 1, 2, 3 du polynome des cotes
-    \param nseg (entrée) : nombre de pas de discrétisation
-    \param tmin, tmax (entrée) : valeurs min et max du paramètre des polynomes
+    \param lx (sortie) : liste des abcisses des points dessinÃ©s
+    \param ly (sortie) : liste des ordonnÃ©es des points dessinÃ©s
+    \param lz (sortie) : liste des ordonnÃ©es des points dessinÃ©s
+    \param npoints (entrÃ©e) : taille des tableaux lx, ly, lz ; (sortie) : nombre de points dessinÃ©s
+    \param x (entrÃ©e) : coefficients 0, 1, 2, 3 du polynome des abcisses
+    \param y (entrÃ©e) : coefficients 0, 1, 2, 3 du polynome des ordonnÃ©es
+    \param z (entrÃ©e) : coefficients 0, 1, 2, 3 du polynome des cotes
+    \param nseg (entrÃ©e) : nombre de pas de discrÃ©tisation
+    \param tmin, tmax (entrÃ©e) : valeurs min et max du paramÃ¨tre des polynomes
     \brief draws a cubic line segment 
-    \warning les tableaux lx, ly, lz doivent avoir été alloués
-    \warning le résultat n'est pas forcément une courbe discrète
-    \warning certains points peuvent être dupliqués
+    \warning les tableaux lx, ly, lz doivent avoir Ã©tÃ© allouÃ©s
+    \warning le rÃ©sultat n'est pas forcÃ©ment une courbe discrÃ¨te
+    \warning certains points peuvent Ãªtre dupliquÃ©s
 */
 #undef F_NAME
 #define F_NAME "ldrawcubic3dlist"
@@ -728,7 +728,7 @@ void ldrawtangents3d(
 
 /* ==================================== */
 void ldrawdirtangents3dlist(
-			    double *Vx, double *Vy, double *Vz, // liste de nseg+1 vecteurs (résultat)
+			    double *Vx, double *Vy, double *Vz, // liste de nseg+1 vecteurs (rÃ©sultat)
 			    double *x, double *y, double *z, // trois polynomes de degre 3 
 			    int32_t nseg,                    // nombre de segments pour la discretisation 
 			    double tmin, double tmax)        // bornes pour le coeff. des polynomes
@@ -973,12 +973,12 @@ int isincylinder(
 /* ==================================== */
 #undef F_NAME
 #define F_NAME  "isincylinder"
-//retourne 1 si le point M (exprimé dans la base d'origine) est bien contenu dans le cylindre de parametres e (hauteur) et r (rayon) et de centre A (coordonnees de A exprimés dans la base d'origine)
+//retourne 1 si le point M (exprimÃ© dans la base d'origine) est bien contenu dans le cylindre de parametres e (hauteur) et r (rayon) et de centre A (coordonnees de A exprimÃ©s dans la base d'origine)
 //et 0 sinon
-//Note: P matrice de passage telle que: (point exprimé dans la base d'origine) = (point exprimé dans la nouvelle base)* P
+//Note: P matrice de passage telle que: (point exprimÃ© dans la base d'origine) = (point exprimÃ© dans la nouvelle base)* P
 {
   double u[3], v[3], w[3]; //les vecteurs de la nouvelle base
-  double ub[3], vb[3], wb[3]; //les vecteurs exprimés dans la base d'origine
+  double ub[3], vb[3], wb[3]; //les vecteurs exprimÃ©s dans la base d'origine
   u[0]=1; u[1]=0; u[2]=0;
   v[0]=0; v[1]=1; v[2]=0;
   w[0]=0; w[1]=0; w[2]=1;
@@ -987,7 +987,7 @@ int isincylinder(
   lin_mult(P, v, vb, 3, 3, 1);
   lin_mult(P, w, wb, 3, 3, 1);
   
-  //les vars qui suivent sont les coefficients obtenus en faisant les produits scalaires sur les différents axes
+  //les vars qui suivent sont les coefficients obtenus en faisant les produits scalaires sur les diffÃ©rents axes
 
   double cz,cy,cx;	
   cz = (xM-xA)*wb[0]+(yM-yA)*wb[1]+(zM-zA)*wb[2];

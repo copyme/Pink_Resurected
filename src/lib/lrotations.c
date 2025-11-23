@@ -724,12 +724,12 @@ of information occurs.
 int32_t laffinetransformation(struct xvimage * image, double hx, double hy, double theta, double tx, double ty, struct xvimage * image2)
 /* ==================================== */
 /*
-Composée (dans cet ordre) d'une  homothétie dans les directions x,y 
+ComposÃ©e (dans cet ordre) d'une  homothÃ©tie dans les directions x,y 
 de facteurs (hx, hy), d'une rotation d'angle theta autour du point 0,0
 et d'une translation de vecteur (tx, ty).
-Méthode: interpolation.
-Le résultat (image2) doit être alloué et de même taille que image.
-L'angle est exprimé en radians. 
+MÃ©thode: interpolation.
+Le rÃ©sultat (image2) doit Ãªtre allouÃ© et de mÃªme taille que image.
+L'angle est exprimÃ© en radians. 
 */
 #undef F_NAME
 #define F_NAME "laffinetransformation"

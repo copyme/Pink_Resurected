@@ -162,8 +162,8 @@ int main(int argc, char **argv)
   // longueur demi-grand axe et demi-petit axe
   fprintf(fd, "%g %g\n", dist2(x0, y0, xa, ya), dist2(x0, y0, xb, yb));
 
-  // calcule la matrice N de changement de base pour exprimer les points d'entrée 
-  // dans le repère lié à l'ellipse
+  // calcule la matrice N de changement de base pour exprimer les points d'entrÃ©e 
+  // dans le repÃ¨re liÃ© Ã  l'ellipse
   {
     double M[4], N[4], P[2], Q[2];
     M[0] = xa-x0; M[1] = ya-y0; M[2] = xb-x0; M[3] = yb-y0;
@@ -172,7 +172,7 @@ int main(int argc, char **argv)
       fprintf(stderr, "%s: lin_inverseLUP failed\n", argv[0]);
       exit(1);
     }
-    //passe les points dans le nouveau repère
+    //passe les points dans le nouveau repÃ¨re
     for (i = 0; i < n; i++)
     {
       P[0] = x[i]-x0; P[1] = y[i]-y0;
@@ -180,7 +180,7 @@ int main(int argc, char **argv)
       x[i] = Q[0]; y[i] = Q[1];
     }
   }
-  // calcule le rayon moyen par quandrant dans le nouveau repère (cas idéal : 1)
+  // calcule le rayon moyen par quandrant dans le nouveau repÃ¨re (cas idÃ©al : 1)
   {
     double r1, r2, r3, r4;
     int n1, n2, n3, n4;

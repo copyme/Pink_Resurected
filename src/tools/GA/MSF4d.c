@@ -92,8 +92,8 @@ int main(int32_t argc, char **argv)
   struct GA4d * ga;
   struct xvimage4D * marqueurs;
 
-  /* A priori il n'y a (quasi?) rien à modifier pour passer à des
-     marqueurs codés en uint32_t */
+  /* A priori il n'y a (quasi?) rien Ã  modifier pour passer Ã  des
+     marqueurs codÃ©s en uint32_t */
 
   if ((argc != 7))
   {
@@ -116,7 +116,7 @@ int main(int32_t argc, char **argv)
     fprintf(stderr, "%s: MSF4d failed\n", argv[0]);
     exit(1);
   }
-  printf("Calcule de la MSE effectué \n");
+  printf("Calcule de la MSE effectuÃ© \n");
   /* Il faut surement tester la valeur de retour de writeimage() */
   if(atoi(argv[3]) == 0)
     writeGA4d(ga,argv[4]); 

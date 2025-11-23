@@ -76,9 +76,9 @@ conventions :
 double * lin_duplicate(double *A, int32_t n, int32_t m)
 /* ==================================== */
 /*! \fn double * lin_duplicate(double *A, int32_t n, int32_t m)
-    \param mat (entrée) : pointeur sur le tableau des donnees
-    \param n (entrée) : nombre de lignes
-    \param m (entrée) : nombre de colonnes
+    \param mat (entrÃ©e) : pointeur sur le tableau des donnees
+    \param n (entrÃ©e) : nombre de lignes
+    \param m (entrÃ©e) : nombre de colonnes
     \return matrice
     \brief retourne une copie de la matrice \b A
 */
@@ -100,10 +100,10 @@ double * lin_duplicate(double *A, int32_t n, int32_t m)
 double * lin_zeros(int32_t n, int32_t m)
 /* ==================================== */
 /*! \fn double * lin_zeros(double * mat, int32_t n, int32_t m)
-    \param n (entrée) : nombre de lignes
-    \param m (entrée) : nombre de colonnes
+    \param n (entrÃ©e) : nombre de lignes
+    \param m (entrÃ©e) : nombre de colonnes
     \return matrice
-    \brief retourne une matrice dont tous les éléments sont a 0.0
+    \brief retourne une matrice dont tous les Ã©lÃ©ments sont a 0.0
 */
 #undef F_NAME
 #define F_NAME "lin_zeros"
@@ -123,10 +123,10 @@ double * lin_zeros(int32_t n, int32_t m)
 double * lin_ones(int32_t n, int32_t m)
 /* ==================================== */
 /*! \fn double * lin_ones(double * mat, int32_t n, int32_t m)
-    \param n (entrée) : nombre de lignes
-    \param m (entrée) : nombre de colonnes
+    \param n (entrÃ©e) : nombre de lignes
+    \param m (entrÃ©e) : nombre de colonnes
     \return matrice
-    \brief retourne une matrice dont tous les éléments sont a 1.0
+    \brief retourne une matrice dont tous les Ã©lÃ©ments sont a 1.0
 */
 #undef F_NAME
 #define F_NAME "lin_ones"
@@ -146,9 +146,9 @@ double * lin_ones(int32_t n, int32_t m)
 void lin_printmat(double * mat, int32_t n, int32_t m)
 /* ==================================== */
 /*! \fn void lin_printmat(double * mat, int32_t n, int32_t m)
-    \param mat (entrée) : pointeur sur le tableau des donnees
-    \param n (entrée) : nombre de lignes
-    \param m (entrée) : nombre de colonnes
+    \param mat (entrÃ©e) : pointeur sur le tableau des donnees
+    \param n (entrÃ©e) : nombre de lignes
+    \param m (entrÃ©e) : nombre de colonnes
     \brief affichage matrice \b n x \b m
 */
 {
@@ -166,11 +166,11 @@ void lin_printmat(double * mat, int32_t n, int32_t m)
 double lin_min(double * mat, int32_t n, int32_t m)
 /* ==================================== */
 /*! \fn double lin_min(double * mat, int32_t n, int32_t m)
-    \param mat (entrée) : pointeur sur le tableau des donnees
-    \param n (entrée) : nombre de lignes
-    \param m (entrée) : nombre de colonnes
-    \return élément minimal de \b mat
-    \brief retourne l'élément minimal de \b mat
+    \param mat (entrÃ©e) : pointeur sur le tableau des donnees
+    \param n (entrÃ©e) : nombre de lignes
+    \param m (entrÃ©e) : nombre de colonnes
+    \return Ã©lÃ©ment minimal de \b mat
+    \brief retourne l'Ã©lÃ©ment minimal de \b mat
 */
 {
   int32_t i; double min = mat[0];
@@ -183,11 +183,11 @@ double lin_min(double * mat, int32_t n, int32_t m)
 double lin_max(double * mat, int32_t n, int32_t m)
 /* ==================================== */
 /*! \fn double lin_max(double * mat, int32_t n, int32_t m)
-    \param mat (entrée) : pointeur sur le tableau des donnees
-    \param n (entrée) : nombre de lignes
-    \param m (entrée) : nombre de colonnes
-    \return élément maximal de \b mat
-    \brief retourne l'élément maximal de \b mat
+    \param mat (entrÃ©e) : pointeur sur le tableau des donnees
+    \param n (entrÃ©e) : nombre de lignes
+    \param m (entrÃ©e) : nombre de colonnes
+    \return Ã©lÃ©ment maximal de \b mat
+    \brief retourne l'Ã©lÃ©ment maximal de \b mat
 */
 {
   int32_t i; double max = mat[0];
@@ -200,11 +200,11 @@ double lin_max(double * mat, int32_t n, int32_t m)
 double lin_sum(double * mat, int32_t n, int32_t m)
 /* ==================================== */
 /*! \fn double lin_sum(double * mat, int32_t n, int32_t m)
-    \param mat (entrée) : pointeur sur le tableau des donnees
-    \param n (entrée) : nombre de lignes
-    \param m (entrée) : nombre de colonnes
-    \return somme des éléments de \b mat
-    \brief retourne la somme des éléments de \b mat
+    \param mat (entrÃ©e) : pointeur sur le tableau des donnees
+    \param n (entrÃ©e) : nombre de lignes
+    \param m (entrÃ©e) : nombre de colonnes
+    \return somme des Ã©lÃ©ments de \b mat
+    \brief retourne la somme des Ã©lÃ©ments de \b mat
 */
 {
   int32_t i; double sum = 0.0;
@@ -216,11 +216,11 @@ double lin_sum(double * mat, int32_t n, int32_t m)
 double lin_norme2(double * mat, int32_t n, int32_t m)
 /* ==================================== */
 /*! \fn double lin_norme2(double * mat, int32_t n, int32_t m)
-    \param mat (entrée) : pointeur sur le tableau des donnees
-    \param n (entrée) : nombre de lignes
-    \param m (entrée) : nombre de colonnes
-    \return norme2 des éléments de \b mat
-    \brief retourne la racine carrée de la somme des carrés des éléments de \b mat
+    \param mat (entrÃ©e) : pointeur sur le tableau des donnees
+    \param n (entrÃ©e) : nombre de lignes
+    \param m (entrÃ©e) : nombre de colonnes
+    \return norme2 des Ã©lÃ©ments de \b mat
+    \brief retourne la racine carrÃ©e de la somme des carrÃ©s des Ã©lÃ©ments de \b mat
 */
 {
   int32_t i; double sum = 0.0;
@@ -232,10 +232,10 @@ double lin_norme2(double * mat, int32_t n, int32_t m)
 double lin_normevec2(double * vec, int32_t n)
 /* ==================================== */
 /*! \fn double lin_normevec2(double * mat, int32_t n)
-    \param vec (entrée) : pointeur sur le tableau des donnees
-    \param n (entrée) : taille vecteur
-    \return norme2 des éléments de \b vec
-    \brief retourne la racine carrée de la somme des carrés des éléments de \b vec
+    \param vec (entrÃ©e) : pointeur sur le tableau des donnees
+    \param n (entrÃ©e) : taille vecteur
+    \return norme2 des Ã©lÃ©ments de \b vec
+    \brief retourne la racine carrÃ©e de la somme des carrÃ©s des Ã©lÃ©ments de \b vec
 */
 {
   int32_t i; double sum = 0.0;
@@ -247,9 +247,9 @@ double lin_normevec2(double * vec, int32_t n)
 void lin_transpose(double * mat, int32_t n)
 /* ==================================== */
 /*! \fn void lin_transpose(double * mat, int32_t n)
-    \param mat (entrée) : pointeur sur le tableau des donnees
-    \param n (entrée) : nombre de lignes et de colonnes
-    \brief transpose la matrice carrée \b mat (sur place)
+    \param mat (entrÃ©e) : pointeur sur le tableau des donnees
+    \param n (entrÃ©e) : nombre de lignes et de colonnes
+    \brief transpose la matrice carrÃ©e \b mat (sur place)
 */
 {
   int32_t i, j; double t;
@@ -266,12 +266,12 @@ void lin_transpose(double * mat, int32_t n)
 void lin_copy(double * dest, double * source, int32_t n, int32_t m)
 /* ==================================== */
 /*! \fn lin_copy(double * dest, double * source, int32_t n, int32_t m)
-    \param dest (sortie) : résultat de la copie
-    \param source (entrée) : matrice à copier
-    \param n (entrée) : nombre de lignes
-    \param m (entrée) : nombre de colonnes
+    \param dest (sortie) : rÃ©sultat de la copie
+    \param source (entrÃ©e) : matrice Ã  copier
+    \param n (entrÃ©e) : nombre de lignes
+    \param m (entrÃ©e) : nombre de colonnes
     \brief copie la matrice source dans \b dest
-    \warning la mémoire pour stocker le résultat \b dest doit avoir été allouée
+    \warning la mÃ©moire pour stocker le rÃ©sultat \b dest doit avoir Ã©tÃ© allouÃ©e
 */
 {
   memcpy(dest, source, n * m * sizeof(double));
@@ -281,10 +281,10 @@ void lin_copy(double * dest, double * source, int32_t n, int32_t m)
 void lin_multscal(double * A, double r, int32_t n, int32_t m)
 /* ==================================== */
 /*! \fn void lin_multscal(double * A, double r, int32_t n, int32_t m)
-    \param A (entrée/sortie) : matrice
-    \param r (entrée) : scalaire
-    \param n (entrée) : nombre de lignes
-    \param m (entrée) : nombre de colonnes
+    \param A (entrÃ©e/sortie) : matrice
+    \param r (entrÃ©e) : scalaire
+    \param n (entrÃ©e) : nombre de lignes
+    \param m (entrÃ©e) : nombre de colonnes
     \brief multiplication de chaque element de la matrice \b A par le scalaire \b r
 */
 {
@@ -296,11 +296,11 @@ void lin_multscal(double * A, double r, int32_t n, int32_t m)
 void lin_multpoint(double * A, double * B, int32_t n, int32_t m)
 /* ==================================== */
 /*! \fn lin_multpoint(double * A, double * B, int32_t n, int32_t m)
-    \param A (entrée/sortie) : matrice
-    \param B (entrée) : matrice
-    \param n (entrée) : nombre de lignes
-    \param m (entrée) : nombre de colonnes
-    \brief multiplication point à point de \b A par \b B - résultat dans \b A
+    \param A (entrÃ©e/sortie) : matrice
+    \param B (entrÃ©e) : matrice
+    \param n (entrÃ©e) : nombre de lignes
+    \param m (entrÃ©e) : nombre de colonnes
+    \brief multiplication point Ã  point de \b A par \b B - rÃ©sultat dans \b A
 */
 {
   int32_t i;
@@ -311,11 +311,11 @@ void lin_multpoint(double * A, double * B, int32_t n, int32_t m)
 void lin_sub(double * A, double * B, int32_t n, int32_t m)
 /* ==================================== */
 /*! \fn lin_sub(double * A, double * B, int32_t n, int32_t m)
-    \param A (entrée/sortie) : matrice
-    \param B (entrée) : matrice
-    \param n (entrée) : nombre de lignes
-    \param m (entrée) : nombre de colonnes
-    \brief soustraction de \b B à \b A - résultat dans \b A
+    \param A (entrÃ©e/sortie) : matrice
+    \param B (entrÃ©e) : matrice
+    \param n (entrÃ©e) : nombre de lignes
+    \param m (entrÃ©e) : nombre de colonnes
+    \brief soustraction de \b B Ã  \b A - rÃ©sultat dans \b A
 */
 {
   int32_t i;
@@ -326,11 +326,11 @@ void lin_sub(double * A, double * B, int32_t n, int32_t m)
 void lin_add(double * A, double * B, int32_t n, int32_t m)
 /* ==================================== */
 /*! \fn lin_add(double * A, double * B, int32_t n, int32_t m)
-    \param A (entrée/sortie) : matrice
-    \param B (entrée) : matrice
-    \param n (entrée) : nombre de lignes
-    \param m (entrée) : nombre de colonnes
-    \brief addition de \b B à \b A - résultat dans \b A
+    \param A (entrÃ©e/sortie) : matrice
+    \param B (entrÃ©e) : matrice
+    \param n (entrÃ©e) : nombre de lignes
+    \param m (entrÃ©e) : nombre de colonnes
+    \brief addition de \b B Ã  \b A - rÃ©sultat dans \b A
 */
 {
   int32_t i;
@@ -341,14 +341,14 @@ void lin_add(double * A, double * B, int32_t n, int32_t m)
 void lin_mult(double * A, double * B , double * R, int32_t p, int32_t q, int32_t r)
 /* ==================================== */
 /*! \fn void lin_mult(double * A, double B , double * R, int32_t p, int32_t q, int32_t r)
-    \param A (entrée) : opérande gauche
-    \param B (entrée) : opérande droit
-    \param R (sortie) : résultat (taille p x r) 
-    \param p (entrée) : nb de lignes de A
-    \param q (entrée) : nb de colonnes de A = nb de lignes de B
-    \param r (entrée) : nb de colonnes de B
+    \param A (entrÃ©e) : opÃ©rande gauche
+    \param B (entrÃ©e) : opÃ©rande droit
+    \param R (sortie) : rÃ©sultat (taille p x r) 
+    \param p (entrÃ©e) : nb de lignes de A
+    \param q (entrÃ©e) : nb de colonnes de A = nb de lignes de B
+    \param r (entrÃ©e) : nb de colonnes de B
     \brief multiplication matrice \b A (taille \b p x \b q) par matrice \b B (taille \b q x \b r)
-    \warning la mémoire pour stocker le résultat \b R doit avoir été allouée
+    \warning la mÃ©moire pour stocker le rÃ©sultat \b R doit avoir Ã©tÃ© allouÃ©e
 */
 {
   double t;
@@ -367,16 +367,16 @@ void lin_mult(double * A, double * B , double * R, int32_t p, int32_t q, int32_t
 void lin_multAtB(double * A, double * B , double * R, int32_t nA, int32_t mA, int32_t nB, int32_t mB)
 /* ==================================== */
 /*! \fn void lin_multAtB(double * A, double * B , double * R, int32_t nA, int32_t mA, int32_t nB, int32_t mB)
-    \param A (entrée) : opérande gauche
-    \param B (entrée) : opérande droit
-    \param R (sortie) : résultat (taille mA x mB) 
-    \param nA (entrée) : nb de lignes de A
-    \param mA (entrée) : nb de colonnes de A
-    \param nB (entrée) : nb de lignes de B
-    \param mB (entrée) : nb de colonnes de B
-    \brief multiplication de la matrice \b A transposée par matrice \b B
-    \warning la mémoire pour stocker le résultat \b R doit avoir été allouée
-    \warning on doit avoir: \b nA = \b nB (pas de vérification)
+    \param A (entrÃ©e) : opÃ©rande gauche
+    \param B (entrÃ©e) : opÃ©rande droit
+    \param R (sortie) : rÃ©sultat (taille mA x mB) 
+    \param nA (entrÃ©e) : nb de lignes de A
+    \param mA (entrÃ©e) : nb de colonnes de A
+    \param nB (entrÃ©e) : nb de lignes de B
+    \param mB (entrÃ©e) : nb de colonnes de B
+    \brief multiplication de la matrice \b A transposÃ©e par matrice \b B
+    \warning la mÃ©moire pour stocker le rÃ©sultat \b R doit avoir Ã©tÃ© allouÃ©e
+    \warning on doit avoir: \b nA = \b nB (pas de vÃ©rification)
 */
 {
   double t;
@@ -395,10 +395,10 @@ void lin_multAtB(double * A, double * B , double * R, int32_t nA, int32_t mA, in
 void lin_createbase(double *v, double *n1, double *n2)
 /* ==================================== */
 /*! \fn void lin_createbase(double *v, double *n1, double *n2)
-    \param v (entrée) : un vecteur
-    \param n1 (sortie) : un vecteur normal à v
-    \param n2 (sortie) : un vecteur normal à v et à n1
-    \brief crée deux vecteurs n1 et n2 formant une base orthonormée avec v
+    \param v (entrÃ©e) : un vecteur
+    \param n1 (sortie) : un vecteur normal Ã  v
+    \param n2 (sortie) : un vecteur normal Ã  v et Ã  n1
+    \brief crÃ©e deux vecteurs n1 et n2 formant une base orthonormÃ©e avec v
 */
 #undef F_NAME
 #define F_NAME "lin_createbase"
@@ -456,11 +456,11 @@ void lin_createbase(double *v, double *n1, double *n2)
 void lin_3Drotationmatrix(double c, double s, double *u, double *R)
 /* ==================================== */
 /*! \fn double * lin_3Drotationmatrix(double c, double s, double *u, double *R)
-    \param c (entrée) : cosinus de l'angle de rotation
-    \param s (entrée) : sinus de l'angle de rotation
-    \param u (entrée) : vecteur directeur (normé) de l'axe de rotation
+    \param c (entrÃ©e) : cosinus de l'angle de rotation
+    \param s (entrÃ©e) : sinus de l'angle de rotation
+    \param u (entrÃ©e) : vecteur directeur (normÃ©) de l'axe de rotation
     \param R (sortie) : la matrice de rotation 3D
-    \brief calcule la matrice de rotation 3D correspondant à un angle et un axe 
+    \brief calcule la matrice de rotation 3D correspondant Ã  un angle et un axe 
 */
 #undef F_NAME
 #define F_NAME "lin_3Drotationmatrix"
@@ -475,13 +475,13 @@ void lin_3Drotationmatrix(double c, double s, double *u, double *R)
 int32_t lin_decomposition_LUP(double * A, int32_t * pi, int32_t n)
 /* ==================================== */
 /*! \fn int32_t lin_decomposition_LUP(double * A, double * p, int32_t n)
-    \param A (entrée/sortie) : opérande, et résultat (L et U dans la même matrice)
+    \param A (entrÃ©e/sortie) : opÃ©rande, et rÃ©sultat (L et U dans la mÃªme matrice)
     \param pi (sortie) : permutation (sous la forme d'un vecteur d'indices de colonnes)
-    \param n (entrée) : nb de lignes et de colonnes de A
-    \return 0 si la matrice est singulière, 1 sinon
-    \brief décomposition LUP de la matrice carrée A (cf. Cormen & al., "Introduction a l'algorithmique") 
-    \warning la mémoire pour stocker le résultat \b p doit avoir été allouée
-    \warning le contenu de la matrice A est effacé
+    \param n (entrÃ©e) : nb de lignes et de colonnes de A
+    \return 0 si la matrice est singuliÃ¨re, 1 sinon
+    \brief dÃ©composition LUP de la matrice carrÃ©e A (cf. Cormen & al., "Introduction a l'algorithmique") 
+    \warning la mÃ©moire pour stocker le rÃ©sultat \b p doit avoir Ã©tÃ© allouÃ©e
+    \warning le contenu de la matrice A est effacÃ©
 */
 {
   double p, t;
@@ -515,12 +515,12 @@ int32_t lin_decomposition_LUP(double * A, int32_t * pi, int32_t n)
 int32_t lin_decomposition_cholesky(double * a, double * l, int32_t n)
 /* ==================================== */
 /*! \fn int32_t lin_decomposition_cholesky(double * a, int32_t * l, int32_t n)
-    \param a (entrée) : matrice à décomposer (supposée symétrique définie positive) 
-    \param l (sortie) : résultat l (triangulaire inférieure)
-    \param n (entrée) : nb de lignes et de colonnes de A
-    \return 0 si la matrice est non définie positive, 1 sinon
-    \brief décomposition de Cholesky de a, le résultat l est tel que l * l' = a
-    \warning la mémoire pour stocker le résultat \b l doit avoir été allouée
+    \param a (entrÃ©e) : matrice Ã  dÃ©composer (supposÃ©e symÃ©trique dÃ©finie positive) 
+    \param l (sortie) : rÃ©sultat l (triangulaire infÃ©rieure)
+    \param n (entrÃ©e) : nb de lignes et de colonnes de A
+    \return 0 si la matrice est non dÃ©finie positive, 1 sinon
+    \brief dÃ©composition de Cholesky de a, le rÃ©sultat l est tel que l * l' = a
+    \warning la mÃ©moire pour stocker le rÃ©sultat \b l doit avoir Ã©tÃ© allouÃ©e
 */
 {
   int32_t i,j,k;
@@ -571,12 +571,12 @@ int32_t lin_decomposition_cholesky(double * a, double * l, int32_t n)
 int32_t lin_inverse_gauss(double *TB, double *InvB, int32_t N)
 /* ==================================== */
 /*! \fn int32_t lin_inverse_gauss(double *TB, double *InvB, int32_t N)
-    \param TB (entrée) : matrice à inverser (supposée triangulaire inférieure)
-    \param InvB (sortie) : résultat
-    \param N (entrée) : nb de lignes et de colonnes de TB
-    \return 0 si la matrice est singulière, 1 sinon
-    \brief inversion de la matrice TB par la méthode de Gauss-Jordan
-    \warning la mémoire pour stocker le résultat \b InvB doit avoir été allouée
+    \param TB (entrÃ©e) : matrice Ã  inverser (supposÃ©e triangulaire infÃ©rieure)
+    \param InvB (sortie) : rÃ©sultat
+    \param N (entrÃ©e) : nb de lignes et de colonnes de TB
+    \return 0 si la matrice est singuliÃ¨re, 1 sinon
+    \brief inversion de la matrice TB par la mÃ©thode de Gauss-Jordan
+    \warning la mÃ©moire pour stocker le rÃ©sultat \b InvB doit avoir Ã©tÃ© allouÃ©e
 */
 #undef F_NAME
 #define F_NAME "lin_inverse_gauss"
@@ -642,7 +642,7 @@ int32_t lin_inverse_gauss(double *TB, double *InvB, int32_t N)
 	  return 0;
 	}
       }
-      /* Copie le résultat dans la matrice InvB */
+      /* Copie le rÃ©sultat dans la matrice InvB */
       for (k=1,p=0;k<=N;k++,p++)
 	for (j=N+2,q=0;j<=2*N+1;j++,q++)
 	  InvB[p*N+q]=A[k*mA+j];
@@ -661,15 +661,15 @@ void ROTATE(double * a, int32_t i, int32_t j, int32_t k, int32_t l, double tau, 
 int32_t lin_jacobi(double * A, int32_t n, double * D, double * V, int32_t nrot)      
 /* ==================================== */
 /*! \fn void lin_jacobi(double * A, int32_t N, double * D, double * V, int32_t nrot)
-    \param A (entrée) : matrice à traiter
-    \param n (entrée) : nb de lignes et de colonnes de A
+    \param A (entrÃ©e) : matrice Ã  traiter
+    \param n (entrÃ©e) : nb de lignes et de colonnes de A
     \param D (sortie) : valeurs propres
     \param V (sortie) : vecteurs propres
-    \param nrot (entrée) : non utilisé
-    \return 0 si erreur (trop d'itérations), 1 sinon
-    \brief calcul des valeurs et vecteurs propres de a par la méthode de Jacobi
-    \warning la matrice A doit être symétrique
-    \warning la mémoire pour stocker les résultat \b D et \b V doit avoir été allouée
+    \param nrot (entrÃ©e) : non utilisÃ©
+    \return 0 si erreur (trop d'itÃ©rations), 1 sinon
+    \brief calcul des valeurs et vecteurs propres de a par la mÃ©thode de Jacobi
+    \warning la matrice A doit Ãªtre symÃ©trique
+    \warning la mÃ©moire pour stocker les rÃ©sultat \b D et \b V doit avoir Ã©tÃ© allouÃ©e
 */
 {
 	int32_t j, iq, ip, i;
@@ -771,11 +771,11 @@ int32_t lin_jacobi(double * A, int32_t n, double * D, double * V, int32_t nrot)
 void lin_permutmat(int32_t * pi, double * P, int32_t n)
 /* ==================================== */
 /*! \fn void lin_permutmat(double * pi, double * A, int32_t n)
-    \param pi (entrée) : permutation (sous la forme d'un vecteur d'indices de colonnes)
-    \param P (sortie) : matrice de permutation générée, sous forme de tableau n x n
-    \param n (entrée) : nb de lignes et de colonnes de P
+    \param pi (entrÃ©e) : permutation (sous la forme d'un vecteur d'indices de colonnes)
+    \param P (sortie) : matrice de permutation gÃ©nÃ©rÃ©e, sous forme de tableau n x n
+    \param n (entrÃ©e) : nb de lignes et de colonnes de P
     \brief conversion d'une permutation en matrice de permutation
-    \warning la mémoire pour stocker le résultat \b P doit avoir été allouée
+    \warning la mÃ©moire pour stocker le rÃ©sultat \b P doit avoir Ã©tÃ© allouÃ©e
 */
 {
   int32_t i, j;
@@ -789,12 +789,12 @@ void lin_permutmat(int32_t * pi, double * P, int32_t n)
 void lin_LU(double * A, double * L, double * U, int32_t n)
 /* ==================================== */
 /*! \fn void lin_LU(double * A, double * L, double * U, int32_t n)
-    \param A (entrée) : matrice contenant une décomposition LU
-    \param L (sortie) : matrice L, triangulaire inférieure unitaire, extraite de A
-    \param U (sortie) : matrice U, triangulaire supérieure, extraite de A
-    \param n (entrée) : nb de lignes et de colonnes de A
-    \brief extraction des matrices L et U d'une matrice A contenant une décomposition LU
-    \warning la mémoire pour stocker les résultats \b L, \b U doit avoir été allouée
+    \param A (entrÃ©e) : matrice contenant une dÃ©composition LU
+    \param L (sortie) : matrice L, triangulaire infÃ©rieure unitaire, extraite de A
+    \param U (sortie) : matrice U, triangulaire supÃ©rieure, extraite de A
+    \param n (entrÃ©e) : nb de lignes et de colonnes de A
+    \brief extraction des matrices L et U d'une matrice A contenant une dÃ©composition LU
+    \warning la mÃ©moire pour stocker les rÃ©sultats \b L, \b U doit avoir Ã©tÃ© allouÃ©e
 */
 {
   int32_t i, j;
@@ -813,13 +813,13 @@ void lin_LU(double * A, double * L, double * U, int32_t n)
 void lin_solveLUP(double * LU, int32_t *P, double * b, double * x, int32_t n)
 /* ==================================== */
 /*! \fn void lin_solveLUP(double * LU, int32_t *P, double * b, double * x, int32_t n)
-    \param LU (entrée) : matrice contenant la décomposition LU de A
-    \param P (entrée) : permutation de la décomposition LUP de A
-    \param b (entrée) : vecteur second membre du système
-    \param x (sortie) : vecteur résultat
-    \param n (entrée) : nb de lignes et de colonnes de L
-    \brief résolution du système Ax = b, d'apres une décomposition LUP de A
-    \warning la mémoire pour stocker le résultat \b x doit avoir été allouée
+    \param LU (entrÃ©e) : matrice contenant la dÃ©composition LU de A
+    \param P (entrÃ©e) : permutation de la dÃ©composition LUP de A
+    \param b (entrÃ©e) : vecteur second membre du systÃ¨me
+    \param x (sortie) : vecteur rÃ©sultat
+    \param n (entrÃ©e) : nb de lignes et de colonnes de L
+    \brief rÃ©solution du systÃ¨me Ax = b, d'apres une dÃ©composition LUP de A
+    \warning la mÃ©moire pour stocker le rÃ©sultat \b x doit avoir Ã©tÃ© allouÃ©e
 */
 {
   int32_t i, j;
@@ -853,12 +853,12 @@ void lin_solveLUP(double * LU, int32_t *P, double * b, double * x, int32_t n)
 int32_t lin_solve(double * A, double * b, double * x, int32_t n)
 /* ==================================== */
 /*! \fn void lin_solve(double * A, double * b, double * x, int32_t n)
-    \param A (entrée) : matrice du système
-    \param b (entrée) : vecteur second membre du système
-    \param x (sortie) : vecteur résultat
-    \param n (entrée) : nb de lignes et de colonnes de A
-    \brief résolution du système Ax = b par décomposition LU
-    \warning la mémoire pour stocker le résultat \b x doit avoir été allouée
+    \param A (entrÃ©e) : matrice du systÃ¨me
+    \param b (entrÃ©e) : vecteur second membre du systÃ¨me
+    \param x (sortie) : vecteur rÃ©sultat
+    \param n (entrÃ©e) : nb de lignes et de colonnes de A
+    \brief rÃ©solution du systÃ¨me Ax = b par dÃ©composition LU
+    \warning la mÃ©moire pour stocker le rÃ©sultat \b x doit avoir Ã©tÃ© allouÃ©e
 */
 #undef F_NAME
 #define F_NAME "lin_solve"
@@ -884,12 +884,12 @@ int32_t lin_solve(double * A, double * b, double * x, int32_t n)
 int32_t lin_solvebidiag(double * A, double * b, double * x, int32_t n)
 /* ==================================== */
 /*! \fn void lin_solvebidiag(double * A, double * b, double * x, int32_t n)
-    \param A (entrée) : matrice du système (doit être bi-diagonale supérieure)
-    \param b (entrée) : vecteur second membre du système
-    \param x (sortie) : vecteur résultat
-    \param n (entrée) : nb de lignes et de colonnes de A
-    \brief résolution du système Ax = b
-    \warning la mémoire pour stocker le résultat \b x doit avoir été allouée
+    \param A (entrÃ©e) : matrice du systÃ¨me (doit Ãªtre bi-diagonale supÃ©rieure)
+    \param b (entrÃ©e) : vecteur second membre du systÃ¨me
+    \param x (sortie) : vecteur rÃ©sultat
+    \param n (entrÃ©e) : nb de lignes et de colonnes de A
+    \brief rÃ©solution du systÃ¨me Ax = b
+    \warning la mÃ©moire pour stocker le rÃ©sultat \b x doit avoir Ã©tÃ© allouÃ©e
 */
 #undef F_NAME
 #define F_NAME "lin_solvebidiag"
@@ -910,13 +910,13 @@ int32_t lin_solvebidiag(double * A, double * b, double * x, int32_t n)
 int32_t lin_solvetridiag(double * A, double * b, double * x, int32_t n)
 /* ==================================== */
 /*! \fn void lin_solvetridiag(double * A, double * b, double * x, int32_t n)
-    \param A (entrée) : matrice du système (doit être tri-diagonale)
-    \param b (entrée) : vecteur second membre du système
-    \param x (sortie) : vecteur résultat
-    \param n (entrée) : nb de lignes et de colonnes de A
-    \brief résolution du système Ax = b
-    \warning la mémoire pour stocker le résultat \b x doit avoir été allouée
-    \warning les contenus de A et de b seront modifiés
+    \param A (entrÃ©e) : matrice du systÃ¨me (doit Ãªtre tri-diagonale)
+    \param b (entrÃ©e) : vecteur second membre du systÃ¨me
+    \param x (sortie) : vecteur rÃ©sultat
+    \param n (entrÃ©e) : nb de lignes et de colonnes de A
+    \brief rÃ©solution du systÃ¨me Ax = b
+    \warning la mÃ©moire pour stocker le rÃ©sultat \b x doit avoir Ã©tÃ© allouÃ©e
+    \warning les contenus de A et de b seront modifiÃ©s
 */
 #undef F_NAME
 #define F_NAME "lin_solvetridiag"
@@ -988,13 +988,13 @@ int32_t lin_invmat3(double *ma, double *mr)
 int32_t lin_inverseLUP(double * A, double * R, int32_t n)
 /* ==================================== */
 /*! \fn 
-    \param A (entrée) : matrice à inverser
-    \param R (sortie) : résultat (inverse de A)
-    \param n (entrée) : nb de lignes et de colonnes de A
-    \return 0 si la matrice est singulière, 1 sinon
-    \brief inversion de la matrice, d'apres une décomposition LUP de A
-    \warning la mémoire pour stocker le résultat \b R doit avoir été allouée
-    \warning le contenu de la matrice A est effacé
+    \param A (entrÃ©e) : matrice Ã  inverser
+    \param R (sortie) : rÃ©sultat (inverse de A)
+    \param n (entrÃ©e) : nb de lignes et de colonnes de A
+    \return 0 si la matrice est singuliÃ¨re, 1 sinon
+    \brief inversion de la matrice, d'apres une dÃ©composition LUP de A
+    \warning la mÃ©moire pour stocker le rÃ©sultat \b R doit avoir Ã©tÃ© allouÃ©e
+    \warning le contenu de la matrice A est effacÃ©
 */
 {
   int32_t i, j, ret;
@@ -1034,13 +1034,13 @@ int32_t lin_inverseLUP(double * A, double * R, int32_t n)
 int32_t lin_trouvemin(double * x, double * d, double (*F)(double *, int32_t), int32_t n, double *precision)
 /* ==================================== */
 /*! \fn lin_trouvemin(double * x, double * d, double (*F)(double *, int32_t), int32_t n, double *precision)
-    \param x (entrée/sortie) : valeur initiale et résultat (vecteur de taille n)
-    \param d (entrée/sortie) : valeur initiale/finale du vecteur d'incréments (taille n)
-    \param F (entrée) : fonction de R^n dans R dont on doit trouver le min
-    \param n (entrée) : dimension du problème (taille des vecteurs x et d0)
-    \param precision (entrée) : vecteur spécificant la précision voulue (valeur minimale de l'incrément) dans chacune des dimensions
-    \return le nombre d'itérations plus 1 si la stabilité est atteinte, 0 sinon
-    \brief trouve le minimum de la fonction F de R^n dans R, supposée convexe
+    \param x (entrÃ©e/sortie) : valeur initiale et rÃ©sultat (vecteur de taille n)
+    \param d (entrÃ©e/sortie) : valeur initiale/finale du vecteur d'incrÃ©ments (taille n)
+    \param F (entrÃ©e) : fonction de R^n dans R dont on doit trouver le min
+    \param n (entrÃ©e) : dimension du problÃ¨me (taille des vecteurs x et d0)
+    \param precision (entrÃ©e) : vecteur spÃ©cificant la prÃ©cision voulue (valeur minimale de l'incrÃ©ment) dans chacune des dimensions
+    \return le nombre d'itÃ©rations plus 1 si la stabilitÃ© est atteinte, 0 sinon
+    \brief trouve le minimum de la fonction F de R^n dans R, supposÃ©e convexe
 */
 {
   const int32_t MAXITER = 500;
@@ -1088,7 +1088,7 @@ int32_t lidentifyline(double *pbx, double *pby, int32_t npb, double *a, double *
  Identifie les parametres (a,b) de l'equation y = ax + b d'une droite
  pour minimiser l'ecart (au sens des moindres carres)
  entre cette droite et les points contenus dans la liste de points (pbx,pby).
- Régression linéaire (voir http://en.wikipedia.org/wiki/Linear_regression ).
+ RÃ©gression linÃ©aire (voir http://en.wikipedia.org/wiki/Linear_regression ).
  */
 {
   int32_t i, ret, noresult = 1;
@@ -1147,7 +1147,7 @@ int32_t lidentifyparabola3(double *pbx, double *pby, int32_t npb, double *a, dou
  Identifie les parametres (a,b,c) de l'equation y = ax^2 + bx + c d'une parabole, 
  pour minimiser l'ecart (au sens des moindres carres)
  entre cette parabole et les points contenus dans la liste de points (pbx,pby).
- Régression linéaire (voir http://en.wikipedia.org/wiki/Linear_regression ).
+ RÃ©gression linÃ©aire (voir http://en.wikipedia.org/wiki/Linear_regression ).
  */
 {
   int32_t i, ret, noresult = 1;
@@ -1206,9 +1206,9 @@ int32_t lidentifyparabola2(double *pbx, double *pby, int32_t npb, double *a, dou
 #define F_NAME "lidentifyparabola"
 /*
  Identifie les parametres (a,b,c) de l'equation y = ax^2 + b d'une parabole
- d'axe de symétrie vertical, pour minimiser l'ecart (au sens des moindres carres)
+ d'axe de symÃ©trie vertical, pour minimiser l'ecart (au sens des moindres carres)
  entre cette parabole et les points contenus dans la liste de points (pbx,pby).
- Régression linéaire (voir http://en.wikipedia.org/wiki/Linear_regression ).
+ RÃ©gression linÃ©aire (voir http://en.wikipedia.org/wiki/Linear_regression ).
  */
 {
   int32_t i, ret, noresult = 1;
@@ -1267,7 +1267,7 @@ int32_t lidentifyplane(double *pbx, double *pby, double *pbz, index_t npb, doubl
  Identifie les parametres (a, b, c, d) de l'equation d'un plan 3D
  pour minimiser l'ecart (au sens des moindres carres)
  entre ce plan et les points contenus dans la liste de points (pbx,pby,pbz).
- Régression linéaire (voir http://en.wikipedia.org/wiki/Linear_regression ).
+ RÃ©gression linÃ©aire (voir http://en.wikipedia.org/wiki/Linear_regression ).
  */
 {
   index_t i;
@@ -1290,9 +1290,9 @@ int32_t lidentifyplane(double *pbx, double *pby, double *pbz, index_t npb, doubl
   RtXtY = lin_zeros(1, 1);
   YtY = lin_zeros(1, 1);
 
-  // L'équation cherchée est du type : ax + by + cz + d = 0.
-  // Pour réduire le nombre d'inconnues à 3, on force l'un des 
-  // trois paramètres a,b,c à -1.
+  // L'Ã©quation cherchÃ©e est du type : ax + by + cz + d = 0.
+  // Pour rÃ©duire le nombre d'inconnues Ã  3, on force l'un des 
+  // trois paramÃ¨tres a,b,c Ã  -1.
   // Pour savoir lequel, on fait les trois calculs et l'on retient
   // celui qui donne l'erreur minimale.
 

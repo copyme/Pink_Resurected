@@ -34,8 +34,8 @@ knowledge of the CeCILL license and that you accept its terms.
 */
 /* 
   recalage rigide :
-  - de contours simples (courbes fermées)
-  - d'images numériques
+  - de contours simples (courbes fermÃ©es)
+  - d'images numÃ©riques
 
   Michel Couprie - juillet 2002 - avril 2005 - novembre 2008 
 */
@@ -67,13 +67,13 @@ static double distcarre(double x1, double y1, double x2, double y2)
 double lrecalagerigide_Delta(double *X, int32_t n, double *Y, int32_t m)
 /* ==================================== */
 /*! \fn double lrecalagerigide_Delta(double *X, int32_t n, double *Y, int32_t m)
-    \param X (entrée) : matrice n * 2 contenant le premier ensemble de points
-    \param n (entrée) : nombre de points dans X
-    \param Y (entrée) : matrice m * 2 contenant le second ensemble de points
-    \param m (entrée) : nombre de points dans X
-    \return distance de X à Y
-    \brief calcule une "distance" de X à Y, définie comme la somme des carrés des distances
-       des points de X à l'ensemble Y.
+    \param X (entrÃ©e) : matrice n * 2 contenant le premier ensemble de points
+    \param n (entrÃ©e) : nombre de points dans X
+    \param Y (entrÃ©e) : matrice m * 2 contenant le second ensemble de points
+    \param m (entrÃ©e) : nombre de points dans X
+    \return distance de X Ã  Y
+    \brief calcule une "distance" de X Ã  Y, dÃ©finie comme la somme des carrÃ©s des distances
+       des points de X Ã  l'ensemble Y.
 */
 {
   double tmin, t, x1, x2, delta = 0.0;
@@ -97,11 +97,11 @@ double lrecalagerigide_Delta(double *X, int32_t n, double *Y, int32_t m)
 void lrecalagerigide_Tgamma(double *X, int32_t n, double *Gamma, double *R)
 /* ==================================== */
 /*! \fn double lrecalagerigide_Tgamma(double *X, int32_t n, double *Y, int32_t m)
-    \param X (entrée) : matrice n * 2 contenant un ensemble de points
-    \param n (entrée) : nombre de points dans X
-    \param Gamma (entrée) : paramètres d'une transformation affine linéaire
-    \param R (sortie) : résultat
-    \brief applique la transformation affine linéaire définie par Gamma aux points de X
+    \param X (entrÃ©e) : matrice n * 2 contenant un ensemble de points
+    \param n (entrÃ©e) : nombre de points dans X
+    \param Gamma (entrÃ©e) : paramÃ¨tres d'une transformation affine linÃ©aire
+    \param R (sortie) : rÃ©sultat
+    \brief applique la transformation affine linÃ©aire dÃ©finie par Gamma aux points de X
     \warning R doit etre initialise aux memes dimensions que X (n,2)
 */
 {
@@ -140,17 +140,17 @@ double lrecalagerigide_F(double *G, ensemble *ens)
 double *lrecalagerigide_lrecalagerigide2d(double *X, int32_t n, double *Y, int32_t m)
 /* ==================================== */
 /*! \fn double *lrecalagerigide_lrecalagerigide2d(double *X, int32_t n, double *Y, int32_t m)
-    \param X (entrée/sortie) : matrice n * 2 contenant le premier ensemble de points
-    \param n (entrée) : nombre de points dans X
-    \param Y (entrée) : matrice m * 2 contenant le second ensemble de points
-    \param m (entrée) : nombre de points dans Y
-    \return vecteur des paramètres de la déformation recalant X à Y  
-    \brief identifie les paramètres de la déformation affine linéaire recalant au mieux X à Y et
-       applique cette déformation à X.
-       Cette déformation est la composée (dans cet ordre) d'une rotation d'angle theta ;
-       d'une  homothétie dans les directions x,y de facteurs (hx, hy)
+    \param X (entrÃ©e/sortie) : matrice n * 2 contenant le premier ensemble de points
+    \param n (entrÃ©e) : nombre de points dans X
+    \param Y (entrÃ©e) : matrice m * 2 contenant le second ensemble de points
+    \param m (entrÃ©e) : nombre de points dans Y
+    \return vecteur des paramÃ¨tres de la dÃ©formation recalant X Ã  Y  
+    \brief identifie les paramÃ¨tres de la dÃ©formation affine linÃ©aire recalant au mieux X Ã  Y et
+       applique cette dÃ©formation Ã  X.
+       Cette dÃ©formation est la composÃ©e (dans cet ordre) d'une rotation d'angle theta ;
+       d'une  homothÃ©tie dans les directions x,y de facteurs (hx, hy)
        et d'une translation de vecteur (tx, ty).
-       Le résultat de l'application de cette déformation à X est stockée dans X en sortie.
+       Le rÃ©sultat de l'application de cette dÃ©formation Ã  X est stockÃ©e dans X en sortie.
 */
 {
   double *Gamma, fmin;
@@ -160,7 +160,7 @@ double *lrecalagerigide_lrecalagerigide2d(double *X, int32_t n, double *Y, int32
   ensemble ens;
   const double PRECISION = 1e-6;
 
-  // identifie les barycentres et normalise les coordonnées
+  // identifie les barycentres et normalise les coordonnÃ©es
   BX1 = BX2 = BY1 = BY2 = 0.0;
   for (i = 0; i < n; i++) { BX1 += X[2*i]; BX2 += X[2*i + 1]; }
   for (i = 0; i < m; i++) { BY1 += Y[2*i]; BY2 += Y[2*i + 1]; }
@@ -190,16 +190,16 @@ double *lrecalagerigide_lrecalagerigide2d(double *X, int32_t n, double *Y, int32
 double *lrecalagerigide_lrecalagerigidesanszoom2d(double *X, int32_t n, double *Y, int32_t m)
 /* ==================================== */
 /*! \fn double *lrecalagerigide_lrecalagerigidesanszoom2d(double *X, int32_t n, double *Y, int32_t m)
-    \param X (entrée/sortie) : matrice n * 2 contenant le premier ensemble de points
-    \param n (entrée) : nombre de points dans X
-    \param Y (entrée) : matrice m * 2 contenant le second ensemble de points
-    \param m (entrée) : nombre de points dans Y
-    \return vecteur des paramètres de la déformation recalant X à Y  
-    \brief identifie les paramètres de la déformation affine linéaire recalant au mieux X à Y et
-       applique cette déformation à X.
-       Cette déformation est la composée (dans cet ordre) d'une rotation d'angle theta
+    \param X (entrÃ©e/sortie) : matrice n * 2 contenant le premier ensemble de points
+    \param n (entrÃ©e) : nombre de points dans X
+    \param Y (entrÃ©e) : matrice m * 2 contenant le second ensemble de points
+    \param m (entrÃ©e) : nombre de points dans Y
+    \return vecteur des paramÃ¨tres de la dÃ©formation recalant X Ã  Y  
+    \brief identifie les paramÃ¨tres de la dÃ©formation affine linÃ©aire recalant au mieux X Ã  Y et
+       applique cette dÃ©formation Ã  X.
+       Cette dÃ©formation est la composÃ©e (dans cet ordre) d'une rotation d'angle theta
        et d'une translation de vecteur (tx, ty).
-       Le résultat de l'application de cette déformation à X est stockée dans X en sortie.
+       Le rÃ©sultat de l'application de cette dÃ©formation Ã  X est stockÃ©e dans X en sortie.
 */
 {
   double *Gamma, fmin;
@@ -209,7 +209,7 @@ double *lrecalagerigide_lrecalagerigidesanszoom2d(double *X, int32_t n, double *
   ensemble ens;
   const double PRECISION = 1e-6;
 
-  // identifie les barycentres et normalise les coordonnées
+  // identifie les barycentres et normalise les coordonnÃ©es
   BX1 = BX2 = BY1 = BY2 = 0.0;
   for (i = 0; i < n; i++) { BX1 += X[2*i]; BX2 += X[2*i + 1]; }
   for (i = 0; i < m; i++) { BY1 += Y[2*i]; BY2 += Y[2*i + 1]; }
@@ -248,13 +248,13 @@ static double distcarre3d(double x1, double y1, double z1, double x2, double y2,
 double lrecalagerigide_Delta3d(double *X, int32_t n, double *Y, int32_t m)
 /* ==================================== */
 /*! \fn double lrecalagerigide_Delta3d(double *X, int32_t n, double *Y, int32_t m)
-    \param X (entrée) : matrice n * 3 contenant le premier ensemble de points
-    \param n (entrée) : nombre de points dans X
-    \param Y (entrée) : matrice m * 3 contenant le second ensemble de points
-    \param m (entrée) : nombre de points dans X
-    \return distance de X à Y
-    \brief calcule une "distance" de X à Y, définie comme la somme des carrés des distances
-       des points de X à l'ensemble Y.
+    \param X (entrÃ©e) : matrice n * 3 contenant le premier ensemble de points
+    \param n (entrÃ©e) : nombre de points dans X
+    \param Y (entrÃ©e) : matrice m * 3 contenant le second ensemble de points
+    \param m (entrÃ©e) : nombre de points dans X
+    \return distance de X Ã  Y
+    \brief calcule une "distance" de X Ã  Y, dÃ©finie comme la somme des carrÃ©s des distances
+       des points de X Ã  l'ensemble Y.
 */
 {
   double tmin, t, x1, x2, x3, delta = 0.0;
@@ -279,11 +279,11 @@ double lrecalagerigide_Delta3d(double *X, int32_t n, double *Y, int32_t m)
 void lrecalagerigide_Tgamma3d(double *X, int32_t n, double *Gamma, double *R)
 /* ==================================== */
 /*! \fn double lrecalagerigide_Tgamma3d(double *X, int32_t n, double *Y, int32_t m)
-    \param X (entrée) : matrice n * 2 contenant un ensemble de points
-    \param n (entrée) : nombre de points dans X
-    \param Gamma (entrée) : paramètres d'une transformation affine linéaire
-    \param R (sortie) : résultat
-    \brief applique la transformation affine linéaire définie par Gamma aux points de X
+    \param X (entrÃ©e) : matrice n * 2 contenant un ensemble de points
+    \param n (entrÃ©e) : nombre de points dans X
+    \param Gamma (entrÃ©e) : paramÃ¨tres d'une transformation affine linÃ©aire
+    \param R (sortie) : rÃ©sultat
+    \brief applique la transformation affine linÃ©aire dÃ©finie par Gamma aux points de X
     \warning R doit etre initialise aux memes dimensions que X (n,2)
 */
 {
@@ -335,17 +335,17 @@ double lrecalagerigide_F3d(double *G, ensemble *ens)
 double *lrecalagerigide3d(double *X, int32_t n, double *Y, int32_t m)
 /* ==================================== */
 /*! \fn double *lrecalagerigide3d(double *X, int32_t n, double *Y, int32_t m)
-    \param X (entrée/sortie) : matrice n * 3 contenant le premier ensemble de points
-    \param n (entrée) : nombre de points dans X
-    \param Y (entrée) : matrice m * 3 contenant le second ensemble de points
-    \param m (entrée) : nombre de points dans Y
-    \return vecteur des paramètres de la déformation recalant X à Y  
-    \brief identifie les paramètres de la déformation affine linéaire recalant au mieux X à Y et
-       applique cette déformation à X.
-       Cette déformation est la composée (dans cet ordre) d'une rotation d'angle theta ;
-       d'une homothétie dans les directions x,y,z de facteurs (hx, hy, hz) ; 
+    \param X (entrÃ©e/sortie) : matrice n * 3 contenant le premier ensemble de points
+    \param n (entrÃ©e) : nombre de points dans X
+    \param Y (entrÃ©e) : matrice m * 3 contenant le second ensemble de points
+    \param m (entrÃ©e) : nombre de points dans Y
+    \return vecteur des paramÃ¨tres de la dÃ©formation recalant X Ã  Y  
+    \brief identifie les paramÃ¨tres de la dÃ©formation affine linÃ©aire recalant au mieux X Ã  Y et
+       applique cette dÃ©formation Ã  X.
+       Cette dÃ©formation est la composÃ©e (dans cet ordre) d'une rotation d'angle theta ;
+       d'une homothÃ©tie dans les directions x,y,z de facteurs (hx, hy, hz) ; 
        et d'une translation de vecteur (tx, ty, tz).
-       Le résultat de l'application de cette déformation à X est stockée dans X en sortie.
+       Le rÃ©sultat de l'application de cette dÃ©formation Ã  X est stockÃ©e dans X en sortie.
 */
 {
   double *Gamma, fmin;
@@ -355,7 +355,7 @@ double *lrecalagerigide3d(double *X, int32_t n, double *Y, int32_t m)
   ensemble ens;
   const double PRECISION = 1e-6;
 
-  // identifie les barycentres et normalise les coordonnées
+  // identifie les barycentres et normalise les coordonnÃ©es
   BX1 = BX2 = BX3 = BY1 = BY2 = BY3 = 0.0;
   for (i = 0; i < n; i++) { BX1 += X[3*i]; BX2 += X[3*i + 1]; BX3 += X[3*i + 2]; }
   for (i = 0; i < m; i++) { BY1 += Y[3*i]; BY2 += Y[3*i + 1]; BY3 += Y[3*i + 2]; }
@@ -384,7 +384,7 @@ double *lrecalagerigide3d(double *X, int32_t n, double *Y, int32_t m)
 
 /* ============================================================= */
 /* ============================================================= */
-/* recalage global (affine) pour deux images numériques */
+/* recalage global (affine) pour deux images numÃ©riques */
 /* ============================================================= */
 /* ============================================================= */
 
@@ -393,21 +393,21 @@ static double SEUIL2;
 /* ==================================== */
 double lrecalagerigide_F_num(double *G, struct xvimage * image1, struct xvimage * image2)
 /* ==================================== */
-// fonction de l'évaluation d'erreur pour 2 images numériques
+// fonction de l'Ã©valuation d'erreur pour 2 images numÃ©riques
 //
-// G contient les paramètres d'une transformation affine :
+// G contient les paramÃ¨tres d'une transformation affine :
 // G[0] = hx
 // G[1] = hy (homothetie)
 // G[2] = theta (rotation)
 // G[3] = tx
 // G[4] = ty (translation)
 //
-// dans image2 on a les coordonnées (xmin,ymin,xmax,ymax) d'un rectangle 
-// dont seuls les points seront utilisés.
+// dans image2 on a les coordonnÃ©es (xmin,ymin,xmax,ymax) d'un rectangle 
+// dont seuls les points seront utilisÃ©s.
 //
-// calcule la somme des carrés des différences entre G(image1) et image2
-// WARNING : les images doivent être de même taille - pas de vérification
-// WARNING : utilise (par effet de bord) la variable globale SEUIL2 (à changer)
+// calcule la somme des carrÃ©s des diffÃ©rences entre G(image1) et image2
+// WARNING : les images doivent Ãªtre de mÃªme taille - pas de vÃ©rification
+// WARNING : utilise (par effet de bord) la variable globale SEUIL2 (Ã  changer)
 {
   int32_t i, x, y, Xm, Ym, XM, YM;
   int32_t rs = rowsize(image1);
@@ -453,7 +453,7 @@ double lrecalagerigide_F_num(double *G, struct xvimage * image1, struct xvimage 
     if ((Xm >= image2->xmin) && (Ym >= image2->ymin) && (Xm <= image2->xmax) && (Ym <= image2->ymax) &&
 	(XM >= image2->xmin) && (YM >= image2->ymin) && (XM <= image2->xmax) && (YM <= image2->ymax))
     {
-      // calcule valeur interpolée dans I2
+      // calcule valeur interpolÃ©e dans I2
       tXm = I2[Ym*rs + Xm] * (XM-X) + I2[Ym*rs + XM] * (X-Xm);
       tXM = I2[YM*rs + Xm] * (XM-X) + I2[YM*rs + XM] * (X-Xm);
       t = tXm * (YM - Y) + tXM * (Y - Ym); 
@@ -474,16 +474,16 @@ double lrecalagerigide_F_num(double *G, struct xvimage * image1, struct xvimage 
 int32_t lrecalagerigide_lrecalagerigide2d_num(struct xvimage * image1, struct xvimage * image2, double *G, double seuil, double precision)
 /* ==================================== */
 /*! \fn double *lrecalagerigide_lrecalagerigide2d_num(struct xvimage * image1, struct xvimage * image2)
-    \param image1 (entrée/sortie) : première image
-    \param image2 (entrée) : seconde image
-    \param G (entrée/sortie) : vecteur des paramètres de la déformation recalant image1 à image2 - en entrée : une déformation initiale
-    \param seuil (en entrée) : l'erreur ponctuelle quadratique est comparée à seuil^2, au delà elle n'est pas prise en compte (outlier)
-    \param précision (en entrée) : arrêt de l'algo quand la différence entre les coûts globaux P et C aux étapes précedente et courante est inférieure à (P+C)*precision/2
+    \param image1 (entrÃ©e/sortie) : premiÃ¨re image
+    \param image2 (entrÃ©e) : seconde image
+    \param G (entrÃ©e/sortie) : vecteur des paramÃ¨tres de la dÃ©formation recalant image1 Ã  image2 - en entrÃ©e : une dÃ©formation initiale
+    \param seuil (en entrÃ©e) : l'erreur ponctuelle quadratique est comparÃ©e Ã  seuil^2, au delÃ  elle n'est pas prise en compte (outlier)
+    \param prÃ©cision (en entrÃ©e) : arrÃªt de l'algo quand la diffÃ©rence entre les coÃ»ts globaux P et C aux Ã©tapes prÃ©cedente et courante est infÃ©rieure Ã  (P+C)*precision/2
     \return entier 1 si ok, 0 sinon
-    \brief identifie les paramètres de la déformation affine linéaire recalant au mieux 
-       image1 à image2.
-       Cette déformation est la composée (dans cet ordre) d'une rotation 
-       d'angle theta ; d'une homothétie dans les directions x,y de facteurs (hx, hy), 
+    \brief identifie les paramÃ¨tres de la dÃ©formation affine linÃ©aire recalant au mieux 
+       image1 Ã  image2.
+       Cette dÃ©formation est la composÃ©e (dans cet ordre) d'une rotation 
+       d'angle theta ; d'une homothÃ©tie dans les directions x,y de facteurs (hx, hy), 
        et d'une translation de vecteur (tx, ty).
 */
 #undef F_NAME
@@ -492,9 +492,9 @@ int32_t lrecalagerigide_lrecalagerigide2d_num(struct xvimage * image1, struct xv
   double fmin;
 
 #ifdef ESSAI
-  SEUIL2 = seuil; // globale utilisée par lrecalagerigide_F_num 
+  SEUIL2 = seuil; // globale utilisÃ©e par lrecalagerigide_F_num 
 #else
-  SEUIL2 = seuil * seuil; // globale utilisée par lrecalagerigide_F_num - pour éliminer les outliers
+  SEUIL2 = seuil * seuil; // globale utilisÃ©e par lrecalagerigide_F_num - pour Ã©liminer les outliers
 #endif
 
   if (powell_num(lrecalagerigide_F_num, image1, image2, G, 5, precision, 0.1, MAXITER, &fmin) == M_NOT_FOUND)

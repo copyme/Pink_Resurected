@@ -52,7 +52,7 @@ Different modes are available [default mode is 0]:
 [1] Foley, Van Damm & al: "Computer Graphics", 2nd ed., p. 595
 
 [2] J. Angulo and J. Serra. "Traitements des images de couleur 
-en représentation luminance/saturation/teinte par norme L_1" (in French). 
+en reprÃ©sentation luminance/saturation/teinte par norme L_1" (in French). 
 Traitement du Signal, Vol. 21, No. 6, pp 583-604, December 2004.
 
 <B>Types supported:</B> byte 2d

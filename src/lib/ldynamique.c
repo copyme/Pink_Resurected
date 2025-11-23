@@ -33,7 +33,7 @@ The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
 /* 
-  Calcul de la dynamique ordonnée (nouvelle version)
+  Calcul de la dynamique ordonnÃ©e (nouvelle version)
 
   Ref: Ber05
   G. Bertrand, "A new definition of the dynamics", Proceedings of the 7th International Symposium on Mathematical Morphology,
@@ -145,11 +145,11 @@ static void i_TriRapideStochastique (int32_t * A, int32_t *T, int32_t p, int32_t
 int32_t lordermaxima(struct xvimage *image, struct xvimage *order, int32_t connex, int32_t nblabels)
 /* ==================================== */
 /*! \fn int32_t lordermaxima(struct xvimage *image, struct xvimage *order, int32_t connex, int32_t nblabels)
-    \param image (entrée) : une image
-    \param order (entrée/sortie) : labels définissant les maxima (de 1 à nbmaxima, 0 pour les non-maxima)
-    \param connex (entrée) : 4 ou 8 (2D), 6, 18 ou 26 (3D) 
-    \param nblabels (entrée) : nombre de maxima plus 1
-    \return code erreur : 0 si échec, 1 sinon
+    \param image (entrÃ©e) : une image
+    \param order (entrÃ©e/sortie) : labels dÃ©finissant les maxima (de 1 Ã  nbmaxima, 0 pour les non-maxima)
+    \param connex (entrÃ©e) : 4 ou 8 (2D), 6, 18 ou 26 (3D) 
+    \param nblabels (entrÃ©e) : nombre de maxima plus 1
+    \return code erreur : 0 si Ã©chec, 1 sinon
     \brief ordonne les labels sur les maxima par altitude croissante
 */
 #undef F_NAME
@@ -201,11 +201,11 @@ int32_t lordermaxima(struct xvimage *image, struct xvimage *order, int32_t conne
 int32_t lordermaximasurf(struct xvimage *image, struct xvimage *order, int32_t connex, int32_t nblabels)
 /* ==================================== */
 /*! \fn int32_t lordermaxima(struct xvimage *image, struct xvimage *order, int32_t connex, int32_t nblabels)
-    \param image (entrée) : une image
-    \param order (sortie) : labels définissant les maxima (de 1 à nbmaxima, 0 pour les non-maxima)
-    \param connex (entrée) : 4 ou 8 (2D), 6, 18 ou 26 (3D) 
-    \param nblabels (entrée) : nombre de maxima plus 1
-    \return code erreur : 0 si échec, 1 sinon
+    \param image (entrÃ©e) : une image
+    \param order (sortie) : labels dÃ©finissant les maxima (de 1 Ã  nbmaxima, 0 pour les non-maxima)
+    \param connex (entrÃ©e) : 4 ou 8 (2D), 6, 18 ou 26 (3D) 
+    \param nblabels (entrÃ©e) : nombre de maxima plus 1
+    \return code erreur : 0 si Ã©chec, 1 sinon
     \brief ordonne les labels sur les maxima par surface croissante
 */
 #undef F_NAME
@@ -271,7 +271,7 @@ int32_t lordermaximasurf(struct xvimage *image, struct xvimage *order, int32_t c
     c = CM[x];
     if ((i != 0) && (T[i] == 0))
     {
-      // remonte jusqu'à trouver une bifurcation (ou la racine)
+      // remonte jusqu'Ã  trouver une bifurcation (ou la racine)
       j = c;
       k = CT->tabnodes[j].father; 
       while ((k != -1) && (CT->tabnodes[k].nbsons < 2)) 
@@ -279,7 +279,7 @@ int32_t lordermaximasurf(struct xvimage *image, struct xvimage *order, int32_t c
 	j = k; 
 	k = CT->tabnodes[k].father; 
       }
-      // on prend la surface de l'avant-dernière composante
+      // on prend la surface de l'avant-derniÃ¨re composante
       T[i] = CT->tabnodes[j].area; 
 #ifdef DEBUG
       printf("max %d : val %d\n", i, T[i]);
@@ -309,11 +309,11 @@ int32_t lordermaximasurf(struct xvimage *image, struct xvimage *order, int32_t c
 int32_t lordermaximavol(struct xvimage *image, struct xvimage *order, int32_t connex, int32_t nblabels)
 /* ==================================== */
 /*! \fn int32_t lordermaxima(struct xvimage *image, struct xvimage *order, int32_t connex, int32_t nblabels)
-    \param image (entrée) : une image
-    \param order (sortie) : labels définissant les maxima (de 1 à nbmaxima, 0 pour les non-maxima)
-    \param connex (entrée) : 4 ou 8 (2D), 6, 18 ou 26 (3D) 
-    \param nblabels (entrée) : nombre de maxima plus 1
-    \return code erreur : 0 si échec, 1 sinon
+    \param image (entrÃ©e) : une image
+    \param order (sortie) : labels dÃ©finissant les maxima (de 1 Ã  nbmaxima, 0 pour les non-maxima)
+    \param connex (entrÃ©e) : 4 ou 8 (2D), 6, 18 ou 26 (3D) 
+    \param nblabels (entrÃ©e) : nombre de maxima plus 1
+    \return code erreur : 0 si Ã©chec, 1 sinon
     \brief ordonne les labels sur les maxima par volume croissant
 */
 #undef F_NAME
@@ -379,7 +379,7 @@ int32_t lordermaximavol(struct xvimage *image, struct xvimage *order, int32_t co
     c = CM[x];
     if ((i != 0) && (T[i] == 0))
     {
-      // remonte jusqu'à trouver une bifurcation (ou la racine)
+      // remonte jusqu'Ã  trouver une bifurcation (ou la racine)
       j = c;
       k = CT->tabnodes[j].father; 
       while ((k != -1) && (CT->tabnodes[k].nbsons < 2)) 
@@ -387,7 +387,7 @@ int32_t lordermaximavol(struct xvimage *image, struct xvimage *order, int32_t co
 	j = k; 
 	k = CT->tabnodes[k].father; 
       }
-      // on prend la volace de l'avant-dernière composante
+      // on prend la volace de l'avant-derniÃ¨re composante
       T[i] = CT->tabnodes[j].vol; 
 #ifdef DEBUG
       printf("max %d : val %d\n", i, T[i]);
@@ -417,11 +417,11 @@ int32_t lordermaximavol(struct xvimage *image, struct xvimage *order, int32_t co
 int32_t ldynamique_ldynamique(struct xvimage *image, struct xvimage *order, int32_t connex)
 /* ==================================== */
 /*! \fn int32_t ldynamique_ldynamique(struct xvimage *image, struct xvimage *order, int32_t connex)
-    \param image (entrée/sortie) : une image
-    \param order (entrée) : labels définissant un ordre sur les maxima (de 1 à nbmaxima)
-    \param connex (entrée) : 4 ou 8 (2D), 6, 18 ou 26 (3D) 
-    \return code erreur : 0 si échec, 1 sinon
-    \brief calcule la dynamique ordonnée des maxima
+    \param image (entrÃ©e/sortie) : une image
+    \param order (entrÃ©e) : labels dÃ©finissant un ordre sur les maxima (de 1 Ã  nbmaxima)
+    \param connex (entrÃ©e) : 4 ou 8 (2D), 6, 18 ou 26 (3D) 
+    \return code erreur : 0 si Ã©chec, 1 sinon
+    \brief calcule la dynamique ordonnÃ©e des maxima
 */
 #undef F_NAME
 #define F_NAME "ldynamique_ldynamique"
@@ -437,9 +437,9 @@ int32_t ldynamique_ldynamique(struct xvimage *image, struct xvimage *order, int3
   Fahs * FAHS;                    /* la file d'attente hierarchique */
   int32_t *CM;                      /* etat d'un pixel */
   ctree * CT;                   /* resultat : l'arbre des composantes */
-  int32_t *mu;                      /* pour représenter l'ordre */
-  int32_t *alpha;                   /* pour certains calculs intermédiaires */
-  int32_t *dyn;                     /* pour représenter la dynamique */
+  int32_t *mu;                      /* pour reprÃ©senter l'ordre */
+  int32_t *alpha;                   /* pour certains calculs intermÃ©diaires */
+  int32_t *dyn;                     /* pour reprÃ©senter la dynamique */
   
   if ((rowsize(order) != rs) || (colsize(order) != cs) || (depth(order) != ds))
   {
@@ -533,12 +533,12 @@ int32_t ldynamique_ldynamique(struct xvimage *image, struct xvimage *order, int3
 int32_t lfiltredynamique(struct xvimage *image, struct xvimage *order, int32_t connex, int32_t seuil)
 /* ==================================== */
 /*! \fn int32_t lfiltredynamique(struct xvimage *image, struct xvimage *order, int32_t connex, int32_t seuil)
-    \param image (entrée/sortie) : une image
-    \param order (entrée) : labels définissant un ordre sur les maxima (de 1 à nbmaxima)
-    \param connex (entrée) : 4 ou 8 (2D), 6, 18 ou 26 (3D) 
-    \param seuil (entrée) : pour le filtrage
-    \return code erreur : 0 si échec, 1 sinon
-    \brief filtre les composantes selon la dynamique ordonnée des maxima
+    \param image (entrÃ©e/sortie) : une image
+    \param order (entrÃ©e) : labels dÃ©finissant un ordre sur les maxima (de 1 Ã  nbmaxima)
+    \param connex (entrÃ©e) : 4 ou 8 (2D), 6, 18 ou 26 (3D) 
+    \param seuil (entrÃ©e) : pour le filtrage
+    \return code erreur : 0 si Ã©chec, 1 sinon
+    \brief filtre les composantes selon la dynamique ordonnÃ©e des maxima
 */
 #undef F_NAME
 #define F_NAME "lfiltredynamique"
@@ -554,9 +554,9 @@ int32_t lfiltredynamique(struct xvimage *image, struct xvimage *order, int32_t c
   Fahs * FAHS;                    /* la file d'attente hierarchique */
   int32_t *CM;                      /* etat d'un pixel */
   ctree * CT;                   /* resultat : l'arbre des composantes */
-  int32_t *mu;                      /* pour représenter l'ordre */
-  int32_t *alpha;                   /* pour certains calculs intermédiaires */
-  int32_t *dyn;                     /* pour représenter la dynamique */
+  int32_t *mu;                      /* pour reprÃ©senter l'ordre */
+  int32_t *alpha;                   /* pour certains calculs intermÃ©diaires */
+  int32_t *dyn;                     /* pour reprÃ©senter la dynamique */
   int32_t noleaf;
 
   if ((rowsize(order) != rs) || (colsize(order) != cs) || (depth(order) != ds))

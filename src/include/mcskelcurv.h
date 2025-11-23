@@ -64,43 +64,43 @@ typedef struct SKC_adj_cell {
 typedef SKC_adj_cell * SKC_adj_pcell;
 
 /*
-Un squelette S est représenté par un graphe comportant 4 types de sommets : 
-- les isolés
-- les extrémités
+Un squelette S est reprÃ©sentÃ© par un graphe comportant 4 types de sommets : 
+- les isolÃ©s
+- les extrÃ©mitÃ©s
 - les courbes
 - les jonctions
-liés par des arcs qui représentent les relations d'adjacence.
+liÃ©s par des arcs qui reprÃ©sentent les relations d'adjacence.
 
-Une courbe de S est composée de points qui ont 1 ou 2 voisins dans S
+Une courbe de S est composÃ©e de points qui ont 1 ou 2 voisins dans S
 
-Tous les sommets du graphe sont représentés par la structure suivante :
+Tous les sommets du graphe sont reprÃ©sentÃ©s par la structure suivante :
 */
 
 typedef struct {
   uint8_t tag;               // associated tag (for marking, etc)
   float fval;                // associated value
-  struct SKC_pt_cell * pts;  // liste des points constituant l'élément de squelette
-  struct SKC_adj_cell * adj; // liste des éléments adjacents
+  struct SKC_pt_cell * pts;  // liste des points constituant l'Ã©lÃ©ment de squelette
+  struct SKC_adj_cell * adj; // liste des Ã©lÃ©ments adjacents
 } skelpart;
 
 typedef skelpart * pskelpart;
 
 /*
-La structure pour représenter un squelette :
+La structure pour reprÃ©senter un squelette :
 */
 
 typedef struct {
-  int32_t connex;      // connexité pour l'objet 
+  int32_t connex;      // connexitÃ© pour l'objet 
   uint32_t rs, cs, ds; // dimensions image
-  uint32_t e_isol;     // fin des index "points isolés" 
-  uint32_t e_end;      // fin des index "points extrémités" 
+  uint32_t e_isol;     // fin des index "points isolÃ©s" 
+  uint32_t e_end;      // fin des index "points extrÃ©mitÃ©s" 
   uint32_t e_curv;     // fin des index "points de courbe" 
   uint32_t e_junc;     // fin des index "points de jonction" 
   uint32_t nbptcell;   // nombre total de cellules de liste de points
   uint32_t freeptcell; // pour la gestion du tas de cellules de points
   uint32_t nbadjcell;  // nombre total de cellules de liste de voisins
   uint32_t freeadjcell;    // pour la gestion du tas de cellules de voisins
-  skelpart * tskel;        // tableau des éléments de squelette (tas)
+  skelpart * tskel;        // tableau des Ã©lÃ©ments de squelette (tas)
   SKC_pt_cell * tptcell;   // tableau des cellules de points (tas)
   SKC_adj_cell * tadjcell; // tableau des cellules de voisins (tas)
 } skel;

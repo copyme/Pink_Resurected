@@ -97,7 +97,7 @@ int main(int32_t argc, char **argv)
   }
   connex = atoi(argv[2]);
   if( (connex != 4) && (connex != 8)){
-    fprintf(stderr,"Connexité inconnue en 2D\n");
+    fprintf(stderr,"ConnexitÃ© inconnue en 2D\n");
     freeimage(image);
     exit(0);
   }
@@ -122,14 +122,14 @@ int main(int32_t argc, char **argv)
   G = UCHARDATA(result2);
   memset(G,0,N);
   for(i = 0; i < N; i++){
-    if(LABEL[i] == 0){ // le points appartient à l'objet X
+    if(LABEL[i] == 0){ // le points appartient Ã  l'objet X
       G[i] = 255;
       label = -1;
       for(k = 0; k < 8; k += incr){
 	y = voisin(i, k, rs, N);
 	if (y != -1)
 	{
-	  if(LABEL[y] > 0) // y appartient à \Bar{X}
+	  if(LABEL[y] > 0) // y appartient Ã  \Bar{X}
 	  {
 	    if(label != -1) 
 	    {

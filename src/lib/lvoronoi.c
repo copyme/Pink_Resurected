@@ -270,10 +270,10 @@ printf("\n");
 int32_t ltriang_delaunay(mcgeo_point *S, int32_t n, int32_t **v, int32_t *nv, int32_t *ec)
 /* ==================================== */
 /* 
-   Modifie le graphe de Delaunay donné en entrée pour assurer qu'il s'agisse
+   Modifie le graphe de Delaunay donnÃ© en entrÃ©e pour assurer qu'il s'agisse
    d'une 2-surface (en fait, une triangulation).
-   La propriété garantie en sortie est que le voisinage (au sens: liste ordonnée des
-   faces adjacentes) de tout sommet forme une courbe simple (fermée ou ouverte).
+   La propriÃ©tÃ© garantie en sortie est que le voisinage (au sens: liste ordonnÃ©e des
+   faces adjacentes) de tout sommet forme une courbe simple (fermÃ©e ou ouverte).
    entrees : S : le tableau des points
              n : le nombre de points
              ec : table de booleens indiquant les points de l'enveloppe convexe

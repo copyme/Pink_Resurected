@@ -39,7 +39,7 @@ knowledge of the CeCILL license and that you accept its terms.
 <B>Usage:</B> diZenzo imageRVB.ppm alpha [mode] out.pgm
 
 <B>Description:</B>
-Le gradient de diZenzo est défini par la donnée de p, q, et t:
+Le gradient de diZenzo est dÃ©fini par la donnÃ©e de p, q, et t:
 
 p = Rx*Rx + Vx*Vx + Bx*Bx
 
@@ -47,18 +47,18 @@ q = Ry*Ry + Vy*Vy + By*By
 
 t = Rx*Ry + Vx*Vy + Bx*By
 
-(ou Rx = dérivée en x de la bande rouge, Ry est la dérivée en y de la bande rouge, etc.)
+(ou Rx = dÃ©rivÃ©e en x de la bande rouge, Ry est la dÃ©rivÃ©e en y de la bande rouge, etc.)
 
-et le module est donnée par
+et le module est donnÃ©e par
 
 G = sqrt(1/2*(p+q+sqrt((p+q)*(p+q) -4(pq-t*t))))
 
-La direction est donnée par 1/2*atan(2*t/(p-q))
+La direction est donnÃ©e par 1/2*atan(2*t/(p-q))
 
-Si le mode est égale à 0 (valeur défaut) alors l'image de sortie est le gradient, 
+Si le mode est Ã©gale Ã  0 (valeur dÃ©faut) alors l'image de sortie est le gradient, 
 sinon l'image de sortie est une int32_t entre 0 et 360.
 
-Les gradients sont calculés par les filtres de Deriche, de paramètre alpha
+Les gradients sont calculÃ©s par les filtres de Deriche, de paramÃ¨tre alpha
 
 <B>Types supported:</B> byte 2D
 
@@ -67,7 +67,7 @@ Les gradients sont calculés par les filtres de Deriche, de paramètre alpha
 
 \author Laurent Najman
 */
-/* Gradient couleur de diZenzo basé sur le filtre lineaire general recursif de Deriche */
+/* Gradient couleur de diZenzo basÃ© sur le filtre lineaire general recursif de Deriche */
 
 #include <stdio.h>
 #include <stdint.h>

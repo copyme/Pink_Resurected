@@ -210,8 +210,8 @@ int32_t lptselectgray(struct xvimage *image,
     int32_t cs = colsize(image);     /* taille colonne */
     int32_t N = rs * cs;             /* taille image */
     uint8_t *F = UCHARDATA(image);      /* l'image de depart */
-    uint8_t* R;                    // Masque d'arrivée : les points à 255 sont ceux qui correspondent aux critères, les autres
-                                    // restent à 0
+    uint8_t* R;                    // Masque d'arrivÃ©e : les points Ã  255 sont ceux qui correspondent aux critÃ¨res, les autres
+                                    // restent Ã  0
 
     if (depth(image) != 1) 
     {
@@ -232,7 +232,7 @@ int32_t lptselectgray(struct xvimage *image,
     /* ================================================ */
 
     /* ========================================================= */
-    /* REMPLISSAGE DE R : tous les points correspondant aux critères */
+    /* REMPLISSAGE DE R : tous les points correspondant aux critÃ¨res */
     /* ========================================================= */
 
     if (connex == 4)
@@ -256,7 +256,7 @@ int32_t lptselectgray(struct xvimage *image,
         }
     }
 
-    // Recopie du résultat
+    // Recopie du rÃ©sultat
     for (x = 0; x < N; x++)
     {
         F[x] = R[x];
@@ -354,7 +354,7 @@ int32_t lptselectgray3d(struct xvimage *image,
     /* ================================================ */
 
     /* ========================================================= */
-    /* REMPLISSAGE DE R : tous les points correspondant aux critères*/
+    /* REMPLISSAGE DE R : tous les points correspondant aux critÃ¨res*/
     /* ========================================================= */
     if (connex == 6)
     {
@@ -377,7 +377,7 @@ int32_t lptselectgray3d(struct xvimage *image,
         }
     }
 
-    // Recopie du résultat
+    // Recopie du rÃ©sultat
     for (x = 0; x < N; x++)
     {
         F[x] = R[x];

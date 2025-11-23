@@ -49,15 +49,15 @@ knowledge of the CeCILL license and that you accept its terms.
    MC Update avril 2003 : convertfloat, convertlong
    MC Update janvier 2006 : adoption des nouveaux "magic numbers" pour
                             les formats byte 3d, idem 2d (P2 et P5)
-		            P7 (raw 3d) est conservé pour la compatibilité
-   MC Update mars 2008 : fixe bug perte mémoire dans convertXXXX
-   MC Update aout 2008 : nouveaux formats pgm étendus PC, PD pour les "double"
+		            P7 (raw 3d) est conservÃ© pour la compatibilitÃ©
+   MC Update mars 2008 : fixe bug perte mÃ©moire dans convertXXXX
+   MC Update aout 2008 : nouveaux formats pgm Ã©tendus PC, PD pour les "double"
    MC Update janvier 2011 : types COMPLEX DCOMPLEX
-   MC Update mars 2011 : lecture/écriture des images 'short'
+   MC Update mars 2011 : lecture/Ã©criture des images 'short'
    HT Update avril 2011 : lecture des images TIFF
    MC Update avril 2011 : les images couleurs sont maintenant lues 
                           par readimage comme 'multiband'
-			  les images 2D à 3 bandes sont traitées 
+			  les images 2D Ã  3 bandes sont traitÃ©es 
 			  par writeimage comme des images couleurs 
    MC Update juillet 2011 : fonctions writelist2, writelist3
 */

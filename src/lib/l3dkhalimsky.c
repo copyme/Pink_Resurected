@@ -51,10 +51,10 @@ knowledge of the CeCILL license and that you accept its terms.
    l3dplane: dicretisation d'un plan
      Michel Couprie - avril 2002
 
-   l3dborder: extraction de la frontière interne
-     Michel Couprie - décembre 2004
+   l3dborder: extraction de la frontiÃ¨re interne
+     Michel Couprie - dÃ©cembre 2004
 
-   l3dseltype: extraction d'éléments selon leur rang et leur type topologique
+   l3dseltype: extraction d'Ã©lÃ©ments selon leur rang et leur type topologique
      Michel Couprie - avril 2007
 
    l3dbeta: beta-dilatation
@@ -1073,7 +1073,7 @@ int32_t l3dinvariants(struct xvimage *f, index_t *nbcc, index_t *nbcav, index_t 
 int32_t l3dboundary(struct xvimage * f)
 /* =============================================================== */
 /* 
-   extrait la frontière interne
+   extrait la frontiÃ¨re interne
    def: {x in F | theta(x) inter Fbar neq emptyset}
 */
 {
@@ -1125,7 +1125,7 @@ int32_t l3dboundary(struct xvimage * f)
 int32_t l3dborder(struct xvimage * f)
 /* =============================================================== */
 /* 
-   extrait la frontière interne
+   extrait la frontiÃ¨re interne
    def: closure{x in F | x free for F}
 */
 {

@@ -33,7 +33,7 @@ The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
 /* 
-   Ligne de partage des eaux sur les aretes d'un graphe et segmentation hiérarchique
+   Ligne de partage des eaux sur les aretes d'un graphe et segmentation hiÃ©rarchique
 
    Jean Cousty - 2004-2006 
 */
@@ -513,7 +513,7 @@ int32_t StreamGArecursif(struct xvimage *ga, int32_t x, Lifo *FIFO, int32_t *Lab
 }
 
 /* Calcul le flow mapping (cf. cite{XXX}) d'un GA 4-connexe */
-/* Algo. non recursif : l'exploration est, à la fois en     */
+/* Algo. non recursif : l'exploration est, Ã  la fois en     */
 /* profondeur et en largeur d'abord.                        */
 /* Attention Label est suppose alloue a la bonne taille ... */
 int32_t flowMapping(struct  xvimage* ga, int32_t* Label) 
@@ -570,7 +570,7 @@ int32_t StreamGA(struct xvimage *ga, int32_t x, Lifo *L, Lifo *B,int32_t *psi, u
 #undef F_NAME
 #define F_NAME "LPEGrapheAreteValuee" 
 {
-  //  Lifo *B;                                /* Les bottoms non encore exploré de L */ 
+  //  Lifo *B;                                /* Les bottoms non encore explorÃ© de L */ 
   int32_t rs = rowsize(ga);               /* taille ligne */
   int32_t cs = colsize(ga);               /* taille colonne */
   int32_t N = rs * cs;                    /* taille image */
@@ -640,7 +640,7 @@ float altitudePointFloat(struct xvimage *ga, int32_t i)
 }
 
 /* Calcul le flow mapping (cf. cite{XXX}) d'un GA 4-connexe */
-/* Algo. non recursif : l'exploration est, à la fois en     */
+/* Algo. non recursif : l'exploration est, Ã  la fois en     */
 /* profondeur et en largeur d'abord.                        */
 /* Attention Label est suppose alloue a la bonne taille ... */
 int32_t flowMappingFloat(struct  xvimage* ga, int32_t* Label) 
@@ -697,7 +697,7 @@ int32_t StreamGAFloat(struct xvimage *ga, int32_t x, Lifo *L, Lifo *B,int32_t *p
 #undef F_NAME
 #define F_NAME "LPEGrapheAreteValuee" 
 {
-  //  Lifo *B;                                /* Les bottoms non encore exploré de L */ 
+  //  Lifo *B;                                /* Les bottoms non encore explorÃ© de L */ 
   int32_t rs = rowsize(ga);               /* taille ligne */
   int32_t cs = colsize(ga);               /* taille colonne */
   int32_t N = rs * cs;                    /* taille image */
@@ -768,7 +768,7 @@ double altitudePointDouble(struct xvimage *ga, int32_t i)
 }
 
 /* Calcul le flow mapping (cf. cite{XXX}) d'un GA 4-connexe */
-/* Algo. non recursif : l'exploration est, à la fois en     */
+/* Algo. non recursif : l'exploration est, Ã  la fois en     */
 /* profondeur et en largeur d'abord.                        */
 /* Attention Label est suppose alloue a la bonne taille ... */
 int32_t flowMappingDouble(struct  xvimage* ga, int32_t* Label) 

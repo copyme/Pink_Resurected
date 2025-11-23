@@ -1264,10 +1264,10 @@ static int32_t InList(int32_t e, int32_t *list, int32_t n)
 int32_t lwshedval(struct xvimage *image, int32_t connex)
 /* ==================================== */
 /*! \fn int32_t lwshedval(struct xvimage *image, int32_t connex)
-    \param image (entrée/sortie) : une image 2D ndg
-    \param connex (entrée) : 4 ou 8 
-    \return code erreur : 0 si échec, 1 sinon
-    \brief ligne de partage des eaux valuée (algo MC, GB, LN)
+    \param image (entrÃ©e/sortie) : une image 2D ndg
+    \param connex (entrÃ©e) : 4 ou 8 
+    \return code erreur : 0 si Ã©chec, 1 sinon
+    \brief ligne de partage des eaux valuÃ©e (algo MC, GB, LN)
 */
 #undef F_NAME
 #define F_NAME "lwshedval"
@@ -1544,9 +1544,9 @@ AfficheCompactTree(cpct);
 int32_t ldynamique_grimaud_ldynamique_grimaud_lwshedtopo(struct xvimage *image, int32_t connex)
 /* ==================================== */
 /*! \fn int32_t ldynamique_grimaud_ldynamique_grimaud_lwshedtopo(struct xvimage *image, int32_t connex)
-    \param image (entrée/sortie) : une image 2D ndg
-    \param connex (entrée) : 4 ou 8 
-    \return code erreur : 0 si échec, 1 sinon
+    \param image (entrÃ©e/sortie) : une image 2D ndg
+    \param connex (entrÃ©e) : 4 ou 8 
+    \return code erreur : 0 si Ã©chec, 1 sinon
     \brief ligne de partage des eaux "topologique" (algo MC, GB)
 */
 #undef F_NAME

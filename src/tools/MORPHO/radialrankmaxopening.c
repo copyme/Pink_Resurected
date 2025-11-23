@@ -49,7 +49,7 @@ exact division of 360 by an integer.
 <B>Category:</B> morpho
 \ingroup  morpho
 
-\author André Vital Saude, Michel Couprie jan 2005
+\author AndrÃ© Vital Saude, Michel Couprie jan 2005
 
 */
 

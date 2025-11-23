@@ -34,20 +34,20 @@ knowledge of the CeCILL license and that you accept its terms.
 */
 /* 
 
-   l3dcollapse: collapse guidé et contraint (OBSOLETE)
+   l3dcollapse: collapse guidÂÃ© et contraint (OBSOLETE)
      
    Michel Couprie - avril 2007
 
-   l3dpardircollapse: collapse parallèle par sous-étapes directionnelles
-   l3dpardircollapse_l: collapse guidé et contraint - priorité ULONG
-   l3dpardircollapse_f: collapse guidé et contraint - priorité FLOAT
-   l3dsurfacecollapse: collapse avec condition d'arrêt surfacique
-   l3dtopoflow_l: topological flow - priorité ULONG
-   l3dtopoflow_f: topological flow - priorité FLOAT
+   l3dpardircollapse: collapse parallÂÃ¨le par sous-ÂÃ©tapes directionnelles
+   l3dpardircollapse_l: collapse guidÂÃ© et contraint - prioritÂÃ© ULONG
+   l3dpardircollapse_f: collapse guidÂÃ© et contraint - prioritÂÃ© FLOAT
+   l3dsurfacecollapse: collapse avec condition d'arrÂÃªt surfacique
+   l3dtopoflow_l: topological flow - prioritÂÃ© ULONG
+   l3dtopoflow_f: topological flow - prioritÂÃ© FLOAT
 
    Michel Couprie - juillet 2015
 
-   l3dcurvecollapse: collapse avec condition d'arrêt curviligne
+   l3dcurvecollapse: collapse avec condition d'arrÂÃªt curviligne
 
 */
 
@@ -81,7 +81,7 @@ knowledge of the CeCILL license and that you accept its terms.
 int32_t l3dcollapse(struct xvimage * k, struct xvimage * prio, struct xvimage * inhibit)
 /* =============================================================== */
 /* 
-  collapse séquentiel, guidé et contraint
+  collapse sÂÃ©quentiel, guidÂÃ© et contraint
   OBSOLETE - utiliser l3dpardircollapse_l
 */
 #undef F_NAME
@@ -215,9 +215,9 @@ int32_t l3dcollapse(struct xvimage * k, struct xvimage * prio, struct xvimage * 
 int32_t l3dpardircollapse_l(struct xvimage * k, struct xvimage * prio, struct xvimage * inhibit, int32_t priomax)
 /* =============================================================== */
 /* 
-  collapse parallèle directionnel
-  fonction de priorité en entiers longs
-  les éléments à préserver sont ceux de l'image "inhibit" ou, si celle-ci est "NULL", ceux supérieurs à "priomax" 
+  collapse parallÂÃ¨le directionnel
+  fonction de prioritÂÃ© en entiers longs
+  les ÂÃ©lÂÃ©ments ÂÃ  prÂÃ©server sont ceux de l'image "inhibit" ou, si celle-ci est "NULL", ceux supÂÃ©rieurs ÂÃ  "priomax" 
 */
 #undef F_NAME
 #define F_NAME "l3dpardircollapse_l"
@@ -334,7 +334,7 @@ int32_t l3dpardircollapse_l(struct xvimage * k, struct xvimage * prio, struct xv
 
   while (!mcrbt_RbtVide(RBT))
   {
-    // construit la liste de toutes les paires libres ayant la priorité courante
+    // construit la liste de toutes les paires libres ayant la prioritÂÃ© courante
     p = RbtMinLevel(RBT); 
     while (!mcrbt_RbtVide(RBT) && (RbtMinLevel(RBT) == p))
     {
@@ -385,12 +385,12 @@ int32_t l3dpardircollapse_l(struct xvimage * k, struct xvimage * prio, struct xv
 			(((I != NULL) && (!I[f])) || ((I == NULL) && (P[f] < priomax))) )
 		    {
 		      if ((P[g] <= p) && (P[f] <= p) && !IsSet(g, EN_RLIFO))
-		      { // Préparation sous-étapes suivantes
+		      { // PrÂÃ©paration sous-ÂÃ©tapes suivantes
 			RlifoPush(&RLIFOb, f);
 			RlifoPush(&RLIFOb, g);
 		      }
 		      if (!IsSet(g, EN_RBT))
-		      { // Préparation étape suivante
+		      { // PrÂÃ©paration ÂÃ©tape suivante
 			pp = (TypRbtKey)(mcmax(P[g],P[f]));
 			mcrbt_RbtInsert(&RBT, pp, g);
 			Set(g, EN_RBT);
@@ -430,9 +430,9 @@ int32_t l3dpardircollapse_l(struct xvimage * k, struct xvimage * prio, struct xv
 int32_t l3dpardircollapse_f(struct xvimage * k, struct xvimage * prio, struct xvimage * inhibit, float priomax)
 /* =============================================================== */
 /* 
-  collapse parallèle directionnel
-  fonction de priorité en flottants
-  les éléments à préserver sont ceux de l'image "inhibit" ou, si celle-ci est "NULL", ceux supérieurs à "priomax" 
+  collapse parallÂÃ¨le directionnel
+  fonction de prioritÂÃ© en flottants
+  les ÂÃ©lÂÃ©ments ÂÃ  prÂÃ©server sont ceux de l'image "inhibit" ou, si celle-ci est "NULL", ceux supÂÃ©rieurs ÂÃ  "priomax" 
 */
 #undef F_NAME
 #define F_NAME "l3dpardircollapse_f"
@@ -549,7 +549,7 @@ int32_t l3dpardircollapse_f(struct xvimage * k, struct xvimage * prio, struct xv
 
   while (!mcrbt_RbtVide(RBT))
   {
-    // construit la liste de toutes les paires libres ayant la priorité courante
+    // construit la liste de toutes les paires libres ayant la prioritÂÃ© courante
     p = RbtMinLevel(RBT); 
     while (!mcrbt_RbtVide(RBT) && (RbtMinLevel(RBT) == p))
     {
@@ -600,12 +600,12 @@ int32_t l3dpardircollapse_f(struct xvimage * k, struct xvimage * prio, struct xv
 			(((I != NULL) && (!I[f])) || ((I == NULL) && (P[f] < priomax))) )
 		    {
 		      if ((P[g] <= p) && (P[f] <= p) && !IsSet(g, EN_RLIFO))
-		      { // Préparation sous-étapes suivantes
+		      { // PrÂÃ©paration sous-ÂÃ©tapes suivantes
 			RlifoPush(&RLIFOb, f);
 			RlifoPush(&RLIFOb, g);
 		      }
 		      if (!IsSet(g, EN_RBT))
-		      { // Préparation étape suivante
+		      { // PrÂÃ©paration ÂÃ©tape suivante
 			pp = (TypRbtKey)(mcmax(P[g],P[f]));
 			mcrbt_RbtInsert(&RBT, pp, g);
 			Set(g, EN_RBT);
@@ -645,8 +645,8 @@ int32_t l3dpardircollapse_f(struct xvimage * k, struct xvimage * prio, struct xv
 int32_t l3dpardircollapse_short(struct xvimage * k, int32_t nsteps)
 /* =============================================================== */
 /* 
-  collapse parallèle directionnel
-  sans fonction de priorité
+  collapse parallÂÃ¨le directionnel
+  sans fonction de prioritÂÃ©
 */
 #undef F_NAME
 #define F_NAME "l3dpardircollapse_short"
@@ -661,8 +661,8 @@ int32_t l3dpardircollapse_short(struct xvimage * k, int32_t nsteps)
 int32_t l3dpardircollapse(struct xvimage * k, int32_t nsteps, struct xvimage * inhibit)
 /* =============================================================== */
 /* 
-  collapse parallèle directionnel
-  sans fonction de priorité
+  collapse parallÂÃ¨le directionnel
+  sans fonction de prioritÂÃ©
 */
 #undef F_NAME
 #define F_NAME "l3dpardircollapse"
@@ -785,7 +785,7 @@ int32_t l3dpardircollapse(struct xvimage * k, int32_t nsteps, struct xvimage * i
 	      {
 		K[g] = K[f] = VAL_NULLE;
 		ncol += 1;
-		// Préparation sous-étapes suivantes
+		// PrÂÃ©paration sous-ÂÃ©tapes suivantes
 		Alphacarre3d(rs, cs, ds, xf, yf, zf, tab, &n);
 		for (u = 0; u < n; u += 1)
 		{
@@ -879,9 +879,9 @@ int32_t l3dpardircollapse(struct xvimage * k, int32_t nsteps, struct xvimage * i
 int32_t l3ddetectdyncollapse(struct xvimage * k, int32_t nsteps, struct xvimage * inhibit, int32_t dddim)
 /* =============================================================== */
 /* 
-  collapse parallèle directionnel
-  sans fonction de priorité
-  detection et préservation d'éléments de dimension dddim
+  collapse parallÂÃ¨le directionnel
+  sans fonction de prioritÂÃ©
+  detection et prÂÃ©servation d'ÂÃ©lÂÃ©ments de dimension dddim
 */
 #undef F_NAME
 #define F_NAME "l3ddetectdyncollapse"
@@ -1008,7 +1008,7 @@ int32_t l3ddetectdyncollapse(struct xvimage * k, int32_t nsteps, struct xvimage 
 	      {
 		K[g] = K[f] = VAL_NULLE;
 		nbcol++;
-		// Préparation sous-étapes suivantes
+		// PrÂÃ©paration sous-ÂÃ©tapes suivantes
 		Alphacarre3d(rs, cs, ds, xf, yf, zf, tab, &n);
 		for (u = 0; u < n; u += 1)
 		{
@@ -1134,9 +1134,9 @@ int32_t l3ddetectdyncollapse(struct xvimage * k, int32_t nsteps, struct xvimage 
 graphe * l3dtopoflow_l(struct xvimage * k, struct xvimage * prio, struct xvimage * inhibit, float priomax)
 /* =============================================================== */
 /* 
-  construction du flot topologique associé à un collapse parallèle directionnel
+  construction du flot topologique associÂÃ© ÂÃ  un collapse parallÂÃ¨le directionnel
   (voir l3dpardircollapse_f)
-  fonction de priorité en entiers longs
+  fonction de prioritÂÃ© en entiers longs
 */
 #undef F_NAME
 #define F_NAME "l3dtopoflow_l"
@@ -1149,15 +1149,15 @@ graphe * l3dtopoflow_l(struct xvimage * k, struct xvimage * prio, struct xvimage
 graphe * l3dtopoflow_f(struct xvimage * k, struct xvimage * prio, struct xvimage * inhibit, float priomax)
 /* =============================================================== */
 /* 
-  construction du flot topologique associé à un collapse parallèle directionnel
+  construction du flot topologique associÂÃ© ÂÃ  un collapse parallÂÃ¨le directionnel
   (voir l3dpardircollapse_f)
-  fonction de priorité en flottants
-  le résultat est un graphe dont les sommets (faces du complexe k) 
-  sont valués par :
+  fonction de prioritÂÃ© en flottants
+  le rÂÃ©sultat est un graphe dont les sommets (faces du complexe k) 
+  sont valuÂÃ©s par :
     TF_NOT_IN_I: la face n'appartient pas au complexe initial (avant collapse)
     TF_HEAD: la face est une tete de paire libre (face libre)
     TF_TAIL: la face est une queue de paire libre
-    TF_PERMANENT: la face appartient toujours au complexe final (après collapse)
+    TF_PERMANENT: la face appartient toujours au complexe final (aprÂÃ¨s collapse)
 */
 #undef F_NAME
 #define F_NAME "l3dtopoflow_f"
@@ -1266,7 +1266,7 @@ graphe * l3dtopoflow_f(struct xvimage * k, struct xvimage * prio, struct xvimage
   for (xg = 0; xg < rs; xg++)
   {
     g = zg*ps + yg*rs + xg;
-    flow->x[g] = xg; // coordonnées des sommets
+    flow->x[g] = xg; // coordonnÂÃ©es des sommets
     flow->y[g] = yg;
     flow->z[g] = zg;
     if (!K[g]) flow->v_sommets[g] = TF_NOT_IN_I;
@@ -1309,7 +1309,7 @@ graphe * l3dtopoflow_f(struct xvimage * k, struct xvimage * prio, struct xvimage
 
   while (!mcrbt_RbtVide(RBT))
   {
-    // construit la liste de toutes les paires libres ayant la priorité courante
+    // construit la liste de toutes les paires libres ayant la prioritÂÃ© courante
     p = RbtMinLevel(RBT); 
     while (!mcrbt_RbtVide(RBT) && (RbtMinLevel(RBT) == p))
     {
@@ -1392,12 +1392,12 @@ graphe * l3dtopoflow_f(struct xvimage * k, struct xvimage * prio, struct xvimage
 			(((I != NULL) && (!I[ff])) || ((I == NULL) && (P[ff] < priomax))) )
 		    {
 		      if ((P[gg] <= p) && (P[ff] <= p) && !IsSet(gg, EN_RLIFO))
-		      { // Préparation sous-étapes suivantes
+		      { // PrÂÃ©paration sous-ÂÃ©tapes suivantes
 			RlifoPush(&RLIFOb, ff);
 			RlifoPush(&RLIFOb, gg);
 		      }
 		      if (!IsSet(gg, EN_RBT))
-		      { // Préparation étape suivante
+		      { // PrÂÃ©paration ÂÃ©tape suivante
 			pp = (TypRbtKey)(mcmax(P[gg],P[ff]));
 			mcrbt_RbtInsert(&RBT, pp, gg);
 			Set(gg, EN_RBT);
@@ -1517,11 +1517,11 @@ int32_t l3dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
   FUNC = FLOATDATA(func);
 
   if (mode == 0)
-  { // fonction uniformément nulle 
+  { // fonction uniformÂÃ©ment nulle 
     razimage(func);
   }
   else if (mode == 1)
-  { // fonction uniforme (unité)
+  { // fonction uniforme (unitÂÃ©)
     for (i = 0; i < N; i++) 
       if (K[i])
 	FUNC[i] = (float)1;
@@ -1529,7 +1529,7 @@ int32_t l3dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
 	FUNC[i] = (float)0;
   }
   else if ((mode == 2) || (mode == 3))
-  { // fonction uniforme sur la frontière, nulle à l'intérieur 
+  { // fonction uniforme sur la frontiÂÃ¨re, nulle ÂÃ  l'intÂÃ©rieur 
     struct xvimage * border = copyimage(k);
     uint8_t *B;
     assert(border != NULL);
@@ -1547,7 +1547,7 @@ int32_t l3dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
     freeimage(border);
   }
   else if (mode == 4)
-  { // fonction d'ouverture inversée
+  { // fonction d'ouverture inversÂÃ©e
     int32_t ret;
     uint32_t *OF, maxof;
     struct xvimage *of = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
@@ -1579,7 +1579,7 @@ int32_t l3dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
     MaxAlpha3d(func); // fermeture (en ndg)
   }
   else if (mode == 8)
-  { // fonction uniforme (unité) sur les facettes
+  { // fonction uniforme (unitÂÃ©) sur les facettes
     for (z = 0; z < ds; z++) 
     for (y = 0; y < cs; y++) 
     for (x = 0; x < rs; x++)
@@ -1592,7 +1592,7 @@ int32_t l3dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
     }
   }
   else if (mode == 9)
-  { // fonction uniforme sur les facettes de la frontière
+  { // fonction uniforme sur les facettes de la frontiÂÃ¨re
     struct xvimage * border = copyimage(k);
     uint8_t *B;
     assert(border != NULL);
@@ -1655,11 +1655,11 @@ int32_t l3dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
 
   // -----------------------------------------------------------
   // 4EME ETAPE : TRANSFORME LA FONCTION SUR LES SOMMETS EN 
-  // FONCTION DE MORSE (INVERSÉE) SUR LE COMPLEXE
+  // FONCTION DE MORSE (INVERSÂÃ‰E) SUR LE COMPLEXE
   // -----------------------------------------------------------  
   AlphaTopologicalMap(flow, head, alpha);
 
-  // met à vmax (infini) les sommets "permanents" (non collapsés)
+  // met ÂÃ  vmax (infini) les sommets "permanents" (non collapsÂÃ©s)
   vmax = flow->v_sommets[0];
   for (i = 0; i < N; i++)
     if (flow->v_sommets[i] > vmax) vmax = flow->v_sommets[i];

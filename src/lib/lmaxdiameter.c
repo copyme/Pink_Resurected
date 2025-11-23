@@ -32,7 +32,7 @@ same conditions as regards security.
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
-/* Trouve les deux points les plus éloignés entre eux (au sens de 
+/* Trouve les deux points les plus Ã©loignÃ©s entre eux (au sens de 
    la distance euclidienne) dans une image binaire */
 
 #include <stdio.h>
@@ -118,7 +118,7 @@ int32_t lmaxdiameter(struct xvimage *image, int32_t connex)
 				y1 = x/rs;
 				for (i = x+1; i < N; i++)
 				{
-					//Le deuxième point au border
+					//Le deuxiÃ¨me point au border
 					if( I[i] != NDG_MIN )
 					{
 						x2 = i%rs;

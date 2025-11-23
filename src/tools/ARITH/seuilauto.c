@@ -155,7 +155,7 @@ int main(int argc, char **argv)
     diff=N;
     for (x=2; x<254; x++)
     {
-      somme = somme + histo [x];   /* points déjà considérés */
+      somme = somme + histo [x];   /* points dÃ©jÃ  considÃ©rÃ©s */
       if ((histolisse[x-1]>=histolisse[x]) && (histolisse[x]<histolisse[x+1]))
         if (abs(N-2*somme) < diff)
         {
@@ -204,7 +204,7 @@ int main(int argc, char **argv)
   }
 
 
-/* Ecriture de l'image résultat */
+/* Ecriture de l'image rÃ©sultat */
   if (datatype(image) == VFF_TYP_4_BYTE)
   {
     imagebin = allocimage(image->name, rs, cs, d, VFF_TYP_1_BYTE);

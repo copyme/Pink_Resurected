@@ -234,7 +234,7 @@ int32_t lpgm2ga(struct xvimage *im, struct xvimage *ga, int32_t param, double al
   uint8_t *F = UCHARDATA(im);        /* composante rouge */
   uint8_t *GA = UCHARDATA(ga);      /* graphe d'arete est suppose deja allouer */ 
   
-  /* vérifier que les tailles des diférentes images sont cohérentes */
+  /* vÃ©rifier que les tailles des difÃ©rentes images sont cohÃ©rentes */
 
   switch(param)
   {
@@ -295,7 +295,7 @@ int32_t lpgm2gafloat(struct xvimage *im, struct xvimage *ga, int32_t param, doub
   float *F = FLOATDATA(im);         /* composante rouge */
   float *GA = FLOATDATA(ga);        /* graphe d'arete est suppose deja allouer */ 
   
-  /* vérifier que les tailles des diférentes images sont cohérentes */
+  /* vÃ©rifier que les tailles des difÃ©rentes images sont cohÃ©rentes */
   switch(param)
   {
   case 0:
@@ -372,7 +372,7 @@ int32_t lpgm2gaDouble(struct xvimage *im, struct xvimage *ga, int32_t param, dou
   double *F = DOUBLEDATA(im);         /* composante rouge */
   double *GA = DOUBLEDATA(ga);        /* graphe d'arete est suppose deja allouer */ 
   double f,g;  
-  /* vérifier que les tailles des diférentes images sont cohérentes */
+  /* vÃ©rifier que les tailles des difÃ©rentes images sont cohÃ©rentes */
   switch(param)
   {
   case 0:
@@ -468,7 +468,7 @@ int32_t lpgm2ga3d(struct xvimage *im, struct xvimage *ga, int32_t param)
   uint8_t *F = UCHARDATA(im);       /* composante rouge */
   uint8_t *GA = UCHARDATA(ga);      /* graphe d'arete est suppose deja allouer */
   
-  /* vérifier que les tailles des diférentes images sont cohérentes */
+  /* vÃ©rifier que les tailles des difÃ©rentes images sont cohÃ©rentes */
   switch(param)
   {
   case 0:
@@ -563,7 +563,7 @@ int32_t lpgm2ga4d(struct xvimage4D *im, struct GA4d * ga, int32_t param)
   F = (uint8_t **)malloc(sizeof(char *) * ss);
   for(j = 0; j < ss; j++)
     F[j] = UCHARDATA(im->frame[j]);
-  /* vérifier que les tailles des diférentes images sont cohérentes */
+  /* vÃ©rifier que les tailles des difÃ©rentes images sont cohÃ©rentes */
   memset(GA,0,N*4);
   switch(param)
   {
@@ -639,8 +639,8 @@ int32_t lpgm2ga4d(struct xvimage4D *im, struct GA4d * ga, int32_t param)
 
 int16_t (**sphere_points)[3];
 /* Construit un graphe d'arete 2D 4-connexe a partir d'une image rgb */
-/* Chaque arete a pour valeur l'inverse de la composante homogénéité */
-/* de l'afinite définie ds :                                         */
+/* Chaque arete a pour valeur l'inverse de la composante homogÃ©nÃ©itÃ© */
+/* de l'afinite dÃ©finie ds :                                         */
 /* "Vectorial Scale based fuzzy connected image segmentation:        */
 /* theory, algorithms and applications" - Ying Zhuge, Jayaram K.     */
 /* Udupa and Punam K. Saha                                           */
@@ -731,7 +731,7 @@ int32_t laffinitynetwork(struct xvimage *r, struct xvimage *v, struct xvimage *b
   anisotropy_row = 1;
   anisotropy_col = 1;
 
-  /* Calcul de masques correspondants à des cercles de rayon k autour centre en (0,0) */
+  /* Calcul de masques correspondants Ã  des cercles de rayon k autour centre en (0,0) */
   /* pour un rayon croissant des disques */
   for (k = 0; k <= SCALE; k++)
   {
@@ -1034,7 +1034,7 @@ int32_t lppm2ga(struct xvimage *r, struct xvimage *v, struct xvimage *b, struct 
   uint8_t *B = UCHARDATA(b);        /* composante bleue */
   uint8_t *GA = UCHARDATA(ga);      /* graphe d'arete est suppose deja allouer */
   
-  /* vérifier que les tailles des diférentes images sont cohérentes */
+  /* vÃ©rifier que les tailles des difÃ©rentes images sont cohÃ©rentes */
   switch(param)
   {
   case 0:
@@ -1119,7 +1119,7 @@ int32_t compute_scale(uint8_t **image, uint8_t **scale_image, float *scale_map, 
       {
 	flag = 0;
 	edge_flag = 0;
-	// Attention on n'effectue pas de filtrage, c'est tout l'interet de la méthode  	
+	// Attention on n'effectue pas de filtrage, c'est tout l'interet de la mÃ©thode  	
 	//------------------------------mean filter----------------------
 	for(i=0;i<3;i++)
 	  mask_f[i] = 0;
@@ -1268,7 +1268,7 @@ void compute_homogeneitysb(uint8_t ** image, double *feature_mean, uint8_t *x_af
 	  {
 	    xx = sphere_points[k][i][2];
 	    yy = sphere_points[k][i][1];	      
-	    // (x,y) ds B correspond à (x1,y1) ds B1, B coule centre (col,row) et B1 centre en (col1,row1)
+	    // (x,y) ds B correspond Ã  (x1,y1) ds B1, B coule centre (col,row) et B1 centre en (col1,row1)
 	    x = col + xx; y = row + yy; x1 = col1 + xx; y1 = row1 + yy;
 	    tti1 = 0;	      
 	    if( x >= 0 && x1>=0 && y>=0 && y1>=0 && 
@@ -1367,7 +1367,7 @@ int32_t lga2pgm(struct xvimage *im, struct xvimage *ga, int32_t param)
   int32_t N = rs * cs;                        /* taille image */
   uint8_t *F = UCHARDATA(im);        /* composante rouge */
   uint8_t *GA = UCHARDATA(ga);       /* graphe d'arete est suppose deja allouer */ 
-  /* vérifier que les tailles des diférentes images sont cohérentes */
+  /* vÃ©rifier que les tailles des difÃ©rentes images sont cohÃ©rentes */
   switch(param)
   {
   case 1:
@@ -1406,7 +1406,7 @@ int32_t lga2pgm3d(struct xvimage *im, struct xvimage *ga, int32_t param)
   int32_t N = ps*ds;                          /* taille image */
   uint8_t *F = UCHARDATA(im);        /* composante rouge */
   uint8_t *GA = UCHARDATA(ga);       /* graphe d'arete est suppose deja allouer */ 
-  /* vérifier que les tailles des diférentes images sont cohérentes */
+  /* vÃ©rifier que les tailles des difÃ©rentes images sont cohÃ©rentes */
   switch(param)
   {
   case 1:

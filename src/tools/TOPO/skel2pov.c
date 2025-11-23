@@ -146,7 +146,7 @@ int main(int argc, char **argv)
   double x, y, z;
   int32_t npoints = 0;
   double bx, by, bz; //pour le calcul du barycentre global
-  double *X, *Y, *Z; // tableaux pour les coordonnées
+  double *X, *Y, *Z; // tableaux pour les coordonnÃ©es
   SKC_adj_pcell a;
 
   bx = by = bz = 0.0;
@@ -193,7 +193,7 @@ int main(int argc, char **argv)
   fprintf(fd, "%s\n", DEBIMAGE);
 #endif
 
-  // génère les sommets
+  // gÃ©nÃ¨re les sommets
 
   for (i = 0; i < S->e_isol; i++)
   {
@@ -219,7 +219,7 @@ int main(int argc, char **argv)
     npoints++; bx += x; by += y; bz += z;
   }
 
-  // génère les arêtes
+  // gÃ©nÃ¨re les arÃªtes
 
   for (i = S->e_end; i < S->e_curv; i++)
   {

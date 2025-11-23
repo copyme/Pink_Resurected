@@ -35,12 +35,12 @@ knowledge of the CeCILL license and that you accept its terms.
 /* Operateurs agissant dans la grille de Khalimsky 2d */
 /* Michel Couprie - mars 2000 
 
-   l2dseltype: extraction d'éléments selon leur rang et leur type topologique
+   l2dseltype: extraction d'Ã©lÃ©ments selon leur rang et leur type topologique
      Michel Couprie - avril 2007
 
-   l2dborder: extraction de la frontière interne
-   l2dboundary: extraction de la frontière interne
-     Michel Couprie - août 2009
+   l2dborder: extraction de la frontiÃ¨re interne
+   l2dboundary: extraction de la frontiÃ¨re interne
+     Michel Couprie - aoÃ»t 2009
  */
 #include <stdio.h>
 #include <stdint.h>
@@ -208,7 +208,7 @@ int32_t l2dkhalimskize_noalloc(struct xvimage * i, struct xvimage *k, int32_t mo
 #define F_NAME "l2dkhalimskize_noalloc"
 /* 
    passage de z2 a la grille de Khalimsky
-   sans allocation de mémoire
+   sans allocation de mÃ©moire
    mode = 
      4 : emulation de la 4-connexite, idem "miss", 
      8 : emulation de la 8-connexite, 
@@ -220,7 +220,7 @@ int32_t l2dkhalimskize_noalloc(struct xvimage * i, struct xvimage *k, int32_t mo
      7 : moyenne
      9 : reverse (Khalimsky -> Z2) : selection carres
 
-     \warning pas de vérification de taille
+     \warning pas de vÃ©rification de taille
 */
 {
   ACCEPTED_TYPES1(i, VFF_TYP_1_BYTE);
@@ -1519,7 +1519,7 @@ int32_t l2dinvariants(struct xvimage *f, index_t *nbcc, index_t *nbtrous, index_
 int32_t l2dboundary(struct xvimage * f)
 /* =============================================================== */
 /* 
-   extrait la frontière interne
+   extrait la frontiÃ¨re interne
    def: {x in F | theta(x) inter Fbar neq emptyset}
 */
 {
@@ -1569,7 +1569,7 @@ int32_t l2dboundary(struct xvimage * f)
 int32_t l2dborder(struct xvimage * f)
 /* =============================================================== */
 /* 
-   extrait la frontière interne
+   extrait la frontiÃ¨re interne
    def: closure{x in F | x free for F}
 */
 {

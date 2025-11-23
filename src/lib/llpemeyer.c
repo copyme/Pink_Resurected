@@ -45,7 +45,7 @@ knowledge of the CeCILL license and that you accept its terms.
 
    Update janvier 2000 : generation d'una animation (flag ANIMATE)
    Update janvier 2001 : mise a jour 2D-3D 
-   Update juin 2004  : "écriture" d'une version sans ligne
+   Update juin 2004  : "Ã©criture" d'une version sans ligne
 */
 
 /*
@@ -316,9 +316,9 @@ int32_t llpemeyer2(
         int32_t connex)
 /* ==================================== */
 // marqueurs: image initiale de labels
-// le résultat du traitement se trouve dans marqueurs (image de labels)
+// le rÃ©sultat du traitement se trouve dans marqueurs (image de labels)
 // et dans image (binaire)
-// LPE avec ligne de séparation
+// LPE avec ligne de sÃ©paration
 #undef F_NAME
 #define F_NAME "llpemeyer2"
 {
@@ -458,9 +458,9 @@ int32_t llpemeyer2lab(
         int32_t connex)
 /* ==================================== */
 // marqueurs: image initiale de labels
-// le résultat du traitement se trouve dans marqueurs (image de labels)
+// le rÃ©sultat du traitement se trouve dans marqueurs (image de labels)
 // et dans image (binaire)
-// LPE avec ligne de séparation
+// LPE avec ligne de sÃ©paration
 #undef F_NAME
 #define F_NAME "llpemeyer2lab"
 {
@@ -474,9 +474,9 @@ int32_t llpemeyer2lab_nomask(
         int32_t connex)
 /* ==================================== */
 // marqueurs: image initiale de labels
-// le résultat du traitement se trouve dans marqueurs (image de labels)
+// le rÃ©sultat du traitement se trouve dans marqueurs (image de labels)
 // et dans image (binaire)
-// LPE avec ligne de séparation
+// LPE avec ligne de sÃ©paration
 #undef F_NAME
 #define F_NAME "llpemeyer2lab_nomask"
 {
@@ -490,8 +490,8 @@ int32_t llpemeyer3(
         struct xvimage *masque,
         int32_t connex)
 /* ==================================== */
-// version sans ligne de séparation
-// le résultat se trouve dans marqueurs
+// version sans ligne de sÃ©paration
+// le rÃ©sultat se trouve dans marqueurs
 #undef F_NAME
 #define F_NAME "llpemeyer3"
 {
@@ -2150,9 +2150,9 @@ int32_t llpemeyer3d2(
         int32_t connex)
 /* ==================================== */
 // marqueurs: image initiale de labels
-// le résultat du traitement se trouve dans marqueurs (image de labels)
+// le rÃ©sultat du traitement se trouve dans marqueurs (image de labels)
 // et dans image (binaire)
-// LPE avec ligne de séparation
+// LPE avec ligne de sÃ©paration
 {
 #undef F_NAME
 #define F_NAME "llpemeyer3d2"
@@ -2358,10 +2358,10 @@ int32_t llpemeyer3d2b(
         int32_t connex)
 /* ==================================== */
 // marqueurs: image initiale de labels
-// le résultat du traitement se trouve dans marqueurs (image de labels)
+// le rÃ©sultat du traitement se trouve dans marqueurs (image de labels)
 // et dans image (binaire)
-// LPE avec ligne de séparation
-// labels différents pour les voxels de la LPE :
+// LPE avec ligne de sÃ©paration
+// labels diffÃ©rents pour les voxels de la LPE :
 //   soit n le dernier label de l'image marqueurs, 
 //   si v est voisin de 2 labels i et j alors son label sera j*(n+1)+i, avec i<j
 //   s'il est voisin de plus de 2 labels alors son label sera n+1
@@ -2604,8 +2604,8 @@ int32_t llpemeyer3d3(
         int32_t connex)
 /* ==================================== */
 // marqueurs: image initiale de labels
-// le résultat du traitement se trouve dans marqueurs
-// LPE sans ligne de séparation
+// le rÃ©sultat du traitement se trouve dans marqueurs
+// LPE sans ligne de sÃ©paration
 #undef F_NAME
 #define F_NAME "llpemeyer3d3"
 {

@@ -145,7 +145,7 @@ void printskel(skel * S)
 /* ================================================ */
 
 /* ================================================ */
-/* fonctions d'entrée-sortie */
+/* fonctions d'entrÃ©e-sortie */
 /* ================================================ */
 
 /*
@@ -345,8 +345,8 @@ void writeskel(skel * S, const char *filename)
 /* ====================================================================== */
 void writevskel(skel * S, const char *filename, struct xvimage *val)
 /* ====================================================================== */
-// idem writeskel, mais de plus chaque point est suivi d'une valeur trouvée dans l'image val,
-// et chaque vertex est suivi d'une valeur (nulle par défaut).
+// idem writeskel, mais de plus chaque point est suivi d'une valeur trouvÃ©e dans l'image val,
+// et chaque vertex est suivi d'une valeur (nulle par dÃ©faut).
 // write all elements, even those that are "deleted" 
 {
 #undef F_NAME
@@ -463,7 +463,7 @@ skel * readskel(const char *filename)
   S->e_isol = nbisol;
 
 #ifdef DEBUG
-  printf("points isolés : %d\n", nbisol);
+  printf("points isolÃ©s : %d\n", nbisol);
 #endif
 
   for (i = 0; i < nbisol; i++)
@@ -508,7 +508,7 @@ skel * readskel(const char *filename)
   S->e_end = nbisol+nbend;
 
 #ifdef DEBUG
-  printf("points extrémités : %d\n", nbend);
+  printf("points extrÃ©mitÃ©s : %d\n", nbend);
 #endif
 
   for (i = 0; i < nbend; i++)
@@ -770,7 +770,7 @@ void skeldelete(skel * S, uint32_t i)
   }
   else if (IS_CURV(i)) 
   {
-    if (p == NULL) // si arc fermé
+    if (p == NULL) // si arc fermÃ©
     {
 #ifdef DEBUG_skeldelete
     printf("%s: curv (closed) i=%d\n", F_NAME, i);

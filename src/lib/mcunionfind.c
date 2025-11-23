@@ -40,8 +40,8 @@ Ref: R.E. Tarjan, Data Structures and Network Algorithms, SIAM, 1978.
 
 Michel Couprie 2003
 
-ATTENTION : L'opération de Link n'a de sens que si elle agit sur des représentants
-(il faut faire find avant) - pas de vérification
+ATTENTION : L'opÃ©ration de Link n'a de sens que si elle agit sur des reprÃ©sentants
+(il faut faire find avant) - pas de vÃ©rification
 
 */
 
@@ -60,9 +60,9 @@ ATTENTION : L'opération de Link n'a de sens que si elle agit sur des représentan
 Tarjan * CreeTarjan(int32_t taille)
 /* ==================================== */
 /*! \fn Tarjan * CreeTarjan(int32_t taille)
-    \param taille : nombre total d'éléments
+    \param taille : nombre total d'Ã©lÃ©ments
     \return pointeur sur une structure Tarjan
-    \brief crée une structure pour la fusion d'ensemble
+    \brief crÃ©e une structure pour la fusion d'ensemble
     \warning ne fait pas l'initialisation de la structure
 */
 #undef F_NAME
@@ -92,7 +92,7 @@ void TarjanTermine(Tarjan * T)
 /* ==================================== */
 /*! \fn void TarjanTermine(Tarjan * T)
     \param T: une structure Tarjan
-    \brief libère la mémoire
+    \brief libÃ¨re la mÃ©moire
 */
 {
   free(T->Fth);
@@ -105,7 +105,7 @@ void TarjanInit(Tarjan * T)
 /* ==================================== */
 /*! \fn void TarjanInit(Tarjan * T)
     \param T: une structure Tarjan
-    \brief initialise la structure (crée les singletons)
+    \brief initialise la structure (crÃ©e les singletons)
 */
 {
   int32_t i;
@@ -130,8 +130,8 @@ void TarjanMakeSet(Tarjan * T, int32_t x)
 /* ==================================== */
 /*! \fn void TarjanMakeSet(Tarjan * T, int32_t x)
     \param T: une structure Tarjan
-    \param x: un élément
-    \brief ajoute le singleton {x} à la famille d'ensembles
+    \param x: un Ã©lÃ©ment
+    \brief ajoute le singleton {x} Ã  la famille d'ensembles
 */
 {
   T->Fth[x] = x;
@@ -143,10 +143,10 @@ int32_t TarjanFind(Tarjan * T, int32_t x)
 /* ==================================== */
 /*! \fn int32_t TarjanFind(Tarjan * T, int32_t x)
     \param T: une structure Tarjan
-    \param x: un élément
-    \return un représentant
-    \brief retourne le représentant de l'ensemble auquel appartient x
-    \warning x doit appartenir à un ensemble de la famille - pas de vérification
+    \param x: un Ã©lÃ©ment
+    \return un reprÃ©sentant
+    \brief retourne le reprÃ©sentant de l'ensemble auquel appartient x
+    \warning x doit appartenir Ã  un ensemble de la famille - pas de vÃ©rification
 */
 {
   if (T->Fth[x] != x) T->Fth[x] = TarjanFind(T, T->Fth[x]);
@@ -158,10 +158,10 @@ int32_t TarjanLink(Tarjan * T, int32_t x, int32_t y)
 /* ==================================== */
 /*! \fn int32_t TarjanLink(Tarjan * T, int32_t x, int32_t y)
     \param T: une structure Tarjan
-    \param x, y: deux représentants
-    \return un représentant
-    \brief fusionne les ensembles représentés par x et y et retourne le représentant de la fusion
-    \warning x et y doivent être des représentants - pas de vérification
+    \param x, y: deux reprÃ©sentants
+    \return un reprÃ©sentant
+    \brief fusionne les ensembles reprÃ©sentÃ©s par x et y et retourne le reprÃ©sentant de la fusion
+    \warning x et y doivent Ãªtre des reprÃ©sentants - pas de vÃ©rification
 */
 {
   if (T->Rank[x] > T->Rank[y]) { int32_t tmp = x; x = y; y = tmp; }
@@ -175,9 +175,9 @@ int32_t TarjanLinkSafe(Tarjan * T, int32_t x, int32_t y)
 /* ==================================== */
 /*! \fn int32_t TarjanLinkSafe(Tarjan * T, int32_t x, int32_t y)
     \param T: une structure Tarjan
-    \param x, y: deux éléments
-    \return un représentant
-    \brief fusionne les ensembles auxquels appartiennent x et y et retourne le représentant de la fusion
+    \param x, y: deux Ã©lÃ©ments
+    \return un reprÃ©sentant
+    \brief fusionne les ensembles auxquels appartiennent x et y et retourne le reprÃ©sentant de la fusion
 */
 {
   x = TarjanFind(T, x);

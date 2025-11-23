@@ -205,7 +205,7 @@ struct xvimage* lzoomintxyz(
     }
     else 
       {
-	fprintf (stderr,"erreur facteur de zoom non tous positif ou non tous négatif");
+	fprintf (stderr,"erreur facteur de zoom non tous positif ou non tous nÃ©gatif");
 	return 0;
       }
 

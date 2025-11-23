@@ -63,12 +63,12 @@ int32_t lellipseincl(double * X1, double * X2, int32_t np,
                )
 /* ==================================== */
 /*! \fn int32_t lellipseincl(double * X1, double * X2, int32_t np, double *R, double *S, double *T, double *U, double *V, double *Z)
-    \param X1 (entrée) : liste des abcisses des n points
-    \param X2 (entrée) : liste des ordonnées des n points
-    \param np (entrée) : nb de points
-    \param R,S,T,U,V,Z (sortie) : parametres de l'équation de l'ellipse (Rxx + Syy + 2Txy + 2Ux + 2Vy + Z = 0)
+    \param X1 (entrÃ©e) : liste des abcisses des n points
+    \param X2 (entrÃ©e) : liste des ordonnÃ©es des n points
+    \param np (entrÃ©e) : nb de points
+    \param R,S,T,U,V,Z (sortie) : parametres de l'Ã©quation de l'ellipse (Rxx + Syy + 2Txy + 2Ux + 2Vy + Z = 0)
     \return 0 en cas d'erreur, 1 sinon
-    \brief détermine la plus petite ellipse incluant les points donnés en entrée (cf. Pronzato 2002)
+    \brief dÃ©termine la plus petite ellipse incluant les points donnÃ©s en entrÃ©e (cf. Pronzato 2002)
 */
 {
 #define LOCALEPS 1e-2
