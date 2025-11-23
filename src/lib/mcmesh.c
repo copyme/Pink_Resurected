@@ -1577,7 +1577,7 @@ double CurvVoisEdges(int32_t v)
 // - sens 2 : cotes opposes a v pour les faces adjacentes
 // implemente pour le moment le sens 1
 {
-  double curv;
+  double curv = 0.0;
   int32_t i, ne, e;
 
   //printf("vertex %d : ", v);
