@@ -348,7 +348,8 @@ int main(int argc, char **argv)
     if (!voisins4(p, sp, rs))
       fprintf(stderr, "%s: warning: not a closed curve\n", argv[0]);
     else
-      P[n] = sp; n++;
+      P[n] = sp;
+    n++;
   }
   else if (connex == 8)
   {
@@ -363,7 +364,8 @@ int main(int argc, char **argv)
     if (!voisins8(p, sp, rs))
       fprintf(stderr, "%s: warning: not a closed curve\n", argv[0]);
     else
-      P[n] = sp; n++;
+      P[n] = sp;
+    n++;
   }
   else if (connex == 6)
   {
@@ -378,7 +380,8 @@ int main(int argc, char **argv)
     if (!voisins6(p, sp, rs, ps))
       fprintf(stderr, "%s: warning: not a closed curve\n", argv[0]);
     else
-      P[n] = sp; n++;
+      P[n] = sp;
+    n++;
   }
   else if (connex == 18)
   {
@@ -393,7 +396,8 @@ int main(int argc, char **argv)
     if (!voisins18(p, sp, rs, ps))
       fprintf(stderr, "%s: warning: not a closed curve\n", argv[0]);
     else
-      P[n] = sp; n++;
+      P[n] = sp;
+    n++;
   }
   else if (connex == 26)
   {
@@ -408,7 +412,8 @@ int main(int argc, char **argv)
     if (!voisins26(p, sp, rs, ps))
       fprintf(stderr, "%s: warning: not a closed curve\n", argv[0]);
     else
-      P[n] = sp; n++;
+      P[n] = sp;
+    n++;
   }
 
   if (val)
