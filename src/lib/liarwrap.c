@@ -186,5 +186,5 @@ int imexception(const char *msg, ...)
 }
 
 #ifdef HAVE_TIFF_LIB
-#  include "loadtiff-code.h"
+#  include "loadtiff_code.h"
 #endif // HAVE_TIFF_LIB
