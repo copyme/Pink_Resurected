@@ -121,8 +121,8 @@ int32_t lnbtopo(
         case M:  for (p = 0; p < N; p++) if (nonbord3d(p, rs, ps, N)) F[p] = (uint8_t)mctopo3d_t26m(I, p, rs, ps, N);  break;
         case MM: for (p = 0; p < N; p++) if (nonbord3d(p, rs, ps, N)) F[p] = (uint8_t)mctopo3d_t26mm(I, p, rs, ps, N); break;
       }
-      break;
       mctopo3d_termine_topo3d();
+      break;
     default: 
       fprintf(stderr, "%s: bad value for connex: %d\n", F_NAME, connex);
       return 0;
