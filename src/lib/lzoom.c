@@ -840,7 +840,7 @@ int32_t lzoom2(
 #undef F_NAME
 #define F_NAME "lzoom2"
 {
-  double zoom;
+  double zoom = 0.0;
 
   if (dim == 'x') zoom = (double)newdim / (double)rowsize(in);
   else if (dim == 'y') zoom = (double)newdim / (double)colsize(in);
