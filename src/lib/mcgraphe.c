@@ -1205,8 +1205,8 @@ boolean * Descendants(graphe * g, int32_t a)
 #undef F_NAME
 #define F_NAME "Descendants"
 {
-  boolean * D;   /* pour les "descendants" (successeurs a N niveaux) */
-  Lifo * T;   /* liste temporaire geree en pile (Last In, First Out) */
+  boolean * D = NULL;   /* pour les "descendants" (successeurs a N niveaux) */
+  Lifo * T = NULL;   /* liste temporaire geree en pile (Last In, First Out) */
   int32_t i, s, n;
   pcell p;
   n = g->nsom;
@@ -1246,8 +1246,8 @@ void CompFortConnexe(graphe * g, graphe *g_1, int32_t a, boolean * Ca)
 #undef F_NAME
 #define F_NAME "CompFortConnexe"
 {
-  boolean * D;   /* pour les "descendants" (successeurs a N niveaux) */
-  boolean * A;   /* pour les "ascendants" (predecesseurs a N niveaux) */
+  boolean * D = NULL;   /* pour les "descendants" (successeurs a N niveaux) */
+  boolean * A = NULL;   /* pour les "ascendants" (predecesseurs a N niveaux) */
   int32_t i, n;
   n = g->nsom;
   D = Descendants(g, a);
@@ -1269,8 +1269,8 @@ boolean ExisteCircuit(graphe * g, int32_t a)
 #undef F_NAME
 #define F_NAME "ExisteCircuit"
 {
-  boolean * D;   /* pour les "descendants" (successeurs a N niveaux) */
-  Lifo * T;   /* liste temporaire geree en pile (Last In, First Out) */
+  boolean * D = NULL;   /* pour les "descendants" (successeurs a N niveaux) */
+  Lifo * T = NULL;   /* liste temporaire geree en pile (Last In, First Out) */
   int32_t i, n, s;
   pcell p;
 
@@ -1314,7 +1314,7 @@ void CompConnexe(graphe * g, graphe *g_1, int32_t a, boolean * Ca)
 #undef F_NAME
 #define F_NAME "CompConnexe"
 {
-  Lifo * T;   /* liste temporaire geree en pile (Last In, First Out) */
+  Lifo * T = NULL;   /* liste temporaire geree en pile (Last In, First Out) */
   int32_t i, n, s;
   pcell p;
 
@@ -1388,7 +1388,7 @@ boolean CircuitNiveaux(graphe * g)
   int32_t * D = NULL;// pour les degrés intérieurs
   int32_t i, n, x, y, N;
   pcell p;
-  Lifo * T, *U, *V;
+  Lifo * T = NULL, *U = NULL, *V = NULL;
 
   n = g->nsom;
   T = CreeLifoVide(n);
@@ -1686,7 +1686,7 @@ void DepthTree(graphe * g, int32_t a, TYP_VARC *depth, int32_t *farthest)
 #undef F_NAME
 #define F_NAME "DepthTree"
 {
-  Lifo * T;   /* liste temporaire geree en pile (Last In, First Out) */
+  Lifo * T = NULL;   /* liste temporaire geree en pile (Last In, First Out) */
   int32_t i, f, n, s;
   pcell p;
   TYP_VARC * dist = NULL;
@@ -1732,8 +1732,8 @@ graphe * MaxDiameterTree(graphe * g)
 {
   int32_t n = g->nsom;
   int32_t i, imd;
-  TYP_VARC * diam, d, maxdiam = 0;
-  int32_t *opp_som, f;
+  TYP_VARC * diam = NULL, d, maxdiam = 0;
+  int32_t *opp_som = NULL, f;
   graphe * pcc = NULL;
 
   diam = (TYP_VARC *)malloc(n * sizeof(TYP_VARC *));
@@ -2651,8 +2651,8 @@ boolean EstConfluent(graphe * g, graphe *g_1, int32_t a)
 #undef F_NAME
 #define F_NAME "EstConfluent"
 {
-  boolean * A;   /* pour les "ascendants" (predecesseurs a N niveaux) */
-  Lifo * T;   /* liste temporaire geree en pile (Last In, First Out) */
+  boolean * A = NULL;   /* pour les "ascendants" (predecesseurs a N niveaux) */
+  Lifo * T = NULL;   /* liste temporaire geree en pile (Last In, First Out) */
   int32_t i, n, s;
   pcell p;
   boolean ret = TRUE;
@@ -2704,7 +2704,7 @@ boolean * LeastDecreasingPath(graphe * g, int32_t a)
 #undef F_NAME
 #define F_NAME "LeastDecreasingPath"
 {
-  boolean * D;   /* pour les "descendants" (successeurs a N niveaux) */
+  boolean * D = NULL;   /* pour les "descendants" (successeurs a N niveaux) */
   int32_t s, t;
   pcell p;
   TYP_VSOM vmax;
@@ -3337,7 +3337,7 @@ void ldrawgraph(graphe * g, xvimage *image)
 #ifdef TESTKRUSKAL
 int32_t main(int32_t argc, char **argv)
 {
-  graphe * g, *g_1, *a;
+  graphe * g = NULL, *g_1 = NULL, *a = NULL;
   int32_t s1, s2, na, ns;
   boolean * Cs = NULL;
 

@@ -96,7 +96,7 @@ int main(int argc, char **argv)
   FILE *fd = NULL;
   int32_t i, n;
   char type;
-  double *x, *y, xx, yy, x0, y0, xa, ya, xb, yb;
+  double *x = NULL, *y = NULL, xx, yy, x0, y0, xa, ya, xb, yb;
 
   if (argc != 3)
   {

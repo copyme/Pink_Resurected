@@ -145,7 +145,7 @@ void DetruitListechainee(TypListechainee * lis)
                                  elements de la listechainee et par les
                                  liens du chainage. Attention: 
                                  ne modifie pas le contenu de lis */
-  TypListechainee *temp, *temp1;
+  TypListechainee *temp = NULL, *temp1 = NULL;
   for (temp = lis; temp != NULL; ) {
     temp1 = temp;
     temp = temp->suite;
@@ -178,7 +178,7 @@ TypListechainee * UnionListechainee (TypListechainee * lis1, TypListechainee * l
 #ifdef TEST_LISTECHAINEE
 main () {
   int32_t erreurs = 0;
-  TypListechainee *listechainee1, *listechainee2;
+  TypListechainee *listechainee1 = NULL, *listechainee2 = NULL;
                   
   listechainee1 = ListechaineeVide();
   if (!Vide(listechainee1)) {

@@ -1768,8 +1768,8 @@ skel * lskelsmoothing(skel *S, int32_t mode, double param)
 
   if (ds == 1)
   {
-    int32_t *X, *Y, *Xp, *Yp, Np, xi, yi;
-    double *Xd, *Yd;
+    int32_t *X = NULL, *Y = NULL, *Xp = NULL, *Yp = NULL, Np, xi, yi;
+    double *Xd = NULL, *Yd = NULL;
     X = (int32_t *)malloc(MAXNCURVEPOINTS * sizeof(int32_t)); assert(X != NULL);
     Y = (int32_t *)malloc(MAXNCURVEPOINTS * sizeof(int32_t)); assert(Y != NULL);
     Xp = (int32_t *)malloc(MAXNCURVEPOINTS * sizeof(int32_t)); assert(Xp != NULL);
@@ -1917,8 +1917,8 @@ skel * lskelsmoothing(skel *S, int32_t mode, double param)
   }
   else // 3D
   {
-    int32_t *X, *Y, *Z, *Xp, *Yp, *Zp, Np, xi, yi, zi;
-    double *Xd, *Yd, *Zd;
+    int32_t *X = NULL, *Y = NULL, *Z = NULL, *Xp = NULL, *Yp = NULL, *Zp = NULL, Np, xi, yi, zi;
+    double *Xd = NULL, *Yd = NULL, *Zd = NULL;
     X = (int32_t *)malloc(MAXNCURVEPOINTS * sizeof(int32_t)); assert(X != NULL);
     Y = (int32_t *)malloc(MAXNCURVEPOINTS * sizeof(int32_t)); assert(Y != NULL);
     Z = (int32_t *)malloc(MAXNCURVEPOINTS * sizeof(int32_t)); assert(Z != NULL);
@@ -3073,10 +3073,10 @@ int32_t lskelfilter1a(skel *S, double delta1, double delta2, double theta, int32
 {
 #undef F_NAME
 #define F_NAME "lskelfilter1a"
-  int32_t ret, J, Ai, nadj, i, j, A[26], nmaxpoints, *listpoints;
+  int32_t ret, J, Ai, nadj, i, j, A[26], nmaxpoints, *listpoints = NULL;
   SKC_adj_pcell p;
   double Vx[26], Vy[26], Vz[26], VVx, VVy, VVz, Cij;
-  double *X, *Y, *Z;
+  double *X = NULL, *Y = NULL, *Z = NULL;
 #ifdef DEBUG
   printf("%s: delta1 = %g, delta2 = %g, theta %g\n", F_NAME, delta1, delta2, theta);
 #endif	  
@@ -3351,10 +3351,10 @@ The matching branches are marked (field "tag" = 1).
 #undef F_NAME
 #define F_NAME "lskelfilter1"
   int32_t ret, i, j, len, e, m, Ai, EE[2], E;
-  int32_t nadj, A[26], nmaxpoints, *listpoints;
+  int32_t nadj, A[26], nmaxpoints, *listpoints = NULL;
   SKC_adj_pcell p;
   double Vx[26], Vy[26], Vz[26], VVx, VVy, VVz, Cij, angle, maxangle;
-  double *X, *Y, *Z;
+  double *X = NULL, *Y = NULL, *Z = NULL;
 
 #ifdef DEBUG
   printf("%s: length = %g, delta1 = %g, delta2 = %g\n", F_NAME, length, delta1, delta2);
@@ -3536,10 +3536,10 @@ int32_t lskelfilter2(skel *S, double delta1, double delta2)
 #undef F_NAME
 #define F_NAME "lskelfilter2"
   int32_t ret, e, i, j, m, Ai, A0, EE[2], E, Ep;
-  int32_t nadj, A[26], nmaxpoints, *listpoints, maxlen;
+  int32_t nadj, A[26], nmaxpoints, *listpoints = NULL, maxlen;
   SKC_adj_pcell p;
   double Vx[26], Vy[26], Vz[26], VVx, VVy, VVz, Cij, angle, minangle, normprod;
-  double *X, *Y, *Z;
+  double *X = NULL, *Y = NULL, *Z = NULL;
 
 #ifdef DEBUGDRAW
   int32_t rs = S->rs, ps = rs * S->cs;
@@ -4208,9 +4208,9 @@ static double calc_courbure(int32_t *X, int32_t *Y, int32_t *Z, int32_t n, int32
 // ----------------------------------------------------------------------
 {
 #define DELTAMAX 2
-  double *C0, *C1, *C2, *C3;
-  double *D0, *D1, *D2, *D3;
-  double *E0, *E1, *E2, *E3;
+  double *C0 = NULL, *C1 = NULL, *C2 = NULL, *C3 = NULL;
+  double *D0 = NULL, *D1 = NULL, *D2 = NULL, *D3 = NULL;
+  double *E0 = NULL, *E1 = NULL, *E2 = NULL, *E3 = NULL;
   double courbure;
   int32_t * CP = NULL;
   int32_t nctrlpoints, j;

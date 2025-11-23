@@ -76,8 +76,8 @@ int main(int argc, char **argv)
 {
   int32_t j, nsamples, npoints;
   FILE *fd = NULL;
-  double *x, *y, *z, x1, y1, z1;
-  double *sk, *rhok;
+  double *x = NULL, *y = NULL, *z = NULL, x1, y1, z1;
+  double *sk = NULL, *rhok = NULL;
   char type;
 
   if (argc != 4)

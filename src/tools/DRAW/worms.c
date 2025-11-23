@@ -105,7 +105,7 @@ int main(int argc, char **argv)
   struct xvimage * dis = NULL;
   struct xvimage * dil = NULL;
   struct xvimage * dse = NULL;
-  uint8_t *I, *T, *L;
+  uint8_t *I = NULL, *T = NULL, *L = NULL;
   uint32_t * D = NULL;
   index_t i, j, rs, cs, ds, N;
   int32_t n, nmax, nt, ntmax, radius, ret;

@@ -72,7 +72,7 @@ int main(int argc, char **argv)
   struct xvimage * opening = NULL;
   double lambda, lowlambda;
   uint32_t rs, cs, ds, N, i;
-  float max, *L, *O;;
+  float max, *L = NULL, *O = NULL;;
   uint8_t * I = NULL;
 
   if (argc != 6)

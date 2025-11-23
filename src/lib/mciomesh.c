@@ -44,7 +44,7 @@ knowledge of the CeCILL license and that you accept its terms.
 
 #define VERBOSE
 
-extern Rbtp * RBTP;
+extern Rbtp * RBTP = NULL;
 
 uint16_t LE_ReadUnsignedShort(FILE *fd)
 {
@@ -912,7 +912,7 @@ tri          := (uint32_t)v0 + (uint32_t)v1 + (uint32_t)v2
 */
 {
   int32_t i, nvert=-1, nfaces=-1, dim;
-  int32_t *f1, *f2, *f3, nf, F1, F2, F3;
+  int32_t *f1 = NULL, *f2 = NULL, *f3 = NULL, nf, F1, F2, F3;
   double x, y;
 
   fscanf(filein, "%d%d%d", &nvert, &nfaces, &dim);
@@ -1017,7 +1017,7 @@ void LoadBuildMCM(FILE *filein)
 #define sbuf 1024
   char buf[sbuf];
   char * ret = NULL;
-  double *vx, *vy, *vz;
+  double *vx = NULL, *vy = NULL, *vz = NULL;
   int32_t f1, f2, f3;
   while (1)
   {
@@ -1085,7 +1085,7 @@ POLYGONS %d %d     (Faces - champ obligatoire)
 #define sbuf 1024
   char buf[sbuf];
   char * ret = NULL;
-  double *vx, *vy, *vz;
+  double *vx = NULL, *vy = NULL, *vz = NULL;
   int32_t nf, f1, f2, f3;
   while (1)
   {
@@ -1181,7 +1181,7 @@ should fly along its object space -z axis.
 #define sbuf 1024
   char buf[sbuf];
   uint32_t s;
-  double *vx, *vy, *vz;
+  double *vx = NULL, *vy = NULL, *vz = NULL;
   int32_t f1, f2, f3;
 
   s = LE_ReadUnsignedLong(filein);

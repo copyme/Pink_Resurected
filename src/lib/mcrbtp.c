@@ -100,7 +100,7 @@ void RbtpReAlloc(Rbtp **A)
 /* ==================================== */
 {
   int32_t taillemax;
-  Rbtp * T, *Tmp;
+  Rbtp * T = NULL, *Tmp = NULL;
 
 #ifdef VERBOSE
   printf("RbtpReAlloc: ancienne taille %d nouvelle taille %d\n", (*A)->max, 2 * (*A)->max);

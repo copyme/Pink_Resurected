@@ -106,7 +106,7 @@ int main(int argc, char **argv)
   FILE *fd = NULL;
   int32_t rs, cs, ds, ps, N, x, y, z, p, n, connex, val;
   uint8_t * F = NULL;
-  int32_t *X, *Y, *Z = NULL;
+  int32_t *X = NULL, *Y = NULL, *Z = NULL;
 
   if ((argc != 7) && (argc != 6) && (argc != 4))
   {

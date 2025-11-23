@@ -123,7 +123,7 @@ void MCM_ReAllocVertices(meshtabvertices **A)
 /* ==================================== */
 {
   int32_t taillemax;
-  meshtabvertices * T, *Tmp;
+  meshtabvertices * T = NULL, *Tmp = NULL;
 
   //printf("MCM_ReAllocVertices: ancienne taille %d nouvelle taille %d\n", (*A)->max, 2 * (*A)->max);
 
@@ -162,7 +162,7 @@ void MCM_ReAllocFaces(meshtabfaces **A)
 /* ==================================== */
 {
   int32_t taillemax;
-  meshtabfaces * T, *Tmp;
+  meshtabfaces * T = NULL, *Tmp = NULL;
 
   //printf("MCM_ReAllocFaces: ancienne taille %d nouvelle taille %d\n", (*A)->max, 2 * (*A)->max);
 
@@ -197,7 +197,7 @@ void MCM_ReAllocEdges(meshtabedges **A)
 /* ==================================== */
 {
   int32_t taillemax;
-  meshtabedges * T, *Tmp;
+  meshtabedges * T = NULL, *Tmp = NULL;
 
   //printf("MCM_ReAllocEdges: ancienne taille %d nouvelle taille %d\n", (*A)->max, 2 * (*A)->max);
 
@@ -232,7 +232,7 @@ void ReAllocEdges(meshtabedges2 **A)
 /* ==================================== */
 {
   int32_t taillemax;
-  meshtabedges2 * T, *Tmp;
+  meshtabedges2 * T = NULL, *Tmp = NULL;
 
   //printf("MCM_ReAllocEdges: ancienne taille %d nouvelle taille %d\n", (*A)->max, 2 * (*A)->max);
 
@@ -1879,14 +1879,14 @@ void RegulMeshHamam(double theta)
 {
   int32_t a, n, i, j, iter, nv;
   double sx, sy, sz, alphax, alphay, alphaz;
-  double *tx, *ty, *tz;    // resultats intermediaires
+  double *tx = NULL, *ty = NULL, *tz = NULL;    // resultats intermediaires
   int32_t nitermax = NITERMAX; // garde-fou
   double normgradx, normgrady, normgradz;
   int32_t stabilite;
 #ifdef OPTIMALSTEP
-  double *ux, *uy, *uz;    // resultats intermediaires
+  double *ux = NULL, *uy = NULL, *uz = NULL;    // resultats intermediaires
 #endif
-  double *gx, *gy, *gz; // pour calculer la norme du vecteur des modifications
+  double *gx = NULL, *gy = NULL, *gz = NULL; // pour calculer la norme du vecteur des modifications
 
   gx = (double *)calloc(1,Vertices->cur * sizeof(double));
   gy = (double *)calloc(1,Vertices->cur * sizeof(double));
@@ -2121,11 +2121,11 @@ void RegulMeshHamam1(double theta)
 {
   int32_t a, n, i, j, iter, nv;
   double sx, sy, sz, alphax, alphay, alphaz;
-  double *tx, *ty, *tz;    // resultats intermediaires
+  double *tx = NULL, *ty = NULL, *tz = NULL;    // resultats intermediaires
   int32_t nitermax = NITERMAX; // garde-fou
   double normgradx, normgrady, normgradz;
   int32_t stabilite;
-  double *gx, *gy, *gz; // pour calculer la norme du vecteur des modifications
+  double *gx = NULL, *gy = NULL, *gz = NULL; // pour calculer la norme du vecteur des modifications
 
   gx = (double *)calloc(1,Vertices->cur * sizeof(double));
   gy = (double *)calloc(1,Vertices->cur * sizeof(double));
@@ -2314,7 +2314,7 @@ void RegulMeshHamam2(int32_t nitermax)
 {
   int32_t a, n, i, j, iter, nv;
   double sx, sy, sz, alpha, dx, dy, dz;
-  double *tx, *ty, *tz; // resultats intermediaires
+  double *tx = NULL, *ty = NULL, *tz = NULL; // resultats intermediaires
   double normgradx, normgrady, normgradz;
   int32_t stabilite;
 
@@ -2447,10 +2447,10 @@ void RegulMeshHamam3(double theta)
 {
   int32_t n, i, j, iter, nv;
   double sx, sy, sz;
-  double *dx, *dy, *dz;    // resultats intermediaires
-  double *ex, *ey, *ez;    // resultats intermediaires
-  double *fx, *fy, *fz;    // resultats intermediaires
-  double *tx, *ty, *tz;    // resultats intermediaires
+  double *dx = NULL, *dy = NULL, *dz = NULL;    // resultats intermediaires
+  double *ex = NULL, *ey = NULL, *ez = NULL;    // resultats intermediaires
+  double *fx = NULL, *fy = NULL, *fz = NULL;    // resultats intermediaires
+  double *tx = NULL, *ty = NULL, *tz = NULL;    // resultats intermediaires
   double alphax, betax, gamma_1x, gamma_nx, gamma_n1x;
   double alphay, betay, gamma_1y, gamma_ny, gamma_n1y;
   double alphaz, betaz, gamma_1z, gamma_nz, gamma_n1z;
@@ -2659,7 +2659,7 @@ void RegulMeshHC(double alpha, double beta)
   meshface F;
   int32_t link[MCM_MAXADJFACES];
   double x, y, z, sx, sy, sz, normgradx, normgrady, normgradz, dx, dy, dz;
-  double *tx, *ty, *tz; // pour calculer la norme du vecteur des modifications
+  double *tx = NULL, *ty = NULL, *tz = NULL; // pour calculer la norme du vecteur des modifications
 
 #ifdef VERBOSE
   //printf("%s: alpha = %g ; beta = %g\n", F_NAME, alpha, beta);
@@ -2836,7 +2836,7 @@ void RegulMeshTaubin(double lambda, double mu, int nitermax)
   meshface F;
   int32_t link[MCM_MAXADJFACES];
   double x, y, z, sx, sy, sz, normgradx, normgrady, normgradz, dx, dy, dz;
-  double *tx, *ty, *tz; // pour calculer la norme du vecteur des modifications
+  double *tx = NULL, *ty = NULL, *tz = NULL; // pour calculer la norme du vecteur des modifications
 
 #ifdef VERBOSE
   //printf("%s: lambda = %g ; mu = %g\n", F_NAME, lambda, mu);

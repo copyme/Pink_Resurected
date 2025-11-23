@@ -68,7 +68,7 @@ int main(int argc, char **argv)
   int32_t i, ncol;
   double minhue, maxhue, minlum, maxlum, minsat, maxsat;
   double r, g, b, hue, lum, sat;
-  uint8_t *R, *G, *B;
+  uint8_t *R = NULL, *G = NULL, *B = NULL;
   int32_t rint, gint, bint;
 
   if (argc != 9)

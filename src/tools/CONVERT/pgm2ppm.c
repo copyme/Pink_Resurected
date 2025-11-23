@@ -94,7 +94,7 @@ int main(int argc, char **argv)
     struct xvimage * lut_g = NULL;
     struct xvimage * lut_b = NULL;
     int32_t ncol, i, N;
-    uint8_t *G1, *G2, *G3, *R, *G, *B, c;
+    uint8_t *G1 = NULL, *G2 = NULL, *G3 = NULL, *R = NULL, *G = NULL, *B = NULL, c;
     g1 = readimage(argv[1]);
     g2 = copyimage(g1);
     g3 = copyimage(g1);

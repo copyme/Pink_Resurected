@@ -232,7 +232,7 @@ int main(int argc, char **argv)
   struct xvimage * es = NULL;
   double r;
   int32_t xc, yc, zc, rs, cs, ds, nbpoints;
-  int32_t *tabx, *taby, *tabz;
+  int32_t *tabx = NULL, *taby = NULL, *tabz = NULL;
 
   if (argc != 4)
   {

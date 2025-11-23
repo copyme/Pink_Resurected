@@ -85,7 +85,7 @@ double * lin_duplicate(double *A, int32_t n, int32_t m)
 #undef F_NAME
 #define F_NAME "lin_duplicate"
 {
-  double *z; int32_t i;
+  double *z = NULL; int32_t i;
   z = (double *)calloc(1,n * m * sizeof(double));
   if (z == NULL)
   {
@@ -108,7 +108,7 @@ double * lin_zeros(int32_t n, int32_t m)
 #undef F_NAME
 #define F_NAME "lin_zeros"
 {
-  double *z; int32_t i;
+  double *z = NULL; int32_t i;
   z = (double *)calloc(1,n * m * sizeof(double));
   if (z == NULL)
   {
@@ -131,7 +131,7 @@ double * lin_ones(int32_t n, int32_t m)
 #undef F_NAME
 #define F_NAME "lin_ones"
 {
-  double *z; int32_t i;
+  double *z = NULL; int32_t i;
   z = (double *)calloc(1,n * m * sizeof(double));
   if (z == NULL)
   {
@@ -1092,7 +1092,7 @@ int32_t lidentifyline(double *pbx, double *pby, int32_t npb, double *a, double *
  */
 {
   int32_t i, ret, noresult = 1;
-  double *X, *Y, *XtX, *XtXi, *XtY, *RtXtY, *YtY, *R;
+  double *X = NULL, *Y = NULL, *XtX = NULL, *XtXi = NULL, *XtY = NULL, *RtXtY = NULL, *YtY = NULL, *R = NULL;
 
   if (npb < 2)
   {
@@ -1151,7 +1151,7 @@ int32_t lidentifyparabola3(double *pbx, double *pby, int32_t npb, double *a, dou
  */
 {
   int32_t i, ret, noresult = 1;
-  double *X, *Y, *XtX, *XtXi, *XtY, *RtXtY, *YtY, *R;
+  double *X = NULL, *Y = NULL, *XtX = NULL, *XtXi = NULL, *XtY = NULL, *RtXtY = NULL, *YtY = NULL, *R = NULL;
 
   if (npb < 3)
   {
@@ -1212,7 +1212,7 @@ int32_t lidentifyparabola2(double *pbx, double *pby, int32_t npb, double *a, dou
  */
 {
   int32_t i, ret, noresult = 1;
-  double *X, *Y, *XtX, *XtXi, *XtY, *RtXtY, *YtY, *R;
+  double *X = NULL, *Y = NULL, *XtX = NULL, *XtXi = NULL, *XtY = NULL, *RtXtY = NULL, *YtY = NULL, *R = NULL;
 
   if (npb < 3)
   {
@@ -1272,7 +1272,7 @@ int32_t lidentifyplane(double *pbx, double *pby, double *pbz, index_t npb, doubl
 {
   index_t i;
   int32_t ret, noresult = 1;
-  double *X, *Y, *XtX, *XtXi, *XtY, *RtXtY, *YtY, *R;
+  double *X = NULL, *Y = NULL, *XtX = NULL, *XtXi = NULL, *XtY = NULL, *RtXtY = NULL, *YtY = NULL, *R = NULL;
   double err;
 
   if (npb < 3)

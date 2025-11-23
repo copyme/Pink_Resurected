@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
 {
 	FILE * f = NULL;
 	uint64_t rs, cs, d, nrs, ncs, nd, pixel, avct, h, b, i, j, k, size;
-	struct xvimage *output, *crop, *input_header;
+	struct xvimage *output = NULL, *crop = NULL, *input_header = NULL;
 	double factor, factor_rs, factor_cs, factor_d, factor_x, factor_y, factor_z, fx1, fx2, fy1, fy2, fz1, fz2, v, somme_facteur;
 	uint64_t sid, i_d, j_d, k_d, i_a, j_a, k_a, i_a_arrivee, j_a_arrivee, k_a_arrivee, sidsquare;
 	char mode, type;

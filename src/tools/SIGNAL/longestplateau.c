@@ -99,7 +99,7 @@ int main(int argc, char **argv)
   FILE *fd = NULL;
   int32_t n, i, l, imax, lmax;
   char type;
-  double v, tol, *tab;
+  double v, tol, *tab = NULL;
 
   if ((argc != 3) && (argc != 4))
   {

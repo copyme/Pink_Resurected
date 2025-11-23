@@ -153,7 +153,7 @@ double *lrecalagerigide_lrecalagerigide2d(double *X, int32_t n, double *Y, int32
        Le résultat de l'application de cette déformation à X est stockée dans X en sortie.
 */
 {
-  double *Gamma, fmin;
+  double *Gamma = NULL, fmin;
   double G[5] = {1.0, 1.0, 0.0, 0.0, 0.0}; // hx, hy, theta, tx, ty
   int32_t i;
   double BX1, BX2, BY1, BY2; // barycentres
@@ -346,7 +346,7 @@ double *lrecalagerigide3d(double *X, int32_t n, double *Y, int32_t m)
        Le résultat de l'application de cette déformation à X est stockée dans X en sortie.
 */
 {
-  double *Gamma, fmin;
+  double *Gamma = NULL, fmin;
   double G[8] = {1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0}; // hx, hy, hz, theta, phi, tx, ty, tz
   int32_t i;
   double BX1, BX2, BX3, BY1, BY2, BY3; // barycentres

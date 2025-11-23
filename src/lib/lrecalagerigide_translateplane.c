@@ -149,7 +149,7 @@ double *lrecalagerigide2d_translateplane(double *X, int32_t n, double *Y, int32_
        Le résultat de l'application de cette déformation à X est stockée dans X en sortie.
 */
 {
-  double *Gamma, fmin;
+  double *Gamma = NULL, fmin;
   double G[5] = {1.0, 1.0, 0.0, 0.0, 0.0}; // hx, hy, theta, tx, ty
   int i;
   double BX1, BX2, BY1, BY2; // barycentres
@@ -293,7 +293,7 @@ double *lrecalagerigide3d_translateplane(double *X, int n, double *Y, int m)
        Le résultat de l'application de cette déformation à X est stockée dans X en sortie.
 */
 {
-  double *Gamma, fmin;
+  double *Gamma = NULL, fmin;
   double G[3] = {0.0, 0.0,0.0}; // tx, ty,
   int i;
   double BX1, BX2, BX3, BY1, BY2, BY3; // barycentres
@@ -350,7 +350,7 @@ double *lrecalagerigide3d_translate(double *X, int n, double *Y, int m)
        Le résultat de l'application de cette déformation à X est stockée dans X en sortie.
 */
 {
-  double *Gamma, fmin;
+  double *Gamma = NULL, fmin;
   double G[3] = {0.0, 0.0,0.0}; // tx, ty,tz
   int i;
   double BX1, BX2, BX3, BY1, BY2, BY3; // barycentres

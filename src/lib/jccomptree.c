@@ -225,7 +225,7 @@ int32_t ** jccomptree_LCApreprocess(JCctree *CT, int32_t *Euler, int32_t *Depth,
   int32_t logn;
   int32_t i,j,k1,k2;
   int32_t * minim = NULL;
-  int32_t **Minim;
+  int32_t **Minim = NULL;
 
   nbr = -1; // Initialization number of euler nodes
   rep = 0;

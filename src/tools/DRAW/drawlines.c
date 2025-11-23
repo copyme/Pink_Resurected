@@ -83,7 +83,7 @@ int main(int argc, char **argv)
   double x1, y1, x2, y2;
   FILE *fd = NULL;
   int32_t nvect, n;
-  int32_t *lx, *ly;
+  int32_t *lx = NULL, *ly = NULL;
   char tag;
   int32_t rs, cs;
   uint8_t * F = NULL;

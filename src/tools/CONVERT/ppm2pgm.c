@@ -69,7 +69,7 @@ int main(int argc, char **argv)
   struct xvimage * g = NULL;
   struct xvimage * b = NULL;
   index_t i, rs, cs, N;
-  uint8_t *I, *R, *G, *B;
+  uint8_t *I = NULL, *R = NULL, *G = NULL, *B = NULL;
 
   if (argc != 5)
   {

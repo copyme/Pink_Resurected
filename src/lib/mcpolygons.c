@@ -70,7 +70,7 @@ void MCP_ReAllocVertices(mcptabvertices **A)
 /* ==================================== */
 {
   int32_t taillemax;
-  mcptabvertices * T, *Tmp;
+  mcptabvertices * T = NULL, *Tmp = NULL;
 
   //printf("ReAllocVertices: ancienne taille %d nouvelle taille %d\n", (*A)->max, 2 * (*A)->max);
 
@@ -106,7 +106,7 @@ void MCP_ReAllocFaces(mcptabfaces **A)
 /* ==================================== */
 {
   int32_t taillemax;
-  mcptabfaces * T, *Tmp;
+  mcptabfaces * T = NULL, *Tmp = NULL;
 
   //printf("ReAllocFaces: ancienne taille %d nouvelle taille %d\n", (*A)->max, 2 * (*A)->max);
 
@@ -141,7 +141,7 @@ void MCP_ReAllocEdges(mcptabedges **A)
 /* ==================================== */
 {
   int32_t taillemax;
-  mcptabedges * T, *Tmp;
+  mcptabedges * T = NULL, *Tmp = NULL;
 
   //printf("ReAllocEdges: ancienne taille %d nouvelle taille %d\n", (*A)->max, 2 * (*A)->max);
 

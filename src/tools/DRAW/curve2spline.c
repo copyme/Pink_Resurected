@@ -138,9 +138,9 @@ int main(int argc, char **argv)
 
   if (type == 'b') // cas 2D
   {
-    int32_t *X, *Y, *W;
-    double *C0, *C1, *C2, *C3;
-    double *D0, *D1, *D2, *D3;
+    int32_t *X = NULL, *Y = NULL, *W = NULL;
+    double *C0 = NULL, *C1 = NULL, *C2 = NULL, *C3 = NULL;
+    double *D0 = NULL, *D1 = NULL, *D2 = NULL, *D3 = NULL;
     fscanf(fd, "%d", &npoints);
     X = (int32_t *)calloc(1,npoints*sizeof(int32_t));
     Y = (int32_t *)calloc(1,npoints*sizeof(int32_t));
@@ -180,10 +180,10 @@ int main(int argc, char **argv)
   }
   else // cas 3D
   {
-    int32_t *X, *Y, *Z, *W;
-    double *C0, *C1, *C2, *C3;
-    double *D0, *D1, *D2, *D3;
-    double *E0, *E1, *E2, *E3;
+    int32_t *X = NULL, *Y = NULL, *Z = NULL, *W = NULL;
+    double *C0 = NULL, *C1 = NULL, *C2 = NULL, *C3 = NULL;
+    double *D0 = NULL, *D1 = NULL, *D2 = NULL, *D3 = NULL;
+    double *E0 = NULL, *E1 = NULL, *E2 = NULL, *E3 = NULL;
     fscanf(fd, "%d", &npoints);
     X = (int32_t *)calloc(1,npoints*sizeof(int32_t));
     Y = (int32_t *)calloc(1,npoints*sizeof(int32_t));

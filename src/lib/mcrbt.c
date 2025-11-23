@@ -186,7 +186,7 @@ void RbtReAlloc(Rbt **A)
 /* ==================================== */
 {
   index_t taillemax;
-  Rbt * T, *Tmp;
+  Rbt * T = NULL, *Tmp = NULL;
 
 #ifdef VERBOSE
 #ifdef MC_64_BITS

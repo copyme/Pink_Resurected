@@ -90,7 +90,7 @@ int main(int argc, char **argv)
 
   if ((type == 's') || (type == 'b')) // cas 2D
   {
-    double *x, *y, *X, *Y;
+    double *x = NULL, *y = NULL, *X = NULL, *Y = NULL;
     fscanf(fd, "%d", &npoints);
     x = (double *)calloc(1,npoints*sizeof(double));
     y = (double *)calloc(1,npoints*sizeof(double));
@@ -120,7 +120,7 @@ int main(int argc, char **argv)
   }
   else if ((type == 'S') || (type == 'B')) // cas 3D
   {
-    double *x, *y, *z, *X, *Y, *Z;
+    double *x = NULL, *y = NULL, *z = NULL, *X = NULL, *Y = NULL, *Z = NULL;
     fscanf(fd, "%d", &npoints);
     x = (double *)calloc(1,npoints*sizeof(double));
     y = (double *)calloc(1,npoints*sizeof(double));

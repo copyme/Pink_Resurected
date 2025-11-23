@@ -633,7 +633,7 @@ int32_t lhisto_distance_modulo_raw (index_t * A, index_t * B, int32_t n)
   // note: not supported in msvc
   // int32_t prefixsum[n], temp[n];
   
-  int32_t *prefixsum, *temp;
+  int32_t *prefixsum = NULL, *temp = NULL;
   prefixsum = (int32_t*)malloc(n*sizeof(int32_t));
   temp = (int32_t*)malloc(n*sizeof(int32_t));
 
@@ -725,7 +725,7 @@ double lhisto_distance_modulo (index_t * A, index_t * B, int32_t n)
   double nA, nB;
   // note: not supported in msvc
   // double prefixsum[n], temp[n];
-  double *prefixsum, *temp;
+  double *prefixsum = NULL, *temp = NULL;
   prefixsum = (double*)malloc(n*sizeof(double));
   temp = (double*)malloc(n*sizeof(double));
 

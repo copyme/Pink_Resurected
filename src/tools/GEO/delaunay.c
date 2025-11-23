@@ -102,7 +102,7 @@ int main(int argc, char **argv)
   char type;
   mcgeo_point * S = NULL;
   double * V = NULL;
-  int32_t **v; /* la table des listes de voisins (reperes par leur indice dans S) */
+  int32_t **v = NULL; /* la table des listes de voisins (reperes par leur indice dans S) */
   int32_t * nv = NULL;/* la table des nombres de voisins */
   int32_t * ec = NULL;/* table de booleens indiquant les points de l'enveloppe convexe */
   struct xvimage * mask = NULL;
@@ -110,7 +110,7 @@ int main(int argc, char **argv)
   uint8_t * M = NULL;
   int32_t npoints;
   int32_t newnv;
-  int32_t *del, *lx, *ly;
+  int32_t *del = NULL, *lx = NULL, *ly = NULL;
 
   if ((argc != 3) && (argc != 4))
   {

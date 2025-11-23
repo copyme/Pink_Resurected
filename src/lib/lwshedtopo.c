@@ -248,7 +248,7 @@ int32_t ** LCApreprocess(ctree *CT,   int32_t *Euler, int32_t *Depth, int32_t *R
   int32_t logn;
   int32_t i,j,k1,k2;
   int32_t * minim = NULL;
-  int32_t **Minim;
+  int32_t **Minim = NULL;
 
   nbr = -1; // Initialization number of euler nodes
   rep = 0;
@@ -801,7 +801,7 @@ static void reconsTree(ctree *CT, int32_t *CM, int32_t *newCM, int32_t N, uint8_
       e=d;
       while ((e != c) && (CT->tabnodes[e].nbsons != -2)) {
 	if (CT->tabnodes[e].father == c) { // remove the son which is elevated to the father
-	  soncell *sc, *prev = NULL;
+	  soncell *sc = NULL, *prev = NULL;
 	  for (sc = CT->tabnodes[c].sonlist; sc != NULL; sc = sc->next)    {
 		if (sc->son == e) {
 		  CT->tabnodes[c].nbsons--;

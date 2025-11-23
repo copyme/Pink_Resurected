@@ -203,7 +203,7 @@ int fastlog2(int n)
 void R2TX(int nthpo, DCOMPLEX *c0, DCOMPLEX *c1)
 {
   int k,kk;
-  double *cr0, *ci0, *cr1, *ci1, r1, fi1;
+  double *cr0 = NULL, *ci0 = NULL, *cr1 = NULL, *ci1 = NULL, r1, fi1;
 
   cr0 = &(c0[0].re);
   ci0 = &(c0[0].im);
@@ -228,7 +228,7 @@ void R4TX(int nthpo, DCOMPLEX *c0, DCOMPLEX *c1,
           DCOMPLEX *c2, DCOMPLEX *c3)
 {
   int k,kk;
-  double *cr0, *ci0, *cr1, *ci1, *cr2, *ci2, *cr3, *ci3;
+  double *cr0 = NULL, *ci0 = NULL, *cr1 = NULL, *ci1 = NULL, *cr2 = NULL, *ci2 = NULL, *cr3 = NULL, *ci3 = NULL;
   double r1, r2, r3, r4, i1, i2, i3, i4;
 
   cr0 = &(c0[0].re);
@@ -278,8 +278,8 @@ void R8TX(int nxtlt, int nthpo, int length,
   double br0, br1, br2, br3, br4, br5, br6, br7;
   double bi0, bi1, bi2, bi3, bi4, bi5, bi6, bi7;
   
-  double *cr0, *cr1, *cr2, *cr3, *cr4, *cr5, *cr6, *cr7;
-  double *ci0, *ci1, *ci2, *ci3, *ci4, *ci5, *ci6, *ci7;
+  double *cr0 = NULL, *cr1 = NULL, *cr2 = NULL, *cr3 = NULL, *cr4 = NULL, *cr5 = NULL, *cr6 = NULL, *cr7 = NULL;
+  double *ci0 = NULL, *ci1 = NULL, *ci2 = NULL, *ci3 = NULL, *ci4 = NULL, *ci5 = NULL, *ci6 = NULL, *ci7 = NULL;
 
   cr0 = &(cc0[0].re);
   cr1 = &(cc1[0].re);

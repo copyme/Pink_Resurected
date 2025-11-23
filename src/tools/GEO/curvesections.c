@@ -84,11 +84,11 @@ int main(int argc, char **argv)
   double tolerance;
   int32_t npoints, n_samples, clip_rad;
   int32_t i, n; // where n+1 denotes the number of control points
-  int32_t *X, *Y, *Z, *W;
-  double *C0, *C1, *C2, *C3;
-  double *D0, *D1, *D2, *D3;
-  double *E0, *E1, *E2, *E3;
-  double *sk, *xk, *yk, *zk, *txk, *tyk, *tzk, norm;
+  int32_t *X = NULL, *Y = NULL, *Z = NULL, *W = NULL;
+  double *C0 = NULL, *C1 = NULL, *C2 = NULL, *C3 = NULL;
+  double *D0 = NULL, *D1 = NULL, *D2 = NULL, *D3 = NULL;
+  double *E0 = NULL, *E1 = NULL, *E2 = NULL, *E3 = NULL;
+  double *sk = NULL, *xk = NULL, *yk = NULL, *zk = NULL, *txk = NULL, *tyk = NULL, *tzk = NULL, norm;
   double v[3], n1[3], n2[3];
   char bufname[1024];
   int32_t namelen, nl;

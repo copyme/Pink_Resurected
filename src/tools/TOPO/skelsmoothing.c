@@ -67,7 +67,7 @@ The parameter \b mode specifies the smoothing method:
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  skel * S, *SS;
+  skel * S = NULL, *SS = NULL;
   int32_t mode;
   double param;
 

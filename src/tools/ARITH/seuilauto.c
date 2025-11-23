@@ -81,7 +81,7 @@ int main(int argc, char **argv)
   uint8_t * F = NULL;
   int32_t * FL = NULL;
   index_t * histo = NULL;
-  index_t * histolisse, somme;
+  index_t * histolisse = NULL, somme;
   int32_t x, y, diff, compteur, lissage;
 
   if ((argc != 5) && (argc != 6))

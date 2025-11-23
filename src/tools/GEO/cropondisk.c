@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
 {
 	FILE * f = NULL;
 	uint64_t rs, cs, d, nrs, ncs, nd, cx, cy, cz, h, b, size;
-	struct xvimage *output, *input_header;
+	struct xvimage *output = NULL, *input_header = NULL;
 	char mode, type;
 	struct stat st;
 

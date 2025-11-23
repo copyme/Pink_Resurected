@@ -96,7 +96,7 @@ int geodist(
 	int i;
 	HEAPSTRUCT * heapStruct = NULL;
 	FMMSTATESTRUCT * stateStruct = NULL;
-	BVECT * coord, * tempCoord;
+	BVECT * coord = NULL, * tempCoord = NULL;
 
 	/* Allocate memory for coordinates */
 	coord = BVECT_constructor(g->dim->length);
@@ -191,7 +191,7 @@ static char updateDistance(
 	float oldDist, newDist, discriminant;
 	float minNeighbourDist;			/* Label inherited from lowest distance neighbour */
 	int returnVal = NOCHANGE;		/* Default is that no change occurred */
-	BVECT tempCoord, *ptempCoord;
+	BVECT tempCoord, *ptempCoord = NULL;
 	float neighbourDist[MAXDIMS];	/* Temporary buffers, to save the pain of freeing at every return */
 	int buffer[MAXDIMS];
 	int index, neighbourDistLength;

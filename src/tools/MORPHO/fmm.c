@@ -85,11 +85,11 @@ speed must be float, seeds must be integer.
 int main(int argc, char **argv) 
 /* =============================================================== */
 {
-    struct xvimage  *seeds, *speed ;
-    struct xvimage  *voronoi, *distance;
+    struct xvimage  *seeds = NULL, *speed = NULL ;
+    struct xvimage  *voronoi = NULL, *distance = NULL;
     int32_t  rs, cs, ss, dim[4], ndim;
-    int32_t *SeedIn, *SeedOut;
-    float    *SpeedIn, *SpeedOut, threshold;
+    int32_t *SeedIn = NULL, *SeedOut = NULL;
+    float    *SpeedIn = NULL, *SpeedOut = NULL, threshold;
     int      error = 0, stop=0;
 
     if (argc != 7)

@@ -93,9 +93,9 @@ int main(int argc, char **argv)
   int32_t i, j;
   FILE *fd = NULL;
   int32_t nsplines, npoints;
-  double *x, *y, *z, *t, x1, y1, z1, len = 0.0;
+  double *x = NULL, *y = NULL, *z = NULL, *t = NULL, x1, y1, z1, len = 0.0;
   double Px[4], Py[4], Pz[4];
-  double *X0, *X1, *X2, *X3,  *Y0, *Y1, *Y2, *Y3,  *Z0, *Z1, *Z2, *Z3;
+  double *X0 = NULL, *X1 = NULL, *X2 = NULL, *X3 = NULL,  *Y0 = NULL, *Y1 = NULL, *Y2 = NULL, *Y3 = NULL,  *Z0 = NULL, *Z1 = NULL, *Z2 = NULL, *Z3 = NULL;
   double tx, ty, tz, tn;
   char type;
 

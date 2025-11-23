@@ -192,7 +192,7 @@ int32_t ldelaunay(mcgeo_point *S, int32_t n, int32_t ***v, int32_t **nv, int32_t
 #undef F_NAME
 #define F_NAME "ldelaunay"
   int32_t i, j, k, m;
-  int32_t **voisins, *nbvois, *envconv;
+  int32_t **voisins = NULL, *nbvois = NULL, *envconv = NULL;
 
   nbvois = (int32_t *)calloc(n, sizeof(int32_t));
   envconv = (int32_t *)calloc(n, sizeof(int32_t));

@@ -79,7 +79,7 @@ int main(int argc, char **argv)
   int32_t rs, cs, d, N;
   int32_t i;
   double R, S, T, U, V, Z;
-  double *x, *y;
+  double *x = NULL, *y = NULL;
   int32_t filled;
 
   if ((argc != 11) && (argc != 12))

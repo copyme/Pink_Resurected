@@ -96,8 +96,8 @@ Z. Aktouf, G. Bertrand, L.Perroton:
 int main(int argc, char **argv) 
 /* =============================================================== */
 {
-  struct xvimage * image;      /* image (binaire) de depart */
-  struct xvimage * guide;      /* image (long) */
+  struct xvimage * image = NULL;      /* image (binaire) de depart */
+  struct xvimage * guide = NULL;      /* image (long) */
   int32_t connex;
   int32_t tailletrous;
   

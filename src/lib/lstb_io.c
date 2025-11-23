@@ -52,7 +52,7 @@ knowledge of the CeCILL license and that you accept its terms.
 int lreadLSTBmsgs(void)
 {
         int i;
-        char ** Msgs;
+        char ** Msgs = NULL;
         int NumMsgs;
 
         /* Get a handle on LSTB's message list */

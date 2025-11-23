@@ -1616,7 +1616,7 @@ static void REDT_line(int32_t *f, int32_t *g, index_t rs, index_t cs)
 /* ======================================================== */
 {
   int32_t j, u, q, w; // attention: index signés (parcours inverse, petite taille)
-  int32_t *s, *t; //sommets des paraboles
+  int32_t *s = NULL, *t = NULL; //sommets des paraboles
   s = (int32_t *)calloc(1,rs * sizeof(int32_t));
   t = (int32_t *)calloc(1,rs * sizeof(int32_t));
 
@@ -1654,7 +1654,7 @@ static void REDT_column(int32_t *f, int32_t *g, index_t rs, index_t cs)
 /* ======================================================== */
 {
   int32_t i, u, q, w; // attention: index signés (parcours inverse, petite taille)
-  int32_t *s, *t; //sommets des paraboles
+  int32_t *s = NULL, *t = NULL; //sommets des paraboles
   s = (int32_t *)calloc(1,cs * sizeof(int32_t));
   t = (int32_t *)calloc(1,cs * sizeof(int32_t));
 
@@ -1728,7 +1728,7 @@ static void REDT_line_3d(int32_t *f, int32_t *g, index_t rs, index_t cs, index_t
 /* ======================================================== */
 {
   int32_t j, u, q, k, ps, w; // attention: index signés (parcours inverse, petite taille)
-  int32_t *s, *t; //sommets des paraboles
+  int32_t *s = NULL, *t = NULL; //sommets des paraboles
   s = (int32_t *)calloc(1,rs * sizeof(int32_t));
   t = (int32_t *)calloc(1,rs * sizeof(int32_t));
   ps = cs * rs; // taille d'un plan
@@ -1770,7 +1770,7 @@ static void REDT_column_3d(int32_t *f, int32_t *g, index_t rs, index_t cs, index
 /* ======================================================== */
 {
   int32_t i, u, q, k, ps, w; // attention: index signés (parcours inverse, petite taille)
-  int32_t *s, *t; //sommets des paraboles
+  int32_t *s = NULL, *t = NULL; //sommets des paraboles
   s = (int32_t *)calloc(1,cs * sizeof(int32_t));
   t = (int32_t *)calloc(1,cs * sizeof(int32_t));
   ps = rs * cs; // taille d'un plan
@@ -1813,7 +1813,7 @@ static void REDT_zaxis_3d(int32_t *f, int32_t *g, index_t rs, index_t cs, index_
 /* ======================================================== */
 {
   int32_t i, u, q, j, ps, w; // attention: index signés (parcours inverse, petite taille)
-  int32_t *s, *t; //sommets des paraboles
+  int32_t *s = NULL, *t = NULL; //sommets des paraboles
   s = (int32_t *)calloc(1,ds * sizeof(int32_t));
   t = (int32_t *)calloc(1,ds * sizeof(int32_t));
   ps = rs * cs; // taille d'un plan
@@ -1893,7 +1893,7 @@ static void ST_line(uint32_t *f, uint32_t *g, uint8_t *r, index_t rs, index_t cs
 /* ======================================================== */
 {
   int32_t j, u, q, w; // attention: index signés (parcours inverse, petite taille)
-  uint32_t *s, *t; //sommets des paraboles
+  uint32_t *s = NULL, *t = NULL; //sommets des paraboles
   s = (uint32_t *)calloc(1,rs * sizeof(uint32_t));
   t = (uint32_t *)calloc(1,rs * sizeof(uint32_t));
 
@@ -1935,7 +1935,7 @@ static void ST_column(uint32_t *f, uint8_t *r, index_t rs, index_t cs)
 // input/output r: binary image - positions of the skeleton points
 {
   int32_t i, u, q, w; // attention: index signés (parcours inverse, petite taille)
-  uint32_t *s, *t; //sommets des paraboles
+  uint32_t *s = NULL, *t = NULL; //sommets des paraboles
   s = (uint32_t *)calloc(1,cs * sizeof(uint32_t));
   t = (uint32_t *)calloc(1,cs * sizeof(uint32_t));
 
@@ -2048,7 +2048,7 @@ void SEDT_column(uint32_t *f, uint32_t *g, index_t rs, index_t cs)
 /* ======================================================== */
 {
   int32_t i, u, q, w; // attention: index signés (parcours inverse, petite taille)
-  uint32_t *s, *t;
+  uint32_t *s = NULL, *t = NULL;
   s = (uint32_t *)calloc(1,cs * sizeof(uint32_t));
   t = (uint32_t *)calloc(1,cs * sizeof(uint32_t));
 
@@ -2110,7 +2110,7 @@ void SEDT3d_column(uint32_t *f, uint32_t *g, index_t rs, index_t cs, index_t ds)
 /* ======================================================== */
 {
   int32_t i, k, u, q, ps = rs*cs, w; // attention: index signés (parcours inverse, petite taille)
-  uint32_t *s, *t;
+  uint32_t *s = NULL, *t = NULL;
   s = (uint32_t *)calloc(1,cs * sizeof(uint32_t));
   t = (uint32_t *)calloc(1,cs * sizeof(uint32_t));
 
@@ -2149,7 +2149,7 @@ void SEDT3d_planes(uint32_t *f, uint32_t *g, index_t rs, index_t cs, index_t ds)
 /* ======================================================== */
 {
   int32_t i, j, u, q, ps = rs*cs, w; // attention: index signés (parcours inverse, petite taille)
-  uint32_t *s, *t;
+  uint32_t *s = NULL, *t = NULL;
   s = (uint32_t *)calloc(1,ds * sizeof(uint32_t));
   t = (uint32_t *)calloc(1,ds * sizeof(uint32_t));
 

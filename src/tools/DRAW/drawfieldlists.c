@@ -73,8 +73,8 @@ int main(int argc, char **argv)
   FILE *fd = NULL;
   int32_t rs, cs, ds, npoints, n, i; 
   char type;
-  int32_t *X, *Y, *Z;
-  double *tx, *ty, *tz;
+  int32_t *X = NULL, *Y = NULL, *Z = NULL;
+  double *tx = NULL, *ty = NULL, *tz = NULL;
   double len = 10;
 
   if ((argc != 5) && (argc != 6))

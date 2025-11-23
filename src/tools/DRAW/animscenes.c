@@ -74,10 +74,10 @@ int main(int argc, char **argv)
 {
   int32_t s, o, p, n, nobj, begin, end, nbsamples, lenprefix, nbscenes;
   char buf[1024];
-  scene **tabscene_in;
-  scene **tabscene_out;
+  scene **tabscene_in = NULL;
+  scene **tabscene_out = NULL;
   object * obj = NULL;
-  double *x, *y, *z, *X, *Y, *Z;
+  double *x = NULL, *y = NULL, *z = NULL, *X = NULL, *Y = NULL, *Z = NULL;
 
   if (argc != 6)
   {

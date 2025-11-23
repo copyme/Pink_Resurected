@@ -74,7 +74,7 @@ int32_t lellipseincl(double * X1, double * X2, int32_t np,
 #define LOCALEPS 1e-2
   double delta;
   double alpha0, alpha;
-  double *E0, *E, *Ej, *W, *zmz, *xe, *ye, *c, *cc, *tmp, *C, *A, *M;
+  double *E0 = NULL, *E = NULL, *Ej = NULL, *W = NULL, *zmz = NULL, *xe = NULL, *ye = NULL, *c = NULL, *cc = NULL, *tmp = NULL, *C = NULL, *A = NULL, *M = NULL;
   double xx, xy, yy, x, y;
   double err, val, sW;
   int32_t iter, k, ret;

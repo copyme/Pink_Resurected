@@ -92,7 +92,7 @@ int main(int argc, char **argv)
   struct xvimage * image = NULL;
   int32_t rs, cs, ds, N, i, ndims;
   int littleendian = 0, datatype = 1, t; 
-  char *ret, *s;
+  char *ret = NULL, *s = NULL;
   char buf[TAILLEBUF];
   char infilename[TAILLEBUF];
   char outfilename[TAILLEBUF];

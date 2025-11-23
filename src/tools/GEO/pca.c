@@ -77,7 +77,7 @@ int main(int argc, char **argv)
   FILE *fd = NULL;
   int32_t n, i;
   char type;
-  double *X, *Y, *Z, x, y, z, dx1, dy1, dz1, dx2, dy2, dz2, dx3, dy3, dz3;
+  double *X = NULL, *Y = NULL, *Z = NULL, x, y, z, dx1, dy1, dz1, dx2, dy2, dz2, dx3, dy3, dz3;
 
   if (argc != 3)
   {

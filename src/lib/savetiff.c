@@ -168,10 +168,10 @@ int save_tiff(void **outbuffp,	   /* output buffer  */
     int          linebytes, sample;
     uint32_t	 i, j;
     uint32_t       nbcols, nbrows;
-    uint8_t	*theBufc, *pc;
-    int16_t	*theBufs, *ps;
-    int32_t	*theBufl, *pl;   /* will serve for float and 32 bit ints */
-    double      *theBufd, *pd;   /* will serve for doubles and 64 bit ints */
+    uint8_t	*theBufc = NULL, *pc = NULL;
+    int16_t	*theBufs = NULL, *ps = NULL;
+    int32_t	*theBufl = NULL, *pl = NULL;   /* will serve for float and 32 bit ints */
+    double      *theBufd = NULL, *pd = NULL;   /* will serve for doubles and 64 bit ints */
     int          result=0;
 
     // this shuts gcc up.

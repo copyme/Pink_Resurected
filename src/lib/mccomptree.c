@@ -171,7 +171,7 @@ void mergenodes(ctree *CT, int32_t node, int32_t nodeaux)
 #define F_NAME "mergenodes"
 {
 #ifdef PARANO
-  soncell * nodeson, * nodeauxson;  
+  soncell * nodeson = NULL, * nodeauxson = NULL;  
   if ((CT->tabnodes[node].nbsons > 0) && (CT->tabnodes[nodeaux].nbsons > 0))
     for (nodeson = CT->tabnodes[node].sonlist; nodeson != NULL; nodeson = nodeson->next)
       for (nodeauxson = CT->tabnodes[nodeaux].sonlist; nodeauxson != NULL; nodeauxson = nodeauxson->next)
@@ -350,8 +350,8 @@ int32_t ComponentTree( uint8_t *F, int32_t rs, int32_t N, int32_t connex, // inp
   int32_t currentNode;
   int32_t neighbSubtree;
   int32_t neighbNode;
-  Tarjan *T1, *T2;
-  soncell *sc; int32_t son;
+  Tarjan *T1 = NULL, *T2 = NULL;
+  soncell *sc = NULL; int32_t son;
 
   CT = ComponentTreeAlloc(N);
   if (CT == NULL)
@@ -535,8 +535,8 @@ int32_t ComponentTree3d( uint8_t *F, int32_t rs, int32_t ps, int32_t N, int32_t 
   int32_t currentNode;
   int32_t neighbSubtree;
   int32_t neighbNode;
-  Tarjan *T1, *T2;
-  soncell *sc; int32_t son;
+  Tarjan *T1 = NULL, *T2 = NULL;
+  soncell *sc = NULL; int32_t son;
 
   CT = ComponentTreeAlloc(N);
   if (CT == NULL)

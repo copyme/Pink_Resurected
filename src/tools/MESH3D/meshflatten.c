@@ -73,7 +73,7 @@ int main(int argc, char **argv)
   FILE *fileout = NULL;
   int32_t i, n;
   int32_t formatin, formatout;
-  double *pbx, *pby, *pbz, a, b, c, d, A, B, C, D, err;
+  double *pbx = NULL, *pby = NULL, *pbz = NULL, a, b, c, d, A, B, C, D, err;
 
   if (argc != 3)
   {

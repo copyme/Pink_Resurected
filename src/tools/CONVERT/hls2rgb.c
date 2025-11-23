@@ -84,9 +84,9 @@ int main(int argc, char **argv)
   struct xvimage * H = NULL;
   struct xvimage * L = NULL;
   struct xvimage * S = NULL;
-  uint8_t *r, *g, *b;
+  uint8_t *r = NULL, *g = NULL, *b = NULL;
   int32_t * h = NULL;
-  uint8_t *l, *s;
+  uint8_t *l = NULL, *s = NULL;
   int32_t rs, cs, N;
   int32_t x;
   double tr, tg, tb;

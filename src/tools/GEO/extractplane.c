@@ -101,7 +101,7 @@ int main(int argc, char **argv)
 
 if (datatype(image) == VFF_TYP_1_BYTE)
 {
-  uint8_t *I, *R;
+  uint8_t *I = NULL, *R = NULL;
   I = UCHARDATA(image);
 
   n = atoi(argv[2]);
@@ -197,7 +197,7 @@ if (datatype(image) == VFF_TYP_1_BYTE)
 } 
 else if (datatype(image) == VFF_TYP_4_BYTE)
 {
-  uint32_t *I, *R;
+  uint32_t *I = NULL, *R = NULL;
   I = ULONGDATA(image);
 
   n = atoi(argv[2]);
@@ -293,7 +293,7 @@ else if (datatype(image) == VFF_TYP_4_BYTE)
 } 
 else if (datatype(image) == VFF_TYP_FLOAT)
 {
-  float *I, *R;
+  float *I = NULL, *R = NULL;
   I = FLOATDATA(image);
 
   n = atoi(argv[2]);

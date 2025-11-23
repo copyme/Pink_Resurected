@@ -76,7 +76,7 @@ int main(int argc, char **argv)
   int32_t rs, cs, ds, ps, N;
   int32_t rayonmin, rayonmax, rayon;
   int32_t d, xc, yc, x, y, nptb;
-  int32_t *tab_es_x, *tab_es_y;
+  int32_t *tab_es_x = NULL, *tab_es_y = NULL;
 
   if ((argc != 4) && (argc != 5))
   {

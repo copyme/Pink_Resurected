@@ -75,7 +75,7 @@ int main(int argc, char **argv)
   FILE *fd = NULL;
   int32_t i, n;
   char type;
-  double *x, *y, xx, yy, R, S, T, U, V, Z;
+  double *x = NULL, *y = NULL, xx, yy, R, S, T, U, V, Z;
   int32_t filled;
 
   if (argc != 5)

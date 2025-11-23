@@ -146,7 +146,7 @@ int main(int argc, char **argv)
   double x, y, z;
   int32_t npoints = 0;
   double bx, by, bz; //pour le calcul du barycentre global
-  double *X, *Y, *Z; // tableaux pour les coordonnées
+  double *X = NULL, *Y = NULL, *Z = NULL; // tableaux pour les coordonnées
   SKC_adj_pcell a;
 
   bx = by = bz = 0.0;

@@ -7567,7 +7567,7 @@ static void apply_rot(int32_t * M, int32_t * V , int32_t * R)
 
 static void rotate_vectors_x(int32_t MVEC[NVEC][3])
 { // rotate around x axis
-  int32_t i, *V, R[3];
+  int32_t i, *V = NULL, R[3];
   int32_t M[9] = {1, 0, 0, 0, 0, 1, 0, -1, 0};
   for (i = 0; i < NVEC; i++)
   {
@@ -7579,7 +7579,7 @@ static void rotate_vectors_x(int32_t MVEC[NVEC][3])
 
 static void rotate_vectors_y(int32_t MVEC[NVEC][3])
 { // rotate around y axis
-  int32_t i, *V, R[3];
+  int32_t i, *V = NULL, R[3];
   int32_t M[9] = {0, 0, 1, 0, 1, 0, -1, 0, 0};
   for (i = 0; i < NVEC; i++)
   {
@@ -7591,7 +7591,7 @@ static void rotate_vectors_y(int32_t MVEC[NVEC][3])
 
 static void rotate_vectors_z(int32_t MVEC[NVEC][3])
 { // rotate around z axis
-  int32_t i, *V, R[3];
+  int32_t i, *V = NULL, R[3];
   int32_t M[9] = {0, 1, 0, -1, 0, 0, 0, 0, 1};
   for (i = 0; i < NVEC; i++)
   {
@@ -7603,7 +7603,7 @@ static void rotate_vectors_z(int32_t MVEC[NVEC][3])
 
 static index_t add_vec(int32_t MVEC[NVEC][3], uint32_t i, index_t p, index_t rs, index_t ps)
 {
-  int32_t x, y, z, *V;
+  int32_t x, y, z, *V = NULL;
   x = p % rs; y = (p % ps) / rs; z = p / ps;
   V = (int32_t *)(&(MVEC[i]));
   x += V[0]; y += V[1]; z += V[2];

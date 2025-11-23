@@ -95,7 +95,7 @@ connect
 
 int main(int argc, char **argv)
 {
-  struct xvimage * ga, *annexe;
+  struct xvimage * ga = NULL, *annexe = NULL;
   int32_t param;
   if ((argc != 4) && (argc != 5))
   {

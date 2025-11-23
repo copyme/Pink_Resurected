@@ -65,7 +65,7 @@ int main(int argc, char **argv)
   struct xvimage * image = NULL;
   struct xvimage * imhist = NULL;
   struct xvimage * mask = NULL;
-  index_t * histo, somme;
+  index_t * histo = NULL, somme;
   int32_t x, y, z, lissage;
 
   if ((argc != 4) && (argc != 5))

@@ -69,7 +69,7 @@ Parameter \b type (default 0) indicates whether the histogram must be interprete
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  index_t *histo1, *histo2;
+  index_t *histo1 = NULL, *histo2 = NULL;
   char tag;
   int32_t i, x, y, n1, n2, type = 0;
   double dist;

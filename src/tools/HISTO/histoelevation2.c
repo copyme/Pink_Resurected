@@ -76,7 +76,7 @@ int main(int argc, char **argv)
   int32_t i, nbins, nvec;
   FILE *fdin = NULL;
   FILE *fdout = NULL;
-  double *Vx, *Vy, *Vz;
+  double *Vx = NULL, *Vy = NULL, *Vz = NULL;
   char type;
 
   if (argc != 4)

@@ -103,7 +103,7 @@ int main(int argc, char **argv)
   struct xvimage * image1 = NULL;
   struct xvimage * image2 = NULL;
   index_t n1, n2;
-  double * P1, * P2, *Gamma;
+  double * P1 = NULL, * P2 = NULL, *Gamma = NULL;
 
   if (argc != 4)
   {

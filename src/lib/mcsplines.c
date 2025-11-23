@@ -150,7 +150,7 @@ int32_t scn_solvespline(double *x, double *y, int32_t n,
 #define F_NAME "scn_solvespline"
 {
   int32_t i, j;
-  double *M, *P, *z, *A, *B;
+  double *M = NULL, *P = NULL, *z = NULL, *A = NULL, *B = NULL;
 
   M = (double *)calloc(1,(n-2) * (n-2) * sizeof(double)); assert(M != NULL);
   P = (double *)calloc(1,(n-2) * sizeof(double)); assert(P != NULL);
@@ -325,7 +325,7 @@ int32_t scn_solvespline1(double *y, int32_t n,
 #define F_NAME "scn_solvespline1"
 {
   int32_t i, j;
-  double *M, *P, *z, *A, *B;
+  double *M = NULL, *P = NULL, *z = NULL, *A = NULL, *B = NULL;
   M = (double *)calloc(1,(n-2) * (n-2) * sizeof(double)); assert(M != NULL);
   P = (double *)calloc(1,(n-2) * sizeof(double)); assert(P != NULL);
   z = (double *)calloc(1,(n-2) * sizeof(double)); assert(z != NULL);
@@ -409,7 +409,7 @@ int32_t scn_solveclosedspline(double *x, double *y, int32_t n,
 #define F_NAME "scn_solveclosedspline"
 {
   int32_t i, nn;
-  double *xx, *yy, *ZZ0, *ZZ1, *ZZ2, *ZZ3;
+  double *xx = NULL, *yy = NULL, *ZZ0 = NULL, *ZZ1 = NULL, *ZZ2 = NULL, *ZZ3 = NULL;
 
   if (n < 3)
   {
@@ -615,8 +615,8 @@ int32_t scn_samplespline(double *x, double *y, int32_t n, int32_t m, double *X, 
 #undef F_NAME
 #define F_NAME "scn_samplespline"
 {
-  double *X0, *X1, *X2, *X3;
-  double *Y0, *Y1, *Y2, *Y3;
+  double *X0 = NULL, *X1 = NULL, *X2 = NULL, *X3 = NULL;
+  double *Y0 = NULL, *Y1 = NULL, *Y2 = NULL, *Y3 = NULL;
   double * t = NULL;
   double tk, tmp, L = 0;
   double sum, sumsav;
@@ -742,9 +742,9 @@ int32_t scn_samplespline3d(double *x, double *y, double *z, int32_t n, int32_t m
 {
 #undef F_NAME
 #define F_NAME "scn_samplespline3d"
-  double *X0, *X1, *X2, *X3;
-  double *Y0, *Y1, *Y2, *Y3;
-  double *Z0, *Z1, *Z2, *Z3;
+  double *X0 = NULL, *X1 = NULL, *X2 = NULL, *X3 = NULL;
+  double *Y0 = NULL, *Y1 = NULL, *Y2 = NULL, *Y3 = NULL;
+  double *Z0 = NULL, *Z1 = NULL, *Z2 = NULL, *Z3 = NULL;
   double * t = NULL;
   double tk, tmp, L = 0;
   double sum, sumsav;
@@ -886,7 +886,7 @@ double scn_lengthspline(double *X0, double *X1, double *X2, double *X3,
 {
 #undef F_NAME
 #define F_NAME "scn_lengthspline"
-  double *t, L = 0, f[3], g[3];
+  double *t = NULL, L = 0, f[3], g[3];
   int32_t i, p = 10000;
   
   t = (double *)calloc(1, nctrl * sizeof(double)); assert(t != NULL);
@@ -939,7 +939,7 @@ double scn_lengthspline3d(double *X0, double *X1, double *X2, double *X3,
 {
 #undef F_NAME
 #define F_NAME "scn_lengthspline3d"
-  double *t, L = 0, f[3], g[3], h[3];
+  double *t = NULL, L = 0, f[3], g[3], h[3];
   int32_t i, p = 10000;
   
   t = (double *)calloc(1, nctrl * sizeof(double)); assert(t != NULL);
@@ -988,8 +988,8 @@ int32_t scn_curvatures(double *x, double *y, int32_t n, int32_t m, double *sk, d
 {
 #undef F_NAME
 #define F_NAME "scn_curvatures"
-  double *X0, *X1, *X2, *X3;
-  double *Y0, *Y1, *Y2, *Y3;
+  double *X0 = NULL, *X1 = NULL, *X2 = NULL, *X3 = NULL;
+  double *Y0 = NULL, *Y1 = NULL, *Y2 = NULL, *Y3 = NULL;
   double * t = NULL;
   double tk, tmp, eval, xp, yp, xs, ys, L = 0;
   double sum, sumsav;
@@ -1074,9 +1074,9 @@ int32_t scn_curvatures3d(double *x, double *y, double *z, int32_t n, int32_t m, 
 {
 #undef F_NAME
 #define F_NAME "scn_curvatures3d"
-  double *X0, *X1, *X2, *X3;
-  double *Y0, *Y1, *Y2, *Y3;
-  double *Z0, *Z1, *Z2, *Z3;
+  double *X0 = NULL, *X1 = NULL, *X2 = NULL, *X3 = NULL;
+  double *Y0 = NULL, *Y1 = NULL, *Y2 = NULL, *Y3 = NULL;
+  double *Z0 = NULL, *Z1 = NULL, *Z2 = NULL, *Z3 = NULL;
   double * t = NULL;
   double tk, tmp, eval, xp, yp, zp, xs, ys, zs, L = 0;
   double sum, sumsav;
@@ -1689,7 +1689,7 @@ int32_t scn_approxcurve2(int32_t *X, int32_t *Y, int32_t *N, double deltamax)
 {
   int32_t * C = NULL;
   int32_t ret, n, i, npoints = *N;
-  double *C0, *C1, *C2, *C3, *D0, *D1, *D2, *D3;
+  double *C0 = NULL, *C1 = NULL, *C2 = NULL, *C3 = NULL, *D0 = NULL, *D1 = NULL, *D2 = NULL, *D3 = NULL;
   
   C = (int32_t *)calloc(1,npoints*sizeof(int32_t)); assert(C != NULL);
   C0 = (double *)calloc(1,(npoints-1)*sizeof(double)); assert(C0 != NULL);
@@ -1752,8 +1752,8 @@ int32_t scn_approxcurve_with_initial_control_points(int32_t *X, int32_t *Y, int3
 #define F_NAME "scn_approxcurve_with_initial_control_points"
 {
   int32_t i, j, continuer;
-  double *t, *x, *y;
-  int32_t *V, *W;
+  double *t = NULL, *x = NULL, *y = NULL;
+  int32_t *V = NULL, *W = NULL;
   double delta; 
   int32_t arg;
   int32_t nctrl = *n;
@@ -1921,7 +1921,7 @@ int32_t scn_approxcurve3d2(int32_t *X, int32_t *Y, int32_t *Z, int32_t *N, doubl
 {
   int32_t * C = NULL;
   int32_t ret, n, i, npoints = *N;
-  double *C0, *C1, *C2, *C3, *D0, *D1, *D2, *D3, *E0, *E1, *E2, *E3;
+  double *C0 = NULL, *C1 = NULL, *C2 = NULL, *C3 = NULL, *D0 = NULL, *D1 = NULL, *D2 = NULL, *D3 = NULL, *E0 = NULL, *E1 = NULL, *E2 = NULL, *E3 = NULL;
   
   C = (int32_t *)calloc(1,npoints*sizeof(int32_t)); assert(C != NULL);
   C0 = (double *)calloc(1,(npoints-1)*sizeof(double)); assert(C0 != NULL);
@@ -2005,8 +2005,8 @@ int32_t scn_approxcurve3d_with_initial_control_points(
 #define F_NAME "scn_approxcurve3d_with_initial_control_points"
 {
   int32_t i, j, continuer;
-  double *t, *x, *y;
-  int32_t *U, *V, *W;
+  double *t = NULL, *x = NULL, *y = NULL;
+  int32_t *U = NULL, *V = NULL, *W = NULL;
   double delta; 
   int32_t arg;
   int32_t nctrl = *n;
@@ -2290,7 +2290,7 @@ void scn_drawsplinelist(int32_t *lx, int32_t *ly, int32_t *npoints, double *x, d
 #define F_NAME "scn_drawsplinelist"
 {
   double Px[4], Py[4];
-  double *X0, *X1, *X2, *X3, *Y0, *Y1, *Y2, *Y3, *t;
+  double *X0 = NULL, *X1 = NULL, *X2 = NULL, *X3 = NULL, *Y0 = NULL, *Y1 = NULL, *Y2 = NULL, *Y3 = NULL, *t = NULL;
   int32_t j, nmaxpoints = *npoints, np, npp;
 
   t = (double *)calloc(1,nctrl*sizeof(double)); assert(t != NULL);
@@ -2440,7 +2440,7 @@ void scn_drawspline3dlist(int32_t *lx, int32_t *ly, int32_t *lz, int32_t *npoint
 #define F_NAME "scn_drawspline3dlist"
 {
   double Px[4], Py[4], Pz[4];
-  double *X0, *X1, *X2, *X3, *Y0, *Y1, *Y2, *Y3, *Z0, *Z1, *Z2, *Z3, *t;
+  double *X0 = NULL, *X1 = NULL, *X2 = NULL, *X3 = NULL, *Y0 = NULL, *Y1 = NULL, *Y2 = NULL, *Y3 = NULL, *Z0 = NULL, *Z1 = NULL, *Z2 = NULL, *Z3 = NULL, *t = NULL;
   int32_t j, nmaxpoints = *npoints, np = 0, npp;
 
   t = (double *)calloc(1,nctrl*sizeof(double)); assert(t != NULL);
@@ -2530,9 +2530,9 @@ int32_t main()
   double Y[6] = {4, 10, 8, 5, 5, 7};
   double Z[6] = {1, 2, 3, 2, 1, 0};
   double * t = NULL;
-  double *C0, *C1, *C2, *C3;
-  double *D0, *D1, *D2, *D3;
-  double *E0, *E1, *E2, *E3;
+  double *C0 = NULL, *C1 = NULL, *C2 = NULL, *C3 = NULL;
+  double *D0 = NULL, *D1 = NULL, *D2 = NULL, *D3 = NULL;
+  double *E0 = NULL, *E1 = NULL, *E2 = NULL, *E3 = NULL;
   double s;
 
   t = (double *)calloc(1,n*sizeof(double));
@@ -2577,9 +2577,9 @@ int32_t main()
   double Y[7] = {1, 1, 1, 10, 2, 2, 2};
   double Z[7] = {1, 2, 3, 4, 3, 2, 1};
   double * t = NULL;
-  double *C0, *C1, *C2, *C3;
-  double *D0, *D1, *D2, *D3;
-  double *E0, *E1, *E2, *E3;
+  double *C0 = NULL, *C1 = NULL, *C2 = NULL, *C3 = NULL;
+  double *D0 = NULL, *D1 = NULL, *D2 = NULL, *D3 = NULL;
+  double *E0 = NULL, *E1 = NULL, *E2 = NULL, *E3 = NULL;
   double c;
 
   t = (double *)malloc(n * sizeof(double));

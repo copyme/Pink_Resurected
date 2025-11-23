@@ -73,7 +73,7 @@ int main(int argc, char **argv)
   FILE *fd = NULL;
   int32_t n, i;
   char type;
-  double *pbx, *pby, *pbz, a, b, c, d, err;
+  double *pbx = NULL, *pby = NULL, *pbz = NULL, a, b, c, d, err;
 
   if (argc != 3)
   {

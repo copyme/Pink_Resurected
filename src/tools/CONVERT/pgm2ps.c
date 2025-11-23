@@ -453,11 +453,11 @@ void psheader(FILE *fd, int32_t w, int32_t h, double scale)
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image, *marker, *label;
+  struct xvimage * image = NULL, *marker = NULL, *label = NULL;
   FILE *fd = NULL;
   int32_t rs, cs, N, x, y, maxval;
   double X, Y;
-  uint8_t *F, *G, *H;
+  uint8_t *F = NULL, *G = NULL, *H = NULL;
   char type;
   char buf[256];
   int32_t printcoords;

@@ -59,7 +59,7 @@ knowledge of the CeCILL license and that you accept its terms.
 
 int main(int argc, char **argv) 
 {
-	struct xvimage *image, *out; //xvimages
+	struct xvimage *image = NULL, *out = NULL; //xvimages
 	int32_t xb,yb,zb,xe,ye,ze;
 	int32_t x,y;//Points entre lesquels on applique l'algorithme Lenoir1
 	int32_t rs, cs, ds, connex; //row-size col-size depth_size et connexité

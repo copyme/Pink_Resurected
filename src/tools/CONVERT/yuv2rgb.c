@@ -86,17 +86,17 @@ typedef uint32_t pixel;
 
 int main(int argc, char **argv)
 {
-	FILE *vf, *uf, *yf;
+	FILE *vf = NULL, *uf = NULL, *yf = NULL;
 	int32_t rows, cols, row;
 	register int32_t col;
 	char *usage=(char *)"basename width height [-split]";
 	int32_t u, v, y0, y1, y2, y3, u0, u1, u2, u3, v0, v1, v2, v3;
-	uint8_t *y1buf, *y2buf, *ubuf, *vbuf;
+	uint8_t *y1buf = NULL, *y2buf = NULL, *ubuf = NULL, *vbuf = NULL;
 	char ufname[256], vfname[256], yfname[256];
 /* Whether to create YUV in JFIF(JPEG) or CCIR.601(MPEG) scale */
 	int32_t	ccir601 = CCIR601;
-        struct xvimage *imr, *img, *imb;
-        uint8_t *pr, *pg, *pb;
+        struct xvimage *imr = NULL, *img = NULL, *imb = NULL;
+        uint8_t *pr = NULL, *pg = NULL, *pb = NULL;
         int32_t split = 0;
 
 	if ((argc>5) || (argc<4)) { printf("usage: %s %s\n", argv[0], usage); exit(1); }
@@ -151,7 +151,7 @@ int main(int argc, char **argv)
         vbuf = (uint8_t *)calloc(1,cols);
 
 	for (row = 0; row < (rows & ~1); row += 2) {
-		uint8_t *y1ptr,*y2ptr,*uptr,*vptr;
+		uint8_t *y1ptr = NULL,*y2ptr = NULL,*uptr = NULL,*vptr = NULL;
 
 		fread(y1buf, (cols & ~1), 1, yf);
 		fread(y2buf, (cols & ~1), 1, yf);

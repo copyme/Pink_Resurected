@@ -68,7 +68,7 @@ knowledge of the CeCILL license and that you accept its terms.
 int32_t invertMatrix(double a[], int32_t n)
 {
   int32_t i,j,k,m;
-  double w,g,*b;
+  double w,g,*b = NULL;
   
   b= (double*)malloc(n*sizeof(double));
   if (b == NULL)

@@ -83,7 +83,7 @@ int lfmmdist(
 )
 {
 	BVECT * dim = NULL;
-	BIMAGE * seeds, * g, * distance;
+	BIMAGE * seeds = NULL, * g = NULL, * distance = NULL;
 	int i;
 	int num_pixels;
 

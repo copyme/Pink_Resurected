@@ -86,7 +86,7 @@ int main(int argc, char **argv)
   struct xvimage * distc = NULL;
   int32_t i;
   uint8_t * I = NULL;
-  uint32_t *D, *DC;
+  uint32_t *D = NULL, *DC = NULL;
   
   int32_t rs, cs, ds, N;
   double eta, alpha0, alpha, beta0, beta, k, k2 ;

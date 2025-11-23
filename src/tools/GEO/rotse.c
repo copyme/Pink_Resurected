@@ -105,7 +105,7 @@ int main(int argc, char **argv)
   else if ((strcmp(argv[2], "90") == 0) || (strcmp(argv[2], "270") == 0))
   {
     struct xvimage * image2 = NULL;
-    uint8_t *I1, *I2;
+    uint8_t *I1 = NULL, *I2 = NULL;
     image2 = allocimage(NULL, cs, rs, 1, VFF_TYP_1_BYTE);
     if (image2 == NULL)
     {
