@@ -11,7 +11,7 @@ crop        /tmp/_$1.r  $2  $3  $4  $5 /tmp/_$1.r
 crop        /tmp/_$1.g  $2  $3  $4  $5 /tmp/_$1.g
 crop        /tmp/_$1.b  $2  $3  $4  $5 /tmp/_$1.b
 pgm2ppm     /tmp/_$1.r /tmp/_$1.g /tmp/_$1.b /tmp/_$1.ppm
-ppm2gif     /tmp/_$1
+ppm2gif.sh     /tmp/_$1
 mv          /tmp/_$1.gif $6
 rm          /tmp/_$1.r /tmp/_$1.g /tmp/_$1.b /tmp/_$1.ppm
 

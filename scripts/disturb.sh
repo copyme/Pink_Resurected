@@ -16,7 +16,7 @@ then
 	exit
 fi
 
-addedennoise $INPUTIMAGE $P_EDEN /tmp/_disturb_e
+addedennoise.sh $INPUTIMAGE $P_EDEN /tmp/_disturb_e
 asft /tmp/_disturb_e null null 26 $P_ASFT $OUTPUTIMAGE
 rm /tmp/_disturb_e
 
