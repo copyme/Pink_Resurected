@@ -83,7 +83,7 @@ in the same format as the output, an initial deformation which is
 #include <stdint.h>
 #include <sys/types.h>
 #include <stdlib.h>
-#include <math.h>
+#include <pinkconst.h>
 #include <mccodimage.h>
 #include <mcimage.h>
 #include <mclin.h>

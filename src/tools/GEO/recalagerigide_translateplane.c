@@ -86,7 +86,7 @@ In 3d, the parameters are:
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
+#include <pinkconst.h>
 #include <mccodimage.h>
 #include <mcimage.h>
 #include <mclin.h>

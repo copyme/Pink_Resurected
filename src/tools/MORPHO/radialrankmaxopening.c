@@ -58,7 +58,7 @@ exact division of 360 by an integer.
 #include <string.h>
 #include <sys/types.h>
 #include <stdlib.h>
-#include <math.h>
+#include <pinkconst.h>
 #include <mccodimage.h>
 #include <mcimage.h>
 #include <larith.h>

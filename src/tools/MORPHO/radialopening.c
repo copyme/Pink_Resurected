@@ -56,9 +56,9 @@ of 360 by an integer.
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
+#include <pinkconst.h>
 #include <sys/types.h>
 #include <stdlib.h>
-#include <math.h>
 #include <mccodimage.h>
 #include <mcimage.h>
 #include <larith.h>

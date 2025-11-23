@@ -59,10 +59,7 @@ image: points, spheres (circles), balls (discs) of given sizes and positions.
 #include <stdint.h>
 #include <sys/types.h>
 #include <stdlib.h>
-#ifdef HP
-#define _INCLUDE_XOPEN_SOURCE
-#endif
-#include <math.h>
+#include <pinkconst.h>
 #include <mccodimage.h>
 #include <mcimage.h>
 #include <lbresen.h>

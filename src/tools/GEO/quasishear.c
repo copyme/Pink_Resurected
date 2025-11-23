@@ -55,10 +55,7 @@ image size, otherwise a new image with sufficient size is created.
 #include <stdint.h>
 #include <sys/types.h>
 #include <stdlib.h>
-#ifdef HP
-#define _INCLUDE_XOPEN_SOURCE
-#endif
-#include <math.h>
+#include <pinkconst.h>
 #include <mccodimage.h>
 #include <mcimage.h>
 #include <lrotations.h>
