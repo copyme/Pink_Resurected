@@ -89,7 +89,7 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if ((argc == 4)) // coords in file
+  if (argc == 4) // coords in file
   {
     fd = fopen(argv[2],"r");
     if (!fd)
@@ -105,7 +105,7 @@ int main(int argc, char **argv)
 
     fclose(fd);
   }
-  else if ((argc == 7)) /* 2D case */
+  else if (argc == 7) /* 2D case */
   {
     x = atoi(argv[2]);
     y = atoi(argv[3]);

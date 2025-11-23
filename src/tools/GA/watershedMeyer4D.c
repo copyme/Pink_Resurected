@@ -89,7 +89,7 @@ int main(int32_t argc, char **argv)
     exit(1);
   }
   marqueurs = readimage4D(argv[4], atoi(argv[2]), atoi(argv[3]));
-  if ((marqueurs == NULL))
+  if (marqueurs == NULL)
   {
     fprintf(stderr, "%s: readimage4D failed\n", argv[0]);
     exit(1);

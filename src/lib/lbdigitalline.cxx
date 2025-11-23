@@ -206,7 +206,7 @@ void Reco::Rebuild(Lpoint LL, int & n,int miny,int maxy)
   int a,b;
   if ( nU == 1 ) { LL[0] = U[0]; n=1; return; }
   Normal(a,b);
-  if ( (b==0)) { LL[0] = U[1]; n=1; return;}
+  if (b==0) { LL[0] = U[1]; n=1; return;}
 
   Z ming = a*U[1].x+b*U[1].y;
   Z maxg = ming;
