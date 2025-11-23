@@ -1261,7 +1261,7 @@ int32_t lgradientcd(struct xvimage *image, double alpha)
 #undef F_NAME
 #define F_NAME "lgradientcd"
 { 
-  double dummy;
+  double dummy = 0.0;
   if (depth(image) == 1)
     return lderiche(image, alpha, 0, dummy);
   else
@@ -1274,7 +1274,7 @@ int32_t lgaussianfilter(struct xvimage *image, double alpha)
 #undef F_NAME
 #define F_NAME "lgaussianfilter"
 { 
-  double dummy;
+  double dummy = 0.0;
   if (depth(image) == 1)
     return lderiche(image, alpha, 4, dummy);
   else
