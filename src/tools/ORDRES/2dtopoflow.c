@@ -252,12 +252,12 @@ int main(int32_t argc, char **argv)
   int32_t priomax_l;
   float * PRIO_F;
   int32_t * PRIO_L;
-  graphe * flow;
+  graphe * flow = NULL;
   graphe * flow_s;
   graphe * forest;
   graphe * forest_s;
-  boolean * perm;
-  boolean * head;
+  boolean * perm = NULL;
+  boolean * head = NULL;
 
   if ((argc != 4) && (argc != 5))
   {
@@ -447,9 +447,9 @@ int main(int32_t argc, char **argv)
 #endif
   }
   
-  SaveGraphe(flow, argv[argc-1]);
+  if (flow != NULL)
+    SaveGraphe(flow, argv[argc-1]);
 
-  //  writeimage(k, argv[argc-1]);
   freeimage(k);
   free(perm);
   free(head);
