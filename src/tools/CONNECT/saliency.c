@@ -141,7 +141,7 @@ int main(int argc, char **argv)
   }
   else    
   {
-    fprintf(stderr, "%s: bad connexity: %d\n", argv[0], connex);
+    fprintf(stderr, "%s: bad connexity: %s\n", argv[0], argv[2]);
     exit(1);
   }
 
