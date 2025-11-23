@@ -63,7 +63,7 @@ int main(int argc, char **argv)
 /* =============================================================== */
 {
   struct xvimage * image;
-  struct xvimage * imhist;
+  struct xvimage * imhist = NULL;
   struct xvimage * mask = NULL;
   index_t * histo;
   int32_t size;
@@ -141,6 +141,9 @@ int main(int argc, char **argv)
 	exit(1);
       }
   }
+
+  if(imhist == NULL)
+    exit(1);
 
   writeimage(imhist, argv[argc - 1]);
   free(histo);
