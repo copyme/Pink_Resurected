@@ -885,7 +885,8 @@ Reference:
       Fori(indmax)
 	MOxy[xytypemax]->Insert(curEp,pointsxy[pos+i]);
       break;
-    default: assert(1);
+    default:
+      exit(1);
     } // switch (elim)
 
     pos = pos+indmax-1;
@@ -1070,7 +1071,8 @@ Reference:
       Fori(indmax)
 	MOxy[xytypemax]->Insert(curEp,pointsxy[pos+i]);
       break;
-    default: assert(1);
+    default:
+      exit(1);
     } // switch (elim)
 #ifdef DEBUG_FindDSSs3D
   printf("%s: xt=%d yt=%d zt=%d\n", F_NAME, xt, yt, zt);
