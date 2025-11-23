@@ -79,7 +79,7 @@ int32_t ldilatnum( struct xvimage *f,
   {
     uint8_t *M = UCHARDATA(m);
     uint8_t *F = UCHARDATA(f);
-    uint8_t *H;                     /* image de travail */
+    uint8_t *H = NULL;                     /* image de travail */
     int32_t sup;
     int32_t t;
     H = (uint8_t *)calloc(1,N*sizeof(uint8_t));
@@ -113,10 +113,10 @@ int32_t ldilatnum( struct xvimage *f,
   {
     float *M = FLOATDATA(m);
     float *F = FLOATDATA(f);
-    float *H;                     /* image de travail */
+    float *H = NULL;                     /* image de travail */
     float sup;
     float t;
-printf("rsm=%d csm=%d\n", rsm, csm);
+    printf("rsm=%d csm=%d\n", rsm, csm);
     H = (float *)calloc(1,N*sizeof(float));
     if (H == NULL)
     {   fprintf(stderr,"%s() : malloc failed for H\n", F_NAME);
@@ -171,7 +171,7 @@ int32_t lerosnum( struct xvimage *f,
   index_t csm = colsize(m);        /* taille colonne masque */
   uint8_t *M = UCHARDATA(m);
   uint8_t *F = UCHARDATA(f);
-  uint8_t *H;                     /* image de travail */
+  uint8_t *H = NULL;                     /* image de travail */
   int32_t inf;
   int32_t t;
 
@@ -230,10 +230,10 @@ int32_t ldilateros_ldilatbin(struct xvimage *f, struct xvimage *m, int32_t xc, i
   index_t Nm = rsm * csm;
   uint8_t *M = UCHARDATA(m);
   uint8_t *F = UCHARDATA(f);
-  uint8_t *H;                    /* image de travail */
+  uint8_t *H = NULL;                    /* image de travail */
   int32_t nptb;                    /* nombre de points de l'e.s. */
-  int32_t *tab_es_x;               /* liste des coord. x des points de l'e.s. */
-  int32_t *tab_es_y;               /* liste des coord. y des points de l'e.s. */
+  int32_t *tab_es_x = NULL;               /* liste des coord. x des points de l'e.s. */
+  int32_t *tab_es_y = NULL;               /* liste des coord. y des points de l'e.s. */
   int32_t c;
   int32_t frontiere;
 
@@ -335,10 +335,10 @@ int32_t ldilateros_lerosbin(struct xvimage *f, struct xvimage *m, int32_t xc, in
   index_t Nm = rsm * csm;
   uint8_t *M = UCHARDATA(m);
   uint8_t *F = UCHARDATA(f);
-  uint8_t *H;                    /* image de travail */
+  uint8_t *H = NULL;                    /* image de travail */
   int32_t nptb;                    /* nombre de points de l'e.s. */
-  int32_t *tab_es_x;               /* liste des coord. x des points de l'e.s. */
-  int32_t *tab_es_y;               /* liste des coord. y des points de l'e.s. */
+  int32_t *tab_es_x = NULL;               /* liste des coord. x des points de l'e.s. */
+  int32_t *tab_es_y = NULL;               /* liste des coord. y des points de l'e.s. */
   int32_t c;
   int32_t frontiere;
 
@@ -435,7 +435,7 @@ int32_t ldilateros_ldilatfast(struct xvimage *f, uint8_t *mask)
   index_t cs = colsize(f);         /* taille colonne */
   index_t N = rs * cs;             /* taille image */
   uint8_t *F = UCHARDATA(f);
-  uint8_t *H;                     /* image de travail */
+  uint8_t *H = NULL;                     /* image de travail */
   uint8_t sup;
 
   ACCEPTED_TYPES1(f, VFF_TYP_1_BYTE);
@@ -487,7 +487,7 @@ int32_t ldilateros_lerosfast(struct xvimage *f, uint8_t *mask)
   index_t cs = colsize(f);         /* taille colonne */
   index_t N = rs * cs;             /* taille image */
   uint8_t *F = UCHARDATA(f);
-  uint8_t *H;                     /* image de travail */
+  uint8_t *H = NULL;                     /* image de travail */
   uint8_t inf;
 
   ACCEPTED_TYPES1(f, VFF_TYP_1_BYTE);
@@ -543,11 +543,11 @@ int32_t ldilatbyte(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t yc)
   index_t Nm = rsm * csm;
   uint8_t *M = UCHARDATA(m);
   uint8_t *F = UCHARDATA(f);
-  uint8_t *H;                    /* image de travail */
+  uint8_t *H = NULL;                    /* image de travail */
   uint8_t sup;
   int32_t nptb;                    /* nombre de points de l'e.s. */
-  int32_t *tab_es_x;               /* liste des coord. x des points de l'e.s. */
-  int32_t *tab_es_y;               /* liste des coord. y des points de l'e.s. */
+  int32_t *tab_es_x = NULL;               /* liste des coord. x des points de l'e.s. */
+  int32_t *tab_es_y = NULL;               /* liste des coord. y des points de l'e.s. */
   int32_t c;
 
   ACCEPTED_TYPES1(f, VFF_TYP_1_BYTE);
@@ -629,11 +629,11 @@ int32_t ldilatlong(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t yc)
   index_t Nm = rsm * csm;
   uint8_t *M = UCHARDATA(m);
   int32_t *F = SLONGDATA(f);
-  int32_t *H;                      /* image de travail */
+  int32_t *H = NULL;                      /* image de travail */
   int32_t sup;
   int32_t nptb;                    /* nombre de points de l'e.s. */
-  int32_t *tab_es_x;               /* liste des coord. x des points de l'e.s. */
-  int32_t *tab_es_y;               /* liste des coord. y des points de l'e.s. */
+  int32_t *tab_es_x = NULL;               /* liste des coord. x des points de l'e.s. */
+  int32_t *tab_es_y = NULL;               /* liste des coord. y des points de l'e.s. */
   int32_t c;
 
 
@@ -715,11 +715,11 @@ int32_t ldilatfloat(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t yc
   index_t Nm = rsm * csm;
   uint8_t *M = UCHARDATA(m);
   float *F = FLOATDATA(f);
-  float *H;                      /* image de travail */
+  float *H = NULL;                      /* image de travail */
   float sup;
   int32_t nptb;                    /* nombre de points de l'e.s. */
-  int32_t *tab_es_x;               /* liste des coord. x des points de l'e.s. */
-  int32_t *tab_es_y;               /* liste des coord. y des points de l'e.s. */
+  int32_t *tab_es_x = NULL;               /* liste des coord. x des points de l'e.s. */
+  int32_t *tab_es_y = NULL;               /* liste des coord. y des points de l'e.s. */
   int32_t c;
 
   ACCEPTED_TYPES1(f, VFF_TYP_FLOAT);
@@ -796,7 +796,7 @@ int32_t ldilat2(struct xvimage *f, int32_t nptb, int32_t *tab_es_x, int32_t *tab
   index_t cs = colsize(f);         /* taille colonne */
   index_t N = rs * cs;             /* taille image */
   uint8_t *F = UCHARDATA(f);
-  uint8_t *H;            /* image de travail */
+  uint8_t *H = NULL;            /* image de travail */
   uint8_t sup;
   int32_t c;
 
@@ -850,7 +850,7 @@ int32_t ldilat3(struct xvimage *f, int32_t nptb, int32_t *tab_es_x, int32_t *tab
   index_t ds = depth(f);           /* nb plans */
   index_t N = ds * ps;
   uint8_t *F = UCHARDATA(f);
-  uint8_t *H;            /* image de travail */
+  uint8_t *H = NULL;            /* image de travail */
   uint8_t sup;
   int32_t c;
 
@@ -913,11 +913,11 @@ int32_t lerosbyte(
   index_t Nm = rsm * csm;
   uint8_t *M = UCHARDATA(m);
   uint8_t *F = UCHARDATA(f);
-  uint8_t *H;                    /* image de travail */
+  uint8_t *H = NULL;                    /* image de travail */
   uint8_t inf;
   int32_t nptb;                    /* nombre de points de l'e.s. */
-  int32_t *tab_es_x;               /* liste des coord. x des points de l'e.s. */
-  int32_t *tab_es_y;               /* liste des coord. y des points de l'e.s. */
+  int32_t *tab_es_x = NULL;               /* liste des coord. x des points de l'e.s. */
+  int32_t *tab_es_y = NULL;               /* liste des coord. y des points de l'e.s. */
   int32_t c;
 
   ACCEPTED_TYPES1(f, VFF_TYP_1_BYTE);
@@ -1003,11 +1003,11 @@ int32_t leroslong(
   index_t Nm = rsm * csm;
   uint8_t *M = UCHARDATA(m);
   int32_t *F = SLONGDATA(f);
-  int32_t *H;                      /* image de travail */
+  int32_t *H = NULL;                      /* image de travail */
   int32_t inf;
   int32_t nptb;                    /* nombre de points de l'e.s. */
-  int32_t *tab_es_x;               /* liste des coord. x des points de l'e.s. */
-  int32_t *tab_es_y;               /* liste des coord. y des points de l'e.s. */
+  int32_t *tab_es_x = NULL;               /* liste des coord. x des points de l'e.s. */
+  int32_t *tab_es_y = NULL;               /* liste des coord. y des points de l'e.s. */
   int32_t c;
 
   //ACCEPTED_TYPES1(f, VFF_TYP_1_BYTE);
@@ -1094,11 +1094,11 @@ int32_t lerosfloat(
   index_t Nm = rsm * csm;
   uint8_t *M = UCHARDATA(m);
   float *F = FLOATDATA(f);
-  float *H;                      /* image de travail */
+  float *H = NULL;                      /* image de travail */
   float inf;
   int32_t nptb;                    /* nombre de points de l'e.s. */
-  int32_t *tab_es_x;               /* liste des coord. x des points de l'e.s. */
-  int32_t *tab_es_y;               /* liste des coord. y des points de l'e.s. */
+  int32_t *tab_es_x = NULL;               /* liste des coord. x des points de l'e.s. */
+  int32_t *tab_es_y = NULL;               /* liste des coord. y des points de l'e.s. */
   int32_t c;
 
   ACCEPTED_TYPES1(f, VFF_TYP_FLOAT);
@@ -1175,7 +1175,7 @@ int32_t leros2(struct xvimage *f, int32_t nptb, int32_t *tab_es_x, int32_t *tab_
   index_t cs = colsize(f);         /* taille colonne */
   index_t N = rs * cs;             /* taille image */
   uint8_t *F = UCHARDATA(f);
-  uint8_t *H;            /* image de travail */
+  uint8_t *H = NULL;            /* image de travail */
   uint8_t inf;
   int32_t c;
 
@@ -1228,7 +1228,7 @@ int32_t leros3(struct xvimage *f, int32_t nptb, int32_t *tab_es_x, int32_t *tab_
   index_t ds = depth(f);           /* nb plans */
   index_t N = ds * ps;
   uint8_t *F = UCHARDATA(f);
-  uint8_t *H;            /* image de travail */
+  uint8_t *H = NULL;            /* image de travail */
   uint8_t inf;
   int32_t c;
 
