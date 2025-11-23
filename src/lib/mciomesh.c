@@ -44,7 +44,7 @@ knowledge of the CeCILL license and that you accept its terms.
 
 #define VERBOSE
 
-extern Rbtp * RBTP = NULL;
+extern Rbtp * RBTP;
 
 uint16_t LE_ReadUnsignedShort(FILE *fd)
 {
