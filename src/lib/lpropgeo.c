@@ -693,7 +693,7 @@ int32_t lpropgeolong(
   int32_t moytrouve;
   int32_t incr_vois;
   int32_t incr_voisb;
-  int32_t sumndg;        /* pour calculer la moyenne sur la composante */
+  int32_t sumndg = 0;        /* pour calculer la moyenne sur la composante */
   int32_t surf;          /* pour calculer la surface de la composante */
   int32_t *SOURCE = SLONGDATA(img1);
   uint8_t *MASK = UCHARDATA(mask);
