@@ -527,7 +527,7 @@ else if (datatype(img) == VFF_TYP_4_BYTE)
 		{
 		  if ((label > 0) && 
 		      ( (minimum && (F[y] < F[w])) ||
-			(!minimum && (F[y] > F[w]))
+			(!minimum && (F[y] > F[w]))  //BUG! F is not inilizaled here! Memory corruption!!
 			)
                    )
 		    {   /* w non dans un minimum (resp. maximum) */
