@@ -19,7 +19,7 @@
 
 #define SIDE 300
 
-int32_t main(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
 	FILE *f;
 	uint64_t rs, cs, d, nrs, ncs, nd, pixel, avct, h, b, i, j, k, size;

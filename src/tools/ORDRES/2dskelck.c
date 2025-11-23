@@ -79,7 +79,7 @@ References:<BR>
 #include "mcskel2d.h"
 
 /* =============================================================== */
-int main(argc, argv) 
+int main(int argc, char **argv)
 /* =============================================================== */
   int argc; char **argv; 
 {

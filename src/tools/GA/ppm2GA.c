@@ -79,7 +79,7 @@ If im.ppm is a 2D (resp. 3D) image, then <B>out.ga</B> is a 2D (resp
 #include <lppm2GA.h>
 
 /* =============================================================== */
-int32_t main(argc, argv) 
+int main(int argc, char **argv)
 /* =============================================================== */
   int32_t argc; char **argv; 
 {
@@ -90,7 +90,7 @@ int32_t main(argc, argv)
   int32_t param;
   if ( (argc != 4) && (argc != 5))
   {
-    fprintf(stderr, "usage: %s im.pgm param  out.ppm \nparam = 0 max (sur RGB) des differences entre pixel extremite, param = 1 distance euclidienne entre pixels extremités, param = 2 affinité floue.\n", 
+    fprintf(stderr, "usage: %s im.pgm param  out.ppm \nparam = 0 max (sur RGB) des differences entre pixel extremite, param = 1 distance euclidienne entre pixels extremits, param = 2 affinit floue.\n", 
             argv[0]);
     exit(1);
   }

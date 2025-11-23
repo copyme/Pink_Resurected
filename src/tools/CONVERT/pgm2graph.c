@@ -60,7 +60,7 @@ The vertices of the graph are the object pixels of the binary image \b in.pgm, a
 #include <mcgraphe.h>
 
 /* =============================================================== */
-int main(argc, argv) 
+int main(int argc, char **argv)
 /* =============================================================== */
   int32_t argc; char **argv; 
 {

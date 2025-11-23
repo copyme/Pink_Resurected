@@ -94,7 +94,7 @@ connect
 
 
 /* =============================================================== */
-int main(argc, argv) 
+int main(int argc, char **argv)
 /* =============================================================== */
   int32_t argc; char **argv; 
 {
@@ -136,7 +136,7 @@ int main(argc, argv)
     fprintf(stderr, "%s: flowLPEAttributOpenning failed\n", argv[0]);
     exit(1);
   }
-  fprintf(stderr,"Aprèes le calcul de la saillance\n");
+  fprintf(stderr,"Apres le calcul de la saillance\n");
   writerawGAimage(ga, argv[3]);
   freeimage(ga);  
   return 0;

@@ -18,7 +18,7 @@
 #define USAGE "<input_image_file> <raw|pgm> <ouput_pgm_file> x y z w h d <for raw input only: width height depth header_size type(uint_8|uint_16|uint_32|float|double)>"
 
 
-int32_t main(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
 	FILE *f;
 	uint64_t rs, cs, d, nrs, ncs, nd, cx, cy, cz, h, b, size;

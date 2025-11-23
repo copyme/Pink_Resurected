@@ -71,7 +71,7 @@ dimension 4).
 #include <lppm2GA.h>
 
 /* =============================================================== */
-int main(argc, argv) 
+int main(int argc, char **argv)
 /* =============================================================== */
   int32_t argc; char **argv; 
 {

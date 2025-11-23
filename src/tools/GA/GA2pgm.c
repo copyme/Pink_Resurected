@@ -69,7 +69,7 @@ If param = 1, then max is used, and if param = 2, min is used.
 #include <lppm2GA.h>
 
 /* =============================================================== */
-int32_t main(argc, argv) 
+int main(int argc, char **argv)
 /* =============================================================== */
   int32_t argc; char **argv; 
 {
