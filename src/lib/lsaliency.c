@@ -434,7 +434,7 @@ int32_t lsaliency(
     for (j = 0; j < rs; j++) {
       x = i*rs + j;
       xx = (2*i+1) * srs + (2*j+1);
-      if ((!masque || MA[x])) 	{
+      if ((!masque || MA[x])) 	{ // TODO: BUG: MA is not allicated here!!!
 	for (k = 0; k < 8; k += incr_vois) {
 	  y = voisin(x, k, rs, N);
 	  yy = voisin(xx, k, srs, 2*N+1);
