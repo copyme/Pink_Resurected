@@ -57,6 +57,7 @@ The distance d used depends on the parameter \b mode :
 #include <stdio.h>
 #include <stdint.h>
 #include <sys/types.h>
+#include <string.h>
 #include <stdlib.h>
 #include <mccodimage.h>
 #include <mcimage.h>
