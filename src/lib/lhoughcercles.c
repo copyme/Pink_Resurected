@@ -70,7 +70,7 @@ int32_t lhoughcercles(struct xvimage *f, /* image de depart - en niveaux de gris
   int32_t N = rs * cs;             /* taille image */
   int32_t rsm;                     /* taille ligne masque */
   int32_t csm;                     /* taille colonne masque */
-  int32_t Nm = rsm * csm;
+  int32_t Nm;
   struct xvimage *m;
   uint8_t *M;
   uint8_t *F = UCHARDATA(f);
