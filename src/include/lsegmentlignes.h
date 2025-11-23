@@ -36,6 +36,8 @@ knowledge of the CeCILL license and that you accept its terms.
 #ifndef LSEGMENTLIGNES__H__
 #define LSEGMENTLIGNES__H__
 
+#include <mccodimage.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
