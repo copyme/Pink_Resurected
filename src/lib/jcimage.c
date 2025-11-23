@@ -489,7 +489,7 @@ struct GA4d * readGA4d(char *filename)
   } while (!isdigit(buffer[0]));
 
   c = sscanf(buffer, "%d %d %d %d", &rs, &cs, &d, &ss);
-  switch(c != 4){
+  if(c != 4){
     fprintf(stderr,"%s : invalid image format\n", F_NAME);
     return NULL; 
   }
