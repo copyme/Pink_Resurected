@@ -103,9 +103,9 @@ Reference:<BR>
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image;
-  struct xvimage * imagebin;
-  struct xvimage * prio;
+  struct xvimage * image = NULL;
+  struct xvimage * imagebin = NULL;
+  struct xvimage * prio = NULL;
   int32_t connex;
   int32_t ret, priocode;
   struct xvimage * inhibimage = NULL;
