@@ -873,7 +873,7 @@ int32_t lsaliency6b(
   for (x=0; x<N; x++) {
     if (L[x] == WSHED) {
       int32_t c1, c2;
-      if ((!masque || MA[x])) 	{
+      if ((!masque || MA[x])) 	{ // TODO: BUG: MA is not allicated here!!!
 	k = 0;
 	while (k < 6) {
 	  y = voisin6b(x, k, rs, N, parite);
