@@ -539,7 +539,7 @@ else if (datatype(img) == VFF_TYP_4_BYTE)
 		      LifoPush(LIFO, w);
 		    } 
 		  else
-		    if (F[y] == F[w])
+		    if (F[y] == F[w]) //BUG! F is not inilizaled here! Memory corruption!!
 		      {
 			if (((label > 0) && (LABEL[y] == -1)) ||
 			    ((label == 0) && (LABEL[y] != 0)))
