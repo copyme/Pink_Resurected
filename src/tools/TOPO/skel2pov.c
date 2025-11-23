@@ -149,6 +149,8 @@ int main(int argc, char **argv)
   double *X, *Y, *Z; // tableaux pour les coordonnées
   SKC_adj_pcell a;
 
+  bx = by = bz = 0.0;
+
   if (argc != 3)
   {
     fprintf(stderr, "usage: %s in.skel out.pov\n", argv[0]);
