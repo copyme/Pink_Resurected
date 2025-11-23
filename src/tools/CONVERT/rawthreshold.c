@@ -192,8 +192,8 @@ int main(int argc, char **argv)
   }
   else
   {
-    float * F;
-    int32_t n_elts = blocksize/sizeof(float); assert(F != NULL);
+    float * F = NULL;
+    int32_t n_elts = blocksize/sizeof(float);
     F = (float *)malloc(n_elts * sizeof(float)); assert(F != NULL);
     B = (uint8_t *)malloc(n_elts * sizeof(uint8_t)); assert(B != NULL);
 
