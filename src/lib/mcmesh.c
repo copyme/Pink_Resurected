@@ -84,11 +84,6 @@ meshtabedges2 *Edges = NULL;
 meshtablinks *Links = NULL;
 Rbtp * RBTP = NULL;
 
-double normevect(double x, double y, double z)
-{
-  return sqrt(x*x + y*y + z*z);
-}
-
 /* ==================================== */
 meshtabvertices * MCM_AllocVertices(int32_t taillemax)
 /* ==================================== */

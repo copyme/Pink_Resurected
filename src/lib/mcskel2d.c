@@ -1188,41 +1188,6 @@ void K2_MarkEnd2(struct xvimage *k, struct xvimage *m)
   for (i = 0; i < N; i++) if (IS_TMP(K[i])) { M[i] = 1; K[i] &= ~FLAG_TMP; }
 } // K2_MarkEnd2()
 
-/* ========================================== */
-/*! \fn void K2_MarkSE(struct xvimage *k)
-    \param k : un complexe
-    \brief ajoute au complexe m les faces SE du complexe k.
-    Une face f est dite SE si elle principale et régulière et si elle 
-    contient une 1-face m-critique S ou E, ou une 0-face m-critique SE ou SW.
-    \warning les faces m-critiques doivent avoir été marquées auparavant,
-    pas de vérification de compatibilité entre k et m
-*/
-void K2_MarkSE(struct xvimage *k, struct xvimage *m)
-/* ========================================== */
-{
-#undef F_NAME
-#define F_NAME "K2_MarkSE"
-  index_t x, y, i, rs = rowsize(k), cs = colsize(k), N = rs*cs;
-  unsigned char *K = UCHARDATA(k);
-  unsigned char *M = UCHARDATA(m);
-  unsigned char vE, vSE, vS, vSW;
-
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    i = y*rs + x;
-    if (CARRE(x,y) && IS_PRINC(K[i]) && IS_REGUL(K[i]))
-    {
-      vE  = K[(y)*rs + x+1];
-      vSE = K[(y+1)*rs + x+1];
-      vS  = K[(y+1)*rs + x];
-      vSW = K[(y+1)*rs + x-1];
-      if (IS_CRITIC(vE) || IS_CRITIC(vSE) || IS_CRITIC(vS) || IS_CRITIC(vSW)) 
-	K[i] |= FLAG_TMP;
-    }
-  }
-  for (i = 0; i < N; i++) if (IS_TMP(K[i])) { M[i] = 1; K[i] &= ~FLAG_TMP; }
-} // K2_MarkSE()
 
 /* ========================================== */
 /*! \fn void K2_MarkNotNeighInterior(struct xvimage *k, struct xvimage *m)

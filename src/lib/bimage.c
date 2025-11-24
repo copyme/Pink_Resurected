@@ -98,20 +98,6 @@ int BVECT_prod(BVECT *in) {
 	return returnValue;
 }
 
-/* prod:
-	Some programs still need this function - sigh!
-*/
-int bimage_prod(BVECT * in) {
-	int i, returnValue;
-
-	returnValue = 1;
-	for (i = 0; i < in->length; i++) {
-		returnValue *= in->buf[i];
-	}
-
-	return returnValue;
-} /*bimage_prod*/
-
 /* BVECT_sum:
 	Return the sum of a vector
 */
