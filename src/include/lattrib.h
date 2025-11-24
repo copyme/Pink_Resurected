@@ -1867,9 +1867,9 @@ static int32_t LowestCommonAncestor(
   int32_t *argv,
   level_t d)
 /* Retourne le plus proche commun ancetre des cellules de la liste (argc, argv)
-   dont le niveau est > d, ou -1 s'il n'existe pas. 
-   Utilise le champ "flags". 
-   
+   dont le niveau est > d, ou -1 s'il n'existe pas.
+   Utilise le champ "flags".
+
 */
 /* ==================================== */
 #undef F_NAME
@@ -1886,7 +1886,7 @@ static int32_t LowestCommonAncestor(
     cpct->flags[x] |= LCA1;     /* marque LCA1 tous les ancetres de x plus hauts que d */
     x = cpct->pere[x];
   } while ((x != CPCT_ROOT) && (DECODENIV(cpct->comp[x]) > d));
-  
+
   for (i = 1; i < argc; i++)   /* boucle pour les autres cellules */
   {
     x = argv[i];
@@ -1895,7 +1895,7 @@ static int32_t LowestCommonAncestor(
     {                          /* remonte les ancetres de x sans depasser d */
       if (cpct->flags[x] & LCA1)  /* on a un ancetre commun */
       {
-        NoComAnc = 0; 
+        NoComAnc = 0;
       	cpct->flags[x] |= LCA2;   /* on le marque LCA2 */
       	break;                 /* on arrete la remontee (sort du do while) */
       }
@@ -1912,7 +1912,7 @@ static int32_t LowestCommonAncestor(
     cpct->flags[x] &= ~LCA;
     x = cpct->pere[x];
   }  while ((x != CPCT_ROOT) && (DECODENIV(cpct->comp[x]) > d));
-  
+
   for (i = 1; i < argc; i++)   /* boucle pour les autres cellules */
   {
     x = argv[i];

@@ -197,7 +197,6 @@ extern void ldrawgraph(graphe * g, xvimage *image);
 /* ====================================================================== */
 
 extern void AutoNomsSommets(graphe * g, int32_t mode);
-extern void PlongementCirculaire(graphe * g, double r);
 extern void PlongementRadial(graphe * g, int32_t c);
 
 /* ====================================================================== */

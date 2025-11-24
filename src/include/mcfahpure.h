@@ -78,10 +78,6 @@ extern int32_t FahpVide(
   Fahp * L
 );
 
-extern int32_t FahpVideUrg(
-  Fahp * L
-);
-
 extern int32_t FahpVideNiveau(
   Fahp * L,
   int32_t niv

@@ -105,7 +105,6 @@ extern void SaveMeshDXF(FILE *fileout, int32_t obj_id);
 extern void LoadMeshMCM(FILE *filein);
 extern void LoadMeshIFS(FILE *filein);
 extern void LoadMeshCGAL(FILE *filein);
-extern void LoadMeshAC(FILE *filein);
 extern void LoadBuildMCM(FILE *filein);
 extern void LoadBuildVTK(FILE *filein);
 extern void LoadBuildIFS(FILE *filein);

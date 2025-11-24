@@ -171,13 +171,6 @@ LSSTRUCT * LSSTRUCT_constructor(
 );
 void LSSTRUCT_destructor(LSSTRUCT * lsstruct);
 
-/* Level set upsampler */
-int LS_upsample(
-	LSSTRUCT ** ls_ptr,					/* The level set object to upsample */
-	BVECT * up_dim,						/* The upsampled image dimensions (not simple multiple) */
-	int upsampling_rate				/* The upsampling rate (integer -> viable DS upsampling) */
-);
-
 /* N-D narrow band reinitialisation function */
 int nbreinit(
 	LSSTRUCT * ls				/* The level set object */
@@ -196,47 +189,6 @@ int lvlseg(
 	),
 	void * param_list,					/* Generic structure holding parameters */
 	float iterationTime 				/* The time over which the PDE is run */
-);
-
-/** Utility functions for curve PDEs **/
-/* Some default speed functions for level sets */
-float LS_GAC_speed_function(
-	void * in,								/* The input image */
-	BIMAGE *phi,							/* The phi function */
-	BVECT *coord,							/* The co-ordinate at which to compute the speed */
-	void * param_list						/* Void pointer to structure containing parameters */
-);
-
-/* The speed function from Sethian's book */
-float LS_sethian_speed_function(
-	void * in,								/* The input image */
-	BIMAGE *phi,							/* The phi function */
-	BVECT *coord,							/* The co-ordinate at which to compute the speed */
-	void * param_list						/* Void pointer to structure containing parameters */
-);
-
-/* The speed function for Gradient Vector Flows */
-float LS_GVF_speed_function(
-	void * in,								/* The input image */
-	BIMAGE *phi,							/* The phi function */
-	BVECT *coord,							/* The co-ordinate at which to compute the speed */
-	void * param_list						/* Void pointer to structure containing parameters */
-);
-
-/* Compute the curvature of a level set */
-float LS_curv(
-	BIMAGE *phi,							/* The phi function */
-	BVECT *pcoord);							/* The co-ordinate at which to compute the curvature */
-
-/* Compute the attraction of a level set to an edge in an image */
-float LS_attract(
-	BIMAGE *P, 								/* The potential image */
-	BIMAGE *phi, 							/* The phi function (level sets) */
-	BVECT *pcoord);							/* The co-ordinate at which to compute the edge-attraction term */
-float LS_vector_attract(
-	BIMAGE * * in, 							/* The input image, typically a gradient image */
-	BIMAGE *phi, 							/* The phi function (level sets) */
-	BVECT *pcoord							/* The co-ordinate at which to compute the edge-attraction term */
 );
 
 /* N-D level set iterator by AOS */
@@ -337,11 +289,6 @@ GOGAC_Polygon * GOGAC_Polygon_constructor(
 );
 
 void GOGAC_Polygon_destructor(
-	GOGAC_Polygon * p
-);
-
-void GOGAC_Polygon_append_point(
-	float * point,		/* x == point[0], y == point[1] */
 	GOGAC_Polygon * p
 );
 

@@ -147,39 +147,6 @@ BIMAGE * BIMAGE_constructor_char(
 );
 void BIMAGE_destructor(BIMAGE * bimage);
 
-/* Preprocessing functions for BIMAGEs */
-/* Blur in to out, in == out ok */
-int BIMAGE_abs_grad(BIMAGE * in, BIMAGE *out);
-
-/* Radial gradient given centre point */
-int BIMAGE_rad_grad(
-	BIMAGE * in,
-	BIMAGE *out,
-	BVECT * centre
-);
-
-/* Weight the metric radially for scale invariance (*= 1/r^(N-1), N the number of dimensions) */
-void BIMAGE_radial_weighting(
-	BIMAGE * g,					/* The original metric (overwrite) */
-	BVECT * source				/* The coordinates of the source */
-);
-
-/* Gaussian blur by [1 2 1]/4 'blurring' times along each axis */
-int BIMAGE_blur(
-	BIMAGE * in,
-	BIMAGE * out,
-	int blurring
-);
-
-/* Blur an image with an implicit (IIR-like) Gaussian, using an AOS
-	implementation of linear diffusion.
-*/
-int BIMAGE_aosblur(
-	BIMAGE *in,						/* The image data to blur */
-	BIMAGE *out,					/* The output image.  May point to in */
-	float blurring 				/* The time over which the PDE is run */
-);
-
 /* Image IIR filtering with reflective boundary conditions */
 int iirsymconv(
 	double *in,						/* The image data to blur */
@@ -191,16 +158,6 @@ int iirsymconv(
 	char symmetric,					/* Is the numerator symmetric (true) or asymmetric (false) ? */
 	double * ldl_matrix,			/* The LDL decomposition of the denominator */
 	int denominator_length			/* The (odd!) number of denominator coefficients */
-);
-
-/* Batch LDL decomposition for filtering with reflective boundary conditions */
-int LDLbatchdecomp(
-	double * denominator,			/* The symmetric denominator to decompose */
-	int denominator_length,			/* The length of the denominator */
-	double * ldl_matrix,			/* The decomposition (preallocated) */
-	int n,							/* The image dimensions */
-	double * old_ldl_matrix,		/* Old LDL decomposition for head-start (or NULL) */
-	int old_n
 );
 
 /* Deriche's constant-time-per-pixel Gaussian blur, extended to reflective boundaries */
@@ -245,40 +202,6 @@ int lapgauss(
 	int order						/* The order of Gaussian approximation [2, 4] */
 );
 
-
-/* Convert a gradient image to a metric image by 1/(1+|grad|^p) */
-int BIMAGE_metrify(
-	BIMAGE * in,				/* The input gradient image */
-	BIMAGE * out,				/* Output image, may point to input */
-	float normalisation,		/* Normalisation factor */
-	int p,						/* Should be 1 or 2 */
-	float epsilon				/* Length penalty weight */
-);
-
-/* Create a tensor metric from a blurred image.  For segmentation. */
-int BIMAGE_tensor_metric(
-	BIMAGE * in,				/* Input image (pre blurred, but not grad'd) */
-	METRIC2D * metric,			/* Output metric */
-	float normalisation,		/* Normalisation factor */
-	int p,						/* Should be 1 or 2 */
-	float epsilon				/* Length penalty weight */
-);
-
-/* Create a tensor metric from a blurred line image. */
-int BIMAGE_line_metric(
-	BIMAGE * in,				/* Input image (pre blurred, but not grad'd) */
-	METRIC2D * metric,			/* Output metric */
-	float normalisation,		/* Normalisation factor */
-	float epsilon				/* Euclidean length penalty */
-);
-
-/* Convert a gradient image to a diffusivity image */
-int BIMAGE_diffusivity(
-	BIMAGE * in,				/* The input gradient image */
-	BIMAGE * out,				/* Output image, may point to input */
-	float lambda				/* The threshold for gradients to be significant */
-);
-
 /** Weickert et. al.'s AOS diffusion scheme **/
 /* Constant (w.r.t. time) diffusivities */
 int aosdiffuse(
@@ -316,30 +239,12 @@ int stereoinpaint(
 	float timestep 					/* The iteration time step */
 );
 
-/* Image downsampling and upsampling.  Requires both images allocated with correct
-dimensions (out->dim = floor(in->dim / or *  downsampling_rate))
-*/
-int BIMAGE_downsample(
-	BIMAGE *in,						/* Input image to downsample */
-	BIMAGE *out,					/* Output image (already allocated) */
-	int downsampling_rate,			/* Downsampling rate for each axis */
-	char blur_flag					/* Do I blur for anti-aliasing? */
-);
-
 int label_image_downsample(
 	char * in,						/* Input image to downsample */
 	BVECT * in_dim,					/* Input dimensions */
 	char * out,						/* Output image (already allocated) */
 	BVECT * out_dim,				/* Output dimensions */
 	int downsampling_rate			/* Downsampling rate for each axis */
-);
-
-int BIMAGE_upsample(
-	BIMAGE *in,						/* Input image to upsample */
-	BIMAGE *out,					/* Output image (already allocated) */
-	int upsampling_rate,			/* Upsampling rate for each axis */
-	char blur_flag					/* Interpolate? */
-
 );
 
 #ifdef __cplusplus
