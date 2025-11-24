@@ -3660,25 +3660,6 @@ static int32_t mc_match6(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   return 0;
 } /* mc_match6() */
 
-#ifdef NOT_USED
-/* ==================================== */
-static int32_t mc_end(uint8_t *F, int32_t x, int32_t rs, int32_t N)
-/* ==================================== */
-{
-  int32_t i;
-  uint8_t v[8];
-  extract_vois(F, x, rs, N, v);
-  for (i = 0; i < 8; i++)
-  {
-    if (v[0] == 0) goto fail;
-    if ((v[2] != 0) || (v[3] != 0) || (v[4] != 0) || (v[5] != 0) || (v[6] != 0)) goto fail;
-    return 1;
-  fail:
-    rotate45_vois(v);
-  }
-  return 0;
-} /* mc_end() */
-#endif
 
 /* ==================================== */
 static int32_t mc_maskend1(uint8_t *F, int32_t x, int32_t rs, int32_t N)

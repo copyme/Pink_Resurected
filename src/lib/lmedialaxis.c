@@ -2519,32 +2519,6 @@ int32_t lmedialaxis_lprintdownstream(struct xvimage *id)
 /* ==================================== */
 /* ==================================== */
 
-/* Function that returns the maximum diameter of the point set */
-/* ==================================== */
-double MaximumDiameter(ListDPoint2D LPoints, int32_t count)
-/* ==================================== */
-{
-  int32_t i, j;
-  double x1, y1, x2, y2;
-  double tmp, MaxDiam;
-
-  MaxDiam = 0.0;
-
-  if (count > 1)
-  {
-    for (i = 0; i < count-1; i++)
-    {
-      x1 = LPoints[i].xCoor; y1 = LPoints[i].yCoor;
-      for(j = i+1; j < count; j++)
-      {
-	x2 = LPoints[j].xCoor; y2 = LPoints[j].yCoor;
-	tmp = sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
-	if (tmp > MaxDiam) MaxDiam=tmp;
-      }
-    }	
-  }
-  return MaxDiam;
-} // MaximumDiameter()
 
 /* Function that returns the maximum diameter of the point set in 3D */
 /* ==================================== */

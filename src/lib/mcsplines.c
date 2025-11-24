@@ -542,24 +542,6 @@ double integrale3(double f[3], double g[3], double h[3], double a, double b, int
      return sum;
 } // integrale3()
 
-double dicho(double f[3], double a, double b, double r, int32_t p, double eps)
-/*
-recherche par dichotomie d'une valeur t dans [a,b] telle que 
-integrale(f, a, t, p) = r avec une erreur max de eps   
-retourne t
-*/
-{
-  double tmp, u, asav = a;
-  while (b-a>eps)
-  {
-    u=(a+b)/2;
-    tmp = integrale(f, asav, u, p);
-    if (tmp == r) return u;
-    else if (tmp > r) b = u;
-	 else a = u;
-  }
-  return u;                    
-} // dicho()
 
 double dicho2(double f[3], double g[3], double a, double b, double r, int32_t p, double eps)
 /*

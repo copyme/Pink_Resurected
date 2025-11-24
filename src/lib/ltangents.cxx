@@ -61,11 +61,7 @@ Michel Couprie, 2017
 #include <mcimage.h>
 #include <mclin.h>
 #include <ltangents.h>
-//#include <mcutil.h>
 
-//#define DEBUG
-//#define DEBUG_ExtractDSSs3D
-//#define DEBUG_CoverByDSSs3D
 
 #define EPSILON 1E-20
 #define PRECISION 1000
@@ -75,48 +71,6 @@ Michel Couprie, 2017
 /*         FUNCTIONS BASED ON DISCRETE CONVOLUTIONS          */
 /*************************************************************/
 /*************************************************************/
-
-/*==================================== */
-void calc_tangents2D(int32_t npoints, int32_t mask, uint64_t *tab_combi, int32_t *X, int32_t *Y, double *Xdir, double *Ydir)
-/*==================================== */
-{
-  int32_t i, j;
-  int32_t *deltaX, *deltaY;
-  double coef, normalisateur;
-  int32_t tmp;
-
-  deltaX = (int32_t *)malloc(npoints * sizeof(int32_t)); assert(deltaX != NULL);
-  deltaY = (int32_t *)malloc(npoints * sizeof(int32_t)); assert(deltaY != NULL);
-  deltaX[0] = 0;
-  deltaY[0] = 0;
-  for (i = 1; i < npoints; i++)
-  {
-    deltaX[i] = X[i]-X[i-1];
-    deltaY[i] = Y[i]-Y[i-1];
-  }
-
-  coef = pow(static_cast<double>(2),1-2*mask);
-
-  for (i = 0; i < npoints; i++)
-  {
-    Xdir[i] = 0;
-    Ydir[i] = 0;
-    for (j = max(0,mask-i); j < min(2*mask,npoints+mask-i-1); j++)
-      {
-	tmp = i+j-mask+1;
-	Xdir[i] += (int64_t)(tab_combi[j]*deltaX[tmp]);
-	Ydir[i] += (int64_t)(tab_combi[j]*deltaY[tmp]);
-      }
-    Xdir[i] = Xdir[i]*coef;
-    Ydir[i] = Ydir[i]*coef;
-    normalisateur = pow(pow(Xdir[i],2)+pow(Ydir[i],2),0.5);
-    Xdir[i] = Xdir[i]/normalisateur;
-    Ydir[i] = Ydir[i]/normalisateur;
-  }
-
-  free(deltaX);
-  free(deltaY);
-}
 
 /*==================================== */
 void calc_tangents3D(int32_t npoints, int32_t mask, uint64_t *tab_combi, int32_t *X, int32_t *Y, int32_t *Z, double *Xdir, double *Ydir, double *Zdir)
@@ -199,7 +153,21 @@ static double scalarprod(double x1, double y1, double z1, double x2, double y2, 
 static double cosinesimilarity(double x1, double y1, double z1, double x2, double y2, double z2)
 /* ==================================== */
 {
-  return acos(scalarprod(x1, y1, z1, x2, y2, z2) / (norm(x1, y1, z1) * norm(x2, y2, z2)));
+  double dot = scalarprod(x1, y1, z1, x2, y2, z2);
+  double lenProduct = norm(x1, y1, z1) * norm(x2, y2, z2);
+
+  if (lenProduct < 1e-9)
+    return 0.0;
+
+  double cosTheta = dot / lenProduct;
+
+  // clamp the value to the [-1, 1] range, otherwise NAN can occur, and in practice it does
+  if (cosTheta > 1.0)
+    cosTheta = 1.0;
+  else if (cosTheta < -1.0)
+    cosTheta = -1.0;
+
+  return acos(cosTheta);
 }
 
 /* ==================================== */
@@ -1299,57 +1267,6 @@ double ComputeLength3D(int32_t npoints, double *Xmstd, double *Ymstd, double *Zm
 } // ComputeLength3D()
 
 //--------------------------------------------------------------------------
-int32_t lcurvetangents2D(int32_t mode, int32_t mask, int64_t *tab_combi, int32_t npoints, int32_t *X, int32_t *Y, double *Xdir, double *Ydir)
-//--------------------------------------------------------------------------
-/*! \fn int32_t lcurvetangents2D(int32_t npoints, int32_t *X, int32_t *Y, double *Xdir, double *Ydir)
-    \param mode (input): code of the method used
-    \param mask (input): size of the mask for the method based on convolution (mode==2)
-    \param tab_combi (input): tableau contenant la ligne utile du triangle de pascal (mode==2)
-    \param npoints (input): number of points in points list
-    \param X (input): ordered list of points (1st coord)
-    \param Y (input): ordered list of points (2nd coord)
-    \param Xdir (output): normalized tangent vector (1st coord)
-    \param Ydir (output): normalized tangent vector (2nd coord)
-    \brief TODO
-    \warning arrays "?dir" must have been allocated.
-*/
-{
-#undef F_NAME
-#define F_NAME "lcurvetangents2D"
-
-  /*  
-  if (mode == 1)
-  {
-    int32_t *end;
-    double *Xtan, *Ytan;
-    
-    end = (int32_t *)malloc(npoints * sizeof(int32_t)); assert(end != NULL);
-    Xtan = (double *)malloc(npoints * sizeof(double)); assert(Xtan != NULL);
-    Ytan = (double *)malloc(npoints * sizeof(double)); assert(Ytan != NULL);
-  
-    ExtractDSSs2D(npoints, X, Y, end, Xtan, Ytan);
-    LambdaMSTD2D(npoints, end, Xtan, Ytan, Xdir, Ydir,);
-    
-    free(end);
-    free(Xtan);
-    free(Ytan);
-  }
-  else if (mode == 2)
-  {
-    calc_tangents2D(npoints, mask, tab_combi, X, Y, Xdir, Ydir);
-  }
-  else
-  */
-  {
-    //fprintf(stderr, "%s: bad mode %d\n", F_NAME, mode);
-    fprintf(stderr, "%s: 2D not implemented\n", F_NAME);
-    return 0;
-  }
-
-  return 1;
-} // lcurvetangents2D()
-
-//--------------------------------------------------------------------------
 int32_t lcurvetangents3D(int32_t mode, int32_t mask, uint64_t *tab_combi, int32_t npoints, int32_t *X, int32_t *Y, int32_t *Z, double *Xdir, double *Ydir, double *Zdir)
 //--------------------------------------------------------------------------
 /*! \fn int32_t lcurvetangents3D(int32_t mode, int32_t mask, int64_t *tab_combi, int32_t npoints, int32_t *X, int32_t *Y, int32_t *Z, double *Xdir, double *Ydir, double *Zdir)
@@ -1571,72 +1488,3 @@ int32_t lcurvenormalplanes3D(int32_t ngauss, int32_t npoints, int32_t *X, int32_
 
   return 1;
 } // lcurvenormalplanes3D()
-
-#ifdef TESTLTANGENTS
-/* =============================================================== */
-int main(int argc, char **argv)
-/* =============================================================== */
-{
-  FILE *fd = NULL;
-  int32_t npoints;
-  char type;
-  int32_t *X, *Y;
-  int32_t *end;
-  double *angle;
-  double *mstd;
-
-  if (argc != 2)
-  {
-    fprintf(stderr, "usage: %s curve.list\n", argv[0]);
-    exit(1);
-  }
-
-  fd = fopen(argv[1],"r");
-  if (!fd)
-  {
-    fprintf(stderr, "%s: cannot open file: %s\n", argv[0], argv[1]);
-    exit(1);
-  }
-
-  fscanf(fd, "%c", &type);
-  if (type != 'b')
-  {
-    fprintf(stderr, "usage: %s: bad file format: %c \n", argv[0], type);
-    exit(1);
-  }
-
-  fscanf(fd, "%d", &npoints);
-  X = (int32_t *)calloc(1,npoints*sizeof(int32_t)); assert(X != NULL);
-  Y = (int32_t *)calloc(1,npoints*sizeof(int32_t)); assert(Y != NULL);
-
-  Fori(npoints)
-  {
-    fscanf(fd, "%d %d", &(X[i]), &(Y[i]));
-  }
-  fclose(fd);
-
-  
-  end = (int32_t *)malloc(npoints * sizeof(int32_t)); assert(end != NULL);
-  angle = (double *)malloc(npoints * sizeof(double)); assert(angle != NULL);
-  mstd = (double *)malloc(npoints * sizeof(double)); assert(mstd != NULL);
-
-  ExtractDSSs(npoints, X, Y, end, angle);
-
-  printf("npoints = %d\n", npoints);
-  Fori(npoints)
-    if (end[i] != -1)
-      printf("DSS %d-%d, angle %g (%g)\n", i, end[i], angle[i], angle[i]*180/M_PI);
-
-  LambdaMSTD(npoints, end, angle, mstd);
-
-  Fori(npoints)
-    printf("point %d, angle %g (%g)\n", i, mstd[i], mstd[i]*180/M_PI);
-
-  free(X);
-  free(Y);
-  free(end);
-  free(angle);
-  free(mstd);
-  return 0;
-}
-#endif

@@ -46,16 +46,6 @@ knowledge of the CeCILL license and that you accept its terms.
 
 extern Rbtp * RBTP;
 
-uint16_t LE_ReadUnsignedShort(FILE *fd)
-{
-  uint16_t tmp, tmp1;
-  fread(&tmp, 2 * sizeof(char), 1, fd);
-  tmp1 = tmp & 0x00ff;
-  tmp = tmp >> 8;
-  tmp = tmp | (tmp1 << 8);      
-  return tmp;
-}
-
 uint32_t LE_ReadUnsignedLong(FILE *fd)
 {
   uint32_t tmp;
