@@ -871,7 +871,7 @@ int K2_MCriticSE2Obj(struct xvimage *k)
     i = y*rs + x;
     if (IS_CRITIC(K[i])) 
     {
-printf("Critic : %d (%d %d)\n", (int)i, (int)x, (int)y);
+      printf("Critic : %d (%d %d)\n", (int)i, (int)x, (int)y);
       K[i] |= FLAG_OBJ;
       Betacarre2d(rs, cs, x, y, tab1, &n1);
       for (u = 0; u < n1; u++) 
@@ -881,7 +881,7 @@ printf("Critic : %d (%d %d)\n", (int)i, (int)x, (int)y);
 	yj = j / rs;
 	if (CARRE(xj,yj) && K[j])
 	{
-printf("  j : %ld (%ldd %ld) ih:%d iv:%d s:%d\n", j, xj, yj, INTERH(x,y), INTERV(x,y), SINGL(x,y));
+      printf("  j : %ld (%ldd %ld) ih:%d iv:%d s:%d\n", j, xj, yj, INTERH(x,y), INTERV(x,y), SINGL(x,y));
 	  if ((INTERH(x,y) && (xj == x) && (yj == y-1)) ||    // S
 	      (INTERV(x,y) && (xj == x-1) && (yj == y)) ||    // E
 	      (SINGL(x,y) && (xj == x-1) && (yj == y-1)) ||   // SE
