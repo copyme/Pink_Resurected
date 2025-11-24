@@ -1199,67 +1199,6 @@ printf("    Eleve au niveau: %d ; LPE\n", F[x]);
 #endif
 } // Watershed4()
 
-#ifdef NOT_USED
-/* ==================================== */
-static int32_t trouvefeuillerec(CompactTree * cpct, int32_t p, int32_t v)
-/* ==================================== */
-/*
-  retourne l'index d'une feuille descendant de p tq dyn(f) = v, ou -1 en cas d'echec
-*/ 
-{
-  int32_t i, n, j, f;
-  n = NBFILS(cpct, p);
-  if (n == 0) 
-  {
-    if (cpct->dyn[p] == v) return p;
-    return -1;
-  }
-  for (i = 0; i < n; i++) 
-  {
-    j = INDEXFILS(cpct, p, i);
-    j = cpct->fils[j];
-    f = trouvefeuillerec(cpct, j, v);
-    if (f != -1) return f;
-  }
-  return -1;
-} /* trouvefeuillerec() */
-
-/* ==================================== */
-static void ElimineDupliques(int32_t *ncomp, int32_t *tabcomp) 
-/* ==================================== */
-{
-  int32_t k, j, i; 
-  for (i = 0; i < *ncomp; i++)
-    if (tabcomp[i] != -1)
-      for (j = i + 1; j < *ncomp; j++)
-        if (tabcomp[j] == tabcomp[i])
-          tabcomp[j] = -1;
-  k = j = 0;
-  for (i = 0; i < *ncomp; i++)
-  {
-    tabcomp[j] = tabcomp[i];
-    if (tabcomp[i] != -1)
-      j++;
-    else
-      k++; // nb elements supprimes
-  }
-  *ncomp -= k;
-} /* ElimineDupliques() */
-
-/* ==================================== */
-static int32_t InList(int32_t e, int32_t *list, int32_t n)                       
-/* ==================================== */
-{
-/* renvoie 1 si e est dans list, 0 sinon */
-/* e : l'element a rechercher */
-/* list : la liste (tableau d'entiers) */
-/* n : le nombre d'elements dans la liste */
-  while (n > 0)
-    if (list[--n] == e) return 1;
-  return 0;
-} /* InList() */
-#endif
-
 /* ==================================== */
 int32_t lwshedval(struct xvimage *image, int32_t connex)
 /* ==================================== */
