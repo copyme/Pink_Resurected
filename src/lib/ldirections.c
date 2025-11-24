@@ -70,10 +70,14 @@ double calcangle(int32_t pc, int32_t p, int32_t rs)
   d = sqrt((xc - x) * (xc - x) + (yc - y) * (yc - y));
   ts = asin((y - yc) / d);
   tc = acos((x - xc) / d);
-  if ((ts >= 0) && (tc <= M_PI_2))   return ts;
-  if ((ts >= 0) && (tc > M_PI_2))    return tc;
-  if ((ts < 0) && (tc > M_PI_2))     return - ts + M_PI;
-  /* ((ts < 0) && (tc <= M_PI_2)) */ return ts + M_PI + M_PI;
+  if ((ts >= 0) && (tc <= M_PI_2))
+    return ts;
+  if ((ts >= 0) && (tc > M_PI_2))
+    return tc;
+  if ((ts < 0) && (tc > M_PI_2))
+    return - ts + M_PI;
+  /* ((ts < 0) && (tc <= M_PI_2)) */
+  return ts + M_PI + M_PI;
 } /* calcangle() */
 
 /* ==================================== */
