@@ -3027,35 +3027,6 @@ int32_t nbcomps8(
 } /* nbcomps8() */
 
 /* ==================================== */
-int32_t courbe4(  /* teste si un point est un point de courbe - minima 4-connexes
-	         ie- si pour une coupe <= img[p] on a T = 2 
-                 et deux voisins exactement dans la coupe */
-  uint8_t *img,          /* pointeur base image */
-  int32_t p,                       /* index du point */
-  int32_t rs,                      /* taille rangee */
-  int32_t N)                       /* taille image */
-/* ==================================== */
-{	
-  int32_t t4mm, t4m, t8p, t8pp;
-  int32_t k, q;
-
-  if ((p%rs==rs-1)||(p<rs)||(p%rs==0)||(p>=N-rs)) /* point de bord */
-     return 0;
-  nbtopo(img, p, rs, N, &t4mm, &t4m, &t8p, &t8pp);
-  if ((t8p == 2) && (nbvoiss8(img, p, img[p], rs, N) == 2)) return 1;
-  for (k = 0; k < 8; k += 1)
-  {
-    q = voisin(p, k, rs, N);
-    if ((q != -1) && (img[q] <= img[p]))
-    {
-      nbtopoh(img, p, img[q], rs, N, &t4mm, &t4m, &t8p, &t8pp);
-      if ((t8p == 2) && (nbvoiss8(img, p, img[q], rs, N) == 2)) return 1;
-    }
-  }	
-  return 0;
-} /* courbe4() */
-
-/* ==================================== */
 int32_t courbe8(  /* teste si un point est un point de courbe - minima 8-connexes
 	         ie- si pour une coupe <= img[p] on a T = 2 
                  et deux voisins exactement dans la coupe */

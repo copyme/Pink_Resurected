@@ -304,53 +304,6 @@ writeimage(image_tmp,"_erostopodilinter");
 } // hpopeningdisc()
 
 /* =============================================================== */
-void hpopeningdisc_bad(struct xvimage * image, struct xvimage * dist, int32_t r, int32_t connex)
-/* =============================================================== */
-/* juste pour montrer que ce n'est pas la bonne definition */
-{
-  struct xvimage * image_tmp;
-  uint8_t *I, *T;
-  int32_t rs, cs, N, i, r2 = r * r;
-  uint32_t *D = ULONGDATA(dist);
-
-  if (connex == 4) connex = 8; else connex = 4; 
-  // (pour hthi* la connexite est celle des minima)
-
-  image_tmp = copyimage(image);
-  rs = rowsize(image);         /* taille ligne */
-  cs = colsize(image);         /* taille colonne */
-  N = rs * cs;                 /* taille image */
-  I = UCHARDATA(image);
-  T = UCHARDATA(image_tmp);
-
-  // erosion
-  for(i=0; i<N; i++) if (T[i]) T[i] = NDG_MIN; else T[i] = NDG_MAX;
-  if (!ldistquad(image_tmp, dist)) // Danielsson's algorithm
-  {
-    fprintf(stderr, "%s: function ldistquad failed\n", F_NAME);
-    exit(0);
-  }
-  for(i=0; i<N; i++) if (D[i] > r2) T[i] = NDG_MAX; else T[i] = NDG_MIN;
-
-  // dilatation
-  if (!ldistquad(image_tmp, dist)) // Danielsson's algorithm
-  {
-    fprintf(stderr, "%s: function ldistquad failed\n", F_NAME);
-    exit(0);
-  }
-  for(i=0; i<N; i++) if (D[i] > r2) T[i] = NDG_MIN; else T[i] = NDG_MAX;
-
-  // controle topologique pour l'ouverture
-  if (!lhthindelta(image, image_tmp, -1, connex))
-  {
-    fprintf(stderr, "%s: function lhthindelta failed\n", F_NAME);
-    exit(0);
-  }
-
-  freeimage(image_tmp);
-} // hpopeningdisc_bad()
-
-/* =============================================================== */
 void condhpclosing(
   struct xvimage * image, struct xvimage * cond, 
   int32_t nptb, int32_t * tab_es_x, int32_t * tab_es_y, 

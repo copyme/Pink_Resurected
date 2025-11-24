@@ -3519,40 +3519,6 @@ int32_t Simpleh3d(struct xvimage *b, index_t i, index_t j, index_t k, int32_t h)
 } /* Simpleh3d() */
 
 /* ==================================== */
-int32_t Alpha3Simple3dDefinitionRecursive(struct xvimage *b, index_t i, index_t j, index_t k)
-/* ==================================== */
-{
-  index_t rs = rowsize(b);
-  index_t cs = colsize(b);
-  index_t ds = depth(b);
-  uint8_t *B = UCHARDATA(b);
-  struct xvimage *g;
-  uint8_t *G;  
-  int32_t ret;
-
-#ifdef DEBUGNEW
-printf("Alpha3Simple3d : %d %d %d\n", i, j, k);
-if (rowsize(b) == 3) printimage(b);
-#endif
-
-  if (SINGL3D(i,j,k)) return 0;
-  g = AllocGrille3d();
-  G = UCHARDATA(g);
-  CopieAlphacarre3d(G, B, rs, cs, ds, i, j, k);
-  if (INTER3D(i,j,k))
-    ret = ContientUnSeulElement3d(g);
-  else
-    ret = Ensemble2Contractile3d(g);
-  FreeGrille3d();
-
-#ifdef DEBUGNEW
-printf("Alpha3Simple3d : retourne %d\n", ret);
-#endif
-
-  return ret;
-} /* Alpha3Simple3dDefinitionRecursive() */
-
-/* ==================================== */
 int32_t Beta3Simple3dDefinitionRecursive(struct xvimage *b, index_t i, index_t j, index_t k)
 /* ==================================== */
 {

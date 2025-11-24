@@ -59,8 +59,6 @@ The file \b scene.3sc contains a scene under the 3Dscene format.
 #include <mcsplines.h>
 #include <ldraw.h>
 
-double pol3(double *P, double v) { return P[0] + P[1]*v +  P[2]*v*v +  P[3]*v*v*v; }
-
 /* =============================================================== */
 static void process_spline(FILE *fd, struct xvimage * image)
 /* =============================================================== */

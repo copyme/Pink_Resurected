@@ -519,41 +519,6 @@ void ndgmin2d(struct xvimage *b)
 } /* ndgmin2d() */
 
 /* ==================================== */
-void ndgmin2d_OLD(struct xvimage *k)
-/* ==================================== */
-/*
-  Entree: une fonction k de H2 dans [0..255] dont
-          seules les valeurs des beta-terminaux (carres) sont significatives.
-  Sortie: une fonction kp de H2 dans [0..255].
-          Tous les points x non beta-terminaux
-          ont recu la valeur min{k[y], y beta-terminal dans betacarre[x]}
-*/
-{
-  index_t rs = rowsize(k);
-  index_t cs = colsize(k);
-  uint8_t *K = UCHARDATA(k);
-  struct xvimage *kp;
-  uint8_t *KP;
-  index_t i, j, u;
-  int32_t n;
-  index_t tab[9];
-
-  kp = copyimage(k);
-  KP = UCHARDATA(kp);
-  memset(KP, NDG_MAX, rs*cs);
-
-  for (j = 1; j < cs; j += 2)
-    for (i = 1; i < rs; i += 2)
-    {
-      KP[j * rs + i] = K[j * rs + i];
-      Alphacarre2d(rs, cs, i, j, tab, &n);
-      for (u = 0; u < n; u++) KP[tab[u]] = mcmin(KP[tab[u]],K[j * rs + i]);
-    }
-  memcpy(K, KP, rs*cs);
-  freeimage(kp);
-} /* ndgmin2d() */
-
-/* ==================================== */
 void ndgminbeta2d(struct xvimage *k)
 /* ==================================== */
 /*

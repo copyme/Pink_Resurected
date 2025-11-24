@@ -275,39 +275,6 @@ static int32_t is_on_frame(index_t p, index_t rs, index_t N)
 }
 
 /* ==================================== */
-void veriftopo()
-/* ==================================== */
-{
-  index_t i, j, n, m;
-  for (i = 0; i < 256; i++)
-  {
-    m = ~i & 0xff;  /* complementaire de i */
-    n = 0;          /* compte de nb de CC */
-    for (j = 0; j < 4; j++) if (Comp4Tab[m][j]) n++;
-    if (n != TopoTab[i][0]) 
-#ifdef MC_64_BITS
-      printf("ERREUR pour %lld\n", (long long int)i);
-#else
-      printf("ERREUR pour %d\n", i);
-#endif
-  }
-  printf("FIN TEST 4\n");
-
-  for (i = 0; i < 256; i++)
-  { 
-    n = 0;          /* compte de nb de CC */
-    for (j = 0; j < 4; j++) if (Comp8Tab[i][j]) n++;
-    if (n != TopoTab[i][1]) 
-#ifdef MC_64_BITS
-      printf("ERREUR pour %lld\n", (long long int)i);
-#else
-      printf("ERREUR pour %d\n", i);
-#endif
-  }
-  printf("FIN TEST 8\n");
-} /* veriftopo() */
-
-/* ==================================== */
 uint8_t mask(
   uint8_t *img, /* pointeur base image */
   index_t p,    /* index du point */

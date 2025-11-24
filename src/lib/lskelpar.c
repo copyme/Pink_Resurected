@@ -296,21 +296,6 @@ static void print_vois(uint8_t *vois)
 } /* print_vois() */
 #endif
 
-#ifdef NOT_USED
-/* ==================================== */
-static void rotate45_vois(uint8_t *vois)
-/*
-   effectue une rotation du voisinage "vois" de 45 degres dans le sens
-   trigonométrique
-*/
-/* ==================================== */
-{
-  uint8_t tmp = vois[0];
-  vois[0] = vois[7]; vois[7] = vois[6]; vois[6] = vois[5]; vois[5] = vois[4];
-  vois[4] = vois[3]; vois[3] = vois[2]; vois[2] = vois[1]; vois[1] = tmp;
-} /* rotate45_vois() */
-#endif
-
 /* ==================================== */
 static void rotate90_vois(uint8_t *vois)
 /*
@@ -469,36 +454,6 @@ static int32_t pav_match3(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   }
   return 0;
 } /* pav_match3() */
-
-#ifdef NOT_USED
-/* ==================================== */
-static int32_t pav_match3b(uint8_t *F, int32_t x, int32_t rs, int32_t N)
-/* ==================================== */
-// condition for "tentatively multiple" points
-/*
-  A A C   avec origine = (1,1) et au moins un des A OU au moins un des B OU au moins un des C non nuls
-  0 2 2
-  B B C
- */
-{
-  int32_t i;
-  uint8_t v[8];
-  extract_vois(F, x, rs, N, v);
-  if ((v[0] != 1) && (v[1] != 1) && (v[2] != 1) && (v[3] != 1) &&
-      (v[4] != 1) && (v[5] != 1) && (v[6] != 1) && (v[7] != 1)) return 1;
-  for (i = 0; i < 4; i++)
-  {
-    if (v[0] != 2) goto fail;
-    if (v[4] != 0) goto fail;
-    if ((v[1] != 0) || (v[7] != 0)) return 1;
-    if ((v[2] != 0) || (v[3] != 0)) return 1;
-    if ((v[5] != 0) || (v[6] != 0)) return 1;
-  fail:
-    rotate90_vois(v);
-  }
-  return 0;
-} /* pav_match3b() */
-#endif
 
 /* ==================================== */
 static int32_t pav_match4(uint8_t *F, int32_t x, int32_t rs, int32_t N)
