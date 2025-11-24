@@ -1178,8 +1178,7 @@ int32_t compute_scale(uint8_t **image, uint8_t **scale_image, float *scale_map, 
 	      count_nonobj = count_nonobj + 1.0 - scale_map[tti1];
 	    }
 	    else
-	    {	      
-	      count_obj = count_obj ;
+	    {
 	      count_nonobj = count_nonobj + 1.0 ;
 	    }
 	  }
