@@ -2942,31 +2942,6 @@ int32_t nbvoiss8(
 } /* nbvoiss8() */
 
 /* ==================================== */
-int32_t nbvoisi8(
-  uint8_t *img,          /* pointeur base image */
-  int32_t p,                       /* index du point */
-  uint8_t h,             /* hauteur de la coupe */
-  int32_t rs,                      /* taille rangee */
-  int32_t N)                       /* taille image */
-/* retourne le nb de 8-voisins de p de niveau inferieur strictement a h */
-/* ==================================== */
-{
-	register uint8_t val = h;
-	register uint8_t * ptr = img+p;
-	register int32_t n = 0;
-
-        if ((p%rs!=rs-1) && (*(ptr+1) < val)) n++;
-        if (((p%rs!=rs-1)&&(p>=rs)) && (*(ptr+1-rs) < val)) n++;
-        if ((p>=rs) && (*(ptr-rs) < val)) n++;
-        if (((p>=rs)&&(p%rs!=0)) && (*(ptr-rs-1) < val)) n++;
-        if ((p%rs!=0) && (*(ptr-1) < val)) n++;
-        if (((p%rs!=0)&&(p<N-rs)) && (*(ptr-1+rs) < val)) n++;
-        if ((p<N-rs) && (*(ptr+rs) < val)) n++;
-        if (((p<N-rs)&&(p%rs!=rs-1)) && (*(ptr+rs+1) < val)) n++;
-        return n;
-} /* nbvoisi8() */
-
-/* ==================================== */
 int32_t nbvoiss4(
   uint8_t *img,          /* pointeur base image */
   int32_t p,                       /* index du point */
@@ -2986,27 +2961,6 @@ int32_t nbvoiss4(
         if ((p<N-rs) && (*(ptr+rs) >= val)) n++;
         return n;
 } /* nbvoiss4() */
-
-/* ==================================== */
-int32_t nbvoisi4(
-  uint8_t *img,          /* pointeur base image */
-  int32_t p,                       /* index du point */
-  uint8_t h,             /* hauteur de la coupe */
-  int32_t rs,                      /* taille rangee */
-  int32_t N)                       /* taille image */
-/* retourne le nb de 4-voisins de p niveau inferieur strictement a h */
-/* ==================================== */
-{
-	register uint8_t val = h;
-	register uint8_t * ptr = img+p;
-	register int32_t n = 0;
-
-        if ((p%rs!=rs-1) && (*(ptr+1) < val)) n++;
-        if ((p>=rs) && (*(ptr-rs) < val)) n++;
-        if ((p%rs!=0) && (*(ptr-1) < val)) n++;
-        if ((p<N-rs) && (*(ptr+rs) < val)) n++;
-        return n;
-} /* nbvoisi4() */
 
 /* ==================================== */
 int32_t extensible4(

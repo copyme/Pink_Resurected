@@ -888,19 +888,6 @@ void SaveCoords()
 } /* SaveCoords() */
 
 /* ==================================== */
-void SaveOriginalCoords()
-/* ==================================== */
-{
-  int32_t i;
-  for (i = 0; i < Vertices->cur; i++)
-  {
-    Vertices->v[i].xo = Vertices->v[i].x;
-    Vertices->v[i].yo = Vertices->v[i].y;
-    Vertices->v[i].zo = Vertices->v[i].z;
-  }
-} /* SaveOriginalCoords() */
-
-/* ==================================== */
 void RestoreCoords()
 /* ==================================== */
 {
@@ -1550,78 +1537,6 @@ void ComputeCurvatures()
       Edges->e[i].curv = AngleFaces(E.f1, E.f2);
   }
 } // ComputeCurvatures()
-
-/* ==================================== */
-int32_t OppositeVertex(int32_t f, int32_t e)
-/* ==================================== */
-// retourne le vertex de la face f oppose au cote e
-{
-  int32_t a = Edges->e[e].v1;   
-  int32_t b = Edges->e[e].v2;   
-  meshface F = Faces->f[f];
-  if ((F.vert[0] != a) && (F.vert[0] != b)) return F.vert[0];
-  if ((F.vert[1] != a) && (F.vert[1] != b)) return F.vert[1];
-  return F.vert[2];
-} // OppositeVertex()
-
-/* ==================================== */
-double CurvVoisEdges(int32_t v)
-/* ==================================== */
-// retourne la moyenne des courbures des cotes "voisins" de v:
-// - sens 1 : cotes adjacents
-// - sens 2 : cotes opposes a v pour les faces adjacentes
-// implemente pour le moment le sens 1
-{
-  double curv = 0.0;
-  int32_t i, ne, e;
-
-  //printf("vertex %d : ", v);
-  ne = Vertices->v[v].nedges;
-  for (i = 0; i < ne; i++)
-  {
-    e = Vertices->v[v].edge[i];
-    //printf("(%d %g) ", e, Edges->e[e].curv);
-    curv += Edges->e[e].curv;
-  }
-  curv /= ne;
-  //printf(" moy: %g\n", curv);
-  return curv;
-} // CurvVoisEdges()
-
-/* ==================================== */
-void MoveVertex(int32_t v, int32_t f, int32_t e, double dc)
-/* ==================================== */
-// calcule le deplacement du vertex v, egal a la normale a la face f, 
-// ponderee par un facteur beta = dc * r / 5
-// ou r est la distance de v au cote e et dc est la difference de courbure
-// le deplacement est cumule dans les champs xp, yp, zp du vertex,
-// et le nombre de deplacements est stocke dans le champ tmp associe au vertex.
-{
-  double nx = Faces->f[f].xn;
-  double ny = Faces->f[f].yn;
-  double nz = Faces->f[f].zn;
-  point3 e1, e2, p;
-  double r, beta;
-
-  e1.x = Vertices->v[Edges->e[e].v1].x;
-  e1.y = Vertices->v[Edges->e[e].v1].y;
-  e1.z = Vertices->v[Edges->e[e].v1].z;
-  e2.x = Vertices->v[Edges->e[e].v2].x;
-  e2.y = Vertices->v[Edges->e[e].v2].y;
-  e2.z = Vertices->v[Edges->e[e].v2].z;
-  p.x = Vertices->v[v].x;
-  p.y = Vertices->v[v].y;
-  p.z = Vertices->v[v].z;
-  r = distpointdroite3(p, e1, e2);  
-  beta = (dc * r) / 5.0;
-
-  //printf("sommet %d cote %d distance %g beta %g\n", v, e, r, beta);
-
-  Vertices->tmp[v] += 1;
-  Vertices->v[v].xp += beta * nx;
-  Vertices->v[v].yp += beta * ny;
-  Vertices->v[v].zp += beta * nz;
-} // MoveVertex()
 
 /* ==================================== */
 void AddNoiseMesh(double alpha)

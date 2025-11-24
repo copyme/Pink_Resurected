@@ -326,7 +326,7 @@ double lrecalagerigide_F3d(double *G, ensemble *ens)
 /* ==================================== */
 {
   lrecalagerigide_Tgamma3d(ens->X, ens->n, G, ens->Tmp);
-  return lrecalagerigide_Delta3d(ens->Tmp, ens->n, ens->Y, ens->m);  
+  return lrecalagerigide_Delta3d(ens->Tmp, ens->n, ens->Y, ens->m);
 } // lrecalagerigide_F3d()
 
 /* ==================================== */
@@ -400,7 +400,7 @@ double lrecalagerigide_F_num(double *G, struct xvimage * image1, struct xvimage 
 // G[3] = tx
 // G[4] = ty (translation)
 //
-// dans image2 on a les coordonnées (xmin,ymin,xmax,ymax) d'un rectangle 
+// dans image2 on a les coordonnées (xmin,ymin,xmax,ymax) d'un rectangle
 // dont seuls les points seront utilisés.
 //
 // calcule la somme des carrés des différences entre G(image1) et image2
@@ -416,20 +416,20 @@ double lrecalagerigide_F_num(double *G, struct xvimage * image1, struct xvimage 
   double RH[2][2];
   double X, Y, tXm, tXM, t;
   double ErrorQuad = 0.0;
-  
+
 #define SANS_ZOOM
 #ifdef SANS_ZOOM
-  // rotation 
-  RH[0][0] = cos(G[2]);  
-  RH[0][1] = -sin(G[2]);  
-  RH[1][0] = sin(G[2]);  
-  RH[1][1] = cos(G[2]);  
+  // rotation
+  RH[0][0] = cos(G[2]);
+  RH[0][1] = -sin(G[2]);
+  RH[1][0] = sin(G[2]);
+  RH[1][1] = cos(G[2]);
 #else
   // rotation et homothetie
-  RH[0][0] = cos(G[2]) * G[0];  
-  RH[0][1] = -sin(G[2]) * G[0];  
-  RH[1][0] = sin(G[2]) * G[1];  
-  RH[1][1] = cos(G[2]) * G[1];  
+  RH[0][0] = cos(G[2]) * G[0];
+  RH[0][1] = -sin(G[2]) * G[0];
+  RH[1][0] = sin(G[2]) * G[1];
+  RH[1][1] = cos(G[2]) * G[1];
 #endif
 
   for (i = 0; i < N; i++)
@@ -454,7 +454,7 @@ double lrecalagerigide_F_num(double *G, struct xvimage * image1, struct xvimage 
       // calcule valeur interpolée dans I2
       tXm = I2[Ym*rs + Xm] * (XM-X) + I2[Ym*rs + XM] * (X-Xm);
       tXM = I2[YM*rs + Xm] * (XM-X) + I2[YM*rs + XM] * (X-Xm);
-      t = tXm * (YM - Y) + tXM * (Y - Ym); 
+      t = tXm * (YM - Y) + tXM * (Y - Ym);
       // calcule l'erreur quadratique et accumule
       t = t - I1[y*rs + x];
       t = t * t;

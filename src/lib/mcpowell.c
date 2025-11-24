@@ -473,7 +473,6 @@ static double f1dim_num(double x, struct xvimage * image1, struct xvimage * imag
     return func_num(ptrial, image1, image2);
 } // f1dim_num()
 
-
 /*
    ** minimize a user supplied function of 'n' variables along the
    ** direction specified by dirv[]

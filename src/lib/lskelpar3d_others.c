@@ -561,15 +561,6 @@ static void print_vois27(uint8_t *v)
   printf("\n");
 } // print_vois27()
 
-/* ==================================== */
-static int equal_vois27(uint8_t *v, uint8_t *w)
-/* ==================================== */
-{
-  int32_t i;
-  for (i = 0; i < 27; i++) if (v[i] != w[i]) return 0;
-  return 1;
-} // equal_vois27()
-
 
 /* ==================================== */
 static void printf_vois125(

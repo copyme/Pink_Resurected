@@ -1207,61 +1207,6 @@ int32_t mctopo3d_table_separant6(  /* teste si un point est separant - minima 6-
 } /* mctopo3d_table_separant6() */
 
 /* ==================================== */
-int32_t hmctopo3d_table_separant6(  /* teste si un point est mctopo3d_table_hseparant - minima 6-connexes
-	         ie- s'il est mctopo3d_table_separant pour la coupe h */
-  uint8_t *img,          /* pointeur base image */
-  index_t p,                       /* index du point */
-  int32_t h,                       /* parametre */
-  index_t rs,                      /* taille rangee */
-  index_t ps,                      /* taille plan */
-  index_t N)                       /* taille image */
-/* ==================================== */
-{
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
-    return 0;
-
-  preparecubesh(img, p, h, rs, ps, N);
-  if (mctopo3d_table_T6(cubec_topo3d) >= 2) return 1;
-  return 0;
-} /* hmctopo3d_table_separant6() */
-
-/* ==================================== */
-int32_t hfmctopo3d_table_separant6(  /* teste si un point est mctopo3d_table_hfseparant - minima 6-connexes
-	         ie- s'il est mctopo3d_table_separant pour une coupe c telle que h < c <= img[p] */
-  uint8_t *img,          /* pointeur base image */
-  index_t p,                       /* index du point */
-  int32_t h,                       /* parametre */
-  index_t rs,                      /* taille rangee */
-  index_t ps,                      /* taille plan */
-  index_t N)                       /* taille image */
-/* ==================================== */
-{
-  int32_t k;
-  index_t q;
-
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
-    return 0;
-
-  preparecubesh(img, p, img[p], rs, ps, N);
-  if (mctopo3d_table_T6(cubec_topo3d) >= 2) return 1;
-
-  for (k = 0; k < 26; k += 1)
-  {
-    q = voisin26(p, k, rs, ps, N);
-    if ((q != -1) && (img[q] > h) && (img[q] <= img[p]))
-    {
-      preparecubesh(img, p, img[q], rs, ps, N);
-      if (mctopo3d_table_T6(cubec_topo3d) >= 2) return 1;
-    }
-  }	
-  return 0;
-} /* hfmctopo3d_table_separant6() */
-
-/* ==================================== */
 int32_t mctopo3d_table_filsombre6(                /* pour des minima en 6-connexite */
   uint8_t *img,          /* pointeur base image */
   index_t p,                       /* index du point */

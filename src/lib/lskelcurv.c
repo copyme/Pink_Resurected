@@ -777,54 +777,6 @@ static int32_t tailleadjliste(SKC_adj_pcell p)
 } /* tailleadjliste() */
 #endif
 
-/* ========================================== */
-int32_t lskelcurv_extractcurve(
-  uint8_t *B,        // entrée/sortie : pointeur base image
-  int32_t i,         // entrée : index du point de départ
-  int32_t rs,        // entrée : taille rangee
-  int32_t N,         // entrée : taille image
-  int32_t connex,    // entrée : 4 ou 8
-  int32_t ** X,      // sortie : points
-  int32_t ** Y,
-  int32_t * npoints) // sortie : nombre de points
-/* ========================================== */
-// extrait de l'image B la courbe débutant au point extrémité i
-{
-#undef F_NAME
-#define F_NAME "lskelcurv_extractcurve"
-  int32_t n = 0;     // compte le nombre de points
-  int32_t v1, v2, ii, jj;
-
-  ii = i;
-  assert(is_end(ii, B, rs, 1, N, connex)); n++;
-  jj = trouve1voisin(ii, rs, 1, N, connex, B); n++;
-  while (!is_end(jj, B, rs, 1, N, connex))
-  {
-    trouve2voisins(jj, rs, 1, N, connex, B, &v1, &v2);
-    if (v1 == ii) { ii = jj; jj = v2; } else { ii = jj; jj = v1; } 
-    n++;
-  }
-  *npoints = n;
-  *X = (int32_t *)malloc(n * sizeof(int32_t)); assert(*X != NULL); 
-  *Y = (int32_t *)malloc(n * sizeof(int32_t)); assert(*Y != NULL); 
-  n = 0;
-  ii = i;
-  *X[n] = ii % rs;
-  *Y[n] = ii / rs;
-  jj = trouve1voisin(ii, rs, 1, N, connex, B); n++;
-  *X[n] = jj % rs;
-  *Y[n] = jj / rs;
-  while (!is_end(jj, B, rs, 1, N, connex))
-  {
-    trouve2voisins(jj, rs, 1, N, connex, B, &v1, &v2);
-    if (v1 == ii) { ii = jj; jj = v2; } else { ii = jj; jj = v1; } 
-    n++;
-    *X[n] = jj % rs;
-    *Y[n] = jj / rs;
-  }  
-  return 1;
-} // lskelcurv_extractcurve()
-
 /* ====================================================================== */
 skel * limage2skel(struct xvimage *image, int32_t connex, int32_t len)
 /* ====================================================================== */
@@ -2008,55 +1960,6 @@ skel * lskelsmoothing(skel *S, int32_t mode, double param)
 } /* lskelsmoothing() */
 
 /* ====================================================================== */
-static void coordvertex(skel *S, int32_t V, double *Vx, double *Vy, double *Vz)
-/* ====================================================================== */
-// computes the coordinates (Vx, Vy, Vz) of vertex V in S 
-{
-  int32_t rs = S->rs;
-  int32_t cs = S->cs;
-  int32_t ps = rs*cs;
-  int32_t n = 0;
-  double x=0.0, y=0.0, z=0.0;
-  SKC_pt_pcell p = S->tskel[V].pts;
-
-  assert(p != NULL);
-  for (; p != NULL; p = p->next)
-  {
-    x += (double)(p->val % rs);
-    y += (double)((p->val % ps) / rs);
-    z += (double)(p->val / ps);
-    n += 1;
-  }  
-  *Vx = x/n; *Vy = y/n; *Vz = z/n; 
-} // coordvertex()
-
-/* ====================================================================== */
-static double distancetoskel(skel *S, double x, double y, double z)
-/* ====================================================================== */
-//
-{
-  int32_t rs = S->rs;
-  int32_t cs = S->cs;
-  int32_t ps = rs*cs;
-  int32_t i;
-  double xx, yy, zz, d, min = (double)(ps * S->ds);
-  SKC_pt_pcell p;
-
-  for (i = 0; i < S->e_junc; i++)
-  {
-    for (p = S->tskel[i].pts; p != NULL; p = p->next)
-    {
-      xx = (double)(p->val % rs);
-      yy = (double)((p->val % ps) / rs);
-      zz = (double)(p->val / ps);
-      d = dist3(xx, yy, zz, x, y, z);
-      if (d < min) min = d;
-    }
-  }
-  return min;
-} // distancetoskel()
-
-/* ====================================================================== */
 int32_t lskelmarkvertex(skel *S, int32_t vertex_id)
 /* ====================================================================== */
 // Mark the specified vertex
@@ -2214,75 +2117,6 @@ static void points_at_tail(skel *S, int32_t A, double delta, int32_t *e, int32_t
   }
   *f = pp->val;
 } // points_at_tail()
-
-/* ====================================================================== */
-int32_t lskelfilter1a_old(skel *S, double delta, double theta)
-/* ====================================================================== */
-/*
-  For each junction J
-    For each arc Ai adjacent to J
-      compute and store the vector Vi tangent to Ai starting from J
-    For each couple (Vi,Vj) of vectors 
-      compute the cosine similarity Cij between Vi and -Vj
-        (see http://en.wikipedia.org/wiki/Cosine_similarity)
-      if Cij <= theta then mark the arcs Ai and Aj as "aligned"
-*/
-{
-#undef F_NAME
-#define F_NAME "lskelfilter1a_old"
-  int32_t rs = S->rs;
-  int32_t ps = rs * S->cs;
-  int32_t J, Ai, nadj, e, f, i, j, A[26];
-  SKC_adj_pcell p;
-  double Vx[26], Vy[26], Vz[26], Cij;
-
-#ifdef DEBUG
-  printf("lskelfilter1a: delta = %g, theta %g\n", delta, theta);
-#endif	  
-
-  for (Ai = S->e_end; Ai < S->e_curv; Ai++)
-    S->tskel[Ai].tag = 1; // mark all arcs as "not aligned"
-
-  for (J = S->e_curv; J < S->e_junc; J++)
-  {
-    for (p = S->tskel[J].adj,nadj = 0; p != NULL; p = p->next, nadj++)
-    {
-      Ai = p->val;
-      A[nadj] = Ai;
-      points_at_head(S, Ai, delta, &e, &f);
-      if (adj_point_junc(S, e, J))
-      {
-	Vx[nadj] = (double)((e % rs) - (f % rs));
-	Vy[nadj] = (double)(((e % ps) / rs) - ((f % ps) / rs));
-	Vz[nadj] = (double)((e / ps) - (f / ps));
-      }
-      else
-      {
-	points_at_tail(S, Ai, delta, &e, &f);
-	assert(adj_point_junc(S, e, J));
-	Vx[nadj] = (double)((e % rs) - (f % rs));
-	Vy[nadj] = (double)(((e % ps) / rs) - ((f % ps) / rs));
-	Vz[nadj] = (double)((e / ps) - (f / ps));	
-      }
-    } // for (p = S->tskel[J].adj,nadj = 0; p != NULL; p = p->next, nadj++)
-    for (i = 0; i < nadj-1; i++)
-      for (j = i+1; j < nadj; j++)
-      {
-	Cij = acos(scalarprod(Vx[i], Vy[i], Vz[i], -Vx[j], -Vy[j], -Vz[j]) / 
-		      (norm(Vx[i], Vy[i], Vz[i]) * norm(Vx[j], Vy[j], Vz[j])));
-	if (Cij <= theta)
-	{
-	  S->tskel[A[i]].tag = 0;
-	  S->tskel[A[j]].tag = 0;
-#ifdef DEBUG
-	  printf("mark %d and %d\n", A[i], A[j]);
-#endif	  
-	}
-      }
-  } // for (J = S->e_curv; J < S->e_junc; J++)
-
-  return 1;
-} /* lskelfilter1a_old() */
 
 /* ====================================================================== */
 static void list_points_at_head(skel *S, int32_t Ai, double delta, int32_t *listpoints, int32_t *npoints)
@@ -3002,71 +2836,6 @@ int32_t lskelfilter1a(skel *S, double delta1, double delta2, double theta, int32
   free(listpoints); free(X); free(Y); free(Z);
   return 1;
 } /* lskelfilter1a() */
-
-/* ====================================================================== */
-void mark_sharp_angles1(skel *S, int32_t len, double sharp, struct xvimage *image, int32_t *lp, int32_t nmax)
-/* ====================================================================== */
-/*
-Version naïve
-
-The curves of skeleton S are searched for "sharp" angles.
-Let <C[0], ... C[n-1]> be the points of the curve C. 
-Let j be an index between len and n-1-len, 
-let i = j - len, let k = j + len.
-If angle(C[j]-C[i], C[j]-C[k]) <= sharp then mark C[j] (by a voxel in "image").
-
-Le tableau lp doit avoir été alloué.
-En entrée, nmax contient la taille du tableau lp.
-*/
-{
-#undef F_NAME
-#define F_NAME "mark_sharp_angles1"
-  int32_t C, i, j, k, n, rs = S->rs, ps = rs * S->cs;
-  SKC_pt_pcell p;
-  double xi, yi, zi, xj, yj, zj, xk, yk, zk, angle;
-  uint8_t *F;
-
-#ifdef DEBUG
-  printf("%s: length = %d, sharp %g\n", F_NAME, len, sharp);
-#endif	   
-  assert(image != NULL);
-  assert(datatype(image) == VFF_TYP_1_BYTE);
-  assert(rowsize(image)==rs);
-  assert(colsize(image)==S->cs);
-  assert(depth(image)==S->ds);
-  razimage(image);
-  F = UCHARDATA(image);
-
-  for (C = S->e_end; C < S->e_curv; C++) // scan all curves C
-  {
-    n = 0;
-    for (p = S->tskel[C].pts; p != NULL; p = p->next)
-    {
-      assert(n < nmax);
-      lp[n] = p->val;
-      n++;
-    }
-    for (j = len, i = 0, k = j+len; k < n; i++, j++, k++)
-    {
-      xi = (double)(lp[i] % rs);
-      yi = (double)((lp[i] % ps) / rs);
-      zi = (double)(lp[i] / ps);
-      xj = (double)(lp[j] % rs);
-      yj = (double)((lp[j] % ps) / rs);
-      zj = (double)(lp[j] / ps);
-      xk = (double)(lp[k] % rs);
-      yk = (double)((lp[k] % ps) / rs);
-      zk = (double)(lp[k] / ps);
-      // If angle(C[j]-C[i], C[j]-C[k]) <= sharp then mark C[j]
-      angle = acos(scalarprod(xj-xi, yj-yi, zj-zi, xj-xk, yj-yk, zj-zk) / 
-		   (norm(xj-xi, yj-yi, zj-zi) * norm(xj-xk, yj-yk, zj-zk)));
-      if (angle <= sharp) F[lp[j]] = 255;
-    }
-  } // for (C = S->e_end; C < S->e_curv; C++)
-#ifdef DEBUG
-  printf("%s: leaving\n", F_NAME);
-#endif	   
-} /* mark_sharp_angles1() */
 
 /* ====================================================================== */
 void mark_sharp_angles(skel *S, double thickness, double sharp, struct xvimage *image, int32_t *X, int32_t *Y, int32_t *Z, int32_t nmax)
@@ -3988,48 +3757,6 @@ struct xvimage * lskelfilter5(skel *S, int32_t mask, int32_t fenetre, double max
 
   return result;
 } /* lskelfilter5() */
-
-#ifdef COMPILE_UNUSED
-// ----------------------------------------------------------------------
-static double calc_courbure(int32_t *X, int32_t *Y, int32_t *Z, int32_t n, int32_t i)
-// ----------------------------------------------------------------------
-{
-#define DELTAMAX 2
-  double *C0 = NULL, *C1 = NULL, *C2 = NULL, *C3 = NULL;
-  double *D0 = NULL, *D1 = NULL, *D2 = NULL, *D3 = NULL;
-  double *E0 = NULL, *E1 = NULL, *E2 = NULL, *E3 = NULL;
-  double courbure;
-  int32_t * CP = NULL;
-  int32_t nctrlpoints, j;
-
-  C0 = (double *)malloc(12 * (n-1) * sizeof(double));
-  C1 = C0 + n - 1; C2 = C1 + n - 1; C3 = C2 + n - 1;
-  D0 = C3 + n - 1; D1 = D0 + n - 1; D2 = D1 + n - 1; D3 = D2 + n - 1;
-  E0 = D3 + n - 1; E1 = E0 + n - 1; E2 = E1 + n - 1; E3 = E2 + n - 1;
-  CP = (int32_t *)malloc(n * sizeof(int32_t));
-
-  CP[0] = 0;
-  CP[1] = i;
-  CP[2] = n-1;
-  nctrlpoints = 3;
-
-  (void)scn_approxcurve3d_with_initial_control_points(
-    X, Y, Z, n, DELTAMAX, CP, &nctrlpoints, 
-    C0, C1, C2, C3, D0, D1, D2, D3, E0, E1, E2, E3);
-
-  // retrouve l'index j du point de contrôle correspondant au point de la
-  // courbe discrete d'indice i
-  for (j = 0; j < nctrlpoints; j++) if (CP[j] == i) break;
-  assert(j < nctrlpoints);
-
-  courbure = scn_splinequerycurvature3d((double)j, n,
-    C0, C1, C2, C3, D0, D1, D2, D3, E0, E1, E2, E3);
-
-  free(CP);
-  free(C0);
-  return courbure;
-} // calc_courbure()
-#endif
 
 // ----------------------------------------------------------------------
 static void reverse_curve(int32_t *X, int32_t *Y, int32_t *Z, int32_t n)

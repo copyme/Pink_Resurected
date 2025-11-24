@@ -174,24 +174,6 @@ struct xvimage * lcrop(struct xvimage *in, int32_t x, int32_t y, int32_t w, int3
 } // lcrop()
 
 
-/*
- * simple wrapper for Python
- *
- * Hugues Talbot 15/feb/2011
- */
-
-#ifdef NOT_USED_TO_BE_REMOVED
-int lpycrop(struct xvimage *in, struct xvimage *out, int32_t x, int32_t y,int32_t w, int32_t h)
-{
-    out = lcrop(in, x, y, w, h);
-
-    if (out != NULL)
-        return 1; /* success */
-    else
-        return 0;
-}
-#endif
-
 /* =============================================================== */
 struct xvimage * lcrop3d(struct xvimage *in, int32_t x, int32_t y, int32_t z, int32_t w, int32_t h, int32_t d) 
 /* =============================================================== */

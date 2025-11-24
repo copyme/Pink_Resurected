@@ -142,41 +142,6 @@ static double norm(double x, double y, double z)
   return sqrt((x * x) + (y * y) + (z * z));
 }
 
-/* ==================================== */
-static double scalarprod(double x1, double y1, double z1, double x2, double y2, double z2)
-/* ==================================== */
-{
-  return (x1 * x2) + (y1 * y2) + (z1 * z2);
-}
-
-/* ==================================== */
-static double cosinesimilarity(double x1, double y1, double z1, double x2, double y2, double z2)
-/* ==================================== */
-{
-  double dot = scalarprod(x1, y1, z1, x2, y2, z2);
-  double lenProduct = norm(x1, y1, z1) * norm(x2, y2, z2);
-
-  if (lenProduct < 1e-9)
-    return 0.0;
-
-  double cosTheta = dot / lenProduct;
-
-  // clamp the value to the [-1, 1] range, otherwise NAN can occur, and in practice it does
-  if (cosTheta > 1.0)
-    cosTheta = 1.0;
-  else if (cosTheta < -1.0)
-    cosTheta = -1.0;
-
-  return acos(cosTheta);
-}
-
-/* ==================================== */
-static double sqrdist(double x1, double y1, double z1, double x2, double y2, double z2)
-/* ==================================== */
-{
-  return (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) + (z1-z2)*(z1-z2);
-}
-
 //--------------------------------------------------------------------------
 void ExtractDSSs(int32_t npoints, int32_t *X, int32_t *Y, double thickness, int32_t *end, double *angle)
 //--------------------------------------------------------------------------

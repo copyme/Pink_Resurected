@@ -122,16 +122,6 @@ static double dist3(double x1, double y1, double z1, double x2, double y2, doubl
 // =================================================
 
 /* ==================================== */
-int32_t scn_constant(double *x, int32_t n)
-/* ==================================== */
-{
-  int32_t i; 
-  for (i = 1; i < n; i++) 
-    if (mcabs((x[i]-x[0])) > SCN_EPSILON) return 0;
-  return 1;
-} // scn_constant()
-
-/* ==================================== */
 int32_t scn_solvespline(double *x, double *y, int32_t n, 
                          double *Z0, double *Z1, double *Z2, double *Z3)
 /* ==================================== */
@@ -472,27 +462,6 @@ double evalpoly(int32_t n, double *f, double x)
      for(i=n-1;i>0;i--) sum=x*(f[i]+sum);
      return sum+f[0];
 }
-
-double integrale(double f[3], double a, double b, int32_t p)
-{
-     int32_t i;
-     double fti,fti1;
-     double sum=0.0;
-     double pas=(b-a)/p;
-     double ti=a, ti1=a+pas;
-     double tmp;
-     for(i=0;i<p;i++)
-     {
-       tmp = evalpoly(3, (double *)f,ti);
-       fti=sqrt(1+tmp*tmp);
-       tmp = evalpoly(3, (double *)f,ti1);
-       fti1=sqrt(1+tmp*tmp);
-       sum=sum+(fti1-fti)*(pas/2)+fti*pas;
-       ti=ti1;
-       ti1=ti1+pas;
-     }
-     return sum;
-} // integrale()
 
 double integrale2(double f[3], double g[3], double a, double b, int32_t p)
 {

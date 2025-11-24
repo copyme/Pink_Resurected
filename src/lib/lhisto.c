@@ -304,38 +304,6 @@ int32_t lhistsum(index_t *histo)
 }
 
 /* ==================================== */
-int32_t lhistdilat(index_t *histo, int32_t n)
-/* ==================================== */
-/* dilatation numerique par un es. plan, centre, de taille 2n+1 */
-{
-#undef F_NAME
-#define F_NAME "lhistdilat"
-  int32_t i, j, m;
-  index_t * h = NULL;
-
-  h = (index_t *)calloc(1,(NDG_MAX + 1) * sizeof(index_t));
-  if (h == NULL)
-  {
-    fprintf(stderr, "%s: malloc failed\n", F_NAME);
-    return 0;
-  }
-
-  for (i = NDG_MIN; i <= NDG_MAX; i++) 
-  {
-    m = histo[i];
-    for (j = 1; j <= n; j++)
-    {
-      if (((i - j) >= NDG_MIN) && (histo[i - j] > m)) m = histo[i - j];
-      if (((i + j) <= NDG_MAX) && (histo[i + j] > m)) m = histo[i + j];
-    }
-    h[i] = m; 
-  }
-  for (i = NDG_MIN; i <= NDG_MAX; i++) histo[i] = h[i];
-  free(h);
-  return 1;
-}
-
-/* ==================================== */
 void labelextr1d(int32_t *F, int32_t n, uint8_t *E)
 /* ==================================== */
 /*

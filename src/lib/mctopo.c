@@ -3086,26 +3086,6 @@ int32_t nbvoism8(
 } /* nbvoism8() */
 
 /* ==================================== */
-int32_t nbvoism4(
-  uint8_t *img,          /* pointeur base image */
-  index_t p,                       /* index du point */
-  index_t rs,                      /* taille rangee */
-  index_t N)                       /* taille image */
-/* retourne le nb de 4-voisins de niveau inferieur ou egal a celui du point p */
-/* ==================================== */
-{
-	register uint8_t val = *(img+p);
-	register uint8_t * ptr = img+p;
-	register int32_t n = 0;
-
-        if ((p%rs!=rs-1) && (*(ptr+1) <= val)) n++;
-        if ((p>=rs) && (*(ptr-rs) <= val)) n++;
-        if ((p%rs!=0) && (*(ptr-1) <= val)) n++;
-        if ((p<N-rs) && (*(ptr+rs) <= val)) n++;
-        return n;
-} /* nbvoism4() */
-
-/* ==================================== */
 int32_t extremite8(
   uint8_t *img,          /* pointeur base image */
   index_t p,                       /* index du point */
