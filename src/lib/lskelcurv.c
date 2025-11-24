@@ -825,60 +825,6 @@ int32_t lskelcurv_extractcurve(
   return 1;
 } // lskelcurv_extractcurve()
 
-/* ========================================== */
-int32_t lskelcurv_extractcurve3d(
-  uint8_t *B,        // entrée/sortie : pointeur base image
-  int32_t i,         // entrée : index du point de départ
-  int32_t rs,        // entrée : taille rangee
-  int32_t ps,        // entrée : taille plan
-  int32_t N,         // entrée : taille image
-  int32_t connex,    // entrée : 6, 18 ou 26
-  int32_t ** X,      // sortie : points
-  int32_t ** Y,
-  int32_t ** Z,
-  int32_t * npoints) // sortie : nombre de points
-/* ========================================== */
-// extrait de l'image B la courbe débutant au point extrémité i
-{
-#undef F_NAME
-#define F_NAME "lskelcurv_extractcurve3d"
-  int32_t n = 0;     // compte le nombre de points
-  int32_t v1, v2, ii, jj;
-
-  ii = i;
-  assert(is_end(ii, B, rs, ps, N, connex)); n++;
-  jj = trouve1voisin(ii, rs, ps, N, connex, B); n++;
-  while (!is_end(jj, B, rs, ps, N, connex))
-  {
-    trouve2voisins(jj, rs, ps, N, connex, B, &v1, &v2);
-    if (v1 == ii) { ii = jj; jj = v2; } else { ii = jj; jj = v1; } 
-    n++;
-  }
-  *npoints = n;
-  *X = (int32_t *)malloc(n * sizeof(int32_t)); assert(*X != NULL); 
-  *Y = (int32_t *)malloc(n * sizeof(int32_t)); assert(*Y != NULL); 
-  *Z = (int32_t *)malloc(n * sizeof(int32_t)); assert(*Z != NULL); 
-  n = 0;
-  ii = i;
-  *X[n] = ii % rs;
-  *Y[n] = (ii % ps) / rs;
-  *Z[n] = ii / ps;
-  jj = trouve1voisin(ii, rs, ps, N, connex, B); n++;
-  *X[n] = jj % rs;
-  *Y[n] = (jj % ps) / rs;
-  *Z[n] = jj / ps;
-  while (!is_end(jj, B, rs, ps, N, connex))
-  {
-    trouve2voisins(jj, rs, ps, N, connex, B, &v1, &v2);
-    if (v1 == ii) { ii = jj; jj = v2; } else { ii = jj; jj = v1; } 
-    n++;
-    *X[n] = jj % rs;
-    *Y[n] = (jj % ps) / rs;
-    *Z[n] = jj / ps;
-  }  
-  return 1;
-} // lskelcurv_extractcurve3d()
-
 /* ====================================================================== */
 skel * limage2skel(struct xvimage *image, int32_t connex, int32_t len)
 /* ====================================================================== */
@@ -1654,21 +1600,6 @@ int32_t point_at_head(skel *S, int32_t A)
   return p->val;
 } // point_at_head()
 
-#ifdef COMPILE_UNUSED
-/* ====================================================================== */
-static int32_t point_at_tail(skel *S, int32_t A)
-/* ====================================================================== */
-// détermine le point en "fin" de l'arc de courbe A
-{
-  SKC_pt_pcell p = S->tskel[A].pts;
-  int32_t pt;
-
-  assert(p != NULL);
-  for (; p != NULL; p = p->next) pt = p->val;
-  return pt;
-} // point_at_tail()
-#endif
-
 /* ====================================================================== */
 static void barycentre(skel *S, int32_t V, double *x, double *y, double *z)
 /* ====================================================================== */
@@ -2186,81 +2117,6 @@ Parameter \b length is a number pixels
   } // for (i = S->e_end; i < S->e_curv; i++)
   return 1;
 } /* lskelpruning() */
-
-/* ====================================================================== */
-int32_t lskelfilter1_old(skel *S, double length, double angle)
-/* ====================================================================== */
-/*
-The skeleton found in S is searched for "small" branches which 
-satisfies the following criteria:
-\li Extremities A, B are both junctions.
-\li Branch length (AB) is less than \b length parameter.
-\li Let AA be the symmetric of A wrt B, and BB be the symmetric of B wrt A.
-    The distance from AA to the skeleton is more than AB sin( \b angle ), or
-    the distance from BB to the skeleton is more than AB sin( \b angle ).
-
-The matching branches are marked (field "tag" = 1)
-
-Parameter \b length is given in pixels, parameter \b angle in radians.
-*/
-{
-#undef F_NAME
-#define F_NAME "lskelfilter1_old"
-  int32_t i, A, B;
-  SKC_adj_pcell p;
-  double AB, Ax, Ay, Az, Bx, By, Bz, AAx, AAy, AAz, BBx, BBy, BBz;
-  double dAA, dBB;
-
-#ifdef DEBUG
-  printf("lskelfilter1: length = %g, angle %g, l sin a %g\n", 
-	 length, angle, length * sin(angle));
-#endif	  
-
-  for (i = S->e_end; i < S->e_curv; i++)
-  {
-    S->tskel[i].tag = 0; // not marked
-    p = S->tskel[i].adj;
-    A = p->val;
-    assert(p->next != NULL);
-    p = p->next;
-    B = p->val;
-    assert(p->next == NULL);
-    if (IS_JUNC(A) && IS_JUNC(B))
-    {
-      coordvertex(S, A, &Ax, &Ay, &Az);
-      coordvertex(S, B, &Bx, &By, &Bz);
-      AB = dist3(Ax, Ay, Az, Bx, By, Bz);
-#ifdef DEBUG
-      printf("arc %d, (%g,%g,%g)-(%g,%g,%g), length %g\n", 
-	     i, Ax, Ay, Az, Bx, By, Bz, AB);
-#endif	  
-      if (AB <= length)
-      {
-	// symétrique de A par rapport à B
-	AAx = Bx + Bx - Ax; BBy = By + By - Ay; BBz = Bz + Bz - Az; 
-	// symétrique de B par rapport à A
-	BBx = Ax + Ax - Bx; AAy = Ay + Ay - By; AAz = Az + Az - Bz; 
-	dAA = distancetoskel(S, AAx, AAy, AAz);
-	dBB = distancetoskel(S, BBx, BBy, BBz);
-
-#ifdef DEBUG
-	printf("dAA = %g, dBB = %g, AB * sin(angle) = %g\n", 
-	       dAA, dBB, AB * sin(angle));
-#endif	  
-	
-	if ((dAA >= (AB * sin(angle))) || (dBB >= (AB * sin(angle))))
-	{
-	  S->tskel[i].tag = 1; // mark for deletion
-#ifdef DEBUG
-	  printf("mark %d\n", i);
-#endif	  
-	}
-      } // if (AB >= length)
-    } // if (IS_JUNC(A) && IS_JUNC(B))
-  } // for (i = S->e_end; i < S->e_curv; i++)
-
-  return 1;
-} /* lskelfilter1_old() */
 
 /* ====================================================================== */
 static void points_at_head(skel *S, int32_t A, double delta, int32_t *e, int32_t *f)
@@ -3464,48 +3320,6 @@ The matching branches are marked (field "tag" = 1).
   return 1;
 } /* lskelfilter1() */
 
-/* ====================================================================== */
-int32_t lskelfilter1b(skel *S, double length, double delta1, double delta2)
-/* ====================================================================== */
-/*
-The skeleton S is searched for arcs A which satisfy the following criteria:
-\li The length of A is not greater than parameter \b length.
-\li Both extremities of A are junctions.
-
-The matching arcs are marked (field "tag" = 1).
-*/
-{
-#undef F_NAME
-#define F_NAME "lskelfilter1b"
-  int32_t i, len, Ai;
-  SKC_adj_pcell p;
-
-#ifdef DEBUG
-  printf("%s: length = %g, delta1 = %g, delta2 = %g\n", F_NAME, length, delta1, delta2);
-#endif	  
-
-  for (i = 0; i < S->e_junc; i++) S->tskel[i].tag = 0; // unmark all
-
-  if (S->e_curv == S->e_end) return 1; // no arc: exit 
-
-  for (Ai = S->e_end; Ai < S->e_curv; Ai++) // scan all arcs
-  {  
-    len = tailleptliste(S->tskel[Ai].pts);
-    p = S->tskel[Ai].adj;
-    if ((len <= length) && (p != NULL)) 
-    { // si arc non fermé et assez court
-      assert(p->next != NULL); // soit 0, soit 2 adjacences
-      if (IS_JUNC(p->val) && IS_JUNC(p->next->val))
-      {	    // mark Ai
-	S->tskel[Ai].tag = 1;
-#ifdef DEBUG
-	printf("mark arc: %d\n", Ai);
-#endif	  
-      }
-    } // if ((len <= length) && (p != NULL))
-  } // for (Ai = S->e_end; Ai < S->e_curv; Ai++)
-  return 1;
-} /* lskelfilter1b() */
 
 /* ====================================================================== */
 int32_t lskelfilter2(skel *S, double delta1, double delta2)

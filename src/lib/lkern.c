@@ -64,16 +64,6 @@ knowledge of the CeCILL license and that you accept its terms.
 #define VERBOSE
 
 /* ==================================== */
-int32_t essentiel(uint8_t *F, int32_t x, int32_t rs, int32_t N)
-/* ==================================== */
-{
-  int32_t t4mm, t4m, t8p, t8pp;
-
-  nbtopo(F, x, rs, N, &t4mm, &t4m, &t8p, &t8pp);
-  return (t8p != 1) && (t8p != 2);
-} /* essentiel() */
-
-/* ==================================== */
 void saturation(int32_t rs, int32_t cs, int32_t N, uint8_t *F, Fahp * FAHP)
 /* ==================================== */
 {

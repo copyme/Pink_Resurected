@@ -175,99 +175,6 @@ void mctopo3d_table_termine_topoCN3d()
 } /* mctopo3d_table_termine_topoCN3d() */
 
 /* ========================================== */
-void mctopo3d_table_construitcube(voxel * cube)
-/* ========================================== */
-{
-  fprintf(stderr,"NOT AVAILABLE WITH TABULATED VERSION (see mctopo3d.c)\n");
-  exit(1);
-} /* mctopo3d_table_construitcube() */
-
-/* ========================================== */
-uint32_t mctopo3d_table_encodecube()
-/* ========================================== */
-{
-  fprintf(stderr,"NOT AVAILABLE WITH TABULATED VERSION (see mctopo3d.c)\n");
-  exit(1);
-} /* mctopo3d_table_encodecube() */
-
-/* ========================================== */
-void mctopo3d_table_geodesic_neighborhood(voxel * cube, uint8_t connex, uint8_t s)
-/* ========================================== */
-/* 
-  met a 1 le champ lab des points appartenant au voisinage geodesique d'ordre s du point central,
-  met a 0 les autres
-*/
-{  
-  fprintf(stderr,"NOT AVAILABLE WITH TABULATED VERSION (see mctopo3d.c)\n");
-  exit(1);
-} /* mctopo3d_table_geodesic_neighborhood() */
-
-/* ========================================== */
-void mctopo3d_table_G6(voxel * cube)
-/* ========================================== */
-{
-  fprintf(stderr,"NOT AVAILABLE WITH TABULATED VERSION (see mctopo3d.c)\n");
-  exit(1);
-} /* mctopo3d_table_G6() */
-
-/* ========================================== */
-void mctopo3d_table_G6p(voxel * cube)
-/* ========================================== */
-{
-  fprintf(stderr,"NOT AVAILABLE WITH TABULATED VERSION (see mctopo3d.c)\n");
-  exit(1);
-} /* mctopo3d_table_G6p() */
-
-/* ========================================== */
-void mctopo3d_table_G18(voxel * cube)
-/* ========================================== */
-{
-  fprintf(stderr,"NOT AVAILABLE WITH TABULATED VERSION (see mctopo3d.c)\n");
-  exit(1);
-} /* mctopo3d_table_G18() */
-
-/* ========================================== */
-void mctopo3d_table_G26(voxel * cube)
-/* ========================================== */
-{
-  fprintf(stderr,"NOT AVAILABLE WITH TABULATED VERSION (see mctopo3d.c)\n");
-  exit(1);
-} /* mctopo3d_table_G26() */
-
-/* ========================================== */
-uint8_t mctopo3d_table_nbcomp(voxel * cube, uint8_t connex)
-/* ========================================== */
-/*
-  retourne le nombre de composantes connexes de l'objet marque par un lab=1 
-*/
-{
-  fprintf(stderr,"NOT AVAILABLE WITH TABULATED VERSION (see mctopo3d.c)\n");
-  exit(1);
-} /* mctopo3d_table_nbcomp() */
-
-/* ========================================== */
-uint8_t mctopo3d_table_nbvois6(voxel * cube)
-/* ========================================== */
-/*
-  retourne le nombre de 6-voisins du point central appartenant a l'objet
-*/
-{
-  fprintf(stderr,"NOT AVAILABLE WITH TABULATED VERSION (see mctopo3d.c)\n");
-  exit(1);
-} /* mctopo3d_table_nbvois6() */
-
-/* ========================================== */
-uint8_t mctopo3d_table_nbvois26(voxel * cube)
-/* ========================================== */
-/*
-  retourne le nombre de 26-voisins du point central appartenant a l'objet
-*/
-{
-  fprintf(stderr,"NOT AVAILABLE WITH TABULATED VERSION (see mctopo3d.c)\n");
-  exit(1);
-} /* mctopo3d_table_nbvois26() */
-
-/* ========================================== */
 int32_t mctopo3d_table_nbvoisc6(
   uint8_t *B,            /* pointeur base image */
   index_t i,                       /* index du point */
@@ -1381,8 +1288,6 @@ int32_t mctopo3d_table_filsombre6(                /* pour des minima en 6-connex
   if (T != 1) return 0;
   Tb = mctopo3d_table_T6(cubec_topo3d);
   if (Tb == 0) return 1;
-  Nb = mctopo3d_table_nbvois6(cubec_topo3d);
-  if (Tb > 0) return (Nb == Tb);
   return 0;
 } /* mctopo3d_table_filsombre6() */
 
@@ -1413,8 +1318,6 @@ int32_t mctopo3d_table_filsombre26(               /* pour des minima en 26-conne
   if (T != 1) return 0;
   Tb = mctopo3d_table_T26(cubec_topo3d);
   if (Tb == 0) return 1;
-  Nb = mctopo3d_table_nbvois26(cubec_topo3d);
-  if (Tb > 0) return (Nb == Tb);
   return 0;
 } /* mctopo3d_table_filsombre26() */
 
@@ -1444,9 +1347,6 @@ int32_t mctopo3d_table_filclair6(                /* pour des minima en 6-connexi
   if (Tb != 1) return 0;
   T = mctopo3d_table_T26(cube_topo3d);
   if (T == 0) return 1;
-  Nb = mctopo3d_table_nbvois26(cube_topo3d);
-  if (T > 0) return (Nb == T);
-  return 0;
 } /* mctopo3d_table_filclair6() */
 
 /* ==================================== */
@@ -1475,9 +1375,6 @@ int32_t mctopo3d_table_filclair26(                /* pour des minima en 26-conne
   if (Tb != 1) return 0;
   T = mctopo3d_table_T6(cube_topo3d);
   if (T == 0) return 1;
-  Nb = mctopo3d_table_nbvois6(cube_topo3d);
-  if (T > 0) return (Nb == T);
-  return 0;
 } /* mctopo3d_table_filclair26() */
 
 /* ==================================== */

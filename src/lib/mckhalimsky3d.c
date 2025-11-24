@@ -3867,55 +3867,6 @@ printf("CourbeSimple3d : connexite ok\n");
 }  /* CourbeSimple3d() */
 
 /* ==================================== */
-int32_t CourbeSimpleOuverte3d(struct xvimage *b)
-/* ==================================== */
-/*
-  Teste si b contient une courbe simple ouverte.
-  Un point isole est une courbe simple ouverte par convention.
-  Sinon, tous les points sauf 2 ont un thetacarre de cardinal 2,
-    les 2 autres ont un thetacarre de cardinal 1.
-  Attention : on ne teste pas si les deux theta-voisins d'un point sont 
-    non theta-voisins entre eux.
-*/
-{
-  index_t rs = rowsize(b);
-  index_t cs = colsize(b);
-  index_t ps = rs * cs;
-  index_t ds = depth(b);
-  uint8_t *B = UCHARDATA(b);
-  index_t i, j, k;
-  index_t n = 0;    /* nombre total de points */
-  index_t nend = 0; /* nombre total de points extremites */
-  int32_t ctc;
-
-#ifdef DEBUGCS
-printf("CourbeSimple3d :\n");
-printimage(b);
-#endif
-
-  if (!Connexe3d(b)) return 0;
-
-#ifdef DEBUGCS
-printf("CourbeSimple3d : connexite ok\n");
-#endif
-
-  for (k = 0; k < ds; k += 1)
-    for (j = 0; j < cs; j += 1)
-      for (i = 0; i < rs; i += 1)
-        if (B[k * ps + j * rs + i])
-        {
-          n++;
-          ctc = CardThetacarre3d(B, rs, cs, ds, i, j, k);
-          if (ctc > 2) return 0;
-          if (ctc == 1) nend++;
-        } 
-  if (n == 0) return 0;
-  if (n == 1) return 1;
-  if (nend == 2) return 1;
-  return 0;
-}  /* CourbeSimpleOuverte3d() */
-
-/* ==================================== */
 int32_t Arbre3d(struct xvimage *b)
 /* ==================================== */
 /*

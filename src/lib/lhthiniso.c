@@ -520,61 +520,6 @@ double dist(double x1, double y1, double x2, double y2)
 }
 
 /* ==================================== */
-void UpdateRbt4alpha(uint32_t x, uint8_t *F, uint32_t *T, 
-                int32_t rs, int32_t N, RbtElt **R, Rbt *RBT, double dmax)
-/* ==================================== */
-/*
-   i) si besoin, retire x de RBT
-   ii) teste si x est 4-destructible
-   iii) si oui, calcule d=d(x,T(y)) (avec y = N(x)) et stocke le triple (x,y,d) dans RBT
-*/
-{
-  uint32_t y, z, k, kk, alpha;
-  double dz, dtmp;
-  RbtElt * r = NULL;
-
-  if (R[x]) 
-  { 
-#ifdef DEBUGISO
-      printf("delete x=(%d,%d)\n", x%rs, x/rs);
-#endif
-    lhthiniso_RbtDelete(RBT, R[x], R); 
-    R[x] = NULL; 
-  }
-
-  if (pdestr4(F, x, rs, N))
-  {
-    alpha = alpha8m(F, x, rs, N);
-    z = -1;                         /* position du voisin retenu */
-    dz = (double)N;                 /* distance au bord du voisin retenu */
-    for (k = 0; k < 8; k += 1)
-    {
-      y = voisin(x, k, rs, N);
-      if ((y != -1) && (F[y] == alpha))
-      {
-        dtmp = dist(x%rs, x/rs, T[y]%rs, T[y]/rs);
-        if ((dtmp <= dmax) && ((z == -1) || (dtmp < dz)))
-        {
-          z = y;
-          kk = k;
-          dz = dtmp;
-	}
-      } /* if ((y != -1) && (F[y] == alpha)) */
-    } /* for (k = 0; k < 8; k += 1) */
-
-    if (z != -1)
-    {
-#ifdef DEBUGISO
-      printf("insere x=(%d,%d), z=(%d,%d), kk=%d, d=%g\n", x%rs, x/rs, z%rs, z/rs, kk, dz, r);
-#endif
-      z = ENCODEDIR(x,kk);
-      r = lhthiniso_RbtInsert(RBT, dz, F[x], z);
-      R[x] = r;
-    }
-  } /* if (pdestr4(F, x, rs, N)) */
-} /* UpdateRbt4alpha() */
-
-/* ==================================== */
 void UpdateRbt4(uint32_t x, uint8_t *F, uint32_t *T, 
                 int32_t rs, int32_t N, RbtElt **R, Rbt *RBT, double dmax)
 /* ==================================== */

@@ -636,21 +636,6 @@ static int equal_vois27(uint8_t *v, uint8_t *w)
   return 1;
 } // equal_vois27()
 
-/* ==================================== */
-static void print_vois125(uint8_t *v)
-/* ==================================== */
-{
-  int32_t i, j, k;
-  for (k = 0; k < 5; k++)
-  {
-    for (j = 0; j < 5; j++)
-    {
-      for (i = 0; i < 5; i++) printf("%d ", v[(k * 25) + (j * 5) + i]);
-      printf("\n");
-    }
-    printf("\n");
-  }
-} // print_vois125()
 
 /* ==================================== */
 static void printf_vois125(
@@ -798,18 +783,6 @@ static void isometrieYZ_vois125(uint8_t *vois)
   for (i = 0; i < 125; i++) vois[i] = v[i];
 } /* isometrieYZ_vois125() */
 
-static void rotate_90_Z_125(uint8_t *vois)
-{
-// version pour la numérotation de extract_vois125()
-  uint8_t v[125];
-  int32_t i, j, k;
-  for (k = 0; k < 5; k++)
-    for (j = 0; j < 5; j++)
-      for (i = 0; i < 5; i++)
-	v[k*25 + j*5 + i] = vois[k*25 + (-i+4)*5 + j];
-  for (i = 0; i < 125; i++) vois[i] = v[i];
-} // rotate_90_Z_125()
-
 static void swap_U_L_125(uint8_t *vois)
 {
 // version pour la numérotation de extract_vois125()
@@ -889,15 +862,9 @@ int32_t ma_sonka_dir_ABC(uint8_t *v, uint8_t *m)
 /* ==================================== */
 {
   int32_t x = 62, xm = 13;
-  //if (trace) print_vois125(v);
-  //if (trace) print_vois27(m);
-  //if (trace) printf("match_dir_ABC 0 - S=%d\n", m[__S(x)]);
   if ((m[__S(xm)]==OBJ) && !v[_S(_S(x))]) return 0;
-  //if (trace) printf("match_dir_ABC 1 - W=%d\n", m[__W(x)]);
   if ((m[__W(xm)]==OBJ) && !v[_W(_W(x))]) return 0;
-  //if (trace) printf("match_dir_ABC 2 - D=%d\n", m[__D(x)]);
   if ((m[__D(xm)]==OBJ) && !v[_D(_D(x))]) return 0;
-  //if (trace) printf("match_ABC\n");
   return 1;
 } // ma_sonka_dir_ABC()
 
@@ -981,35 +948,21 @@ void test_ma_sonka_deletable()
 int32_t ma_sonka_deletable(uint8_t *v)
 /* ==================================== */
 {
-  //if (trace) print_vois125(v);
-
-  //if (trace) printf("deletable A0\n");
-  //if (trace) print_vois27(A);
   if (ma_sonka_match(v, A) && ma_sonka_dir_ABC(v, A)) return 1; // U
   swap_U_L_27(A);
-  //if (trace) printf("deletable A1\n");
-  //if (trace) print_vois27(A);
   if (ma_sonka_match(v, A) && ma_sonka_dir_ABC(v, A)) return 1; // D
   swap_U_L_27(A); // retour
 
   isometrieXZ_vois27(A);
-  //if (trace) printf("deletable A2\n");
-  //if (trace) print_vois27(A);
   if (ma_sonka_match(v, A) && ma_sonka_dir_ABC(v, A)) return 1; // E
   swap_W_E_27(A);
-  //if (trace) printf("deletable A3\n");
-  //if (trace) print_vois27(A);
   if (ma_sonka_match(v, A) && ma_sonka_dir_ABC(v, A)) return 1; // W
   swap_W_E_27(A); // retour
   isometrieXZ_vois27(A); // retour
 
   isometrieYZ_vois27(A);
-  //if (trace) printf("deletable A4\n");
-  //if (trace) print_vois27(A);
   if (ma_sonka_match(v, A) && ma_sonka_dir_ABC(v, A)) return 1; // N
   swap_S_N_27(A);
-  //if (trace) printf("deletable A5\n");
-  //if (trace) print_vois27(A);
   if (ma_sonka_match(v, A) && ma_sonka_dir_ABC(v, A)) return 1; // S
   swap_S_N_27(A); // retour
   isometrieYZ_vois27(A); // retour
@@ -1050,82 +1003,58 @@ int32_t ma_sonka_deletable(uint8_t *v)
   rotate_90_Z_27(C);
   swap_U_L_27(C); // retour
 
-  //if (trace) printf("deletable B-D0\n");
-  //if (trace) print_vois27(B);
-  //if (trace) print_vois27(D);
+
   if (ma_sonka_match(v, B) && ma_sonka_dir_ABC(v, B)) return 1;
   if (ma_sonka_match(v, D) && ma_sonka_dir_D(v, D)) return 1;
   rotate_90_Z_27(B); rotate_90_Z_27(D);
-  //if (trace) printf("deletable B-D1\n");
-  //if (trace) print_vois27(B);
-  //if (trace) print_vois27(D);
+
   if (ma_sonka_match(v, B) && ma_sonka_dir_ABC(v, B)) return 1;
   if (ma_sonka_match(v, D) && ma_sonka_dir_D(v, D)) return 1;
   rotate_90_Z_27(B); rotate_90_Z_27(D);
-  //if (trace) printf("deletable B-D2\n");
-  //if (trace) print_vois27(B);
-  //if (trace) print_vois27(D);
+
   if (ma_sonka_match(v, B) && ma_sonka_dir_ABC(v, B)) return 1;
   if (ma_sonka_match(v, D) && ma_sonka_dir_D(v, D)) return 1;
   rotate_90_Z_27(B); rotate_90_Z_27(D);
-  //if (trace) printf("deletable B-D3\n");
-  //if (trace) print_vois27(B);
-  //if (trace) print_vois27(D);
+
   if (ma_sonka_match(v, B) && ma_sonka_dir_ABC(v, B)) return 1;
   if (ma_sonka_match(v, D) && ma_sonka_dir_D(v, D)) return 1;
   rotate_90_Z_27(B); rotate_90_Z_27(D);
 
   swap_U_L_27(B); swap_U_L_27(D);
-  //if (trace) printf("deletable B-D4\n");
-  //if (trace) print_vois27(B);
-  //if (trace) print_vois27(D);
+
   if (ma_sonka_match(v, B) && ma_sonka_dir_ABC(v, B)) return 1;
   if (ma_sonka_match(v, D) && ma_sonka_dir_D(v, D)) return 1;
   rotate_90_Z_27(B); rotate_90_Z_27(D);
-  //if (trace) printf("deletable B-D5\n");
-  //if (trace) print_vois27(B);
-  //if (trace) print_vois27(D);
+
   if (ma_sonka_match(v, B) && ma_sonka_dir_ABC(v, B)) return 1;
   if (ma_sonka_match(v, D) && ma_sonka_dir_D(v, D)) return 1;
   rotate_90_Z_27(B); rotate_90_Z_27(D);
-  //if (trace) printf("deletable B-D6\n");
-  //if (trace) print_vois27(B);
-  //if (trace) print_vois27(D);
+
   if (ma_sonka_match(v, B) && ma_sonka_dir_ABC(v, B)) return 1;
   if (ma_sonka_match(v, D) && ma_sonka_dir_D(v, D)) return 1;
   rotate_90_Z_27(B); rotate_90_Z_27(D);
-  //if (trace) printf("deletable B-D7\n");
-  //if (trace) print_vois27(B);
-  //if (trace) print_vois27(D);
+
   if (ma_sonka_match(v, B) && ma_sonka_dir_ABC(v, B)) return 1;
   if (ma_sonka_match(v, D) && ma_sonka_dir_D(v, D)) return 1;
   rotate_90_Z_27(B); rotate_90_Z_27(D);
   swap_U_L_27(B); swap_U_L_27(D); // retour
 
   isometrieYZ_vois27(B); isometrieYZ_vois27(D);
-  //if (trace) printf("deletable B-D8\n");
-  //if (trace) print_vois27(B);
-  //if (trace) print_vois27(D);
+
   if (ma_sonka_match(v, B) && ma_sonka_dir_ABC(v, B)) return 1;
   if (ma_sonka_match(v, D) && ma_sonka_dir_D(v, D)) return 1;
   rotate_90_Z_27(B); rotate_90_Z_27(D);
   rotate_90_Z_27(B); rotate_90_Z_27(D);
-  //if (trace) printf("deletable B-D9\n");
-  //if (trace) print_vois27(B);
-  //if (trace) print_vois27(D);
+
   if (ma_sonka_match(v, B) && ma_sonka_dir_ABC(v, B)) return 1;
   if (ma_sonka_match(v, D) && ma_sonka_dir_D(v, D)) return 1;
   swap_S_N_27(B); swap_S_N_27(D);
-  //if (trace) printf("deletable B-D10\n");
-  //if (trace) print_vois27(B);
-  //if (trace) print_vois27(D);
+
   if (ma_sonka_match(v, B) && ma_sonka_dir_ABC(v, B)) return 1;
   if (ma_sonka_match(v, D) && ma_sonka_dir_D(v, D)) return 1;
   rotate_90_Z_27(B); rotate_90_Z_27(D);
   rotate_90_Z_27(B); rotate_90_Z_27(D);
-  //if (trace) printf("deletable B-D11\n");
-  //if (trace) print_vois27(B);
-  //if (trace) print_vois27(D);
+
   if (ma_sonka_match(v, B) && ma_sonka_dir_ABC(v, B)) return 1;
   if (ma_sonka_match(v, D) && ma_sonka_dir_D(v, D)) return 1;
   swap_S_N_27(B); swap_S_N_27(D); // retour

@@ -272,7 +272,7 @@ double lrecalagerigide_transparentplane_F3d(double *G, ensemble *ens)
 /* ==================================== */
 {
   lrecalagerigide_translateplane_Tgamma3d(ens->X, ens->n, G, ens->Tmp);
-  return lrecalagerigide_translateplane_Delta3d(ens->Tmp, ens->n, ens->Y, ens->m);  
+  return lrecalagerigide_translateplane_Delta3d(ens->Tmp, ens->n, ens->Y, ens->m);
 } // lrecalagerigide_transparentplane_F3d()
 
 

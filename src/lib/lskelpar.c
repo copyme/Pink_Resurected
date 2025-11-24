@@ -4231,25 +4231,6 @@ A   2*  B
   return 1;
 } /* bertrand_match2() */
 
-#ifdef NOT_FINISHED
-/* ==================================== */
-int32_t cruc_asym_match1(uint8_t *F, int32_t x, int32_t rs, int32_t N)
-/* ==================================== */
-/*
-A     A
-2*    2
-B     B
-*/
-{
-  uint8_t v[8];
-  extract_vois(F, x, rs, N, v);
-  if (!IS_SIMPLE(v[0])) return 0;
-  if ((v[1] == 0) && (v[2] == 0)) return 0;
-  if ((v[6] == 0) && (v[7] == 0)) return 0;
-  return 1;
-} /* bertrand_match1() */
-#endif
-
 /* ==================================== */
 int32_t lskelNK2(struct xvimage *image,
 	      int32_t nsteps,

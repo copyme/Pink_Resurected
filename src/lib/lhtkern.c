@@ -3027,33 +3027,6 @@ int32_t nbcomps8(
 } /* nbcomps8() */
 
 /* ==================================== */
-int32_t phi8m(
-  uint8_t *img,          /* pointeur base image */
-  int32_t p,                       /* index du point */
-  int32_t rs,                      /* taille rangee */
-  int32_t N)                       /* taille image */
-/* retourne max{F(y), y dans gamma8*(x) / F(y) <= F(x)} si gamma8*(x) / F(y) <= F(x) non vide,
-   F(x) sinon 
-*/
-/* ==================================== */
-{
-	register uint8_t val = *(img+p);
-	register uint8_t phi = NDG_MIN;
-	register uint8_t * ptr = img+p;
-
-        if ((p%rs!=rs-1) && (*(ptr+1) <= val) && (*(ptr+1) > phi)) phi = *(ptr+1);
-        if (((p%rs!=rs-1)&&(p>=rs)) && (*(ptr+1-rs) <= val) && (*(ptr+1-rs) > phi)) phi = *(ptr+1-rs);
-        if ((p>=rs) && (*(ptr-rs) <= val) && (*(ptr-rs) > phi)) phi = *(ptr-rs);
-        if (((p>=rs)&&(p%rs!=0)) && (*(ptr-rs-1) <= val) && (*(ptr-rs-1) > phi)) phi = *(ptr-rs-1);
-        if ((p%rs!=0) && (*(ptr-1) <= val) && (*(ptr-1) > phi)) phi = *(ptr-1);
-        if (((p%rs!=0)&&(p<N-rs)) && (*(ptr-1+rs) <= val) && (*(ptr-1+rs) > phi)) phi = *(ptr-1+rs);
-        if ((p<N-rs) && (*(ptr+rs) <= val) && (*(ptr+rs) > phi)) phi = *(ptr+rs);
-        if (((p<N-rs)&&(p%rs!=rs-1)) && (*(ptr+rs+1) <= val) && (*(ptr+rs+1) > phi)) phi = *(ptr+rs+1);
-        if (phi == NDG_MIN) phi = val;
-        return phi;
-} /* phi8m() */
-
-/* ==================================== */
 int32_t courbe4(  /* teste si un point est un point de courbe - minima 4-connexes
 	         ie- si pour une coupe <= img[p] on a T = 2 
                  et deux voisins exactement dans la coupe */
