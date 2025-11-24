@@ -160,7 +160,8 @@ int LIARerror(const char *msg, ...)
 
 
     va_end(args);
-    
+
+    return ret;
 }
 
 #ifdef HAVE_TIFF_LIB
