@@ -89,10 +89,10 @@ int main(int argc, char **argv)
   }
 
 #ifdef MC_64_BITS
-  printf("car. Euler = %lld\n", euler);
-  printf("%lld composantes connexes, ", nbcc);
-  printf("%lld cavites, ", nbcav);
-  printf("%lld tunnels\n", nbtun);
+  printf("car. Euler = %lld\n", (long long)euler);
+  printf("%lld composantes connexes, ", (long long)nbcc);
+  printf("%lld cavites, ", (long long)nbcav);
+  printf("%lld tunnels\n", (long long)nbtun);
 #else
   printf("car. Euler = %d\n", euler);
   printf("%d composantes connexes, ", nbcc);

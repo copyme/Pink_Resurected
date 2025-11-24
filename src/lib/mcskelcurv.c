@@ -99,7 +99,7 @@ static void printptsliste(SKC_pt_pcell p, int32_t rs)
 /* ====================================================================== */
 {
   for (; p != NULL; p = p->next)
-    printf("%d,%d ; ", p->val%rs, p->val/rs);
+    printf("%d,%d ; ", (int)p->val%rs, (int)p->val/rs);
 } /* printptsliste() */
 
 /* ====================================================================== */

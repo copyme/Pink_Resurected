@@ -96,11 +96,11 @@ int main(int argc, char **argv)
       exit(1);
     }
     fprintf(fd, "e %d\n", 3); 
-    fprintf(fd, "%d %d %d\n", arg % rs, (arg % ps) / rs, arg/ps); 
+    fprintf(fd, "%ld %ld %ld\n", arg % rs, (arg % ps) / rs, arg/ps);
     fclose(fd);
   }
   else
-    printf("%d %d %d\n", arg % rs, (arg % ps) / rs, arg/ps); 
+    printf("%ld %ld %ld\n", arg % rs, (arg % ps) / rs, arg/ps);
 
   freeimage(image);
 

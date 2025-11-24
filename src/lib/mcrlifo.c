@@ -58,7 +58,7 @@ Rlifo * CreeRlifoVide(index_t taillemax)
   if (L == NULL)
   {   
 #ifdef MC_64_BITS
-    fprintf(stderr, "%s: malloc failed : %lld bytes\n", F_NAME, sizeof(Rlifo) + sizeof(index_t) * (taillemax-1));
+    fprintf(stderr, "%s: malloc failed : %lld bytes\n", F_NAME, (long long)sizeof(Rlifo) + sizeof(index_t) * (taillemax-1));
 #else
     fprintf(stderr, "%s: malloc failed : %d bytes\n", F_NAME, sizeof(Rlifo) + sizeof(index_t) * (taillemax-1));
 #endif

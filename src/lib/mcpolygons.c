@@ -455,7 +455,7 @@ POLYGONS %d %d    // Faces - champ obligatoire
       {
 	a = F.vert[j]; 
 #ifdef MC_64_BITS
-	fprintf(fileout, "%lld ", a);
+	fprintf(fileout, "%lld ", (long long)a);
 #else
 	fprintf(fileout, "%d ", a);
 #endif
@@ -468,7 +468,7 @@ POLYGONS %d %d    // Faces - champ obligatoire
 	  {
 	    for (k = 0; k < E.n; k++)
 #ifdef MC_64_BITS
-	      fprintf(fileout, "%lld ", E.vert[k]);
+	      fprintf(fileout, "%lld ", (long long)E.vert[k]);
 #else
 	      fprintf(fileout, "%d ", E.vert[k]);
 #endif
@@ -477,7 +477,7 @@ POLYGONS %d %d    // Faces - champ obligatoire
 	  {
 	    for (k = E.n - 1; k >= 0; k--)
 #ifdef MC_64_BITS
-	      fprintf(fileout, "%lld ", E.vert[k]);
+	      fprintf(fileout, "%lld ", (long long)E.vert[k]);
 #else
 	      fprintf(fileout, "%d ", E.vert[k]);
 #endif
@@ -639,7 +639,7 @@ void MCP_Print(MCP *P)
     printf("  faces "); 
     for (j = 0; j < P->Vertices->v[i].nfaces; j++)
 #ifdef MC_64_BITS
-      printf("%lld  ", P->Vertices->v[i].face[j]);
+      printf("%lld  ", (long long)P->Vertices->v[i].face[j]);
 #else
       printf("%d  ", P->Vertices->v[i].face[j]);
 #endif
@@ -651,7 +651,7 @@ void MCP_Print(MCP *P)
     printf("f[%d]: [ ", i);
     for (j = 0; j < P->Faces->f[i].n; j++)
 #ifdef MC_64_BITS
-      printf("%lld ", P->Faces->f[i].vert[j]);
+      printf("%lld ", (long long)P->Faces->f[i].vert[j]);
 #else
       printf("%d ", P->Faces->f[i].vert[j]);
 #endif
@@ -665,7 +665,7 @@ void MCP_Print(MCP *P)
     {
       E = P->Edges->e[i];
 #ifdef MC_64_BITS
-      printf("e[%d]: %lld, %lld (subd: %d)\n", i, E.v1, E.v2, E.n);
+      printf("e[%d]: %lld, %lld (subd: %d)\n", i, (long long)E.v1, (long long)E.v2, E.n);
 #else
       printf("e[%d]: %d, %d (subd: %d)\n", i, E.v1, E.v2, E.n);
 #endif
@@ -674,7 +674,7 @@ void MCP_Print(MCP *P)
 	printf("  subdiv: ");
 	for (j = 0; j < E.n; j++)	
 #ifdef MC_64_BITS
-	  printf("%lld ", E.vert[j]);
+	  printf("%lld ", (long long)E.vert[j]);
 #else
 	  printf("%d ", E.vert[j]);
 #endif

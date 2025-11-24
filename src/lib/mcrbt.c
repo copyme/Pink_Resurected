@@ -244,7 +244,7 @@ void RbtPrintRec(
   RbtPrintRec(T, x->left, niv+1);
   for (i = 0; i < niv; i++) printf("    ");
 #ifdef MC_64_BITS
-  printf("%g [%lld] (", x->key, x->auxdata);
+  printf("%g [%lld] (", x->key, (long long)x->auxdata);
 #else
   printf("%g [%d] (", x->key, x->auxdata);
 #endif
