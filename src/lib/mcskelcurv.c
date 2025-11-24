@@ -181,7 +181,7 @@ void fprintptliste(FILE *fd, SKC_pt_pcell p)
 {
   int32_t n = tailleptliste(p);
   fprintf(fd, "%d ", n);
-  for (; p != NULL; p = p->next) fprintf(fd, "%d ", p->val);
+  for (; p != NULL; p = p->next) fprintf(fd, "%d ", (int)p->val);
 } /* fprintptliste() */
 
 /* ====================================================================== */
@@ -190,7 +190,7 @@ void fprintptvliste(FILE *fd, SKC_pt_pcell p, float *V)
 {
   int32_t n = tailleptliste(p);
   fprintf(fd, "%d ", n);
-  for (; p != NULL; p = p->next) fprintf(fd, "%d %g ", p->val, V[p->val]);
+  for (; p != NULL; p = p->next) fprintf(fd, "%d %g ", (int)p->val, V[p->val]);
 } /* fprintptvliste() */
 
 /* ====================================================================== */
