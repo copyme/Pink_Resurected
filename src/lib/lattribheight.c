@@ -251,49 +251,6 @@ static void ProcessLeafMins(CompactTree * cpct, int32_t som)
   }
 } /* ProcessLeafMins() */
 
-/* ==================================== */
-static void ProcessLeafMinsOp(CompactTree * cpct, int32_t som)
-/* ==================================== */
-/*
-  Recherche a partir du sommet som, les sommets marques LEAFMIN.
-  Demarque en remontant jusqu'a la feuille la plus haute.
-  Version pour une ouverture (avec RecupereImageFiltree).
-*/
-{
-  int32_t i, j, n, m, jm, h;
-
-  if (!(cpct->flags[som] & LEAFMIN))
-  {
-    n = NBFILS(cpct, som);           /* remonte l'arbre pour trouver une LEAFMIN */ 
-    for (i = 0; i < n; i++) 
-    {
-      j = INDEXFILS(cpct, som, i);
-      j = cpct->fils[j];
-      ProcessLeafMinsOp(cpct, j);
-    }
-  }
-  else /* (on a trouve une LEAFMIN) */
-  {
-    cpct->flags[som] &= ~LEAFMIN; /* demarque som */
-    while (NBFILS(cpct, som) > 0)       /* remonte jusqu'a une (vraie) feuille */
-    {
-      /* recherche l'indice im du fils de hauteur maxi */
-      n = NBFILS(cpct, som);
-      m = -1;
-      for (i = 0; i < n; i++) 
-      {
-        j = INDEXFILS(cpct, som, i);
-        j = cpct->fils[j];
-        h = DECODENIV(cpct->comp[j]) + cpct->height[j];
-        if (h > m) { m = h; jm = j; } 
-      }
-      /* remonte en demarquant */
-      som = jm;
-      cpct->flags[som] &= ~FILTERED_OUT;
-    }
-    cpct->flags[som] |= LEAFMIN;  /* marque LEAFMIN le sommet atteint */
-  }
-} /* ProcessLeafMinsOp() */
 
 #ifdef __GNUC__
 static void RecupereImageFiltreeH(CompactTree * cpct, indexcomp_t *STATUS, index_t rs, index_t N, uint8_t *ORI) __attribute__ ((unused));
