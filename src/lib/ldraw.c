@@ -177,7 +177,7 @@ int32_t ldrawfilledtriangle(struct xvimage * image1, int32_t v1x, int32_t v1y, i
   else if (v1y == v2y)
   {
     fillTopFlatTriangle(image1, v1x, v1y, v2x, v2y, v3x, v3y);
-  } 
+  }
   else
   {
     /* general case - split the triangle in a topflat and bottom-flat one */
@@ -186,6 +186,7 @@ int32_t ldrawfilledtriangle(struct xvimage * image1, int32_t v1x, int32_t v1y, i
     fillBottomFlatTriangle(image1, v1x, v1y, v2x, v2y, v4x, v4y);
     fillTopFlatTriangle(image1, v2x, v2y, v4x, v4y, v3x, v3y);
   }
+  return 1;
 } // ldrawfilledtriangle()
 
 /* ==================================== */
@@ -195,8 +196,11 @@ int32_t ldrawfilledquadrangle(struct xvimage * image1, int32_t v1x, int32_t v1y,
 #undef F_NAME
 #define F_NAME "ldrawfilledquadrangle"
 {
-  ldrawfilledtriangle(image1, v1x, v1y, v2x, v2y, v3x, v3y);
-  ldrawfilledtriangle(image1, v1x, v1y, v4x, v4y, v3x, v3y);
+  if (ldrawfilledtriangle(image1, v1x, v1y, v2x, v2y, v3x, v3y) && ldrawfilledtriangle(image1, v1x, v1y, v4x, v4y, v3x, v3y))
+    return 1;
+  else
+    return 0;
+
 } // ldrawfilledquadrangle()
 
 /* ==================================== */
