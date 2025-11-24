@@ -237,43 +237,6 @@ struct xvimage * KhalimskizeNDG2d(struct xvimage *o)
   return b;
 } /* KhalimskizeNDG2d() */
 
-/* ==================================== */
-struct xvimage * KhalimskizeNDG2d_OLD(struct xvimage *o)
-/* ==================================== */
-/*            
-   o: image originale
-   k: resultat - chaque pixel de o est devenu un beta-terminal de k
-                 et sa valeur de gris a ete transmise. les ndg des
-                 autres points sont a 0.
-*/
-{
-  index_t ors = rowsize(o);
-  index_t ocs = colsize(o);
-  uint8_t *O = UCHARDATA(o);
-  struct xvimage *k;
-  index_t krs, kcs, kN;
-  uint8_t *K;
-  index_t i, j;  
-
-  krs = 2 * ors + 1;
-  kcs = 2 * ocs + 1;
-  kN = krs * kcs;
-  
-  k = allocimage(NULL, krs, kcs, 1, VFF_TYP_1_BYTE);
-  if (k == NULL)
-  {   fprintf(stderr,"Khalimskize2d() : allocimage failed\n");
-      return NULL;
-  }
-  K = UCHARDATA(k);
-
-  memset(K, VAL_NULLE, kN); /* init a VAL_NULLE */
-
-  for (j = 0; j < ocs; j++)
-    for (i = 0; i < ors; i++)
-      K[(2*j+1) * krs + (2*i+1)] = O[j * ors + i];
-
-  return k;
-} /* KhalimskizeNDG2d() */
 
 /* ==================================== */
 struct xvimage * DeKhalimskize2d(struct xvimage *o)
@@ -630,41 +593,6 @@ void ndgmax2d(struct xvimage *b)
     exit(0);
   }
 
-} /* ndgmax2d() */
-
-/* ==================================== */
-void ndgmax2d_OLD(struct xvimage *k)
-/* ==================================== */
-/*
-  Entree: une fonction k de H2 dans [0..255] dont
-          seules les valeurs des beta-terminaux (carres) sont significatives.
-  Sortie: une fonction kp de H2 dans [0..255].
-          Tous les points x non beta-terminaux 
-          ont recu la valeur max{k[y], y beta-terminal dans betacarre[x]}
-*/
-{
-  index_t rs = rowsize(k);
-  index_t cs = colsize(k);
-  uint8_t *K = UCHARDATA(k);
-  struct xvimage *kp;
-  uint8_t *KP;
-  index_t i, j, u;
-  int32_t n;
-  index_t tab[9];
-
-  kp = copyimage(k);
-  KP = UCHARDATA(kp);
-  memset(KP, NDG_MIN, rs*cs);
-
-  for (j = 1; j < cs; j += 2)
-    for (i = 1; i < rs; i += 2)
-    {
-      KP[j * rs + i] = K[j * rs + i];
-      Alphacarre2d(rs, cs, i, j, tab, &n);
-      for (u = 0; u < n; u++) KP[tab[u]] = mcmax(KP[tab[u]],K[j * rs + i]);
-    }
-  memcpy(K, KP, rs*cs);
-  freeimage(kp);
 } /* ndgmax2d() */
 
 /* ==================================== */
