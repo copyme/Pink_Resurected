@@ -107,7 +107,7 @@ int main(int argc, char **argv)
   // LECTURE SCENES
   for (s = begin, n = 0; s <= end; s++, n++)
   {
-    sprintf(buf+lenprefix, "%04d\0", s);
+    sprintf(buf+lenprefix, "%04d", s);
     strcat(buf, ".3sc");
 #ifdef VERBOSE
     printf("reading %s\n", buf);
@@ -181,7 +181,7 @@ int main(int argc, char **argv)
   lenprefix = strlen(buf);
   for (s = 0; s < nbsamples; s++)
   {
-    sprintf(buf+lenprefix, "%04d\0", s);
+    sprintf(buf+lenprefix, "%04d", s);
     strcat(buf, ".3sc");
 #ifdef VERBOSE
     printf("writing %s\n", buf);
