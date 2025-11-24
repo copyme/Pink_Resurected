@@ -125,14 +125,6 @@ void SetEmpty(Set *s)
     s->tab[i] = 0;
 } /* SetEmpty() */
 
-/* ============================================ */
-void SetFull(Set *s)
-/* ============================================ */
-{
-  int32_t i;
-  for (i = 0; i < s->setsize; i++)
-    s->tab[i] = 0xffffffff;
-} /* SetFull() */
 
 /* ============================================ */
 void SetElement(Set *s, int32_t e)

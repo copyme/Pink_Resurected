@@ -756,11 +756,6 @@ double test1(double x)
     return 3 * x * x + 40 * sin(x);
 }
 
-double test2(double x, ensemble *ens)
-{
-    return 3 * x * x + 40 * sin(x);
-}
-
 double test(FUNCe f, double x0, double x1)
 {
     double x, x2, fx;

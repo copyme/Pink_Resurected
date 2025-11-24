@@ -1638,63 +1638,6 @@ void AddNoiseMesh(double alpha)
 } /* AddNoiseMesh() */
 
 /* ==================================== */
-void LissageMesh()
-/* ==================================== */
-/* 
-   ATTENTION : utilise et modifie les champs xp, yp, zp du vertex V.
-   Les sommets dont les labels sont non nuls resteront a leur position initiale .
-*/
-{
-#define MAXVOISEDGES 100
-  int32_t e, i, f1, f2, v1, v2;
-  double c, cv;
-
-  //printf("%d %d\n", Vertices->cur, Edges->cur);
-
-  for (i = 0; i < Vertices->cur; i++)
-  {
-    Vertices->tmp[i] = 0;
-    Vertices->v[i].xp = Vertices->v[i].yp = Vertices->v[i].zp = 0.0;
-  }
-
-  for (e = 0; e < Edges->cur; e++)
-  {
-    c = Edges->e[e].curv;
-    f2 = Edges->e[e].f2;
-    if (f2 == -1) goto next;
-    f1 = Edges->e[e].f1;
-    v1 = OppositeVertex(f1, e);
-    //printf("Vertices->lab[%d] = %d\n", v1, Vertices->lab[v1]);
-    if (Vertices->lab[v1] == 0)
-    {
-      cv = CurvVoisEdges(v1);
-      //printf("e = %d, c = %g, cv1 = %g\n", e, c, cv);
-      if ((c >= 0) && (c > cv)) MoveVertex(v1, f1, e, c - cv);
-      if ((c <= 0) && (c < cv)) MoveVertex(v1, f1, e, c - cv);
-    }
-
-    v2 = OppositeVertex(f2, e);
-    if (Vertices->lab[v2] == 0)
-    {
-      cv = CurvVoisEdges(v2);
-      //printf("e = %d, c = %g, cv2 = %g\n", e, c, cv);
-      if ((c >= 0) && (c > cv)) MoveVertex(v2, f2, e, c - cv);
-      if ((c <= 0) && (c < cv)) MoveVertex(v2, f2, e, c - cv);
-    }
-    next:;
-  }
-
-  for (i = 0; i < Vertices->cur; i++)
-  if (Vertices->tmp[i] > 0)
-  {
-    Vertices->v[i].x += (Vertices->v[i].xp / Vertices->tmp[i]);
-    Vertices->v[i].y += (Vertices->v[i].yp / Vertices->tmp[i]);
-    Vertices->v[i].z += (Vertices->v[i].zp / Vertices->tmp[i]);
-  }
-
-} /* LissageMesh() */
-
-/* ==================================== */
 void RegulMeshLaplacian(int32_t niters)
 /* ==================================== */
 /* 

@@ -3009,24 +3009,6 @@ int32_t nbvoisi4(
 } /* nbvoisi4() */
 
 /* ==================================== */
-int32_t nbcomps8(
-  uint8_t *img,          /* pointeur base image */
-  int32_t p,                       /* index du point */
-  uint8_t h,             /* hauteur de la coupe */
-  int32_t rs,                      /* taille rangee */
-  int32_t N)                       /* taille image */
-/* ==================================== */
-{
-	int32_t t4mm, t4m, t8p, t8pp;
-
-        if ((p%rs==rs-1)||(p<rs)||(p%rs==0)||(p>=N-rs)) /* point de bord */
-                return 0;
-
-        nbtopoh(img, p, h, rs, N, &t4mm, &t4m, &t8p, &t8pp);
-	return t8p;
-} /* nbcomps8() */
-
-/* ==================================== */
 int32_t courbe8(  /* teste si un point est un point de courbe - minima 8-connexes
 	         ie- si pour une coupe <= img[p] on a T = 2 
                  et deux voisins exactement dans la coupe */

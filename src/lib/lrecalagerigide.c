@@ -133,7 +133,7 @@ double lrecalagerigide_F(double *G, ensemble *ens)
 /* ==================================== */
 {
   lrecalagerigide_Tgamma(ens->X, ens->n, G, ens->Tmp);
-  return lrecalagerigide_Delta(ens->Tmp, ens->n, ens->Y, ens->m);  
+  return lrecalagerigide_Delta(ens->Tmp, ens->n, ens->Y, ens->m);
 } // lrecalagerigide_F()
 
 /* ==================================== */

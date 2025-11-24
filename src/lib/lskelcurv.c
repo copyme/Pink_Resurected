@@ -3069,33 +3069,6 @@ En entrée, nmax contient la taille du tableau lp.
 } /* mark_sharp_angles1() */
 
 /* ====================================================================== */
-struct xvimage * lskelfindelbows1(skel *S, double length, double angle)
-/* ====================================================================== */
-/*
-Version naïve
-
-Find "elbows" (points making sharp angles) in the curves of skeleton S.
-Matching points are written as voxels in the returned image.  
-*/
-{
-#undef F_NAME
-#define F_NAME "lskelfindelbows1"
-  int32_t nmaxpoints, *listpoints;
-  struct xvimage *sharppoints;
-
-  sharppoints = allocimage(NULL, S->rs, S->cs, S->ds, VFF_TYP_1_BYTE); 
-  assert(sharppoints != NULL);
-  nmaxpoints = S->rs + S->rs + S->cs + S->cs + S->ds + S->ds;
-  listpoints = (int32_t *)malloc(nmaxpoints * sizeof(int32_t));
-  assert(listpoints != NULL);
-
-  mark_sharp_angles1(S, length, angle, sharppoints, listpoints, nmaxpoints);
-
-  free(listpoints);
-  return sharppoints;
-} /* lskelfindelbows1() */
-
-/* ====================================================================== */
 void mark_sharp_angles(skel *S, double thickness, double sharp, struct xvimage *image, int32_t *X, int32_t *Y, int32_t *Z, int32_t nmax)
 /* ====================================================================== */
 /*

@@ -1280,51 +1280,6 @@ void nbtopoh2_l(        /* minima 8-connexes - version avec hauteur de la coupe 
 } /* nbtopoh2_l() */
 
 /* ==================================== */
-int32_t t8ph(
-  uint8_t *img,          /* pointeur base image */
-  index_t p,                       /* index du point */
-  uint8_t h,             /* hauteur de la coupe */
-  index_t rs,                      /* taille rangee */
-  index_t N)                       /* taille image */
-/* retourne le T8plus de p a la coupe h */
-/* ==================================== */
-{
-	register uint8_t val = h;
-	register uint8_t * ptr = img+p;
-	register uint8_t v0;
-	register uint8_t v1;
-	register uint8_t v2;
-	register uint8_t v3;
-	register uint8_t v4;
-	register uint8_t v5;
-	register uint8_t v6;
-	register uint8_t v7;
-	register int32_t t;
-
-	assert(!is_on_frame(p, rs, N));
-
-        v0 = *(ptr+1)   ;
-        v1 = *(ptr+1-rs);
-        v2 = *(ptr-rs)  ;
-        v3 = *(ptr-rs-1);
-        v4 = *(ptr-1)   ;
-        v5 = *(ptr-1+rs);
-        v6 = *(ptr+rs)  ;
-        v7 = *(ptr+rs+1);
-
-	if (v0 >= val) t=1; else t=0;
- 	if (v1 >= val) t|=2;
- 	if (v2 >= val) t|=4;
- 	if (v3 >= val) t|=8;
- 	if (v4 >= val) t|=16;
- 	if (v5 >= val) t|=32;
- 	if (v6 >= val) t|=64;
- 	if (v7 >= val) t|=128;
-
-	return TopoTab[t][1];
-} /* t8ph() */
-
-/* ==================================== */
 uint8_t alpha8m(
   uint8_t *img,          /* pointeur base image */
   index_t p,                       /* index du point */

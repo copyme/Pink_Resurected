@@ -3512,13 +3512,6 @@ int32_t Beta3Simpleh3d(struct xvimage *b, index_t i, index_t j, index_t k, int32
 } /* Beta3Simpleh3d() */
 
 /* ==================================== */
-int32_t Simpleh3d(struct xvimage *b, index_t i, index_t j, index_t k, int32_t h)
-/* ==================================== */
-{
-  return Beta3Simpleh3d(b, i, j, k, h) || Alpha3Simpleh3d(b, i, j, k, h);
-} /* Simpleh3d() */
-
-/* ==================================== */
 int32_t Beta3Simple3dDefinitionRecursive(struct xvimage *b, index_t i, index_t j, index_t k)
 /* ==================================== */
 {

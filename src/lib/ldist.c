@@ -1027,25 +1027,6 @@ Dcol* Dadd(Drow* r,int32_t x, int32_t y, int32_t z, int32_t dx, int32_t dy, int3
   return Dadd2col(r->cols[val],x,y,z,dx,dy,dz);
 }
 
-int32_t Dcount(Drow* r,int32_t val)
-{
-  int32_t nb=0;
-  Dcol * cur = NULL;
-  if((val>r->max)||(r->cols[val]==NULL)) return 0;
-  cur=r->cols[val];
-  do{
-    nb+=cur->nb;
-    cur=cur->next;
-  }while(cur!=NULL);
-  return nb;
-}
-
-int32_t Dhas(Drow* r,int32_t val)
-{
-  if((val>r->max)||(r->cols[val]==NULL)) return 0;
-  return (r->cols[val]->nb)>0;
-}
-
 /********************************************************************/
 /*                    CODE POUR LES DISTANCES                       */
 /********************************************************************/

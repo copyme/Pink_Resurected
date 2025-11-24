@@ -543,72 +543,6 @@ static void extract_vois27(
 
 } /* extract_vois27() */
 
-#ifdef COMPILE_NOTUSED
-/* ==================================== */
-static index_t return_vois27(
-  index_t p,
-  int32_t dir,
-  index_t rs,                      /* taille rangee */
-  index_t ps)                      /* taille plan */
-/* 
-  retourne l'index du point voisin q de p dans la direction dir
-
-  0   1   2   
-  3   4   5
-  6   7   8   
-
-  9   10  11
-  12  13  14
-  15  16  17
-
-  18  19  20
-  21  22  23
-  24  25  26
-
-  le point p ne doit pas être un point de bord de l'image
-*/
-/* ==================================== */
-{
-#undef F_NAME
-#define F_NAME "return_vois27"
-  switch (dir)
-  {
-  case  0: return p-ps-rs-1;
-  case  1: return p-ps-rs;
-  case  2: return p-ps+1-rs;
-  case  3: return p-ps-1;
-  case  4: return p-ps;
-  case  5: return p-ps+1;
-  case  6: return p-ps-1+rs;
-  case  7: return p-ps+rs;
-  case  8: return p-ps+rs+1;
-
-  case  9: return p-rs-1;
-  case 10: return p-rs;
-  case 11: return p+1-rs;
-  case 12: return p-1;
-  case 13: return p;
-  case 14: return p+1;
-  case 15: return p-1+rs;
-  case 16: return p+rs;
-  case 17: return p+rs+1;
-
-  case 18: return p+ps-rs-1;
-  case 19: return p+ps-rs;
-  case 20: return p+ps+1-rs;
-  case 21: return p+ps-1;
-  case 22: return p+ps;
-  case 23: return p+ps+1;
-  case 24: return p+ps-1+rs;
-  case 25: return p+ps+rs;
-  case 26: return p+ps+rs+1;
-  default: 
-    printf("%s: ERREUR: mauvais code dir %d\n", F_NAME, dir);
-    exit(0);
-  }
-} /* return_vois27() */
-#endif
-
 #ifdef DEBUG
 /* ==================================== */
 static void print_vois27(uint8_t *v)
@@ -749,52 +683,6 @@ static void swap_S_N_27(uint8_t *vois)
 	v[k*9 + j*3 + i] = vois[k*9 + (-j+2)*3 + i];
   for (i = 0; i < 27; i++) vois[i] = v[i];
 } // swap_U_L_27()
-
-#ifdef COMPILE_NOTUSED
-/* ==================================== */
-static void isometrieXZ_vois125(uint8_t *vois) 
-// effectue une isométrie du voisinage "vois" par échange des axes X et Z (+ symétries)
-// cette isométrie est de plus une involution
-// version pour la numérotation de extract_vois125()
-/* ==================================== */
-{
-  uint8_t v[125];
-  int32_t i, j, k;
-  for (k = 0; k < 5; k++)
-    for (j = 0; j < 5; j++)
-      for (i = 0; i < 5; i++)
-	v[k*25 + j*5 + i] = vois[i*25 + j*5 + k];
-  for (i = 0; i < 125; i++) vois[i] = v[i];
-} /* isometrieXZ_vois125() */
-
-/* ==================================== */
-static void isometrieYZ_vois125(uint8_t *vois)
-// effectue une isométrie du voisinage "vois" par échange des axes Y et Z (+ symétries)  
-// cette isométrie est de plus une involution
-// version pour la numérotation de extract_vois125()
-/* ==================================== */
-{
-  uint8_t v[125];
-  int32_t i, j, k;
-  for (k = 0; k < 5; k++)
-    for (j = 0; j < 5; j++)
-      for (i = 0; i < 5; i++)
-	v[k*25 + j*5 + i] = vois[j*25 + k*5 + i];
-  for (i = 0; i < 125; i++) vois[i] = v[i];
-} /* isometrieYZ_vois125() */
-
-static void swap_U_L_125(uint8_t *vois)
-{
-// version pour la numérotation de extract_vois125()
-  uint8_t v[125];
-  int32_t i, j, k;
-  for (k = 0; k < 5; k++)
-    for (j = 0; j < 5; j++)
-      for (i = 0; i < 5; i++)
-	v[k*25 + j*5 + i] = vois[(-k+4)*25 + j*5 + i];
-  for (i = 0; i < 125; i++) vois[i] = v[i];
-} // swap_U_L_125()
-#endif
 
 /* ============================================================ */
 /* ============================================================ */
@@ -9477,11 +9365,6 @@ static void f2(vec a, vec b, vec x, vec r)
 static void f3(vec a, vec b, vec x, vec r) 
 {
   addvec(a, a, r); addvec(r, b, r); addvec(r, b, r); addvec(r, x, r);
-}
-
-static void prinvec(vec v) 
-{
-  printf("%d %d %d\n", v[0], v[1], v[2]);
 }
 
 static int32_t s_open(int32_t *X, vec x, index_t rs, index_t ps, int32_t i)

@@ -163,28 +163,6 @@ int LIARerror(const char *msg, ...)
     
 }
 
-int imexception(const char *msg, ...)
-{
-    char strarg[BUFSIZE];
-    int  ret = 0;
-    va_list args;
-
-    im_va_start(args,msg);
-
-#   ifdef WIN32
-    _snprintf(strarg, BUFSIZE, EXCEPTPROMPT "%s", msg);
-#   else /* NOT WIN32 */
-    snprintf(strarg, BUFSIZE, EXCEPTPROMPT "%s", msg);
-#   endif /* NOT WIN32 */
-
-    ret = vfprintf(stderr, strarg, args);
-
-    va_end(args);
-
-    /* used to call exit().. a bit rough */
-    return(1);
-}
-
 #ifdef HAVE_TIFF_LIB
 #  include "loadtiff_code.h"
 #endif // HAVE_TIFF_LIB
