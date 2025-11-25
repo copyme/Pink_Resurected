@@ -182,7 +182,7 @@ int main(int argc, char **argv)
       float * D = NULL;
       convertfloat(&result);
       D = FLOATDATA(result);
-      for (i = 0; i < N; i++) D[i] = (float)sqrt(D[i]);
+      for (i = 0; i < N; i++) D[i] = (float)sqrtf(D[i]);
     }
   }
   else if (mode < 40)

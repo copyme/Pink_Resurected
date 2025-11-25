@@ -270,7 +270,7 @@ static char updateDistance(
 
 	discriminant = - 4.0 * a * c;
 	if (discriminant >= 0) {
-		newDist = sqrt(discriminant) / (2.0 * a) + meanDist;
+		newDist = sqrtf(discriminant) / (2.0 * a) + meanDist;
 	} else {
 		LSTB_debug("Discriminant = %f\n", discriminant);
 		newDist = meanDist;

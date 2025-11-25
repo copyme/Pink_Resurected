@@ -2433,7 +2433,7 @@ The parameter 'cut' is required only for Baddeley distances.
       d = mcmin(FD2[i],cut) - mcmin(FD1[i],cut);
       sum = sum + (d * d);
     }
-    result = (float)sqrt(sum / N);
+    result = (float)sqrtf(sum / N);
   }
   else if (mode == 3) // Dubuisson-Jain
   {

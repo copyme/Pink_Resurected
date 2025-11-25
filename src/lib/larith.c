@@ -366,13 +366,13 @@ int32_t ldiff(
   {
     FPT1 = FLOATDATA(image1); FPT2 = FLOATDATA(image2);
     for (i = 0; i < N; i++, FPT1++, FPT2++)
-      *FPT1 = (float)fabs((float)(*FPT1)-(float)(*FPT2));
+      *FPT1 = (float)fabsf((float)(*FPT1)-(float)(*FPT2));
   }
   else if ((datatype(image1) == VFF_TYP_COMPLEX) && (datatype(image2) == VFF_TYP_COMPLEX))
   {
     FPT1 = FLOATDATA(image1); FPT2 = FLOATDATA(image2);
     for (i = 0; i < N+N; i++, FPT1++, FPT2++)
-      *FPT1 = (float)fabs((float)(*FPT1)-(float)(*FPT2));
+      *FPT1 = (float)fabsf((float)(*FPT1)-(float)(*FPT2));
   }
   else 
   {

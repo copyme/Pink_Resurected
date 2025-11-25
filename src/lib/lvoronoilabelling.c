@@ -572,7 +572,7 @@ Mathematical Morphology: 40 Years On, Springer, 2005, pp. 259-268
 				max=t;
 		}
 
-		R[p] = sqrt(max);
+		R[p] = sqrtf(max);
     }
 
     freeimage(tmp);
@@ -657,7 +657,7 @@ Mathematical Morphology: 40 Years On, Springer, 2005, pp. 259-268
 				max = t;
 		}
 
-		R[p] = sqrt(max);
+		R[p] = sqrtf(max);
     }
 
     freeimage(tmp);

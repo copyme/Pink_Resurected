@@ -16,7 +16,7 @@
 #define D6I_OBJECT 255
 
 
-unsigned char* loadLUTDir(std::string name, unsigned int size, unsigned int dataSize){
+unsigned char* loadLUTDir(const std::string& name, unsigned int size, unsigned int dataSize){
 	FILE* file = fopen(name.c_str(),"rb");
 	unsigned char* lut = new unsigned char[size*dataSize];
 	if(fread((void*)lut, dataSize, size, file)!=size){

@@ -170,8 +170,8 @@ int main(int argc, char **argv)
 		//initialize centroids
 		float centroids[] = {0, 0};
 		
-		centroids[0] = log(maxope+1);
-		centroids[1] = log(maxope+1);
+		centroids[0] = logf(maxope+1);
+		centroids[1] = logf(maxope+1);
 		centroids[0] = centroids[0]/maxlam;
 		centroids[1] = centroids[1]/minlam;
 		centroids[0] = pow(e,centroids[0]);
@@ -187,9 +187,9 @@ int main(int argc, char **argv)
 			//1. calculate the distance between cluster centroid to each object
 			for (i=0; i<nbLam;i++)
 			{
-				double y2 = (log(Ope[i]+1))/(log(centroids[0]));
+				double y2 = (logf(Ope[i]+1))/(logf(centroids[0]));
 				distTo1[i] = (y2-Lam[i])*(y2-Lam[i]);
-				y2 = (log(Ope[i]+1))/(log(centroids[1]));
+				y2 = (logf(Ope[i]+1))/(logf(centroids[1]));
 				distTo2[i] = (y2-Lam[i])*(y2-Lam[i]);
 			}
 			
@@ -229,8 +229,8 @@ int main(int argc, char **argv)
 				}
 			}
 			
-			centroids[0] = log(maxope/2+1);
-			centroids[1] = log(maxope/2+1);
+			centroids[0] = logf(maxope/2+1);
+			centroids[1] = logf(maxope/2+1);
 			centroids[0] = centroids[0]/(maxope/2*(val1/count1));
 			centroids[1] = centroids[1]/(maxope/2*(val2/count2));
 			centroids[0] = pow(e,centroids[0]);
@@ -241,8 +241,8 @@ int main(int argc, char **argv)
 		}
 		
 		//Calculate parameter which separate 2 sets
-		lambda = log(maxope+1);
-		lambda = lambda/(log(maxope+1)/log(centroids[1])+fabs(log(maxope+1)/log(centroids[0])-log(maxope+1)/log(centroids[1]))/2);
+		lambda = logf(maxope+1);
+		lambda = lambda/(logf(maxope+1)/logf(centroids[1])+fabs(logf(maxope+1)/logf(centroids[0])-logf(maxope+1)/logf(centroids[1]))/2);
 		lambda = pow(e,lambda);
 		
 		//finalize
@@ -268,7 +268,7 @@ int main(int argc, char **argv)
   {
 	if(L[i] > 0)
 	{
-	 if(L[i] <= log(O[i]+1)/log(1.1+lambda*0.01))
+	 if(L[i] <= logf(O[i]+1)/log(1.1+lambda*0.01))
     //if (L[i] <= ((lowlambda/L[i])+((O[i]*lambda)/max))) // michal
     //if (L[i]*L[i] <= ((O[i]*lambda)/max))
     //if (L[i] <  O[i]*tan(lambda))

@@ -96,8 +96,8 @@ int main(int argc, char **argv)
   dz = atoi(argv[4]);
 
   nplans = d * dz;
-  nrs = (int32_t)ceil(rs + (dx * nplans));
-  ncs = (int32_t)ceil(cs + (dy * nplans));
+  nrs = (int32_t)ceilf(rs + (dx * nplans));
+  ncs = (int32_t)ceilf(cs + (dy * nplans));
   NI = nrs * ncs;
   dndg = (float)(7 * NDG_MAX) / (float)(8 * nplans);
 
