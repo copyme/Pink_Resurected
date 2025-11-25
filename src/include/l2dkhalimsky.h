@@ -45,7 +45,7 @@ extern "C" {
 #endif
 
 extern int32_t l2dmakecomplex(struct xvimage * i);
-extern int32_t l2d_is_complex(struct xvimage * k);
+extern int32_t l2d_is_complex(const struct xvimage * k);
 extern int32_t l2dclosebeta(struct xvimage * i);
 extern int32_t l2dkhalimskize(struct xvimage * i, struct xvimage **k, int32_t mode);
 extern int32_t l2dkhalimskize_noalloc(struct xvimage * i, struct xvimage *k, int32_t mode);
@@ -53,11 +53,11 @@ extern int32_t l2dcolor(struct xvimage * k);
 extern int32_t l2dthin(struct xvimage * k, int32_t nsteps);
 extern int32_t l2dlabel(struct xvimage * f, struct xvimage * lab, index_t *nlabels);
 extern int32_t l2dlabelextrema(
-      struct xvimage * f,   /* ordre value' original */
+      const struct xvimage * f,   /* ordre value' original */
       int32_t minimum,          /* booleen */
-      struct xvimage * lab, /* resultat: image de labels */
+      const struct xvimage * lab, /* resultat: image de labels */
       index_t *nlabels);        /* resultat: nombre d'extrema traites + 1 (0 = non extremum) */
-extern int32_t l2dtopotess(struct xvimage * lab, struct xvimage * mask);
+extern int32_t l2dtopotess(const struct xvimage * lab, const struct xvimage * mask);
 extern int32_t l2dvoronoi(struct xvimage * lab, struct xvimage * mask);
 extern int32_t l2dtopotessndg(struct xvimage * f);
 extern int32_t l2dinvariants(struct xvimage *f, index_t *nbcc, index_t *nbtrous, index_t *euler);

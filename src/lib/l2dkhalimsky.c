@@ -52,7 +52,6 @@ knowledge of the CeCILL license and that you accept its terms.
 #include <mcimage.h>
 #include <mclifo.h>
 #include <mcindic.h>
-#include <mcutil.h>
 #include <mckhalimsky2d.h>
 #include <l2dkhalimsky.h>
 
@@ -82,7 +81,7 @@ int32_t l2dmakecomplex(struct xvimage * i)
 } /* l2dmakecomplex() */
 
 /* =============================================================== */
-int32_t l2d_is_complex(struct xvimage * k)
+int32_t l2d_is_complex(const struct xvimage * k)
 /* =============================================================== */
 #undef F_NAME
 #define F_NAME "l2d_is_complex"
@@ -90,21 +89,23 @@ int32_t l2d_is_complex(struct xvimage * k)
    teste si k est un complexe
 */
 {
-  index_t rs = rowsize(k);
-  index_t cs = colsize(k);
-  uint8_t *K = UCHARDATA(k);
-  int32_t u, n;
-  index_t i, j, tab[GRS2D*GCS2D];
+  const index_t rs = rowsize(k);
+  const index_t cs = colsize(k);
+  const uint8_t *K = UCHARDATA(k);
+  int32_t n;
+  index_t tab[GRS2D*GCS2D];
 
   ACCEPTED_TYPES1(k, VFF_TYP_1_BYTE);
   ONLY_2D(k);
 
-  for (j = 0; j < cs; j++)
-  for (i = 0; i < rs; i++)
+  for (index_t j = 0; j < cs; j++)
+  for (index_t i = 0; i < rs; i++)
   if (K[j * rs + i])
   {
     Alphacarre2d(rs, cs, i, j, tab, &n);
-    for (u = 0; u < n; u++) if (!K[tab[u]]) return 0;
+    for (int32_t u = 0; u < n; u++)
+      if (!K[tab[u]])
+        return 0;
   }
   return 1;
 } /* l2d_is_complex() */
@@ -373,7 +374,7 @@ int32_t l2dlabel(struct xvimage * f, struct xvimage * lab, index_t *nlabels)
 */
 {
   index_t rs, cs, N;
-  int32_t x, y, w;
+  int32_t y, w;
   uint8_t *F;
   int32_t *LAB;
   Lifo * LIFO;
@@ -404,7 +405,7 @@ int32_t l2dlabel(struct xvimage * f, struct xvimage * lab, index_t *nlabels)
       return(0);
   }
   
-  for (x = 0; x < N; x++)
+  for (int32_t x = 0; x < N; x++)
   {
     if (F[x] && !LAB[x]) 
     {
@@ -449,9 +450,9 @@ int32_t l2dlabel(struct xvimage * f, struct xvimage * lab, index_t *nlabels)
 
 /* =============================================================== */
 int32_t l2dlabelextrema(
-      struct xvimage * f,   /* ordre value' original */
-      int32_t minimum,          /* booleen */
-      struct xvimage * lab, /* resultat: image de labels */
+      const struct xvimage * f,   /* ordre value' original */
+      const int32_t minimum,          /* booleen */
+      const struct xvimage * lab, /* resultat: image de labels */
       index_t *nlabels)         /* resultat: nombre d'extrema traites + 1 (0 = non extremum) */
 /* =============================================================== */
 #undef F_NAME
@@ -576,7 +577,7 @@ int32_t l2dlabelextrema(
 } /* l2dlabelextrema() */
 
 /* =============================================================== */
-static int32_t simple(index_t w, int32_t *LAB, index_t rs, index_t cs)
+static int32_t simple(const index_t w, const int32_t *LAB, const index_t rs, const index_t cs)
 /* =============================================================== */
 #undef F_NAME
 #define F_NAME "simple"
@@ -619,7 +620,7 @@ static int32_t simple(index_t w, int32_t *LAB, index_t rs, index_t cs)
 } /* simple() */
 
 /* =============================================================== */
-int32_t l2dtopotess(struct xvimage * lab, struct xvimage * mask)
+int32_t l2dtopotess(const struct xvimage * lab, const struct xvimage * mask)
 /* =============================================================== */
 #undef F_NAME
 #define F_NAME "l2dtopotess"
