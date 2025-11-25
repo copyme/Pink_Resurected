@@ -59,8 +59,8 @@ int32_t lcomphisto(struct xvimage *image, int32_t n)
   index_t d = depth(image);        /* nb plans */
   index_t N = rs * cs * d;         /* taille image */
   uint8_t *SOURCE = UCHARDATA(image);      /* l'image de depart */
-  index_t * histo;
-  uint8_t * tabcor;
+  index_t * histo = NULL;
+  uint8_t * tabcor = NULL;
   int32_t nndg;
   double p, np;
 

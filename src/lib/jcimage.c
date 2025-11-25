@@ -590,8 +590,10 @@ struct GA4d *allocGA4d(
   {
     g->name = (char *)malloc(strlen(name)+1);
     if (g->name == NULL)
-    {   fprintf(stderr,"%s: malloc failed for name\n", F_NAME);
-        return NULL;
+    {
+      free(g);
+      fprintf(stderr,"%s: malloc failed for name\n", F_NAME);
+      return NULL;
     }
     strcpy((char *)(g->name), name);
   } else {
