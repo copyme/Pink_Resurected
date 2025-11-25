@@ -74,12 +74,15 @@ int32_t lcomphisto(struct xvimage *image, int32_t n)
   tabcor = (uint8_t *)calloc(NDG_MAX - NDG_MIN + 1,  sizeof(char));
   if (tabcor == NULL)
   {
+    free(histo);
     fprintf(stderr, "%s: calloc failed for tabcor\n", F_NAME);
     return(0);
   }
 
   if (! lhisto1(image, histo))
   {
+    free(histo);
+    free(tabcor);
     fprintf(stderr, "%s: function lhisto failed\n", F_NAME);
     return(0);
   }  
@@ -93,6 +96,8 @@ int32_t lcomphisto(struct xvimage *image, int32_t n)
 
   if (n > nndg)
   {
+    free(histo);
+    free(tabcor);
     fprintf(stderr, "%s: required histogram larger than actual one\n", F_NAME);
     return(0);
   }  
