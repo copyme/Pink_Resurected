@@ -129,7 +129,7 @@ int main(int32_t argc, char **argv)
     fprintf(stderr, "%s: bad connexity: %d\n", argv[0], connex);
     exit(1);
   }  
-  writeimage4D(image, argv[argc - 1], atoi(argv[2]), atoi(argv[3]) );
+  writeimage4D(image, argv[argc - 1], atoi(argv[2]));
   
   freeimage4D(image);
   freeimage4D(marqueurs);
