@@ -65,27 +65,57 @@ int32_t lseuil(
   if (datatype(f) == VFF_TYP_1_BYTE)
   {
     uint8_t *F = UCHARDATA(f);
-    for (x = 0; x < N; x++) if (F[x] < seuil) F[x] = NDG_MIN; else F[x] = NDG_MAX;  
+    for (x = 0; x < N; x++) {
+      if (F[x] < seuil) {
+        F[x] = NDG_MIN;
+      } else {
+        F[x] = NDG_MAX;
+      }
+    }
   }
   else if (datatype(f) == VFF_TYP_2_BYTE)
   {
     int16_t *FS = SSHORTDATA(f);
-    for (x = 0; x < N; x++) if (FS[x] < seuil) FS[x] = NDG_MIN; else FS[x] = NDG_MAX;  
+    for (x = 0; x < N; x++) {
+      if (FS[x] < seuil) {
+        FS[x] = NDG_MIN;
+      } else {
+        FS[x] = NDG_MAX;
+      }
+    }
   }
   else if (datatype(f) == VFF_TYP_4_BYTE)
   {
     int32_t *FL = SLONGDATA(f);
-    for (x = 0; x < N; x++) if (FL[x] < seuil) FL[x] = NDG_MIN; else FL[x] = NDG_MAX;  
+    for (x = 0; x < N; x++) {
+      if (FL[x] < seuil) {
+        FL[x] = NDG_MIN;
+      } else {
+        FL[x] = NDG_MAX;
+      }
+    }
   }
   else if (datatype(f) == VFF_TYP_FLOAT)
   {
     float *FF = FLOATDATA(f);
-    for (x = 0; x < N; x++) if (FF[x] < seuil) FF[x] = 0.0; else FF[x] = 1.0;  
+    for (x = 0; x < N; x++) {
+      if (FF[x] < seuil) {
+        FF[x] = 0.0;
+      } else {
+        FF[x] = 1.0;
+      }
+    }
   }
   else if (datatype(f) == VFF_TYP_DOUBLE)
   {
     double *FD = DOUBLEDATA(f);
-    for (x = 0; x < N; x++) if (FD[x] < seuil) FD[x] = 0.0; else FD[x] = 1.0;  
+    for (x = 0; x < N; x++) {
+      if (FD[x] < seuil) {
+        FD[x] = 0.0;
+      } else {
+        FD[x] = 1.0;
+      }
+    }
   }
   else
   {   fprintf(stderr,"lseuil() : bad datatype : %d\n", datatype(f));
@@ -114,23 +144,35 @@ int32_t lseuil2(
   if (datatype(f) == VFF_TYP_1_BYTE)
   {
     uint8_t *F = UCHARDATA(f);
-    for (x = 0; x < N; x++)
-      if ((int32_t)(F[x]) < (int32_t)seuilmin) F[x] = valmin;  
-      else if ((int32_t)(F[x]) >= (int32_t)seuilmax) F[x] = valmax;
+    for (x = 0; x < N; x++) {
+      if ((int32_t)(F[x]) < (int32_t)seuilmin) {
+        F[x] = valmin;
+      } else if ((int32_t)(F[x]) >= (int32_t)seuilmax) {
+        F[x] = valmax;
+      }
+    }
   }
   else if (datatype(f) == VFF_TYP_4_BYTE)
   {
     int32_t *F = SLONGDATA(f);
-    for (x = 0; x < N; x++)
-      if ((int32_t)(F[x]) < (int32_t)seuilmin) F[x] = (int32_t)valmin;  
-      else if ((int32_t)(F[x]) >= (int32_t)seuilmax) F[x] = (int32_t)valmax;
+    for (x = 0; x < N; x++) {
+      if ((int32_t)(F[x]) < (int32_t)seuilmin) {
+        F[x] = (int32_t)valmin;
+      } else if ((int32_t)(F[x]) >= (int32_t)seuilmax) {
+        F[x] = (int32_t)valmax;
+      }
+    }
   }
   else if (datatype(f) == VFF_TYP_FLOAT)
   {
     float *F = FLOATDATA(f);
-    for (x = 0; x < N; x++)
-      if ((int32_t)(F[x]) < (int32_t)seuilmin) F[x] = (float)valmin;  
-      else if ((int32_t)(F[x]) >= (int32_t)seuilmax) F[x] = (float)valmax;
+    for (x = 0; x < N; x++) {
+      if ((int32_t)(F[x]) < (int32_t)seuilmin) {
+        F[x] = (float)valmin;
+      } else if ((int32_t)(F[x]) >= (int32_t)seuilmax) {
+        F[x] = (float)valmax;
+      }
+    }
   }
   else
   {   fprintf(stderr,"lseuil() : bad datatype : %d\n", datatype(f));
@@ -156,26 +198,35 @@ int32_t lseuil3(
   if (datatype(f) == VFF_TYP_1_BYTE)
   {
     uint8_t *F = UCHARDATA(f);
-    for (x = 0; x < N; x++) 
-      if ((F[x] < seuil2) && (F[x]>=seuil))
-	F[x] = NDG_MAX; 
-      else F[x] = NDG_MIN;  
+    for (x = 0; x < N; x++) {
+      if ((F[x] < seuil2) && (F[x] >= seuil)) {
+        F[x] = NDG_MAX;
+      } else {
+        F[x] = NDG_MIN;
+      }
+    }
   }
   else if (datatype(f) == VFF_TYP_4_BYTE)
   {
     int32_t *FL = SLONGDATA(f);
-    for (x = 0; x < N; x++) 
-      if ((FL[x] < seuil2) && (FL[x]>=seuil))
-	FL[x] = NDG_MAX; 
-      else FL[x] = NDG_MIN;  
+    for (x = 0; x < N; x++) {
+      if ((FL[x] < seuil2) && (FL[x] >= seuil)) {
+        FL[x] = NDG_MAX;
+      } else {
+        FL[x] = NDG_MIN;
+      }
+    }
   }
   else if (datatype(f) == VFF_TYP_FLOAT)
   {
     float *FF = FLOATDATA(f);
-    for (x = 0; x < N; x++) 
-      if ((FF[x] < seuil2) && (FF[x]>=seuil))
-	FF[x] = 1.0; 
-      else FF[x] = 0.0;  
+    for (x = 0; x < N; x++) {
+      if ((FF[x] < seuil2) && (FF[x] >= seuil)) {
+        FF[x] = 1.0;
+      } else {
+        FF[x] = 0.0;
+      }
+    }
   }
   else
   {   fprintf(stderr,"lseuil() : bad datatype : %d\n", datatype(f));
@@ -232,13 +283,14 @@ int32_t lotsu(
     }	
 
     // Create normalised histogram values
-    for (I=1; I<=k; I++) 
-      histNormalized[I-1] = histo[I-1]/(float)N;
-
+    for (I = 1; I <= k; I++) {
+      histNormalized[I - 1] = histo[I - 1] / (float)N;
+    }
 
     // Calculate total mean level
-    for (I=1; I<=k; I++) 
-      uT+=(I*histNormalized[I-1]);
+    for (I = 1; I <= k; I++) {
+      uT += (I * histNormalized[I - 1]);
+    }
 
     // Find optimal threshold value
     for (I=1; I<k; I++) {
@@ -246,7 +298,9 @@ int32_t lotsu(
       u+=(I*histNormalized[I-1]);
       work1 = (uT * w - u);
       work2 = (work1 * work1) / ( w * (1.0f-w) );
-      if (work2>work3) work3=work2;
+      if (work2 > work3) {
+        work3 = work2;
+      }
     }
 
     // Convert the final value to an integer
@@ -256,12 +310,15 @@ int32_t lotsu(
 #endif
 #ifdef VERBOSE
     printf("%s optimal threshold = %d\n", F_NAME, threshold);
-#endif    
+#endif
 
-    for (x = 0; x < N; x++) 
-      if (F[x] >= threshold)
-	F[x] = NDG_MAX; 
-      else F[x] = NDG_MIN;  
+    for (x = 0; x < N; x++) {
+      if (F[x] >= threshold) {
+        F[x] = NDG_MAX;
+      } else {
+        F[x] = NDG_MIN;
+      }
+    }
   }
   else
   {   fprintf(stderr,"lseuil() : bad datatype : %d\n", datatype(f));
@@ -298,8 +355,10 @@ int32_t lseuilOtsu(
   if (datatype(f) == VFF_TYP_1_BYTE)
   {
     uint8_t *F = UCHARDATA(f);
-    for (l = 0; l < 256; l++) hist[l] = 0;
-    
+    for (l = 0; l < 256; l++) {
+      hist[l] = 0;
+    }
+
     for (x = 0; x < N; x++) {
       hist[F[x]]++;
     }
@@ -309,8 +368,10 @@ int32_t lseuilOtsu(
     w_c = 0;
     h_c = 0;
 
-    for (l = 0; l < 256; l++) h_c += l * hist[l];
-    
+    for (l = 0; l < 256; l++) {
+      h_c += l * hist[l];
+    }
+
     w_c = N;
     
     //    printf("Valeur moyenne de l'image:%lg\n",  (double)h_c/(double)w_c);

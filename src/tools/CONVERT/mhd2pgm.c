@@ -125,7 +125,9 @@ int main(int argc, char **argv)
   while(1)
   {
     ret = fgets(buf, TAILLEBUF, fd);
-    if (ret == NULL) break;
+    if (ret == NULL) {
+      break;
+    }
     s = "NDims ="; t = strlen(s);
     if (strncasecmp(buf, s, t) == 0)
     {
@@ -151,21 +153,38 @@ int main(int argc, char **argv)
     s = "BinaryDataByteOrderMSB ="; t = strlen(s);
     if (strncasecmp(buf, s, t) == 0)
     {
-       if (strcasestr(buf+t, "True") != NULL)
-         littleendian = 1;
+      if (strcasestr(buf + t, "True") != NULL) {
+        littleendian = 1;
+      }
     }
 
     s = "ElementType ="; t = strlen(s);
     if (strncasecmp(buf, s, t) == 0)
     {
-       if (strcasestr(buf+t, "MET_CHAR") != NULL) datatype = 1;
-       if (strcasestr(buf+t, "MET_UCHAR") != NULL) datatype = 1;
-       if (strcasestr(buf+t, "MET_BYTE") != NULL) datatype = 1;
-       if (strcasestr(buf+t, "MET_UBYTE") != NULL) datatype = 1;
-       if (strcasestr(buf+t, "MET_USHORT") != NULL) datatype = 2;
-       if (strcasestr(buf+t, "MET_SHORT") != NULL) datatype = 3;
-       if (strcasestr(buf+t, "MET_LONG") != NULL) datatype = 4;
-       if (strcasestr(buf+t, "MET_FLOAT") != NULL) datatype = 5;
+      if (strcasestr(buf + t, "MET_CHAR") != NULL) {
+        datatype = 1;
+      }
+      if (strcasestr(buf + t, "MET_UCHAR") != NULL) {
+        datatype = 1;
+      }
+      if (strcasestr(buf + t, "MET_BYTE") != NULL) {
+        datatype = 1;
+      }
+      if (strcasestr(buf + t, "MET_UBYTE") != NULL) {
+        datatype = 1;
+      }
+      if (strcasestr(buf + t, "MET_USHORT") != NULL) {
+        datatype = 2;
+      }
+      if (strcasestr(buf + t, "MET_SHORT") != NULL) {
+        datatype = 3;
+      }
+      if (strcasestr(buf + t, "MET_LONG") != NULL) {
+        datatype = 4;
+      }
+      if (strcasestr(buf + t, "MET_FLOAT") != NULL) {
+        datatype = 5;
+      }
     }
 
     s = "ElementDataFile ="; t = strlen(s);
@@ -250,17 +269,22 @@ int main(int argc, char **argv)
       S[i] = tmp; 
     }
     Smin = S[0];
-    for (i = 0; i < N; i++) 
-      if (S[i] < Smin) Smin = S[i];
+    for (i = 0; i < N; i++) {
+      if (S[i] < Smin) {
+        Smin = S[i];
+      }
+    }
     if (Smin < 0)
     {
-      for (i = 0; i < N; i++) 
-	I[i] = S[i] - Smin;
+      for (i = 0; i < N; i++) {
+        I[i] = S[i] - Smin;
+      }
     }
     else
     {
-      for (i = 0; i < N; i++) 
-	I[i] = S[i];
+      for (i = 0; i < N; i++) {
+        I[i] = S[i];
+      }
     }
     freeimage(image_S);
   }
@@ -320,8 +344,9 @@ int main(int argc, char **argv)
     }
   }
 
-  if (image == NULL)
+  if (image == NULL) {
     exit(1);
+  }
 
   image->xdim = xdim;
   image->ydim = ydim;

@@ -146,18 +146,22 @@ int32_t lt4pp(struct xvimage * image)
     pti = UCHARDATA(image);
     ptt = UCHARDATA(temp);
     memset(pti, 0, N);
-    for (j = 1; j < cs - 1; j++) 
-      for (i = 1; i < rs - 1; i++) 
+    for (j = 1; j < cs - 1; j++) {
+      for (i = 1; i < rs - 1; i++) {
         pti[j * rs + i] = (uint8_t)t4pp(ptt, j * rs + i, rs, N);
+      }
+    }
   }
   else if (datatype(image) == VFF_TYP_4_BYTE)
   {
     pti_l = SLONGDATA(image);
     ptt_l = SLONGDATA(temp);
     memset(pti_l, 0, 4*N);
-    for (j = 1; j < cs - 1; j++) 
-      for (i = 1; i < rs - 1; i++) 
+    for (j = 1; j < cs - 1; j++) {
+      for (i = 1; i < rs - 1; i++) {
         pti_l[j * rs + i] = (int32_t)t4pp_l(ptt_l, j * rs + i, rs, N);
+      }
+    }
   }
   else
   {
@@ -207,18 +211,22 @@ int32_t lt8pp(struct xvimage * image)
     pti = UCHARDATA(image);
     ptt = UCHARDATA(temp);
     memset(pti, 0, N);
-    for (j = 1; j < cs - 1; j++) 
-      for (i = 1; i < rs - 1; i++) 
+    for (j = 1; j < cs - 1; j++) {
+      for (i = 1; i < rs - 1; i++) {
         pti[j * rs + i] = (uint8_t)t8pp(ptt, j * rs + i, rs, N);
+      }
+    }
   }
   else if (datatype(image) == VFF_TYP_4_BYTE)
   {
     pti_l = SLONGDATA(image);
     ptt_l = SLONGDATA(temp);
     memset(pti_l, 0, 4*N);
-    for (j = 1; j < cs - 1; j++) 
-      for (i = 1; i < rs - 1; i++) 
+    for (j = 1; j < cs - 1; j++) {
+      for (i = 1; i < rs - 1; i++) {
         pti_l[j * rs + i] = (int32_t)t8pp_l(ptt_l, j * rs + i, rs, N);
+      }
+    }
   }
   else
   {
@@ -266,20 +274,28 @@ int32_t lt6pp(struct xvimage * image)
     pti = UCHARDATA(image);
     ptt = UCHARDATA(temp);
     memset(pti, 0, N);
-    for (k = 1; k < ds - 1; k++) 
-      for (j = 1; j < cs - 1; j++) 
-        for (i = 1; i < rs - 1; i++) 
-          pti[k*ps + j*rs + i] = (uint8_t)mctopo3d_t6pp(ptt, k*ps + j*rs + i, rs, ps, N);
+    for (k = 1; k < ds - 1; k++) {
+      for (j = 1; j < cs - 1; j++) {
+        for (i = 1; i < rs - 1; i++) {
+          pti[k * ps + j * rs + i] =
+              (uint8_t)mctopo3d_t6pp(ptt, k * ps + j * rs + i, rs, ps, N);
+        }
+      }
+    }
   }
   else if (datatype(image) == VFF_TYP_4_BYTE)
   {
     pti_l = SLONGDATA(image);
     ptt_l = SLONGDATA(temp);
     memset(pti_l, 0, 4*N);
-    for (k = 1; k < ds - 1; k++) 
-      for (j = 1; j < cs - 1; j++) 
-        for (i = 1; i < rs - 1; i++) 
-          pti_l[k*ps + j*rs + i] = (int32_t)mctopo3d_t6pp_l(ptt_l, k*ps + j*rs + i, rs, ps, N);
+    for (k = 1; k < ds - 1; k++) {
+      for (j = 1; j < cs - 1; j++) {
+        for (i = 1; i < rs - 1; i++) {
+          pti_l[k * ps + j * rs + i] =
+              (int32_t)mctopo3d_t6pp_l(ptt_l, k * ps + j * rs + i, rs, ps, N);
+        }
+      }
+    }
   }
   else
   {
@@ -328,20 +344,28 @@ int32_t ltopotypes_t26pp(struct xvimage * image)
     pti = UCHARDATA(image);
     ptt = UCHARDATA(temp);
     memset(pti, 0, N);
-    for (k = 1; k < ds - 1; k++) 
-      for (j = 1; j < cs - 1; j++) 
-        for (i = 1; i < rs - 1; i++) 
-          pti[k*ps + j*rs + i] = (uint8_t)mctopo3d_t26pp(ptt, k*ps + j*rs + i, rs, ps, N);
+    for (k = 1; k < ds - 1; k++) {
+      for (j = 1; j < cs - 1; j++) {
+        for (i = 1; i < rs - 1; i++) {
+          pti[k * ps + j * rs + i] =
+              (uint8_t)mctopo3d_t26pp(ptt, k * ps + j * rs + i, rs, ps, N);
+        }
+      }
+    }
   }
   else if (datatype(image) == VFF_TYP_4_BYTE)
   {
     pti_l = SLONGDATA(image);
     ptt_l = SLONGDATA(temp);
     memset(pti_l, 0, 4*N);
-    for (k = 1; k < ds - 1; k++) 
-      for (j = 1; j < cs - 1; j++) 
-        for (i = 1; i < rs - 1; i++) 
-          pti_l[k*ps + j*rs + i] = (int32_t)mctopo3d_t26pp_l(ptt_l, k*ps + j*rs + i, rs, ps, N);
+    for (k = 1; k < ds - 1; k++) {
+      for (j = 1; j < cs - 1; j++) {
+        for (i = 1; i < rs - 1; i++) {
+          pti_l[k * ps + j * rs + i] =
+              (int32_t)mctopo3d_t26pp_l(ptt_l, k * ps + j * rs + i, rs, ps, N);
+        }
+      }
+    }
   }
   else
   {
@@ -389,48 +413,48 @@ int32_t lalpha(struct xvimage * image, int32_t connex, char sign)
 
     if (sign == 'm')
     {
-      if (connex == 26)
-	for (k = 0; k < N; k++) 
-	  pti[k] = (uint8_t)mctopo3d_alpha26m(ptt, k, rs, ps, N);
-      else
-      if (connex == 6)
-	for (k = 0; k < N; k++) 
-	  pti[k] = (uint8_t)mctopo3d_alpha6m(ptt, k, rs, ps, N);
-      else
-      if (connex == 8)
-	for (k = 0; k < N; k++) 
-	  pti[k] = (uint8_t)alpha8m(ptt, k, rs, N);
-      else
-      if (connex == 4)
-	for (k = 0; k < N; k++) 
-	  pti[k] = (uint8_t)alpha4m(ptt, k, rs, N);
-      else
-      {
-	fprintf(stderr, "%s: bad connexity: %d\n", F_NAME, connex);
+      if (connex == 26) {
+        for (k = 0; k < N; k++) {
+          pti[k] = (uint8_t)mctopo3d_alpha26m(ptt, k, rs, ps, N);
+        }
+      } else if (connex == 6) {
+        for (k = 0; k < N; k++) {
+          pti[k] = (uint8_t)mctopo3d_alpha6m(ptt, k, rs, ps, N);
+        }
+      } else if (connex == 8) {
+        for (k = 0; k < N; k++) {
+          pti[k] = (uint8_t)alpha8m(ptt, k, rs, N);
+        }
+      } else if (connex == 4) {
+        for (k = 0; k < N; k++) {
+          pti[k] = (uint8_t)alpha4m(ptt, k, rs, N);
+        }
+      } else {
+        fprintf(stderr, "%s: bad connexity: %d\n", F_NAME, connex);
 	return(0);
       }
     }
     else
     if (sign == 'p')
     {
-      if (connex == 26)
-	for (k = 0; k < N; k++) 
-	  pti[k] = (uint8_t)mctopo3d_alpha26p(ptt, k, rs, ps, N);
-      else
-      if (connex == 6)
-	for (k = 0; k < N; k++) 
-	  pti[k] = (uint8_t)mctopo3d_alpha6p(ptt, k, rs, ps, N);
-      else
-      if (connex == 8)
-	for (k = 0; k < N; k++) 
-	  pti[k] = (uint8_t)alpha8p(ptt, k, rs, N);
-      else
-      if (connex == 4)
-	for (k = 0; k < N; k++) 
-	  pti[k] = (uint8_t)alpha4p(ptt, k, rs, N);
-      else
-      {
-	fprintf(stderr, "%s: bad connexity: %d\n", F_NAME, connex);
+      if (connex == 26) {
+        for (k = 0; k < N; k++) {
+          pti[k] = (uint8_t)mctopo3d_alpha26p(ptt, k, rs, ps, N);
+        }
+      } else if (connex == 6) {
+        for (k = 0; k < N; k++) {
+          pti[k] = (uint8_t)mctopo3d_alpha6p(ptt, k, rs, ps, N);
+        }
+      } else if (connex == 8) {
+        for (k = 0; k < N; k++) {
+          pti[k] = (uint8_t)alpha8p(ptt, k, rs, N);
+        }
+      } else if (connex == 4) {
+        for (k = 0; k < N; k++) {
+          pti[k] = (uint8_t)alpha4p(ptt, k, rs, N);
+        }
+      } else {
+        fprintf(stderr, "%s: bad connexity: %d\n", F_NAME, connex);
 	return(0);
       }
     }

@@ -101,7 +101,11 @@ int main(int32_t argc, char **argv)
     freeimage(image);
     exit(0);
   }
-  if(connex == 4) incr = 2; else incr = 1;
+  if (connex == 4) {
+    incr = 2;
+  } else {
+    incr = 1;
+  }
   function = LABMIN; 
   result = allocimage(NULL, rowsize(image), colsize(image), depth(image), VFF_TYP_4_BYTE); 
   if (result == NULL)
@@ -133,11 +137,13 @@ int main(int32_t argc, char **argv)
 	  {
 	    if(label != -1) 
 	    {
-	      if(label != LABEL[y]) G[i] = 0;
-	    } 
-	    else 
-	      label = LABEL[y];
-	  }
+              if (label != LABEL[y]) {
+                G[i] = 0;
+              }
+            } else {
+              label = LABEL[y];
+            }
+          }
 	}
       }//for(k = 0 ... )
     }// if(LABEL[i] ...)

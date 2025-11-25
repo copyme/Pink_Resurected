@@ -77,10 +77,13 @@ int32_t altitudePoint(struct xvimage *ga, int32_t i)
   uint8_t *F = UCHARDATA(ga);     /* l'image de depart */
   int32_t k, min, u;
   min = 255;
-  for(k = 0; k < 4; k++)
-    if( (u = incidente(i, k, rs, N)) != -1) { 
-      if((int32_t)F[u] < min) min = (int32_t)F[u];
+  for (k = 0; k < 4; k++) {
+    if( (u = incidente(i, k, rs, N)) != -1) {
+      if ((int32_t)F[u] < min) {
+        min = (int32_t)F[u];
+      }
     }
+  }
   return min;
 } 
 
@@ -126,11 +129,16 @@ struct xvimage *mBorderWshed2d(struct xvimage *ga)
   for(i = 0; i < N; i++) {
     VF[i] = 255;
     Vminima[i] = 0;
-    for(k = 0; k < 4; k++)
-      if( (u = incidente(i, k, rs, N)) != -1) { 
-	if(F[u] < VF[i]) VF[i] = F[u];
-	if(Eminima[u] > 0) Vminima[i] = Eminima[u];
+    for (k = 0; k < 4; k++) {
+      if( (u = incidente(i, k, rs, N)) != -1) {
+        if (F[u] < VF[i]) {
+          VF[i] = F[u];
+        }
+        if (Eminima[u] > 0) {
+          Vminima[i] = Eminima[u];
+        }
       }
+    }
   }
 
   /* Initialisation de la FIFO */
@@ -139,23 +147,29 @@ struct xvimage *mBorderWshed2d(struct xvimage *ga)
   
   /* Les aretes adjacentes a un minimum sont inserees dans L */
   /* on explore d'abord les aretes horizontales */
-  for(j = 0; j < cs; j++)
+  for (j = 0; j < cs; j++) {
     for(i = 0; i < rs -1; i++){
       u = j * rs + i; x = Sommetx(u,N,rs); y = Sommety(u,N,rs);
-      if( (mcmin(Vminima[x], Vminima[y]) == 0) && /* un des deux sommets non ds un minima */
-	  (mcmax(Vminima[x], Vminima[y]) > 0) ) /* et l'autre dans un minima */
-	LifoPush(L,u); 
+      if ((mcmin(Vminima[x], Vminima[y]) ==
+           0) && /* un des deux sommets non ds un minima */
+          (mcmax(Vminima[x], Vminima[y]) > 0)) { /* et l'autre dans un minima */
+        LifoPush(L,u);
+      }
     }
+  }
   /* puis les aretes verticales */
-   for(j = 0; j < cs -1; j++)
+  for (j = 0; j < cs - 1; j++) {
     for(i = 0; i < rs; i++)
     {
       u = N + j * rs + i; x = Sommetx(u,N,rs); y = Sommety(u,N,rs);
-      if( (mcmin(Vminima[x], Vminima[y]) == 0) && /* un des deux sommets non ds un minima */
-	  (mcmax(Vminima[x], Vminima[y]) > 0) ) /* et l'autre dans un minima */
-	LifoPush(L,u);
-    } 
-   
+      if ((mcmin(Vminima[x], Vminima[y]) ==
+           0) && /* un des deux sommets non ds un minima */
+          (mcmax(Vminima[x], Vminima[y]) > 0)) { /* et l'autre dans un minima */
+        LifoPush(L, u);
+      }
+    }
+  }
+
    /*************BOUCLE PRINCIPALE*****************/
    while(!LifoVide(L)) {
      u = LifoPop(L);
@@ -168,9 +182,11 @@ struct xvimage *mBorderWshed2d(struct xvimage *ga)
        Eminima[u] = Vminima[x];
        Vminima[y] = Vminima[x];
        for(k = 0; k < 8; k +=2){
-	 if( (z = voisin(y, k, rs, N)) != -1)
-	   if(Vminima[z] == 0)
-	     LifoPush(L, Arete(y,z,rs,N));
+         if ((z = voisin(y, k, rs, N)) != -1) {
+           if (Vminima[z] == 0) {
+             LifoPush(L, Arete(y, z, rs, N));
+           }
+         }
        } /* for(k = 0 .. */
      } /* if( (VF[x] < ... */
    }/* while(!LifoVide... */
@@ -218,9 +234,13 @@ struct xvimage *mBorderWshed2drapide(struct xvimage *ga)
   for(i = 0; i < N; i++) {
     VF[i] = 255;
     Vminima[i] = -1;
-    for(k = 0; k < 4; k++)
-      if( (u = incidente(i, k, rs, N)) != -1)
-	if(F[u] < VF[i]) VF[i] = F[u];
+    for (k = 0; k < 4; k++) {
+      if ((u = incidente(i, k, rs, N)) != -1) {
+        if (F[u] < VF[i]) {
+          VF[i] = F[u];
+        }
+      }
+    }
   }
   
   /* Initialisation de la FIFO */
@@ -238,8 +258,8 @@ struct xvimage *mBorderWshed2drapide(struct xvimage *ga)
       while(!LifoVide(L)) {
 	w = LifoPop(L);
 	label = Vminima[w];
-	for(k = 0; k < 4; k++)
-	  if( (u = incidente(w, k, rs, N)) != -1){
+        for (k = 0; k < 4; k++) {
+          if( (u = incidente(w, k, rs, N)) != -1){
 	    if(F[u] == VF[w]){
 	      switch(k){
 	      case 0: y = w+1; break;      /* EST   */ 
@@ -261,7 +281,8 @@ struct xvimage *mBorderWshed2drapide(struct xvimage *ga)
 		}
 	      }
 	    }
-	  }
+          }
+        }
       }
     }
   }
@@ -269,23 +290,29 @@ struct xvimage *mBorderWshed2drapide(struct xvimage *ga)
 
   /* Les aretes adjacentes a un minimum sont inserees dans L */
   /* on explore d'abord les aretes horizontales */
-  for(j = 0; j < cs; j++)
+  for (j = 0; j < cs; j++) {
     for(i = 0; i < rs -1; i++){
       u = j * rs + i; x = Sommetx(u,N,rs); y = Sommety(u,N,rs);
-      if( (mcmin(Vminima[x], Vminima[y]) == 0) && /* un des deux sommets non ds un minima */
-	  (mcmax(Vminima[x], Vminima[y]) > 0) ) /* et l'autre dans un minima */
-	LifoPush(L,u); 
+      if ((mcmin(Vminima[x], Vminima[y]) ==
+           0) && /* un des deux sommets non ds un minima */
+          (mcmax(Vminima[x], Vminima[y]) > 0)) { /* et l'autre dans un minima */
+        LifoPush(L,u);
+      }
     }
+  }
   /* puis les aretes verticales */
-   for(j = 0; j < cs -1; j++)
+  for (j = 0; j < cs - 1; j++) {
     for(i = 0; i < rs; i++)
     {
       u = N + j * rs + i; x = Sommetx(u,N,rs); y = Sommety(u,N,rs);
-      if( (mcmin(Vminima[x], Vminima[y]) == 0) && /* un des deux sommets non ds un minima */
-	  (mcmax(Vminima[x], Vminima[y]) > 0) ) /* et l'autre dans un minima */
-	LifoPush(L,u);
-    } 
-   
+      if ((mcmin(Vminima[x], Vminima[y]) ==
+           0) && /* un des deux sommets non ds un minima */
+          (mcmax(Vminima[x], Vminima[y]) > 0)) { /* et l'autre dans un minima */
+        LifoPush(L, u);
+      }
+    }
+  }
+
    /*************BOUCLE PRINCIPALE*****************/
    while(!LifoVide(L)) {
      u = LifoPop(L);
@@ -298,9 +325,11 @@ struct xvimage *mBorderWshed2drapide(struct xvimage *ga)
        //  Eminima[u] = Vminima[x];
        Vminima[y] = Vminima[x];
        for(k = 0; k < 8; k +=2){
-	 if( (z = voisin(y, k, rs, N)) != -1)
-	   if(Vminima[z] == 0)
-	     LifoPush(L, Arete(y,z,rs,N));
+         if ((z = voisin(y, k, rs, N)) != -1) {
+           if (Vminima[z] == 0) {
+             LifoPush(L, Arete(y, z, rs, N));
+           }
+         }
        } /* for(k = 0 .. */
      } /* if( (VF[x] < ... */
    }/* while(!LifoVide... */
@@ -335,7 +364,9 @@ int32_t lpeGrapheAreteValuee(GrapheValue *gv, int32_t* Label)
   {
     min_som = 255;
     for(p = g->gamma[i]; p != NULL; p = p->next){
-      if(gv->F[p->edge] < min_som) min_som = gv->F[p->edge];
+      if (gv->F[p->edge] < min_som) {
+        min_som = gv->F[p->edge];
+      }
     }
     G[i] = min_som;
     Label[i] = NO_LABEL;
@@ -375,17 +406,19 @@ int32_t Stream(uint8_t *F, GrapheBasic *g, int32_t sommet, Lifo *FIFO, int32_t *
   int32_t labStream;
   Label[sommet] = IN_PROCESS;
   LifoPush(FIFO, sommet);
-  for(p = g->gamma[sommet]; p != NULL; p = p->next) 
+  for (p = g->gamma[sommet]; p != NULL; p = p->next) {
     if(F[p->edge] == G[sommet]){
       if(Label[p->vertex] == NO_LABEL){
 	labStream = Stream(F, g, (int32_t)(p->vertex), FIFO, Label, alt,G);
-	if( (labStream >= 0) || ( (*alt) < (int32_t)G[sommet]) )
-	  return labStream;
+        if ((labStream >= 0) || ((*alt) < (int32_t)G[sommet])) {
+          return labStream;
+        }
+      } else if (Label[p->vertex] >= 0) {
+        return Label[p->vertex];
       }
-      else if(Label[p->vertex] >= 0)
-	return Label[p->vertex];
     }
-  
+  }
+
   (*alt) = (int32_t)G[sommet];
   return NO_LABEL;
 } 
@@ -410,20 +443,24 @@ struct xvimage *SeparatingEdge(struct xvimage *labels)
   }
   F = UCHARDATA(ga);      /* le resultat */
   memset(F,0,2*N);
-  /* les aretes horizontales */ 
-  for(j = 0; j < cs; j++)
+  /* les aretes horizontales */
+  for (j = 0; j < cs; j++) {
     for(i = 0; i < rs -1; i++){
       u = j * rs + i; x = Sommetx(u,N,rs); y = Sommety(u,N,rs);
-      if(lab[x] != lab[y])
-	F[u] = 255;
+      if (lab[x] != lab[y]) {
+        F[u] = 255;
+      }
     }
+  }
   /* puis les aretes verticales */
-  for(j = 0; j < cs -1; j++)
+  for (j = 0; j < cs - 1; j++) {
     for(i = 0; i < rs; i++){
       u = N + j * rs + i; x = Sommetx(u,N,rs); y = Sommety(u,N,rs);
-      if(lab[x] != lab[y])
-	F[u] = 255;
+      if (lab[x] != lab[y]) {
+        F[u] = 255;
+      }
     }
+  }
   return ga;
 }
 
@@ -489,8 +526,8 @@ int32_t StreamGArecursif(struct xvimage *ga, int32_t x, Lifo *FIFO, int32_t *Lab
   int32_t labStream,k,u,y;
   Label[x] = IN_PROCESS;
   LifoPush(FIFO, x);
-  for(k = 0; k < 4; k++)
-    if((u = incidente(x, k, rs, N)) != -1) 
+  for (k = 0; k < 4; k++) {
+    if ((u = incidente(x, k, rs, N)) != -1) {
       if(F[u] == G[x]){
 	switch(k){
 	case 0: y = x+1; break;      /* EST   */ 
@@ -500,14 +537,17 @@ int32_t StreamGArecursif(struct xvimage *ga, int32_t x, Lifo *FIFO, int32_t *Lab
 	}
 	if(Label[y] == NO_LABEL) {
 	  labStream = StreamGArecursif(ga, y, FIFO, Label, alt,G);
-	  if( (labStream >= 0) || ( (*alt) < (int32_t)G[x]) )
-	    return labStream;
-	}
+          if ((labStream >= 0) || ((*alt) < (int32_t)G[x])) {
+            return labStream;
+          }
+        }
 	else if (Label[y] >= 0){
 	  //(*alt) = G[y];
 	  return Label[y];
-	}	  
+	}
       }
+    }
+  }
   (*alt) = (int32_t)G[x];
   return NO_LABEL;
 }
@@ -585,9 +625,9 @@ int32_t StreamGA(struct xvimage *ga, int32_t x, Lifo *L, Lifo *B,int32_t *psi, u
   while(!LifoVide(B)){
     y = LifoPop(B);
     breadth_first = TRUE;
-    for(k = 0; (k < 4) && (breadth_first == TRUE); k++)
-      if((u = incidente(y, k, rs, N)) != -1) 
-	if(F[u] == G[y]){
+    for (k = 0; (k < 4) && (breadth_first == TRUE); k++) {
+      if ((u = incidente(y, k, rs, N)) != -1) {
+        if(F[u] == G[y]){
 	  switch(k){
 	  case 0: z = y+1; break;      /* EST   */ 
 	  case 1: z = y-rs; break;     /* NORD  */
@@ -618,7 +658,9 @@ int32_t StreamGA(struct xvimage *ga, int32_t x, Lifo *L, Lifo *B,int32_t *psi, u
 	      }
 	    }
 	  }
-	}
+        }
+      }
+    }
   }
   LifoFlush(B);
   return NO_LABEL;
@@ -632,10 +674,13 @@ float altitudePointFloat(struct xvimage *ga, int32_t i)
   float *F = FLOATDATA(ga);     /* l'image de depart */
   int32_t k, u;
   float min = 255; // En theorie ca peut aller bien plus haut attention !!! MAX_FLOAT
-  for(k = 0; k < 4; k++)
-    if( (u = incidente(i, k, rs, N)) != -1) { 
-      if((float)F[u] < min) min = (float)F[u];
+  for (k = 0; k < 4; k++) {
+    if( (u = incidente(i, k, rs, N)) != -1) {
+      if ((float)F[u] < min) {
+        min = (float)F[u];
+      }
     }
+  }
   return min;
 }
 
@@ -712,9 +757,9 @@ int32_t StreamGAFloat(struct xvimage *ga, int32_t x, Lifo *L, Lifo *B,int32_t *p
   while(!LifoVide(B)){
     y = LifoPop(B);
     breadth_first = TRUE;
-    for(k = 0; (k < 4) && (breadth_first == TRUE); k++)
-      if((u = incidente(y, k, rs, N)) != -1) 
-	if(F[u] == G[y]){
+    for (k = 0; (k < 4) && (breadth_first == TRUE); k++) {
+      if ((u = incidente(y, k, rs, N)) != -1) {
+        if(F[u] == G[y]){
 	  switch(k){
 	  case 0: z = y+1; break;      /* EST   */ 
 	  case 1: z = y-rs; break;     /* NORD  */
@@ -745,7 +790,9 @@ int32_t StreamGAFloat(struct xvimage *ga, int32_t x, Lifo *L, Lifo *B,int32_t *p
 	      }
 	    }
 	  }
-	}
+        }
+      }
+    }
   }
   LifoFlush(B);
   return NO_LABEL;
@@ -760,10 +807,13 @@ double altitudePointDouble(struct xvimage *ga, int32_t i)
   int32_t k, u;
   //double min = 956036423.000000;
   double min = 1000000000000000000000000000000.0; // En theorie ca peut aller bien plus haut attention !!! MAX_FLOAT
-  for(k = 0; k < 4; k++)
-    if( (u = incidente(i, k, rs, N)) != -1) { 
-      if(F[u] < min) min = F[u];
+  for (k = 0; k < 4; k++) {
+    if( (u = incidente(i, k, rs, N)) != -1) {
+      if (F[u] < min) {
+        min = F[u];
+      }
     }
+  }
   return min;
 }
 
@@ -840,9 +890,9 @@ int32_t StreamGADouble(struct xvimage *ga, int32_t x, Lifo *L, Lifo *B,int32_t *
   while(!LifoVide(B)){
     y = LifoPop(B);
     breadth_first = TRUE;
-    for(k = 0; (k < 4) && (breadth_first == TRUE); k++)
-      if((u = incidente(y, k, rs, N)) != -1) 
-	if(F[u] == G[y]){
+    for (k = 0; (k < 4) && (breadth_first == TRUE); k++) {
+      if ((u = incidente(y, k, rs, N)) != -1) {
+        if(F[u] == G[y]){
 	  switch(k){
 	  case 0: z = y+1; break;      /* EST   */ 
 	  case 1: z = y-rs; break;     /* NORD  */
@@ -873,7 +923,9 @@ int32_t StreamGADouble(struct xvimage *ga, int32_t x, Lifo *L, Lifo *B,int32_t *
 	      }
 	    }
 	  }
-	}
+        }
+      }
+    }
   }
   LifoFlush(B);
   return NO_LABEL;

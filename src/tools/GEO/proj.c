@@ -119,36 +119,28 @@ int main(int argc, char **argv)
 	R = UCHARDATA(result);
       }
 
-      for (k = 0; k < ds; k++)
-      for (j = 0; j < cs; j++)
-      {
-        tmp = 0.0;
-        if (mode == 0)
-	{
-          for (i = 0; i < rs; i++)
-          {
-            tmp += (double)(I[k * ps + j*rs + i]);
-          } /* for i */
-          R[k*cs + j] = (uint8_t)arrondi((tmp/rs));
-	}
-        else if (mode == 1)
-	{
-          t = 0;
-          for (i = 0; i < rs; i++)
-          {
-            t = mcmax(t,I[k*ps+j*rs+i]);
-          } /* for i */
-          R[k*cs + j] = t;
-	}
-        else if (mode == 2)
-	{
-          for (i = 0; i < rs; i++)
-          {
-            tmp += (double)(I[k * ps + j*rs + i]);
-          } /* for i */
-          F[k*cs + j] = (float)rs;
-	}
-      } /* for k, j */
+      for (k = 0; k < ds; k++) {
+        for (j = 0; j < cs; j++) {
+          tmp = 0.0;
+          if (mode == 0) {
+            for (i = 0; i < rs; i++) {
+              tmp += (double)(I[k * ps + j * rs + i]);
+            } /* for i */
+            R[k * cs + j] = (uint8_t)arrondi((tmp / rs));
+          } else if (mode == 1) {
+            t = 0;
+            for (i = 0; i < rs; i++) {
+              t = mcmax(t, I[k * ps + j * rs + i]);
+            } /* for i */
+            R[k * cs + j] = t;
+          } else if (mode == 2) {
+            for (i = 0; i < rs; i++) {
+              tmp += (double)(I[k * ps + j * rs + i]);
+            } /* for i */
+            F[k * cs + j] = (float)rs;
+          }
+        } /* for k, j */
+      }
       break;
 
     case 'y':
@@ -165,36 +157,28 @@ int main(int argc, char **argv)
 	R = UCHARDATA(result);
       }
 
-      for (k = 0; k < ds; k++)
-      for (i = 0; i < rs; i++)
-      {
-        tmp = 0.0;
-        if (mode == 0)
-	{
-          for (j = 0; j < cs; j++)
-          {
-            tmp += (double)(I[k * ps + j*rs + i]);
-          } /* for j */
-          R[k*rs + i] = (uint8_t)arrondi((tmp/cs));
-	}
-        else if (mode == 1)
-	{
-          t = 0;
-          for (j = 0; j < cs; j++)
-          {
-            t = mcmax(t,I[k*ps+j*rs+i]);
-          } /* for j */
-          R[k*rs + i] = t;
-	}
-        else if (mode == 2)
-	{
-          for (j = 0; j < cs; j++)
-          {
-            tmp += (double)(I[k * ps + j*rs + i]);
-          } /* for j */
-          F[k*rs + i] = (float)tmp;
-	}
-      } /* for k, i */
+      for (k = 0; k < ds; k++) {
+        for (i = 0; i < rs; i++) {
+          tmp = 0.0;
+          if (mode == 0) {
+            for (j = 0; j < cs; j++) {
+              tmp += (double)(I[k * ps + j * rs + i]);
+            } /* for j */
+            R[k * rs + i] = (uint8_t)arrondi((tmp / cs));
+          } else if (mode == 1) {
+            t = 0;
+            for (j = 0; j < cs; j++) {
+              t = mcmax(t, I[k * ps + j * rs + i]);
+            } /* for j */
+            R[k * rs + i] = t;
+          } else if (mode == 2) {
+            for (j = 0; j < cs; j++) {
+              tmp += (double)(I[k * ps + j * rs + i]);
+            } /* for j */
+            F[k * rs + i] = (float)tmp;
+          }
+        } /* for k, i */
+      }
       break;
 
     case 'z':
@@ -211,36 +195,28 @@ int main(int argc, char **argv)
 	R = UCHARDATA(result);
       }
 
-      for (j = 0; j < cs; j++)
-      for (i = 0; i < rs; i++)
-      {
-        tmp = 0.0;
-        if (mode == 0)
-	{
-          for (k = 0; k < ds; k++)
-          {
-            tmp += (double)(I[k * ps + j*rs + i]);
-          } /* for k */
-          R[j*rs + i] = (uint8_t)arrondi((tmp/ds));
-	}
-        else if (mode == 1)
-	{
-          t = 0;
-          for (k = 0; k < ds; k++)
-          {
-            t = mcmax(t,I[k*ps+j*rs+i]);
-          } /* for k */
-          R[j*rs + i] = t;
-	}
-        else if (mode == 2)
-	{
-          for (k = 0; k < ds; k++)
-          {
-            tmp += (double)(I[k * ps + j*rs + i]);
-          } /* for k */
-          F[j*rs + i] = (float)tmp;
-	}
-      } /* for j, i */
+      for (j = 0; j < cs; j++) {
+        for (i = 0; i < rs; i++) {
+          tmp = 0.0;
+          if (mode == 0) {
+            for (k = 0; k < ds; k++) {
+              tmp += (double)(I[k * ps + j * rs + i]);
+            } /* for k */
+            R[j * rs + i] = (uint8_t)arrondi((tmp / ds));
+          } else if (mode == 1) {
+            t = 0;
+            for (k = 0; k < ds; k++) {
+              t = mcmax(t, I[k * ps + j * rs + i]);
+            } /* for k */
+            R[j * rs + i] = t;
+          } else if (mode == 2) {
+            for (k = 0; k < ds; k++) {
+              tmp += (double)(I[k * ps + j * rs + i]);
+            } /* for k */
+            F[j * rs + i] = (float)tmp;
+          }
+        } /* for j, i */
+      }
       break;
     
     default:

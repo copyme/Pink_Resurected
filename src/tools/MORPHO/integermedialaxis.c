@@ -118,9 +118,10 @@ int main(int argc, char **argv)
 	N = rowsize(image) * colsize(image) * depth(image);
 	for(i=0; i<N; i++)
 	{
-		if(FLOATDATA(resf)[i] < gamma)
-			UCHARDATA(image)[i] = NDG_MIN;
-	}
+          if (FLOATDATA(resf)[i] < gamma) {
+            UCHARDATA(image)[i] = NDG_MIN;
+          }
+        }
 
 	writeimage(image, argv[argc - 1]);
   }

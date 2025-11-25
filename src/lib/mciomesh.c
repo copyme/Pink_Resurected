@@ -382,7 +382,9 @@ void SaveMeshMCM(FILE *fileout)
   fprintf(fileout, "V %d\n", Vertices->cur);
   for (i = 0; i < Vertices->cur; i++)
   {
-    if (Vertices->lab[i]) nfixes++;
+    if (Vertices->lab[i]) {
+      nfixes++;
+    }
     fprintf(fileout, "%g %g %g", Vertices->v[i].x, Vertices->v[i].y, Vertices->v[i].z);
     fprintf(fileout, "\n");
   }
@@ -402,22 +404,28 @@ void SaveMeshMCM(FILE *fileout)
   for (i = 0; i < Vertices->cur; i++)
   {
     fprintf(fileout, "%d ", Vertices->v[i].nfaces);
-    for (j = 0; j < Vertices->v[i].nfaces; j++)
+    for (j = 0; j < Vertices->v[i].nfaces; j++) {
       fprintf(fileout, "%d ", Vertices->v[i].face[j]);
+    }
     fprintf(fileout, "\n");
   }
   fprintf(fileout, "\n");
 
   // SOMMETS FIXES
   fprintf(fileout, "x %d\n", nfixes);
-  for (i = 0; i < Vertices->cur; i++)
-    if (Vertices->lab[i]) fprintf(fileout, "%d\n", i);
+  for (i = 0; i < Vertices->cur; i++) {
+    if (Vertices->lab[i]) {
+      fprintf(fileout, "%d\n", i);
+    }
+  }
   fprintf(fileout, "\n");
 
   // FACES
   fprintf(fileout, "F %d\n", Faces->cur);
-  for (i = 0; i < Faces->cur; i++)
-    fprintf(fileout, "%d %d %d\n", Faces->f[i].vert[0], Faces->f[i].vert[1], Faces->f[i].vert[2]);
+  for (i = 0; i < Faces->cur; i++) {
+    fprintf(fileout, "%d %d %d\n", Faces->f[i].vert[0], Faces->f[i].vert[1],
+            Faces->f[i].vert[2]);
+  }
   fprintf(fileout, "\n");
 
   // NORMALES AUX FACES
@@ -433,9 +441,10 @@ void SaveMeshMCM(FILE *fileout)
   if (Edges != NULL) 
   {
     fprintf(fileout, "e %d\n", Edges->cur);
-    for (i = 0; i < Edges->cur; i++)
-      fprintf(fileout, "%d %d %d %d\n", Edges->e[i].v1, Edges->e[i].v2, Edges->e[i].f1, Edges->e[i].f2);
-
+    for (i = 0; i < Edges->cur; i++) {
+      fprintf(fileout, "%d %d %d %d\n", Edges->e[i].v1, Edges->e[i].v2,
+              Edges->e[i].f1, Edges->e[i].f2);
+    }
   }
 
 
@@ -468,8 +477,10 @@ POLYGONS %d %d    // Faces - champ obligatoire
 
   // FACES
   fprintf(fileout, "POLYGONS %d %d\n", Faces->cur, 4*Faces->cur);
-  for (i = 0; i < Faces->cur; i++)
-    fprintf(fileout, "3 %d %d %d\n", Faces->f[i].vert[0], Faces->f[i].vert[1], Faces->f[i].vert[2]);
+  for (i = 0; i < Faces->cur; i++) {
+    fprintf(fileout, "3 %d %d %d\n", Faces->f[i].vert[0], Faces->f[i].vert[1],
+            Faces->f[i].vert[2]);
+  }
   fprintf(fileout, "\n");
 
 } /* SaveMeshVTK() */
@@ -560,12 +571,17 @@ Attention : les faces dont le champ "aux" est différent de 0 ne sont pas sauvé
 
   // FACES
   n = m = 0;
-  for (i = 0; i < M->Faces->cur; i++)
-    if (M->Faces->f[i].aux == 0) { n++; m += 4; }
+  for (i = 0; i < M->Faces->cur; i++) {
+    if (M->Faces->f[i].aux == 0) { n++; m += 4;
+    }
+  }
   fprintf(fileout, "POLYGONS %d %d\n", n, m);
-  for (i = 0; i < M->Faces->cur; i++)
-    if (M->Faces->f[i].aux == 0)
-      fprintf(fileout, "3 %d %d %d\n", M->Faces->f[i].vert[0], M->Faces->f[i].vert[1], M->Faces->f[i].vert[2]);
+  for (i = 0; i < M->Faces->cur; i++) {
+    if (M->Faces->f[i].aux == 0) {
+      fprintf(fileout, "3 %d %d %d\n", M->Faces->f[i].vert[0],
+              M->Faces->f[i].vert[1], M->Faces->f[i].vert[2]);
+    }
+  }
   fprintf(fileout, "\n");
 } /* MCM_SaveVTK() */
 
@@ -618,20 +634,25 @@ static GLfloat face_indiciess<obj_id>[<nfaces>][6] = {
   int32_t i;
 
   fprintf(fileout, "static GLfloat normals%d[%d][3] = {\n", obj_id, Vertices->cur);
-  for (i = 0; i < Vertices->cur-1; i++)
-    fprintf(fileout, "  {%g, %g, %g},\n", Vertices->v[i].xp, Vertices->v[i].yp, Vertices->v[i].zp);
+  for (i = 0; i < Vertices->cur - 1; i++) {
+    fprintf(fileout, "  {%g, %g, %g},\n", Vertices->v[i].xp, Vertices->v[i].yp,
+            Vertices->v[i].zp);
+  }
   fprintf(fileout, "  {%g, %g, %g}\n};\n\n", Vertices->v[i].xp, Vertices->v[i].yp, Vertices->v[i].zp);
 
   fprintf(fileout, "static GLfloat vertices%d[%d][3] = {\n", obj_id, Vertices->cur);
-  for (i = 0; i < Vertices->cur-1; i++)
-    fprintf(fileout, "  {%g, %g, %g},\n", Vertices->v[i].x, Vertices->v[i].y, Vertices->v[i].z);
+  for (i = 0; i < Vertices->cur - 1; i++) {
+    fprintf(fileout, "  {%g, %g, %g},\n", Vertices->v[i].x, Vertices->v[i].y,
+            Vertices->v[i].z);
+  }
   fprintf(fileout, "  {%g, %g, %g}\n};\n\n", Vertices->v[i].x, Vertices->v[i].y, Vertices->v[i].z);
 
   fprintf(fileout, "static GLint face_indicies%d[%d][6] = {\n", obj_id, Faces->cur);
-  for (i = 0; i < Faces->cur-1; i++)
-    fprintf(fileout, "  {%d, %d, %d, %d, %d, %d},\n", 
-                     Faces->f[i].vert[0], Faces->f[i].vert[1], Faces->f[i].vert[2], 
-                     Faces->f[i].vert[0], Faces->f[i].vert[1], Faces->f[i].vert[2]);
+  for (i = 0; i < Faces->cur - 1; i++) {
+    fprintf(fileout, "  {%d, %d, %d, %d, %d, %d},\n", Faces->f[i].vert[0],
+            Faces->f[i].vert[1], Faces->f[i].vert[2], Faces->f[i].vert[0],
+            Faces->f[i].vert[1], Faces->f[i].vert[2]);
+  }
   fprintf(fileout, "  {%d, %d, %d, %d, %d, %d}\n};\n\n", 
                    Faces->f[i].vert[0], Faces->f[i].vert[1], Faces->f[i].vert[2], 
                    Faces->f[i].vert[0], Faces->f[i].vert[1], Faces->f[i].vert[2]);
@@ -708,7 +729,9 @@ void LoadMeshMCM(FILE *filein)
     do { ret=fgets(buf, sbuf, filein); }
     while (ret && (buf[0]!='V') && (buf[0]!='v') && (buf[0]!='f') && 
                   (buf[0]!='x') && (buf[0]!='F') && (buf[0]!='n'));
-    if (ret == NULL) goto end;;
+    if (ret == NULL) {
+      goto end;
+    };
     if (buf[0]=='V')
     {
       sscanf(buf+1, "%d", &nvert);
@@ -725,9 +748,10 @@ void LoadMeshMCM(FILE *filein)
       sscanf(buf+1, "%d", &nfaces);
       Faces = MCM_AllocFaces(nfaces);
       Faces->cur = nfaces;
-      for (i = 0; i < nfaces; i++)
-        fscanf(filein, "%d%d%d", &(Faces->f[i].vert[0]), 
-               &(Faces->f[i].vert[1]), &(Faces->f[i].vert[2]));
+      for (i = 0; i < nfaces; i++) {
+        fscanf(filein, "%d%d%d", &(Faces->f[i].vert[0]), &(Faces->f[i].vert[1]),
+               &(Faces->f[i].vert[2]));
+      }
     }
     else if (buf[0]=='x')
     {
@@ -762,8 +786,9 @@ void LoadMeshMCM(FILE *filein)
       {
         fscanf(filein, "%d", &n);
         Vertices->v[i].nfaces = n;
-        for (j = 0; j < n; j++)
+        for (j = 0; j < n; j++) {
           fscanf(filein, "%d", &(Vertices->v[i].face[j]));
+        }
       } // for i
     }
     else if (buf[0]=='n')
@@ -951,8 +976,10 @@ tri          := (uint32_t)v0 + (uint32_t)v1 + (uint32_t)v2
   for (i = 0; i < nfaces; i++)
   {
     fscanf(filein, "%d%d%d", &F1, &F2, &F3);
-    f1[i] = F1; f2[i] = F2; f3[i] = F3; 
-    if ((F1 != 0) && (F2 != 0) && (F3 != 0)) nf++;
+    f1[i] = F1; f2[i] = F2; f3[i] = F3;
+    if ((F1 != 0) && (F2 != 0) && (F3 != 0)) {
+      nf++;
+    }
   }
 
 #ifdef VERBOSE
@@ -1013,7 +1040,9 @@ void LoadBuildMCM(FILE *filein)
   {
     do { ret=fgets(buf, sbuf, filein); }
     while (ret && (buf[0]!='V') && (buf[0]!='F'));
-    if (ret == NULL) goto end;
+    if (ret == NULL) {
+      goto end;
+    }
     if (buf[0]=='V')
     {
       sscanf(buf+1, "%d", &nvert);
@@ -1081,7 +1110,9 @@ POLYGONS %d %d     (Faces - champ obligatoire)
   {
     do { ret=fgets(buf, sbuf, filein); }
     while (ret && strncmp(buf,"POINTS",6) && strncmp(buf,"POLYGONS",8));
-    if (ret == NULL) goto end;
+    if (ret == NULL) {
+      goto end;
+    }
     if (strncmp(buf,"POINTS",6) == 0)
     {
       sscanf(buf+7, "%d", &nvert);

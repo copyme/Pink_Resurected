@@ -120,10 +120,12 @@ int main(int32_t argc, char **argv)
   }
   
   /*Il faut surement tester la valeur de retour de writeimage() */
-  if(atoi(argv[3]) == 0)
-    writerawGAimage(ga,argv[4]); 
-  else writeimage(labels,argv[4]);
-  
+  if (atoi(argv[3]) == 0) {
+    writerawGAimage(ga,argv[4]);
+  } else {
+    writeimage(labels, argv[4]);
+  }
+
   freeimage(labels);
   freeimage(ga); freeimage(marqueurs); 
   return 0;

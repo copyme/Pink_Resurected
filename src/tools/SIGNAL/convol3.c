@@ -85,7 +85,11 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (argc == 5) writeimage(image, argv[4]); else writeimage(image, argv[3]);
+  if (argc == 5) {
+    writeimage(image, argv[4]);
+  } else {
+    writeimage(image, argv[3]);
+  }
   freeimage(image);
   freeimage(mask);
   return 0;

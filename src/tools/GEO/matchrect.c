@@ -76,12 +76,11 @@ int main(int argc, char **argv)
   }
   if (argc == 5)
   {
-    if (strcmp(argv[3], "rounded") == 0)
+    if (strcmp(argv[3], "rounded") == 0) {
       mode = 1;
-    else if (strcmp(argv[3], "axis") == 0)
+    } else if (strcmp(argv[3], "axis") == 0) {
       mode = 2;
-    else
-    {
+    } else {
       fprintf(stderr, "usage: %s in.pgm connex [rounded|axis] out.pgm \n", argv[0]);
       exit(1);
     }

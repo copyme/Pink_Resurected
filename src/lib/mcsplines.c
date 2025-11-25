@@ -148,22 +148,25 @@ int32_t scn_solvespline(double *x, double *y, int32_t n,
   A = (double *)calloc(1,(n-1) * sizeof(double)); assert(A != NULL);
   B = (double *)calloc(1,(n-1) * sizeof(double)); assert(B != NULL);
 
-  for (i = 0; i < n-2; i++)
+  for (i = 0; i < n - 2; i++) {
     for (j = 0; j < n-2; j++)
     {
-      if (i == j)
+      if (i == j) {
         M[i*(n-2) + j] = (x[i+2] - x[i]) / 3;
-      else if (j == (i+1))
+      } else if (j == (i + 1)) {
         M[i*(n-2) + j] = (x[j+1] - x[j]) / 6;
-      else if (j == (i-1))
+      } else if (j == (i - 1)) {
         M[i*(n-2) + j] = (x[i+1] - x[i]) / 6;
-      else
-        M[i*(n-2) + j] = 0.0;
+      } else {
+        M[i * (n - 2) + j] = 0.0;
+      }
     }
+  }
 
-  for (j = 0; j < n-2; j++)
-    P[j] = ((y[j+2] - y[j+1]) / (x[j+2] - x[j+1])) - 
-           ((y[j+1] - y[j]) / (x[j+1] - x[j]));
+  for (j = 0; j < n - 2; j++) {
+    P[j] = ((y[j + 2] - y[j + 1]) / (x[j + 2] - x[j + 1])) -
+           ((y[j + 1] - y[j]) / (x[j + 1] - x[j]));
+  }
   if (!lin_solvetridiag(M, P, z, n-2))
   {
     printf("%s: lin_solvetridiag failed\n", F_NAME);
@@ -242,22 +245,25 @@ int32_t scn_solvespline_noalloc(double *x, double *y, int32_t n,
   memset(A, 0, (n-1) * sizeof(double));
   memset(B, 0, (n-1) * sizeof(double));
 
-  for (i = 0; i < n-2; i++)
+  for (i = 0; i < n - 2; i++) {
     for (j = 0; j < n-2; j++)
     {
-      if (i == j)
+      if (i == j) {
         M[i*(n-2) + j] = (x[i+2] - x[i]) / 3;
-      else if (j == (i+1))
+      } else if (j == (i + 1)) {
         M[i*(n-2) + j] = (x[j+1] - x[j]) / 6;
-      else if (j == (i-1))
+      } else if (j == (i - 1)) {
         M[i*(n-2) + j] = (x[i+1] - x[i]) / 6;
-      else
-        M[i*(n-2) + j] = 0.0;
+      } else {
+        M[i * (n - 2) + j] = 0.0;
+      }
     }
+  }
 
-  for (j = 0; j < n-2; j++)
-    P[j] = ((y[j+2] - y[j+1]) / (x[j+2] - x[j+1])) - 
-           ((y[j+1] - y[j]) / (x[j+1] - x[j]));
+  for (j = 0; j < n - 2; j++) {
+    P[j] = ((y[j + 2] - y[j + 1]) / (x[j + 2] - x[j + 1])) -
+           ((y[j + 1] - y[j]) / (x[j + 1] - x[j]));
+  }
   if (!lin_solvetridiag(M, P, z, n-2))
   {
     printf("%s: lin_solvetridiag failed\n", F_NAME);
@@ -322,21 +328,24 @@ int32_t scn_solvespline1(double *y, int32_t n,
   A = (double *)calloc(1,(n-1) * sizeof(double)); assert(A != NULL);
   B = (double *)calloc(1,(n-1) * sizeof(double)); assert(B != NULL);
 
-  for (i = 0; i < n-2; i++)
+  for (i = 0; i < n - 2; i++) {
     for (j = 0; j < n-2; j++)
     {
-      if (i == j)
+      if (i == j) {
         M[i*(n-2) + j] = 2.0 / 3;
-      else if (j == (i+1))
+      } else if (j == (i + 1)) {
         M[i*(n-2) + j] = 1.0 / 6;
-      else if (j == (i-1))
+      } else if (j == (i - 1)) {
         M[i*(n-2) + j] = 1.0 / 6;
-      else
-        M[i*(n-2) + j] = 0.0;
+      } else {
+        M[i * (n - 2) + j] = 0.0;
+      }
     }
+  }
 
-  for (j = 0; j < n-2; j++)
-    P[j] = ((y[j+2] - y[j+1]) / 2) - ((y[j+1] - y[j]) / 2);
+  for (j = 0; j < n - 2; j++) {
+    P[j] = ((y[j + 2] - y[j + 1]) / 2) - ((y[j + 1] - y[j]) / 2);
+  }
 
   if (!lin_solvetridiag(M, P, z, n-2))
   {
@@ -431,8 +440,9 @@ int32_t scn_solveclosedspline(double *x, double *y, int32_t n,
   xx[n+3] = x[n-1] + x[2] - x[0];
   yy[n+3] = y[2];
 
-  if (scn_solvespline(xx, yy, nn, ZZ0, ZZ1, ZZ2, ZZ3) == 0)
+  if (scn_solvespline(xx, yy, nn, ZZ0, ZZ1, ZZ2, ZZ3) == 0) {
     return 0;
+  }
 
   for (i = 0; i < n-1; i++)
   {
@@ -458,8 +468,10 @@ int32_t scn_solveclosedspline(double *x, double *y, int32_t n,
 double evalpoly(int32_t n, double *f, double x)
 {
      double sum = 0;
-     int32_t i;    
-     for(i=n-1;i>0;i--) sum=x*(f[i]+sum);
+     int32_t i;
+     for (i = n - 1; i > 0; i--) {
+       sum = x * (f[i] + sum);
+     }
      return sum+f[0];
 }
 
@@ -524,9 +536,13 @@ retourne t
   {
     u = (a + b) / 2;
     tmp = integrale2(f, g, asav, u, p);
-    if (tmp == r) return u;
-    else if (tmp > r) b = u;
-	 else a = u;
+    if (tmp == r) {
+      return u;
+    } else if (tmp > r) {
+      b = u;
+    } else {
+      a = u;
+    }
   }
   return u;                    
 } // dicho2()
@@ -543,9 +559,13 @@ retourne t
   {
     u = (a + b) / 2;
     tmp = integrale3(f, g, h, asav, u, p);
-    if (tmp == r) return u;
-    else if (tmp > r) b = u;
-	 else a = u;
+    if (tmp == r) {
+      return u;
+    } else if (tmp > r) {
+      b = u;
+    } else {
+      a = u;
+    }
   }
   return u;
 } // dicho3()
@@ -614,18 +634,27 @@ int32_t scn_samplespline(double *x, double *y, int32_t n, int32_t m, double *X, 
   Y1 = (double *)calloc(1,(n-1) * sizeof(double)); assert(Y1 != NULL);
   Y2 = (double *)calloc(1,(n-1) * sizeof(double)); assert(Y2 != NULL);
   Y3 = (double *)calloc(1,(n-1) * sizeof(double)); assert(Y3 != NULL);
-  for(i = 0; i < n; i++) t[i] = (double)i;
-
+  for (i = 0; i < n; i++) {
+    t[i] = (double)i;
+  }
 
   if ((x[0] != x[n-1]) || (y[0] != y[n-1]))
   {
-    if (scn_solvespline(t, x, n, X0, X1, X2, X3) == 0) return 0;
-    if (scn_solvespline(t, y, n, Y0, Y1, Y2, Y3) == 0) return 0;
+    if (scn_solvespline(t, x, n, X0, X1, X2, X3) == 0) {
+      return 0;
+    }
+    if (scn_solvespline(t, y, n, Y0, Y1, Y2, Y3) == 0) {
+      return 0;
+    }
   }
   else
   {
-    if (scn_solveclosedspline(t, x, n, X0, X1, X2, X3) == 0) return 0;
-    if (scn_solveclosedspline(t, y, n, Y0, Y1, Y2, Y3) == 0) return 0;
+    if (scn_solveclosedspline(t, x, n, X0, X1, X2, X3) == 0) {
+      return 0;
+    }
+    if (scn_solveclosedspline(t, y, n, Y0, Y1, Y2, Y3) == 0) {
+      return 0;
+    }
   }
 
   for(i = 0; i < n-1; i++)
@@ -747,19 +776,33 @@ int32_t scn_samplespline3d(double *x, double *y, double *z, int32_t n, int32_t m
   Z1 = (double *)calloc(1,(n-1) * sizeof(double)); assert(Z1 != NULL);
   Z2 = (double *)calloc(1,(n-1) * sizeof(double)); assert(Z2 != NULL);
   Z3 = (double *)calloc(1,(n-1) * sizeof(double)); assert(Z3 != NULL);
-  for(i = 0; i < n; i++) t[i] = (double)i;
+  for (i = 0; i < n; i++) {
+    t[i] = (double)i;
+  }
 
   if ((x[0] != x[n-1]) || (y[0] != y[n-1]) || (z[0] != z[n-1]))
   {
-    if (scn_solvespline(t, x, n, X0, X1, X2, X3) == 0) return 0;
-    if (scn_solvespline(t, y, n, Y0, Y1, Y2, Y3) == 0) return 0;
-    if (scn_solvespline(t, z, n, Z0, Z1, Z2, Z3) == 0) return 0;
+    if (scn_solvespline(t, x, n, X0, X1, X2, X3) == 0) {
+      return 0;
+    }
+    if (scn_solvespline(t, y, n, Y0, Y1, Y2, Y3) == 0) {
+      return 0;
+    }
+    if (scn_solvespline(t, z, n, Z0, Z1, Z2, Z3) == 0) {
+      return 0;
+    }
   }
   else
   {
-    if (scn_solveclosedspline(t, x, n, X0, X1, X2, X3) == 0) return 0;
-    if (scn_solveclosedspline(t, y, n, Y0, Y1, Y2, Y3) == 0) return 0;
-    if (scn_solveclosedspline(t, z, n, Z0, Z1, Z2, Z3) == 0) return 0;
+    if (scn_solveclosedspline(t, x, n, X0, X1, X2, X3) == 0) {
+      return 0;
+    }
+    if (scn_solveclosedspline(t, y, n, Y0, Y1, Y2, Y3) == 0) {
+      return 0;
+    }
+    if (scn_solveclosedspline(t, z, n, Z0, Z1, Z2, Z3) == 0) {
+      return 0;
+    }
   }
 
   for (i = 0; i < n-1; i++)
@@ -842,7 +885,9 @@ double scn_lengthspline(double *X0, double *X1, double *X2, double *X3,
   
   t = (double *)calloc(1, nctrl * sizeof(double)); assert(t != NULL);
 
-  for(i = 0; i < nctrl; i++) t[i] = (double)i;
+  for (i = 0; i < nctrl; i++) {
+    t[i] = (double)i;
+  }
 
   for (i = 0; i < nctrl-1; i++)
   {
@@ -895,7 +940,9 @@ double scn_lengthspline3d(double *X0, double *X1, double *X2, double *X3,
   
   t = (double *)calloc(1, nctrl * sizeof(double)); assert(t != NULL);
 
-  for(i = 0; i < nctrl; i++) t[i] = (double)i;
+  for (i = 0; i < nctrl; i++) {
+    t[i] = (double)i;
+  }
 
   for (i = 0; i < nctrl-1; i++)
   {
@@ -958,10 +1005,16 @@ int32_t scn_curvatures(double *x, double *y, int32_t n, int32_t m, double *sk, d
   Y2 = (double *)calloc(1,(n-1) * sizeof(double)); assert(Y2 != NULL);
   Y3 = (double *)calloc(1,(n-1) * sizeof(double)); assert(Y3 != NULL);
 
-  for(i=0; i < n; i++) t[i] = (double)i;
+  for (i = 0; i < n; i++) {
+    t[i] = (double)i;
+  }
 
-  if (scn_solvespline(t, x, n, X0, X1, X2, X3) == 0) return 0;
-  if (scn_solvespline(t, y, n, Y0, Y1, Y2, Y3) == 0) return 0;
+  if (scn_solvespline(t, x, n, X0, X1, X2, X3) == 0) {
+    return 0;
+  }
+  if (scn_solvespline(t, y, n, Y0, Y1, Y2, Y3) == 0) {
+    return 0;
+  }
 
   for(i=0; i < n-1; i++)
   {
@@ -1049,11 +1102,19 @@ int32_t scn_curvatures3d(double *x, double *y, double *z, int32_t n, int32_t m, 
   Z2 = (double *)calloc(1,(n-1) * sizeof(double)); assert(Z2 != NULL);
   Z3 = (double *)calloc(1,(n-1) * sizeof(double)); assert(Z3 != NULL);
 
-  for (i = 0; i < n; i++) t[i] = (double)i;
+  for (i = 0; i < n; i++) {
+    t[i] = (double)i;
+  }
 
-  if (scn_solvespline(t, x, n, X0, X1, X2, X3) == 0) return 0;
-  if (scn_solvespline(t, y, n, Y0, Y1, Y2, Y3) == 0) return 0;
-  if (scn_solvespline(t, z, n, Z0, Z1, Z2, Z3) == 0) return 0;
+  if (scn_solvespline(t, x, n, X0, X1, X2, X3) == 0) {
+    return 0;
+  }
+  if (scn_solvespline(t, y, n, Y0, Y1, Y2, Y3) == 0) {
+    return 0;
+  }
+  if (scn_solvespline(t, z, n, Z0, Z1, Z2, Z3) == 0) {
+    return 0;
+  }
 
   for (i = 0; i < n-1; i++)
   {
@@ -1219,7 +1280,9 @@ void distancesegments1(int32_t *Y, int32_t *W, int32_t i1, int32_t i2, double *d
     for(j=i1; j<=i2; j++)
     {
       d = sqrt((i-j)*(i-j) + (Y[i]-W[j])*(Y[i]-W[j]));
-      if (d < dmin) dmin = d;
+      if (d < dmin) {
+        dmin = d;
+      }
     }
     if (dmin > del)
     {
@@ -1246,7 +1309,9 @@ void distancesegments(int32_t *X, int32_t *Y, int32_t *V, int32_t *W, int32_t i1
     for(j=i1; j<=i2; j++)
     {
       d = sqrt((X[i]-V[j])*(X[i]-V[j]) + (Y[i]-W[j])*(Y[i]-W[j]));
-      if (d < dmin) dmin = d;
+      if (d < dmin) {
+        dmin = d;
+      }
     }
     if (dmin > del)
     {
@@ -1282,7 +1347,9 @@ void distancesegments3d(int32_t *X, int32_t *Y, int32_t *Z, int32_t *U, int32_t 
     for(j=i1; j<=i2; j++)
     {
       d = sqrt((X[i]-U[j])*(X[i]-U[j]) + (Y[i]-V[j])*(Y[i]-V[j]) + (Z[i]-W[j])*(Z[i]-W[j]));
-      if (d < dmin) dmin = d;
+      if (d < dmin) {
+        dmin = d;
+      }
     }
     if (dmin > del)
     {
@@ -1322,8 +1389,9 @@ void scn_discretisespline1(int32_t nctrl,
     f[1] = C1[i];
     f[2] = C2[i];
     f[3] = C3[i];
-    for(j = C[i]; j <= C[i+1]; j++)
+    for (j = C[i]; j <= C[i + 1]; j++) {
       W[j] = (int32_t)evalpoly(4, (double *)f, (double)j);
+    }
   }
 } // scn_discretisespline1()
 
@@ -1355,9 +1423,13 @@ void scn_discretisespline(int32_t nctrl,
   for(i = 0; i < nctrl-1; i++)
   {
     f[0] = C0[i]; f[1] = C1[i]; f[2] = C2[i]; f[3] = C3[i];
-    for(j = C[i]; j <= C[i+1]; j++) V[j] = (int32_t)evalpoly(4, (double *)f, (double)j);
+    for (j = C[i]; j <= C[i + 1]; j++) {
+      V[j] = (int32_t)evalpoly(4, (double *)f, (double)j);
+    }
     f[0] = D0[i]; f[1] = D1[i]; f[2] = D2[i]; f[3] = D3[i];
-    for(j = C[i]; j <= C[i+1]; j++) W[j] = (int32_t)evalpoly(4, (double *)f, (double)j);
+    for (j = C[i]; j <= C[i + 1]; j++) {
+      W[j] = (int32_t)evalpoly(4, (double *)f, (double)j);
+    }
   }
 } // scn_discretisespline()
 
@@ -1399,11 +1471,17 @@ void scn_discretisespline3d(int32_t nctrl,
   for(i = 0; i < nctrl-1; i++)
   {
     f[0] = C0[i]; f[1] = C1[i]; f[2] = C2[i]; f[3] = C3[i];
-    for(j = C[i]; j <= C[i+1]; j++) U[j] = (int32_t)evalpoly(4, (double *)f, (double)j);
+    for (j = C[i]; j <= C[i + 1]; j++) {
+      U[j] = (int32_t)evalpoly(4, (double *)f, (double)j);
+    }
     f[0] = D0[i]; f[1] = D1[i]; f[2] = D2[i]; f[3] = D3[i];
-    for(j = C[i]; j <= C[i+1]; j++) V[j] = (int32_t)evalpoly(4, (double *)f, (double)j);
+    for (j = C[i]; j <= C[i + 1]; j++) {
+      V[j] = (int32_t)evalpoly(4, (double *)f, (double)j);
+    }
     f[0] = E0[i]; f[1] = E1[i]; f[2] = E2[i]; f[3] = E3[i];
-    for(j = C[i]; j <= C[i+1]; j++) W[j] = (int32_t)evalpoly(4, (double *)f, (double)j);
+    for (j = C[i]; j <= C[i + 1]; j++) {
+      W[j] = (int32_t)evalpoly(4, (double *)f, (double)j);
+    }
   }
 } // scn_discretisespline3d()
 
@@ -1413,8 +1491,9 @@ void printcurve1(int32_t *W, int32_t N, char *filename)
   int32_t i; 
   fd = fopen(filename,"w");
   fprintf(fd, "%d\n", N);
-  for (i = 0; i < N; i++)
+  for (i = 0; i < N; i++) {
     fprintf(fd, "%d %d\n", i, W[i]);
+  }
   fclose(fd);
 }
 
@@ -1424,8 +1503,9 @@ void printctrlpoints1(int32_t *C, int32_t *Y, int32_t n, char *filename)
   int32_t i; 
   fd = fopen(filename,"w");
   fprintf(fd, "b %d\n", n);
-  for (i = 0; i < n; i++)
+  for (i = 0; i < n; i++) {
     fprintf(fd, "%d %d\n", C[i], Y[C[i]]);
+  }
   fclose(fd);
 }
 
@@ -1435,8 +1515,9 @@ void printcurve(int32_t *V, int32_t *W, int32_t N, char *filename)
   int32_t i; 
   fd = fopen(filename,"w");
   fprintf(fd, "c %d\n", N);
-  for (i = 0; i < N; i++)
+  for (i = 0; i < N; i++) {
     fprintf(fd, "%d %d\n", V[i], W[i]);
+  }
   fclose(fd);
 }
 
@@ -1446,7 +1527,9 @@ void printctrlpoints(int32_t *C, int32_t *X, int32_t *Y, int32_t n, char *filena
   int32_t i;
   fd = fopen(filename,"w");
   fprintf(fd, "b %d\n", n);
-  for (i = 0; i < n; i++) fprintf(fd, "%d %d\n", X[C[i]], Y[C[i]]);
+  for (i = 0; i < n; i++) {
+    fprintf(fd, "%d %d\n", X[C[i]], Y[C[i]]);
+  }
   fclose(fd);
 }
 
@@ -1458,9 +1541,13 @@ void printspline2d(int32_t *C, int32_t *X, int32_t *Y, int32_t n, char *filename
   int32_t i;
   fd = fopen(filename,"w");
   fprintf(fd, "s %d\n", n);
-  for (i = 0; i < n; i++) fprintf(fd, "%d %d\n", X[C[i]], Y[C[i]]);
-  for (i = 0; i < n-1; i++) fprintf(fd, "%g %g %g %g %g %g %g %g\n", 
-				    C0[i], D0[i], C1[i], D1[i], C2[i], D2[i], C3[i], D3[i]);
+  for (i = 0; i < n; i++) {
+    fprintf(fd, "%d %d\n", X[C[i]], Y[C[i]]);
+  }
+  for (i = 0; i < n - 1; i++) {
+    fprintf(fd, "%g %g %g %g %g %g %g %g\n", C0[i], D0[i], C1[i], D1[i], C2[i],
+            D2[i], C3[i], D3[i]);
+  }
   fclose(fd);
 }
 
@@ -1470,8 +1557,9 @@ void printcurve3d(int32_t *U, int32_t *V, int32_t *W, int32_t N, char *filename)
   int32_t i; 
   fd = fopen(filename,"w");
   fprintf(fd, "C %d\n", N);
-  for (i = 0; i < N; i++)
+  for (i = 0; i < N; i++) {
     fprintf(fd, "%d %d %d\n", U[i], V[i], W[i]);
+  }
   fclose(fd);
 }
 
@@ -1481,7 +1569,9 @@ void printctrlpoints3d(int32_t *C, int32_t *X, int32_t *Y, int32_t *Z, int32_t n
   int32_t i;
   fd = fopen(filename,"w");
   fprintf(fd, "b %d\n", n);
-  for (i = 0; i < n; i++) fprintf(fd, "%d %d %d\n", X[C[i]], Y[C[i]], Z[C[i]]);
+  for (i = 0; i < n; i++) {
+    fprintf(fd, "%d %d %d\n", X[C[i]], Y[C[i]], Z[C[i]]);
+  }
   fclose(fd);
 }
 
@@ -1547,7 +1637,9 @@ int32_t scn_approxcurve1(int32_t *Y, int32_t N, double deltamax, int32_t *Z, int
       x[i] = Z[i];
       y[i] = Y[Z[i]];
     }
-    if (scn_solvespline(x, y, nctrl, C0, C1, C2, C3) == 0) return 0;
+    if (scn_solvespline(x, y, nctrl, C0, C1, C2, C3) == 0) {
+      return 0;
+    }
     scn_discretisespline1(nctrl, C0, C1, C2, C3, Z, W);
 #ifdef DEBUG
     { 
@@ -1566,7 +1658,9 @@ int32_t scn_approxcurve1(int32_t *Y, int32_t N, double deltamax, int32_t *Z, int
       { // insere le point arg dans Z à la position i+1 
         continuer = 1;
         nctrl++;
-        for (j = nctrl-1; j > i+1; j--) Z[j] = Z[j-1];
+        for (j = nctrl - 1; j > i + 1; j--) {
+          Z[j] = Z[j - 1];
+        }
         Z[i+1] = (Z[i]+Z[i+2])/2;
         i++;
       }
@@ -1722,7 +1816,9 @@ int32_t scn_approxcurve_with_initial_control_points(int32_t *X, int32_t *Y, int3
     return 0;
   }
 
-  for (i = 0; i < N; i++) t[i] = (double)i;
+  for (i = 0; i < N; i++) {
+    t[i] = (double)i;
+  }
 
   do
   {
@@ -1731,12 +1827,22 @@ int32_t scn_approxcurve_with_initial_control_points(int32_t *X, int32_t *Y, int3
     printf("%s debut: niter = %d ; nctrl=%d ; \n", F_NAME, niter, nctrl);  
 #endif
     continuer = 0;
-    for (i = 0; i < nctrl; i++) x[i] = C[i];
+    for (i = 0; i < nctrl; i++) {
+      x[i] = C[i];
+    }
 
-    for (i = 0; i < nctrl; i++) y[i] = X[C[i]];
-    if (scn_solvespline(x, y, nctrl, C0, C1, C2, C3) == 0) return 0;
-    for (i = 0; i < nctrl; i++) y[i] = Y[C[i]];
-    if (scn_solvespline(x, y, nctrl, D0, D1, D2, D3) == 0) return 0;
+    for (i = 0; i < nctrl; i++) {
+      y[i] = X[C[i]];
+    }
+    if (scn_solvespline(x, y, nctrl, C0, C1, C2, C3) == 0) {
+      return 0;
+    }
+    for (i = 0; i < nctrl; i++) {
+      y[i] = Y[C[i]];
+    }
+    if (scn_solvespline(x, y, nctrl, D0, D1, D2, D3) == 0) {
+      return 0;
+    }
     scn_discretisespline(nctrl, C0, C1, C2, C3, D0, D1, D2, D3, C, V, W);
 #ifdef DEBUG_AC
     { 
@@ -1757,7 +1863,9 @@ int32_t scn_approxcurve_with_initial_control_points(int32_t *X, int32_t *Y, int3
       { // insere le point arg dans C à la position i+1 
         continuer = 1;
         nctrl++;
-        for (j = nctrl-1; j > i+1; j--) C[j] = C[j-1];
+        for (j = nctrl - 1; j > i + 1; j--) {
+          C[j] = C[j - 1];
+        }
         C[i+1] = (C[i]+C[i+2])/2;
         i++;
       }
@@ -1791,12 +1899,22 @@ int32_t scn_approxcurve_with_initial_control_points(int32_t *X, int32_t *Y, int3
 #endif
 
   // renormalisation de l'abcisse curviligne
-  // (départ à 0, incrément de 1 pour chaque point de contrôle) 
-  for (i = 0; i < nctrl; i++) x[i] = i;
-  for (i = 0; i < nctrl; i++) y[i] = X[C[i]];
-  if (scn_solvespline(x, y, nctrl, C0, C1, C2, C3) == 0) return 0;
-  for (i = 0; i < nctrl; i++) y[i] = Y[C[i]];
-  if (scn_solvespline(x, y, nctrl, D0, D1, D2, D3) == 0) return 0;
+  // (départ à 0, incrément de 1 pour chaque point de contrôle)
+  for (i = 0; i < nctrl; i++) {
+    x[i] = i;
+  }
+  for (i = 0; i < nctrl; i++) {
+    y[i] = X[C[i]];
+  }
+  if (scn_solvespline(x, y, nctrl, C0, C1, C2, C3) == 0) {
+    return 0;
+  }
+  for (i = 0; i < nctrl; i++) {
+    y[i] = Y[C[i]];
+  }
+  if (scn_solvespline(x, y, nctrl, D0, D1, D2, D3) == 0) {
+    return 0;
+  }
 
   *n = nctrl;
   free(t);
@@ -1976,19 +2094,35 @@ int32_t scn_approxcurve3d_with_initial_control_points(
     return 0;
   }
 
-  for (i = 0; i < N; i++) t[i] = (double)i;
+  for (i = 0; i < N; i++) {
+    t[i] = (double)i;
+  }
 
   do
   {
     niter++;
     continuer = 0;
-    for (i = 0; i < nctrl; i++) x[i] = C[i];
-    for (i = 0; i < nctrl; i++) y[i] = X[C[i]];
-    if (scn_solvespline(x, y, nctrl, C0, C1, C2, C3) == 0) return 0;
-    for (i = 0; i < nctrl; i++) y[i] = Y[C[i]];
-    if (scn_solvespline(x, y, nctrl, D0, D1, D2, D3) == 0) return 0;
-    for (i = 0; i < nctrl; i++) y[i] = Z[C[i]];
-    if (scn_solvespline(x, y, nctrl, E0, E1, E2, E3) == 0) return 0;
+    for (i = 0; i < nctrl; i++) {
+      x[i] = C[i];
+    }
+    for (i = 0; i < nctrl; i++) {
+      y[i] = X[C[i]];
+    }
+    if (scn_solvespline(x, y, nctrl, C0, C1, C2, C3) == 0) {
+      return 0;
+    }
+    for (i = 0; i < nctrl; i++) {
+      y[i] = Y[C[i]];
+    }
+    if (scn_solvespline(x, y, nctrl, D0, D1, D2, D3) == 0) {
+      return 0;
+    }
+    for (i = 0; i < nctrl; i++) {
+      y[i] = Z[C[i]];
+    }
+    if (scn_solvespline(x, y, nctrl, E0, E1, E2, E3) == 0) {
+      return 0;
+    }
     scn_discretisespline3d(nctrl, C0, C1, C2, C3, D0, D1, D2, D3, E0, E1, E2, E3, C, U, V, W);
 #ifdef DEBUG_approxcurve3d
     { 
@@ -2007,7 +2141,9 @@ int32_t scn_approxcurve3d_with_initial_control_points(
       { // insere le point arg dans C à la position i+1 
         continuer = 1;
         nctrl++;
-        for (j = nctrl-1; j > i+1; j--) C[j] = C[j-1];
+        for (j = nctrl - 1; j > i + 1; j--) {
+          C[j] = C[j - 1];
+        }
         C[i+1] = (C[i]+C[i+2])/2;
         i++;
       }
@@ -2027,14 +2163,28 @@ int32_t scn_approxcurve3d_with_initial_control_points(
   }
 
   // renormalisation de l'abcisse curviligne
-  // (départ à 0, incrément de 1 pour chaque point de contrôle) 
-  for (i = 0; i < nctrl; i++) x[i] = i;
-  for (i = 0; i < nctrl; i++) y[i] = X[C[i]];
-  if (scn_solvespline(x, y, nctrl, C0, C1, C2, C3) == 0) return 0;
-  for (i = 0; i < nctrl; i++) y[i] = Y[C[i]];
-  if (scn_solvespline(x, y, nctrl, D0, D1, D2, D3) == 0) return 0;
-  for (i = 0; i < nctrl; i++) y[i] = Z[C[i]];
-  if (scn_solvespline(x, y, nctrl, E0, E1, E2, E3) == 0) return 0;
+  // (départ à 0, incrément de 1 pour chaque point de contrôle)
+  for (i = 0; i < nctrl; i++) {
+    x[i] = i;
+  }
+  for (i = 0; i < nctrl; i++) {
+    y[i] = X[C[i]];
+  }
+  if (scn_solvespline(x, y, nctrl, C0, C1, C2, C3) == 0) {
+    return 0;
+  }
+  for (i = 0; i < nctrl; i++) {
+    y[i] = Y[C[i]];
+  }
+  if (scn_solvespline(x, y, nctrl, D0, D1, D2, D3) == 0) {
+    return 0;
+  }
+  for (i = 0; i < nctrl; i++) {
+    y[i] = Z[C[i]];
+  }
+  if (scn_solvespline(x, y, nctrl, E0, E1, E2, E3) == 0) {
+    return 0;
+  }
 
   *n = nctrl;
   free(t);
@@ -2083,7 +2233,9 @@ double scn_splinequerypoint3d(double x, double y, double z, double p, int32_t n,
   dmin = dist3(x, y, z, C0[0], D0[0], E0[0]);
   for (smin = s = 0.0, i = 0; s <= (double)(n-1); s += p)
   {
-    if (s > (double)(i+1)) i++;
+    if (s > (double)(i + 1)) {
+      i++;
+    }
     f[0] = C0[i]; f[1] = C1[i]; f[2] = C2[i]; f[3] = C3[i];
     X = evalpoly(4, (double *)f, s);
     f[0] = D0[i]; f[1] = D1[i]; f[2] = D2[i]; f[3] = D3[i];
@@ -2129,9 +2281,13 @@ double scn_splinequerycurvature3d(double s, int32_t n,
   double xs, ys, zs; // dérivées secondes
   double f[3], tmp1, tmp2;
   int32_t j;
-  
-  if (s < n-1) j = (int32_t)floor(s); else j = n-2;
-  
+
+  if (s < n - 1) {
+    j = (int32_t)floor(s);
+  } else {
+    j = n - 2;
+  }
+
   f[0] = C1[j]; f[1] = 2*C2[j]; f[2] = 3*C3[j];
   xp = evalpoly(3, (double *)f, s);
   f[0] = D1[j]; f[1] = 2*D2[j]; f[2] = 3*D3[j];
@@ -2154,8 +2310,10 @@ double scn_splinequerycurvature3d(double s, int32_t n,
   tmp2 = sqrt(tmp2);
 
   //  printf("%s : %g / %g\n", F_NAME, tmp2, tmp1);
-  
-  if (tmp2 < SCN_EPSILON2) return 0.0;
+
+  if (tmp2 < SCN_EPSILON2) {
+    return 0.0;
+  }
   return tmp2 / tmp1;
 } // scn_splinequerycurvature3d()
 
@@ -2191,7 +2349,9 @@ void scn_drawspline(struct xvimage * image, double *x, double *y, int32_t nctrl)
   Y2 = (double *)calloc(1,(nctrl-1)*sizeof(double)); assert(Y2 != NULL);
   Y3 = (double *)calloc(1,(nctrl-1)*sizeof(double)); assert(Y3 != NULL);
 
-  for (j = 0; j < nctrl; j++) t[j] = (double)j;
+  for (j = 0; j < nctrl; j++) {
+    t[j] = (double)j;
+  }
 
   if (nctrl == 2)
   {
@@ -2254,7 +2414,9 @@ void scn_drawsplinelist(int32_t *lx, int32_t *ly, int32_t *npoints, double *x, d
   Y2 = (double *)calloc(1,(nctrl-1)*sizeof(double)); assert(Y2 != NULL);
   Y3 = (double *)calloc(1,(nctrl-1)*sizeof(double)); assert(Y3 != NULL);
 
-  for (j = 0; j < nctrl; j++) t[j] = (double)j;
+  for (j = 0; j < nctrl; j++) {
+    t[j] = (double)j;
+  }
 
   if (nctrl == 2)
   {
@@ -2333,7 +2495,9 @@ void scn_drawspline3d(struct xvimage * image, double *x, double *y, double *z, i
   Z2 = (double *)calloc(1,(nctrl-1)*sizeof(double)); assert(Z2 != NULL);
   Z3 = (double *)calloc(1,(nctrl-1)*sizeof(double)); assert(Z3 != NULL);
 
-  for (j = 0; j < nctrl; j++) t[j] = (double)j;
+  for (j = 0; j < nctrl; j++) {
+    t[j] = (double)j;
+  }
 
   if (nctrl == 2)
   {
@@ -2408,7 +2572,9 @@ void scn_drawspline3dlist(int32_t *lx, int32_t *ly, int32_t *lz, int32_t *npoint
   Z2 = (double *)calloc(1,(nctrl-1)*sizeof(double)); assert(Z2 != NULL);
   Z3 = (double *)calloc(1,(nctrl-1)*sizeof(double)); assert(Z3 != NULL);
 
-  for (j = 0; j < nctrl; j++) t[j] = (double)j;
+  for (j = 0; j < nctrl; j++) {
+    t[j] = (double)j;
+  }
 
   if (nctrl == 2)
   {

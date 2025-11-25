@@ -124,13 +124,13 @@ int getTiffType(int pi,  /* photometric interpretation */
     return 1; /* error unknown image type */
   }
 
-  if (sf == 1 || sf == 4)
+  if (sf == 1 || sf == 4) {
     idx2 = 1;
-  else if (sf == 2)
+  } else if (sf == 2) {
     idx2 = 0;
-  else if (sf == 3)
+  } else if (sf == 3) {
     idx2 = 2;
-  else {
+  } else {
     *imagetype = IM_ERROR;
     return 1; /* error unknown image type */
   }
@@ -216,16 +216,19 @@ int load_tiff(const char *fname, /* file name  */
   TIFFGetField(tif, TIFFTAG_IMAGELENGTH, &imLength);
   /* although as we use it, the X and Y positions are always
      integer, they are stored as float in the Tiff Lib */
-  if (!TIFFGetField(tif, TIFFTAG_XPOSITION, &imXposition))
+  if (!TIFFGetField(tif, TIFFTAG_XPOSITION, &imXposition)) {
     imXposition = 0.0;
-  if (!TIFFGetField(tif, TIFFTAG_YPOSITION, &imYposition))
+  }
+  if (!TIFFGetField(tif, TIFFTAG_YPOSITION, &imYposition)) {
     imYposition = 0.0;
+  }
   if (!TIFFGetField(tif, TIFFTAG_SAMPLEFORMAT, &sampleformat)) {
     /* NOTE: if this field is not present then the data is integer... */
-    if (bitspersample > 16)
+    if (bitspersample > 16) {
       sampleformat = 2; /* signed for ints and doubles */
-    else
+    } else {
       sampleformat = 1; /* unsigned for shorts, chars and lower */
+    }
   }
   TIFFGetFieldDefaulted(tif, TIFFTAG_PHOTOMETRIC, &photometric);
 
@@ -234,11 +237,12 @@ int load_tiff(const char *fname, /* file name  */
   if (photometric == PHOTOMETRIC_PALETTE) {
     TIFFGetField(tif, TIFFTAG_COLORMAP, &red_cm, &green_cm, &blue_cm);
     nbcols = 1 << ((bitspersample < 8) ? 8 : bitspersample);
-    for (n = 0; n < (int)nbcols; n++)
+    for (n = 0; n < (int)nbcols; n++) {
       if ((red_cm[n] >= 256) || (green_cm[n] >= 256) || (blue_cm[n] >= 256)) {
         range = 65535L;
         break;
       }
+    }
   }
 
   /* fill what is expected of us... */
@@ -320,8 +324,9 @@ int load_tiff(const char *fname, /* file name  */
     for (l = 0; l < imLength; l++) {
       if (TIFFReadScanline(tif, bufIn, l, 0) < 0) {
         LIARerror("(load_tiff): Error while reading line %d", l);
-        for (i = 0; i < samplesperpixel; i++)
+        for (i = 0; i < samplesperpixel; i++) {
           free(buffp[i]);
+        }
         _TIFFfree(bufIn);
         TIFFClose(tif);
         return 13;
@@ -426,8 +431,9 @@ int load_tiff(const char *fname, /* file name  */
         if (TIFFReadScanline(tif, bufIn, l, k) < 0) {
           LIARerror("(load_tiff): Error while reading component %d in line %d",
                     k, l);
-          for (i = 0; i < samplesperpixel; i++)
+          for (i = 0; i < samplesperpixel; i++) {
             free(buffp[i]);
+          }
           _TIFFfree(bufIn);
           TIFFClose(tif);
           return 13;
@@ -450,8 +456,9 @@ int load_tiff(const char *fname, /* file name  */
         case 8:
           cp = (uint8_t *)(buffp[k]) + l * imWidth;
           cpi = bufIn;
-          for (j = 0; j < imWidth; j++)
+          for (j = 0; j < imWidth; j++) {
             *cp++ = *cpi++;
+          }
           break;
 
         case 12: {
@@ -479,20 +486,23 @@ int load_tiff(const char *fname, /* file name  */
         case 16:
           sp = (uint16_t *)(buffp[k]) + l * imWidth;
           spi = (uint16_t *)bufIn;
-          for (j = 0; j < imWidth; j++)
+          for (j = 0; j < imWidth; j++) {
             *sp++ = *spi++;
+          }
           break;
         case 32:
           lp = (uint32_t *)(buffp[k]) + l * imWidth;
           lpi = (uint32_t *)bufIn;
-          for (j = 0; j < imWidth; j++)
+          for (j = 0; j < imWidth; j++) {
             *lp++ = *lpi++;
+          }
           break;
         case 64:
           dp = (double *)(buffp[k]) + l * imWidth;
           dpi = (double *)bufIn;
-          for (j = 0; j < imWidth; j++)
+          for (j = 0; j < imWidth; j++) {
             *dp++ = *dpi++;
+          }
           break;
         }
       }
@@ -501,8 +511,9 @@ int load_tiff(const char *fname, /* file name  */
 
   default:
     LIARerror("Unrecognized pixel configuration");
-    for (i = 0; i < samplesperpixel; i++)
+    for (i = 0; i < samplesperpixel; i++) {
       free(buffp[i]);
+    }
     _TIFFfree(bufIn);
     TIFFClose(tif);
     return (16);

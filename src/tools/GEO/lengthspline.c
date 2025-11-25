@@ -104,8 +104,11 @@ int main(int argc, char **argv)
   }
 
   fscanf(fd, "%c", &type);
-  if ((type == 's') || (type == 'S'))
-    fprintf(stderr, "%s: WARNING: use tags c and C for single splines, not %c\n", argv[0], type);
+  if ((type == 's') || (type == 'S')) {
+    fprintf(stderr,
+            "%s: WARNING: use tags c and C for single splines, not %c\n",
+            argv[0], type);
+  }
 
   if ((type != 'c') && (type != 'C') && (type != 's') && (type != 'S'))
   {
@@ -161,8 +164,9 @@ int main(int argc, char **argv)
       fprintf(fd, "e %d\n", 1); 
       fprintf(fd, "%g\n", L); 
       fclose(fd);
+    } else {
+      printf("%g\n", L);
     }
-    else printf("%g\n", L); 
 
     free(x); free(y); free(t); 
     free(X0); free(X1); free(X2); free(X3);
@@ -214,8 +218,9 @@ int main(int argc, char **argv)
       fprintf(fd, "e %d\n", 1); 
       fprintf(fd, "%g\n", L); 
       fclose(fd);
+    } else {
+      printf("%g\n", L);
     }
-    else printf("%g\n", L); 
 
     free(x); free(y); free(z); free(t); 
     free(X0); free(X1); free(X2); free(X3);

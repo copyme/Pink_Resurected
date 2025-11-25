@@ -99,10 +99,16 @@ static int32_t Partitionner(int32_t *A, index_t *T, int32_t p, int32_t r)
   int32_t j = r + 1;
   while (1)
   {
-    do j--; while (T[A[j]] < x);
-    do i++; while (T[A[i]] > x);
-    if (i < j) { t = A[i]; A[i] = A[j]; A[j] = t; }
-    else return j;
+    do {
+      j--;
+    } while (T[A[j]] < x);
+    do {
+      i++;
+    } while (T[A[i]] > x);
+    if (i < j) { t = A[i]; A[i] = A[j]; A[j] = t;
+    } else {
+      return j;
+    }
   } /* while (1) */   
 } /* Partitionner() */
 
@@ -181,9 +187,14 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-
-  if (argc > 3) mode = atoi(argv[2]);
-  if (argc > 4) nbnewval = atoi(argv[3]); else nbnewval = 256;
+  if (argc > 3) {
+    mode = atoi(argv[2]);
+  }
+  if (argc > 4) {
+    nbnewval = atoi(argv[3]);
+  } else {
+    nbnewval = 256;
+  }
 
   rs = rowsize(imagelong);
   cs = colsize(imagelong);
@@ -205,22 +216,31 @@ int main(int argc, char **argv)
   switch(mode)
   {
     case 0:
-      for (x = 0; x < N; x++)
-        B[x] = (uint8_t)mcmax(mcmin(L[x],255),0);
+      for (x = 0; x < N; x++) {
+        B[x] = (uint8_t)mcmax(mcmin(L[x], 255), 0);
+      }
       break;
     case 1:
-      for (x = 0; x < N; x++)
+      for (x = 0; x < N; x++) {
         B[x] = (uint8_t)(L[x] % 256);
+      }
       break;
     case 2:
       Max = L[0];
-      for (x = 0; x < N; x++) if (L[x] > Max) Max = L[x];
-      if (Max > 255)
-        for (x = 0; x < N; x++) 
+      for (x = 0; x < N; x++) {
+        if (L[x] > Max) {
+          Max = L[x];
+        }
+      }
+      if (Max > 255) {
+        for (x = 0; x < N; x++) {
           B[x] = (uint8_t)(L[x] * 255 / Max);
-      else
-        for (x = 0; x < N; x++) 
+        }
+      } else {
+        for (x = 0; x < N; x++) {
           B[x] = (uint8_t)L[x];
+        }
+      }
       break;
     case 3:
       if (! lhistolong(imagelong, NULL, &histo, &nbval))
@@ -234,14 +254,20 @@ int main(int argc, char **argv)
         fprintf(stderr, "%s: malloc failed\n", argv[0]);
         exit(1);
       }
-      for (i = 0; i < nbval; i++) index[i] = i;
+      for (i = 0; i < nbval; i++) {
+        index[i] = i;
+      }
       TriRapideStochastique (index, histo, 1, nbval-1);
       newvals = histo; /* reutilisation de la place memoire allouee pour histo */
-      for (i = 0; i < nbval; i++) newvals[i] = 0;
-      for (i = 1; i < mcmin(nbval,nbnewval); i++) 
-	newvals[index[i]] = i;
-      for (x = 0; x < N; x++) 
+      for (i = 0; i < nbval; i++) {
+        newvals[i] = 0;
+      }
+      for (i = 1; i < mcmin(nbval, nbnewval); i++) {
+        newvals[index[i]] = i;
+      }
+      for (x = 0; x < N; x++) {
         B[x] = (uint8_t)(newvals[L[x]]);
+      }
       free(histo);
       free(index);      
       break;
@@ -249,7 +275,9 @@ int main(int argc, char **argv)
       for (x = 0; x < N; x++)
       {
         t = sqrt((double)(L[x]));
-        if (t > 255) t = 255;
+        if (t > 255) {
+          t = 255;
+        }
         B[x] = (uint8_t)arrondi(t);
       }
       break;
@@ -257,7 +285,9 @@ int main(int argc, char **argv)
       for (x = 0; x < N; x++)
       {
         t = log((double)(L[x]));
-        if (t > 255) t = 255;
+        if (t > 255) {
+          t = 255;
+        }
         B[x] = (uint8_t)arrondi(t);
       }
       break;

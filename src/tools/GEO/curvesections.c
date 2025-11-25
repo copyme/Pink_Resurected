@@ -126,8 +126,9 @@ int main(int argc, char **argv)
   Y = (int32_t *)calloc(1,npoints*sizeof(int32_t)); assert(Y != NULL);
   Z = (int32_t *)calloc(1,npoints*sizeof(int32_t)); assert(Y != NULL);
 
-  for (i = 0; i < npoints; i++)
+  for (i = 0; i < npoints; i++) {
     fscanf(fd, "%d %d %d", &(X[i]), &(Y[i]), &(Z[i]));
+  }
   fclose(fd);
 
   tolerance = atof(argv[3]);
@@ -201,14 +202,16 @@ int main(int argc, char **argv)
     uint8_t *O = UCHARDATA(out);
     int x, y;
 
-    for (y=0; y < cs; y++) // clipping
+    for (y = 0; y < cs; y++) { // clipping
       for (x=0; x < rs; x++)
       {
 	v[0] = x - xc;
 	v[1] = y - yc;
-	if (lin_norme2(v, 2, 1) > clip_rad) 
-	  O[y*rs + x] = NDG_MIN;
+        if (lin_norme2(v, 2, 1) > clip_rad) {
+          O[y * rs + x] = NDG_MIN;
+        }
       }
+    }
 
     razimage(out_image);
     if (!linsert(out, out_image, out_rs/2 - (int)xc, out_cs/2 - (int)yc, 0))

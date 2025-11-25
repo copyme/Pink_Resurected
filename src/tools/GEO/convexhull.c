@@ -129,8 +129,9 @@ int main(int argc, char **argv)
       exit(1);
     }
     fprintf(fd, "b %d\n", npoints);
-    for (i = 0; i < npoints; i++)
-      fprintf(fd, "%d %d\n", listepoints[i]%rs, listepoints[i]/rs);
+    for (i = 0; i < npoints; i++) {
+      fprintf(fd, "%d %d\n", listepoints[i] % rs, listepoints[i] / rs);
+    }
     fclose(fd);
   }
   else if (mode == 1)
@@ -160,17 +161,37 @@ int main(int argc, char **argv)
     }    
     ldrawline(image, listepoints[npoints-1]%rs, listepoints[npoints-1]/rs, 
                       listepoints[0]%rs, listepoints[0]/rs);
-    for (i = 0; i < rs; i++) if (!F[i]) G[i] = NDG_MAX; // construit cadre
-    for (i = 0; i < rs; i++) if (!F[(cs - 1) * rs + i]) G[(cs - 1) * rs + i] = NDG_MAX;
-    for (i = 1; i < cs - 1; i++) if (!F[i * rs]) G[i * rs] = NDG_MAX;
-    for (i = 1; i < cs - 1; i++) if (!F[i * rs + rs - 1]) G[i * rs + rs - 1] = NDG_MAX;
-    for (i = 0; i < N; i++) F[i] = NDG_MAX - F[i]; // inverse image
+    for (i = 0; i < rs; i++) {
+      if (!F[i]) {
+        G[i] = NDG_MAX; // construit cadre
+      }
+    }
+    for (i = 0; i < rs; i++) {
+      if (!F[(cs - 1) * rs + i]) {
+        G[(cs - 1) * rs + i] = NDG_MAX;
+      }
+    }
+    for (i = 1; i < cs - 1; i++) {
+      if (!F[i * rs]) {
+        G[i * rs] = NDG_MAX;
+      }
+    }
+    for (i = 1; i < cs - 1; i++) {
+      if (!F[i * rs + rs - 1]) {
+        G[i * rs + rs - 1] = NDG_MAX;
+      }
+    }
+    for (i = 0; i < N; i++) {
+      F[i] = NDG_MAX - F[i]; // inverse image
+    }
     if (! lgeodilat(mark, image, 4, -1))
     {
       fprintf(stderr, "%s: function lgeodilat failed\n", argv[0]);
       exit(1);
     }
-    for (i = 0; i < N; i++) F[i] = NDG_MAX - G[i];    
+    for (i = 0; i < N; i++) {
+      F[i] = NDG_MAX - G[i];
+    }
     writeimage(image, argv[argc-1]);
     free(mark);
   }

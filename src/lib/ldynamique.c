@@ -99,10 +99,16 @@ static int32_t i_Partitionner(int32_t *A, int32_t *T, int32_t p, int32_t r)
   int32_t j = r + 1;
   while (1)
   {
-    do j--; while (T[A[j]] > x);
-    do i++; while (T[A[i]] < x);
-    if (i < j) { t = A[i]; A[i] = A[j]; A[j] = t; }
-    else return j;
+    do {
+      j--;
+    } while (T[A[j]] > x);
+    do {
+      i++;
+    } while (T[A[i]] < x);
+    if (i < j) { t = A[i]; A[i] = A[j]; A[j] = t;
+    } else {
+      return j;
+    }
   } /* while (1) */   
 } /* i_Partitionner() */
 
@@ -178,19 +184,26 @@ int32_t lordermaxima(struct xvimage *image, struct xvimage *order, int32_t conne
   {   fprintf(stderr, "%s() : malloc failed\n", F_NAME);
       return(0);
   }
-  for (i = 0; i < nblabels; i++) A[i] = i;
+  for (i = 0; i < nblabels; i++) {
+    A[i] = i;
+  }
 
-  for (i = 0; i < N; i++) 
-    if (O[i])
+  for (i = 0; i < N; i++) {
+    if (O[i]) {
       T[O[i]] = (int32_t)F[i];
+    }
+  }
 
   i_TriRapideStochastique (A, T, 1, nblabels-1);
 
-  for (i = 1; i < nblabels; i++)
+  for (i = 1; i < nblabels; i++) {
     T[A[i]] = i;
-  for (i = 0; i < N; i++) 
-    if (O[i])
+  }
+  for (i = 0; i < N; i++) {
+    if (O[i]) {
       O[i] = T[O[i]];
+    }
+  }
 
   free(A);
   free(T);
@@ -261,7 +274,9 @@ int32_t lordermaximasurf(struct xvimage *image, struct xvimage *order, int32_t c
   {   fprintf(stderr, "%s() : malloc failed\n", F_NAME);
       return(0);
   }
-  for (i = 0; i < nblabels; i++) A[i] = i;
+  for (i = 0; i < nblabels; i++) {
+    A[i] = i;
+  }
 
   // CALCUL DES SURFACES DES MAXIMA
 
@@ -291,11 +306,14 @@ int32_t lordermaximasurf(struct xvimage *image, struct xvimage *order, int32_t c
 
   i_TriRapideStochastique (A, T, 1, nblabels-1);
 
-  for (i = 1; i < nblabels; i++)
+  for (i = 1; i < nblabels; i++) {
     T[A[i]] = i;
-  for (i = 0; i < N; i++) 
-    if (O[i])
+  }
+  for (i = 0; i < N; i++) {
+    if (O[i]) {
       O[i] = T[O[i]];
+    }
+  }
 
   FahsTermine(FAHS);
   ComponentTreeFree(CT);
@@ -369,7 +387,9 @@ int32_t lordermaximavol(struct xvimage *image, struct xvimage *order, int32_t co
   {   fprintf(stderr, "%s() : malloc failed\n", F_NAME);
       return(0);
   }
-  for (i = 0; i < nblabels; i++) A[i] = i;
+  for (i = 0; i < nblabels; i++) {
+    A[i] = i;
+  }
 
   // CALCUL DES VOLUMES DES MAXIMA
 
@@ -399,11 +419,14 @@ int32_t lordermaximavol(struct xvimage *image, struct xvimage *order, int32_t co
 
   i_TriRapideStochastique (A, T, 1, nblabels-1);
 
-  for (i = 1; i < nblabels; i++)
+  for (i = 1; i < nblabels; i++) {
     T[A[i]] = i;
-  for (i = 0; i < N; i++) 
-    if (O[i])
+  }
+  for (i = 0; i < N; i++) {
+    if (O[i]) {
       O[i] = T[O[i]];
+    }
+  }
 
   FahsTermine(FAHS);
   ComponentTreeFree(CT);
@@ -489,8 +512,9 @@ int32_t ldynamique_ldynamique(struct xvimage *image, struct xvimage *order, int3
   {
     k = CM[x];
     i = O[x]; // label donnant l'ordre
-    if (CT->tabnodes[k].nbsons == 0) // feuille
-      mu[i] = k; 
+    if (CT->tabnodes[k].nbsons == 0) { // feuille
+      mu[i] = k;
+    }
   } // for (x = 0; x < N; x++)
 
   for (i = CT->nbleafs; i >= 1; i--)
@@ -503,18 +527,24 @@ int32_t ldynamique_ldynamique(struct xvimage *image, struct xvimage *order, int3
     {
       alpha[k] = i;
       k = CT->tabnodes[k].father;
-    } 
-    if (k == -1)
+    }
+    if (k == -1) {
       dyn[i] = 255;
-    else
+    } else {
       dyn[i] = CT->tabnodes[j].data - CT->tabnodes[k].data;
+    }
 #ifdef DEBUG
     printf("  ancestor %d, level %d\n", k, dyn[i]);
 #endif
   } // for (i = CT->nbleafs; i >= 1; i--)
 
-  for (x = 0; x < N; x++)
-    if (O[x]) F[x] = dyn[O[x]]; else F[x] = 0;
+  for (x = 0; x < N; x++) {
+    if (O[x]) {
+      F[x] = dyn[O[x]];
+    } else {
+      F[x] = 0;
+    }
+  }
 
   /* ================================================ */
   /* UN PEU DE MENAGE                                 */
@@ -606,8 +636,9 @@ int32_t lfiltredynamique(struct xvimage *image, struct xvimage *order, int32_t c
   {
     k = CM[x];
     i = O[x]; // label donnant l'ordre
-    if (CT->tabnodes[k].nbsons == 0) // feuille
-      mu[i] = k; 
+    if (CT->tabnodes[k].nbsons == 0) { // feuille
+      mu[i] = k;
+    }
   } // for (x = 0; x < N; x++)
 
   for (i = CT->nbleafs; i >= 1; i--)
@@ -620,11 +651,12 @@ int32_t lfiltredynamique(struct xvimage *image, struct xvimage *order, int32_t c
     {
       alpha[k] = i;
       k = CT->tabnodes[k].father;
-    } 
-    if (k == -1)
+    }
+    if (k == -1) {
       dyn[i] = 255;
-    else
+    } else {
       dyn[i] = CT->tabnodes[j].data - CT->tabnodes[k].data;
+    }
 #ifdef DEBUG
     printf("  ancestor %d, level %d\n", k, dyn[i]);
 #endif
@@ -653,11 +685,18 @@ int32_t lfiltredynamique(struct xvimage *image, struct xvimage *order, int32_t c
   for (x = 0; x < N; x++)
   {
     k = CM[x];
-    while ((k != -1) && (alpha[k] == 0))
+    while ((k != -1) && (alpha[k] == 0)) {
       k = CT->tabnodes[k].father;
-    if (k == -1) break;
+    }
+    if (k == -1) {
+      break;
+    }
     i = alpha[k];
-    if (i == noleaf) F[x] = 0; else F[x] = dyn[i]; 
+    if (i == noleaf) {
+      F[x] = 0;
+    } else {
+      F[x] = dyn[i];
+    }
   }
   /* ================================================ */
   /* UN PEU DE MENAGE                                 */

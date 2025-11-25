@@ -85,10 +85,26 @@ boolean K2_CheckFrame(struct xvimage *k)
   index_t x, y, rs = rowsize(k), cs = colsize(k);
   unsigned char *K = UCHARDATA(k);
 
-  for (x = 0; x < rs; x++)     if (K[x]) return 0;
-  for (x = 0; x < rs; x++)     if (K[(cs - 1) * rs + x]) return 0;
-  for (y = 1; y < cs - 1; y++) if (K[y * rs]) return 0;
-  for (y = 1; y < cs - 1; y++) if (K[y * rs + rs - 1]) return 0;
+  for (x = 0; x < rs; x++) {
+    if (K[x]) {
+      return 0;
+    }
+  }
+  for (x = 0; x < rs; x++) {
+    if (K[(cs - 1) * rs + x]) {
+      return 0;
+    }
+  }
+  for (y = 1; y < cs - 1; y++) {
+    if (K[y * rs]) {
+      return 0;
+    }
+  }
+  for (y = 1; y < cs - 1; y++) {
+    if (K[y * rs + rs - 1]) {
+      return 0;
+    }
+  }
   return 1;
 } // K2_CheckFrame()
 
@@ -107,15 +123,19 @@ boolean K2_CheckComplex(struct xvimage *k)
   unsigned char *K = UCHARDATA(k);
   index_t tab[8], u;
   int32_t n;
-  
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-    if (K[y*rs + x])
-    {
-      Alphacarre2d(rs, cs, x, y, tab, &n);
-      for (u = 0; u < n; u++)
-	if (K[tab[u]] == 0) return 0;
+
+  for (y = 0; y < cs; y++) {
+    for (x = 0; x < rs; x++) {
+      if (K[y * rs + x]) {
+        Alphacarre2d(rs, cs, x, y, tab, &n);
+        for (u = 0; u < n; u++) {
+          if (K[tab[u]] == 0) {
+            return 0;
+          }
+        }
+      }
     }
+  }
 #ifdef VERBOSE
   printf("%s: complex OK\n", F_NAME);  
 #endif
@@ -134,7 +154,13 @@ void K2_MarkObj(struct xvimage *k)
 #define F_NAME "K2_MarkObj"
   index_t i, N = rowsize(k) * colsize(k);
   unsigned char *K = UCHARDATA(k);
-  for (i = 0; i < N; i++) if (K[i]) K[i] = FLAG_OBJ; else K[i] = 0;
+  for (i = 0; i < N; i++) {
+    if (K[i]) {
+      K[i] = FLAG_OBJ;
+    } else {
+      K[i] = 0;
+    }
+  }
 } // K2_MarkObj()
 
 /* ========================================== */
@@ -149,7 +175,13 @@ void K2_Binarize(struct xvimage *k)
 #define F_NAME "K2_Binarize"
   index_t i, N = rowsize(k) * colsize(k);
   unsigned char *K = UCHARDATA(k);
-  for (i = 0; i < N; i++) if (K[i]) K[i] = NDG_MAX; else K[i] = 0;
+  for (i = 0; i < N; i++) {
+    if (K[i]) {
+      K[i] = NDG_MAX;
+    } else {
+      K[i] = 0;
+    }
+  }
 } // K2_Binarize()
 
 /* ========================================== */
@@ -165,7 +197,13 @@ void K2_SelMarked(struct xvimage *k, unsigned char mask)
 #define F_NAME "K2_SelMarked"
   index_t i, N = rowsize(k) * colsize(k);
   unsigned char *K = UCHARDATA(k);
-  for (i = 0; i < N; i++) if (K[i] & mask) K[i] = FLAG_OBJ; else K[i] = 0;
+  for (i = 0; i < N; i++) {
+    if (K[i] & mask) {
+      K[i] = FLAG_OBJ;
+    } else {
+      K[i] = 0;
+    }
+  }
 } // K2_SelMarked()
 
 /* ========================================== */
@@ -185,7 +223,9 @@ void K2_MarkAlphaCarre(struct xvimage *k, index_t f, unsigned char mask)
   int32_t n;
   unsigned char *K = UCHARDATA(k);
   Alphacarre2d(rs, cs, x, y, tab, &n);
-  for (u = 0; u < n; u++) K[tab[u]] |= mask;
+  for (u = 0; u < n; u++) {
+    K[tab[u]] |= mask;
+  }
 } // K2_MarkAlphaCarre()
 
 /* ========================================== */
@@ -205,7 +245,9 @@ void K2_UnMarkAlphaCarre(struct xvimage *k, index_t f, unsigned char mask)
   int32_t n;
   unsigned char *K = UCHARDATA(k);
   Alphacarre2d(rs, cs, x, y, tab, &n);
-  for (u = 0; u < n; u++) K[tab[u]] &= ~mask;
+  for (u = 0; u < n; u++) {
+    K[tab[u]] &= ~mask;
+  }
 } // K2_UnMarkAlphaCarre()
 
 /* ========================================== */
@@ -222,16 +264,21 @@ void K2_MarkPrinc(struct xvimage *k)
   unsigned char *K = UCHARDATA(k);
   index_t tab[8], u;
   int32_t n;
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    i = y*rs + x;
-    if (IS_OBJ(K[i])) 
-    {
-      Betacarre2d(rs, cs, x, y, tab, &n);
-      card = 0;
-      for (u = 0; u < n; u++) if (IS_OBJ(K[tab[u]])) card++;
-      if (card == 0) K[i] |= FLAG_PRINC;
+  for (y = 0; y < cs; y++) {
+    for (x = 0; x < rs; x++) {
+      i = y * rs + x;
+      if (IS_OBJ(K[i])) {
+        Betacarre2d(rs, cs, x, y, tab, &n);
+        card = 0;
+        for (u = 0; u < n; u++) {
+          if (IS_OBJ(K[tab[u]])) {
+            card++;
+          }
+        }
+        if (card == 0) {
+          K[i] |= FLAG_PRINC;
+        }
+      }
     }
   }
 } // K2_MarkPrinc()
@@ -251,34 +298,42 @@ void K2_MarkEss(struct xvimage *k)
   unsigned char *K = UCHARDATA(k);
   index_t tab[8], u;
   int32_t n;
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    i = y*rs + x;
-    if (IS_OBJ(K[i])) 
-    {
-      if (CARRE(x,y)) 
-      { 
-	if (IS_PRINC(K[i])) K[i] |= FLAG_ESS; 
-      }
-      else if (INTER(x,y)) 
-      {
-	index_t card = 0;	
-	Betacarre2d(rs, cs, x, y, tab, &n);
-	for (u = 0; u < n; u++) if (IS_PRINC(K[tab[u]])) card++;
-	if (IS_PRINC(K[i]) && ((card == 0) || (card == 2))) K[i] |= FLAG_ESS; 
-	if (!IS_PRINC(K[i]) && (card == 2)) K[i] |= FLAG_ESS; 
-      }
-      else // SINGL
-      {
-	index_t mask = 0, bitmask = 1;
-	Betacarre2d(rs, cs, x, y, tab, &n);
-	for (u = 0; u < n; u++) 
-	{
-	  if (IS_PRINC(K[tab[u]])) mask |= bitmask;
-	  bitmask = bitmask << 1;
-	}    
-	if (EssTab[mask]) K[i] |= FLAG_ESS;
+  for (y = 0; y < cs; y++) {
+    for (x = 0; x < rs; x++) {
+      i = y * rs + x;
+      if (IS_OBJ(K[i])) {
+        if (CARRE(x, y)) {
+          if (IS_PRINC(K[i])) {
+            K[i] |= FLAG_ESS;
+          }
+        } else if (INTER(x, y)) {
+          index_t card = 0;
+          Betacarre2d(rs, cs, x, y, tab, &n);
+          for (u = 0; u < n; u++) {
+            if (IS_PRINC(K[tab[u]])) {
+              card++;
+            }
+          }
+          if (IS_PRINC(K[i]) && ((card == 0) || (card == 2))) {
+            K[i] |= FLAG_ESS;
+          }
+          if (!IS_PRINC(K[i]) && (card == 2)) {
+            K[i] |= FLAG_ESS;
+          }
+        } else // SINGL
+        {
+          index_t mask = 0, bitmask = 1;
+          Betacarre2d(rs, cs, x, y, tab, &n);
+          for (u = 0; u < n; u++) {
+            if (IS_PRINC(K[tab[u]])) {
+              mask |= bitmask;
+            }
+            bitmask = bitmask << 1;
+          }
+          if (EssTab[mask]) {
+            K[i] |= FLAG_ESS;
+          }
+        }
       }
     }
   }
@@ -422,7 +477,11 @@ int K2_CardCore(struct xvimage *k, index_t f)
   int32_t n;
 
   Alphacarre2d(rs, cs, x, y, tab, &n);
-  for (u = 0; u < n; u++) if (IS_ESS(K[tab[u]])) nf++; 
+  for (u = 0; u < n; u++) {
+    if (IS_ESS(K[tab[u]])) {
+      nf++;
+    }
+  }
   return nf;
 } // K2_CardCore()
 
@@ -451,7 +510,11 @@ int K2_CardCore2(struct xvimage *k, struct xvimage *m, index_t f)
   int32_t n;
   
   Alphacarre2d(rs, cs, x, y, tab, &n);
-  for (u = 0; u < n; u++) if (IS_ESS(K[tab[u]]) || M[tab[u]]) nf++; 
+  for (u = 0; u < n; u++) {
+    if (IS_ESS(K[tab[u]]) || M[tab[u]]) {
+      nf++;
+    }
+  }
   return nf;
 } // K2_CardCore2()
 
@@ -471,39 +534,74 @@ void K2_MarkRegul(struct xvimage *k)
   unsigned char *K = UCHARDATA(k);
   index_t n, ncore, ntrans;
 
-  for (y = 1; y < cs-1; y++)
-  for (x = 1; x < rs-1; x++)
-  {
-    if (SINGL(x,y)) n = 0; else if (CARRE(x,y)) n = 8; else n = 2; 
-    i = y*rs + x;
-    if (IS_ESS(K[i])) 
-    {
-      ncore = K2_MarkCore(k, i);
+  for (y = 1; y < cs - 1; y++) {
+    for (x = 1; x < rs - 1; x++) {
+      if (SINGL(x, y)) {
+        n = 0;
+      } else if (CARRE(x, y)) {
+        n = 8;
+      } else {
+        n = 2;
+      }
+      i = y * rs + x;
+      if (IS_ESS(K[i])) {
+        ncore = K2_MarkCore(k, i);
 #ifdef DEBUG
 printf("ess : %d,%d ; n = %d, ncore = %d\n", x, y, n, ncore);
 #endif
-      if (ncore == 0) goto next;
+if (ncore == 0) {
+  goto next;
+}
       if (ncore == n) { K2_UnMarkAlphaCarre(k, i, FLAG_CORE); goto next; }
       //if (SINGL(x,y)) goto next; // inutile car le core d'un singl est forcément vide
       if (INTERH(x,y) || INTERV(x,y))
       {
-	if (ncore == 1) K[i] |= FLAG_REGUL;
-	K2_UnMarkAlphaCarre(k, i, FLAG_CORE);
+        if (ncore == 1) {
+          K[i] |= FLAG_REGUL;
+        }
+        K2_UnMarkAlphaCarre(k, i, FLAG_CORE);
 	goto next;
       }
       //if (CARRE(x,y)) // inutile car c'est le seul choix qui reste
       ntrans = 0;
-      if ((K[(y)  *rs + x+1] & FLAG_CORE) != (K[(y-1)*rs + x+1] & FLAG_CORE)) ntrans++;
-      if ((K[(y-1)*rs + x+1] & FLAG_CORE) != (K[(y-1)*rs + x  ] & FLAG_CORE)) ntrans++;
-      if ((K[(y-1)*rs + x  ] & FLAG_CORE) != (K[(y-1)*rs + x-1] & FLAG_CORE)) ntrans++;
-      if ((K[(y-1)*rs + x-1] & FLAG_CORE) != (K[(y)  *rs + x-1] & FLAG_CORE)) ntrans++;
-      if ((K[(y)  *rs + x-1] & FLAG_CORE) != (K[(y+1)*rs + x-1] & FLAG_CORE)) ntrans++;
-      if ((K[(y+1)*rs + x-1] & FLAG_CORE) != (K[(y+1)*rs + x  ] & FLAG_CORE)) ntrans++;
-      if ((K[(y+1)*rs + x  ] & FLAG_CORE) != (K[(y+1)*rs + x+1] & FLAG_CORE)) ntrans++;
-      if ((K[(y+1)*rs + x+1] & FLAG_CORE) != (K[(y)  *rs + x+1] & FLAG_CORE)) ntrans++;
-      if (ntrans == 2) K[i] |= FLAG_REGUL;
+      if ((K[(y)*rs + x + 1] & FLAG_CORE) !=
+          (K[(y - 1) * rs + x + 1] & FLAG_CORE)) {
+        ntrans++;
+      }
+      if ((K[(y - 1) * rs + x + 1] & FLAG_CORE) !=
+          (K[(y - 1) * rs + x] & FLAG_CORE)) {
+        ntrans++;
+      }
+      if ((K[(y - 1) * rs + x] & FLAG_CORE) !=
+          (K[(y - 1) * rs + x - 1] & FLAG_CORE)) {
+        ntrans++;
+      }
+      if ((K[(y - 1) * rs + x - 1] & FLAG_CORE) !=
+          (K[(y)*rs + x - 1] & FLAG_CORE)) {
+        ntrans++;
+      }
+      if ((K[(y)*rs + x - 1] & FLAG_CORE) !=
+          (K[(y + 1) * rs + x - 1] & FLAG_CORE)) {
+        ntrans++;
+      }
+      if ((K[(y + 1) * rs + x - 1] & FLAG_CORE) !=
+          (K[(y + 1) * rs + x] & FLAG_CORE)) {
+        ntrans++;
+      }
+      if ((K[(y + 1) * rs + x] & FLAG_CORE) !=
+          (K[(y + 1) * rs + x + 1] & FLAG_CORE)) {
+        ntrans++;
+      }
+      if ((K[(y + 1) * rs + x + 1] & FLAG_CORE) !=
+          (K[(y)*rs + x + 1] & FLAG_CORE)) {
+        ntrans++;
+      }
+      if (ntrans == 2) {
+        K[i] |= FLAG_REGUL;
+      }
       K2_UnMarkAlphaCarre(k, i, FLAG_CORE);
     next:;
+    }
     }
   }
 } // K2_MarkRegul()
@@ -527,36 +625,74 @@ void K2_MarkRegul2(struct xvimage *k, struct xvimage *m)
   unsigned char *K = UCHARDATA(k);
   index_t n, ncore, ntrans;
 
-  for (y = 1; y < cs-1; y++)
-  for (x = 1; x < rs-1; x++)
-  {
-    if (SINGL(x,y)) n = 0; else if (CARRE(x,y)) n = 8; else n = 2; 
-    i = y*rs + x;
-    if (IS_ESS(K[i])) 
-    {
-      ncore = K2_MarkCore2(k, m, i);
-      if (ncore == 0) goto next;
-      if (ncore == n) { K2_UnMarkAlphaCarre(k, i, FLAG_CORE); goto next; }
-      //if (SINGL(x,y)) goto next; // inutile car le core d'un singl est forcément vide
-      if (INTERH(x,y) || INTERV(x,y))
-      {
-	if (ncore == 1) K[i] |= FLAG_REGUL;
-	K2_UnMarkAlphaCarre(k, i, FLAG_CORE);
-	goto next;
+  for (y = 1; y < cs - 1; y++) {
+    for (x = 1; x < rs - 1; x++) {
+      if (SINGL(x, y)) {
+        n = 0;
+      } else if (CARRE(x, y)) {
+        n = 8;
+      } else {
+        n = 2;
       }
-      //if (CARRE(x,y)) // inutile car c'est le seul choix qui reste
-      ntrans = 0;
-      if ((K[(y)  *rs + x+1] & FLAG_CORE) != (K[(y-1)*rs + x+1] & FLAG_CORE)) ntrans++;
-      if ((K[(y-1)*rs + x+1] & FLAG_CORE) != (K[(y-1)*rs + x  ] & FLAG_CORE)) ntrans++;
-      if ((K[(y-1)*rs + x  ] & FLAG_CORE) != (K[(y-1)*rs + x-1] & FLAG_CORE)) ntrans++;
-      if ((K[(y-1)*rs + x-1] & FLAG_CORE) != (K[(y)  *rs + x-1] & FLAG_CORE)) ntrans++;
-      if ((K[(y)  *rs + x-1] & FLAG_CORE) != (K[(y+1)*rs + x-1] & FLAG_CORE)) ntrans++;
-      if ((K[(y+1)*rs + x-1] & FLAG_CORE) != (K[(y+1)*rs + x  ] & FLAG_CORE)) ntrans++;
-      if ((K[(y+1)*rs + x  ] & FLAG_CORE) != (K[(y+1)*rs + x+1] & FLAG_CORE)) ntrans++;
-      if ((K[(y+1)*rs + x+1] & FLAG_CORE) != (K[(y)  *rs + x+1] & FLAG_CORE)) ntrans++;
-      if (ntrans == 2) K[i] |= FLAG_REGUL;
-      K2_UnMarkAlphaCarre(k, i, FLAG_CORE);
-    next:;
+      i = y * rs + x;
+      if (IS_ESS(K[i])) {
+        ncore = K2_MarkCore2(k, m, i);
+        if (ncore == 0) {
+          goto next;
+        }
+        if (ncore == n) {
+          K2_UnMarkAlphaCarre(k, i, FLAG_CORE);
+          goto next;
+        }
+        // if (SINGL(x,y)) goto next; // inutile car le core d'un singl est
+        // forcément vide
+        if (INTERH(x, y) || INTERV(x, y)) {
+          if (ncore == 1) {
+            K[i] |= FLAG_REGUL;
+          }
+          K2_UnMarkAlphaCarre(k, i, FLAG_CORE);
+          goto next;
+        }
+        // if (CARRE(x,y)) // inutile car c'est le seul choix qui reste
+        ntrans = 0;
+        if ((K[(y)*rs + x + 1] & FLAG_CORE) !=
+            (K[(y - 1) * rs + x + 1] & FLAG_CORE)) {
+          ntrans++;
+        }
+        if ((K[(y - 1) * rs + x + 1] & FLAG_CORE) !=
+            (K[(y - 1) * rs + x] & FLAG_CORE)) {
+          ntrans++;
+        }
+        if ((K[(y - 1) * rs + x] & FLAG_CORE) !=
+            (K[(y - 1) * rs + x - 1] & FLAG_CORE)) {
+          ntrans++;
+        }
+        if ((K[(y - 1) * rs + x - 1] & FLAG_CORE) !=
+            (K[(y)*rs + x - 1] & FLAG_CORE)) {
+          ntrans++;
+        }
+        if ((K[(y)*rs + x - 1] & FLAG_CORE) !=
+            (K[(y + 1) * rs + x - 1] & FLAG_CORE)) {
+          ntrans++;
+        }
+        if ((K[(y + 1) * rs + x - 1] & FLAG_CORE) !=
+            (K[(y + 1) * rs + x] & FLAG_CORE)) {
+          ntrans++;
+        }
+        if ((K[(y + 1) * rs + x] & FLAG_CORE) !=
+            (K[(y + 1) * rs + x + 1] & FLAG_CORE)) {
+          ntrans++;
+        }
+        if ((K[(y + 1) * rs + x + 1] & FLAG_CORE) !=
+            (K[(y)*rs + x + 1] & FLAG_CORE)) {
+          ntrans++;
+        }
+        if (ntrans == 2) {
+          K[i] |= FLAG_REGUL;
+        }
+        K2_UnMarkAlphaCarre(k, i, FLAG_CORE);
+      next:;
+      }
     }
   }
 } // K2_MarkRegul2()
@@ -575,21 +711,54 @@ void K2_MarkCritic(struct xvimage *k)
 #define F_NAME "K2_MarkCritic"
   index_t i, x, y, rs = rowsize(k), cs = colsize(k), N = rs*cs;
   unsigned char *K = UCHARDATA(k);
-  for (i = 0; i < N; i++) 
+  for (i = 0; i < N; i++) {
     if (IS_ESS(K[i]) && !IS_REGUL(K[i]))
     {
       K[i] |= FLAG_CRITIC;
       K[i] |= FLAG_CRITIC_T;
       K2_MarkAlphaCarre(k, i, FLAG_CRITIC);
     }
-  for (x = 0; x < rs; x++)     if (K[x]) K[x] |= FLAG_CRITIC;
-  for (x = 0; x < rs; x++)     if (K[x+rs]) K[x+rs] |= FLAG_CRITIC;
-  for (x = 0; x < rs; x++)     if (K[(cs - 1) * rs + x]) K[(cs - 1) * rs + x] |= FLAG_CRITIC;
-  for (x = 0; x < rs; x++)     if (K[(cs - 2) * rs + x]) K[(cs - 2) * rs + x] |= FLAG_CRITIC;
-  for (y = 1; y < cs - 1; y++) if (K[y * rs]) K[y * rs] |= FLAG_CRITIC;
-  for (y = 1; y < cs - 1; y++) if (K[y * rs + 1]) K[y * rs + 1] |= FLAG_CRITIC;
-  for (y = 1; y < cs - 1; y++) if (K[y * rs + rs - 1]) K[y * rs + rs - 1] |= FLAG_CRITIC;
-  for (y = 1; y < cs - 1; y++) if (K[y * rs + rs - 2]) K[y * rs + rs - 2] |= FLAG_CRITIC;
+  }
+  for (x = 0; x < rs; x++) {
+    if (K[x]) {
+      K[x] |= FLAG_CRITIC;
+    }
+  }
+  for (x = 0; x < rs; x++) {
+    if (K[x + rs]) {
+      K[x + rs] |= FLAG_CRITIC;
+    }
+  }
+  for (x = 0; x < rs; x++) {
+    if (K[(cs - 1) * rs + x]) {
+      K[(cs - 1) * rs + x] |= FLAG_CRITIC;
+    }
+  }
+  for (x = 0; x < rs; x++) {
+    if (K[(cs - 2) * rs + x]) {
+      K[(cs - 2) * rs + x] |= FLAG_CRITIC;
+    }
+  }
+  for (y = 1; y < cs - 1; y++) {
+    if (K[y * rs]) {
+      K[y * rs] |= FLAG_CRITIC;
+    }
+  }
+  for (y = 1; y < cs - 1; y++) {
+    if (K[y * rs + 1]) {
+      K[y * rs + 1] |= FLAG_CRITIC;
+    }
+  }
+  for (y = 1; y < cs - 1; y++) {
+    if (K[y * rs + rs - 1]) {
+      K[y * rs + rs - 1] |= FLAG_CRITIC;
+    }
+  }
+  for (y = 1; y < cs - 1; y++) {
+    if (K[y * rs + rs - 2]) {
+      K[y * rs + rs - 2] |= FLAG_CRITIC;
+    }
+  }
 } // K2_MarkCritic()
 
 /* ========================================== */
@@ -605,19 +774,52 @@ void K2_MarkCritic1(struct xvimage *k)
 #define F_NAME "K2_MarkCritic1"
   index_t i, x, y, rs = rowsize(k), cs = colsize(k), N = rs*cs;
   unsigned char *K = UCHARDATA(k);
-  for (i = 0; i < N; i++) 
+  for (i = 0; i < N; i++) {
     if (IS_ESS(K[i]) && !IS_REGUL(K[i])) 
     {
       K[i] |= FLAG_CRITIC;
     }
-  for (x = 0; x < rs; x++)     if (K[x]) K[x] |= FLAG_CRITIC;
-  for (x = 0; x < rs; x++)     if (K[x+rs]) K[x+rs] |= FLAG_CRITIC;
-  for (x = 0; x < rs; x++)     if (K[(cs - 1) * rs + x]) K[(cs - 1) * rs + x] |= FLAG_CRITIC;
-  for (x = 0; x < rs; x++)     if (K[(cs - 2) * rs + x]) K[(cs - 2) * rs + x] |= FLAG_CRITIC;
-  for (y = 1; y < cs - 1; y++) if (K[y * rs]) K[y * rs] |= FLAG_CRITIC;
-  for (y = 1; y < cs - 1; y++) if (K[y * rs + 1]) K[y * rs + 1] |= FLAG_CRITIC;
-  for (y = 1; y < cs - 1; y++) if (K[y * rs + rs - 1]) K[y * rs + rs - 1] |= FLAG_CRITIC;
-  for (y = 1; y < cs - 1; y++) if (K[y * rs + rs - 2]) K[y * rs + rs - 2] |= FLAG_CRITIC;
+  }
+  for (x = 0; x < rs; x++) {
+    if (K[x]) {
+      K[x] |= FLAG_CRITIC;
+    }
+  }
+  for (x = 0; x < rs; x++) {
+    if (K[x + rs]) {
+      K[x + rs] |= FLAG_CRITIC;
+    }
+  }
+  for (x = 0; x < rs; x++) {
+    if (K[(cs - 1) * rs + x]) {
+      K[(cs - 1) * rs + x] |= FLAG_CRITIC;
+    }
+  }
+  for (x = 0; x < rs; x++) {
+    if (K[(cs - 2) * rs + x]) {
+      K[(cs - 2) * rs + x] |= FLAG_CRITIC;
+    }
+  }
+  for (y = 1; y < cs - 1; y++) {
+    if (K[y * rs]) {
+      K[y * rs] |= FLAG_CRITIC;
+    }
+  }
+  for (y = 1; y < cs - 1; y++) {
+    if (K[y * rs + 1]) {
+      K[y * rs + 1] |= FLAG_CRITIC;
+    }
+  }
+  for (y = 1; y < cs - 1; y++) {
+    if (K[y * rs + rs - 1]) {
+      K[y * rs + rs - 1] |= FLAG_CRITIC;
+    }
+  }
+  for (y = 1; y < cs - 1; y++) {
+    if (K[y * rs + rs - 2]) {
+      K[y * rs + rs - 2] |= FLAG_CRITIC;
+    }
+  }
 } // K2_MarkCritic1()
 
 /* ========================================== */
@@ -639,21 +841,54 @@ void K2_MarkCritic2(struct xvimage *k, struct xvimage *m)
   index_t i, x, y, rs = rowsize(k), cs = colsize(k), N = rs*cs;
   unsigned char *K = UCHARDATA(k);
   unsigned char *M = UCHARDATA(m);
-  for (i = 0; i < N; i++) 
+  for (i = 0; i < N; i++) {
     if (M[i] || (IS_ESS(K[i]) && !IS_REGUL(K[i])))
     {
       K[i] |= FLAG_CRITIC;
       K[i] |= FLAG_CRITIC_T;
       K2_MarkAlphaCarre(k, i, FLAG_CRITIC);
     }
-  for (x = 0; x < rs; x++)     if (K[x]) K[x] |= FLAG_CRITIC;
-  for (x = 0; x < rs; x++)     if (K[x+rs]) K[x+rs] |= FLAG_CRITIC;
-  for (x = 0; x < rs; x++)     if (K[(cs - 1) * rs + x]) K[(cs - 1) * rs + x] |= FLAG_CRITIC;
-  for (x = 0; x < rs; x++)     if (K[(cs - 2) * rs + x]) K[(cs - 2) * rs + x] |= FLAG_CRITIC;
-  for (y = 1; y < cs - 1; y++) if (K[y * rs]) K[y * rs] |= FLAG_CRITIC;
-  for (y = 1; y < cs - 1; y++) if (K[y * rs + 1]) K[y * rs + 1] |= FLAG_CRITIC;
-  for (y = 1; y < cs - 1; y++) if (K[y * rs + rs - 1]) K[y * rs + rs - 1] |= FLAG_CRITIC;
-  for (y = 1; y < cs - 1; y++) if (K[y * rs + rs - 2]) K[y * rs + rs - 2] |= FLAG_CRITIC;
+  }
+  for (x = 0; x < rs; x++) {
+    if (K[x]) {
+      K[x] |= FLAG_CRITIC;
+    }
+  }
+  for (x = 0; x < rs; x++) {
+    if (K[x + rs]) {
+      K[x + rs] |= FLAG_CRITIC;
+    }
+  }
+  for (x = 0; x < rs; x++) {
+    if (K[(cs - 1) * rs + x]) {
+      K[(cs - 1) * rs + x] |= FLAG_CRITIC;
+    }
+  }
+  for (x = 0; x < rs; x++) {
+    if (K[(cs - 2) * rs + x]) {
+      K[(cs - 2) * rs + x] |= FLAG_CRITIC;
+    }
+  }
+  for (y = 1; y < cs - 1; y++) {
+    if (K[y * rs]) {
+      K[y * rs] |= FLAG_CRITIC;
+    }
+  }
+  for (y = 1; y < cs - 1; y++) {
+    if (K[y * rs + 1]) {
+      K[y * rs + 1] |= FLAG_CRITIC;
+    }
+  }
+  for (y = 1; y < cs - 1; y++) {
+    if (K[y * rs + rs - 1]) {
+      K[y * rs + rs - 1] |= FLAG_CRITIC;
+    }
+  }
+  for (y = 1; y < cs - 1; y++) {
+    if (K[y * rs + rs - 2]) {
+      K[y * rs + rs - 2] |= FLAG_CRITIC;
+    }
+  }
 } // K2_MarkCritic2()
 
 /* ========================================== */
@@ -674,19 +909,52 @@ void K2_MarkCritic3(struct xvimage *k, struct xvimage *m)
   index_t i, x, y, rs = rowsize(k), cs = colsize(k), N = rs*cs;
   unsigned char *K = UCHARDATA(k);
   unsigned char *M = UCHARDATA(m);
-  for (i = 0; i < N; i++) 
+  for (i = 0; i < N; i++) {
     if (M[i] || (IS_ESS(K[i]) && !IS_REGUL(K[i])))
     {
       K[i] |= FLAG_CRITIC;
     }
-  for (x = 0; x < rs; x++)     if (K[x]) K[x] |= FLAG_CRITIC;
-  for (x = 0; x < rs; x++)     if (K[x+rs]) K[x+rs] |= FLAG_CRITIC;
-  for (x = 0; x < rs; x++)     if (K[(cs - 1) * rs + x]) K[(cs - 1) * rs + x] |= FLAG_CRITIC;
-  for (x = 0; x < rs; x++)     if (K[(cs - 2) * rs + x]) K[(cs - 2) * rs + x] |= FLAG_CRITIC;
-  for (y = 1; y < cs - 1; y++) if (K[y * rs]) K[y * rs] |= FLAG_CRITIC;
-  for (y = 1; y < cs - 1; y++) if (K[y * rs + 1]) K[y * rs + 1] |= FLAG_CRITIC;
-  for (y = 1; y < cs - 1; y++) if (K[y * rs + rs - 1]) K[y * rs + rs - 1] |= FLAG_CRITIC;
-  for (y = 1; y < cs - 1; y++) if (K[y * rs + rs - 2]) K[y * rs + rs - 2] |= FLAG_CRITIC;
+  }
+  for (x = 0; x < rs; x++) {
+    if (K[x]) {
+      K[x] |= FLAG_CRITIC;
+    }
+  }
+  for (x = 0; x < rs; x++) {
+    if (K[x + rs]) {
+      K[x + rs] |= FLAG_CRITIC;
+    }
+  }
+  for (x = 0; x < rs; x++) {
+    if (K[(cs - 1) * rs + x]) {
+      K[(cs - 1) * rs + x] |= FLAG_CRITIC;
+    }
+  }
+  for (x = 0; x < rs; x++) {
+    if (K[(cs - 2) * rs + x]) {
+      K[(cs - 2) * rs + x] |= FLAG_CRITIC;
+    }
+  }
+  for (y = 1; y < cs - 1; y++) {
+    if (K[y * rs]) {
+      K[y * rs] |= FLAG_CRITIC;
+    }
+  }
+  for (y = 1; y < cs - 1; y++) {
+    if (K[y * rs + 1]) {
+      K[y * rs + 1] |= FLAG_CRITIC;
+    }
+  }
+  for (y = 1; y < cs - 1; y++) {
+    if (K[y * rs + rs - 1]) {
+      K[y * rs + rs - 1] |= FLAG_CRITIC;
+    }
+  }
+  for (y = 1; y < cs - 1; y++) {
+    if (K[y * rs + rs - 2]) {
+      K[y * rs + rs - 2] |= FLAG_CRITIC;
+    }
+  }
 } // K2_MarkCritic3()
 
 /* ========================================== */
@@ -704,30 +972,73 @@ void K2_MarkMCritic(struct xvimage *k)
   unsigned char *K = UCHARDATA(k);
   index_t tab[8], u;
   int32_t n;
-  for (i = 0; i < N; i++) 
+  for (i = 0; i < N; i++) {
     if (IS_ESS(K[i]) && !IS_REGUL(K[i])) 
     {
       K[i] |= FLAG_CRITIC;
     }
-  for (i = 0; i < N; i++) if (IS_CRITIC(K[i])) 
-  {
-    Betacarre2d(rs, cs, i%rs, i/rs, tab, &n);
-    for (u = 0; u < n; u++) if (IS_CRITIC(K[tab[u]])) break;	
-    if (u == n) K[i] |= FLAG_TMP;
   }
-  for (i = 0; i < N; i++) if (IS_CRITIC(K[i])) 
-  {
-    if (!IS_TMP(K[i])) K[i] &= ~FLAG_CRITIC;
-    K[i] &= ~FLAG_TMP;
+  for (i = 0; i < N; i++) {
+    if (IS_CRITIC(K[i])) {
+      Betacarre2d(rs, cs, i % rs, i / rs, tab, &n);
+      for (u = 0; u < n; u++) {
+        if (IS_CRITIC(K[tab[u]])) {
+          break;
+        }
+      }
+      if (u == n) {
+        K[i] |= FLAG_TMP;
+      }
+    }
   }
-  for (x = 0; x < rs; x++)     if (K[x]) K[x] |= FLAG_CRITIC;
-  for (x = 0; x < rs; x++)     if (K[x+rs]) K[x+rs] |= FLAG_CRITIC;
-  for (x = 0; x < rs; x++)     if (K[(cs - 1) * rs + x]) K[(cs - 1) * rs + x] |= FLAG_CRITIC;
-  for (x = 0; x < rs; x++)     if (K[(cs - 2) * rs + x]) K[(cs - 2) * rs + x] |= FLAG_CRITIC;
-  for (y = 1; y < cs - 1; y++) if (K[y * rs]) K[y * rs] |= FLAG_CRITIC;
-  for (y = 1; y < cs - 1; y++) if (K[y * rs + 1]) K[y * rs + 1] |= FLAG_CRITIC;
-  for (y = 1; y < cs - 1; y++) if (K[y * rs + rs - 1]) K[y * rs + rs - 1] |= FLAG_CRITIC;
-  for (y = 1; y < cs - 1; y++) if (K[y * rs + rs - 2]) K[y * rs + rs - 2] |= FLAG_CRITIC;
+  for (i = 0; i < N; i++) {
+    if (IS_CRITIC(K[i])) {
+      if (!IS_TMP(K[i])) {
+        K[i] &= ~FLAG_CRITIC;
+      }
+      K[i] &= ~FLAG_TMP;
+    }
+  }
+  for (x = 0; x < rs; x++) {
+    if (K[x]) {
+      K[x] |= FLAG_CRITIC;
+    }
+  }
+  for (x = 0; x < rs; x++) {
+    if (K[x + rs]) {
+      K[x + rs] |= FLAG_CRITIC;
+    }
+  }
+  for (x = 0; x < rs; x++) {
+    if (K[(cs - 1) * rs + x]) {
+      K[(cs - 1) * rs + x] |= FLAG_CRITIC;
+    }
+  }
+  for (x = 0; x < rs; x++) {
+    if (K[(cs - 2) * rs + x]) {
+      K[(cs - 2) * rs + x] |= FLAG_CRITIC;
+    }
+  }
+  for (y = 1; y < cs - 1; y++) {
+    if (K[y * rs]) {
+      K[y * rs] |= FLAG_CRITIC;
+    }
+  }
+  for (y = 1; y < cs - 1; y++) {
+    if (K[y * rs + 1]) {
+      K[y * rs + 1] |= FLAG_CRITIC;
+    }
+  }
+  for (y = 1; y < cs - 1; y++) {
+    if (K[y * rs + rs - 1]) {
+      K[y * rs + rs - 1] |= FLAG_CRITIC;
+    }
+  }
+  for (y = 1; y < cs - 1; y++) {
+    if (K[y * rs + rs - 2]) {
+      K[y * rs + rs - 2] |= FLAG_CRITIC;
+    }
+  }
 } // K2_MarkMCritic()
 
 /* ========================================== */
@@ -750,30 +1061,73 @@ void K2_MarkMCritic2(struct xvimage *k, struct xvimage *m)
   unsigned char *M = UCHARDATA(m);
   index_t tab[8], u;
   int32_t n;
-  for (i = 0; i < N; i++) 
+  for (i = 0; i < N; i++) {
     if (M[i] || (IS_ESS(K[i]) && !IS_REGUL(K[i])))
     {
       K[i] |= FLAG_CRITIC;
     }
-  for (i = 0; i < N; i++) if (IS_CRITIC(K[i])) 
-  {
-    Betacarre2d(rs, cs, i%rs, i/rs, tab, &n);
-    for (u = 0; u < n; u++) if (IS_CRITIC(K[tab[u]])) break;	
-    if (u == n) K[i] |= FLAG_TMP;
   }
-  for (i = 0; i < N; i++) if (IS_CRITIC(K[i])) 
-  {
-    if (!IS_TMP(K[i])) K[i] &= ~FLAG_CRITIC;
-    K[i] &= ~FLAG_TMP;
+  for (i = 0; i < N; i++) {
+    if (IS_CRITIC(K[i])) {
+      Betacarre2d(rs, cs, i % rs, i / rs, tab, &n);
+      for (u = 0; u < n; u++) {
+        if (IS_CRITIC(K[tab[u]])) {
+          break;
+        }
+      }
+      if (u == n) {
+        K[i] |= FLAG_TMP;
+      }
+    }
   }
-  for (x = 0; x < rs; x++)     if (K[x]) K[x] |= FLAG_CRITIC;
-  for (x = 0; x < rs; x++)     if (K[x+rs]) K[x+rs] |= FLAG_CRITIC;
-  for (x = 0; x < rs; x++)     if (K[(cs - 1) * rs + x]) K[(cs - 1) * rs + x] |= FLAG_CRITIC;
-  for (x = 0; x < rs; x++)     if (K[(cs - 2) * rs + x]) K[(cs - 2) * rs + x] |= FLAG_CRITIC;
-  for (y = 1; y < cs - 1; y++) if (K[y * rs]) K[y * rs] |= FLAG_CRITIC;
-  for (y = 1; y < cs - 1; y++) if (K[y * rs + 1]) K[y * rs + 1] |= FLAG_CRITIC;
-  for (y = 1; y < cs - 1; y++) if (K[y * rs + rs - 1]) K[y * rs + rs - 1] |= FLAG_CRITIC;
-  for (y = 1; y < cs - 1; y++) if (K[y * rs + rs - 2]) K[y * rs + rs - 2] |= FLAG_CRITIC;
+  for (i = 0; i < N; i++) {
+    if (IS_CRITIC(K[i])) {
+      if (!IS_TMP(K[i])) {
+        K[i] &= ~FLAG_CRITIC;
+      }
+      K[i] &= ~FLAG_TMP;
+    }
+  }
+  for (x = 0; x < rs; x++) {
+    if (K[x]) {
+      K[x] |= FLAG_CRITIC;
+    }
+  }
+  for (x = 0; x < rs; x++) {
+    if (K[x + rs]) {
+      K[x + rs] |= FLAG_CRITIC;
+    }
+  }
+  for (x = 0; x < rs; x++) {
+    if (K[(cs - 1) * rs + x]) {
+      K[(cs - 1) * rs + x] |= FLAG_CRITIC;
+    }
+  }
+  for (x = 0; x < rs; x++) {
+    if (K[(cs - 2) * rs + x]) {
+      K[(cs - 2) * rs + x] |= FLAG_CRITIC;
+    }
+  }
+  for (y = 1; y < cs - 1; y++) {
+    if (K[y * rs]) {
+      K[y * rs] |= FLAG_CRITIC;
+    }
+  }
+  for (y = 1; y < cs - 1; y++) {
+    if (K[y * rs + 1]) {
+      K[y * rs + 1] |= FLAG_CRITIC;
+    }
+  }
+  for (y = 1; y < cs - 1; y++) {
+    if (K[y * rs + rs - 1]) {
+      K[y * rs + rs - 1] |= FLAG_CRITIC;
+    }
+  }
+  for (y = 1; y < cs - 1; y++) {
+    if (K[y * rs + rs - 2]) {
+      K[y * rs + rs - 2] |= FLAG_CRITIC;
+    }
+  }
 } // K2_MarkMCritic2()
 
 /* ========================================== */
@@ -789,14 +1143,15 @@ int K2_Critic2Obj(struct xvimage *k)
 #define F_NAME "K2_Critic2Obj"
   index_t i, N = rowsize(k) * colsize(k), n = 0;
   unsigned char *K = UCHARDATA(k);
-  for (i = 0; i < N; i++) 
+  for (i = 0; i < N; i++) {
     if (IS_CRITIC(K[i]))
     {
       K[i] = FLAG_OBJ;
       n++;
-    }
-    else
+    } else {
       K[i] = 0;
+    }
+  }
   return n;
 } // K2_Critic2Obj()
 
@@ -817,32 +1172,39 @@ int K2_MCritic2Obj(struct xvimage *k)
   unsigned char *K = UCHARDATA(k);
   index_t tab1[8], tab2[8], u, v;
   int32_t n1, n2;
-  for (i = 0; i < N; i++) K[i] &= ~FLAG_OBJ;
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    i = y*rs + x;
-    if (IS_CRITIC(K[i])) 
-    {
-      K[i] |= FLAG_OBJ;
-      Betacarre2d(rs, cs, x, y, tab1, &n1);
-      for (u = 0; u < n1; u++) 
-      {
-	j = tab1[u];
-	if (K[j])
-	{
-	  K[j] |= FLAG_OBJ;
-	  Alphacarre2d(rs, cs, j%rs, j/rs, tab2, &n2);
-	  for (v = 0; v < n2; v++) K[tab2[v]] |= FLAG_OBJ;
-	}
+  for (i = 0; i < N; i++) {
+    K[i] &= ~FLAG_OBJ;
+  }
+  for (y = 0; y < cs; y++) {
+    for (x = 0; x < rs; x++) {
+      i = y * rs + x;
+      if (IS_CRITIC(K[i])) {
+        K[i] |= FLAG_OBJ;
+        Betacarre2d(rs, cs, x, y, tab1, &n1);
+        for (u = 0; u < n1; u++) {
+          j = tab1[u];
+          if (K[j]) {
+            K[j] |= FLAG_OBJ;
+            Alphacarre2d(rs, cs, j % rs, j / rs, tab2, &n2);
+            for (v = 0; v < n2; v++) {
+              K[tab2[v]] |= FLAG_OBJ;
+            }
+          }
+        }
+        Alphacarre2d(rs, cs, x, y, tab2, &n2);
+        for (v = 0; v < n2; v++) {
+          K[tab2[v]] |= FLAG_OBJ;
+        }
       }
-      Alphacarre2d(rs, cs, x, y, tab2, &n2);
-      for (v = 0; v < n2; v++) K[tab2[v]] |= FLAG_OBJ;
     }
   }
 
-  for (i = 0; i < N; i++) 
-    if (IS_OBJ(K[i])) { n++; K[i] = FLAG_OBJ; } else K[i] = 0;
+  for (i = 0; i < N; i++) {
+    if (IS_OBJ(K[i])) { n++; K[i] = FLAG_OBJ;
+    } else {
+      K[i] = 0;
+    }
+  }
   return n;
 } // K2_MCritic2Obj()
 
@@ -864,43 +1226,50 @@ int K2_MCriticSE2Obj(struct xvimage *k)
   unsigned char *K = UCHARDATA(k);
   index_t tab1[8], tab2[8], u, v;
   int32_t n1, n2;
-  for (i = 0; i < N; i++) K[i] &= ~FLAG_OBJ;
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    i = y*rs + x;
-    if (IS_CRITIC(K[i])) 
-    {
-      printf("Critic : %d (%d %d)\n", (int)i, (int)x, (int)y);
-      K[i] |= FLAG_OBJ;
-      Betacarre2d(rs, cs, x, y, tab1, &n1);
-      for (u = 0; u < n1; u++) 
-      {
-	j = tab1[u];
-	xj = j % rs;
-	yj = j / rs;
-	if (CARRE(xj,yj) && K[j])
-	{
-      printf("  j : %ld (%ldd %ld) ih:%d iv:%d s:%d\n", j, xj, yj, INTERH(x,y), INTERV(x,y), SINGL(x,y));
-	  if ((INTERH(x,y) && (xj == x) && (yj == y-1)) ||    // S
-	      (INTERV(x,y) && (xj == x-1) && (yj == y)) ||    // E
-	      (SINGL(x,y) && (xj == x-1) && (yj == y-1)) ||   // SE
-	      (SINGL(x,y) && (xj == x+1) && (yj == y-1))      // SW
-	     )
-	  {
-	    K[j] |= FLAG_OBJ;
-	    Alphacarre2d(rs, cs, j%rs, j/rs, tab2, &n2);
-	    for (v = 0; v < n2; v++) K[tab2[v]] |= FLAG_OBJ;
-	  }
-	}
+  for (i = 0; i < N; i++) {
+    K[i] &= ~FLAG_OBJ;
+  }
+  for (y = 0; y < cs; y++) {
+    for (x = 0; x < rs; x++) {
+      i = y * rs + x;
+      if (IS_CRITIC(K[i])) {
+        printf("Critic : %d (%d %d)\n", (int)i, (int)x, (int)y);
+        K[i] |= FLAG_OBJ;
+        Betacarre2d(rs, cs, x, y, tab1, &n1);
+        for (u = 0; u < n1; u++) {
+          j = tab1[u];
+          xj = j % rs;
+          yj = j / rs;
+          if (CARRE(xj, yj) && K[j]) {
+            printf("  j : %ld (%ldd %ld) ih:%d iv:%d s:%d\n", j, xj, yj,
+                   INTERH(x, y), INTERV(x, y), SINGL(x, y));
+            if ((INTERH(x, y) && (xj == x) && (yj == y - 1)) ||    // S
+                (INTERV(x, y) && (xj == x - 1) && (yj == y)) ||    // E
+                (SINGL(x, y) && (xj == x - 1) && (yj == y - 1)) || // SE
+                (SINGL(x, y) && (xj == x + 1) && (yj == y - 1))    // SW
+            ) {
+              K[j] |= FLAG_OBJ;
+              Alphacarre2d(rs, cs, j % rs, j / rs, tab2, &n2);
+              for (v = 0; v < n2; v++) {
+                K[tab2[v]] |= FLAG_OBJ;
+              }
+            }
+          }
+        }
+        Alphacarre2d(rs, cs, x, y, tab2, &n2);
+        for (v = 0; v < n2; v++) {
+          K[tab2[v]] |= FLAG_OBJ;
+        }
       }
-      Alphacarre2d(rs, cs, x, y, tab2, &n2);
-      for (v = 0; v < n2; v++) K[tab2[v]] |= FLAG_OBJ;
     }
   }
 
-  for (i = 0; i < N; i++) 
-    if (IS_OBJ(K[i])) { n++; K[i] = FLAG_OBJ; } else K[i] = 0;
+  for (i = 0; i < N; i++) {
+    if (IS_OBJ(K[i])) { n++; K[i] = FLAG_OBJ;
+    } else {
+      K[i] = 0;
+    }
+  }
   return n;
 } // K2_MCriticSE2Obj()
 
@@ -924,29 +1293,37 @@ int K2_MCriticOrMarked2Obj(struct xvimage *k, struct xvimage *m)
   unsigned char *M = UCHARDATA(m);
   index_t tab1[8], tab2[8], u, v;
   int32_t n1, n2;
-  for (i = 0; i < N; i++) K[i] &= ~FLAG_OBJ;
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    i = y*rs + x;
-    if (M[i] || IS_CRITIC(K[i])) 
-    {
-      K[i] |= FLAG_OBJ;
-      Betacarre2d(rs, cs, x, y, tab1, &n1);
-      for (u = 0; u < n1; u++) 
-      {
-	j = tab1[u];
-	K[j] |= FLAG_OBJ;
-	Alphacarre2d(rs, cs, j%rs, j/rs, tab2, &n2);
-	for (v = 0; v < n2; v++) K[tab2[v]] |= FLAG_OBJ;
+  for (i = 0; i < N; i++) {
+    K[i] &= ~FLAG_OBJ;
+  }
+  for (y = 0; y < cs; y++) {
+    for (x = 0; x < rs; x++) {
+      i = y * rs + x;
+      if (M[i] || IS_CRITIC(K[i])) {
+        K[i] |= FLAG_OBJ;
+        Betacarre2d(rs, cs, x, y, tab1, &n1);
+        for (u = 0; u < n1; u++) {
+          j = tab1[u];
+          K[j] |= FLAG_OBJ;
+          Alphacarre2d(rs, cs, j % rs, j / rs, tab2, &n2);
+          for (v = 0; v < n2; v++) {
+            K[tab2[v]] |= FLAG_OBJ;
+          }
+        }
+        Alphacarre2d(rs, cs, x, y, tab2, &n2);
+        for (v = 0; v < n2; v++) {
+          K[tab2[v]] |= FLAG_OBJ;
+        }
       }
-      Alphacarre2d(rs, cs, x, y, tab2, &n2);
-      for (v = 0; v < n2; v++) K[tab2[v]] |= FLAG_OBJ;
     }
   }
 
-  for (i = 0; i < N; i++) 
-    if (IS_OBJ(K[i])) { n++; K[i] = FLAG_OBJ; } else K[i] = 0;
+  for (i = 0; i < N; i++) {
+    if (IS_OBJ(K[i])) { n++; K[i] = FLAG_OBJ;
+    } else {
+      K[i] = 0;
+    }
+  }
   return n;
 } // K2_MCriticOrMarked2Obj()
 
@@ -969,39 +1346,69 @@ void K2_MarkThin(struct xvimage *k, struct xvimage *m)
   unsigned char *M = UCHARDATA(m);
   index_t n, ncore, ntrans;
 
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    if (SINGL(x,y)) n = 0; else if (CARRE(x,y)) n = 8; else n = 2; 
-    i = y*rs + x;
-    if (IS_ESS(K[i])) 
-    {
-      if (SINGL(x,y)) goto next;
-      if (INTERH(x,y) || INTERV(x,y))
-      {
-	if (IS_PRINC(K[i]))
-	{
-	  K[i] |= FLAG_TMP;
-	  K2_MarkAlphaCarre(k, i, FLAG_TMP);
-	}
-	goto next;
+  for (y = 0; y < cs; y++) {
+    for (x = 0; x < rs; x++) {
+      if (SINGL(x, y)) {
+        n = 0;
+      } else if (CARRE(x, y)) {
+        n = 8;
+      } else {
+        n = 2;
       }
-      //if (CARRE(x,y)) // inutile car c'est le seul choix qui reste
-      ncore = K2_MarkCore(k, i);
+      i = y * rs + x;
+      if (IS_ESS(K[i])) {
+        if (SINGL(x, y)) {
+          goto next;
+        }
+        if (INTERH(x, y) || INTERV(x, y)) {
+          if (IS_PRINC(K[i])) {
+            K[i] |= FLAG_TMP;
+            K2_MarkAlphaCarre(k, i, FLAG_TMP);
+          }
+          goto next;
+        }
+        // if (CARRE(x,y)) // inutile car c'est le seul choix qui reste
+        ncore = K2_MarkCore(k, i);
 #ifdef DEBUG
 printf("ess : %d,%d ; n = %d, ncore = %d\n", x, y, n, ncore);
 #endif
-      if (ncore == 0) goto next;
+if (ncore == 0) {
+  goto next;
+}
       if (ncore == n) { K2_UnMarkAlphaCarre(k, i, FLAG_CORE); goto next; }
       ntrans = 0;
-      if ((K[(y)  *rs + x+1] & FLAG_CORE) != (K[(y-1)*rs + x+1] & FLAG_CORE)) ntrans++;
-      if ((K[(y-1)*rs + x+1] & FLAG_CORE) != (K[(y-1)*rs + x  ] & FLAG_CORE)) ntrans++;
-      if ((K[(y-1)*rs + x  ] & FLAG_CORE) != (K[(y-1)*rs + x-1] & FLAG_CORE)) ntrans++;
-      if ((K[(y-1)*rs + x-1] & FLAG_CORE) != (K[(y)  *rs + x-1] & FLAG_CORE)) ntrans++;
-      if ((K[(y)  *rs + x-1] & FLAG_CORE) != (K[(y+1)*rs + x-1] & FLAG_CORE)) ntrans++;
-      if ((K[(y+1)*rs + x-1] & FLAG_CORE) != (K[(y+1)*rs + x  ] & FLAG_CORE)) ntrans++;
-      if ((K[(y+1)*rs + x  ] & FLAG_CORE) != (K[(y+1)*rs + x+1] & FLAG_CORE)) ntrans++;
-      if ((K[(y+1)*rs + x+1] & FLAG_CORE) != (K[(y)  *rs + x+1] & FLAG_CORE)) ntrans++;
+      if ((K[(y)*rs + x + 1] & FLAG_CORE) !=
+          (K[(y - 1) * rs + x + 1] & FLAG_CORE)) {
+        ntrans++;
+      }
+      if ((K[(y - 1) * rs + x + 1] & FLAG_CORE) !=
+          (K[(y - 1) * rs + x] & FLAG_CORE)) {
+        ntrans++;
+      }
+      if ((K[(y - 1) * rs + x] & FLAG_CORE) !=
+          (K[(y - 1) * rs + x - 1] & FLAG_CORE)) {
+        ntrans++;
+      }
+      if ((K[(y - 1) * rs + x - 1] & FLAG_CORE) !=
+          (K[(y)*rs + x - 1] & FLAG_CORE)) {
+        ntrans++;
+      }
+      if ((K[(y)*rs + x - 1] & FLAG_CORE) !=
+          (K[(y + 1) * rs + x - 1] & FLAG_CORE)) {
+        ntrans++;
+      }
+      if ((K[(y + 1) * rs + x - 1] & FLAG_CORE) !=
+          (K[(y + 1) * rs + x] & FLAG_CORE)) {
+        ntrans++;
+      }
+      if ((K[(y + 1) * rs + x] & FLAG_CORE) !=
+          (K[(y + 1) * rs + x + 1] & FLAG_CORE)) {
+        ntrans++;
+      }
+      if ((K[(y + 1) * rs + x + 1] & FLAG_CORE) !=
+          (K[(y)*rs + x + 1] & FLAG_CORE)) {
+        ntrans++;
+      }
       if (ntrans != 2) 
       {
 	K[i] |= FLAG_TMP;
@@ -1010,8 +1417,13 @@ printf("ess : %d,%d ; n = %d, ncore = %d\n", x, y, n, ncore);
       K2_UnMarkAlphaCarre(k, i, FLAG_CORE);
     next:;
     }
+    }
   }
-  for (i = 0; i < N; i++) if (IS_TMP(K[i])) M[i] = 1;
+  for (i = 0; i < N; i++) {
+    if (IS_TMP(K[i])) {
+      M[i] = 1;
+    }
+  }
 } // K2_MarkThin()
 
 /* ========================================== */
@@ -1030,8 +1442,12 @@ int K2_CriticOrMarked2Obj(struct xvimage *k, struct xvimage *m)
   index_t i, N = rowsize(k) * colsize(k), nobj = 0;
   unsigned char *K = UCHARDATA(k);
   unsigned char *M = UCHARDATA(m);
-  for (i = 0; i < N; i++) 
-    if (M[i] || IS_CRITIC(K[i])) { K[i] = FLAG_OBJ; nobj++; } else K[i] = 0;
+  for (i = 0; i < N; i++) {
+    if (M[i] || IS_CRITIC(K[i])) { K[i] = FLAG_OBJ; nobj++;
+    } else {
+      K[i] = 0;
+    }
+  }
   return nobj;
 } // K2_CriticOrMarked2Obj()
 
@@ -1049,23 +1465,25 @@ void K2_HitPrinc(struct xvimage *k)
   unsigned char *K = UCHARDATA(k);
   index_t tab1[8], tab2[8], u, v;
   int32_t n1, n2;
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    i = y*rs + x;
-    if (IS_PRINC(K[i])) 
-    {
-      K[i] |= FLAG_OBJ;
-      Betacarre2d(rs, cs, x, y, tab1, &n1);
-      for (u = 0; u < n1; u++) 
-      {
-	j = tab1[u];
-	K[j] |= FLAG_OBJ;
-	Alphacarre2d(rs, cs, j%rs, j/rs, tab2, &n2);
-	for (v = 0; v < n2; v++) K[tab2[v]] |= FLAG_OBJ;
+  for (y = 0; y < cs; y++) {
+    for (x = 0; x < rs; x++) {
+      i = y * rs + x;
+      if (IS_PRINC(K[i])) {
+        K[i] |= FLAG_OBJ;
+        Betacarre2d(rs, cs, x, y, tab1, &n1);
+        for (u = 0; u < n1; u++) {
+          j = tab1[u];
+          K[j] |= FLAG_OBJ;
+          Alphacarre2d(rs, cs, j % rs, j / rs, tab2, &n2);
+          for (v = 0; v < n2; v++) {
+            K[tab2[v]] |= FLAG_OBJ;
+          }
+        }
+        Alphacarre2d(rs, cs, x, y, tab2, &n2);
+        for (v = 0; v < n2; v++) {
+          K[tab2[v]] |= FLAG_OBJ;
+        }
       }
-      Alphacarre2d(rs, cs, x, y, tab2, &n2);
-      for (v = 0; v < n2; v++) K[tab2[v]] |= FLAG_OBJ;
     }
   }
 } // K2_HitPrinc()
@@ -1098,38 +1516,51 @@ void K2_MarkEnd(struct xvimage *k, struct xvimage *m)
   index_t ncore, tab[8], u, card;
   int32_t n;
 
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    i = y*rs + x;
-    if (IS_REGUL(K[i])) 
-    {
-      if (SINGL(x,y)) goto next;
-      if (INTERH(x,y) || INTERV(x,y))
-      {
-	Betacarre2d(rs, cs, x, y, tab, &n);
-	card = 0;
-	for (u = 0; u < n; u++) if (IS_OBJ(K[tab[u]])) card++;
-	if (card != 2) goto next;
-        for (u = 0; u < n; u++)
-	{
-	  if (!IS_REGUL(K[tab[u]])) goto next;
-	  ncore = K2_CardCore(k, tab[u]);
-	  if (ncore != 3) goto next;
-	}
-	K[i] |= FLAG_TMP;	
+  for (y = 0; y < cs; y++) {
+    for (x = 0; x < rs; x++) {
+      i = y * rs + x;
+      if (IS_REGUL(K[i])) {
+        if (SINGL(x, y)) {
+          goto next;
+        }
+        if (INTERH(x, y) || INTERV(x, y)) {
+          Betacarre2d(rs, cs, x, y, tab, &n);
+          card = 0;
+          for (u = 0; u < n; u++) {
+            if (IS_OBJ(K[tab[u]])) {
+              card++;
+            }
+          }
+          if (card != 2) {
+            goto next;
+          }
+          for (u = 0; u < n; u++) {
+            if (!IS_REGUL(K[tab[u]])) {
+              goto next;
+            }
+            ncore = K2_CardCore(k, tab[u]);
+            if (ncore != 3) {
+              goto next;
+            }
+          }
+          K[i] |= FLAG_TMP;
+        }
+        // if (CARRE(x,y)) // inutile car c'est le seul choix qui reste
+        ncore = K2_CardCore(k, i);
+        if (ncore <= 3) {
+          K[i] |= FLAG_TMP;
+          //	K2_MarkAlphaCarre(k, i, FLAG_TMP);
+        }
+      next:;
       }
-      //if (CARRE(x,y)) // inutile car c'est le seul choix qui reste
-      ncore = K2_CardCore(k, i);
-      if (ncore <= 3) 
-      {
-	K[i] |= FLAG_TMP;
-	//	K2_MarkAlphaCarre(k, i, FLAG_TMP);
-      }
-    next:;
     }
   }
-  for (i = 0; i < N; i++) if (IS_TMP(K[i])) { M[i] = 1; K[i] &= ~FLAG_TMP; }
+  for (i = 0; i < N; i++) {
+    if (IS_TMP(K[i])) {
+      M[i] = 1;
+      K[i] &= ~FLAG_TMP;
+    }
+  }
 } // K2_MarkEnd()
 
 /* ========================================== */
@@ -1155,37 +1586,48 @@ void K2_MarkEnd2(struct xvimage *k, struct xvimage *m)
   index_t ncritic, tab[8], u;
   int32_t n;
 
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    i = y*rs + x;
-    if (IS_PRINC(K[i]) && IS_REGUL(K[i]))
-    {
-      if (SINGL(x,y)) goto next;
-      if (INTERH(x,y) || INTERV(x,y))
-      {
-	Alphacarre2d(rs, cs, x, y, tab, &n);
-	ncritic = 0;
-        for (u = 0; u < n; u++)
-	{
-	  if (IS_ESS(K[tab[u]]) && !IS_REGUL(K[tab[u]])) ncritic++;
-	}
-	if (ncritic != 1) goto next;
-	K[i] |= FLAG_TMP;	
+  for (y = 0; y < cs; y++) {
+    for (x = 0; x < rs; x++) {
+      i = y * rs + x;
+      if (IS_PRINC(K[i]) && IS_REGUL(K[i])) {
+        if (SINGL(x, y)) {
+          goto next;
+        }
+        if (INTERH(x, y) || INTERV(x, y)) {
+          Alphacarre2d(rs, cs, x, y, tab, &n);
+          ncritic = 0;
+          for (u = 0; u < n; u++) {
+            if (IS_ESS(K[tab[u]]) && !IS_REGUL(K[tab[u]])) {
+              ncritic++;
+            }
+          }
+          if (ncritic != 1) {
+            goto next;
+          }
+          K[i] |= FLAG_TMP;
+        }
+        // if (CARRE(x,y)) // inutile car c'est le seul choix qui reste
+        Alphacarre2d(rs, cs, x, y, tab, &n);
+        ncritic = 0;
+        for (u = 0; u < n; u++) {
+          if (IS_ESS(K[tab[u]]) && !IS_REGUL(K[tab[u]])) {
+            ncritic++;
+          }
+        }
+        if (ncritic != 1) {
+          goto next;
+        }
+        K[i] |= FLAG_TMP;
+      next:;
       }
-      //if (CARRE(x,y)) // inutile car c'est le seul choix qui reste
-      Alphacarre2d(rs, cs, x, y, tab, &n);
-      ncritic = 0;
-      for (u = 0; u < n; u++)
-      {
-	if (IS_ESS(K[tab[u]]) && !IS_REGUL(K[tab[u]])) ncritic++;
-      }
-      if (ncritic != 1) goto next;
-      K[i] |= FLAG_TMP;
-    next:;
     }
   }
-  for (i = 0; i < N; i++) if (IS_TMP(K[i])) { M[i] = 1; K[i] &= ~FLAG_TMP; }
+  for (i = 0; i < N; i++) {
+    if (IS_TMP(K[i])) {
+      M[i] = 1;
+      K[i] &= ~FLAG_TMP;
+    }
+  }
 } // K2_MarkEnd2()
 
 
@@ -1210,37 +1652,57 @@ void K2_MarkNotNeighInterior(struct xvimage *k, struct xvimage *m)
   unsigned char *M = UCHARDATA(m);
   index_t ncore;
 
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    i = y*rs + x;
-    if (CARRE(x,y)) 
-    { 
-      ncore = K2_CardCore(k, i);
-      if (ncore == 8) K[i] |= FLAG_TMP;
+  for (y = 0; y < cs; y++) {
+    for (x = 0; x < rs; x++) {
+      i = y * rs + x;
+      if (CARRE(x, y)) {
+        ncore = K2_CardCore(k, i);
+        if (ncore == 8) {
+          K[i] |= FLAG_TMP;
+        }
+      }
     }
   }
 
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    j = y*rs + x;
-    if (CARRE(x,y) && IS_REGUL(K[j])) 
-    {
-      HasNeighInt = 0;
-      xx = x - 2; yy = y; i = yy*rs + xx;
-      if ((xx >= 0) && IS_TMP(K[i])) HasNeighInt = 1; 
-      xx = x + 2; yy = y; i = yy*rs + xx;
-      if ((xx < rs) && IS_TMP(K[i])) HasNeighInt = 1; 
-      xx = x; yy = y - 2; i = yy*rs + xx;
-      if ((yy >= 0) && IS_TMP(K[i])) HasNeighInt = 1; 
-      xx = x; yy = y + 2; i = yy*rs + xx;
-      if ((yy < cs) && IS_TMP(K[i])) HasNeighInt = 1; 
-      if (!HasNeighInt) M[j] = 1;
+  for (y = 0; y < cs; y++) {
+    for (x = 0; x < rs; x++) {
+      j = y * rs + x;
+      if (CARRE(x, y) && IS_REGUL(K[j])) {
+        HasNeighInt = 0;
+        xx = x - 2;
+        yy = y;
+        i = yy * rs + xx;
+        if ((xx >= 0) && IS_TMP(K[i])) {
+          HasNeighInt = 1;
+        }
+        xx = x + 2;
+        yy = y;
+        i = yy * rs + xx;
+        if ((xx < rs) && IS_TMP(K[i])) {
+          HasNeighInt = 1;
+        }
+        xx = x;
+        yy = y - 2;
+        i = yy * rs + xx;
+        if ((yy >= 0) && IS_TMP(K[i])) {
+          HasNeighInt = 1;
+        }
+        xx = x;
+        yy = y + 2;
+        i = yy * rs + xx;
+        if ((yy < cs) && IS_TMP(K[i])) {
+          HasNeighInt = 1;
+        }
+        if (!HasNeighInt) {
+          M[j] = 1;
+        }
+      }
     }
   }
 
-  for (i = 0; i < N; i++) K[i] &= ~FLAG_TMP;
+  for (i = 0; i < N; i++) {
+    K[i] &= ~FLAG_TMP;
+  }
 } // K2_MarkNotNeighInterior()
 
 /* ========================================== */
@@ -1259,7 +1721,11 @@ void K2_LabelDifference(struct xvimage *k, struct xvimage *m, struct xvimage *l,
   unsigned char *K = UCHARDATA(k);
   unsigned char *M = UCHARDATA(m);
   unsigned char *L = UCHARDATA(l);
-  for (i = 0; i < N; i++) if (K[i] && !M[i]) L[i] = lab;
+  for (i = 0; i < N; i++) {
+    if (K[i] && !M[i]) {
+      L[i] = lab;
+    }
+  }
 } // K2_LabelDifference()
 
 /* ==================================================================================== */
@@ -1285,8 +1751,12 @@ void lskel2d4(struct xvimage * k, index_t nsteps)
 #endif
   index_t n_old, n_new, n;
 
-  if (nsteps == -1) nsteps = 2000000000;
-  if (nsteps == 0) return;
+  if (nsteps == -1) {
+    nsteps = 2000000000;
+  }
+  if (nsteps == 0) {
+    return;
+  }
 
   if (!K2_CheckComplex(k))
   {
@@ -1347,8 +1817,12 @@ void lskel2d4b(struct xvimage * k, struct xvimage * m, index_t nsteps)
 #endif
   index_t n_old, n_new, n;
 
-  if (nsteps == -1) nsteps = 2000000000;
-  if (nsteps == 0) return;
+  if (nsteps == -1) {
+    nsteps = 2000000000;
+  }
+  if (nsteps == 0) {
+    return;
+  }
 
   if (!K2_CheckComplex(k))
   {
@@ -1418,8 +1892,12 @@ void lskel2d5(struct xvimage * k, index_t nsteps)
   struct xvimage * m;
   index_t n_old, n_new, n;
 
-  if (nsteps == -1) nsteps = 2000000000;
-  if (nsteps == 0) return;
+  if (nsteps == -1) {
+    nsteps = 2000000000;
+  }
+  if (nsteps == 0) {
+    return;
+  }
 
   if (!K2_CheckComplex(k))
   {
@@ -1523,8 +2001,12 @@ void lskel2d7(struct xvimage * k, index_t nsteps)
   struct xvimage * m;
   index_t n_old, n_new, n;
 
-  if (nsteps == -1) nsteps = 2000000000;
-  if (nsteps == 0) return;
+  if (nsteps == -1) {
+    nsteps = 2000000000;
+  }
+  if (nsteps == 0) {
+    return;
+  }
 
   if (!K2_CheckComplex(k))
   {
@@ -1630,8 +2112,12 @@ void lskel2d9(struct xvimage * k, index_t nsteps)
   struct xvimage * m;
   index_t n_old, n_new, n;
 
-  if (nsteps == -1) nsteps = 2000000000;
-  if (nsteps == 0) return;
+  if (nsteps == -1) {
+    nsteps = 2000000000;
+  }
+  if (nsteps == 0) {
+    return;
+  }
 
   if (!K2_CheckComplex(k))
   {
@@ -1728,8 +2214,12 @@ int32_t lskel2d1(struct xvimage * k, int32_t nsteps, struct xvimage * inhi)
 
   ACCEPTED_TYPES1(k, VFF_TYP_1_BYTE);
 
-  if (nsteps == -1) nsteps = 2000000000;
-  if (nsteps == 0) return 1;
+  if (nsteps == -1) {
+    nsteps = 2000000000;
+  }
+  if (nsteps == 0) {
+    return 1;
+  }
 
   if (!K2_CheckComplex(k))
   {
@@ -1741,9 +2231,9 @@ int32_t lskel2d1(struct xvimage * k, int32_t nsteps, struct xvimage * inhi)
   {
     m = copyimage(k);
     razimage(m);
-  }
-  else
+  } else {
     m = copyimage(inhi);
+  }
 
   K2_MarkObj(k);
   n_new = -1;
@@ -1787,8 +2277,12 @@ int32_t lskel2d0(struct xvimage * k, int32_t nsteps, struct xvimage * inhi)
 
   ACCEPTED_TYPES1(k, VFF_TYP_1_BYTE);
 
-  if (nsteps == -1) nsteps = 2000000000;
-  if (nsteps == 0) return 1;
+  if (nsteps == -1) {
+    nsteps = 2000000000;
+  }
+  if (nsteps == 0) {
+    return 1;
+  }
 
   if (!K2_CheckComplex(k))
   {
@@ -1806,10 +2300,11 @@ int32_t lskel2d0(struct xvimage * k, int32_t nsteps, struct xvimage * inhi)
     K2_MarkEss(k);
     K2_MarkRegul(k);
     K2_MarkCritic(k);
-    if (inhi != NULL)
-      n_new = K2_CriticOrMarked2Obj(k, inhi); 
-    else
-      n_new = K2_Critic2Obj(k); 
+    if (inhi != NULL) {
+      n_new = K2_CriticOrMarked2Obj(k, inhi);
+    } else {
+      n_new = K2_Critic2Obj(k);
+    }
 #ifdef VERBOSE
     printf("step %d ; new %d ; old %d\n", n, n_new, n_old);
 #endif

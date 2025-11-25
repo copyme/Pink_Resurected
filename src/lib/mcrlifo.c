@@ -144,9 +144,10 @@ void RlifoPrint(Rlifo * L)
   index_t i;
   if (RlifoVide(L)) {printf("[]"); return;}
   printf("[ ");
-  for (i = 0; i < L->Sp; i++)
+  for (i = 0; i < L->Sp; i++) {
 #ifdef MC_64_BITS
     printf("%ld ", L->Pts[i]);
+  }
 #else
     printf("%d ", L->Pts[i]);
 #endif
@@ -160,9 +161,10 @@ void RlifoPrintLine(Rlifo * L)
   index_t i;
   if (RlifoVide(L)) {printf("[]\n"); return;}
   printf("[ ");
-  for (i = 0; i < L->Sp; i++)
+  for (i = 0; i < L->Sp; i++) {
 #ifdef MC_64_BITS
     printf("%ld ", L->Pts[i]);
+  }
 #else
     printf("%d ", L->Pts[i]);
 #endif

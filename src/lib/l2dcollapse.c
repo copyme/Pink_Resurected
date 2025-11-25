@@ -124,10 +124,9 @@ int32_t l2dcollapse(struct xvimage * k, struct xvimage * prio, struct xvimage * 
     fprintf(stderr, "%s : bad size for prio\n", F_NAME);
     return(0);
   }
-  if (datatype(prio) == VFF_TYP_4_BYTE) 
-    P = SLONGDATA(prio); 
-  else 
-  {
+  if (datatype(prio) == VFF_TYP_4_BYTE) {
+    P = SLONGDATA(prio);
+  } else {
     fprintf(stderr, "%s : datatype(prio) must be int32_t\n", F_NAME);
     return(0);
   }
@@ -139,10 +138,9 @@ int32_t l2dcollapse(struct xvimage * k, struct xvimage * prio, struct xvimage * 
       fprintf(stderr, "%s : bad size for inhibit\n", F_NAME);
       return(0);
     }
-    if (datatype(inhibit) == VFF_TYP_1_BYTE) 
-      I = UCHARDATA(inhibit); 
-    else 
-    {
+    if (datatype(inhibit) == VFF_TYP_1_BYTE) {
+      I = UCHARDATA(inhibit);
+    } else {
       fprintf(stderr, "%s : datatype(inhibit) must be uint8_t\n", F_NAME);
       return(0);
     }
@@ -169,14 +167,13 @@ int32_t l2dcollapse(struct xvimage * k, struct xvimage * prio, struct xvimage * 
   /*   INITIALISATION DU RBT */
   /* ========================================================= */
 
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    i = y*rs + x;
-    if (K[i] && ((I == NULL) || (!I[i])) && FaceLibre2d(k, x, y))
-    {
-      mcrbt_RbtInsert(&RBT, P[i], i);
-      Set(i, EN_RBT);
+  for (y = 0; y < cs; y++) {
+    for (x = 0; x < rs; x++) {
+      i = y * rs + x;
+      if (K[i] && ((I == NULL) || (!I[i])) && FaceLibre2d(k, x, y)) {
+        mcrbt_RbtInsert(&RBT, P[i], i);
+        Set(i, EN_RBT);
+      }
     }
   }
 
@@ -259,10 +256,9 @@ int32_t l2dpardircollapse_l(struct xvimage * k, struct xvimage * prio, struct xv
     fprintf(stderr, "%s : bad size for prio\n", F_NAME);
     return(0);
   }
-  if (datatype(prio) == VFF_TYP_4_BYTE) 
-    P = SLONGDATA(prio); 
-  else 
-  {
+  if (datatype(prio) == VFF_TYP_4_BYTE) {
+    P = SLONGDATA(prio);
+  } else {
     fprintf(stderr, "%s : datatype(prio) must be long\n", F_NAME);
     return(0);
   }
@@ -274,10 +270,9 @@ int32_t l2dpardircollapse_l(struct xvimage * k, struct xvimage * prio, struct xv
       fprintf(stderr, "%s : bad size for inhibit\n", F_NAME);
       return(0);
     }
-    if (datatype(inhibit) == VFF_TYP_1_BYTE) 
-      I = UCHARDATA(inhibit); 
-    else 
-    {
+    if (datatype(inhibit) == VFF_TYP_1_BYTE) {
+      I = UCHARDATA(inhibit);
+    } else {
       fprintf(stderr, "%s : datatype(inhibit) must be uint8_t\n", F_NAME);
       return(0);
     }
@@ -312,20 +307,18 @@ int32_t l2dpardircollapse_l(struct xvimage * k, struct xvimage * prio, struct xv
   /*   INITIALISATION DU RBT */
   /* ========================================================= */
 
-  for (yg = 0; yg < cs; yg++)
-  for (xg = 0; xg < rs; xg++)
-  {
-    g = yg*rs + xg;
-    if (K[g])
-    {
-      f = PaireLibre2d(k, xg, yg);
-      if ((f != -1) && 
-	  (((I != NULL) && (!I[g] && !I[f])) || 
-	   ((I == NULL) && (P[g] < priomax) && (P[f] < priomax)) ) )
-      {
-	pp = (TypRbtKey)(mcmax(P[g],P[f]));
-	mcrbt_RbtInsert(&RBT, pp, g);
-	Set(g, EN_RBT);
+  for (yg = 0; yg < cs; yg++) {
+    for (xg = 0; xg < rs; xg++) {
+      g = yg * rs + xg;
+      if (K[g]) {
+        f = PaireLibre2d(k, xg, yg);
+        if ((f != -1) &&
+            (((I != NULL) && (!I[g] && !I[f])) ||
+             ((I == NULL) && (P[g] < priomax) && (P[f] < priomax)))) {
+          pp = (TypRbtKey)(mcmax(P[g], P[f]));
+          mcrbt_RbtInsert(&RBT, pp, g);
+          Set(g, EN_RBT);
+        }
       }
     }
   }
@@ -352,7 +345,7 @@ int32_t l2dpardircollapse_l(struct xvimage * k, struct xvimage * prio, struct xv
       }
     } // while (!mcrbt_RbtVide(RBT) && (RbtMinLevel(RBT) == p))
 
-    for (dir = 0; dir <= 1; dir++) // For all face directions
+    for (dir = 0; dir <= 1; dir++) { // For all face directions
       for (ori = 0; ori <= 1; ori++) // For both orientations
       {
 	for (dim = 2; dim >= 1; dim--) // For dimensions in decreasing order
@@ -367,9 +360,21 @@ int32_t l2dpardircollapse_l(struct xvimage * k, struct xvimage * prio, struct xv
 		 ((I == NULL) && (P[g] < priomax) && (P[f] < priomax)) ) )
 	    {
 	      xg = g % rs; yg = g / rs;
-	      if (xf - xg) { direc = 0; if (xf > xg) orien = 0; else orien = 1; }
-	      else         { direc = 1; if (yf > yg) orien = 0; else orien = 1; }
-	      if ((DIM2D(xf,yf) == dim) && (direc == dir) && (orien == ori))
+	      if (xf - xg) { direc = 0;
+                if (xf > xg) {
+                  orien = 0;
+                } else {
+                  orien = 1;
+                }
+              } else {
+                direc = 1;
+                if (yf > yg) {
+                  orien = 0;
+                } else {
+                  orien = 1;
+                }
+              }
+              if ((DIM2D(xf,yf) == dim) && (direc == dir) && (orien == ori))
 	      {
 		K[g] = K[f] = VAL_NULLE; // COLLAPSE
 #ifdef TRACECOL
@@ -412,7 +417,8 @@ int32_t l2dpardircollapse_l(struct xvimage * k, struct xvimage * prio, struct xv
 	    RlifoPush(&RLIFO, g); 
 	  }
       } // for (dim = 2; dim >= 1; dim--)
-    } // for for
+      } // for for
+    }
 
     RlifoFlush(RLIFO);
   } /* while (!mcrbt_RbtVide(RBT)) */
@@ -471,10 +477,9 @@ int32_t l2dpardircollapse_f(struct xvimage * k, struct xvimage * prio, struct xv
     fprintf(stderr, "%s : bad size for prio\n", F_NAME);
     return(0);
   }
-  if (datatype(prio) == VFF_TYP_FLOAT) 
-    P = FLOATDATA(prio); 
-  else 
-  {
+  if (datatype(prio) == VFF_TYP_FLOAT) {
+    P = FLOATDATA(prio);
+  } else {
     fprintf(stderr, "%s : datatype(prio) must be float\n", F_NAME);
     return(0);
   }
@@ -486,10 +491,9 @@ int32_t l2dpardircollapse_f(struct xvimage * k, struct xvimage * prio, struct xv
       fprintf(stderr, "%s : bad size for inhibit\n", F_NAME);
       return(0);
     }
-    if (datatype(inhibit) == VFF_TYP_1_BYTE) 
-      I = UCHARDATA(inhibit); 
-    else 
-    {
+    if (datatype(inhibit) == VFF_TYP_1_BYTE) {
+      I = UCHARDATA(inhibit);
+    } else {
       fprintf(stderr, "%s : datatype(inhibit) must be uint8_t\n", F_NAME);
       return(0);
     }
@@ -524,20 +528,18 @@ int32_t l2dpardircollapse_f(struct xvimage * k, struct xvimage * prio, struct xv
   /*   INITIALISATION DU RBT */
   /* ========================================================= */
 
-  for (yg = 0; yg < cs; yg++)
-  for (xg = 0; xg < rs; xg++)
-  {
-    g = yg*rs + xg;
-    if (K[g])
-    {
-      f = PaireLibre2d(k, xg, yg);
-      if ((f != -1) && 
-	  (((I != NULL) && (!I[g] && !I[f])) || 
-	   ((I == NULL) && (P[g] < priomax) && (P[f] < priomax)) ) )
-      {
-	pp = (TypRbtKey)(mcmax(P[g],P[f]));
-	mcrbt_RbtInsert(&RBT, pp, g);
-	Set(g, EN_RBT);
+  for (yg = 0; yg < cs; yg++) {
+    for (xg = 0; xg < rs; xg++) {
+      g = yg * rs + xg;
+      if (K[g]) {
+        f = PaireLibre2d(k, xg, yg);
+        if ((f != -1) &&
+            (((I != NULL) && (!I[g] && !I[f])) ||
+             ((I == NULL) && (P[g] < priomax) && (P[f] < priomax)))) {
+          pp = (TypRbtKey)(mcmax(P[g], P[f]));
+          mcrbt_RbtInsert(&RBT, pp, g);
+          Set(g, EN_RBT);
+        }
       }
     }
   }
@@ -564,7 +566,7 @@ int32_t l2dpardircollapse_f(struct xvimage * k, struct xvimage * prio, struct xv
       }
     } // while (!mcrbt_RbtVide(RBT) && (RbtMinLevel(RBT) == p))
 
-    for (dir = 0; dir <= 1; dir++) // For all face directions
+    for (dir = 0; dir <= 1; dir++) { // For all face directions
       for (ori = 0; ori <= 1; ori++) // For both orientations
       {
 	for (dim = 2; dim >= 1; dim--) // For dimensions in decreasing order
@@ -579,9 +581,21 @@ int32_t l2dpardircollapse_f(struct xvimage * k, struct xvimage * prio, struct xv
 		 ((I == NULL) && (P[g] < priomax) && (P[f] < priomax)) ) )
 	    {
 	      xg = g % rs; yg = g / rs;
-	      if (xf - xg) { direc = 0; if (xf > xg) orien = 0; else orien = 1; }
-	      else         { direc = 1; if (yf > yg) orien = 0; else orien = 1; }
-	      if ((DIM2D(xf,yf) == dim) && (direc == dir) && (orien == ori))
+	      if (xf - xg) { direc = 0;
+                if (xf > xg) {
+                  orien = 0;
+                } else {
+                  orien = 1;
+                }
+              } else {
+                direc = 1;
+                if (yf > yg) {
+                  orien = 0;
+                } else {
+                  orien = 1;
+                }
+              }
+              if ((DIM2D(xf,yf) == dim) && (direc == dir) && (orien == ori))
 	      {
 		K[g] = K[f] = VAL_NULLE; // COLLAPSE
 #ifdef TRACECOL
@@ -624,7 +638,8 @@ int32_t l2dpardircollapse_f(struct xvimage * k, struct xvimage * prio, struct xv
 	    RlifoPush(&RLIFO, g); 
 	  }
       } // for (dim = 2; dim >= 1; dim--)
-    } // for for
+      } // for for
+    }
 
     RlifoFlush(RLIFO);
   } /* while (!mcrbt_RbtVide(RBT)) */
@@ -688,10 +703,9 @@ int32_t l2dpardircollapse(struct xvimage * k, int32_t nsteps, struct xvimage * i
       fprintf(stderr, "%s : bad size for inhibit\n", F_NAME);
       return(0);
     }
-    if (datatype(inhibit) == VFF_TYP_1_BYTE) 
-      I = UCHARDATA(inhibit); 
-    else 
-    {
+    if (datatype(inhibit) == VFF_TYP_1_BYTE) {
+      I = UCHARDATA(inhibit);
+    } else {
       fprintf(stderr, "%s : datatype(inhibit) must be uint8_t\n", F_NAME);
       return(0);
     }
@@ -706,7 +720,9 @@ int32_t l2dpardircollapse(struct xvimage * k, int32_t nsteps, struct xvimage * i
     return(0);
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -720,25 +736,23 @@ int32_t l2dpardircollapse(struct xvimage * k, int32_t nsteps, struct xvimage * i
   /* INITIALISATION DE LA RLIFO ET DE LA "BORDER" */
   /* ========================================================= */
 
-  for (yg = 0; yg < cs; yg++)
-  for (xg = 0; xg < rs; xg++)
-  {
-    g = yg*rs + xg;
-    if (K[g] && ((I == NULL) || (!I[g])))
-    {
-      f = PaireLibre2d(k, xg, yg);
-      if (f != -1) 
-      { 
-	RlifoPush(&RLIFO, f); 
-	RlifoPush(&RLIFO, g);
-	Set(g, EN_RLIFO);
-	xf = f % rs; yf = f / rs;
-	Alphacarre2d(rs, cs, xf, yf, tab, &n);
-	for (u = 0; u < n; u += 1)
-	{
-	  g = tab[u];
-	  Set(g, BORDER);
-	} // for u
+  for (yg = 0; yg < cs; yg++) {
+    for (xg = 0; xg < rs; xg++) {
+      g = yg * rs + xg;
+      if (K[g] && ((I == NULL) || (!I[g]))) {
+        f = PaireLibre2d(k, xg, yg);
+        if (f != -1) {
+          RlifoPush(&RLIFO, f);
+          RlifoPush(&RLIFO, g);
+          Set(g, EN_RLIFO);
+          xf = f % rs;
+          yf = f / rs;
+          Alphacarre2d(rs, cs, xf, yf, tab, &n);
+          for (u = 0; u < n; u += 1) {
+            g = tab[u];
+            Set(g, BORDER);
+          } // for u
+        }
       }
     }
   }
@@ -751,7 +765,7 @@ int32_t l2dpardircollapse(struct xvimage * k, int32_t nsteps, struct xvimage * i
   {
     nsteps --;
 
-    for (dir = 0; dir <= 1; dir++) // For all face directions
+    for (dir = 0; dir <= 1; dir++) { // For all face directions
       for (ori = 0; ori <= 1; ori++) // For both orientations
       {
 	for (dim = 2; dim >= 1; dim--) // For dimensions in decreasing order
@@ -764,9 +778,21 @@ int32_t l2dpardircollapse(struct xvimage * k, int32_t nsteps, struct xvimage * i
 	    if (K[f] && K[g] && ((I == NULL) || (!I[g] && !I[f])))
 	    {
 	      xg = g % rs; yg = g / rs;
-	      if (xf - xg) { direc = 0; if (xf > xg) orien = 0; else orien = 1; }
-	      else         { direc = 1; if (yf > yg) orien = 0; else orien = 1; }
-	      if ((DIM2D(xf,yf) == dim) && (direc == dir) && (orien == ori))
+	      if (xf - xg) { direc = 0;
+                if (xf > xg) {
+                  orien = 0;
+                } else {
+                  orien = 1;
+                }
+              } else {
+                direc = 1;
+                if (yf > yg) {
+                  orien = 0;
+                } else {
+                  orien = 1;
+                }
+              }
+              if ((DIM2D(xf,yf) == dim) && (direc == dir) && (orien == ori))
 	      {
 		K[g] = K[f] = VAL_NULLE; // COLLAPSE
 		// Préparation sous-étapes suivantes
@@ -796,10 +822,13 @@ int32_t l2dpardircollapse(struct xvimage * k, int32_t nsteps, struct xvimage * i
 	    RlifoPush(&RLIFO, g); 
 	  }
       } // for (dim = 2; dim >= 1; dim--)
-    } // for for
+      } // for for
+    }
 
     // PREPARATION ETAPE SUIVANTE
-    for (i = 0; i < RLIFO->Sp; i++) UnSet(RLIFO->Pts[i], EN_RLIFO);
+    for (i = 0; i < RLIFO->Sp; i++) {
+      UnSet(RLIFO->Pts[i], EN_RLIFO);
+    }
     for (i = 0; i < RLIFO->Sp; i += 2)
     {
       f = RLIFO->Pts[i];
@@ -911,10 +940,9 @@ graphe * l2dtopoflow_l(struct xvimage * k, struct xvimage * prio, struct xvimage
     fprintf(stderr, "%s : bad size for prio\n", F_NAME);
     return(NULL);
   }
-  if (datatype(prio) == VFF_TYP_4_BYTE) 
-    PRIO = SLONGDATA(prio); 
-  else 
-  {
+  if (datatype(prio) == VFF_TYP_4_BYTE) {
+    PRIO = SLONGDATA(prio);
+  } else {
     fprintf(stderr, "%s : datatype(prio) must be long int\n", F_NAME);
     return(NULL);
   }
@@ -926,10 +954,9 @@ graphe * l2dtopoflow_l(struct xvimage * k, struct xvimage * prio, struct xvimage
       fprintf(stderr, "%s : bad size for inhibit\n", F_NAME);
       return(NULL);
     }
-    if (datatype(inhibit) == VFF_TYP_1_BYTE) 
-      I = UCHARDATA(inhibit); 
-    else 
-    {
+    if (datatype(inhibit) == VFF_TYP_1_BYTE) {
+      I = UCHARDATA(inhibit);
+    } else {
       fprintf(stderr, "%s : datatype(inhibit) must be uint8_t\n", F_NAME);
       return(NULL);
     }
@@ -957,13 +984,15 @@ graphe * l2dtopoflow_l(struct xvimage * k, struct xvimage * prio, struct xvimage
   /* ================================================ */
 
   narcs = 0; // evalue la taille max du graphe
-  for (yg = 0; yg < cs; yg++)
-  for (xg = 0; xg < rs; xg++)
-  {
-    if (K[yg*rs + xg]) 
-    { 
-      if (CARRE(xg,yg)) narcs += 8;
-      else if (INTER(xg,yg)) narcs += 2;
+  for (yg = 0; yg < cs; yg++) {
+    for (xg = 0; xg < rs; xg++) {
+      if (K[yg * rs + xg]) {
+        if (CARRE(xg, yg)) {
+          narcs += 8;
+        } else if (INTER(xg, yg)) {
+          narcs += 2;
+        }
+      }
     }
   }
   flow = InitGraphe(N, narcs); // toutes les faces (dans K ou non) sont des sommets
@@ -972,13 +1001,15 @@ graphe * l2dtopoflow_l(struct xvimage * k, struct xvimage * prio, struct xvimage
     fprintf(stderr, "%s : InitGraphe failed\n", F_NAME);
     return(NULL);
   }
-  for (yg = 0; yg < cs; yg++) // coordonnées des sommets
-  for (xg = 0; xg < rs; xg++)
-  {
-    g = yg*rs + xg;
-    flow->x[g] = xg; // coordonnées des sommets
-    flow->y[g] = yg;
-    if (!K[g]) flow->v_sommets[g] = TF_NOT_IN_I;
+  for (yg = 0; yg < cs; yg++) { // coordonnées des sommets
+    for (xg = 0; xg < rs; xg++) {
+      g = yg * rs + xg;
+      flow->x[g] = xg; // coordonnées des sommets
+      flow->y[g] = yg;
+      if (!K[g]) {
+        flow->v_sommets[g] = TF_NOT_IN_I;
+      }
+    }
   }
 
   /* ================================================ */
@@ -993,20 +1024,18 @@ graphe * l2dtopoflow_l(struct xvimage * k, struct xvimage * prio, struct xvimage
   /*   INITIALISATION DU RBT */
   /* ========================================================= */
 
-  for (yg = 0; yg < cs; yg++)
-  for (xg = 0; xg < rs; xg++)
-  {
-    g = yg*rs + xg;
-    if (K[g])
-    {
-      f = PaireLibre2d(k, xg, yg);
-      if ((f != -1) && 
-	  (((I != NULL) && (!I[g] && !I[f])) || 
-	   ((I == NULL) && (PRIO[g] < priomax) && (PRIO[f] < priomax)) ) )
-      {
-	pp = (TypRbtKey)(mcmax(PRIO[g],PRIO[f]));
-	mcrbt_RbtInsert(&RBT, pp, g);
-	Set(g, EN_RBT);
+  for (yg = 0; yg < cs; yg++) {
+    for (xg = 0; xg < rs; xg++) {
+      g = yg * rs + xg;
+      if (K[g]) {
+        f = PaireLibre2d(k, xg, yg);
+        if ((f != -1) &&
+            (((I != NULL) && (!I[g] && !I[f])) ||
+             ((I == NULL) && (PRIO[g] < priomax) && (PRIO[f] < priomax)))) {
+          pp = (TypRbtKey)(mcmax(PRIO[g], PRIO[f]));
+          mcrbt_RbtInsert(&RBT, pp, g);
+          Set(g, EN_RBT);
+        }
       }
     }
   }
@@ -1033,7 +1062,7 @@ graphe * l2dtopoflow_l(struct xvimage * k, struct xvimage * prio, struct xvimage
       }
     } // while (!mcrbt_RbtVide(RBT) && (RbtMinLevel(RBT) == p))
 
-    for (dir = 0; dir <= 1; dir++) // For all face directions
+    for (dir = 0; dir <= 1; dir++) { // For all face directions
       for (ori = 0; ori <= 1; ori++) // For both orientations
       {
 	for (dim = 2; dim >= 1; dim--) // For dimensions in decreasing order
@@ -1048,9 +1077,21 @@ graphe * l2dtopoflow_l(struct xvimage * k, struct xvimage * prio, struct xvimage
 		 ((I == NULL) && (PRIO[g] < priomax) && (PRIO[f] < priomax)) ) )
 	    {
 	      xg = g % rs; yg = g / rs;
-	      if (xf - xg) { direc = 0; if (xf > xg) orien = 0; else orien = 1; }
-	      else         { direc = 1; if (yf > yg) orien = 0; else orien = 1; }
-	      if ((DIM2D(xf,yf) == dim) && (direc == dir) && (orien == ori))
+	      if (xf - xg) { direc = 0;
+                if (xf > xg) {
+                  orien = 0;
+                } else {
+                  orien = 1;
+                }
+              } else {
+                direc = 1;
+                if (yf > yg) {
+                  orien = 0;
+                } else {
+                  orien = 1;
+                }
+              }
+              if ((DIM2D(xf,yf) == dim) && (direc == dir) && (orien == ori))
 	      {
 		K[g] = K[f] = VAL_NULLE; // COLLAPSE
 		ncoll ++;
@@ -1111,14 +1152,18 @@ graphe * l2dtopoflow_l(struct xvimage * k, struct xvimage * prio, struct xvimage
 	    RlifoPush(&RLIFO, g); 
 	  }
       } // for (dim = 2; dim >= 1; dim--)
-    } // for for
+      } // for for
+    }
 
     RlifoFlush(RLIFO);
 
   } /* while (!mcrbt_RbtVide(RBT)) */
 
-  for (g = 0; g < N; g++)
-    if (K[g]) flow->v_sommets[g] = TF_PERMANENT;
+  for (g = 0; g < N; g++) {
+    if (K[g]) {
+      flow->v_sommets[g] = TF_PERMANENT;
+    }
+  }
 
 #ifdef VERBOSE
   fprintf(stderr, "%s: Fin traitement\n", F_NAME);
@@ -1186,10 +1231,9 @@ graphe * l2dtopoflow_f(struct xvimage * k, struct xvimage * prio, struct xvimage
     fprintf(stderr, "%s : bad size for prio\n", F_NAME);
     return(NULL);
   }
-  if (datatype(prio) == VFF_TYP_FLOAT) 
-    P = FLOATDATA(prio); 
-  else 
-  {
+  if (datatype(prio) == VFF_TYP_FLOAT) {
+    P = FLOATDATA(prio);
+  } else {
     fprintf(stderr, "%s : datatype(prio) must be float\n", F_NAME);
     return(NULL);
   }
@@ -1201,10 +1245,9 @@ graphe * l2dtopoflow_f(struct xvimage * k, struct xvimage * prio, struct xvimage
       fprintf(stderr, "%s : bad size for inhibit\n", F_NAME);
       return(NULL);
     }
-    if (datatype(inhibit) == VFF_TYP_1_BYTE) 
-      I = UCHARDATA(inhibit); 
-    else 
-    {
+    if (datatype(inhibit) == VFF_TYP_1_BYTE) {
+      I = UCHARDATA(inhibit);
+    } else {
       fprintf(stderr, "%s : datatype(inhibit) must be uint8_t\n", F_NAME);
       return(NULL);
     }
@@ -1232,13 +1275,15 @@ graphe * l2dtopoflow_f(struct xvimage * k, struct xvimage * prio, struct xvimage
   /* ================================================ */
 
   narcs = 0; // evalue la taille max du graphe
-  for (yg = 0; yg < cs; yg++)
-  for (xg = 0; xg < rs; xg++)
-  {
-    if (K[yg*rs + xg]) 
-    { 
-      if (CARRE(xg,yg)) narcs += 8;
-      else if (INTER(xg,yg)) narcs += 2;
+  for (yg = 0; yg < cs; yg++) {
+    for (xg = 0; xg < rs; xg++) {
+      if (K[yg * rs + xg]) {
+        if (CARRE(xg, yg)) {
+          narcs += 8;
+        } else if (INTER(xg, yg)) {
+          narcs += 2;
+        }
+      }
     }
   }
   flow = InitGraphe(N, narcs); // toutes les faces (dans K ou non) sont des sommets
@@ -1247,13 +1292,15 @@ graphe * l2dtopoflow_f(struct xvimage * k, struct xvimage * prio, struct xvimage
     fprintf(stderr, "%s : InitGraphe failed\n", F_NAME);
     return(NULL);
   }
-  for (yg = 0; yg < cs; yg++) // coordonnées des sommets
-  for (xg = 0; xg < rs; xg++)
-  {
-    g = yg*rs + xg;
-    flow->x[g] = xg; // coordonnées des sommets
-    flow->y[g] = yg;
-    if (!K[g]) flow->v_sommets[g] = TF_NOT_IN_I;
+  for (yg = 0; yg < cs; yg++) { // coordonnées des sommets
+    for (xg = 0; xg < rs; xg++) {
+      g = yg * rs + xg;
+      flow->x[g] = xg; // coordonnées des sommets
+      flow->y[g] = yg;
+      if (!K[g]) {
+        flow->v_sommets[g] = TF_NOT_IN_I;
+      }
+    }
   }
 
   /* ================================================ */
@@ -1268,20 +1315,18 @@ graphe * l2dtopoflow_f(struct xvimage * k, struct xvimage * prio, struct xvimage
   /*   INITIALISATION DU RBT */
   /* ========================================================= */
 
-  for (yg = 0; yg < cs; yg++)
-  for (xg = 0; xg < rs; xg++)
-  {
-    g = yg*rs + xg;
-    if (K[g])
-    {
-      f = PaireLibre2d(k, xg, yg);
-      if ((f != -1) && 
-	  (((I != NULL) && (!I[g] && !I[f])) || 
-	   ((I == NULL) && (P[g] < priomax) && (P[f] < priomax)) ) )
-      {
-	pp = (TypRbtKey)(mcmax(P[g],P[f]));
-	mcrbt_RbtInsert(&RBT, pp, g);
-	Set(g, EN_RBT);
+  for (yg = 0; yg < cs; yg++) {
+    for (xg = 0; xg < rs; xg++) {
+      g = yg * rs + xg;
+      if (K[g]) {
+        f = PaireLibre2d(k, xg, yg);
+        if ((f != -1) &&
+            (((I != NULL) && (!I[g] && !I[f])) ||
+             ((I == NULL) && (P[g] < priomax) && (P[f] < priomax)))) {
+          pp = (TypRbtKey)(mcmax(P[g], P[f]));
+          mcrbt_RbtInsert(&RBT, pp, g);
+          Set(g, EN_RBT);
+        }
       }
     }
   }
@@ -1308,7 +1353,7 @@ graphe * l2dtopoflow_f(struct xvimage * k, struct xvimage * prio, struct xvimage
       }
     } // while (!mcrbt_RbtVide(RBT) && (RbtMinLevel(RBT) == p))
 
-    for (dir = 0; dir <= 1; dir++) // For all face directions
+    for (dir = 0; dir <= 1; dir++) { // For all face directions
       for (ori = 0; ori <= 1; ori++) // For both orientations
       {
 	for (dim = 2; dim >= 1; dim--) // For dimensions in decreasing order
@@ -1323,9 +1368,21 @@ graphe * l2dtopoflow_f(struct xvimage * k, struct xvimage * prio, struct xvimage
 		 ((I == NULL) && (P[g] < priomax) && (P[f] < priomax)) ) )
 	    {
 	      xg = g % rs; yg = g / rs;
-	      if (xf - xg) { direc = 0; if (xf > xg) orien = 0; else orien = 1; }
-	      else         { direc = 1; if (yf > yg) orien = 0; else orien = 1; }
-	      if ((DIM2D(xf,yf) == dim) && (direc == dir) && (orien == ori))
+	      if (xf - xg) { direc = 0;
+                if (xf > xg) {
+                  orien = 0;
+                } else {
+                  orien = 1;
+                }
+              } else {
+                direc = 1;
+                if (yf > yg) {
+                  orien = 0;
+                } else {
+                  orien = 1;
+                }
+              }
+              if ((DIM2D(xf,yf) == dim) && (direc == dir) && (orien == ori))
 	      {
 		K[g] = K[f] = VAL_NULLE; // COLLAPSE
 		ncoll ++;
@@ -1386,14 +1443,18 @@ graphe * l2dtopoflow_f(struct xvimage * k, struct xvimage * prio, struct xvimage
 	    RlifoPush(&RLIFO, g); 
 	  }
       } // for (dim = 2; dim >= 1; dim--)
-    } // for for
+      } // for for
+    }
 
     RlifoFlush(RLIFO);
 
   } /* while (!mcrbt_RbtVide(RBT)) */
 
-  for (g = 0; g < N; g++)
-    if (K[g]) flow->v_sommets[g] = TF_PERMANENT;
+  for (g = 0; g < N; g++) {
+    if (K[g]) {
+      flow->v_sommets[g] = TF_PERMANENT;
+    }
+  }
 
 #ifdef VERBOSE
   fprintf(stderr, "%s: Fin traitement\n", F_NAME);
@@ -1460,8 +1521,16 @@ static void ShowGraphe(graphe * g, char *filename, double s, double r, double t,
   ymin = ymax = s*g->y[0];
   for (i = 1; i < n; i++) 
   {
-    if (s*g->x[i] < xmin) xmin = s*g->x[i]; else if (s*g->x[i] > xmax) xmax = s*g->x[i];
-    if (s*g->y[i] < ymin) ymin = s*g->y[i]; else if (s*g->y[i] > ymax) ymax = s*g->y[i];
+    if (s * g->x[i] < xmin) {
+      xmin = s * g->x[i];
+    } else if (s * g->x[i] > xmax) {
+      xmax = s * g->x[i];
+    }
+    if (s * g->y[i] < ymin) {
+      ymin = s * g->y[i];
+    } else if (s * g->y[i] > ymax) {
+      ymax = s * g->y[i];
+    }
   }
   EPSHeader(fd, xmax - xmin + MARGEX1 + MARGEX2, ymax - ymin + MARGEY1 + MARGEY2, 1.0, FONTSIZE);
   
@@ -1472,8 +1541,8 @@ static void ShowGraphe(graphe * g, char *filename, double s, double r, double t,
 
   /* dessine le complexe */
   PSSetColor (fd, 0.80);
-  PSSetLineWidth (fd, 5);    
-  for (i = 0; i < n; i++) 
+  PSSetLineWidth (fd, 5);
+  for (i = 0; i < n; i++) {
     if (K[i])
     {
       xx = i%rs;
@@ -1481,83 +1550,99 @@ static void ShowGraphe(graphe * g, char *filename, double s, double r, double t,
       if ((xx%2 == 0) && (yy%2 == 0))
       {
 	PSDrawdisc(fd, s*g->x[i]-xmin+MARGEX1, s*g->y[i]-ymin+MARGEY1, 5);
-	if ((xx < rs-2) && K[i+2])
-	  PSLine(fd, s*g->x[i]-xmin+MARGEX1, s*g->y[i]-ymin+MARGEY1, s*g->x[i+2]-xmin+MARGEX1, s*g->y[i+2]-ymin+MARGEY1);
-	if ((i < n-(rs+rs)) && K[i+rs+rs])
-	  PSLine(fd, s*g->x[i]-xmin+MARGEX1, s*g->y[i]-ymin+MARGEY1, s*g->x[i+rs+rs]-xmin+MARGEX1, s*g->y[i+rs+rs]-ymin+MARGEY1);
+        if ((xx < rs - 2) && K[i + 2]) {
+          PSLine(fd, s * g->x[i] - xmin + MARGEX1, s * g->y[i] - ymin + MARGEY1,
+                 s * g->x[i + 2] - xmin + MARGEX1,
+                 s * g->y[i + 2] - ymin + MARGEY1);
+        }
+        if ((i < n - (rs + rs)) && K[i + rs + rs]) {
+          PSLine(fd, s * g->x[i] - xmin + MARGEX1, s * g->y[i] - ymin + MARGEY1,
+                 s * g->x[i + rs + rs] - xmin + MARGEX1,
+                 s * g->y[i + rs + rs] - ymin + MARGEY1);
+        }
       }
     }
+  }
   PSSetColor (fd, 0.0);
   PSSetLineWidth (fd, 1);
 
-  if (noms_sommets && g->nomsommet)
-    for (i = 0; i < n; i++) 
-      if (K[i])
-	PSString(fd, s*g->x[i]-xmin+MARGEX1+2*r, s*g->y[i]-ymin+MARGEY1-2*r, g->nomsommet[i]);
+  if (noms_sommets && g->nomsommet) {
+    for (i = 0; i < n; i++) {
+      if (K[i]) {
+        PSString(fd, s * g->x[i] - xmin + MARGEX1 + 2 * r,
+                 s * g->y[i] - ymin + MARGEY1 - 2 * r, g->nomsommet[i]);
+      }
+    }
+  }
 
   /* dessine les arcs */
   PSSetColor (fd, 0.50);
-  for (i = 0; i < n; i++)
-    if (all_arcs || head[i])
+  for (i = 0; i < n; i++) {
+    if (all_arcs || head[i]) {
       for (p = g->gamma[i]; p != NULL; p = p->next)
       {
 	j = p->som;
 	PSLine(fd, s*g->x[i]-xmin+MARGEX1, s*g->y[i]-ymin+MARGEY1, s*g->x[j]-xmin+MARGEX1, s*g->y[j]-ymin+MARGEY1);
       }
+    }
+  }
 
   /* dessine les fleches sur les arcs */
   if (t > 0.0)
   {
-    for (i = 0; i < n; i++) 
-    if (all_arcs || head[i])
-    for (p = g->gamma[i]; p != NULL; p = p->next)
-    {
-      j = p->som;
-      x1 = s*g->x[i]-xmin+MARGEX1;
-      y1 = s*g->y[i]-ymin+MARGEY1;
-      x2 = s*g->x[j]-xmin+MARGEX1;
-      y2 = s*g->y[j]-ymin+MARGEY1;
-      x = (x2 + x1) / 2; // milieu de l'arc
-      y = (y2 + y1) / 2;
-      a = x2 - x1;
-      b = y2 - y1;             /* (a,b) est un vecteur directeur de l'arc */
-      d = sqrt(a * a + b * b); /* longueur de l'arc */
-      if (d > 1) // sinon on ne dessine pas la fleche
-      { 
-        a /= d; b /= d;          /* norme le vecteur */
-        x1 = x + 2 * t * a;
-        y1 = y + 2 * t * b;      /* pointe de la fleche */
-        x2 = x - 2 * t * a;
-        y2 = y - 2 * t * b;      /* base de la fleche */
-        x3 = x2 + t * -b;        /* (-b,a) est normal a (a,b) */
-        y3 = y2 + t * a;
-        x2 = x2 - t * -b;
-        y2 = y2 - t * a;
-        PSLine(fd, x1, y1, x2, y2);
-        PSLine(fd, x2, y2, x3, y3);
-        PSLine(fd, x3, y3, x1, y1);
+    for (i = 0; i < n; i++) {
+      if (all_arcs || head[i]) {
+        for (p = g->gamma[i]; p != NULL; p = p->next) {
+          j = p->som;
+          x1 = s * g->x[i] - xmin + MARGEX1;
+          y1 = s * g->y[i] - ymin + MARGEY1;
+          x2 = s * g->x[j] - xmin + MARGEX1;
+          y2 = s * g->y[j] - ymin + MARGEY1;
+          x = (x2 + x1) / 2; // milieu de l'arc
+          y = (y2 + y1) / 2;
+          a = x2 - x1;
+          b = y2 - y1;             /* (a,b) est un vecteur directeur de l'arc */
+          d = sqrt(a * a + b * b); /* longueur de l'arc */
+          if (d > 1)               // sinon on ne dessine pas la fleche
+          {
+            a /= d;
+            b /= d; /* norme le vecteur */
+            x1 = x + 2 * t * a;
+            y1 = y + 2 * t * b; /* pointe de la fleche */
+            x2 = x - 2 * t * a;
+            y2 = y - 2 * t * b; /* base de la fleche */
+            x3 = x2 + t * -b;   /* (-b,a) est normal a (a,b) */
+            y3 = y2 + t * a;
+            x2 = x2 - t * -b;
+            y2 = y2 - t * a;
+            PSLine(fd, x1, y1, x2, y2);
+            PSLine(fd, x2, y2, x3, y3);
+            PSLine(fd, x3, y3, x1, y1);
+          }
+        }
       }
     }
   }
   PSSetColor (fd, 0.0);
 
   /* dessine les sommets */
-  for (i = 0; i < n; i++) 
+  for (i = 0; i < n; i++) {
     if (K[i])
     {
-      if (col_sommets && (g->v_sommets[i] == 1)) 
-	PSDrawdisc(fd, s*g->x[i]-xmin+MARGEX1, s*g->y[i]-ymin+MARGEY1, 8*r);
-      else if (col_sommets && (g->v_sommets[i] == 2)) 
-      {
-	PSSetColor(fd, 1.0);
+      if (col_sommets && (g->v_sommets[i] == 1)) {
+        PSDrawdisc(fd, s*g->x[i]-xmin+MARGEX1, s*g->y[i]-ymin+MARGEY1, 8*r);
+      } else if (col_sommets && (g->v_sommets[i] == 2)) {
+        PSSetColor(fd, 1.0);
 	PSDrawdisc(fd, s*g->x[i]-xmin+MARGEX1, s*g->y[i]-ymin+MARGEY1, 8*r);
 	PSSetColor(fd, 0.0);
 	PSDrawcircle(fd, s*g->x[i]-xmin+MARGEX1, s*g->y[i]-ymin+MARGEY1, 8*r);
+      } else {
+        PSDrawcircle(fd, s * g->x[i] - xmin + MARGEX1,
+                     s * g->y[i] - ymin + MARGEY1, r);
       }
-      else
-	PSDrawcircle(fd, s*g->x[i]-xmin+MARGEX1, s*g->y[i]-ymin+MARGEY1, r);
     }
-  if (v_sommets)
+  }
+  if (v_sommets) {
     for (i = 0; i < n; i++)
     { 
 #ifdef DESSINECOLSEQ
@@ -1574,6 +1659,7 @@ static void ShowGraphe(graphe * g, char *filename, double s, double r, double t,
       }
 #endif
     }
+  }
 
   PSFooter(fd);
   fclose(fd);
@@ -1599,7 +1685,9 @@ static void CheckProperty(graphe *H,
   double d, mind;
 
   p = H->gamma[x];
-  if (p == NULL) return;
+  if (p == NULL) {
+    return;
+  }
   for (; p != NULL; p = p->next)
   {
     y = p->som;
@@ -1609,13 +1697,17 @@ static void CheckProperty(graphe *H,
     for (mind = (double)(rs*cs), n = 0; n < card_aval; n++)
     {
       d = dist2((double)(s%rs), (double)(s/rs), Aval[n].xCoor, Aval[n].yCoor);
-      if (d < mind) mind = d;
+      if (d < mind) {
+        mind = d;
+      }
     }
     mind -= 1;
     //    printf("%d,%d : mind = %g\n", i, j, mind);
     res->npoints += 1;
     res->sum += mind;
-    if (mind > res->max) res->max = mind;
+    if (mind > res->max) {
+      res->max = mind;
+    }
     CheckProperty(H, s, y, distimage, rs, cs, TabIndDec, nval, ListDecs, Aval, res);
   }
 } // CheckProperty()
@@ -1711,11 +1803,13 @@ int32_t l2dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
 
   perm = (boolean *)calloc(N, sizeof(boolean)); assert(perm != NULL);
   head = (boolean *)calloc(N, sizeof(boolean)); assert(head != NULL);
-  for (i = 0; i < N; i++)
-    if (flow->v_sommets[i] == TF_PERMANENT)
+  for (i = 0; i < N; i++) {
+    if (flow->v_sommets[i] == TF_PERMANENT) {
       perm[i] = TRUE;
-    else if (flow->v_sommets[i] == TF_HEAD)
+    } else if (flow->v_sommets[i] == TF_HEAD) {
       head[i] = TRUE;
+    }
+  }
 
 #ifdef SHOWGRAPHS
 #ifdef DESSINECOLSEQ
@@ -1792,8 +1886,11 @@ int32_t l2dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
     
     D = ULONGDATA(dist);
     distmax = 0;  // calcule la distance max dans l'image de distance
-    for (i = 0; i < N; i++)
-      if ((D[i] > distmax)) distmax = D[i];
+    for (i = 0; i < N; i++) {
+      if ((D[i] > distmax)) {
+        distmax = D[i];
+      }
+    }
     distmax++;
     Aval= (struct DPoint2D *)calloc(N, sizeof(struct DPoint2D)); assert(Aval != NULL);
     sprintf(tablefilename, "%s/src/tables/TabBisector_1.txt", getenv("PINK"));
@@ -1803,65 +1900,74 @@ int32_t l2dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
     fd = fopen (tablefilename, "r"); assert(fd != NULL);
     fscanf(fd,"%d",&nval); assert(distmax < nval);
     TabIndDec = (int32_t *)calloc(1,(distmax+2) * sizeof(int32_t)); assert(TabIndDec != NULL) ;
-    for (i = 0; i <= distmax+1; i++) fscanf(fd,"%d", &TabIndDec[i]);
+    for (i = 0; i <= distmax + 1; i++) {
+      fscanf(fd, "%d", &TabIndDec[i]);
+    }
     npointsmax = TabIndDec[distmax];
     fclose(fd);
     sprintf(tablefilename, "%s/src/tables/TabBisector_2.txt", getenv("PINK"));
     fd = fopen (tablefilename, "r"); assert(fd != NULL); 
     fscanf(fd,"%d",&npoints);
     ListDecs = (Coordinates *)calloc(1,npointsmax * sizeof(Coordinates)); assert(ListDecs != NULL);
-    for (i = 0; i < npointsmax; i++) fscanf(fd,"%d%d", &ListDecs[i].x, &ListDecs[i].y);
+    for (i = 0; i < npointsmax; i++) {
+      fscanf(fd, "%d%d", &ListDecs[i].x, &ListDecs[i].y);
+    }
     fclose (fd);
 
     kk = copyimage(k); assert(kk != NULL); razimage(kk);
     KK = UCHARDATA(kk); // pour reperer les sources
 
-    for (yg = 0; yg < cs; yg++) // coordonnées des sommets
-    for (xg = 0; xg < rs; xg++)
-    {
-      g = yg*rs + xg;
-      H->x[g] = xg; // coordonnées des sommets
-      H->y[g] = yg;
-      if (!K[g]) H->v_sommets[g] = TF_NOT_IN_I;
+    for (yg = 0; yg < cs; yg++) { // coordonnées des sommets
+      for (xg = 0; xg < rs; xg++) {
+        g = yg * rs + xg;
+        H->x[g] = xg; // coordonnées des sommets
+        H->y[g] = yg;
+        if (!K[g]) {
+          H->v_sommets[g] = TF_NOT_IN_I;
+        }
+      }
     }
 
     nsom_H  = 0;
     nsour_H = 0;
-    for (j = 0; j < cs; j++)
-    for (i = 0; i < rs; i++)
-    {
-      a = j*rs + i;
-      if (K[a] && INTER(i,j))
-      {
-	for (p = flow->gamma[a]; p != NULL; p = p->next)
-	{
-	  b = p->som; ib = b % rs; jb = b / rs;
-	  if CARRE(ib,jb) break;
-	}
-	if (p != NULL) // 'a' possede un successeur 2D 'b' dans flow
-	{
-	  AjouteArcValue(H, a, b, (TYP_VARC)1);
-	  nsom_H += 2;
-	  if (flow_s->gamma[a] == NULL) // 'a' est une source de flow
-          { KK[a] = 2; nsour_H += 1; } 
-	  else
-	    KK[a] = 1;
-	}
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        a = j * rs + i;
+        if (K[a] && INTER(i, j)) {
+          for (p = flow->gamma[a]; p != NULL; p = p->next) {
+            b = p->som;
+            ib = b % rs;
+            jb = b / rs;
+            if CARRE (ib, jb)
+              break;
+          }
+          if (p != NULL) // 'a' possede un successeur 2D 'b' dans flow
+          {
+            AjouteArcValue(H, a, b, (TYP_VARC)1);
+            nsom_H += 2;
+            if (flow_s->gamma[a] == NULL) // 'a' est une source de flow
+            {
+              KK[a] = 2;
+              nsour_H += 1;
+            } else {
+              KK[a] = 1;
+            }
+          }
+        }
       }
     }
 
-    for (j = 0; j < cs; j++)
-    for (i = 0; i < rs; i++)
-    {
-      a = j*rs + i;
-      if (K[a] && CARRE(i,j))
-      {
-	for (p = flow->gamma[a]; p != NULL; p = p->next)
-	{
-	  b = p->som;
-	  if (KK[b])
-	    AjouteArcValue(H, a, b, (TYP_VARC)2);
-	}
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        a = j * rs + i;
+        if (K[a] && CARRE(i, j)) {
+          for (p = flow->gamma[a]; p != NULL; p = p->next) {
+            b = p->som;
+            if (KK[b]) {
+              AjouteArcValue(H, a, b, (TYP_VARC)2);
+            }
+          }
+        }
       }
     }
 
@@ -1901,11 +2007,13 @@ int32_t l2dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
   }
   else if (mode == 1)
   { // fonction uniforme (unité)
-    for (i = 0; i < N; i++) 
-      if (K[i])
-	FUNC[i] = (float)1;
-      else
-	FUNC[i] = (float)0;
+    for (i = 0; i < N; i++) {
+      if (K[i]) {
+        FUNC[i] = (float)1;
+      } else {
+        FUNC[i] = (float)0;
+      }
+    }
   }
   else if ((mode == 2) || (mode == 3))
   { // fonction uniforme sur la frontière, nulle à l'intérieur 
@@ -1921,11 +2029,13 @@ int32_t l2dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
     writeimage(border, "_border");
 #endif
     B = UCHARDATA(border);
-    for (i = 0; i < N; i++) 
-      if (B[i]) 
-	FUNC[i] = (float)1;
-      else
-	FUNC[i] = (float)0;
+    for (i = 0; i < N; i++) {
+      if (B[i]) {
+        FUNC[i] = (float)1;
+      } else {
+        FUNC[i] = (float)0;
+      }
+    }
     freeimage(border);
   }
   else if (mode == 4)
@@ -1937,8 +2047,14 @@ int32_t l2dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
     ret = lopeningfunction(k, of, 0); assert(ret == 1);
     OF = ULONGDATA(of);
     maxof = OF[0];
-    for (i = 0; i < N; i++) if (OF[i] > maxof) maxof = OF[i];
-    for (i = 0; i < N; i++) FUNC[i] = (float)(maxof - OF[i]) + 0.1;
+    for (i = 0; i < N; i++) {
+      if (OF[i] > maxof) {
+        maxof = OF[i];
+      }
+    }
+    for (i = 0; i < N; i++) {
+      FUNC[i] = (float)(maxof - OF[i]) + 0.1;
+    }
     freeimage(of);
   }
   else if (mode == 5)
@@ -1953,7 +2069,9 @@ int32_t l2dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
   else if (mode == 6)
   { // distance map
     uint32_t *D = ULONGDATA(dist);
-    for (i = 0; i < N; i++) FUNC[i] = (float)(1.0/sqrt(D[i]));
+    for (i = 0; i < N; i++) {
+      FUNC[i] = (float)(1.0 / sqrt(D[i]));
+    }
   }
   else if (mode == 7)
   { // lambda function
@@ -1962,12 +2080,15 @@ int32_t l2dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
   }
   else if (mode == 8)
   { // fonction uniforme (unité) sur les facettes
-    for (j = 0; j < cs; j++) 
-    for (i = 0; i < rs; i++) 
-      if (K[j* rs + i] && CARRE(i,j))
-	FUNC[j* rs + i] = (float)1;
-      else
-	FUNC[j* rs + i] = (float)0;
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        if (K[j * rs + i] && CARRE(i, j)) {
+          FUNC[j * rs + i] = (float)1;
+        } else {
+          FUNC[j * rs + i] = (float)0;
+        }
+      }
+    }
   }
   else if (mode == 9)
   { // fonction uniforme sur les facettes de la frontière
@@ -1980,12 +2101,15 @@ int32_t l2dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
       return 0;
     }
     B = UCHARDATA(border);
-    for (j = 0; j < cs; j++) 
-    for (i = 0; i < rs; i++) 
-      if (B[j* rs + i] && INTER(i,j)) 
-	FUNC[j* rs + i] = (float)1;
-      else
-	FUNC[j* rs + i] = (float)0;
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        if (B[j * rs + i] && INTER(i, j)) {
+          FUNC[j * rs + i] = (float)1;
+        } else {
+          FUNC[j * rs + i] = (float)0;
+        }
+      }
+    }
     freeimage(border);
   }
   else
@@ -1994,8 +2118,9 @@ int32_t l2dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
     return 0;
   }
 
-  for (i = 0; i < N; i++)
+  for (i = 0; i < N; i++) {
     flow->v_sommets[i] = (TYP_VSOM)FUNC[i];
+  }
 
 #ifdef SHOWGRAPHS
   ShowGraphe(flow, "_flow2", 30, 1, 3, 0, 1, 0, 1, K, rs, head);
@@ -2011,8 +2136,9 @@ int32_t l2dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
   ShowGraphe(flow, "_flow3", 30, 1, 3, 0, 1, 0, 1, K, rs, head);
 #endif
 #ifdef SHOWIMAGES
-  for (i = 0; i < N; i++)
+  for (i = 0; i < N; i++) {
     FUNC[i] = (float)flow->v_sommets[i];
+  }
   writeimage(func, "_func");
 #endif
     
@@ -2035,9 +2161,11 @@ int32_t l2dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
     assert(of != NULL);
     ret = lopeningfunction(k, of, 0); assert(ret == 1);
     OF = ULONGDATA(of);
-    for (i = 0; i < N; i++)
-      if (OF[i]) 
-	flow->v_sommets[i] = flow->v_sommets[i] / (TYP_VSOM)OF[i];
+    for (i = 0; i < N; i++) {
+      if (OF[i]) {
+        flow->v_sommets[i] = flow->v_sommets[i] / (TYP_VSOM)OF[i];
+      }
+    }
     freeimage(of);
   }
 
@@ -2049,11 +2177,16 @@ int32_t l2dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
 
   // met à vmax (infini) les sommets "permanents" (non collapsés)
   vmax = flow->v_sommets[0];
-  for (i = 0; i < N; i++)
-    if (flow->v_sommets[i] > vmax) vmax = flow->v_sommets[i];
-  for (i = 0; i < N; i++)
-    if (perm[i])
+  for (i = 0; i < N; i++) {
+    if (flow->v_sommets[i] > vmax) {
+      vmax = flow->v_sommets[i];
+    }
+  }
+  for (i = 0; i < N; i++) {
+    if (perm[i]) {
       flow->v_sommets[i] = vmax;
+    }
+  }
 
 #ifdef SHOWGRAPHS
   ShowGraphe(flow, "_flow4", 30, 1, 3, 0, 1, 0, 1, K, rs, head);
@@ -2065,8 +2198,9 @@ int32_t l2dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
     graphe * flow_s;
     uint32_t j;
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       K[i] = (flow->v_sommets[i] >= level ? 255 : 0);
+    }
     writeimage(k, "_seuil_level");
 
     // detects end points
@@ -2084,39 +2218,52 @@ int32_t l2dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
     // foreach end point, compute the upstream
     KK     = UCHARDATA(kk);
     flow_s = Symetrique(flow);
-    
-    for (i = 0; i < N; i++)
+
+    for (i = 0; i < N; i++) {
       if (K[i])
       {
 	boolean *D = Descendants(flow_s, i);
-	for (j = 0; j < N; j++) if (D[j]) KK[j] = 255;
-	free(D);
+        for (j = 0; j < N; j++) {
+          if (D[j]) {
+            KK[j] = 255;
+          }
+        }
+        free(D);
       }
+    }
     writeimage(kk, "_upstreams");    
     TermineGraphe(flow_s);
 
     // computes a new weighting function:
     // uniform on upstreams,
     // null elsewhere
-    for (i = 0; i < N; i++)
-      if (KK[i])
-	flow->v_sommets[i] = (TYP_VSOM)1;
-      else
-	flow->v_sommets[i] = (TYP_VSOM)0;
-    
+    for (i = 0; i < N; i++) {
+      if (KK[i]) {
+        flow->v_sommets[i] = (TYP_VSOM)1;
+      } else {
+        flow->v_sommets[i] = (TYP_VSOM)0;
+      }
+    }
+
     // integrates and "morsifies" this function
     IntegreGSC(flow);
     AlphaTopologicalMap(flow, head, alpha);
     vmax = flow->v_sommets[0];
-    for (i = 0; i < N; i++)
-      if (flow->v_sommets[i] > vmax) vmax = flow->v_sommets[i];
-    for (i = 0; i < N; i++)
-      if (perm[i])
-	flow->v_sommets[i] = vmax;
+    for (i = 0; i < N; i++) {
+      if (flow->v_sommets[i] > vmax) {
+        vmax = flow->v_sommets[i];
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (perm[i]) {
+        flow->v_sommets[i] = vmax;
+      }
+    }
   }
 
-  for (i = 0; i < N; i++)
+  for (i = 0; i < N; i++) {
     FUNC[i] = (float)flow->v_sommets[i];
+  }
 
   freeimage(dist);
   freeimage(lambda);

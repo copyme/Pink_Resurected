@@ -116,9 +116,16 @@ The distance used depends on the optional parameter \b dist (default is 0) :
     printf("%s: mode = %d\n", F_NAME, mode);
 #endif
 
-  if (ds == 1) connex = 4; else connex = 6; 
-  if (ds == 1) rmax = mcmin((rs/2),(cs/2)); 
-  else         rmax = mcmin((ds/2),mcmin((rs/2),(cs/2)));
+    if (ds == 1) {
+      connex = 4;
+    } else {
+      connex = 6;
+    }
+    if (ds == 1) {
+      rmax = mcmin((rs / 2), (cs / 2));
+    } else {
+      rmax = mcmin((ds / 2), mcmin((rs / 2), (cs / 2)));
+    }
 
   ori = copyimage(img); assert(ori != NULL);
   tmp = copyimage(img); assert(tmp != NULL);
@@ -138,9 +145,11 @@ The distance used depends on the optional parameter \b dist (default is 0) :
     ok = lerosball(tmp, r, mode); assert(ok);
     copy2image(tmp1, tmp);
     ok = lopenball(tmp1, 1, mode); assert(ok);
-    for (i = 0; i < N; i++)
-      if (T[i] && !T1[i])
-	R[i] = 255;
+    for (i = 0; i < N; i++) {
+      if (T[i] && !T1[i]) {
+        R[i] = 255;
+      }
+    }
     r++;
   } while (r <= rmax);
 
@@ -170,7 +179,11 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (argc == 4) mode = atoi(argv[2]); else mode = 0;
+  if (argc == 4) {
+    mode = atoi(argv[2]);
+  } else {
+    mode = 0;
+  }
   if ((mode != 0) && (mode != 2) && (mode != 4) && 
       (mode != 8) && (mode != 6) && (mode != 18) && (mode != 26))
   {

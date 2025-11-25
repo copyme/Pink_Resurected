@@ -69,7 +69,9 @@ int32_t legalise(struct xvimage *image, int32_t n)
   }
 
   FahPush(FAH, -1, 0);               /* force la creation du niveau 0 dans la Fah. */
-  for (x = 0; x < N; x++) FahPush(FAH, x, SOURCE[x]);
+  for (x = 0; x < N; x++) {
+    FahPush(FAH, x, SOURCE[x]);
+  }
   (void)FahPop(FAH);
 
   p = (double)N / (double)n;   /* nombre de points par niveau */

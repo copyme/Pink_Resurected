@@ -129,8 +129,11 @@ int32_t ListeIn(Liste * L, int32_t e)
 /* ==================================== */
 {
   int32_t i;
-  for (i = 0; i < L->Sp; i++)
-    if (L->Pts[i] == e) return 1;
+  for (i = 0; i < L->Sp; i++) {
+    if (L->Pts[i] == e) {
+      return 1;
+    }
+  }
   return 0;
 }
 
@@ -141,8 +144,9 @@ void ListePrint(Liste * L)
   int32_t i;
   if (ListeVide(L)) {printf("[]"); return;}
   printf("[ ");
-  for (i = 0; i < L->Sp; i++)
+  for (i = 0; i < L->Sp; i++) {
     printf("%d ", L->Pts[i]);
+  }
   printf("]");
 }
 
@@ -156,8 +160,9 @@ void ListePrintLine(Liste * L)
   printf("Max = %d ; Sp = %d \n", L->Max, L->Sp);
 */
   printf("[ ");
-  for (i = 0; i < L->Sp; i++)
+  for (i = 0; i < L->Sp; i++) {
     printf("%d ", L->Pts[i]);
+  }
   printf("]\n");
 }
 

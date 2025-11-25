@@ -113,14 +113,17 @@ int main(int argc, char **argv)
   R = UCHARDATA(result);
   memset(R, 0, N);
 
-  for (y = 0; y < cs; y++)
-    for (x = 0; x < rs; x++)
+  for (y = 0; y < cs; y++) {
+    for (x = 0; x < rs; x++) {
       if (I[y*rs +x])
       {
 	zd = sqrt(r*r - ((x-xc)*(x-xc) + (y-yc)*(y-yc)));
-	for (z = 0; z <= (int32_t)zd; z++)
-	  R[z*ps + y*rs +x] = NDG_MAX;
+        for (z = 0; z <= (int32_t)zd; z++) {
+          R[z * ps + y * rs + x] = NDG_MAX;
+        }
       }
+    }
+  }
 
   writeimage(result, argv[argc - 1]);
   freeimage(image);

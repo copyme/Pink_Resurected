@@ -126,151 +126,216 @@ int main(int argc, char **argv)
   {
     uint8_t *F = UCHARDATA(image);
 
-    n = 0;                     /* compte le nombre de points non nuls */ 
-    for (x = 0; x < N; x++) if (F[x]) n++;
+    n = 0;                     /* compte le nombre de points non nuls */
+    for (x = 0; x < N; x++) {
+      if (F[x]) {
+        n++;
+      }
+    }
 
     if (type == 'b') 
     {
-      fprintf(fd, "b %d\n", n); 
-      for (y = 0; y < cs; y++)
-	for (x = 0; x < rs; x++)
+      fprintf(fd, "b %d\n", n);
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++)
 	{
-	  if (F[y * rs + x]) fprintf(fd, "%d %d\n", x, y); 
-	}
+          if (F[y * rs + x]) {
+            fprintf(fd, "%d %d\n", x, y);
+          }
+        }
+      }
     }
     else if (type == 'n') 
     {
       fprintf(fd, "n %d\n", N);
-      for (y = 0; y < cs; y++)
-	for (x = 0; x < rs; x++)
-	  fprintf(fd, "%d %d %d\n", x, y, F[y * rs + x]); 
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++) {
+          fprintf(fd, "%d %d %d\n", x, y, F[y * rs + x]);
+        }
+      }
     } else if (type == 'B') 
     {
-      fprintf(fd, "B %d\n", n); 
-      for (z = 0; z < ds; z++)
-	for (y = 0; y < cs; y++)
-	  for (x = 0; x < rs; x++)
-	    if (F[z * ps + y * rs + x]) fprintf(fd, "%d %d %d\n", x, y, z); 
+      fprintf(fd, "B %d\n", n);
+      for (z = 0; z < ds; z++) {
+        for (y = 0; y < cs; y++) {
+          for (x = 0; x < rs; x++) {
+            if (F[z * ps + y * rs + x]) {
+              fprintf(fd, "%d %d %d\n", x, y, z);
+            }
+          }
+        }
+      }
     }
     else if (type == 'N') 
     {
       fprintf(fd, "N %d\n", N);
-      for (z = 0; z < ds; z++)
-	for (y = 0; y < cs; y++)
-	  for (x = 0; x < rs; x++)
-	    fprintf(fd, "%d %d %d %d\n", x, y, z, F[z * ps + y * rs + x]); 
+      for (z = 0; z < ds; z++) {
+        for (y = 0; y < cs; y++) {
+          for (x = 0; x < rs; x++) {
+            fprintf(fd, "%d %d %d %d\n", x, y, z, F[z * ps + y * rs + x]);
+          }
+        }
+      }
     }
     else if (type == 'e') 
     {
-      fprintf(fd, "e %d\n", n); 
-      for (x = 0; x < N; x++)
-	if (F[x]) fprintf(fd, "%d\n", x); 
+      fprintf(fd, "e %d\n", n);
+      for (x = 0; x < N; x++) {
+        if (F[x]) {
+          fprintf(fd, "%d\n", x);
+        }
+      }
     }
     else if (type == 's') 
     {
-      fprintf(fd, "s %d\n", N); 
-      for (x = 0; x < N; x++)
-	fprintf(fd, "%d %d\n", x, F[x]); 
+      fprintf(fd, "s %d\n", N);
+      for (x = 0; x < N; x++) {
+        fprintf(fd, "%d %d\n", x, F[x]);
+      }
     }
   }
   else
   if (datatype(image) == VFF_TYP_4_BYTE)
   {
     int32_t *F = SLONGDATA(image);
-    n = 0;                     /* compte le nombre de points non nuls */ 
-    
-    for (x = 0; x < N; x++) if (F[x]) n++;
+    n = 0;                     /* compte le nombre de points non nuls */
+
+    for (x = 0; x < N; x++) {
+      if (F[x]) {
+        n++;
+      }
+    }
 
     if (type == 'b') 
     {
-      fprintf(fd, "b %d\n", n); 
-      for (y = 0; y < cs; y++)
-	for (x = 0; x < rs; x++)
-	  if (F[y * rs + x]) fprintf(fd, "%d %d\n", x, y); 
+      fprintf(fd, "b %d\n", n);
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++) {
+          if (F[y * rs + x]) {
+            fprintf(fd, "%d %d\n", x, y);
+          }
+        }
+      }
     }
     else if (type == 'n') 
     {
       fprintf(fd, "n %d\n", N);
-      for (y = 0; y < cs; y++)
-	for (x = 0; x < rs; x++)
-	  fprintf(fd, "%d %d %d\n", x, y, F[y * rs + x]); 
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++) {
+          fprintf(fd, "%d %d %d\n", x, y, F[y * rs + x]);
+        }
+      }
     } else if (type == 'B') 
     {
-      fprintf(fd, "B %d\n", n); 
-      for (z = 0; z < ds; z++)
-	for (y = 0; y < cs; y++)
-	  for (x = 0; x < rs; x++)
-	    if (F[z * ps + y * rs + x]) fprintf(fd, "%d %d %d\n", x, y, z); 
+      fprintf(fd, "B %d\n", n);
+      for (z = 0; z < ds; z++) {
+        for (y = 0; y < cs; y++) {
+          for (x = 0; x < rs; x++) {
+            if (F[z * ps + y * rs + x]) {
+              fprintf(fd, "%d %d %d\n", x, y, z);
+            }
+          }
+        }
+      }
     }
     else if (type == 'N') 
     {
       fprintf(fd, "N %d\n", N);
-      for (z = 0; z < ds; z++)
-	for (y = 0; y < cs; y++)
-	  for (x = 0; x < rs; x++)
-	    fprintf(fd, "%d %d %d %d\n", x, y, z, F[z * ps + y * rs + x]); 
+      for (z = 0; z < ds; z++) {
+        for (y = 0; y < cs; y++) {
+          for (x = 0; x < rs; x++) {
+            fprintf(fd, "%d %d %d %d\n", x, y, z, F[z * ps + y * rs + x]);
+          }
+        }
+      }
     }
     else if (type == 'e') 
     {
-      fprintf(fd, "e %d\n", n); 
-      for (x = 0; x < N; x++)
-	if (F[x]) fprintf(fd, "%d\n", x); 
+      fprintf(fd, "e %d\n", n);
+      for (x = 0; x < N; x++) {
+        if (F[x]) {
+          fprintf(fd, "%d\n", x);
+        }
+      }
     }
     else if (type == 's') 
     {
-      fprintf(fd, "s %d\n", N); 
-      for (x = 0; x < N; x++)
-	fprintf(fd, "%d %d\n", x, F[x]); 
+      fprintf(fd, "s %d\n", N);
+      for (x = 0; x < N; x++) {
+        fprintf(fd, "%d %d\n", x, F[x]);
+      }
     }
   }
   else
   if (datatype(image) == VFF_TYP_FLOAT)
   {
     float *F = FLOATDATA(image);
-    n = 0;                     /* compte le nombre de points non nuls */ 
-    
-    for (x = 0; x < N; x++) if (F[x] != (float)0) n++;
+    n = 0;                     /* compte le nombre de points non nuls */
+
+    for (x = 0; x < N; x++) {
+      if (F[x] != (float)0) {
+        n++;
+      }
+    }
 
     if (type == 'b') 
     {
-      fprintf(fd, "b %d\n", n); 
-      for (y = 0; y < cs; y++)
-	for (x = 0; x < rs; x++)
-	  if (F[y * rs + x] != (float)0) fprintf(fd, "%d %d\n", x, y); 
+      fprintf(fd, "b %d\n", n);
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++) {
+          if (F[y * rs + x] != (float)0) {
+            fprintf(fd, "%d %d\n", x, y);
+          }
+        }
+      }
     }
     else if (type == 'n') 
     {
       fprintf(fd, "n %d\n", N);
-      for (y = 0; y < cs; y++)
-	for (x = 0; x < rs; x++)
-	  fprintf(fd, "%d %d %g\n", x, y, F[y * rs + x]); 
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++) {
+          fprintf(fd, "%d %d %g\n", x, y, F[y * rs + x]);
+        }
+      }
     } else if (type == 'B') 
     {
-      fprintf(fd, "B %d\n", n); 
-      for (z = 0; z < ds; z++)
-	for (y = 0; y < cs; y++)
-	  for (x = 0; x < rs; x++)
-	    if (F[z * ps + y * rs + x] != (float)0) fprintf(fd, "%d %d %d\n", x, y, z); 
+      fprintf(fd, "B %d\n", n);
+      for (z = 0; z < ds; z++) {
+        for (y = 0; y < cs; y++) {
+          for (x = 0; x < rs; x++) {
+            if (F[z * ps + y * rs + x] != (float)0) {
+              fprintf(fd, "%d %d %d\n", x, y, z);
+            }
+          }
+        }
+      }
     }
     else if (type == 'N') 
     {
       fprintf(fd, "N %d\n", N);
-      for (z = 0; z < ds; z++)
-	for (y = 0; y < cs; y++)
-	  for (x = 0; x < rs; x++)
-	    fprintf(fd, "%d %d %d %g\n", x, y, z, F[z * ps + y * rs + x]); 
+      for (z = 0; z < ds; z++) {
+        for (y = 0; y < cs; y++) {
+          for (x = 0; x < rs; x++) {
+            fprintf(fd, "%d %d %d %g\n", x, y, z, F[z * ps + y * rs + x]);
+          }
+        }
+      }
     }
     else if (type == 'e') 
     {
-      fprintf(fd, "e %d\n", n); 
-      for (x = 0; x < N; x++)
-	if (F[x] != (float)0) fprintf(fd, "%d\n", x); 
+      fprintf(fd, "e %d\n", n);
+      for (x = 0; x < N; x++) {
+        if (F[x] != (float)0) {
+          fprintf(fd, "%d\n", x);
+        }
+      }
     }
     else if (type == 's') 
     {
-      fprintf(fd, "s %d\n", N); 
-      for (x = 0; x < N; x++)
-	fprintf(fd, "%d %g\n", x, F[x]); 
+      fprintf(fd, "s %d\n", N);
+      for (x = 0; x < N; x++) {
+        fprintf(fd, "%d %g\n", x, F[x]);
+      }
     }
   }
   else

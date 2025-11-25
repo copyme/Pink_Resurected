@@ -149,57 +149,64 @@ int32_t lmedialaxis_lmedax_talbot(struct xvimage *img,   /* donnee: image binair
 
   L = (vect2Dint *)calloc(1,N*sizeof(vect2Dint));
   F = UCHARDATA(img);
-  for (i = 0; i < N; i++) 
-    F[i] = 255-F[i];
+  for (i = 0; i < N; i++) {
+    F[i] = 255 - F[i];
+  }
   if (! ldistvect(F, L, rs, cs))
   {
     fprintf(stderr, "%s: ldistvect failed\n", F_NAME);
     exit(1);
   }
-  for (i = 0; i < N; i++) 
-    F[i] = 255-F[i];
+  for (i = 0; i < N; i++) {
+    F[i] = 255 - F[i];
+  }
 
   M = ULONGDATA(res);
-  for (i = 0; i < N; i++) 
+  for (i = 0; i < N; i++) {
     M[i] = norm(L[i]);
+  }
 
   M = ULONGDATA(res);
-  for (i = 0; i < N; i++) if (F[i])
-  {
-    printf("i=(%ld,%ld); L[i]=(%d,%d)\n", i%rs, i/rs, L[i].x, L[i].y);
-    norm_i = norm(L[i]);
-    // trouver j, le voisin de i dans la direction la plus proche de L[i]
-    // (aval de i)
-    // angle min <=> cos max
-    cosmax = -2.0;
-    for (k = 0; k < 8; k += 1)
-    {
-      h = voisin(i, k, rs, N);
-      if ((h != -1) && (norm_i>norm(L[h])))
-      { 
-        v1.x = h%rs - i%rs; 
-        v1.y = h/rs - i/rs;
-        tmp = pscal(v1, L[i]) / (norm(v1) * norm_i);
-	//printf("scal = %lg, n1 = %lg, n2 = %lg, tmp = %lg - ", pscal(v1,L[i]), norm(v1), norm_i, tmp);
-        if (tmp > cosmax) { 
-	  cosmax = tmp; 
-	  j = k; 
-	  if (k%2) 
-	    dij = sqrt_2; 
-	  else dij = 1.0; 
-	}
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      printf("i=(%ld,%ld); L[i]=(%d,%d)\n", i % rs, i / rs, L[i].x, L[i].y);
+      norm_i = norm(L[i]);
+      // trouver j, le voisin de i dans la direction la plus proche de L[i]
+      // (aval de i)
+      // angle min <=> cos max
+      cosmax = -2.0;
+      for (k = 0; k < 8; k += 1) {
+        h = voisin(i, k, rs, N);
+        if ((h != -1) && (norm_i > norm(L[h]))) {
+          v1.x = h % rs - i % rs;
+          v1.y = h / rs - i / rs;
+          tmp = pscal(v1, L[i]) / (norm(v1) * norm_i);
+          // printf("scal = %lg, n1 = %lg, n2 = %lg, tmp = %lg - ",
+          // pscal(v1,L[i]), norm(v1), norm_i, tmp);
+          if (tmp > cosmax) {
+            cosmax = tmp;
+            j = k;
+            if (k % 2) {
+              dij = sqrt_2;
+            } else {
+              dij = 1.0;
+            }
+          }
+        }
+      }                // for (k = 0; k < 8; k += 1)
+      j = (j + 4) % 8; // cherche l'amont dans la direction opposee
+      j = voisin(i, j, rs, N);
+      norm_j = norm(L[j]);
+      printf("j=(%ld,%ld); norm_j = %g  norm_i = %g  cosmax = %g; dij = %g; "
+             "d*c = %g\n",
+             j % rs, j / rs, norm_j, norm_i, cosmax, dij, dij * cosB);
+      if ((double)(norm_j - norm_i) < ((double)(dij)*cosB)) {
+        // M[i] = L[i].x * L[i].x + L[i].y * L[i].y;
+        M[i] = 255;
+      } else {
+        M[i] = 0;
       }
-    } // for (k = 0; k < 8; k += 1)
-    j = (j + 4) % 8; // cherche l'amont dans la direction opposee
-    j = voisin(i, j, rs, N);
-    norm_j = norm(L[j]);
-    printf("j=(%ld,%ld); norm_j = %g  norm_i = %g  cosmax = %g; dij = %g; d*c = %g\n", 
-        j%rs, j/rs, norm_j, norm_i, cosmax, dij, dij*cosB);
-    if ((double)(norm_j - norm_i) < ((double)(dij) * cosB)) 
-      //M[i] = L[i].x * L[i].x + L[i].y * L[i].y;
-      M[i]=255;
-    else 
-      M[i] = 0;
+    }
   }
   free(L);
   return(1);
@@ -235,7 +242,13 @@ int32_t lmedialaxis_lmedax_meyer(struct xvimage *img,   /* donnee: image binaire
   }
   inv = copyimage(img);
   I = UCHARDATA(inv);
-  for (x = 0; x < N; x++) if (I[x]) I[x] = 0; else I[x] = NDG_MAX;
+  for (x = 0; x < N; x++) {
+    if (I[x]) {
+      I[x] = 0;
+    } else {
+      I[x] = NDG_MAX;
+    }
+  }
   if (! ldisteuc(inv, res)) // calcule la fonction distance
   {
     fprintf(stderr, "%s: ldist failed\n", F_NAME);
@@ -262,7 +275,9 @@ int32_t lmedialaxis_lmedax_meyer(struct xvimage *img,   /* donnee: image binaire
     for (k = 0; k < 8; k += incr_vois)
     {
         y = voisin(x, k, rs, N);
-        if ((y != -1) && (H[y] < inf)) inf = H[y];
+        if ((y != -1) && (H[y] < inf)) {
+          inf = H[y];
+        }
     } /* for k */
     M[x] = inf;
   }
@@ -274,14 +289,21 @@ int32_t lmedialaxis_lmedax_meyer(struct xvimage *img,   /* donnee: image binaire
     for (k = 0; k < 8; k += incr_vois)
     {
         y = voisin(x, k, rs, N);
-        if ((y != -1) && (H[y] > sup)) sup = H[y];
+        if ((y != -1) && (H[y] > sup)) {
+          sup = H[y];
+        }
     } /* for k */
     M[x] = sup;
   }
   free(H);
   // detection des centres de BM
-  for (x = 0; x < N; x++)
-    if (F[x] && (M[x] < D[x])) M[x] = D[x]; else M[x] = 0;  
+  for (x = 0; x < N; x++) {
+    if (F[x] && (M[x] < D[x])) {
+      M[x] = D[x];
+    } else {
+      M[x] = 0;
+    }
+  }
   free(D);
   return(1);
 } // lmedialaxis_lmedax_meyer()
@@ -313,7 +335,13 @@ int32_t lmedialaxis_lmedax_meyer3d(struct xvimage *img,   /* donnee: image binai
 
   inv = copyimage(img);
   I = UCHARDATA(inv);
-  for (x = 0; x < N; x++) if (I[x]) I[x] = 0; else I[x] = NDG_MAX;
+  for (x = 0; x < N; x++) {
+    if (I[x]) {
+      I[x] = 0;
+    } else {
+      I[x] = NDG_MAX;
+    }
+  }
   if (! ldisteuc3d(inv, res)) // calcule la fonction distance
   {
     fprintf(stderr, "%s: ldist failed\n", F_NAME);
@@ -340,7 +368,9 @@ int32_t lmedialaxis_lmedax_meyer3d(struct xvimage *img,   /* donnee: image binai
     for (k = 0; k <= 10; k += 2)
     {
         y = voisin6(x, k, rs, ps, N);
-        if ((y != -1) && (H[y] < inf)) inf = H[y];
+        if ((y != -1) && (H[y] < inf)) {
+          inf = H[y];
+        }
     } /* for k */
     M[x] = inf;
   }
@@ -352,14 +382,21 @@ int32_t lmedialaxis_lmedax_meyer3d(struct xvimage *img,   /* donnee: image binai
     for (k = 0; k <= 10; k += 2)
     {
         y = voisin6(x, k, rs, ps, N);
-        if ((y != -1) && (H[y] > sup)) sup = H[y];
+        if ((y != -1) && (H[y] > sup)) {
+          sup = H[y];
+        }
     } /* for k */
     M[x] = sup;
   }
   free(H);
   // detection des centres de BM
-  for (x = 0; x < N; x++)
-    if (F[x] && (M[x] < D[x])) M[x] = D[x]; else M[x] = 0;  
+  for (x = 0; x < N; x++) {
+    if (F[x] && (M[x] < D[x])) {
+      M[x] = D[x];
+    } else {
+      M[x] = 0;
+    }
+  }
   free(D);
   return(1);
 } // lmedialaxis_lmedax_meyer3d()
@@ -397,10 +434,26 @@ int32_t lmedialaxis_lmedax_mc(struct xvimage *f)
 
   if (ds == 1)
   {
-      for (i = 0; i < N; i++) if (F[i]) F[i] = 0; else F[i] = NDG_MAX; // inverse
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 0;
+      } else {
+        F[i] = NDG_MAX; // inverse
+      }
+    }
       ldisteuc(f, dist);
-      for (i = 0; i < N; i++) if (F[i]) F[i] = 0; else F[i] = NDG_MAX; // inverse
-      for (i = 0; i < N; i++) if (D[i] > rmax) rmax = D[i];
+      for (i = 0; i < N; i++) {
+        if (F[i]) {
+          F[i] = 0;
+        } else {
+          F[i] = NDG_MAX; // inverse
+        }
+      }
+      for (i = 0; i < N; i++) {
+        if (D[i] > rmax) {
+          rmax = D[i];
+        }
+      }
       freeimage(dist);
 #ifdef VERBOSE
         printf("rmax = %d\n", rmax);
@@ -417,7 +470,9 @@ int32_t lmedialaxis_lmedax_mc(struct xvimage *f)
           fprintf(stderr, "%s: ball radius > %d\n", F_NAME, NDG_MAX);
           return(0);
         }
-        for (i = 0; i < N; i++) T1[i] = NDG_MAX;
+        for (i = 0; i < N; i++) {
+          T1[i] = NDG_MAX;
+        }
 #ifdef EXACT
 	// ATTENTION: algorithme naif extremement couteux !
         for (k = 1; k <= rmax; k++)
@@ -432,22 +487,46 @@ int32_t lmedialaxis_lmedax_mc(struct xvimage *f)
 #else
         copy2image(tmp2, f);
         lopenball(tmp2, r+1, 0);
-        for (i = 0; i < N; i++) if (T2[i]) T2[i] = NDG_MIN; else T2[i] = NDG_MAX; // inverse
+        for (i = 0; i < N; i++) {
+          if (T2[i]) {
+            T2[i] = NDG_MIN;
+          } else {
+            T2[i] = NDG_MAX; // inverse
+          }
+        }
         ldilatball(tmp2, r, 0);
 #endif
         copy2image(tmp1, f);
         lerosball(tmp1, r, 0);
-        for (i = 0; i < N; i++) 
-          if (T1[i] && T2[i]) // intersection
-            R[i] = r+1;
+        for (i = 0; i < N; i++) {
+          if (T1[i] && T2[i]) { // intersection
+            R[i] = r + 1;
+          }
+        }
       } // for r
   }
   else // 3D
   {
-      for (i = 0; i < N; i++) if (F[i]) F[i] = 0; else F[i] = NDG_MAX; // inverse
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 0;
+      } else {
+        F[i] = NDG_MAX; // inverse
+      }
+    }
       ldisteuc3d(f, dist);
-      for (i = 0; i < N; i++) if (F[i]) F[i] = 0; else F[i] = NDG_MAX; // inverse
-      for (i = 0; i < N; i++) if (D[i] > rmax) rmax = D[i];
+      for (i = 0; i < N; i++) {
+        if (F[i]) {
+          F[i] = 0;
+        } else {
+          F[i] = NDG_MAX; // inverse
+        }
+      }
+      for (i = 0; i < N; i++) {
+        if (D[i] > rmax) {
+          rmax = D[i];
+        }
+      }
       freeimage(dist);
 #ifdef VERBOSE
         printf("rmax = %d\n", rmax);
@@ -464,7 +543,9 @@ int32_t lmedialaxis_lmedax_mc(struct xvimage *f)
           fprintf(stderr, "%s: ball radius > %d\n", F_NAME, NDG_MAX);
           return(0);
         }
-        for (i = 0; i < N; i++) T1[i] = NDG_MAX;
+        for (i = 0; i < N; i++) {
+          T1[i] = NDG_MAX;
+        }
 #ifdef EXACT
 	// ATTENTION: algorithme naif extremement couteux !
         for (k = 1; k <= rmax; k++)
@@ -479,14 +560,22 @@ int32_t lmedialaxis_lmedax_mc(struct xvimage *f)
 #else
         copy2image(tmp2, f);
         lopenball(tmp2, r+1, 0);
-        for (i = 0; i < N; i++) if (T2[i]) T2[i] = NDG_MIN; else T2[i] = NDG_MAX; // inverse
+        for (i = 0; i < N; i++) {
+          if (T2[i]) {
+            T2[i] = NDG_MIN;
+          } else {
+            T2[i] = NDG_MAX; // inverse
+          }
+        }
         ldilatball(tmp2, r, 0);
 #endif
         copy2image(tmp1, f);
         lerosball(tmp1, r, 0);
-        for (i = 0; i < N; i++) 
-          if (T1[i] && T2[i]) // intersection
-            R[i] = r+1;
+        for (i = 0; i < N; i++) {
+          if (T1[i] && T2[i]) { // intersection
+            R[i] = r + 1;
+          }
+        }
       } // for r
   }
 
@@ -537,7 +626,9 @@ int32_t callcheckR(int32_t distance,MaskG M)
 //----------------------------------
 {
   int32_t count=0;
-  while (distance>=(M[count].RR)) count++;
+  while (distance >= (M[count].RR)) {
+    count++;
+  }
   return count;
 }
 
@@ -548,7 +639,11 @@ int32_t RadiusMax(uint32_t * gg, int32_t rs, int32_t cs, int32_t ds)  //rs=width
 {
     int32_t i, n = rs*cs*ds;
     uint32_t max = 0;
-    for (i = 0; i < n; i++) if (gg[i] > max) max = gg[i];
+    for (i = 0; i < n; i++) {
+      if (gg[i] > max) {
+        max = gg[i];
+      }
+    }
     return max;
 }
 
@@ -680,8 +775,10 @@ int32_t CallMedial(int32_t x, int32_t y, uint32_t *image, int32_t rs, int32_t cs
     for(j = 0; j < nb; j++)
     {
       xx = x + MgN1.neig[j].x; 
-      yy = y + MgN1.neig[j].y; 
-      if (image[xx*rs + yy] >= Lut[t*nbcollut + dist]) return 0;
+      yy = y + MgN1.neig[j].y;
+      if (image[xx * rs + yy] >= Lut[t * nbcollut + dist]) {
+        return 0;
+      }
     }
   }	
   return 1;
@@ -703,8 +800,10 @@ int32_t CallMedial3d(int32_t x, int32_t y, int32_t z, uint32_t *image, int32_t r
     {
       xx = x + MgN1.neig[j].x; 
       yy = y + MgN1.neig[j].y; 
-      zz = z + MgN1.neig[j].z; 
-      if (image[xx*ps + yy*rs + zz] >= Lut[t*nbcollut + dist]) return 0;
+      zz = z + MgN1.neig[j].z;
+      if (image[xx * ps + yy * rs + zz] >= Lut[t * nbcollut + dist]) {
+        return 0;
+      }
     }
   }	
   return 1;
@@ -806,8 +905,9 @@ from the article: " Exact Medial Axis With Euclidean Distance"
     }
     for (i = 0; i < numb; i++)
     {
-      for (j = 0; j < rknown; j++)
-	fscanf(fd,"%d",&(LutColumn1[i*rknown + j]));
+      for (j = 0; j < rknown; j++) {
+        fscanf(fd, "%d", &(LutColumn1[i * rknown + j]));
+      }
     }
     fclose (fd);
 
@@ -838,11 +938,13 @@ from the article: " Exact Medial Axis With Euclidean Distance"
 	if(image1[i*rs + j]!=0)
 	{
 	  distance=image1[i*rs + j];
-	  if (CallMedial(i, j, image1, rs, cs, MgL1, LutColumn1, rknown, rmax))	 
-	    imagemedial[i*rs + j] = distance;
-	}
-	else 
-	  imagemedial[i*rs + j] = 0;
+          if (CallMedial(i, j, image1, rs, cs, MgL1, LutColumn1, rknown,
+                         rmax)) {
+            imagemedial[i * rs + j] = distance;
+          }
+        } else {
+          imagemedial[i * rs + j] = 0;
+        }
       }
     }
 #ifdef CHRONO
@@ -885,8 +987,9 @@ from the article: " Exact Medial Axis With Euclidean Distance"
     }
     for (i = 0; i < numb; i++)
     {
-      for (j = 0; j < rknown; j++)
-	fscanf(fd,"%d",&(LutColumn1[i*rknown + j]));
+      for (j = 0; j < rknown; j++) {
+        fscanf(fd, "%d", &(LutColumn1[i * rknown + j]));
+      }
     }
     fclose (fd);
 
@@ -919,9 +1022,11 @@ from the article: " Exact Medial Axis With Euclidean Distance"
 	  if (image1[i*ps + j*rs + k] != 0)
 	  {
 	    distance=image1[i*ps + j*rs + k];
-	    if (CallMedial3d(i, j, k, image1, rs, cs, ds, MgL1, LutColumn1, rknown, rmax))	 
-	      imagemedial[i*ps + j*rs + k] = distance;
-	  }
+            if (CallMedial3d(i, j, k, image1, rs, cs, ds, MgL1, LutColumn1,
+                             rknown, rmax)) {
+              imagemedial[i * ps + j * rs + k] = distance;
+            }
+          }
 	}
       }
     }
@@ -1025,7 +1130,13 @@ int32_t lmedialaxis_lmedialaxis(struct xvimage *f, int32_t mode, struct xvimage 
     {
       struct xvimage *dist;
       uint32_t *T1;
-      for (i = 0; i < N; i++) if (F[i]) F[i] = NDG_MIN; else F[i] = NDG_MAX; // inverse et seuille a 1 
+      for (i = 0; i < N; i++) {
+        if (F[i]) {
+          F[i] = NDG_MIN;
+        } else {
+          F[i] = NDG_MAX; // inverse et seuille a 1
+        }
+      }
       if (! ldist(f, 4, medial)) // calcule la fonction distance
       {
         fprintf(stderr, "%s: ldist failed\n", F_NAME);
@@ -1038,9 +1149,13 @@ int32_t lmedialaxis_lmedialaxis(struct xvimage *f, int32_t mode, struct xvimage 
         return(0);
       }
       T1 = ULONGDATA(dist);
-      for (i = 0; i < N; i++) 
-        if ((T1[i] == 0) && (F[i] == 0)) ; // F[i] = D[i]; 
-        else D[i] = 0; 
+      for (i = 0; i < N; i++) {
+        if ((T1[i] == 0) && (F[i] == 0)) {
+          ; // F[i] = D[i];
+        } else {
+          D[i] = 0;
+        }
+      }
       freeimage(dist);
     }
     else
@@ -1048,7 +1163,13 @@ int32_t lmedialaxis_lmedialaxis(struct xvimage *f, int32_t mode, struct xvimage 
     {
       struct xvimage *dist;
       uint32_t *T1;
-      for (i = 0; i < N; i++) if (F[i]) F[i] = NDG_MIN; else F[i] = NDG_MAX; // inverse et seuille a 1 
+      for (i = 0; i < N; i++) {
+        if (F[i]) {
+          F[i] = NDG_MIN;
+        } else {
+          F[i] = NDG_MAX; // inverse et seuille a 1
+        }
+      }
       if (! ldist(f, 8, medial)) // calcule la fonction distance
       {
         fprintf(stderr, "%s: ldist failed\n", F_NAME);
@@ -1061,9 +1182,13 @@ int32_t lmedialaxis_lmedialaxis(struct xvimage *f, int32_t mode, struct xvimage 
         return(0);
       }
       T1 = ULONGDATA(dist);
-      for (i = 0; i < N; i++) 
-        if ((T1[i] == 0) && (F[i] == 0)) ; // F[i] = D[i]; 
-        else D[i] = 0; 
+      for (i = 0; i < N; i++) {
+        if ((T1[i] == 0) && (F[i] == 0)) {
+          ; // F[i] = D[i];
+        } else {
+          D[i] = 0;
+        }
+      }
       freeimage(dist);
     }
     else
@@ -1071,7 +1196,13 @@ int32_t lmedialaxis_lmedialaxis(struct xvimage *f, int32_t mode, struct xvimage 
     {
       struct xvimage *dist;
       uint32_t *T1;
-      for (i = 0; i < N; i++) if (F[i]) F[i] = NDG_MIN; else F[i] = NDG_MAX; // inverse et seuille a 1 
+      for (i = 0; i < N; i++) {
+        if (F[i]) {
+          F[i] = NDG_MIN;
+        } else {
+          F[i] = NDG_MAX; // inverse et seuille a 1
+        }
+      }
       if (! ldist(f, 6, medial)) // calcule la fonction distance
       {
         fprintf(stderr, "%s: ldist failed\n", F_NAME);
@@ -1084,9 +1215,13 @@ int32_t lmedialaxis_lmedialaxis(struct xvimage *f, int32_t mode, struct xvimage 
         return(0);
       }
       T1 = ULONGDATA(dist);
-      for (i = 0; i < N; i++) 
-        if ((T1[i] == 0) && (F[i] == 0)) ; // F[i] = D[i]; 
-        else D[i] = 0; 
+      for (i = 0; i < N; i++) {
+        if ((T1[i] == 0) && (F[i] == 0)) {
+          ; // F[i] = D[i];
+        } else {
+          D[i] = 0;
+        }
+      }
       freeimage(dist);
     }
     else
@@ -1094,7 +1229,13 @@ int32_t lmedialaxis_lmedialaxis(struct xvimage *f, int32_t mode, struct xvimage 
     {
       struct xvimage *dist;
       uint32_t *T1;
-      for (i = 0; i < N; i++) if (F[i]) F[i] = NDG_MIN; else F[i] = NDG_MAX; // inverse et seuille a 1 
+      for (i = 0; i < N; i++) {
+        if (F[i]) {
+          F[i] = NDG_MIN;
+        } else {
+          F[i] = NDG_MAX; // inverse et seuille a 1
+        }
+      }
       if (! ldist(f, 26, medial)) // calcule la fonction distance
       {
         fprintf(stderr, "%s: ldist failed\n", F_NAME);
@@ -1107,9 +1248,13 @@ int32_t lmedialaxis_lmedialaxis(struct xvimage *f, int32_t mode, struct xvimage 
         return(0);
       }
       T1 = ULONGDATA(dist);
-      for (i = 0; i < N; i++) 
-        if ((T1[i] == 0) && (F[i] == 0)) ; // F[i] = D[i]; 
-        else D[i] = 0; 
+      for (i = 0; i < N; i++) {
+        if ((T1[i] == 0) && (F[i] == 0)) {
+          ; // F[i] = D[i];
+        } else {
+          D[i] = 0;
+        }
+      }
       freeimage(dist);
     }
     else
@@ -1179,7 +1324,13 @@ int32_t lmedialaxis_lmedialaxisbin(struct xvimage *f, int32_t mode)
     return(0);
   }
 
-  for (i = 0; i < N; i++) if (D[i]) F[i] = NDG_MAX; else F[i] = NDG_MIN;
+  for (i = 0; i < N; i++) {
+    if (D[i]) {
+      F[i] = NDG_MAX;
+    } else {
+      F[i] = NDG_MIN;
+    }
+  }
 
   freeimage(medial);
   return 1;
@@ -1198,10 +1349,9 @@ double MaximumAngle(int32_t xc, int32_t yc, ListPoint2D LPoints, int32_t count)
   countds++;
 #endif
 
-  if (count == 1)
+  if (count == 1) {
     MaxAngle = 1.0;
-  else
-  {
+  } else {
     MaxAngle = 100.00;
     for (i = 0; i < count-1; i++)
     {
@@ -1210,10 +1360,12 @@ double MaximumAngle(int32_t xc, int32_t yc, ListPoint2D LPoints, int32_t count)
       {
 	x2 = LPoints[j].xCoor; y2 = LPoints[j].yCoor;
 	cosi = ((xc-x1)*(xc-x2) + (yc-y1)*(yc-y2)) /
-	  sqrt(((xc-x1)*(xc-x1) + (yc-y1)*(yc-y1)) * ((xc-x2)*(xc-x2) + (yc-y2)*(yc-y2)));	
-	if (cosi<MaxAngle) MaxAngle=cosi;
+	  sqrt(((xc-x1)*(xc-x1) + (yc-y1)*(yc-y1)) * ((xc-x2)*(xc-x2) + (yc-y2)*(yc-y2)));
+        if (cosi < MaxAngle) {
+          MaxAngle = cosi;
+        }
       }
-    }	
+    }
   }
   return MaxAngle;
 } // MaximumAngle()
@@ -1231,10 +1383,9 @@ double MaximumAngle3d(int32_t xc, int32_t yc, int32_t zc, ListPoint3D LPoints, i
   countds++;
 #endif
 
-  if (count == 1)
+  if (count == 1) {
     MaxAngle = 1.0;
-  else
-  {
+  } else {
     MaxAngle = 100.00;
     for (i = 0; i < count-1; i++)
     {
@@ -1244,10 +1395,12 @@ double MaximumAngle3d(int32_t xc, int32_t yc, int32_t zc, ListPoint3D LPoints, i
 	x2 = LPoints[j].xCoor; y2 = LPoints[j].yCoor; z2 = LPoints[j].zCoor;
 	cosi = ((xc-x1)*(xc-x2) + (yc-y1)*(yc-y2) + (zc-z1)*(zc-z2)) /
 	       sqrt(((xc-x1)*(xc-x1) + (yc-y1)*(yc-y1) + (zc-z1)*(zc-z1)) * 
-		    ((xc-x2)*(xc-x2) + (yc-y2)*(yc-y2) + (zc-z2)*(zc-z2)));	
-	if (cosi<MaxAngle) MaxAngle=cosi;
+		    ((xc-x2)*(xc-x2) + (yc-y2)*(yc-y2) + (zc-z2)*(zc-z2)));
+        if (cosi < MaxAngle) {
+          MaxAngle = cosi;
+        }
       }
-    }	
+    }
   }
   return MaxAngle;
 } // MaximumAngle3d()
@@ -1392,9 +1545,13 @@ double lmedialaxis_ComputeAngle(int32_t x, int32_t y, uint32_t *image,
     if (X[k] < rs && Y[k] < cs && X[k] >= 0 && Y[k] >= 0)
     {
       i = (int32_t)(image[Y[k]*rs + X[k]]);
-      if (i == 0) goto endfor;
+      if (i == 0) {
+        goto endfor;
+      }
 #ifdef VARIANTE_GB
-      if (i > image[y*rs + x]) goto endfor;
+      if (i > image[y * rs + x]) {
+        goto endfor;
+      }
 #endif
 #ifdef PARANO
       if (i >= nval)
@@ -1415,10 +1572,14 @@ double lmedialaxis_ComputeAngle(int32_t x, int32_t y, uint32_t *image,
 	  rr = (int32_t)(image[yy*rs + xx]);
 	  
 	  if (rr == 0) // if one zero is found
-	  { 
-	    for (c = 0; c < counter; c++) // check:if the value already exists, no need to store it
-	      if (xx==Aval[c].xCoor && yy==Aval[c].yCoor) goto skip;
-	    Aval[counter].xCoor=xx; Aval[counter].yCoor=yy; counter++;		
+	  {
+            for (c = 0; c < counter; c++) { // check:if the value already
+                                            // exists, no need to store it
+              if (xx == Aval[c].xCoor && yy == Aval[c].yCoor) {
+                goto skip;
+              }
+            }
+            Aval[counter].xCoor=xx; Aval[counter].yCoor=yy; counter++;		
 #ifdef STATVOR
 	    if (k == 0) countvor++;
 #endif
@@ -1492,9 +1653,13 @@ double lmedialaxis_ComputeAngle3d (int32_t x, int32_t y, int32_t z, uint32_t *im
     if (X[k] < rs && Y[k] < cs && Z[k] < ds && X[k] >= 0 && Y[k] >= 0 && Z[k] >= 0)
     {
       i = (int32_t)(image[Z[k]*ps + Y[k]*rs + X[k]]);
-      if (i == 0) goto endfor;
+      if (i == 0) {
+        goto endfor;
+      }
 #ifdef VARIANTE_GB
-      if (i > image[z*ps + y*rs + x]) goto endfor;
+      if (i > image[z * ps + y * rs + x]) {
+        goto endfor;
+      }
 #endif
 #ifdef PARANO
       if (i >= nval)
@@ -1519,11 +1684,15 @@ double lmedialaxis_ComputeAngle3d (int32_t x, int32_t y, int32_t z, uint32_t *im
 	  rr = (int32_t)(image[zz*ps + yy*rs + xx]);
 	  
 	  if (rr == 0) // if one zero is found
-	  { 
-	    for (c = 0; c < counter; c++) // check:if the value already exists, no need to store it
-	      if ((xx == Aval[c].xCoor) && (yy == Aval[c].yCoor) && (zz == Aval[c].zCoor))
-		goto stoploops;
-	    Aval[counter].xCoor = xx;
+	  {
+            for (c = 0; c < counter; c++) { // check:if the value already
+                                            // exists, no need to store it
+              if ((xx == Aval[c].xCoor) && (yy == Aval[c].yCoor) &&
+                  (zz == Aval[c].zCoor)) {
+                goto stoploops;
+              }
+            }
+            Aval[counter].xCoor = xx;
 	    Aval[counter].yCoor = yy;
 	    Aval[counter].zCoor = zz;
 	    counter++;		
@@ -1625,8 +1794,11 @@ int32_t lmedialaxis_lbisector(struct xvimage *id, struct xvimage *im, struct xvi
   }    
 
   distmax = 0;  // calcule la distance max dans l'image de distance
-  for (i = 0; i < N; i++)
-    if ((imagemask[i] != 0) && (imagedist[i] > distmax)) distmax = imagedist[i];
+  for (i = 0; i < N; i++) {
+    if ((imagemask[i] != 0) && (imagedist[i] > distmax)) {
+      distmax = imagedist[i];
+    }
+  }
   distmax++;
 
   if (ds == 1) // 2D
@@ -1660,7 +1832,9 @@ int32_t lmedialaxis_lbisector(struct xvimage *id, struct xvimage *im, struct xvi
       fprintf(stderr, "%s: malloc failed\n", F_NAME);
       return(0);
     }
-    for (i = 0; i <= distmax+1; i++) fscanf(fd,"%d", &TabIndDec[i]);
+    for (i = 0; i <= distmax + 1; i++) {
+      fscanf(fd, "%d", &TabIndDec[i]);
+    }
     npointsmax = TabIndDec[distmax];
     fclose(fd);
 
@@ -1685,22 +1859,24 @@ int32_t lmedialaxis_lbisector(struct xvimage *id, struct xvimage *im, struct xvi
       fprintf(stderr, "%s: malloc failed\n", F_NAME);
       return(0);
     }
-    for (i = 0; i < npointsmax; i++) fscanf(fd,"%d%d", &ListDecs[i].x, &ListDecs[i].y);
+    for (i = 0; i < npointsmax; i++) {
+      fscanf(fd, "%d%d", &ListDecs[i].x, &ListDecs[i].y);
+    }
     fclose (fd);
 #ifdef VERBOSE
 printf("distmax = %d ; nval = %d ; npointsmax = %d ; npoints = %d\n", distmax, nval, npointsmax, npoints);
 #endif
-    for (j = 0; j < cs; j++)
-      for (i = 0; i < rs; i++)
-      {
-	if (imagemask[j*rs + i] != 0)
-        {
-	  angle = lmedialaxis_ComputeAngle(i, j, imagedist, rs, cs, TabIndDec, nval, ListDecs, Aval);
-	  imageangle[j*rs + i] = (float)acos(angle);				
-	}
-	else
-	  imageangle[j*rs + i] = 0.0;
-      }
+for (j = 0; j < cs; j++) {
+  for (i = 0; i < rs; i++) {
+    if (imagemask[j * rs + i] != 0) {
+      angle = lmedialaxis_ComputeAngle(i, j, imagedist, rs, cs, TabIndDec, nval,
+                                       ListDecs, Aval);
+      imageangle[j * rs + i] = (float)acos(angle);
+    } else {
+      imageangle[j * rs + i] = 0.0;
+    }
+  }
+}
     free(Aval);
   } // if (ds == 1)
   else // 3D
@@ -1734,7 +1910,9 @@ printf("distmax = %d ; nval = %d ; npointsmax = %d ; npoints = %d\n", distmax, n
       fprintf(stderr, "%s: malloc failed\n", F_NAME);
       return(0);
     }
-    for (i = 0; i <= distmax+1; i++) fscanf(fd,"%d", &TabIndDec[i]);
+    for (i = 0; i <= distmax + 1; i++) {
+      fscanf(fd, "%d", &TabIndDec[i]);
+    }
     npointsmax = TabIndDec[distmax];
     fclose(fd);
 
@@ -1759,24 +1937,27 @@ printf("distmax = %d ; nval = %d ; npointsmax = %d ; npoints = %d\n", distmax, n
       fprintf(stderr, "%s: malloc failed\n", F_NAME);
       return(0);
     }
-    for (i = 0; i < npointsmax; i++) fscanf(fd,"%d%d%d", &ListDecs[i].x, &ListDecs[i].y, &ListDecs[i].z);
+    for (i = 0; i < npointsmax; i++) {
+      fscanf(fd, "%d%d%d", &ListDecs[i].x, &ListDecs[i].y, &ListDecs[i].z);
+    }
     fclose (fd);
 #ifdef VERBOSE
 printf("distmax = %d ; nval = %d ; npointsmax = %d ; npoints = %d\n", distmax, nval, npointsmax, npoints);
 #endif
 
-    for (k = 0; k < ds; k++)
-      for (j = 0; j < cs; j++)
-	for (i = 0; i < rs; i++)
-        {
-	  if (imagemask[k*ps + j*rs + i] != 0)
-          {
-	    angle = lmedialaxis_ComputeAngle3d(i, j, k, imagedist, rs, cs, ds, TabIndDec, nval, ListDecs, Aval);
-	    imageangle[k*ps + j*rs + i] = (float)acos(angle);				
-	  }
-	  else
-	    imageangle[k*ps + j*rs + i] = 0.0;
-	}
+for (k = 0; k < ds; k++) {
+  for (j = 0; j < cs; j++) {
+    for (i = 0; i < rs; i++) {
+      if (imagemask[k * ps + j * rs + i] != 0) {
+        angle = lmedialaxis_ComputeAngle3d(i, j, k, imagedist, rs, cs, ds,
+                                           TabIndDec, nval, ListDecs, Aval);
+        imageangle[k * ps + j * rs + i] = (float)acos(angle);
+      } else {
+        imageangle[k * ps + j * rs + i] = 0.0;
+      }
+    }
+  }
+}
 
     free(Aval);
   } // else (3D)
@@ -1870,17 +2051,27 @@ int32_t lmedialaxis_lbisector_talbot(struct xvimage * image, struct xvimage *ang
     return 0;
   }
 
-  for (i = 0; i < N; i++) // inverse l'image
-    if (F[i]) F[i] = 0; else F[i] = NDG_MAX;
-   
+  for (i = 0; i < N; i++) { // inverse l'image
+    if (F[i]) {
+      F[i] = 0;
+    } else {
+      F[i] = NDG_MAX;
+    }
+  }
+
   if (! ldistvect(F, L, rs, cs))
   {
     fprintf(stderr, "%s: ldistvect failed\n", F_NAME);
     return 0;
   }
 
-  for (i = 0; i < N; i++) // inverse l'image
-    if (F[i]) F[i] = 0; else F[i] = NDG_MAX;
+  for (i = 0; i < N; i++) { // inverse l'image
+    if (F[i]) {
+      F[i] = 0;
+    } else {
+      F[i] = NDG_MAX;
+    }
+  }
   for (j = 1; j < cs-1; j++)
   {
     for (i = 1; i < rs-1; i++)
@@ -1996,7 +2187,9 @@ int32_t lmedialaxis_Downstream(int32_t x, int32_t y, uint32_t *image,
   counter=0;
 
   i = (int32_t)(image[y*rs + x]);
-  if (i == 0) return 0;
+  if (i == 0) {
+    return 0;
+  }
   ti = TabIndDec[i];
   nbdec = TabIndDec[i+1] - ti;
   for(d = 0; d < nbdec; d++)
@@ -2008,10 +2201,14 @@ int32_t lmedialaxis_Downstream(int32_t x, int32_t y, uint32_t *image,
       xx = x + MgN1.neig[j].x; yy = y + MgN1.neig[j].y; 
       rr = (int32_t)(image[yy*rs + xx]);
       if (rr == 0) // if one zero is found
-      { 
-	for (c = 0; c < counter; c++) // check:if the value already exists, no need to store it
-	  if (xx==Aval[c].xCoor && yy==Aval[c].yCoor) goto skip;
-	Aval[counter].xCoor=xx; Aval[counter].yCoor=yy; counter++;
+      {
+        for (c = 0; c < counter;
+             c++) { // check:if the value already exists, no need to store it
+          if (xx == Aval[c].xCoor && yy == Aval[c].yCoor) {
+            goto skip;
+          }
+        }
+        Aval[counter].xCoor=xx; Aval[counter].yCoor=yy; counter++;
 #define VARIANTE
 #ifdef VARIANTE
 	return counter;
@@ -2052,7 +2249,9 @@ int32_t lmedialaxis_Downstream3d(int32_t x, int32_t y, int32_t z, uint32_t *imag
   counter=0;
 
   i = (int32_t)(image[z*ps + y*rs + x]);
-  if (i == 0) return 0;
+  if (i == 0) {
+    return 0;
+  }
   ti = TabIndDec[i];
   nbdec = TabIndDec[i+1] - ti;
   for(d = 0; d < nbdec; d++)
@@ -2068,10 +2267,15 @@ int32_t lmedialaxis_Downstream3d(int32_t x, int32_t y, int32_t z, uint32_t *imag
       zz = z + MgN1.neig[j].z; 
       rr = (int32_t)(image[zz*ps + yy*rs + xx]);
       if (rr == 0) // if one zero is found
-      { 
-	for (c = 0; c < counter; c++) // check:if the value already exists, no need to store it
-	  if (xx==Aval[c].xCoor && yy==Aval[c].yCoor && zz==Aval[c].zCoor) goto skip;
-	Aval[counter].xCoor=xx; 
+      {
+        for (c = 0; c < counter;
+             c++) { // check:if the value already exists, no need to store it
+          if (xx == Aval[c].xCoor && yy == Aval[c].yCoor &&
+              zz == Aval[c].zCoor) {
+            goto skip;
+          }
+        }
+        Aval[counter].xCoor=xx; 
 	Aval[counter].yCoor=yy; 
 	Aval[counter].zCoor=zz; 
 	counter++;
@@ -2121,8 +2325,12 @@ int32_t lmedialaxis_ExtendedDownstream(int32_t x, int32_t y, uint32_t *image,
     if (X[k] < rs && Y[k] < cs && X[k] >= 0 && Y[k] >= 0)
     {
       i = (int32_t)(image[Y[k]*rs + X[k]]);
-      if (i == 0) goto endfor;
-      if (i > image[y*rs + x]) goto endfor;
+      if (i == 0) {
+        goto endfor;
+      }
+      if (i > image[y * rs + x]) {
+        goto endfor;
+      }
 #ifdef PARANO
       if (i >= nval)
       {
@@ -2142,10 +2350,14 @@ int32_t lmedialaxis_ExtendedDownstream(int32_t x, int32_t y, uint32_t *image,
 	  rr = (int32_t)(image[yy*rs + xx]);
 	  
 	  if (rr == 0) // if one zero is found
-	  { 
-	    for (c = 0; c < counter; c++) // check:if the value already exists, no need to store it
-	      if (xx==Aval[c].xCoor && yy==Aval[c].yCoor) goto skip;
-	    Aval[counter].xCoor=xx; Aval[counter].yCoor=yy; counter++;		
+	  {
+            for (c = 0; c < counter; c++) { // check:if the value already
+                                            // exists, no need to store it
+              if (xx == Aval[c].xCoor && yy == Aval[c].yCoor) {
+                goto skip;
+              }
+            }
+            Aval[counter].xCoor=xx; Aval[counter].yCoor=yy; counter++;		
 	  skip: ;
 	  } // if (rr == 0)
 	} // for (j = 0; j < nb; j++)
@@ -2195,8 +2407,12 @@ int32_t lmedialaxis_ExtendedDownstream3d (int32_t x, int32_t y, int32_t z, uint3
     if (X[k] < rs && Y[k] < cs && Z[k] < ds && X[k] >= 0 && Y[k] >= 0 && Z[k] >= 0)
     {
       i = (int32_t)(image[Z[k]*ps + Y[k]*rs + X[k]]);
-      if (i == 0) goto endfor;
-      if (i > image[z*ps + y*rs + x]) goto endfor;
+      if (i == 0) {
+        goto endfor;
+      }
+      if (i > image[z * ps + y * rs + x]) {
+        goto endfor;
+      }
 #ifdef PARANO
       if (i >= nval)
       {
@@ -2220,11 +2436,15 @@ int32_t lmedialaxis_ExtendedDownstream3d (int32_t x, int32_t y, int32_t z, uint3
 	  rr = (int32_t)(image[zz*ps + yy*rs + xx]);
 	  
 	  if (rr == 0) // if one zero is found
-	  { 
-	    for (c = 0; c < counter; c++) // check:if the value already exists, no need to store it
-	      if ((xx == Aval[c].xCoor) && (yy == Aval[c].yCoor) && (zz == Aval[c].zCoor))
-		goto stoploops;
-	    Aval[counter].xCoor = xx;
+	  {
+            for (c = 0; c < counter; c++) { // check:if the value already
+                                            // exists, no need to store it
+              if ((xx == Aval[c].xCoor) && (yy == Aval[c].yCoor) &&
+                  (zz == Aval[c].zCoor)) {
+                goto stoploops;
+              }
+            }
+            Aval[counter].xCoor = xx;
 	    Aval[counter].yCoor = yy;
 	    Aval[counter].zCoor = zz;
 	    counter++;		
@@ -2298,8 +2518,11 @@ int32_t llambdamedialaxis(struct xvimage *dist, struct xvimage *lambda)
   razimage(lambda); // pour stocker le résulat
 
   distmax = 0;  // calcule la distance max dans l'image de distance
-  for (i = 0; i < N; i++)
-    if ((imagedist[i] > distmax)) distmax = imagedist[i];
+  for (i = 0; i < N; i++) {
+    if ((imagedist[i] > distmax)) {
+      distmax = imagedist[i];
+    }
+  }
   distmax++;
 
   if (ds == 1) // 2D
@@ -2332,7 +2555,9 @@ int32_t llambdamedialaxis(struct xvimage *dist, struct xvimage *lambda)
       fprintf(stderr, "%s: malloc failed\n", F_NAME);
       return(0);
     }
-    for (i = 0; i <= distmax+1; i++) fscanf(fd,"%d", &TabIndDec[i]);
+    for (i = 0; i <= distmax + 1; i++) {
+      fscanf(fd, "%d", &TabIndDec[i]);
+    }
     npointsmax = TabIndDec[distmax];
     fclose(fd);
 
@@ -2357,23 +2582,25 @@ int32_t llambdamedialaxis(struct xvimage *dist, struct xvimage *lambda)
       fprintf(stderr, "%s: malloc failed\n", F_NAME);
       return(0);
     }
-    for (i = 0; i < npointsmax; i++) fscanf(fd,"%d%d", &ListDecs[i].x, &ListDecs[i].y);
+    for (i = 0; i < npointsmax; i++) {
+      fscanf(fd, "%d%d", &ListDecs[i].x, &ListDecs[i].y);
+    }
     fclose (fd);
 #ifdef VERBOSE
 printf("distmax = %d ; nval = %d ; npointsmax = %d ; npoints = %d\n", distmax, nval, npointsmax, npoints);
 #endif
 
-    for (j = 0; j < cs; j++)
-      for (i = 0; i < rs; i++)
-      {
-	if (imagedist[j*rs + i] != 0)
-        {
-	  card_aval = lmedialaxis_ExtendedDownstream(i, j, imagedist, rs, cs, 
-				 TabIndDec, nval, ListDecs, Aval);	  
-	  compute_min_disk_with_border_constraint((double *)Aval, card_aval, NULL, 0, &c_x, &c_y, &c_r);
-	  imagelambda[j*rs + i] = (float)c_r;
-	}
-      }
+for (j = 0; j < cs; j++) {
+  for (i = 0; i < rs; i++) {
+    if (imagedist[j * rs + i] != 0) {
+      card_aval = lmedialaxis_ExtendedDownstream(
+          i, j, imagedist, rs, cs, TabIndDec, nval, ListDecs, Aval);
+      compute_min_disk_with_border_constraint((double *)Aval, card_aval, NULL,
+                                              0, &c_x, &c_y, &c_r);
+      imagelambda[j * rs + i] = (float)c_r;
+    }
+  }
+}
     free(Aval);
   } // if (ds == 1)
   else // 3D
@@ -2406,7 +2633,9 @@ printf("distmax = %d ; nval = %d ; npointsmax = %d ; npoints = %d\n", distmax, n
       fprintf(stderr, "%s: malloc failed\n", F_NAME);
       return(0);
     }
-    for (i = 0; i <= distmax+1; i++) fscanf(fd,"%d", &TabIndDec[i]);
+    for (i = 0; i <= distmax + 1; i++) {
+      fscanf(fd, "%d", &TabIndDec[i]);
+    }
     npointsmax = TabIndDec[distmax];
     fclose(fd);
 
@@ -2431,26 +2660,28 @@ printf("distmax = %d ; nval = %d ; npointsmax = %d ; npoints = %d\n", distmax, n
       fprintf(stderr, "%s: malloc failed\n", F_NAME);
       return(0);
     }
-    for (i = 0; i < npointsmax; i++) fscanf(fd,"%d%d%d", &ListDecs[i].x, &ListDecs[i].y, &ListDecs[i].z);
+    for (i = 0; i < npointsmax; i++) {
+      fscanf(fd, "%d%d%d", &ListDecs[i].x, &ListDecs[i].y, &ListDecs[i].z);
+    }
     fclose (fd);
 #ifdef VERBOSE
 printf("distmax = %d ; nval = %d ; npointsmax = %d ; npoints = %d\n", distmax, nval, npointsmax, npoints);
 #endif
 
-    for (k = 0; k < ds; k++)
-      for (j = 0; j < cs; j++)
-	for (i = 0; i < rs; i++)
-	{
-	  if (imagedist[k*ps + j*rs + i] != 0)
-	  {
-	    card_aval = lmedialaxis_ExtendedDownstream3d(i, j, k, imagedist, rs, cs, ds, 
-					   TabIndDec, nval, ListDecs, Aval);
+for (k = 0; k < ds; k++) {
+  for (j = 0; j < cs; j++) {
+    for (i = 0; i < rs; i++) {
+      if (imagedist[k * ps + j * rs + i] != 0) {
+        card_aval = lmedialaxis_ExtendedDownstream3d(
+            i, j, k, imagedist, rs, cs, ds, TabIndDec, nval, ListDecs, Aval);
 
-	    compute_min_sphere_with_border_constraint((double *)Aval, card_aval, NULL, 0, &c_x, &c_y, &c_z, &c_r);
-	    imagelambda[k*ps + j*rs + i] = (float)c_r;
-
-	  }
-	}
+        compute_min_sphere_with_border_constraint(
+            (double *)Aval, card_aval, NULL, 0, &c_x, &c_y, &c_z, &c_r);
+        imagelambda[k * ps + j * rs + i] = (float)c_r;
+      }
+    }
+  }
+}
 
     free(Aval);
   } // else (3D)
@@ -2528,8 +2759,12 @@ int32_t lmedialaxis_ExtendedDownstreamLambdaPrime(
     {
       j = Y[k]*rs + X[k];
       i = (int32_t)(image[j]);
-      if (i == 0) goto endfor;
-      if (i > image[y*rs + x]) goto endfor;
+      if (i == 0) {
+        goto endfor;
+      }
+      if (i > image[y * rs + x]) {
+        goto endfor;
+      }
       xx = vor[j] % rs;
       yy = vor[j] / rs;
       //      for (c = 0; c < counter; c++) // check:if the value already exists, no need to store it
@@ -2578,8 +2813,12 @@ int32_t lmedialaxis_ExtendedDownstream3dLambdaPrime(
     {
       j = Z[k]*ps + Y[k]*rs + X[k];
       i = (int32_t)(image[j]);
-      if (i == 0) goto endfor;
-      if (i > image[z*ps + y*rs + x]) goto endfor;
+      if (i == 0) {
+        goto endfor;
+      }
+      if (i > image[z * ps + y * rs + x]) {
+        goto endfor;
+      }
       xx = vor[j] % rs;
       yy = (vor[j] % ps) / rs;
       zz = (vor[j] / ps);
@@ -2672,7 +2911,7 @@ int32_t llambdaprimemedialaxis(struct xvimage *dist, struct xvimage *vor, struct
       return 0;
     }
 
-    for (j = 0; j < cs; j++)
+    for (j = 0; j < cs; j++) {
       for (i = 0; i < rs; i++)
       {
 	if (imagedist[j*rs + i] != 0)
@@ -2684,6 +2923,7 @@ int32_t llambdaprimemedialaxis(struct xvimage *dist, struct xvimage *vor, struct
 
 	}
       }
+    }
     free(Aval);
   } // if (ds == 1)
   else // 3D
@@ -2697,8 +2937,8 @@ int32_t llambdaprimemedialaxis(struct xvimage *dist, struct xvimage *vor, struct
       return 0;
     }
 
-    for (k = 0; k < ds; k++)
-      for (j = 0; j < cs; j++)
+    for (k = 0; k < ds; k++) {
+      for (j = 0; j < cs; j++) {
         for (i = 0; i < rs; i++)
       {
 	if (imagedist[k*ps + j*rs + i] != 0)
@@ -2709,7 +2949,9 @@ int32_t llambdaprimemedialaxis(struct xvimage *dist, struct xvimage *vor, struct
 	  imagelambda[k*ps + j*rs + i] = (float)c_r;
 
 	}
+        }
       }
+    }
     free(Aval3d);
   } // else (3D)
 
@@ -2770,21 +3012,28 @@ int32_t lmedialaxis_openingfunction(struct xvimage *image, int32_t mode, struct 
   //1. Look for all balls center and generate data structure with priority (bigger Radius first)
 	
   npoints=0;
-  for (i = 0; i < N; i++) if (R[i]) npoints++; 
+  for (i = 0; i < N; i++) {
+    if (R[i]) {
+      npoints++;
+    }
+  }
 
   X = (int32_t *)malloc(npoints * sizeof(int32_t)); assert(X != NULL);
   Y = (int32_t *)malloc(npoints * sizeof(int32_t)); assert(Y != NULL);
   Z = (int32_t *)malloc(npoints * sizeof(int32_t)); assert(Z != NULL);
 	
   i=0;
-  for(z = 0; z < ds; z++)
-    for(y = 0; y < cs; y++)
-      for(x = 0; x < rs; x++)
-	if (R[z*ps+rs*y+x]) 
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        if (R[z*ps+rs*y+x]) 
 	{
 	  X[i] = x; Y[i] = y; Z[i] = z; i++;
-	}
-	
+        }
+      }
+    }
+  }
+
   I= UCHARDATA(image);
   OF = ULONGDATA(result);
   razimage(result);
@@ -2798,14 +3047,12 @@ int32_t lmedialaxis_openingfunction(struct xvimage *image, int32_t mode, struct 
     ptrc = (index_t *)malloc(N* sizeof(index_t)); assert(ptrc != NULL);
 #endif
 
-    for(z = 0; z < ds; z++)
-    for(y = 0; y < cs; y++)
-    for(x = 0; x < rs; x++)
-    {
-      i = z*ps+rs*y+x;
-      if (I[i]) 
-      {
-	maxr = 0;
+    for (z = 0; z < ds; z++) {
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++) {
+          i = z * ps + rs * y + x;
+          if (I[i]) {
+            maxr = 0;
 #ifdef FEATURE
 	mind = INT32_MAX;
 #endif
@@ -2833,7 +3080,9 @@ int32_t lmedialaxis_openingfunction(struct xvimage *image, int32_t mode, struct 
 	ptrc[i] = cen;
 #endif
       }
-    }	
+    }
+      }
+    }
 
 #ifdef FEATURE
     if (! lsedt_meijster(image, radius)) // calcule la fonction distance
@@ -2953,10 +3202,16 @@ static uint32_t Partitionner(uint32_t *A, TypeCle *T, uint32_t p, uint32_t r)
   uint32_t j = r + 1;
   while (1)
   {
-    do j--; while (T[A[j]] > x);
-    do i++; while (T[A[i]] < x);
-    if (i < j) { t = A[i]; A[i] = A[j]; A[j] = t; }
-    else return j;
+    do {
+      j--;
+    } while (T[A[j]] > x);
+    do {
+      i++;
+    } while (T[A[i]] < x);
+    if (i < j) { t = A[i]; A[i] = A[j]; A[j] = t;
+    } else {
+      return j;
+    }
   } /* while (1) */   
 } /* Partitionner() */
 
@@ -3060,42 +3315,51 @@ int32_t lmedialaxis_scalefilteredmedialaxis(struct xvimage *image, double s, str
 
   // counts the number M of medial axis points
   M = 0;
-  for (p = 0; p < N; p++)
-    if (R[p] > 0) M++;
-  
+  for (p = 0; p < N; p++) {
+    if (R[p] > 0) {
+      M++;
+    }
+  }
+
   MAp = (index_t *)malloc(M * sizeof(index_t)); assert(MAp != NULL);
   MAr = (uint32_t *)malloc(M * sizeof(uint32_t)); assert(MAr != NULL);
   A   = (uint32_t *)malloc(M * sizeof(uint32_t)); assert(A != NULL);
-  for (i = 0; i < M; i++) A[i] = i;
-  for (i = 0, p = 0; p < N; p++) 
+  for (i = 0; i < M; i++) {
+    A[i] = i;
+  }
+  for (i = 0, p = 0; p < N; p++) {
     if (R[p] > 0)
     { 
       MAp[i] = p;
       MAr[i] = R[p];
       i++;
     }
+  }
   assert(i == M);
 
   // tri par ordre croissant des rayons  
   TriRapideStochastique (A, MAr, 0, M-1);
 
-  for (p = 0; p < N; p++) R[p] = 0;
+  for (p = 0; p < N; p++) {
+    R[p] = 0;
+  }
 
   if (ds == 1)
   {
     // foreach p in X do
-    for (p = 0; p < N; p++)
+    for (p = 0; p < N; p++) {
       if (I[p])
       {
 	i = M-1;
-	while ((i >= 0) && (
-			    dist(MAp[A[i]]%rs, MAp[A[i]]/rs, p%rs, p/rs) >=
-			    (s * sqrt((double)MAr[A[i]]))
-			    )
-	       ) 
-	  i--;
-	if (i >= 0) R[MAp[A[i]]] = MAr[A[i]];
+        while ((i >= 0) && (dist(MAp[A[i]] % rs, MAp[A[i]] / rs, p % rs,
+                                 p / rs) >= (s * sqrt((double)MAr[A[i]])))) {
+          i--;
+        }
+        if (i >= 0) {
+          R[MAp[A[i]]] = MAr[A[i]];
+        }
       } // if for
+    }
   } //   if (ds == 1)
   else
   {
@@ -3105,13 +3369,14 @@ int32_t lmedialaxis_scalefilteredmedialaxis(struct xvimage *image, double s, str
       if (I[p])
       {
 	i = M-1;
-	while ((i >= 0) && (
-			    dist3d(MAp[A[i]]%rs, (MAp[A[i]]%ps)/rs, MAp[A[i]]/ps, p%rs, (p%ps)/rs, p/ps) >=
-			    (s * sqrt((double)MAr[A[i]]))
-			   )
-	      ) 
-	  i--;
-	if (i >= 0) R[MAp[A[i]]] = MAr[A[i]];
+        while ((i >= 0) && (dist3d(MAp[A[i]] % rs, (MAp[A[i]] % ps) / rs,
+                                   MAp[A[i]] / ps, p % rs, (p % ps) / rs,
+                                   p / ps) >= (s * sqrt((double)MAr[A[i]])))) {
+          i--;
+        }
+        if (i >= 0) {
+          R[MAp[A[i]]] = MAr[A[i]];
+        }
       } // if
     } // for
   } //   if (ds == 1)

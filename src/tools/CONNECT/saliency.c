@@ -149,7 +149,9 @@ int main(int argc, char **argv)
   writeimage(result, argv[argc - 1]);
   freeimage(image);
   freeimage(result);
-  if (masque) freeimage(masque);
+  if (masque) {
+    freeimage(masque);
+  }
 
   return 0;
 } /* main */

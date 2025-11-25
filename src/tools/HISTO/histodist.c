@@ -138,14 +138,15 @@ int main(int argc, char **argv)
 
   fclose(fd);
 
-  if (argc == 5)
+  if (argc == 5) {
     type = atoi(argv[3]);
+  }
 
-  if (type == 0)
+  if (type == 0) {
     dist = lhisto_distance_ordinal (histo1, histo2, n1);
-  else
-    dist = lhisto_distance_modulo (histo1, histo2, n1);
-
+  } else {
+    dist = lhisto_distance_modulo(histo1, histo2, n1);
+  }
 
   fd = fopen(argv[argc - 1],"w");
   if (!fd)

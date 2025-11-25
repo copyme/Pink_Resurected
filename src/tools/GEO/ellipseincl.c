@@ -156,7 +156,9 @@ int main(int argc, char **argv)
       exit(1);
     }
   }
-  for (i = 0; i < N; i++) Im[i] = mcmax(Im[i],El[i]);
+  for (i = 0; i < N; i++) {
+    Im[i] = mcmax(Im[i], El[i]);
+  }
   writeimage(image, argv[argc-1]);
   freeimage(image);
   freeimage(ellipse);

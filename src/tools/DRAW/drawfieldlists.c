@@ -94,7 +94,9 @@ int main(int argc, char **argv)
   cs = colsize(image);
   ds = depth(image);
 
-  if (argc == 6) len = atof(argv[4]);
+  if (argc == 6) {
+    len = atof(argv[4]);
+  }
 
   fd = fopen(argv[1],"r");
   if (!fd)
@@ -111,8 +113,9 @@ int main(int argc, char **argv)
     X = (int32_t *)calloc(1,npoints*sizeof(int32_t)); assert(X != NULL);
     Y = (int32_t *)calloc(1,npoints*sizeof(int32_t)); assert(Y != NULL);
 
-    for (i = 0; i < npoints; i++)
+    for (i = 0; i < npoints; i++) {
       fscanf(fd, "%d %d", &(X[i]), &(Y[i]));
+    }
 
     fclose(fd);
 
@@ -132,8 +135,9 @@ int main(int argc, char **argv)
     tx = (double *)calloc(1,npoints*sizeof(double)); assert(tx != NULL);
     ty = (double *)calloc(1,npoints*sizeof(double)); assert(ty != NULL);
 
-    for (i = 0; i < npoints; i++)
+    for (i = 0; i < npoints; i++) {
       fscanf(fd, "%lg %lg", &(tx[i]), &(ty[i]));
+    }
 
     ldrawfield2dlist(npoints, X, Y, tx, ty, image, len);
 
@@ -152,8 +156,9 @@ int main(int argc, char **argv)
     Y = (int32_t *)calloc(1,npoints*sizeof(int32_t)); assert(Y != NULL);
     Z = (int32_t *)calloc(1,npoints*sizeof(int32_t)); assert(Z != NULL);
 
-    for (i = 0; i < npoints; i++)
+    for (i = 0; i < npoints; i++) {
       fscanf(fd, "%d %d %d", &(X[i]), &(Y[i]), &(Z[i]));
+    }
 
     fclose(fd);
 
@@ -174,8 +179,9 @@ int main(int argc, char **argv)
     ty = (double *)calloc(1,npoints*sizeof(double)); assert(ty != NULL);
     tz = (double *)calloc(1,npoints*sizeof(double)); assert(tz != NULL);
 
-    for (i = 0; i < npoints; i++)
+    for (i = 0; i < npoints; i++) {
       fscanf(fd, "%lf %lf %lf", &(tx[i]), &(ty[i]), &(tz[i]));
+    }
 
     fclose(fd);
 

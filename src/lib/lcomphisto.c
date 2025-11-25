@@ -85,9 +85,11 @@ int32_t lcomphisto(struct xvimage *image, int32_t n)
   }  
 
   nndg = 0;
-  for (i = NDG_MIN; i <= NDG_MAX; i++) 
-    if (histo[i])
+  for (i = NDG_MIN; i <= NDG_MAX; i++) {
+    if (histo[i]) {
       nndg++;
+    }
+  }
 
   if (n > nndg)
   {
@@ -102,7 +104,9 @@ int32_t lcomphisto(struct xvimage *image, int32_t n)
   k = 0;         /* nombre de niveaux non nuls deja traites */
   while (i <= NDG_MAX)
   {
-    while ((i <= NDG_MAX) && (histo[i] == 0)) i++; /* saute les niveaux nuls */
+    while ((i <= NDG_MAX) && (histo[i] == 0)) {
+      i++; /* saute les niveaux nuls */
+    }
     if ((double)k >= np) { j = i; np += p; }
     tabcor[i] = j;
     i++;
@@ -111,7 +115,9 @@ int32_t lcomphisto(struct xvimage *image, int32_t n)
 
   free(histo);
 
-  for (x = 0; x < N; x++) SOURCE[x] = tabcor[SOURCE[x]];
+  for (x = 0; x < N; x++) {
+    SOURCE[x] = tabcor[SOURCE[x]];
+  }
   return(1);
 }
 /* -library_code_end */

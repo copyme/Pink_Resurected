@@ -352,18 +352,18 @@ int32_t llpetoporeg(
     {
       fprintf(stderr,"lpetoporeg() : construction cbt : PAS DE cc DANS LE VOISINAGE !!!\n"); 
       
-      return(0);  
+      return(0);
     } else
 #endif
-    if (ncc == 1)
+        if (ncc == 1) {
       M[x] = etiqcc[0];
-    else
-    {
+    } else {
       newcell = CreateCell(CBT, &nbcell, nbmaxcell);
       M[x] = newcell;
       SetData(CBT, newcell, SOURCE[x]);    /* conceptuellement : SOURCE[x] + 1 */
-      for (i = 0; i < ncc; i++)
+      for (i = 0; i < ncc; i++) {
         SetFather(CBT, etiqcc[i], newcell);
+      }
     }
 
     for (k = 0; k < 8; k += 2)     /* parcourt les voisins en 4-connexite */
@@ -388,13 +388,17 @@ int32_t llpetoporeg(
   {
     for (i = 0; i < N; i++)
     {
-      if (i % rs == 0) fprintf(stderr,"\n");
+      if (i % rs == 0) {
+        fprintf(stderr, "\n");
+      }
       fprintf(stderr,"%3d ", SOURCE[i]);
     }
     fprintf(stderr,"\n");
     for (i = 0; i < N; i++)
     {
-      if (i % rs == 0) fprintf(stderr,"\n");
+      if (i % rs == 0) {
+        fprintf(stderr, "\n");
+      }
       fprintf(stderr,"%3d ", M[i]);
     }
     fprintf(stderr,"\n");
@@ -413,8 +417,9 @@ int32_t llpetoporeg(
 
   for (x = 0; x < N; x++)
   {
-    if ((M[x] >= nminima) && (T[M[x] - nminima]))
+    if ((M[x] >= nminima) && (T[M[x] - nminima])) {
       M[x] = T[M[x] - nminima];
+    }
   } /* for x */
 
   free(T);
@@ -425,7 +430,9 @@ int32_t llpetoporeg(
     PrintCbt(CBT, nbcell);
     for (i = 0; i < N; i++)
     {
-      if (i % rs == 0) fprintf(stderr,"\n");
+      if (i % rs == 0) {
+        fprintf(stderr, "\n");
+      }
       fprintf(stderr,"%3d ", M[i]);
     }
     fprintf(stderr,"\n");
@@ -458,8 +465,9 @@ int32_t llpetoporeg(
   /* il faut les nettoyer.  */
   for (x = nminima; x < nbcell - 1; x++) /* pas les feuilles, pas la racine */
   {
-    if ((FirstSon(CBT, x + 1) - FirstSon(CBT, x)) == 0)
+    if ((FirstSon(CBT, x + 1) - FirstSon(CBT, x)) == 0) {
       Label(CBT, x) = DISPARU;
+    }
   }
 
   FahFlush(FAH);
@@ -469,8 +477,10 @@ int32_t llpetoporeg(
     if (Data(CBT, Father(CBT, x)) - Data(CBT, x) < seuil)
     { 
 #ifdef TRACEREGUL
-          if (trace) fprintf(stderr,"%d: empile etiquette invalide %d au niveau 0\n", 
-                             tracedate++, x);
+      if (trace) {
+        fprintf(stderr, "%d: empile etiquette invalide %d au niveau 0\n",
+                tracedate++, x);
+      }
 #endif
       Label(CBT, x) = INVALIDE;
       FahPush(FAH, x, 0);
@@ -499,28 +509,36 @@ int32_t llpetoporeg(
       toutes_invalides = 1;
       for (j = 0; j < n; j++)
       {
-        if ((Label(CBT, I[y+j]) != INVALIDE) && (Label(CBT, I[y+j]) != DISPARU))
+        if ((Label(CBT, I[y + j]) != INVALIDE) &&
+            (Label(CBT, I[y + j]) != DISPARU)) {
           toutes_invalides = 0;
+        }
       } /* for (j... */
       if (toutes_invalides)
       {
         min = Data(CBT, x);
         for (j = 0; j < n; j++)
         {
-          if (Data(CBT, I[y+j]) < min) min = Data(CBT, I[y+j]);
+          if (Data(CBT, I[y + j]) < min) {
+            min = Data(CBT, I[y + j]);
+          }
           Label(CBT, I[y+j]) = DISPARU;
           T[I[y+j]] = k;
 #ifdef TRACEREGUL
-          if (trace) fprintf(stderr,"%d: etiquette disparait (1) %d, T[%d] = %d\n", 
-                             tracedate++, I[y+j], I[y+j], k);
+          if (trace) {
+            fprintf(stderr, "%d: etiquette disparait (1) %d, T[%d] = %d\n",
+                    tracedate++, I[y + j], I[y + j], k);
+          }
 #endif
         } /* for (j = 0; j < n; j++) */
         SetData(CBT, k, min);
         if ((Father(CBT, k) != NIL) && (Data(CBT, Father(CBT, k)) - Data(CBT, k) < seuil))
         {
 #ifdef TRACEREGUL
-          if (trace) fprintf(stderr,"%d: empile etiquette invalide %d au niveau %d\n", 
-                             tracedate++, k, i+1);
+          if (trace) {
+            fprintf(stderr, "%d: empile etiquette invalide %d au niveau %d\n",
+                    tracedate++, k, i + 1);
+          }
 #endif
           Label(CBT, k) = INVALIDE; 
           FahPush(FAH, k, i+1);
@@ -531,8 +549,10 @@ int32_t llpetoporeg(
         Label(CBT, x) = DISPARU;
         T[x] = Father(CBT, x);
 #ifdef TRACEREGUL
-          if (trace) fprintf(stderr,"%d: etiquette disparait (2) %d, T[%d] = %d\n", 
-                             tracedate++, x, x, Father(CBT, x));
+        if (trace) {
+          fprintf(stderr, "%d: etiquette disparait (2) %d, T[%d] = %d\n",
+                  tracedate++, x, x, Father(CBT, x));
+        }
 #endif
       } /* else if (toutes_invalides) */
     } /* if (Label(CBT, x) == INVALIDE) */
@@ -543,21 +563,27 @@ int32_t llpetoporeg(
     if (T[x] != 0)
     {
       k = x;
-      while (T[k] != 0) k = T[k];
+      while (T[k] != 0) {
+        k = T[k];
+      }
       T[x] = k;
     }
   }
 
-  for (x = 0; x < N; x++)      /* actualise les etiquettes image */
-    if (T[M[x]] != 0) M[x] = T[M[x]];
-
+  for (x = 0; x < N; x++) { /* actualise les etiquettes image */
+    if (T[M[x]] != 0) {
+      M[x] = T[M[x]];
+    }
+  }
 
 #ifdef TRACEIMAGE
   if (trace) 
   {
     for (i = 0; i < N; i++)
     {
-      if (i % rs == 0) fprintf(stderr,"\n");
+      if (i % rs == 0) {
+        fprintf(stderr, "\n");
+      }
       fprintf(stderr,"%3d ", M[i]);
     }
     fprintf(stderr,"\n");
@@ -570,7 +596,9 @@ int32_t llpetoporeg(
     PrintCbt(CBT, nbcell);
     for (i = 0; i < N; i++)
     {
-      if (i % rs == 0) fprintf(stderr,"\n");
+      if (i % rs == 0) {
+        fprintf(stderr, "\n");
+      }
       fprintf(stderr,"%3d ", M[i]);
     }
     fprintf(stderr,"\n");

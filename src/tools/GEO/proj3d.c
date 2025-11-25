@@ -108,7 +108,9 @@ int main(int argc, char **argv)
     exit(1);
   }
   Im = UCHARDATA(image);
-  for (i = 0; i < NI; i++) Im[i] = 0;
+  for (i = 0; i < NI; i++) {
+    Im[i] = 0;
+  }
 
   ndg = (float)NDG_MAX / 8;
   for (k = d-1; k >= 0; k--)
@@ -117,14 +119,16 @@ int main(int argc, char **argv)
     {
       x0 = (nplans - ((k*dz)+z)) * dx;
       y0 = (nplans - ((k*dz)+z)) * dy;
-      for (j = 0; j < cs; j++)
+      for (j = 0; j < cs; j++) {
         for (i = 0; i < rs; i++)
 	{
           x = (int32_t)(x0 + i);
           y = (int32_t)(y0 + j);
-          if (Im3d[k * n + j * rs + i]) 
+          if (Im3d[k * n + j * rs + i]) {
             Im[y * nrs + x] = (uint8_t)ndg;
-	}
+          }
+        }
+      }
       ndg += dndg;
     } /* for (z = 0; z < dz; z++) */
   } /* for (k = d-1; k >= 0; k--) */

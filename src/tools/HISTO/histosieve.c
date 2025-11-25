@@ -94,7 +94,11 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (argc == 4) writeimage(image, argv[argc-1]); else writeimage(image, argv[1]);
+  if (argc == 4) {
+    writeimage(image, argv[argc - 1]);
+  } else {
+    writeimage(image, argv[1]);
+  }
   freeimage(image);
 
   return 0;

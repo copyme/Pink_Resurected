@@ -72,16 +72,24 @@ void histscal(
     while ((i <= maxs) && (j <= maxd))
     {
 #ifdef CHECKBOUNDS
-if ((j < mind) || (j > maxd)) fprintf(stderr, "j OUT OF BOUNDS 1 : %d\n", j);
-if ((i < mins) || (i > maxs)) fprintf(stderr, "i OUT OF BOUNDS 1 : %d\n", i);
+      if ((j < mind) || (j > maxd)) {
+        fprintf(stderr, "j OUT OF BOUNDS 1 : %d\n", j);
+      }
+      if ((i < mins) || (i > maxs)) {
+        fprintf(stderr, "i OUT OF BOUNDS 1 : %d\n", i);
+      }
 #endif
       hd[j] = reste;
       flo = floor((j-mind+1) * f);
       while (((i-mins+1) <= flo) && (i <= maxs))
       {
 #ifdef CHECKBOUNDS
-if ((j < mind) || (j > maxd)) fprintf(stderr, "j OUT OF BOUNDS 2 : %d\n", j);
-if ((i < mins) || (i > maxs)) fprintf(stderr, "i OUT OF BOUNDS 2 : %d\n", i);
+        if ((j < mind) || (j > maxd)) {
+          fprintf(stderr, "j OUT OF BOUNDS 2 : %d\n", j);
+        }
+        if ((i < mins) || (i > maxs)) {
+          fprintf(stderr, "i OUT OF BOUNDS 2 : %d\n", i);
+        }
 #endif
         hd[j] += (double)hs[i];
         i++;
@@ -90,15 +98,20 @@ if ((i < mins) || (i > maxs)) fprintf(stderr, "i OUT OF BOUNDS 2 : %d\n", i);
       {
         flo1 = (j-mind+1)*f - flo;
 #ifdef CHECKBOUNDS
-if ((j < mind) || (j > maxd)) fprintf(stderr, "j OUT OF BOUNDS 3 : %d\n", j);
-if ((i < mins) || (i > maxs)) fprintf(stderr, "i OUT OF BOUNDS 3 : %d\n", i);
+        if ((j < mind) || (j > maxd)) {
+          fprintf(stderr, "j OUT OF BOUNDS 3 : %d\n", j);
+        }
+        if ((i < mins) || (i > maxs)) {
+          fprintf(stderr, "i OUT OF BOUNDS 3 : %d\n", i);
+        }
 #endif
         hd[j] += (double)hs[i] * flo1;
         reste =  (double)hs[i] * (1.0 - flo1);
         i++;
       } /* if (flo < j*f) */
-      else
+      else {
         reste = 0.0;
+      }
       j++;
     } /* while ((i <= maxs) && (j <= maxd)) */
     hd[maxd] += reste;
@@ -112,8 +125,12 @@ if ((i < mins) || (i > maxs)) fprintf(stderr, "i OUT OF BOUNDS 3 : %d\n", i);
     while ((j <= maxd) && (i <= maxs))
     {
 #ifdef CHECKBOUNDS
-if ((j < mind) || (j > maxd)) fprintf(stderr, "j OUT OF BOUNDS 4 : %d\n", j);
-if ((i < mins) || (i > maxs)) fprintf(stderr, "i OUT OF BOUNDS 4 : %d\n", i);
+      if ((j < mind) || (j > maxd)) {
+        fprintf(stderr, "j OUT OF BOUNDS 4 : %d\n", j);
+      }
+      if ((i < mins) || (i > maxs)) {
+        fprintf(stderr, "i OUT OF BOUNDS 4 : %d\n", i);
+      }
 #endif
       hd[j] += reste * hs[i] * f;
       j++;
@@ -121,8 +138,12 @@ if ((i < mins) || (i > maxs)) fprintf(stderr, "i OUT OF BOUNDS 4 : %d\n", i);
       while (((j-mind+1) <= flo) && (j <= maxd))
       {
 #ifdef CHECKBOUNDS
-if ((j < mind) || (j > maxd)) fprintf(stderr, "j OUT OF BOUNDS 5 : %d\n", j);
-if ((i < mins) || (i > maxs)) fprintf(stderr, "i OUT OF BOUNDS 5 : %d\n", i);
+        if ((j < mind) || (j > maxd)) {
+          fprintf(stderr, "j OUT OF BOUNDS 5 : %d\n", j);
+        }
+        if ((i < mins) || (i > maxs)) {
+          fprintf(stderr, "i OUT OF BOUNDS 5 : %d\n", i);
+        }
 #endif
         hd[j] = (double)hs[i] * f;
         j++;
@@ -131,8 +152,12 @@ if ((i < mins) || (i > maxs)) fprintf(stderr, "i OUT OF BOUNDS 5 : %d\n", i);
       {
       	flo1 = (i-mins+1)/f - flo;
 #ifdef CHECKBOUNDS
-if ((j < mind) || (j > maxd)) fprintf(stderr, "j OUT OF BOUNDS 6 : %d\n", j);
-if ((i < mins) || (i > maxs)) fprintf(stderr, "i OUT OF BOUNDS 6 : %d\n", i);
+        if ((j < mind) || (j > maxd)) {
+          fprintf(stderr, "j OUT OF BOUNDS 6 : %d\n", j);
+        }
+        if ((i < mins) || (i > maxs)) {
+          fprintf(stderr, "i OUT OF BOUNDS 6 : %d\n", i);
+        }
 #endif
       	hd[j] = (hs[i] * f) * flo1;
       	reste = 1.0 - flo1;
@@ -169,8 +194,12 @@ int32_t lhistscal(
       return(0);
   }
 
-  for (i = 0; i <= NDG_MAX; i++) hs[i] = 0;
-  for (x = 0; x < N; x++) hs[SOURCE[x]] += 1;
+  for (i = 0; i <= NDG_MAX; i++) {
+    hs[i] = 0;
+  }
+  for (x = 0; x < N; x++) {
+    hs[SOURCE[x]] += 1;
+  }
 
   histscal(hs, NDG_MIN, a-1, hd, NDG_MIN, A-1);
 
@@ -215,19 +244,28 @@ printf("N = %d ; cumul = %g\n", N, cumul);
 #endif
 
   FahPush(FAH, -1, 0);               /* force la creation du niveau 0 dans la Fah. */
-  for (x = 0; x < N; x++) FahPush(FAH, x, SOURCE[x]);
+  for (x = 0; x < N; x++) {
+    FahPush(FAH, x, SOURCE[x]);
+  }
   (void)FahPop(FAH);
 
   k = NDG_MIN;
   i = 0;
   cumul = hd[k];
-  while (hd[k] == 0.0) k++;
+  while (hd[k] == 0.0) {
+    k++;
+  }
   while (! FahVide(FAH))
   {
     x = FahPop(FAH);
     SOURCE[x] = mcmin(k,NDG_MAX);
     i++;
-    if (k < NDG_MAX) while ((double)i >= cumul) { k++; cumul += hd[k]; }
+    if (k < NDG_MAX) {
+      while ((double)i >= cumul) {
+        k++;
+        cumul += hd[k];
+      }
+    }
   } /* while (! FahVide(FAH)) */
 
   FahTermine(FAH);
@@ -263,8 +301,12 @@ int32_t lhistscal3(
       return(0);
   }
 
-  for (i = 0; i <= NDG_MAX; i++) hs[i] = 0;
-  for (x = 0; x < N; x++) hs[SOURCE[x]] += 1;
+  for (i = 0; i <= NDG_MAX; i++) {
+    hs[i] = 0;
+  }
+  for (x = 0; x < N; x++) {
+    hs[SOURCE[x]] += 1;
+  }
 
   histscal(hs, NDG_MIN, a-1, hd, NDG_MIN, A-1);
 
@@ -278,19 +320,28 @@ int32_t lhistscal3(
   histscal(hs, c+1, NDG_MAX, hd, C+1, NDG_MAX);
 
   FahPush(FAH, -1, 0);               /* force la creation du niveau 0 dans la Fah. */
-  for (x = 0; x < N; x++) FahPush(FAH, x, SOURCE[x]);
+  for (x = 0; x < N; x++) {
+    FahPush(FAH, x, SOURCE[x]);
+  }
   (void)FahPop(FAH);
 
   k = NDG_MIN;
   i = 0;
   cumul = hd[k];
-  while (hd[k] == 0.0) k++;
+  while (hd[k] == 0.0) {
+    k++;
+  }
   while (! FahVide(FAH))
   {
     x = FahPop(FAH);
     SOURCE[x] = mcmin(k,NDG_MAX);
     i++;
-    if (k < NDG_MAX) while ((double)i >= cumul) { k++; cumul += hd[k]; }
+    if (k < NDG_MAX) {
+      while ((double)i >= cumul) {
+        k++;
+        cumul += hd[k];
+      }
+    }
   } /* while (! FahVide(FAH)) */
 
   FahTermine(FAH);

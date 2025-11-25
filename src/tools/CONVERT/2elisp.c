@@ -144,23 +144,31 @@ int main(int argc, char **argv)
     {
       if (bold && *(UCHARDATA(bold) + y * rs + x))
       {
-        if (underl && *(UCHARDATA(underl) + y * rs + x))
+        if (underl && *(UCHARDATA(underl) + y * rs + x)) {
           fprintf(fd, "(zc %d %d)\n", (y*rs+x)*4 + 2*y + 1, (y*rs+x)*4 + 2*y + 5);
-        else
-          fprintf(fd, "(za %d %d)\n", (y*rs+x)*4 + 2*y + 1, (y*rs+x)*4 + 2*y + 5);
+        } else {
+          fprintf(fd, "(za %d %d)\n", (y * rs + x) * 4 + 2 * y + 1,
+                  (y * rs + x) * 4 + 2 * y + 5);
+        }
       }
       else
       {
-        if (underl && *(UCHARDATA(underl) + y * rs + x))
-          fprintf(fd, "(zd %d %d)\n", (y*rs+x)*4 + 2*y + 1, (y*rs+x)*4 + 2*y + 5);
+        if (underl && *(UCHARDATA(underl) + y * rs + x)) {
+          fprintf(fd, "(zd %d %d)\n", (y * rs + x) * 4 + 2 * y + 1,
+                  (y * rs + x) * 4 + 2 * y + 5);
+        }
       }
     } /* for x */
   } /* for y */
 
   fclose(fd);
   freeimage(image);
-  if (argc > 4) freeimage(underl);
-  if (argc > 3) freeimage(bold);
+  if (argc > 4) {
+    freeimage(underl);
+  }
+  if (argc > 3) {
+    freeimage(bold);
+  }
   return 0;
 }
 

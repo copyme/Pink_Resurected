@@ -98,14 +98,17 @@ int32_t l2d_is_complex(const struct xvimage * k)
   ACCEPTED_TYPES1(k, VFF_TYP_1_BYTE);
   ONLY_2D(k);
 
-  for (index_t j = 0; j < cs; j++)
-  for (index_t i = 0; i < rs; i++)
-  if (K[j * rs + i])
-  {
-    Alphacarre2d(rs, cs, i, j, tab, &n);
-    for (int32_t u = 0; u < n; u++)
-      if (!K[tab[u]])
-        return 0;
+  for (index_t j = 0; j < cs; j++) {
+    for (index_t i = 0; i < rs; i++) {
+      if (K[j * rs + i]) {
+        Alphacarre2d(rs, cs, i, j, tab, &n);
+        for (int32_t u = 0; u < n; u++) {
+          if (!K[tab[u]]) {
+            return 0;
+          }
+        }
+      }
+    }
   }
   return 1;
 } /* l2d_is_complex() */
@@ -155,12 +158,14 @@ int32_t l2dkhalimskize(struct xvimage * i, struct xvimage **k, int32_t mode)
   fprintf(stderr, "%s: Debut traitement\n", F_NAME);
 #endif
 
-  if ((mode == 0) || (mode == 1) || (mode == 2) || (mode == 5) || (mode == 6) || (mode == 7))
+  if ((mode == 0) || (mode == 1) || (mode == 2) || (mode == 5) || (mode == 6) ||
+      (mode == 7)) {
     *k = KhalimskizeNDG2d(i);
-  else if (mode == 9)
+  } else if (mode == 9) {
     *k = DeKhalimskize2d(i);
-  else
+  } else {
     *k = Khalimskize2d(i);
+  }
   if (*k == NULL)
   {
     fprintf(stderr, "%s: Khalimskize2d failed\n", F_NAME);
@@ -171,28 +176,25 @@ int32_t l2dkhalimskize(struct xvimage * i, struct xvimage **k, int32_t mode)
   fprintf(stderr, "%s terminee\n", F_NAME);
 #endif
 
-  if (mode == 4)
+  if (mode == 4) {
     Connex4Obj2d(*k);
-  else if (mode == 8)
+  } else if (mode == 8) {
     Connex8Obj2d(*k);
-  else if (mode == 10)
+  } else if (mode == 10) {
     SatureAlphacarre2d(*k);
-  else if (mode == 1)
+  } else if (mode == 1) {
     ndgmin2d(*k);
-  else if (mode == 2)
+  } else if (mode == 2) {
     ndgmax2d(*k);
-  else if (mode == 5)
-  {
+  } else if (mode == 5) {
     ndg4grad2d(*k);
     ndgminbeta2d(*k);
-  }
-  else if (mode == 6)
-  {
+  } else if (mode == 6) {
     ndg4grad2d(*k);
     ndgmaxbeta2d(*k);
-  }
-  else if (mode == 7)
+  } else if (mode == 7) {
     ndgmoy2d(*k);
+  }
 
 #ifdef VERBOSE
   fprintf(stderr, "%s terminee\n", F_NAME);
@@ -231,39 +233,37 @@ int32_t l2dkhalimskize_noalloc(struct xvimage * i, struct xvimage *k, int32_t mo
   fprintf(stderr, "%s: Debut traitement\n", F_NAME);
 #endif
 
-  if ((mode == 1) || (mode == 2) || (mode == 5) || (mode == 6) || (mode == 7))
+  if ((mode == 1) || (mode == 2) || (mode == 5) || (mode == 6) || (mode == 7)) {
     KhalimskizeNDG2d_noalloc(i, k);
-  else if (mode == 9)
+  } else if (mode == 9) {
     DeKhalimskize2d_noalloc(i, k);
-  else
+  } else {
     Khalimskize2d_noalloc(i, k);
+  }
 
 #ifdef VERBOSE
   fprintf(stderr, "%s terminee\n", F_NAME);
 #endif
 
-  if (mode == 4)
+  if (mode == 4) {
     Connex4Obj2d(k);
-  else if (mode == 8)
+  } else if (mode == 8) {
     Connex8Obj2d(k);
-  else if (mode == 10)
+  } else if (mode == 10) {
     SatureAlphacarre2d(k);
-  else if (mode == 1)
+  } else if (mode == 1) {
     ndgmin2d(k);
-  else if (mode == 2)
+  } else if (mode == 2) {
     ndgmax2d(k);
-  else if (mode == 5)
-  {
+  } else if (mode == 5) {
     ndg4grad2d(k);
     ndgminbeta2d(k);
-  }
-  else if (mode == 6)
-  {
+  } else if (mode == 6) {
     ndg4grad2d(k);
     ndgmaxbeta2d(k);
-  }
-  else if (mode == 7)
+  } else if (mode == 7) {
     ndgmoy2d(k);
+  }
 
 #ifdef VERBOSE
   fprintf(stderr, "%s terminee\n", F_NAME);
@@ -328,7 +328,9 @@ int32_t l2dthin(struct xvimage * k, int32_t nsteps)
   }  
   KP = UCHARDATA(kp);
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
   for (int32_t i = 0; i < nsteps; i++)
   {
@@ -338,22 +340,28 @@ int32_t l2dthin(struct xvimage * k, int32_t nsteps)
     if (i % 2)
     {
       stablealpha = 1;
-      for (y = 0; y < cs; y++)
-      for (x = 0; x < rs; x++)
-        if (K[y * rs + x] && Alpha2Simple2d(k, x, y))
-          { KP[y * rs + x] = 0; stablealpha = 0; }
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++) {
+          if (K[y * rs + x] && Alpha2Simple2d(k, x, y)) { KP[y * rs + x] = 0; stablealpha = 0;
+          }
+        }
+      }
       memcpy(K, KP, N);
     }
     else
     {
       stablebeta = 1;
-      for (y = 0; y < cs; y++)
-      for (x = 0; x < rs; x++)
-        if (K[y * rs + x] && Beta2Simple2d(k, x, y))
-          { KP[y * rs + x] = 0; stablebeta = 0; }
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++) {
+          if (K[y * rs + x] && Beta2Simple2d(k, x, y)) { KP[y * rs + x] = 0; stablebeta = 0;
+          }
+        }
+      }
       memcpy(K, KP, N);
     }
-    if (stablealpha && stablebeta) break;
+    if (stablealpha && stablebeta) {
+      break;
+    }
   }
 
   TerminePileGrilles2d();
@@ -494,7 +502,9 @@ int32_t l2dlabelextrema(
   }
   
   /* le LABEL initialement est mis a -1 */
-  for (x = 0; x < N; x++) LAB[x] = -1;
+  for (x = 0; x < N; x++) {
+    LAB[x] = -1;
+  }
 
   *nlabels = 0;
 
@@ -596,10 +606,11 @@ static int32_t simple(const index_t w, const int32_t *LAB, const index_t rs, con
     y = tab[k];
     if (LAB[y])
     {
-      if ((val == 0) || (LAB[y] == val)) 
+      if ((val == 0) || (LAB[y] == val)) {
         val = LAB[y];
-      else 
+      } else {
         return 0;
+      }
     } /* if (LAB[y]) */
   } /* for k ... */
   Betacarre2d(rs, cs, w%rs, w/rs, tab, &n);
@@ -608,10 +619,11 @@ static int32_t simple(const index_t w, const int32_t *LAB, const index_t rs, con
     y = tab[k];
     if (LAB[y])
     {
-      if ((val == 0) || (LAB[y] == val)) 
+      if ((val == 0) || (LAB[y] == val)) {
         val = LAB[y];
-      else 
+      } else {
         return 0;
+      }
     } /* if (LAB[y]) */
   } /* for k ... */
 
@@ -730,9 +742,10 @@ if (mask == NULL)
 
   } /* while (! LifoVide(LIFO)) */
 
-#ifdef PARANO  
-  for (x = 0; x < N; x++)
+#ifdef PARANO
+  for (x = 0; x < N; x++) {
     assert(LAB[x] || (val != simple(x, LAB, rs, cs)));
+  }
     // il reste des points simples
 #endif
 
@@ -826,10 +839,11 @@ int32_t testlocal(index_t w, int32_t *LAB, index_t rs, index_t cs)
     y = tab[k];
     if (LAB[y] != -1)
     {
-      if ((val == -1) || (LAB[y] == val)) 
+      if ((val == -1) || (LAB[y] == val)) {
         val = LAB[y];
-      else 
+      } else {
         return 0;
+      }
     } /* if (LAB[y]) */
   } /* for k ... */
   Betacarre2d(rs, cs, w%rs, w/rs, tab, &n);
@@ -838,10 +852,11 @@ int32_t testlocal(index_t w, int32_t *LAB, index_t rs, index_t cs)
     y = tab[k];
     if (LAB[y] != -1)
     {
-      if ((val == -1) || (LAB[y] == val)) 
+      if ((val == -1) || (LAB[y] == val)) {
         val = LAB[y];
-      else 
+      } else {
         return 0;
+      }
     } /* if (LAB[y]) */
   } /* for k ... */
 
@@ -871,10 +886,11 @@ int32_t testlocalmask(index_t w, int32_t *LAB, uint8_t *MASK, index_t rs, index_
     y = tab[k];
     if (MASK[y] && (LAB[y] != -1))
     {
-      if ((val == -1) || (LAB[y] == val)) 
+      if ((val == -1) || (LAB[y] == val)) {
         val = LAB[y];
-      else 
+      } else {
         return 0;
+      }
     } /* if (LAB[y]) */
   } /* for k ... */
   Betacarre2d(rs, cs, w%rs, w/rs, tab, &n);
@@ -883,10 +899,11 @@ int32_t testlocalmask(index_t w, int32_t *LAB, uint8_t *MASK, index_t rs, index_
     y = tab[k];
     if (MASK[y] && (LAB[y] != -1))
     {
-      if ((val == -1) || (LAB[y] == val)) 
+      if ((val == -1) || (LAB[y] == val)) {
         val = LAB[y];
-      else 
+      } else {
         return 0;
+      }
     } /* if (LAB[y]) */
   } /* for k ... */
 
@@ -947,7 +964,11 @@ int32_t l2dvoronoi(struct xvimage * lab, struct xvimage * mask)
       return(0);
   }
 
-  for (x = 0; x < N; x++) if (LAB[x] == 0) LAB[x] = -1;
+  for (x = 0; x < N; x++) {
+    if (LAB[x] == 0) {
+      LAB[x] = -1;
+    }
+  }
 
 if (mask == NULL)
 {
@@ -1073,7 +1094,11 @@ else
 
   } /* while (! LifoVide(LIFO)) */
 
-  for (x = 0; x < N; x++) if (LAB[x] == -1) LAB[x] = 0;
+  for (x = 0; x < N; x++) {
+    if (LAB[x] == -1) {
+      LAB[x] = 0;
+    }
+  }
 
 } /* if (mask != NULL) */
 
@@ -1134,23 +1159,28 @@ int32_t l2dtopotessndg(struct xvimage * f)
 
   /* calcule histo */  
   memset(histo, 0, (NDG_MAX+1) * sizeof(index_t));
-  for (x = 0; x < N; x++) histo[F[x]] += 1;
+  for (x = 0; x < N; x++) {
+    histo[F[x]] += 1;
+  }
 
   /* monte au second niveau non vide */
-  kp = 0; 
-  while (!histo[kp]) kp++;
+  kp = 0;
+  while (!histo[kp]) {
+    kp++;
+  }
   kp++;
 
-  for (; kp <= NDG_MAX; kp++) /* monte niveau par niveau */
-  if (histo[kp])
-  {
+  for (; kp <= NDG_MAX; kp++) { /* monte niveau par niveau */
+    if (histo[kp]) {
 
 #ifdef VERBOSE
   fprintf(stderr, "  niveau %d\n", kp);
 #endif
 
     /* seuil au niveau kp */
-    for (x = 0; x < N; x++) Fkp[x] = ( (F[x]>=kp) ? 255 : 0 );
+  for (x = 0; x < N; x++) {
+    Fkp[x] = ((F[x] >= kp) ? 255 : 0);
+  }
 
 #ifdef STEP
     { char buf[10]; printf("kp=%d\n",kp); writeimage(f,"f"); writeimage(fk,"fk"); writeimage(fkp,"fkp"); scanf("%s", buf);}
@@ -1175,11 +1205,21 @@ writeimage(lab, "lab");
 #endif
 
     /* recupere dans fk les RV */
-    for (x = 0; x < N; x++) if (LAB[x]) Fk[x] = 255; else Fk[x] = 0;
+for (x = 0; x < N; x++) {
+  if (LAB[x]) {
+    Fk[x] = 255;
+  } else {
+    Fk[x] = 0;
+  }
+}
 
     /* remonte dans F les points de fk qui ont ete rajoutes */
-    for (x = 0; x < N; x++) if (Fk[x] && !Fkp[x]) F[x] = kp;
-
+for (x = 0; x < N; x++) {
+  if (Fk[x] && !Fkp[x]) {
+    F[x] = kp;
+  }
+}
+    }
   }
 
   freeimage(lab);
@@ -1237,26 +1277,33 @@ int32_t l2dtopotessndg_inverse(struct xvimage * f)
 
   /* calcule histo */  
   memset(histo, 0, (NDG_MAX+1) * sizeof(index_t));
-  for (x = 0; x < N; x++) histo[F[x]] += 1;
+  for (x = 0; x < N; x++) {
+    histo[F[x]] += 1;
+  }
 
   /* cherche niveau max */
-  k = NDG_MAX; 
-  while (!histo[k]) k--;
+  k = NDG_MAX;
+  while (!histo[k]) {
+    k--;
+  }
 
   /* seuil au niveau max */
-  for (x = 0; x < N; x++) Fkp[x] = ( (F[x]>=k) ? 255 : 0 );
+  for (x = 0; x < N; x++) {
+    Fkp[x] = ((F[x] >= k) ? 255 : 0);
+  }
 
   kp = k;
-  for (k = k-1; k >= 0; k--) /* descend niveau par niveau */
-  if (histo[k])
-  {
+  for (k = k - 1; k >= 0; k--) { /* descend niveau par niveau */
+    if (histo[k]) {
 
 #ifdef VERBOSE
   fprintf(stderr, "  niveau %d\n", k);
 #endif
 
     /* seuil au niveau k */
-    for (x = 0; x < N; x++) Fk[x] = ( (F[x]>=k) ? 255 : 0 );
+  for (x = 0; x < N; x++) {
+    Fk[x] = ((F[x] >= k) ? 255 : 0);
+  }
 
 #ifdef STEP
     { char buf[10]; printf("kp=%d\n",kp); writeimage(f,"f"); writeimage(fk,"fk"); writeimage(fkp,"fkp"); scanf("%s", buf);}
@@ -1281,14 +1328,27 @@ writeimage(lab, "lab");
 #endif
 
     /* recupere dans fk les RV */
-    for (x = 0; x < N; x++) if (LAB[x]) Fk[x] = 255; else Fk[x] = 0;
+for (x = 0; x < N; x++) {
+  if (LAB[x]) {
+    Fk[x] = 255;
+  } else {
+    Fk[x] = 0;
+  }
+}
 
     /* remonte dans F les points de fk qui ont ete rajoutes */
-    for (x = 0; x < N; x++) if (Fk[x] && !Fkp[x]) F[x] = kp;
+for (x = 0; x < N; x++) {
+  if (Fk[x] && !Fkp[x]) {
+    F[x] = kp;
+  }
+}
 
     /* nouveau fkp */
-    for (x = 0; x < N; x++) Fkp[x] = ( (F[x]>=k) ? 255 : 0 );
+for (x = 0; x < N; x++) {
+  Fkp[x] = ((F[x] >= k) ? 255 : 0);
+}
     kp = k;
+    }
   }
 
   freeimage(lab);
@@ -1363,25 +1423,32 @@ int32_t l2dtopotessndgVS(struct xvimage * f)
 
   /* calcule histo */  
   memset(histo, 0, (NDG_MAX+1) * sizeof(index_t));
-  for (x = 0; x < N; x++) histo[F[x]] += 1;
+  for (x = 0; x < N; x++) {
+    histo[F[x]] += 1;
+  }
 
   /* cherche niveau max */
-  kp = NDG_MAX; 
-  while (!histo[kp]) kp--;
+  kp = NDG_MAX;
+  while (!histo[kp]) {
+    kp--;
+  }
 
   /* seuil au niveau max */
-  for (x = 0; x < N; x++) Fkp[x] = ( (F[x]>=kp) ? 255 : 0 );
+  for (x = 0; x < N; x++) {
+    Fkp[x] = ((F[x] >= kp) ? 255 : 0);
+  }
 
-  for (kp = kp - 1; kp >= NDG_MIN; kp--) /* descend niveau par niveau */
-  if (histo[kp])
-  {
+  for (kp = kp - 1; kp >= NDG_MIN; kp--) { /* descend niveau par niveau */
+    if (histo[kp]) {
 
 #ifdef VERBOSE
   fprintf(stderr, "  niveau %d\n", kp);
 #endif
 
     /* seuil au niveau kp */
-    for (x = 0; x < N; x++) Fk[x] = ( (F[x]>=kp) ? 255 : 0 );
+  for (x = 0; x < N; x++) {
+    Fk[x] = ((F[x] >= kp) ? 255 : 0);
+  }
 
 #ifdef STEP
     { char buf[10]; printf("kp=%d\n",kp); writeimage(fk,"fk"); writeimage(fkp,"fkp"); scanf("%s", buf);}
@@ -1402,13 +1469,20 @@ int32_t l2dtopotessndgVS(struct xvimage * f)
     }
 
     /* fkp = fkp U {maxima de niveau kp} */
-    for (x = 0; x < N; x++) 
-      if (LAB[x] || (Fk[x] && MAXI[x])) Fkp[x] = 255; else Fkp[x] = 0;
-
+    for (x = 0; x < N; x++) {
+      if (LAB[x] || (Fk[x] && MAXI[x])) {
+        Fkp[x] = 255;
+      } else {
+        Fkp[x] = 0;
+      }
+    }
+    }
   }
 
   /* recupere dans f le resultat fkp */
-  for (x = 0; x < N; x++) F[x] = Fkp[x];
+  for (x = 0; x < N; x++) {
+    F[x] = Fkp[x];
+  }
 
   freeimage(maxi);
   freeimage(lab);
@@ -1546,20 +1620,23 @@ int32_t l2dboundary(struct xvimage * f)
   G = UCHARDATA(g);
   razimage(f);
 
-  for (y = 0; y < cs; y++)
-    for (x = 0; x < rs; x++)
+  for (y = 0; y < cs; y++) {
+    for (x = 0; x < rs; x++) {
       if (G[y*rs + x])
       {
 	Thetacarre2d(rs, cs, x, y, tab, &n);
-	for (u = 0; u < n; u++)
-	  if (G[tab[u]] == 0) 
+        for (u = 0; u < n; u++) {
+          if (G[tab[u]] == 0) 
 	  {
 	    F[y*rs + x] = NDG_MAX;
 	    goto next;
-	  }
+          }
+        }
       next:;
-      } 
-  
+      }
+    }
+  }
+
   freeimage(g);
   return 1;
 } /* l2dboundary() */
@@ -1593,10 +1670,13 @@ int32_t l2dborder(struct xvimage * f)
   }  
   G = UCHARDATA(g);
   razimage(f);
-  for (y = 0; y < cs; y++)
-    for (x = 0; x < rs; x++)
-      if (G[y*rs + x] && FaceLibre2d(g, x, y))
-	F[y*rs + x] = VAL_OBJET;
+  for (y = 0; y < cs; y++) {
+    for (x = 0; x < rs; x++) {
+      if (G[y * rs + x] && FaceLibre2d(g, x, y)) {
+        F[y * rs + x] = VAL_OBJET;
+      }
+    }
+  }
   l2dmakecomplex(f);
   freeimage(g);
   return 1;
@@ -1647,37 +1727,42 @@ int32_t l2dseltype(struct xvimage * k, uint8_t d1, uint8_t d2, uint8_t a1, uint8
   KP = UCHARDATA(kp);
   memset(KP, 0, N);
 
-  for (j1 = 0; j1 < cs; j1++)
-  for (i1 = 0; i1 < rs; i1++)
-  {
-    x = j1*rs + i1;
-    d = DIM2D(i1,j1);
-    if (K[x] && (d1 <= d) && (d <= d2))
-    {
-      Alphacarre2d(rs, cs, i1, j1, tab, &n);
-      for (a = u = 0; u < n; u++) /* parcourt les eventuels alpha-voisins */
-      {
-	y = tab[u];
-	i2 = y%rs; j2 = y/rs;
-	if (K[y] && (DIM2D(i2,j2) == (d-1))) a++;
+  for (j1 = 0; j1 < cs; j1++) {
+    for (i1 = 0; i1 < rs; i1++) {
+      x = j1 * rs + i1;
+      d = DIM2D(i1, j1);
+      if (K[x] && (d1 <= d) && (d <= d2)) {
+        Alphacarre2d(rs, cs, i1, j1, tab, &n);
+        for (a = u = 0; u < n; u++) /* parcourt les eventuels alpha-voisins */
+        {
+          y = tab[u];
+          i2 = y % rs;
+          j2 = y / rs;
+          if (K[y] && (DIM2D(i2, j2) == (d - 1))) {
+            a++;
+          }
+        }
+        if ((a1 <= a) && (a <= a2)) {
+          Betacarre2d(rs, cs, i1, j1, tab, &n);
+          for (b = u = 0; u < n; u++) /* parcourt les eventuels beta-voisins */
+          {
+            y = tab[u];
+            i2 = y % rs;
+            j2 = y / rs;
+            if (K[y] && (DIM2D(i2, j2) == (d + 1))) {
+              b++;
+            }
+          }
+          if ((b1 <= b) && (b <= b2)) {
+            KP[x] = NDG_MAX;
+          }
+        }
       }
-      if ((a1 <= a) && (a <= a2))
-      {
-	Betacarre2d(rs, cs, i1, j1, tab, &n);
-	for (b = u = 0; u < n; u++) /* parcourt les eventuels beta-voisins */
-	{
-	  y = tab[u];
-	  i2 = y%rs; j2 = y/rs;
-	  if (K[y] && (DIM2D(i2,j2) == (d+1))) b++;
-	}
-	if ((b1 <= b) && (b <= b2))
-	{
-	  KP[x] = NDG_MAX;
-	}
-      }
-    }
-  } // for k1, j1, i1
-  for (x = 0; x < N; x++) K[x] = KP[x];
+    } // for k1, j1, i1
+  }
+  for (x = 0; x < N; x++) {
+    K[x] = KP[x];
+  }
   freeimage(kp);
   return 1;
 } /* l2dseltype() */

@@ -111,10 +111,11 @@ int main(int32_t argc, char **argv)
 
   mode = atoi(argv[2]);
 
-  if (argc == 4)
+  if (argc == 4) {
     level = -1;
-  else
+  } else {
     level = atof(argv[3]);
+  }
 
   func = allocimage(NULL, rowsize(k), colsize(k), depth(k), VFF_TYP_FLOAT);
   if (func == NULL)

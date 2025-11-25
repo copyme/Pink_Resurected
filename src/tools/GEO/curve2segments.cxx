@@ -101,9 +101,12 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (argc == 3) tolerance = 1;
-  else tolerance = atof(argv[2]);
-  
+  if (argc == 3) {
+    tolerance = 1;
+  } else {
+    tolerance = atof(argv[2]);
+  }
+
   fscanf(fd, "%c", &type);
   if (type == 'b')
   {
@@ -113,8 +116,9 @@ int main(int argc, char **argv)
     X = (int32_t *)calloc(1,npoints*sizeof(int32_t)); assert(X != NULL);
     Y = (int32_t *)calloc(1,npoints*sizeof(int32_t)); assert(Y != NULL);
 
-    for (i = 0; i < npoints; i++)
+    for (i = 0; i < npoints; i++) {
       fscanf(fd, "%d %d", &(X[i]), &(Y[i]));
+    }
     fclose(fd);
 
     nseg = CoverByDSSs(npoints, X, Y, tolerance);
@@ -126,8 +130,9 @@ int main(int argc, char **argv)
       exit(1);
     }
     fprintf(fd, "b %d\n", nseg);
-    for (i = 0; i < nseg; i++)
+    for (i = 0; i < nseg; i++) {
       fprintf(fd, "%d %d\n", X[i], Y[i]);
+    }
     fclose(fd);
 
     free(X); free(Y);
@@ -141,8 +146,9 @@ int main(int argc, char **argv)
     Y = (int32_t *)calloc(1,npoints*sizeof(int32_t)); assert(Y != NULL);
     Z = (int32_t *)calloc(1,npoints*sizeof(int32_t)); assert(Y != NULL);
 
-    for (i = 0; i < npoints; i++)
+    for (i = 0; i < npoints; i++) {
       fscanf(fd, "%d %d %d", &(X[i]), &(Y[i]), &(Z[i]));
+    }
     fclose(fd);
 
     nseg = CoverByDSSs3D(npoints, X, Y, Z, tolerance);
@@ -154,8 +160,9 @@ int main(int argc, char **argv)
       exit(1);
     }
     fprintf(fd, "B %d\n", nseg);
-    for (i = 0; i < nseg; i++)
+    for (i = 0; i < nseg; i++) {
       fprintf(fd, "%d %d %d\n", X[i], Y[i], Z[i]);
+    }
     fclose(fd);
 
     free(X); free(Y); free(Z);

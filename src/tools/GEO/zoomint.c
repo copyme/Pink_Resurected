@@ -86,16 +86,18 @@ int main(int argc, char **argv)
   fill = 1;
   if (argc == 5)
   {
-    if (strcmp(argv[3], "nofill") == 0) fill = 0; else 
-    {
+    if (strcmp(argv[3], "nofill") == 0) {
+      fill = 0;
+    } else {
       fprintf(stderr, "usage: %s in.pgm {f | fx fy fz} [nofill] out.pgm \n", argv[0]);
       exit(1);
     }
   }
   if (argc == 7)
   {
-    if (strcmp(argv[5], "nofill") == 0) fill = 0; else 
-    {
+    if (strcmp(argv[5], "nofill") == 0) {
+      fill = 0;
+    } else {
       fprintf(stderr, "usage: %s in.pgm {f | fx fy fz} [nofill] out.pgm \n", argv[0]);
       exit(1);
     }
@@ -113,10 +115,10 @@ int main(int argc, char **argv)
     zx = atoi(argv[2]);
     zy = atoi(argv[3]);
     zz = atoi(argv[4]);
-  }
-  else
+  } else {
     zx = zy = zz = atoi(argv[2]);
-  
+  }
+
   out = lzoomintxyz(in,zx,zy,zz,fill);
 
   if (out==NULL)

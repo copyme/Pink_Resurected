@@ -183,7 +183,9 @@ int main(int argc, char **argv)
     for (i = 0; i < n; i++)
     {
       fprintf(fd, "%g %g %g %d %d ", S[i].x, S[i].y, V[i], ec[i], nv[i]);
-      for (j = 0; j < nv[i]; j++) fprintf(fd, "%d ", v[i][j]);
+      for (j = 0; j < nv[i]; j++) {
+        fprintf(fd, "%d ", v[i][j]);
+      }
       fprintf(fd, "\n");
     }
     fclose(fd);
@@ -216,7 +218,9 @@ int main(int argc, char **argv)
     {
       fprintf(fd, "%g %g %g %d ", S[i].x, S[i].y, V[i], ec[i]);	
       newnv=nv[i];
-      for (k = 0; k < nv[i] ; k++) del[k]=0;
+      for (k = 0; k < nv[i]; k++) {
+        del[k] = 0;
+      }
       for (j = 0; j < nv[i]; j++) 
       {
 	vois = v[i][j];
@@ -237,16 +241,19 @@ int main(int argc, char **argv)
       fprintf(fd, "%d ", newnv);
       for (k = 0; k < nv[i]; k++)
       {
-	if (del[k]==0)
-	  fprintf(fd, "%d ", v[i][k]);
+        if (del[k] == 0) {
+          fprintf(fd, "%d ", v[i][k]);
+        }
       }
       fprintf(fd, "\n");
+    } else {
+      fprintf(fd, "%g %g %g %d %d\n", S[i].x, S[i].y, V[i], ec[i], 0);
     }
-    else
-      fprintf(fd, "%g %g %g %d %d\n", S[i].x, S[i].y, V[i], ec[i], 0);	
   }
   fclose(fd);
-  for (i = 0; i < n; i++) free(v[i]);
+  for (i = 0; i < n; i++) {
+    free(v[i]);
+  }
   free(v);
   free(nv);
   free(ec);

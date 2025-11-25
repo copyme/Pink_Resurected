@@ -107,20 +107,29 @@ int32_t lcontours(struct xvimage *image, int32_t seuilhaut, int32_t seuilbas)
   /* seuil de l'image originale */
   /* ========================================================= */
 
-  for (x = 0; x < N; x++) 
-    if (F[x] >= seuilhaut) S[x] = NDG_MAX; else S[x] = 0;
+  for (x = 0; x < N; x++) {
+    if (F[x] >= seuilhaut) {
+      S[x] = NDG_MAX;
+    } else {
+      S[x] = 0;
+    }
+  }
 
   /* ========================================================= */
   /* selection des points extremite et elimination des points isoles */
   /* ========================================================= */
 
-  for (x = 0; x < N; x++) 
+  for (x = 0; x < N; x++) {
     if (S[x]) 
     {
       n = nbvois8(S, x, rs, N);
-      if (n == 1) FahPush(FAH, x, NDG_MAX - F[x]); 
-      else if (n == 0) S[x] = 0;
+      if (n == 1) {
+        FahPush(FAH, x, NDG_MAX - F[x]);
+      } else if (n == 0) {
+        S[x] = 0;
+      }
     }
+  }
 
   /* ========================================================= */
   /* traitement des points extremite */
@@ -145,8 +154,10 @@ printf("y = %d,%d ; t = %d ; n = %d ; F[y] = %d\n", y%rs, y/rs, t, n, F[y]);
 #endif
         if ((n == 1) || ((n > 1) && (t > 1)))
         {
-          if (prem) { z = y; prem = 0; }
-          else if (F[y] > F[z]) z = y;
+          if (prem) { z = y; prem = 0;
+          } else if (F[y] > F[z]) {
+            z = y;
+          }
         }
       }
     } /* for k */
@@ -154,7 +165,9 @@ printf("y = %d,%d ; t = %d ; n = %d ; F[y] = %d\n", y%rs, y/rs, t, n, F[y]);
     if ((z != x) && (F[z] >= seuilbas))
     {
       S[z] = NDG_MAX;
-      if (extremite8(S, z, rs, N)) FahPush(FAH, z, NDG_MAX - F[z]); 
+      if (extremite8(S, z, rs, N)) {
+        FahPush(FAH, z, NDG_MAX - F[z]);
+      }
     }
   } /* for x */
 
@@ -162,7 +175,9 @@ printf("y = %d,%d ; t = %d ; n = %d ; F[y] = %d\n", y%rs, y/rs, t, n, F[y]);
   /*                  DEBUT SATURATION                */
   /* ================================================ */
 
-  for (x = 0; x < N; x++) F[x] = S[x];
+  for (x = 0; x < N; x++) {
+    F[x] = S[x];
+  }
 
   /* ================================================ */
   /* UN PEU DE MENAGE                                 */

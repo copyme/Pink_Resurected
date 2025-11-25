@@ -107,9 +107,11 @@ int main(int argc, char **argv)
         fprintf(stderr, "%s: bad n = %d\n", argv[0], n);
         exit(1);
       }
-      for (z = 0; z < ds; z++)
-        for (y = 0; y < cs; y++)
+      for (z = 0; z < ds; z++) {
+        for (y = 0; y < cs; y++) {
           Im[z * ps + y * rs + n] = NDG_MAX;
+        }
+      }
       break;
     case 'y': 
       if ((n < 0) || (n >= cs))
@@ -117,9 +119,11 @@ int main(int argc, char **argv)
         fprintf(stderr, "%s: bad n = %d\n", argv[0], n);
         exit(1);
       }
-      for (z = 0; z < ds; z++)
-        for (x = 0; x < rs; x++)
+      for (z = 0; z < ds; z++) {
+        for (x = 0; x < rs; x++) {
           Im[z * ps + n * rs + x] = NDG_MAX;
+        }
+      }
       break;
     case 'z': 
       if ((n < 0) || (n >= ds))
@@ -127,9 +131,11 @@ int main(int argc, char **argv)
         fprintf(stderr, "%s: bad n = %d\n", argv[0], n);
         exit(1);
       }
-      for (y = 0; y < cs; y++)
-        for (x = 0; x < rs; x++)
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++) {
           Im[n * ps + y * rs + x] = NDG_MAX;
+        }
+      }
       break;
     default:
       fprintf(stderr, "usage: %s rs cs ds {x|y|z} n out.pgm\n", argv[0]);

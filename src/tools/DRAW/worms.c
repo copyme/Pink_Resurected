@@ -149,8 +149,12 @@ int main(int argc, char **argv)
   T = UCHARDATA(tmp);
   D = ULONGDATA(dis);
 
-  if (nmax > 255) 
-    fprintf(stderr, "%s: warning: more than 255 segments (several segments will have the same tag)\n", argv[0]);
+  if (nmax > 255) {
+    fprintf(stderr,
+            "%s: warning: more than 255 segments (several segments will have "
+            "the same tag)\n",
+            argv[0]);
+  }
 
   ret = sscanf(argv[10], "%d", &radius);
   if (ret == 0) // structuring element : image 
@@ -159,9 +163,9 @@ int main(int argc, char **argv)
     dse = readse(argv[10], &x, &y, &z); 
     assert(dse != NULL); 
     xc = (double)x; yc = (double)y; zc = (double)z;
-  }
-  else  // structuring element : Euclidean ball (radius given)
+  } else { // structuring element : Euclidean ball (radius given)
     dse = NULL;
+  }
 
 #ifdef AVOIDFRAME
   assert(rs-dmin-1 > dmin); assert(cs-dmin-1 > dmin); assert(ds-dmin-1 > dmin);
@@ -241,15 +245,23 @@ int main(int argc, char **argv)
 	  exit(1);
 	}
 
-	for (i = 0; i < N; i++) if (T[i] && (D[i] <= dmin)) break;
-	if (i == N)
+        for (i = 0; i < N; i++) {
+          if (T[i] && (D[i] <= dmin)) {
+            break;
+          }
+        }
+        if (i == N)
 	{
 	  n++;
 #ifdef DEBUG
 	printf("nb fibres generees: %d\n", n);
 #endif
-	  for (i = 0; i < N; i++) if (T[i]) I[i] = n;
-	}
+        for (i = 0; i < N; i++) {
+          if (T[i]) {
+            I[i] = n;
+          }
+        }
+        }
       } // if (n > 1)
       else
       {
@@ -257,7 +269,11 @@ int main(int argc, char **argv)
 #ifdef DEBUG
 	printf("INIT : nb fibres generees: %d\n", n);
 #endif
-	for (i = 0; i < N; i++) if (T[i]) I[i] = n;
+        for (i = 0; i < N; i++) {
+          if (T[i]) {
+            I[i] = n;
+          }
+        }
       }
 
       nt++;
@@ -274,9 +290,13 @@ int main(int argc, char **argv)
     dil = copyimage(img);
     L = UCHARDATA(dil);
     ret = ldilatball(dil, radius, 0); assert(ret != 0);
-    for (i = 0; i < N; i++) 
-      if (I[i]) I[i] = NDG_MAX;
-      else if (L[i]) I[i] = NDG_DIL;
+    for (i = 0; i < N; i++) {
+      if (I[i]) {
+        I[i] = NDG_MAX;
+      } else if (L[i]) {
+        I[i] = NDG_DIL;
+      }
+    }
     freeimage(dil);
   }
 
@@ -294,18 +314,31 @@ int main(int argc, char **argv)
     L1 = UCHARDATA(dil1);
     for (j = 1; j <= n; j++) 
     {
-      for (i = 0; i < N; i++) 
-	if (I[i] == j) L1[i] = NDG_MAX; else L1[i] = 0;
+      for (i = 0; i < N; i++) {
+        if (I[i] == j) {
+          L1[i] = NDG_MAX;
+        } else {
+          L1[i] = 0;
+        }
+      }
       theta = Uniform(0.0, 90.0);
       phi = Uniform(0.0, 90.0);
       rot1 = lrotationRT3Dx(dse, theta, yc, zc, &yc1, &zc1, 1);
       rot2 = lrotationRT3Dy(rot1, phi, xc, zc1, &xc2, &zc2, 1);
       ret = ldilat3d(dil1, rot2, xc2, yc1, zc2); assert(ret != 0);
-      for (i = 0; i < N; i++) if (L1[i]) L[i] = NDG_MAX;
+      for (i = 0; i < N; i++) {
+        if (L1[i]) {
+          L[i] = NDG_MAX;
+        }
+      }
     }
-    for (i = 0; i < N; i++) 
-      if (I[i]) I[i] = NDG_MAX;
-      else if (L[i]) I[i] = NDG_DIL;
+    for (i = 0; i < N; i++) {
+      if (I[i]) {
+        I[i] = NDG_MAX;
+      } else if (L[i]) {
+        I[i] = NDG_DIL;
+      }
+    }
 
     freeimage(dse);
     freeimage(dil);

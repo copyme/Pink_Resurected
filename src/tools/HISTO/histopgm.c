@@ -142,13 +142,16 @@ int main(int argc, char **argv)
       }
   }
 
-  if(imhist == NULL)
+  if (imhist == NULL) {
     exit(1);
+  }
 
   writeimage(imhist, argv[argc - 1]);
   free(histo);
   freeimage(image);
   freeimage(imhist);
-  if (mask) freeimage(mask);
+  if (mask) {
+    freeimage(mask);
+  }
   return 0;
 } /* main */

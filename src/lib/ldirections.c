@@ -70,12 +70,15 @@ double calcangle(int32_t pc, int32_t p, int32_t rs)
   d = sqrt((xc - x) * (xc - x) + (yc - y) * (yc - y));
   ts = asin((y - yc) / d);
   tc = acos((x - xc) / d);
-  if ((ts >= 0) && (tc <= M_PI_2))
+  if ((ts >= 0) && (tc <= M_PI_2)) {
     return ts;
-  if ((ts >= 0) && (tc > M_PI_2))
+  }
+  if ((ts >= 0) && (tc > M_PI_2)) {
     return tc;
-  if ((ts < 0) && (tc > M_PI_2))
-    return - ts + M_PI;
+  }
+  if ((ts < 0) && (tc > M_PI_2)) {
+    return -ts + M_PI;
+  }
   /* ((ts < 0) && (tc <= M_PI_2)) */
   return ts + M_PI + M_PI;
 } /* calcangle() */
@@ -103,7 +106,9 @@ int32_t ldirections(struct xvimage *img,   /* donnee: image binaire */
   {   fprintf(stderr,"ldirections() : malloc failed\n");
       return(0);
   }
-  for (p = 0; p < N; p++) D[p] = F[p];
+  for (p = 0; p < N; p++) {
+    D[p] = F[p];
+  }
 
   LIFO = CreeLifoVide(N);
   if (LIFO == NULL)
@@ -123,16 +128,19 @@ int32_t ldirections(struct xvimage *img,   /* donnee: image binaire */
   for (p = 0; p < N; p++)
   {
     j = i = -1;
-    if (D[p] != NDG_MAX)
+    if (D[p] != NDG_MAX) {
       F[p] = NDG_MAX;
-    else
-    {                                     /* c'est un point objet */
+    } else {                              /* c'est un point objet */
       for (k = 0; k < 8; k += incr_vois)  /* cherche deux voisins i, j */
       {
         q = voisin(p, k, rs, N);
         if ((q != -1) && D[q]) 
         {
-          if (i == -1) i = q; else j = q;
+          if (i == -1) {
+            i = q;
+          } else {
+            j = q;
+          }
         }
       } /* for k... */
       if (j != -1)                        /* on a trouve deux voisins */
@@ -155,7 +163,9 @@ int32_t ldirections(struct xvimage *img,   /* donnee: image binaire */
               D[r] = NDG_MAX - 1;
             }
           } /* for k */
-          if (LifoVide(LIFO) || (n == nbpoints)) i = r;
+          if (LifoVide(LIFO) || (n == nbpoints)) {
+            i = r;
+          }
         } /* while (!LifoVide(LIFO)) */
         LifoPush(LIFO, j);
         n = 0;
@@ -172,7 +182,9 @@ int32_t ldirections(struct xvimage *img,   /* donnee: image binaire */
               D[r] = NDG_MAX - 1;
             }
           } /* for k */
-          if (LifoVide(LIFO) || (n == nbpoints)) j = r;
+          if (LifoVide(LIFO) || (n == nbpoints)) {
+            j = r;
+          }
         } /* while (!LifoVide(LIFO)) */
 
         LifoPush(LIFO, p);
@@ -183,17 +195,20 @@ int32_t ldirections(struct xvimage *img,   /* donnee: image binaire */
           for (k = 0; k < 8; k += incr_vois)
           {
             r = voisin(q, k, rs, N);
-            if ((r != -1) && (D[r] == NDG_MAX - 1)) LifoPush(LIFO, r);
+            if ((r != -1) && (D[r] == NDG_MAX - 1)) {
+              LifoPush(LIFO, r);
+            }
           } /* for k */
         } /* while (!LifoVide(LIFO)) */
 
-        if (normale)
+        if (normale) {
           F[p] = (uint8_t)((int32_t)(90.0 + calcangle(i, j, rs) * 180 / M_PI) % 180);
-        else
+        } else {
           F[p] = (uint8_t)((int32_t)(calcangle(i, j, rs) * 180 / M_PI) % 180);
+        }
 
       } /* if (j != -1) */
-    } /* if (D[p] == NDG_MAX) */
+    }   /* if (D[p] == NDG_MAX) */
   } /* for (p = 0; p < N; p++) */
 
   free(D);

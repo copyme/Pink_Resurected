@@ -58,8 +58,12 @@ int32_t angleinf(int32_t p, int32_t p1, int32_t p2, int32_t rs)
   int32_t x2 = (p2 % rs) - (p % rs);
   int32_t y2 = (p2 / rs) - (p / rs);
   int32_t d = x1 * y2 - x2 * y1;
-  if (d > 0) return 1;
-  if (d < 0) return 0;
+  if (d > 0) {
+    return 1;
+  }
+  if (d < 0) {
+    return 0;
+  }
   return ((x1 * x1 + y1 * y1) > (x2 * x2 + y2 * y2));
 } /* angleinf() */
 
@@ -75,8 +79,12 @@ int32_t angleinfxyneg(int32_t p, int32_t p1, int32_t p2, int32_t rs)
   int32_t x2 = (p % rs) - (p2 % rs);
   int32_t y2 = (p / rs) - (p2 / rs);
   int32_t d = x1 * y2 - x2 * y1;
-  if (d > 0) return 1;
-  if (d < 0) return 0;
+  if (d > 0) {
+    return 1;
+  }
+  if (d < 0) {
+    return 0;
+  }
   return ((x1 * x1 + y1 * y1) > (x2 * x2 + y2 * y2));
 } /* angleinfxyneg() */
 
@@ -157,10 +165,14 @@ for (i = 0; i < n; i++) printf("P[i] = %d,%d\n", P[i]%rs, P[i]/rs);
     /* trouve le point suivant, qui minimise l'angle polaire par rapport a p */
     /* en cas d'egalite, on retient le plus eloigne de p */
     ips = 0;
-    while ((P[ips] == -1) && (ips < n)) ips ++;  /* 1er candidat */
+    while ((P[ips] == -1) && (ips < n)) {
+      ips++; /* 1er candidat */
+    }
     for (ips2 = ips + 1; ips2 < n; ips2++)
     {                        /* recherche de meilleurs candidats */
-      if ((P[ips2] != -1) && angleinf(p, P[ips2], P[ips], rs)) ips = ips2; 
+      if ((P[ips2] != -1) && angleinf(p, P[ips2], P[ips], rs)) {
+        ips = ips2;
+      }
     }
     Ph[nh] = p = P[ips];
     nh++;
@@ -178,10 +190,14 @@ for (i = 0; i < n; i++) printf("P[i] = %d,%d\n", P[i]%rs, P[i]/rs);
     /* par rapport aux x et y negatifs */
     /* en cas d'egalite, on retient le plus eloigne de p */
     ips = 0;
-    while ((P[ips] == -1) && (ips < n)) ips ++;  /* 1er candidat */
+    while ((P[ips] == -1) && (ips < n)) {
+      ips++; /* 1er candidat */
+    }
     for (ips2 = ips + 1; ips2 < n; ips2++)
     {                        /* recherche de meilleurs candidats */
-      if ((P[ips2] != -1) && angleinfxyneg(p, P[ips2], P[ips], rs)) ips = ips2; 
+      if ((P[ips2] != -1) && angleinfxyneg(p, P[ips2], P[ips], rs)) {
+        ips = ips2;
+      }
     }
     Ph[nh] = p = P[ips];
     nh++;
@@ -204,16 +220,21 @@ for (i = 0; i < nh; i++)
   {   fprintf(stderr, "lconvexhull() : malloc failed for *listepoints\n");
       return(0); 
   }
-  for (i = 0; i < nh; i++)
+  for (i = 0; i < nh; i++) {
     (*listepoints)[i] = Ph[i];
+  }
   *npoints = nh;
 
   /* ---------------------------------------------------------- */
   /* image de l'env. conv. */
   /* ---------------------------------------------------------- */
 
-  for (i = 0; i < N; i++) F[i] = 0;
-  for (i = 0; i < nh; i++) F[Ph[i]] = 255;
+  for (i = 0; i < N; i++) {
+    F[i] = 0;
+  }
+  for (i = 0; i < nh; i++) {
+    F[Ph[i]] = 255;
+  }
 
   free(Ph);
   return 1;

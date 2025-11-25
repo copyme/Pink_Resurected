@@ -57,8 +57,12 @@ int32_t lstretch(struct xvimage * image)
   ndgmax = NDG_MIN;
   for (x = 0; x < N; x++)
   {
-    if (Im[x] < ndgmin) ndgmin = Im[x];
-    if (Im[x] > ndgmax) ndgmax = Im[x];
+    if (Im[x] < ndgmin) {
+      ndgmin = Im[x];
+    }
+    if (Im[x] > ndgmax) {
+      ndgmax = Im[x];
+    }
   }
 
   ndgmax = ndgmax - ndgmin;

@@ -99,10 +99,9 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (strcmp(argv[3],"null") == 0) 
+  if (strcmp(argv[3], "null") == 0) {
     masque = NULL;
-  else
-  {
+  } else {
     masque = readimage(argv[3]);
     if (masque == NULL)
     {
@@ -113,7 +112,11 @@ int main(int argc, char **argv)
 
   connex = atoi(argv[4]);
 
-  if (argc == 7) mode = atoi(argv[5]); else mode = 0;
+  if (argc == 7) {
+    mode = atoi(argv[5]);
+  } else {
+    mode = 0;
+  }
 
   if ((connex == 4) || (connex == 8))
   {
@@ -159,7 +162,9 @@ int main(int argc, char **argv)
   writeimage(marqueurs, argv[argc - 1]);
   freeimage(image);
   freeimage(marqueurs);
-  if (masque) freeimage(masque);
+  if (masque) {
+    freeimage(masque);
+  }
 
   return 0;
 } /* main */

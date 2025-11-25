@@ -144,7 +144,11 @@ int main(int argc, char **argv)
     }
 
     S = 0;
-    for (i = 0; i < N; i++) if (T[i]) S++;
+    for (i = 0; i < N; i++) {
+      if (T[i]) {
+        S++;
+      }
+    }
 
     fprintf(fd, "%d %d\n", rayon, S);
 

@@ -111,9 +111,15 @@ int32_t lcrestsegment(struct xvimage *image, int32_t connex, int32_t nitermax, i
     fprintf(stderr, "%s: malloc failed\n", F_NAME);
     return(0);
   }
-  for (i = 0; i < nitermax; i++) mu[i] = base + i * incr;
+  for (i = 0; i < nitermax; i++) {
+    mu[i] = base + i * incr;
+  }
 
-  if (connex == 4) incr_vois = 2; else incr_vois = 1;
+  if (connex == 4) {
+    incr_vois = 2;
+  } else {
+    incr_vois = 1;
+  }
 
   if (depth(image) != 1) 
   {
@@ -146,8 +152,11 @@ int32_t lcrestsegment(struct xvimage *image, int32_t connex, int32_t nitermax, i
 
   if (connex == 4)
   {
-    for (x = 0; x < N; x++) 
-      if (pdestr4(F,x,rs,N)) LifoPush(LIFO1, ENCODE(x,delta4m(F,x,rs,N)));
+    for (x = 0; x < N; x++) {
+      if (pdestr4(F, x, rs, N)) {
+        LifoPush(LIFO1, ENCODE(x, delta4m(F, x, rs, N)));
+      }
+    }
   }
   else
   {
@@ -217,10 +226,12 @@ int32_t lcrestsegment(struct xvimage *image, int32_t connex, int32_t nitermax, i
       /* experimental : on etiquete les points separants p 
          tq F[p]-alpha-(p) >= mu[niter] */
       /* --------------------------------------------------------- */
-      for (x = 0; x < N; x++) 
-        if ((h = separant4(F, x, rs, N)) && 
-            ((F[x] - halpha8m(F, x, h, rs, N)) >= mu[niter-1]))
-          Set(x,ROBUSTE);
+      for (x = 0; x < N; x++) {
+        if ((h = separant4(F, x, rs, N)) &&
+            ((F[x] - halpha8m(F, x, h, rs, N)) >= mu[niter - 1])) {
+          Set(x, ROBUSTE);
+        }
+      }
 
     } /* while (! (LifoVide(LIFO1) ...)) */
   } /* if (connex == 4) */
@@ -229,8 +240,13 @@ int32_t lcrestsegment(struct xvimage *image, int32_t connex, int32_t nitermax, i
   /* UN PEU DE MENAGE                                 */
   /* ================================================ */
 
-  for (x = 0; x < N; x++) 
-    if (IsSet(x,ROBUSTE)) F[x] = 255; else F[x] = 0;
+  for (x = 0; x < N; x++) {
+    if (IsSet(x, ROBUSTE)) {
+      F[x] = 255;
+    } else {
+      F[x] = 0;
+    }
+  }
 
   IndicsTermine();
   LifoTermine(LIFO1);

@@ -124,8 +124,11 @@ int main(int argc, char **argv)
   }
 
   fscanf(fd, "%c", &type);
-  if ((type == 's') || (type == 'S'))
-    fprintf(stderr, "%s: WARNING: use tags c and C for single splines, not %c\n", argv[0], type);
+  if ((type == 's') || (type == 'S')) {
+    fprintf(stderr,
+            "%s: WARNING: use tags c and C for single splines, not %c\n",
+            argv[0], type);
+  }
 
   if ((type != 'c') && (type != 'C') && (type != 's') && (type != 'S'))
   {
@@ -140,8 +143,9 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (argc == 5)
+  if (argc == 5) {
     len = atof(argv[3]);
+  }
 
   if ((type == 'c') || (type == 's'))
   {

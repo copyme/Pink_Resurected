@@ -105,7 +105,11 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (argc == 6) mode = atoi(argv[2]); else mode = 0;
+  if (argc == 6) {
+    mode = atoi(argv[2]);
+  } else {
+    mode = 0;
+  }
 
   if (readrgbimage(argv[1], &R, &G, &B) == 0)
   {

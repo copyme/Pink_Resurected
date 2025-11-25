@@ -77,7 +77,9 @@ Rbtp * CreeRbtpVide(
   T->root = T->nil;
 
   /* chaine les elements libres a l'aide du pointeur right */
-  for (i = 1; i < taillemax; i++) T->elts[i].right = &(T->elts[i+1]);
+  for (i = 1; i < taillemax; i++) {
+    T->elts[i].right = &(T->elts[i + 1]);
+  }
   T->elts[taillemax].right = NULL;
   T->libre = &(T->elts[1]);
 
@@ -89,7 +91,9 @@ void RbtpTransRec(
   Rbtp **T, Rbtp * A, RbtpElt * x)
 /* ==================================== */
 {
-  if (x == A->nil) return;
+  if (x == A->nil) {
+    return;
+  }
   RbtpInsert(T, x->key, x->auxdata);
   RbtpTransRec(T, A, x->left);
   RbtpTransRec(T, A, x->right);
@@ -121,7 +125,9 @@ void RbtpFlush(
 {
   int32_t i;
   T->util = 0;
-  for (i = 0; i < T->max - 1; i++) T->elts[i].right = &(T->elts[i+1]);
+  for (i = 0; i < T->max - 1; i++) {
+    T->elts[i].right = &(T->elts[i + 1]);
+  }
   T->elts[T->max - 1].right = NULL;
   T->root = T->nil;
 } /* RbtpFlush() */
@@ -151,11 +157,19 @@ void RbtpPrintRec(
 /* ==================================== */
 {
   int32_t i;
-  if (x == T->nil) return;
+  if (x == T->nil) {
+    return;
+  }
   RbtpPrintRec(T, x->left, niv+1);
-  for (i = 0; i < niv; i++) printf("    ");
+  for (i = 0; i < niv; i++) {
+    printf("    ");
+  }
   PRINTKEY(x->key); printf("(");
-  if (x->color == RBTP_Red) printf("r"); else  printf("b");
+  if (x->color == RBTP_Red) {
+    printf("r");
+  } else {
+    printf("b");
+  }
   printf(")\n");
   RbtpPrintRec(T, x->right, niv+1);
 } /* RbtpPrintRec() */
@@ -174,8 +188,13 @@ RbtpElt * RbtpSearch(
 /* ==================================== */
 {
   RbtpElt * x = T->root;
-  while ((x != T->nil) && !EQUALKEY(k,x->key))
-    if (LESSKEY(k,x->key)) x = x->left; else x = x->right;
+  while ((x != T->nil) && !EQUALKEY(k, x->key)) {
+    if (LESSKEY(k, x->key)) {
+      x = x->left;
+    } else {
+      x = x->right;
+    }
+  }
   return x;
 } /* RbtpSearch() */
 
@@ -184,7 +203,9 @@ RbtpElt * RbtpMinimum(
   Rbtp * T, RbtpElt * x)
 /* ==================================== */
 {
-  while (x->left != T->nil) x = x->left;
+  while (x->left != T->nil) {
+    x = x->left;
+  }
   return x;
 } /* RbtpMinimum() */
 
@@ -193,7 +214,9 @@ RbtpElt * RbtpMaximum(
   Rbtp * T, RbtpElt * x)
 /* ==================================== */
 {
-  while (x->right != T->nil) x = x->right;
+  while (x->right != T->nil) {
+    x = x->right;
+  }
   return x;
 } /* RbtpMaximum() */
 
@@ -203,7 +226,9 @@ RbtpElt * RbtpSuccessor(
 /* ==================================== */
 {
   RbtpElt * y = NULL;
-  if (x->right != T->nil) return RbtpMinimum(T, x->right);
+  if (x->right != T->nil) {
+    return RbtpMinimum(T, x->right);
+  }
   y = x->parent;
   while ((y != T->nil) && (x == y->right))
   {
@@ -226,13 +251,20 @@ void RbtpInsertSimple(
   while (x != T->nil)
   {
     y = x;
-    if (LESSKEY(z->key,x->key)) x = x->left; else x = x->right;
+    if (LESSKEY(z->key, x->key)) {
+      x = x->left;
+    } else {
+      x = x->right;
+    }
   }
   z->parent = y;
-  if (y == T->nil)
+  if (y == T->nil) {
     T->root = z;
-  else
-    if (LESSKEY(z->key,y->key)) y->left = z; else y->right = z;
+  } else if (LESSKEY(z->key, y->key)) {
+    y->left = z;
+  } else {
+    y->right = z;
+  }
 } /* RbtpInsertSimple() */
 
 /* ==================================== */
@@ -242,9 +274,13 @@ RbtpElt * RbtpInsertAux(  /* allocation et insertion simple */
 {
   RbtpElt * z = NULL;
 
-  if ((*T)->libre == NULL) RbtpReAlloc(T);
+  if ((*T)->libre == NULL) {
+    RbtpReAlloc(T);
+  }
   (*T)->util++;
-  if ((*T)->util > (*T)->maxutil) (*T)->maxutil = (*T)->util;
+  if ((*T)->util > (*T)->maxutil) {
+    (*T)->maxutil = (*T)->util;
+  }
   z = (*T)->libre;
   (*T)->libre = (*T)->libre->right;
   COPYKEY(z->key,k);
@@ -264,16 +300,18 @@ static void LeftRotate(
 
   y = x->right;                    /* assume right(x) != NIL */
   x->right = y->left;              /* move y's child over */
-  if (y->left != T->nil)
+  if (y->left != T->nil) {
     y->left->parent = x;
+  }
   y->parent = x->parent;           /* move y up to x's position */
-  if (x->parent == T->nil)
+  if (x->parent == T->nil) {
     T->root = y;
-  else 
-  {
-    if (x == x->parent->left)
+  } else {
+    if (x == x->parent->left) {
       x->parent->left = y;
-    else x->parent->right = y;
+    } else {
+      x->parent->right = y;
+    }
   }
   y->left = x;                     /* move x down */
   x->parent = y;
@@ -288,16 +326,18 @@ static void RightRotate(
 
   y = x->left;              /* assume left(x) != NIL */
   x->left = y->right;
-  if (y->right != T->nil)
+  if (y->right != T->nil) {
     y->right->parent = x;
+  }
   y->parent = x->parent;
-  if (x->parent == T->nil)
+  if (x->parent == T->nil) {
     T->root = y;
-  else 
-  {
-    if (x == x->parent->right)
-       x->parent->right = y;
-    else x->parent->left = y;
+  } else {
+    if (x == x->parent->right) {
+      x->parent->right = y;
+    } else {
+      x->parent->left = y;
+    }
   }
   y->right = x;
   x->parent = y;
@@ -450,31 +490,34 @@ RbtpElt * RbtpDeleteAux(         /* return deleted node */
   RbtpElt * c = NULL;
   RbtpElt * d = NULL;
 
-  if ((z->left == T->nil) || (z->right == T->nil))
+  if ((z->left == T->nil) || (z->right == T->nil)) {
     d = z;
-  else 
+  } else {
     d = RbtpSuccessor(T, z);
-  if (d->left != T->nil)
+  }
+  if (d->left != T->nil) {
     c = d->left;
-  else 
+  } else {
     c = d->right;
+  }
   c->parent = d->parent;      /* no test for NIL with sentinel */
-  if (d->parent == T->nil)
+  if (d->parent == T->nil) {
     T->root = c;
-  else 
-  {
-    if (d == d->parent->left)
+  } else {
+    if (d == d->parent->left) {
       d->parent->left = c;
-    else 
+    } else {
       d->parent->right = c;
+    }
   }
   if (d != z)
   {
     COPYKEY(z->key,d->key);
     z->auxdata = d->auxdata;
   }
-  if (d->color == RBTP_Black)
-    RbtpDeleteFixup(T, c);     /* c is now "Double-Black" */
+  if (d->color == RBTP_Black) {
+    RbtpDeleteFixup(T, c); /* c is now "Double-Black" */
+  }
   return d;
 } /* RbtpDeleteAux() */
 
@@ -499,7 +542,9 @@ TypRbtpAuxData RbtpPopMin(
 */
 {
   RbtpElt * z = T->root;
-  while (z->left != T->nil) z = z->left; /* recherche le min */
+  while (z->left != T->nil) {
+    z = z->left; /* recherche le min */
+  }
   z = RbtpDeleteAux(T, z);                /* efface de l'arbre */
   z->right = T->libre;
   T->libre = z;
@@ -517,7 +562,9 @@ TypRbtpAuxData RbtpPopMax(
 */
 {
   RbtpElt * z = T->root;
-  while (z->left != T->nil) z = z->right; /* recherche le max */
+  while (z->left != T->nil) {
+    z = z->right; /* recherche le max */
+  }
   z = RbtpDeleteAux(T, z);                 /* efface de l'arbre */
   z->right = T->libre;
   T->libre = z;
@@ -531,7 +578,9 @@ TypRbtpKey RbtpMinLevel(
 /* ==================================== */
 {
   RbtpElt * x = T->root;
-  while (x->left != T->nil) x = x->left;
+  while (x->left != T->nil) {
+    x = x->left;
+  }
   return x->key;
 } /* RbtpMinLevel() */
 

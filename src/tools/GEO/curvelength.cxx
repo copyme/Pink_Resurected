@@ -89,12 +89,12 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (strcmp(argv[2],"1") == 0)
+  if (strcmp(argv[2], "1") == 0) {
     closed = 1;
-  else {
-    if (strcmp(argv[2],"0") == 0)
+  } else {
+    if (strcmp(argv[2], "0") == 0) {
       closed = 0;
-    else {
+    } else {
       fprintf(stderr, "%s: bad value for parameter \"closed\" (0 or 1)\n", argv[0]);
       exit(1);
     }
@@ -112,8 +112,9 @@ int main(int argc, char **argv)
     X = (int32_t *)calloc(1,npoints*sizeof(int32_t)); assert(X != NULL);
     Y = (int32_t *)calloc(1,npoints*sizeof(int32_t)); assert(Y != NULL);
 
-    for (i = 0; i < npoints; i++)
+    for (i = 0; i < npoints; i++) {
       fscanf(fd, "%d %d", &(X[i]), &(Y[i]));
+    }
 
     fclose(fd);
   
@@ -125,22 +126,27 @@ int main(int argc, char **argv)
 
 #ifdef DEBUG
     printf("npoints = %d\n", npoints);
-    for (i = 0; i < npoints; i++)
-      if (end[i] != -1)
-	printf("DSS %d-%d, angle %g (%g)\n", i, end[i], angle[i], angle[i]*180/M_PI);
+    for (i = 0; i < npoints; i++) {
+      if (end[i] != -1) {
+        printf("DSS %d-%d, angle %g (%g)\n", i, end[i], angle[i],
+               angle[i] * 180 / M_PI);
+      }
+    }
 #endif
 
     LambdaMSTD(npoints, end, angle, mstd);
 
 #ifdef DEBUG_2
-    for (i = 0; i < npoints; i++)
-      printf("point %d, angle %g (%g)\n", i, mstd[i], mstd[i]*180/M_PI);
+    for (i = 0; i < npoints; i++) {
+      printf("point %d, angle %g (%g)\n", i, mstd[i], mstd[i] * 180 / M_PI);
+    }
 #endif
 
-    if (closed) 
+    if (closed) {
       L = ComputeLength(npoints-1, mstd);
-    else
+    } else {
       L = ComputeLength(npoints, mstd);
+    }
 
     free(X);
     free(Y);
@@ -160,8 +166,9 @@ int main(int argc, char **argv)
     Y = (int32_t *)calloc(1,npoints*sizeof(int32_t)); assert(Y != NULL);
     Z = (int32_t *)calloc(1,npoints*sizeof(int32_t)); assert(Z != NULL);
 
-    for (i = 0; i < npoints; i++)
+    for (i = 0; i < npoints; i++) {
       fscanf(fd, "%d %d %d", &(X[i]), &(Y[i]), &(Z[i]));
+    }
 
     fclose(fd);
   
@@ -177,24 +184,27 @@ int main(int argc, char **argv)
 
 #ifdef DEBUG
     printf("npoints = %d\n", npoints);
-    for (i = 0; i < npoints; i++)
-      if (end[i] != -1)
-	printf("DSS %d-%d, Xtan %g, Ytan %g, Ztan %g\n",
-	       i, end[i], Xtan[i], Ytan[i], Ztan[i]);
+    for (i = 0; i < npoints; i++) {
+      if (end[i] != -1) {
+        printf("DSS %d-%d, Xtan %g, Ytan %g, Ztan %g\n", i, end[i], Xtan[i],
+               Ytan[i], Ztan[i]);
+      }
+    }
 #endif
 
     LambdaMSTD3D(npoints, end, Xtan, Ytan, Ztan, Xmstd, Ymstd, Zmstd);
 
 #ifdef DEBUG_2
-    for (i = 0; i < npoints; i++)
-      printf("point %d, mstd %g %g %g\n", i, 
-	     Xmstd[i], Ymstd[i], Zmstd[i]);
+    for (i = 0; i < npoints; i++) {
+      printf("point %d, mstd %g %g %g\n", i, Xmstd[i], Ymstd[i], Zmstd[i]);
+    }
 #endif
 
-    if (closed) 
+    if (closed) {
       L = ComputeLength3D(npoints-1, Xmstd, Ymstd, Zmstd);
-    else
+    } else {
       L = ComputeLength3D(npoints, Xmstd, Ymstd, Zmstd);
+    }
 
     free(X);
     free(Y);
@@ -224,9 +234,9 @@ int main(int argc, char **argv)
     fprintf(fd, "e %d\n", 1); 
     fprintf(fd, "%g\n", L); 
     fclose(fd);
+  } else {
+    printf("%g\n", L);
   }
-  else printf("%g\n", L); 
-
 
   return 0;
 } /* main */

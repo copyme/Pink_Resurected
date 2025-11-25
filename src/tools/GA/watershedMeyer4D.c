@@ -91,11 +91,10 @@ int main(int32_t argc, char **argv)
     fprintf(stderr, "%s: readimage4D failed\n", argv[0]);
     exit(1);
   }
-  
-  if (strcmp(argv[5],"null") == 0) 
+
+  if (strcmp(argv[5], "null") == 0) {
     marqueursfond = NULL;
-  else
-  {
+  } else {
     marqueursfond = readimage4D(argv[5], atoi(argv[2]), atoi(argv[3]));
     if (marqueursfond == NULL)
     {
@@ -104,10 +103,9 @@ int main(int32_t argc, char **argv)
     }
   }
 
-  if (strcmp(argv[6],"null") == 0) 
+  if (strcmp(argv[6], "null") == 0) {
     masque = NULL;
-  else
-  {
+  } else {
     masque = readimage4D(argv[6], atoi(argv[2]), atoi(argv[3]));
     if (masque == NULL)
     {
@@ -130,7 +128,11 @@ int main(int32_t argc, char **argv)
   
   freeimage4D(image);
   freeimage4D(marqueurs);
-  if (marqueursfond) freeimage4D(marqueursfond);
-  if (masque) freeimage4D(masque);
+  if (marqueursfond) {
+    freeimage4D(marqueursfond);
+  }
+  if (masque) {
+    freeimage4D(masque);
+  }
   return 0;
 } /* main */

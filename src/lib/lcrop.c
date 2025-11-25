@@ -102,68 +102,80 @@ struct xvimage * lcrop(struct xvimage *in, int32_t x, int32_t y, int32_t w, int3
   {
     uint8_t *T1 = UCHARDATA(temp1);
     uint8_t *I = UCHARDATA(in);
-    for (n = 0; n < nb; n++)
-      for (j = j0, yy = y0; j < j1; j++, yy++)
-	for (i = i0, xx = x0; i < i1; i++, xx++)
+    for (n = 0; n < nb; n++) {
+      for (j = j0, yy = y0; j < j1; j++, yy++) {
+        for (i = i0, xx = x0; i < i1; i++, xx++)
 	{
 	  T1[(n*N1) + (j*i1) + i] = I[(n*N) + (yy*rs) + xx];
-	}
+        }
+      }
+    }
   }
   else if (datatype(in) == VFF_TYP_2_BYTE)
   {
     int16_t *T1L = SSHORTDATA(temp1);
     int16_t *IL = SSHORTDATA(in);
-    for (n = 0; n < nb; n++)
-      for (j = j0, yy = y0; j < j1; j++, yy++)
-	for (i = i0, xx = x0; i < i1; i++, xx++)
+    for (n = 0; n < nb; n++) {
+      for (j = j0, yy = y0; j < j1; j++, yy++) {
+        for (i = i0, xx = x0; i < i1; i++, xx++)
 	{
 	  T1L[(n*N1) + (j*i1) + i] = IL[(n*N) + (yy*rs) + xx];
-	}
+        }
+      }
+    }
   }
   else if (datatype(in) == VFF_TYP_4_BYTE)
   {
     int32_t *T1L = SLONGDATA(temp1);
     int32_t *IL = SLONGDATA(in);
-    for (n = 0; n < nb; n++)
-      for (j = j0, yy = y0; j < j1; j++, yy++)
-	for (i = i0, xx = x0; i < i1; i++, xx++)
+    for (n = 0; n < nb; n++) {
+      for (j = j0, yy = y0; j < j1; j++, yy++) {
+        for (i = i0, xx = x0; i < i1; i++, xx++)
 	{
 	  T1L[(n*N1) + (j*i1) + i] = IL[(n*N) + (yy*rs) + xx];
-	}
+        }
+      }
+    }
   }
   else if (datatype(in) == VFF_TYP_FLOAT)
   {
     float *T1F = FLOATDATA(temp1);
     float *IF = FLOATDATA(in);
-    for (n = 0; n < nb; n++)
-      for (j = j0, yy = y0; j < j1; j++, yy++)
-	for (i = i0, xx = x0; i < i1; i++, xx++)
+    for (n = 0; n < nb; n++) {
+      for (j = j0, yy = y0; j < j1; j++, yy++) {
+        for (i = i0, xx = x0; i < i1; i++, xx++)
 	{
 	  T1F[(n*N1) + (j*i1) + i] = IF[(n*N) + (yy*rs) + xx];
-	}
+        }
+      }
+    }
   }
   else if (datatype(in) == VFF_TYP_DOUBLE)
   {
     double *T1F = DOUBLEDATA(temp1);
     double *IF = DOUBLEDATA(in);
-    for (n = 0; n < nb; n++)
-      for (j = j0, yy = y0; j < j1; j++, yy++)
-	for (i = i0, xx = x0; i < i1; i++, xx++)
+    for (n = 0; n < nb; n++) {
+      for (j = j0, yy = y0; j < j1; j++, yy++) {
+        for (i = i0, xx = x0; i < i1; i++, xx++)
 	{
 	  T1F[(n*N1) + (j*i1) + i] = IF[(n*N) + (yy*rs) + xx];
-	}
+        }
+      }
+    }
   }
   else if (datatype(in) == VFF_TYP_COMPLEX)
   {
     fcomplex *T1C = COMPLEXDATA(temp1);
     fcomplex *IC = COMPLEXDATA(in);
-    for (n = 0; n < nb; n++)
-      for (j = j0, yy = y0; j < j1; j++, yy++)
-	for (i = i0, xx = x0; i < i1; i++, xx++)
+    for (n = 0; n < nb; n++) {
+      for (j = j0, yy = y0; j < j1; j++, yy++) {
+        for (i = i0, xx = x0; i < i1; i++, xx++)
 	{
 	  T1C[(n*N1) + (j*i1) + i].re = IC[(n*N) + (yy*rs) + xx].re;
 	  T1C[(n*N1) + (j*i1) + i].im = IC[(n*N) + (yy*rs) + xx].im;
-	}
+        }
+      }
+    }
   }
   else
   {
@@ -227,61 +239,77 @@ struct xvimage * lcrop3d(struct xvimage *in, int32_t x, int32_t y, int32_t z, in
   {
     uint8_t *T1 = UCHARDATA(temp1);
     uint8_t *I = UCHARDATA(in);
-    for (n = 0; n < nb; n++)
-    for (k = k0, zz = z0; k < k1; k++, zz++)
-    for (j = j0, yy = y0; j < j1; j++, yy++)
-    for (i = i0, xx = x0; i < i1; i++, xx++)
-    {
-      T1[(n*N1) + (k*p1) + (j*i1) + i] = I[(n*N) + (zz*ps) + (yy*rs) + xx];
+    for (n = 0; n < nb; n++) {
+      for (k = k0, zz = z0; k < k1; k++, zz++) {
+        for (j = j0, yy = y0; j < j1; j++, yy++) {
+          for (i = i0, xx = x0; i < i1; i++, xx++) {
+            T1[(n * N1) + (k * p1) + (j * i1) + i] =
+                I[(n * N) + (zz * ps) + (yy * rs) + xx];
+          }
+        }
+      }
     }
   }
   else if (datatype(in) == VFF_TYP_4_BYTE)
   {
     int32_t *T1L = SLONGDATA(temp1);
     int32_t *IL = SLONGDATA(in);
-    for (n = 0; n < nb; n++)
-    for (k = k0, zz = z0; k < k1; k++, zz++)
-    for (j = j0, yy = y0; j < j1; j++, yy++)
-    for (i = i0, xx = x0; i < i1; i++, xx++)
-    {
-      T1L[(n*N1) + (k*p1) + (j*i1) + i] = IL[(n*N) + (zz*ps) + (yy*rs) + xx];
+    for (n = 0; n < nb; n++) {
+      for (k = k0, zz = z0; k < k1; k++, zz++) {
+        for (j = j0, yy = y0; j < j1; j++, yy++) {
+          for (i = i0, xx = x0; i < i1; i++, xx++) {
+            T1L[(n * N1) + (k * p1) + (j * i1) + i] =
+                IL[(n * N) + (zz * ps) + (yy * rs) + xx];
+          }
+        }
+      }
     }
   }
   else if (datatype(in) == VFF_TYP_FLOAT)
   {
     float *T1F = FLOATDATA(temp1);
     float *IF = FLOATDATA(in);
-    for (n = 0; n < nb; n++)
-    for (k = k0, zz = z0; k < k1; k++, zz++)
-    for (j = j0, yy = y0; j < j1; j++, yy++)
-    for (i = i0, xx = x0; i < i1; i++, xx++)
-    {
-      T1F[(n*N1) + (k*p1) + (j*i1) + i] = IF[(n*N) + (zz*ps) + (yy*rs) + xx];
+    for (n = 0; n < nb; n++) {
+      for (k = k0, zz = z0; k < k1; k++, zz++) {
+        for (j = j0, yy = y0; j < j1; j++, yy++) {
+          for (i = i0, xx = x0; i < i1; i++, xx++) {
+            T1F[(n * N1) + (k * p1) + (j * i1) + i] =
+                IF[(n * N) + (zz * ps) + (yy * rs) + xx];
+          }
+        }
+      }
     }
   }
   else if (datatype(in) == VFF_TYP_DOUBLE)
   {
     double *T1F = DOUBLEDATA(temp1);
     double *IF = DOUBLEDATA(in);
-    for (n = 0; n < nb; n++)
-    for (k = k0, zz = z0; k < k1; k++, zz++)
-    for (j = j0, yy = y0; j < j1; j++, yy++)
-    for (i = i0, xx = x0; i < i1; i++, xx++)
-    {
-      T1F[(n*N1) + (k*p1) + (j*i1) + i] = IF[(n*N) + (zz*ps) + (yy*rs) + xx];
+    for (n = 0; n < nb; n++) {
+      for (k = k0, zz = z0; k < k1; k++, zz++) {
+        for (j = j0, yy = y0; j < j1; j++, yy++) {
+          for (i = i0, xx = x0; i < i1; i++, xx++) {
+            T1F[(n * N1) + (k * p1) + (j * i1) + i] =
+                IF[(n * N) + (zz * ps) + (yy * rs) + xx];
+          }
+        }
+      }
     }
   }
   else if (datatype(in) == VFF_TYP_COMPLEX)
   {
     fcomplex *T1C = COMPLEXDATA(temp1);
     fcomplex *IC = COMPLEXDATA(in);
-    for (n = 0; n < nb; n++)
-    for (k = k0, zz = z0; k < k1; k++, zz++)
-    for (j = j0, yy = y0; j < j1; j++, yy++)
-    for (i = i0, xx = x0; i < i1; i++, xx++)
-    {
-      T1C[(n*N1)+(k*p1)+(j*i1)+i].re = IC[(n*N)+(zz*ps)+(yy*rs)+xx].re;
-      T1C[(n*N1)+(k*p1)+(j*i1)+i].im = IC[(n*N)+(zz*ps)+(yy*rs)+xx].im;
+    for (n = 0; n < nb; n++) {
+      for (k = k0, zz = z0; k < k1; k++, zz++) {
+        for (j = j0, yy = y0; j < j1; j++, yy++) {
+          for (i = i0, xx = x0; i < i1; i++, xx++) {
+            T1C[(n * N1) + (k * p1) + (j * i1) + i].re =
+                IC[(n * N) + (zz * ps) + (yy * rs) + xx].re;
+            T1C[(n * N1) + (k * p1) + (j * i1) + i].im =
+                IC[(n * N) + (zz * ps) + (yy * rs) + xx].im;
+          }
+        }
+      }
     }
   }
   else
@@ -314,40 +342,57 @@ void lsetframe(struct xvimage *image, int32_t grayval)
 
   if (ds > 1)
   {
-    for (x = 0; x < rs; x++)
-    for (y = 0; y < cs; y++) 
-      Im[0 * ps + y * rs + x] = grayval;          /* plan z = 0 */
+    for (x = 0; x < rs; x++) {
+      for (y = 0; y < cs; y++) {
+        Im[0 * ps + y * rs + x] = grayval; /* plan z = 0 */
+      }
+    }
     for (x = 0; x < rs; x++)
     {
-      for (y = 0; y < cs; y++)
-        Im[(ds-1) * ps + y * rs + x] = grayval; /* plan z = ds-1 */
+      for (y = 0; y < cs; y++) {
+        Im[(ds - 1) * ps + y * rs + x] = grayval; /* plan z = ds-1 */
+      }
     }
 
-    for (x = 0; x < rs; x++)
-    for (z = 0; z < ds; z++) 
-      Im[z * ps + 0 * rs + x] = grayval;          /* plan y = 0 */
+    for (x = 0; x < rs; x++) {
+      for (z = 0; z < ds; z++) {
+        Im[z * ps + 0 * rs + x] = grayval; /* plan y = 0 */
+      }
+    }
     for (x = 0; x < rs; x++)
     {
-      for (z = 0; z < ds; z++)
-        Im[z * ps + (cs-1) * rs + x] = grayval; /* plan y = cs-1 */
+      for (z = 0; z < ds; z++) {
+        Im[z * ps + (cs - 1) * rs + x] = grayval; /* plan y = cs-1 */
+      }
     }
 
-    for (y = 0; y < cs; y++)
-    for (z = 0; z < ds; z++) 
-      Im[z * ps + y * rs + 0] = grayval;          /* plan x = 0 */
+    for (y = 0; y < cs; y++) {
+      for (z = 0; z < ds; z++) {
+        Im[z * ps + y * rs + 0] = grayval; /* plan x = 0 */
+      }
+    }
     for (y = 0; y < cs; y++)
     {
-      for (z = 0; z < ds; z++)
-        Im[z * ps + y * rs + (rs-1)] = grayval; /* plan x = rs-1 */
+      for (z = 0; z < ds; z++) {
+        Im[z * ps + y * rs + (rs - 1)] = grayval; /* plan x = rs-1 */
+      }
     }
   }
   else
   {
-    for (x = 0; x < rs; x++) Im[x] = grayval;
-    for (x = 0; x < rs; x++) Im[(cs - 1) * rs + x] = grayval;
+    for (x = 0; x < rs; x++) {
+      Im[x] = grayval;
+    }
+    for (x = 0; x < rs; x++) {
+      Im[(cs - 1) * rs + x] = grayval;
+    }
 
-    for (y = 1; y < cs - 1; y++) Im[y * rs] = grayval;
-    for (y = 1; y < cs - 1; y++) Im[y * rs + rs - 1] = grayval;
+    for (y = 1; y < cs - 1; y++) {
+      Im[y * rs] = grayval;
+    }
+    for (y = 1; y < cs - 1; y++) {
+      Im[y * rs + rs - 1] = grayval;
+    }
   }
 } // lsetframe()
 
@@ -377,37 +422,57 @@ void lsetthickframe(struct xvimage *image, int32_t width, int32_t grayval)
     assert(width < ds);
     for (w = 0; w < width; w++)
     {
-      for (x = 0; x < rs; x++)
-	for (y = 0; y < cs; y++) 
-	  Im[w * ps + y * rs + x] = grayval;          /* plan z = w */
-      for (x = 0; x < rs; x++)
-	for (y = 0; y < cs; y++) 
-	  Im[(ds-1-w) * ps + y * rs + x] = grayval;     /* plan z = ds-1-w */
+      for (x = 0; x < rs; x++) {
+        for (y = 0; y < cs; y++) {
+          Im[w * ps + y * rs + x] = grayval; /* plan z = w */
+        }
+      }
+      for (x = 0; x < rs; x++) {
+        for (y = 0; y < cs; y++) {
+          Im[(ds - 1 - w) * ps + y * rs + x] = grayval; /* plan z = ds-1-w */
+        }
+      }
 
-      for (x = 0; x < rs; x++)
-	for (z = 0; z < ds; z++) 
-	  Im[z * ps + w * rs + x] = grayval;          /* plan y = w */
-      for (x = 0; x < rs; x++)
-	for (z = 0; z < ds; z++) 
-	  Im[z * ps + (cs-1-w) * rs + x] = grayval;     /* plan y = cs-1-w */
+      for (x = 0; x < rs; x++) {
+        for (z = 0; z < ds; z++) {
+          Im[z * ps + w * rs + x] = grayval; /* plan y = w */
+        }
+      }
+      for (x = 0; x < rs; x++) {
+        for (z = 0; z < ds; z++) {
+          Im[z * ps + (cs - 1 - w) * rs + x] = grayval; /* plan y = cs-1-w */
+        }
+      }
 
-      for (y = 0; y < cs; y++)
-	for (z = 0; z < ds; z++) 
-	  Im[z * ps + y * rs + w] = grayval;          /* plan x = w */
-      for (y = 0; y < cs; y++)
-	for (z = 0; z < ds; z++) 
-	  Im[z * ps + y * rs + (rs-1-w)] = grayval;     /* plan x = rs-1-w */
+      for (y = 0; y < cs; y++) {
+        for (z = 0; z < ds; z++) {
+          Im[z * ps + y * rs + w] = grayval; /* plan x = w */
+        }
+      }
+      for (y = 0; y < cs; y++) {
+        for (z = 0; z < ds; z++) {
+          Im[z * ps + y * rs + (rs - 1 - w)] = grayval; /* plan x = rs-1-w */
+        }
+      }
     }
   }
   else
   {
     for (w = 0; w < width; w++)
     {
-      for (x = 0; x < rs; x++) Im[w*rs + x] = grayval;
-      for (x = 0; x < rs; x++) Im[(cs-1-w) * rs + x] = grayval;
+      for (x = 0; x < rs; x++) {
+        Im[w * rs + x] = grayval;
+      }
+      for (x = 0; x < rs; x++) {
+        Im[(cs - 1 - w) * rs + x] = grayval;
+      }
 
-      for (y = 1; y < cs - 1; y++) Im[y * rs + w] = grayval;
-      for (y = 1; y < cs - 1; y++) Im[y * rs + rs-1-w] = grayval;
+      for (y = 1; y < cs - 1; y++) {
+        Im[y * rs + w] = grayval;
+      }
+      for (y = 1; y < cs - 1; y++) {
+        Im[y * rs + rs - 1 - w] = grayval;
+      }
     }
   }
 } // lsetthickframe()
@@ -426,7 +491,9 @@ struct xvimage * lenframe(struct xvimage *image, int32_t grayval, int32_t width)
   index_t rs2, cs2, ds2, ps2, N2;
   struct xvimage * imageout;
 
-  if (depth(image) > 1) return lenframe3d(image, grayval, width);
+  if (depth(image) > 1) {
+    return lenframe3d(image, grayval, width);
+  }
 
   rs = rowsize(image);
   cs = colsize(image);
@@ -453,78 +520,138 @@ struct xvimage * lenframe(struct xvimage *image, int32_t grayval, int32_t width)
     uint8_t *Imout = UCHARDATA(imageout);
     uint8_t *Im = UCHARDATA(image);
     uint8_t grayvalue = (uint8_t)grayval;
-    for (n = 0; n < nb; n++)
-      for (y = 0; y < width; y++)
-	for (x = 0; x < rs2; x++) Imout[n * N2 + y*rs2 + x] = grayvalue;
-    
-    for (n = 0; n < nb; n++)
-      for (y = 0; y < width; y++)
-	for (x = 0; x < rs2; x++) Imout[n * N2 + (cs2-1-y)*rs2 + x] = grayvalue;
-    
-    for (n = 0; n < nb; n++)
-      for (x = 0; x < width; x++)
-	for (y = 1; y < cs2 - 1; y++) Imout[n * N2 + y*rs2 + x] = grayvalue;
-    
-    for (n = 0; n < nb; n++)
-      for (x = 0; x < width; x++)
-	for (y = 1; y < cs2 - 1; y++) Imout[n * N2 + y*rs2 + rs2-1-x] = grayvalue;
-    
-    for (n = 0; n < nb; n++)
-      for (x = width; x < rs2-width; x++)
-	for (y = width; y < cs2-width; y++) 
-	  Imout[n * N2 + y * rs2 + x] = Im[n * N + (y-width) * rs + (x-width)];
+    for (n = 0; n < nb; n++) {
+      for (y = 0; y < width; y++) {
+        for (x = 0; x < rs2; x++) {
+          Imout[n * N2 + y * rs2 + x] = grayvalue;
+        }
+      }
+    }
+
+    for (n = 0; n < nb; n++) {
+      for (y = 0; y < width; y++) {
+        for (x = 0; x < rs2; x++) {
+          Imout[n * N2 + (cs2 - 1 - y) * rs2 + x] = grayvalue;
+        }
+      }
+    }
+
+    for (n = 0; n < nb; n++) {
+      for (x = 0; x < width; x++) {
+        for (y = 1; y < cs2 - 1; y++) {
+          Imout[n * N2 + y * rs2 + x] = grayvalue;
+        }
+      }
+    }
+
+    for (n = 0; n < nb; n++) {
+      for (x = 0; x < width; x++) {
+        for (y = 1; y < cs2 - 1; y++) {
+          Imout[n * N2 + y * rs2 + rs2 - 1 - x] = grayvalue;
+        }
+      }
+    }
+
+    for (n = 0; n < nb; n++) {
+      for (x = width; x < rs2 - width; x++) {
+        for (y = width; y < cs2 - width; y++) {
+          Imout[n * N2 + y * rs2 + x] =
+              Im[n * N + (y - width) * rs + (x - width)];
+        }
+      }
+    }
   }
   else if (datatype(image) == VFF_TYP_4_BYTE)
   {
     int32_t *Imout = SLONGDATA(imageout);
     int32_t *Im = SLONGDATA(image);
     int32_t grayvalue = (int32_t)grayval;
-    for (n = 0; n < nb; n++)
-      for (y = 0; y < width; y++)
-	for (x = 0; x < rs2; x++) Imout[n * N2 + y*rs2 + x] = grayvalue;
-    
-    for (n = 0; n < nb; n++)
-      for (y = 0; y < width; y++)
-	for (x = 0; x < rs2; x++) Imout[n * N2 + (cs2-1-y)*rs2 + x] = grayvalue;
-    
-    for (n = 0; n < nb; n++)
-      for (x = 0; x < width; x++)
-	for (y = 1; y < cs2 - 1; y++) Imout[n * N2 + y*rs2 + x] = grayvalue;
-    
-    for (n = 0; n < nb; n++)
-      for (x = 0; x < width; x++)
-	for (y = 1; y < cs2 - 1; y++) Imout[n * N2 + y*rs2 + rs2-1-x] = grayvalue;
-    
-    for (n = 0; n < nb; n++)
-      for (x = width; x < rs2-width; x++)
-	for (y = width; y < cs2-width; y++) 
-	  Imout[n * N2 + y * rs2 + x] = Im[n * N + (y-width) * rs + (x-width)];
+    for (n = 0; n < nb; n++) {
+      for (y = 0; y < width; y++) {
+        for (x = 0; x < rs2; x++) {
+          Imout[n * N2 + y * rs2 + x] = grayvalue;
+        }
+      }
+    }
+
+    for (n = 0; n < nb; n++) {
+      for (y = 0; y < width; y++) {
+        for (x = 0; x < rs2; x++) {
+          Imout[n * N2 + (cs2 - 1 - y) * rs2 + x] = grayvalue;
+        }
+      }
+    }
+
+    for (n = 0; n < nb; n++) {
+      for (x = 0; x < width; x++) {
+        for (y = 1; y < cs2 - 1; y++) {
+          Imout[n * N2 + y * rs2 + x] = grayvalue;
+        }
+      }
+    }
+
+    for (n = 0; n < nb; n++) {
+      for (x = 0; x < width; x++) {
+        for (y = 1; y < cs2 - 1; y++) {
+          Imout[n * N2 + y * rs2 + rs2 - 1 - x] = grayvalue;
+        }
+      }
+    }
+
+    for (n = 0; n < nb; n++) {
+      for (x = width; x < rs2 - width; x++) {
+        for (y = width; y < cs2 - width; y++) {
+          Imout[n * N2 + y * rs2 + x] =
+              Im[n * N + (y - width) * rs + (x - width)];
+        }
+      }
+    }
   }
   else if (datatype(image) == VFF_TYP_FLOAT)
   {
     float *Imout = FLOATDATA(imageout);
     float *Im = FLOATDATA(image);
     float grayvalue = (float)grayval;
-    for (n = 0; n < nb; n++)
-      for (y = 0; y < width; y++)
-	for (x = 0; x < rs2; x++) Imout[n * N2 + y*rs2 + x] = grayvalue;
-    
-    for (n = 0; n < nb; n++)
-      for (y = 0; y < width; y++)
-	for (x = 0; x < rs2; x++) Imout[n * N2 + (cs2-1-y)*rs2 + x] = grayvalue;
-    
-    for (n = 0; n < nb; n++)
-      for (x = 0; x < width; x++)
-	for (y = 1; y < cs2 - 1; y++) Imout[n * N2 + y*rs2 + x] = grayvalue;
-    
-    for (n = 0; n < nb; n++)
-      for (x = 0; x < width; x++)
-	for (y = 1; y < cs2 - 1; y++) Imout[n * N2 + y*rs2 + rs2-1-x] = grayvalue;
-    
-    for (n = 0; n < nb; n++)
-      for (x = width; x < rs2-width; x++)
-	for (y = width; y < cs2-width; y++) 
-	  Imout[n * N2 + y * rs2 + x] = Im[n * N + (y-width) * rs + (x-width)];
+    for (n = 0; n < nb; n++) {
+      for (y = 0; y < width; y++) {
+        for (x = 0; x < rs2; x++) {
+          Imout[n * N2 + y * rs2 + x] = grayvalue;
+        }
+      }
+    }
+
+    for (n = 0; n < nb; n++) {
+      for (y = 0; y < width; y++) {
+        for (x = 0; x < rs2; x++) {
+          Imout[n * N2 + (cs2 - 1 - y) * rs2 + x] = grayvalue;
+        }
+      }
+    }
+
+    for (n = 0; n < nb; n++) {
+      for (x = 0; x < width; x++) {
+        for (y = 1; y < cs2 - 1; y++) {
+          Imout[n * N2 + y * rs2 + x] = grayvalue;
+        }
+      }
+    }
+
+    for (n = 0; n < nb; n++) {
+      for (x = 0; x < width; x++) {
+        for (y = 1; y < cs2 - 1; y++) {
+          Imout[n * N2 + y * rs2 + rs2 - 1 - x] = grayvalue;
+        }
+      }
+    }
+
+    for (n = 0; n < nb; n++) {
+      for (x = width; x < rs2 - width; x++) {
+        for (y = width; y < cs2 - width; y++) {
+          Imout[n * N2 + y * rs2 + x] =
+              Im[n * N + (y - width) * rs + (x - width)];
+        }
+      }
+    }
   }
   else
   {
@@ -574,44 +701,79 @@ struct xvimage * lenframe3d(struct xvimage *image, int32_t grayval, int32_t widt
     uint8_t *Im = UCHARDATA(image);
     uint8_t grayvalue = (uint8_t)grayval;
 
-    for (n = 0; n < nb; n++)
-      for (z = 0; z < width; z++)
-	for (x = 0; x < rs2; x++)
-	  for (y = 0; y < cs2; y++) 
-	    Imout[n * N2 + z * ps2 + y * rs2 + x] = grayvalue; /* plans z = 0.. */
-    for (n = 0; n < nb; n++)
-      for (z = 0; z < width; z++)
-	for (x = 0; x < rs2; x++)
-	  for (y = 0; y < cs2; y++) 
-	    Imout[n * N2 + (ds2-1-z) * ps2 + y * rs2 + x] = grayvalue; /* plans z = ..ds2-1 */
-  
-    for (n = 0; n < nb; n++)
-      for (y = 0; y < width; y++)
-	for (x = 0; x < rs2; x++)
-	  for (z = 0; z < ds2; z++) 
-	    Imout[n * N2 + z * ps2 + y * rs2 + x] = grayvalue;         /* plans y = 0.. */
-    for (n = 0; n < nb; n++)
-      for (y = 0; y < width; y++)
-	for (x = 0; x < rs2; x++)
-	  for (z = 0; z < ds2; z++) 
-	    Imout[n * N2 + z * ps2 + (cs2-1-y) * rs2 + x] = grayvalue; /* plans y = ..cs2-1 */
-  
-    for (n = 0; n < nb; n++)
-      for (x = 0; x < width; x++)
-	for (y = 0; y < cs2; y++)
-	  for (z = 0; z < ds2; z++) 
-	    Imout[n * N2 + z * ps2 + y * rs2 + x] = grayvalue;         /* plans x = 0.. */
-    for (n = 0; n < nb; n++)
-      for (x = 0; x < width; x++)
-	for (y = 0; y < cs2; y++)
-	  for (z = 0; z < ds2; z++) 
-	    Imout[n * N2 + z * ps2 + y * rs2 + (rs2-1-x)] = grayvalue; /* plans x = ..rs2-1 */
-  
-    for (n = 0; n < nb; n++)
-      for (x = width; x < rs2-width; x++)
-	for (y = width; y < cs2-width; y++) 
-	  for (z = width; z < ds2-width; z++) 
-	    Imout[n * N2 + z * ps2 + y * rs2 + x] = Im[n * N + (z-width) * ps + (y-width) * rs + (x-width)];
+    for (n = 0; n < nb; n++) {
+      for (z = 0; z < width; z++) {
+        for (x = 0; x < rs2; x++) {
+          for (y = 0; y < cs2; y++) {
+            Imout[n * N2 + z * ps2 + y * rs2 + x] =
+                grayvalue; /* plans z = 0.. */
+          }
+        }
+      }
+    }
+    for (n = 0; n < nb; n++) {
+      for (z = 0; z < width; z++) {
+        for (x = 0; x < rs2; x++) {
+          for (y = 0; y < cs2; y++) {
+            Imout[n * N2 + (ds2 - 1 - z) * ps2 + y * rs2 + x] =
+                grayvalue; /* plans z = ..ds2-1 */
+          }
+        }
+      }
+    }
+
+    for (n = 0; n < nb; n++) {
+      for (y = 0; y < width; y++) {
+        for (x = 0; x < rs2; x++) {
+          for (z = 0; z < ds2; z++) {
+            Imout[n * N2 + z * ps2 + y * rs2 + x] =
+                grayvalue; /* plans y = 0.. */
+          }
+        }
+      }
+    }
+    for (n = 0; n < nb; n++) {
+      for (y = 0; y < width; y++) {
+        for (x = 0; x < rs2; x++) {
+          for (z = 0; z < ds2; z++) {
+            Imout[n * N2 + z * ps2 + (cs2 - 1 - y) * rs2 + x] =
+                grayvalue; /* plans y = ..cs2-1 */
+          }
+        }
+      }
+    }
+
+    for (n = 0; n < nb; n++) {
+      for (x = 0; x < width; x++) {
+        for (y = 0; y < cs2; y++) {
+          for (z = 0; z < ds2; z++) {
+            Imout[n * N2 + z * ps2 + y * rs2 + x] =
+                grayvalue; /* plans x = 0.. */
+          }
+        }
+      }
+    }
+    for (n = 0; n < nb; n++) {
+      for (x = 0; x < width; x++) {
+        for (y = 0; y < cs2; y++) {
+          for (z = 0; z < ds2; z++) {
+            Imout[n * N2 + z * ps2 + y * rs2 + (rs2 - 1 - x)] =
+                grayvalue; /* plans x = ..rs2-1 */
+          }
+        }
+      }
+    }
+
+    for (n = 0; n < nb; n++) {
+      for (x = width; x < rs2 - width; x++) {
+        for (y = width; y < cs2 - width; y++) {
+          for (z = width; z < ds2 - width; z++) {
+            Imout[n * N2 + z * ps2 + y * rs2 + x] =
+                Im[n * N + (z - width) * ps + (y - width) * rs + (x - width)];
+          }
+        }
+      }
+    }
   }
   else if (datatype(image) == VFF_TYP_4_BYTE)
   {
@@ -619,44 +781,79 @@ struct xvimage * lenframe3d(struct xvimage *image, int32_t grayval, int32_t widt
     int32_t *Im = SLONGDATA(image);
     int32_t grayvalue = (int32_t)grayval;
 
-    for (n = 0; n < nb; n++)
-      for (z = 0; z < width; z++)
-	for (x = 0; x < rs2; x++)
-	  for (y = 0; y < cs2; y++) 
-	    Imout[n * N2 + z * ps2 + y * rs2 + x] = grayvalue;         /* plans z = 0.. */
-    for (n = 0; n < nb; n++)
-      for (z = 0; z < width; z++)
-	for (x = 0; x < rs2; x++)
-	  for (y = 0; y < cs2; y++) 
-	    Imout[n * N2 + (ds2-1-z) * ps2 + y * rs2 + x] = grayvalue; /* plans z = ..ds2-1 */
-  
-    for (n = 0; n < nb; n++)
-      for (y = 0; y < width; y++)
-	for (x = 0; x < rs2; x++)
-	  for (z = 0; z < ds2; z++) 
-	    Imout[n * N2 + z * ps2 + y * rs2 + x] = grayvalue;         /* plans y = 0.. */
-    for (n = 0; n < nb; n++)
-      for (y = 0; y < width; y++)
-	for (x = 0; x < rs2; x++)
-	  for (z = 0; z < ds2; z++) 
-	    Imout[n * N2 + z * ps2 + (cs2-1-y) * rs2 + x] = grayvalue; /* plans y = ..cs2-1 */
-  
-    for (n = 0; n < nb; n++)
-      for (x = 0; x < width; x++)
-	for (y = 0; y < cs2; y++)
-	  for (z = 0; z < ds2; z++) 
-	    Imout[n * N2 + z * ps2 + y * rs2 + x] = grayvalue;         /* plans x = 0.. */
-    for (n = 0; n < nb; n++)
-      for (x = 0; x < width; x++)
-	for (y = 0; y < cs2; y++)
-	  for (z = 0; z < ds2; z++) 
-	    Imout[n * N2 + z * ps2 + y * rs2 + (rs2-1-x)] = grayvalue; /* plans x = ..rs2-1 */
-  
-    for (n = 0; n < nb; n++)
-      for (x = width; x < rs2-width; x++)
-	for (y = width; y < cs2-width; y++) 
-	  for (z = width; z < ds2-width; z++) 
-	    Imout[n * N2 + z * ps2 + y * rs2 + x] = Im[n * N + (z-width) * ps + (y-width) * rs + (x-width)];
+    for (n = 0; n < nb; n++) {
+      for (z = 0; z < width; z++) {
+        for (x = 0; x < rs2; x++) {
+          for (y = 0; y < cs2; y++) {
+            Imout[n * N2 + z * ps2 + y * rs2 + x] =
+                grayvalue; /* plans z = 0.. */
+          }
+        }
+      }
+    }
+    for (n = 0; n < nb; n++) {
+      for (z = 0; z < width; z++) {
+        for (x = 0; x < rs2; x++) {
+          for (y = 0; y < cs2; y++) {
+            Imout[n * N2 + (ds2 - 1 - z) * ps2 + y * rs2 + x] =
+                grayvalue; /* plans z = ..ds2-1 */
+          }
+        }
+      }
+    }
+
+    for (n = 0; n < nb; n++) {
+      for (y = 0; y < width; y++) {
+        for (x = 0; x < rs2; x++) {
+          for (z = 0; z < ds2; z++) {
+            Imout[n * N2 + z * ps2 + y * rs2 + x] =
+                grayvalue; /* plans y = 0.. */
+          }
+        }
+      }
+    }
+    for (n = 0; n < nb; n++) {
+      for (y = 0; y < width; y++) {
+        for (x = 0; x < rs2; x++) {
+          for (z = 0; z < ds2; z++) {
+            Imout[n * N2 + z * ps2 + (cs2 - 1 - y) * rs2 + x] =
+                grayvalue; /* plans y = ..cs2-1 */
+          }
+        }
+      }
+    }
+
+    for (n = 0; n < nb; n++) {
+      for (x = 0; x < width; x++) {
+        for (y = 0; y < cs2; y++) {
+          for (z = 0; z < ds2; z++) {
+            Imout[n * N2 + z * ps2 + y * rs2 + x] =
+                grayvalue; /* plans x = 0.. */
+          }
+        }
+      }
+    }
+    for (n = 0; n < nb; n++) {
+      for (x = 0; x < width; x++) {
+        for (y = 0; y < cs2; y++) {
+          for (z = 0; z < ds2; z++) {
+            Imout[n * N2 + z * ps2 + y * rs2 + (rs2 - 1 - x)] =
+                grayvalue; /* plans x = ..rs2-1 */
+          }
+        }
+      }
+    }
+
+    for (n = 0; n < nb; n++) {
+      for (x = width; x < rs2 - width; x++) {
+        for (y = width; y < cs2 - width; y++) {
+          for (z = width; z < ds2 - width; z++) {
+            Imout[n * N2 + z * ps2 + y * rs2 + x] =
+                Im[n * N + (z - width) * ps + (y - width) * rs + (x - width)];
+          }
+        }
+      }
+    }
   }
   else if (datatype(image) == VFF_TYP_FLOAT)
   {
@@ -664,44 +861,79 @@ struct xvimage * lenframe3d(struct xvimage *image, int32_t grayval, int32_t widt
     float *Im = FLOATDATA(image);
     float grayvalue = (float)grayval;
 
-    for (n = 0; n < nb; n++)
-      for (z = 0; z < width; z++)
-	for (x = 0; x < rs2; x++)
-	  for (y = 0; y < cs2; y++) 
-	    Imout[n * N2 + z * ps2 + y * rs2 + x] = grayvalue;         /* plans z = 0.. */
-    for (n = 0; n < nb; n++)
-      for (z = 0; z < width; z++)
-	for (x = 0; x < rs2; x++)
-	  for (y = 0; y < cs2; y++) 
-	    Imout[n * N2 + (ds2-1-z) * ps2 + y * rs2 + x] = grayvalue; /* plans z = ..ds2-1 */
-  
-    for (n = 0; n < nb; n++)
-      for (y = 0; y < width; y++)
-	for (x = 0; x < rs2; x++)
-	  for (z = 0; z < ds2; z++) 
-	    Imout[n * N2 + z * ps2 + y * rs2 + x] = grayvalue;         /* plans y = 0.. */
-    for (n = 0; n < nb; n++)
-      for (y = 0; y < width; y++)
-	for (x = 0; x < rs2; x++)
-	  for (z = 0; z < ds2; z++) 
-	    Imout[n * N2 + z * ps2 + (cs2-1-y) * rs2 + x] = grayvalue; /* plans y = ..cs2-1 */
-  
-    for (n = 0; n < nb; n++)
-      for (x = 0; x < width; x++)
-	for (y = 0; y < cs2; y++)
-	  for (z = 0; z < ds2; z++) 
-	    Imout[n * N2 + z * ps2 + y * rs2 + x] = grayvalue;         /* plans x = 0.. */
-    for (n = 0; n < nb; n++)
-      for (x = 0; x < width; x++)
-	for (y = 0; y < cs2; y++)
-	  for (z = 0; z < ds2; z++) 
-	    Imout[n * N2 + z * ps2 + y * rs2 + (rs2-1-x)] = grayvalue; /* plans x = ..rs2-1 */
-  
-    for (n = 0; n < nb; n++)
-      for (x = width; x < rs2-width; x++)
-	for (y = width; y < cs2-width; y++) 
-	  for (z = width; z < ds2-width; z++) 
-	    Imout[n * N2 + z * ps2 + y * rs2 + x] = Im[n * N + (z-width) * ps + (y-width) * rs + (x-width)];
+    for (n = 0; n < nb; n++) {
+      for (z = 0; z < width; z++) {
+        for (x = 0; x < rs2; x++) {
+          for (y = 0; y < cs2; y++) {
+            Imout[n * N2 + z * ps2 + y * rs2 + x] =
+                grayvalue; /* plans z = 0.. */
+          }
+        }
+      }
+    }
+    for (n = 0; n < nb; n++) {
+      for (z = 0; z < width; z++) {
+        for (x = 0; x < rs2; x++) {
+          for (y = 0; y < cs2; y++) {
+            Imout[n * N2 + (ds2 - 1 - z) * ps2 + y * rs2 + x] =
+                grayvalue; /* plans z = ..ds2-1 */
+          }
+        }
+      }
+    }
+
+    for (n = 0; n < nb; n++) {
+      for (y = 0; y < width; y++) {
+        for (x = 0; x < rs2; x++) {
+          for (z = 0; z < ds2; z++) {
+            Imout[n * N2 + z * ps2 + y * rs2 + x] =
+                grayvalue; /* plans y = 0.. */
+          }
+        }
+      }
+    }
+    for (n = 0; n < nb; n++) {
+      for (y = 0; y < width; y++) {
+        for (x = 0; x < rs2; x++) {
+          for (z = 0; z < ds2; z++) {
+            Imout[n * N2 + z * ps2 + (cs2 - 1 - y) * rs2 + x] =
+                grayvalue; /* plans y = ..cs2-1 */
+          }
+        }
+      }
+    }
+
+    for (n = 0; n < nb; n++) {
+      for (x = 0; x < width; x++) {
+        for (y = 0; y < cs2; y++) {
+          for (z = 0; z < ds2; z++) {
+            Imout[n * N2 + z * ps2 + y * rs2 + x] =
+                grayvalue; /* plans x = 0.. */
+          }
+        }
+      }
+    }
+    for (n = 0; n < nb; n++) {
+      for (x = 0; x < width; x++) {
+        for (y = 0; y < cs2; y++) {
+          for (z = 0; z < ds2; z++) {
+            Imout[n * N2 + z * ps2 + y * rs2 + (rs2 - 1 - x)] =
+                grayvalue; /* plans x = ..rs2-1 */
+          }
+        }
+      }
+    }
+
+    for (n = 0; n < nb; n++) {
+      for (x = width; x < rs2 - width; x++) {
+        for (y = width; y < cs2 - width; y++) {
+          for (z = width; z < ds2 - width; z++) {
+            Imout[n * N2 + z * ps2 + y * rs2 + x] =
+                Im[n * N + (z - width) * ps + (y - width) * rs + (x - width)];
+          }
+        }
+      }
+    }
   }
   else
   {
@@ -744,71 +976,96 @@ int32_t linsert(struct xvimage *a, struct xvimage *b, int32_t x, int32_t y, int3
     uint8_t *A = UCHARDATA(a);
     uint8_t *B = UCHARDATA(b);
 
-    for (n = 0; n < nb; n++)
-    for (k = 0; k < dsa; k++)
-    for (j = 0; j < csa; j++)
-    for (i = 0; i < rsa; i++)
-      if ((z + k < dsb) && (y + j < csb) && (x + i < rsb) && 
-          (z + k >= 0) && (y + j >= 0) && (x + i >= 0))
-        B[(n*Nb) + ((z + k) * psb) + ((y + j) * rsb) + x + i] = 
-          A[(n*Na) + (k * psa) + (j * rsa) + i]; 
+    for (n = 0; n < nb; n++) {
+      for (k = 0; k < dsa; k++) {
+        for (j = 0; j < csa; j++) {
+          for (i = 0; i < rsa; i++) {
+            if ((z + k < dsb) && (y + j < csb) && (x + i < rsb) &&
+                (z + k >= 0) && (y + j >= 0) && (x + i >= 0)) {
+              B[(n * Nb) + ((z + k) * psb) + ((y + j) * rsb) + x + i] =
+                  A[(n * Na) + (k * psa) + (j * rsa) + i];
+            }
+          }
+        }
+      }
+    }
   }
   else if (datatype(a) == VFF_TYP_4_BYTE)
   {
     int32_t *A = SLONGDATA(a);
     int32_t *B = SLONGDATA(b);
 
-    for (n = 0; n < nb; n++)
-    for (k = 0; k < dsa; k++)
-    for (j = 0; j < csa; j++)
-    for (i = 0; i < rsa; i++)
-      if ((z + k < dsb) && (y + j < csb) && (x + i < rsb) && 
-          (z + k >= 0) && (y + j >= 0) && (x + i >= 0)) 
-        B[(n*Nb) + ((z + k) * psb) + ((y + j) * rsb) + x + i] = 
-          A[(n*Na) + (k * psa) + (j * rsa) + i]; 
+    for (n = 0; n < nb; n++) {
+      for (k = 0; k < dsa; k++) {
+        for (j = 0; j < csa; j++) {
+          for (i = 0; i < rsa; i++) {
+            if ((z + k < dsb) && (y + j < csb) && (x + i < rsb) &&
+                (z + k >= 0) && (y + j >= 0) && (x + i >= 0)) {
+              B[(n * Nb) + ((z + k) * psb) + ((y + j) * rsb) + x + i] =
+                  A[(n * Na) + (k * psa) + (j * rsa) + i];
+            }
+          }
+        }
+      }
+    }
   }
   else if (datatype(a) == VFF_TYP_FLOAT)
   {
     float *A = FLOATDATA(a);
     float *B = FLOATDATA(b);
 
-    for (n = 0; n < nb; n++)
-    for (k = 0; k < dsa; k++)
-    for (j = 0; j < csa; j++)
-    for (i = 0; i < rsa; i++)
-      if ((z + k < dsb) && (y + j < csb) && (x + i < rsb) && 
-          (z + k >= 0) && (y + j >= 0) && (x + i >= 0)) 
-        B[(n*Nb) + ((z + k) * psb) + ((y + j) * rsb) + x + i] = 
-          A[(n*Na) + (k * psa) + (j * rsa) + i]; 
+    for (n = 0; n < nb; n++) {
+      for (k = 0; k < dsa; k++) {
+        for (j = 0; j < csa; j++) {
+          for (i = 0; i < rsa; i++) {
+            if ((z + k < dsb) && (y + j < csb) && (x + i < rsb) &&
+                (z + k >= 0) && (y + j >= 0) && (x + i >= 0)) {
+              B[(n * Nb) + ((z + k) * psb) + ((y + j) * rsb) + x + i] =
+                  A[(n * Na) + (k * psa) + (j * rsa) + i];
+            }
+          }
+        }
+      }
+    }
   }
   else if (datatype(a) == VFF_TYP_DOUBLE)
   {
     double *A = DOUBLEDATA(a);
     double *B = DOUBLEDATA(b);
 
-    for (n = 0; n < nb; n++)
-    for (k = 0; k < dsa; k++)
-    for (j = 0; j < csa; j++)
-    for (i = 0; i < rsa; i++)
-      if ((z + k < dsb) && (y + j < csb) && (x + i < rsb) && 
-          (z + k >= 0) && (y + j >= 0) && (x + i >= 0)) 
-        B[(n*Nb) + ((z + k) * psb) + ((y + j) * rsb) + x + i] = 
-          A[(n*Na) + (k * psa) + (j * rsa) + i]; 
+    for (n = 0; n < nb; n++) {
+      for (k = 0; k < dsa; k++) {
+        for (j = 0; j < csa; j++) {
+          for (i = 0; i < rsa; i++) {
+            if ((z + k < dsb) && (y + j < csb) && (x + i < rsb) &&
+                (z + k >= 0) && (y + j >= 0) && (x + i >= 0)) {
+              B[(n * Nb) + ((z + k) * psb) + ((y + j) * rsb) + x + i] =
+                  A[(n * Na) + (k * psa) + (j * rsa) + i];
+            }
+          }
+        }
+      }
+    }
   }
   else if (datatype(a) == VFF_TYP_COMPLEX)
   {
     fcomplex *A = COMPLEXDATA(a);
     fcomplex *B = COMPLEXDATA(b);
 
-    for (n = 0; n < nb; n++)
-    for (k = 0; k < dsa; k++)
-    for (j = 0; j < csa; j++)
-    for (i = 0; i < rsa; i++)
-    if ((z + k < dsb) && (y + j < csb) && (x + i < rsb) && 
-        (z + k >= 0) && (y + j >= 0) && (x + i >= 0)) 
-    {
-      B[(n*Nb) + ((z + k) * psb) + ((y + j) * rsb) + x + i].re = A[(n*Na) + (k * psa) + (j * rsa) + i].re; 
-      B[(n*Nb) + ((z + k) * psb) + ((y + j) * rsb) + x + i].im = A[(n*Na) + (k * psa) + (j * rsa) + i].im; 
+    for (n = 0; n < nb; n++) {
+      for (k = 0; k < dsa; k++) {
+        for (j = 0; j < csa; j++) {
+          for (i = 0; i < rsa; i++) {
+            if ((z + k < dsb) && (y + j < csb) && (x + i < rsb) &&
+                (z + k >= 0) && (y + j >= 0) && (x + i >= 0)) {
+              B[(n * Nb) + ((z + k) * psb) + ((y + j) * rsb) + x + i].re =
+                  A[(n * Na) + (k * psa) + (j * rsa) + i].re;
+              B[(n * Nb) + ((z + k) * psb) + ((y + j) * rsb) + x + i].im =
+                  A[(n * Na) + (k * psa) + (j * rsa) + i].im;
+            }
+          }
+        }
+      }
     }
   }
   else
@@ -857,21 +1114,39 @@ struct xvimage * lexpandframe(struct xvimage *in, int32_t n)
   
       for (y = 0; y < n; y++)
       {
-        for (x = 0; x < n; x++) T1[y * rs2 + x] = I[0];
-        for (x = n; x < rs1+n; x++) T1[y * rs2 + x] = I[x-n];
-        for (x = rs1+n; x < rs2; x++) T1[y * rs2 + x] = I[rs1 - 1];
+        for (x = 0; x < n; x++) {
+          T1[y * rs2 + x] = I[0];
+        }
+        for (x = n; x < rs1 + n; x++) {
+          T1[y * rs2 + x] = I[x - n];
+        }
+        for (x = rs1 + n; x < rs2; x++) {
+          T1[y * rs2 + x] = I[rs1 - 1];
+        }
       }
       for (y = n; y < cs1+n; y++)
       {
-        for (x = 0; x < n; x++) T1[y * rs2 + x] = I[(y-n) * rs1];
-        for (x = n; x < rs1+n; x++) T1[y * rs2 + x] = I[(y-n) * rs1 + x-n];
-        for (x = rs1+n; x < rs2; x++) T1[y * rs2 + x] = I[(y-n) * rs1 + rs1 - 1];
+        for (x = 0; x < n; x++) {
+          T1[y * rs2 + x] = I[(y - n) * rs1];
+        }
+        for (x = n; x < rs1 + n; x++) {
+          T1[y * rs2 + x] = I[(y - n) * rs1 + x - n];
+        }
+        for (x = rs1 + n; x < rs2; x++) {
+          T1[y * rs2 + x] = I[(y - n) * rs1 + rs1 - 1];
+        }
       }
       for (y = cs1+n; y < cs2; y++)
       {
-        for (x = 0; x < n; x++) T1[y * rs2 + x] = I[(cs1 - 1) * rs1];
-        for (x = n; x < rs1+n; x++) T1[y * rs2 + x] = I[(cs1 - 1) * rs1 + x-n];
-        for (x = rs1+n; x < rs2; x++) T1[y * rs2 + x] = I[(cs1 - 1) * rs1 + rs1 - 1];
+        for (x = 0; x < n; x++) {
+          T1[y * rs2 + x] = I[(cs1 - 1) * rs1];
+        }
+        for (x = n; x < rs1 + n; x++) {
+          T1[y * rs2 + x] = I[(cs1 - 1) * rs1 + x - n];
+        }
+        for (x = rs1 + n; x < rs2; x++) {
+          T1[y * rs2 + x] = I[(cs1 - 1) * rs1 + rs1 - 1];
+        }
       }
     }
     else if (datatype(in) == VFF_TYP_4_BYTE)
@@ -889,21 +1164,39 @@ struct xvimage * lexpandframe(struct xvimage *in, int32_t n)
   
       for (y = 0; y < n; y++)
       {
-        for (x = 0; x < n; x++) T1[y * rs2 + x] = I[0];
-        for (x = n; x < rs1+n; x++) T1[y * rs2 + x] = I[x-n];
-        for (x = rs1+n; x < rs2; x++) T1[y * rs2 + x] = I[rs1 - 1];
+        for (x = 0; x < n; x++) {
+          T1[y * rs2 + x] = I[0];
+        }
+        for (x = n; x < rs1 + n; x++) {
+          T1[y * rs2 + x] = I[x - n];
+        }
+        for (x = rs1 + n; x < rs2; x++) {
+          T1[y * rs2 + x] = I[rs1 - 1];
+        }
       }
       for (y = n; y < cs1+n; y++)
       {
-        for (x = 0; x < n; x++) T1[y * rs2 + x] = I[(y-n) * rs1];
-        for (x = n; x < rs1+n; x++) T1[y * rs2 + x] = I[(y-n) * rs1 + x-n];
-        for (x = rs1+n; x < rs2; x++) T1[y * rs2 + x] = I[(y-n) * rs1 + rs1 - 1];
+        for (x = 0; x < n; x++) {
+          T1[y * rs2 + x] = I[(y - n) * rs1];
+        }
+        for (x = n; x < rs1 + n; x++) {
+          T1[y * rs2 + x] = I[(y - n) * rs1 + x - n];
+        }
+        for (x = rs1 + n; x < rs2; x++) {
+          T1[y * rs2 + x] = I[(y - n) * rs1 + rs1 - 1];
+        }
       }
       for (y = cs1+n; y < cs2; y++)
       {
-        for (x = 0; x < n; x++) T1[y * rs2 + x] = I[(cs1 - 1) * rs1];
-        for (x = n; x < rs1+n; x++) T1[y * rs2 + x] = I[(cs1 - 1) * rs1 + x-n];
-        for (x = rs1+n; x < rs2; x++) T1[y * rs2 + x] = I[(cs1 - 1) * rs1 + rs1 - 1];
+        for (x = 0; x < n; x++) {
+          T1[y * rs2 + x] = I[(cs1 - 1) * rs1];
+        }
+        for (x = n; x < rs1 + n; x++) {
+          T1[y * rs2 + x] = I[(cs1 - 1) * rs1 + x - n];
+        }
+        for (x = rs1 + n; x < rs2; x++) {
+          T1[y * rs2 + x] = I[(cs1 - 1) * rs1 + rs1 - 1];
+        }
       }
     }
     else if (datatype(in) == VFF_TYP_FLOAT)
@@ -921,21 +1214,39 @@ struct xvimage * lexpandframe(struct xvimage *in, int32_t n)
   
       for (y = 0; y < n; y++)
       {
-        for (x = 0; x < n; x++) T1[y * rs2 + x] = I[0];
-        for (x = n; x < rs1+n; x++) T1[y * rs2 + x] = I[x-n];
-        for (x = rs1+n; x < rs2; x++) T1[y * rs2 + x] = I[rs1 - 1];
+        for (x = 0; x < n; x++) {
+          T1[y * rs2 + x] = I[0];
+        }
+        for (x = n; x < rs1 + n; x++) {
+          T1[y * rs2 + x] = I[x - n];
+        }
+        for (x = rs1 + n; x < rs2; x++) {
+          T1[y * rs2 + x] = I[rs1 - 1];
+        }
       }
       for (y = n; y < cs1+n; y++)
       {
-        for (x = 0; x < n; x++) T1[y * rs2 + x] = I[(y-n) * rs1];
-        for (x = n; x < rs1+n; x++) T1[y * rs2 + x] = I[(y-n) * rs1 + x-n];
-        for (x = rs1+n; x < rs2; x++) T1[y * rs2 + x] = I[(y-n) * rs1 + rs1 - 1];
+        for (x = 0; x < n; x++) {
+          T1[y * rs2 + x] = I[(y - n) * rs1];
+        }
+        for (x = n; x < rs1 + n; x++) {
+          T1[y * rs2 + x] = I[(y - n) * rs1 + x - n];
+        }
+        for (x = rs1 + n; x < rs2; x++) {
+          T1[y * rs2 + x] = I[(y - n) * rs1 + rs1 - 1];
+        }
       }
       for (y = cs1+n; y < cs2; y++)
       {
-        for (x = 0; x < n; x++) T1[y * rs2 + x] = I[(cs1 - 1) * rs1];
-        for (x = n; x < rs1+n; x++) T1[y * rs2 + x] = I[(cs1 - 1) * rs1 + x-n];
-        for (x = rs1+n; x < rs2; x++) T1[y * rs2 + x] = I[(cs1 - 1) * rs1 + rs1 - 1];
+        for (x = 0; x < n; x++) {
+          T1[y * rs2 + x] = I[(cs1 - 1) * rs1];
+        }
+        for (x = n; x < rs1 + n; x++) {
+          T1[y * rs2 + x] = I[(cs1 - 1) * rs1 + x - n];
+        }
+        for (x = rs1 + n; x < rs2; x++) {
+          T1[y * rs2 + x] = I[(cs1 - 1) * rs1 + rs1 - 1];
+        }
       }
     }
     else
@@ -980,72 +1291,162 @@ struct xvimage * lautocrop(struct xvimage *in, double seuil)
   if (datatype(in) == VFF_TYP_1_BYTE)
   {
     uint8_t *I = UCHARDATA(in);
-    for (n = 0; n < nb; n++)
-    for (z = 0; z < ds; z++)
-    for (y = 0; y < cs; y++)
-    for (x = 0; x < rs; x++)
-      if ((double)(I[n*N + z*ps + y*rs + x]) > seuil)
-    {
-      if (z < zmin) zmin = z; if (z > zmax) zmax = z; 
-      if (y < ymin) ymin = y; if (y > ymax) ymax = y; 
-      if (x < xmin) xmin = x; if (x > xmax) xmax = x; 
+    for (n = 0; n < nb; n++) {
+      for (z = 0; z < ds; z++) {
+        for (y = 0; y < cs; y++) {
+          for (x = 0; x < rs; x++) {
+            if ((double)(I[n * N + z * ps + y * rs + x]) > seuil) {
+              if (z < zmin) {
+                zmin = z;
+              }
+              if (z > zmax) {
+                zmax = z;
+              }
+              if (y < ymin) {
+                ymin = y;
+              }
+              if (y > ymax) {
+                ymax = y;
+              }
+              if (x < xmin) {
+                xmin = x;
+              }
+              if (x > xmax) {
+                xmax = x;
+              }
+            }
+          }
+        }
+      }
     }
   }
   else if (datatype(in) == VFF_TYP_4_BYTE)
   {
     int32_t *I = SLONGDATA(in);
-    for (n = 0; n < nb; n++)
-    for (z = 0; z < ds; z++)
-    for (y = 0; y < cs; y++)
-    for (x = 0; x < rs; x++)
-      if ((double)(I[n*N + z*ps + y*rs + x]) > seuil)
-    {
-      if (z < zmin) zmin = z; if (z > zmax) zmax = z; 
-      if (y < ymin) ymin = y; if (y > ymax) ymax = y; 
-      if (x < xmin) xmin = x; if (x > xmax) xmax = x; 
+    for (n = 0; n < nb; n++) {
+      for (z = 0; z < ds; z++) {
+        for (y = 0; y < cs; y++) {
+          for (x = 0; x < rs; x++) {
+            if ((double)(I[n * N + z * ps + y * rs + x]) > seuil) {
+              if (z < zmin) {
+                zmin = z;
+              }
+              if (z > zmax) {
+                zmax = z;
+              }
+              if (y < ymin) {
+                ymin = y;
+              }
+              if (y > ymax) {
+                ymax = y;
+              }
+              if (x < xmin) {
+                xmin = x;
+              }
+              if (x > xmax) {
+                xmax = x;
+              }
+            }
+          }
+        }
+      }
     }
   }
   else if (datatype(in) == VFF_TYP_FLOAT)
   {
     float *I = FLOATDATA(in);
-    for (n = 0; n < nb; n++)
-    for (z = 0; z < ds; z++)
-    for (y = 0; y < cs; y++)
-    for (x = 0; x < rs; x++)
-      if ((double)(I[n*N + z*ps + y*rs + x]) > seuil)
-    {
-      if (z < zmin) zmin = z; if (z > zmax) zmax = z; 
-      if (y < ymin) ymin = y; if (y > ymax) ymax = y; 
-      if (x < xmin) xmin = x; if (x > xmax) xmax = x; 
+    for (n = 0; n < nb; n++) {
+      for (z = 0; z < ds; z++) {
+        for (y = 0; y < cs; y++) {
+          for (x = 0; x < rs; x++) {
+            if ((double)(I[n * N + z * ps + y * rs + x]) > seuil) {
+              if (z < zmin) {
+                zmin = z;
+              }
+              if (z > zmax) {
+                zmax = z;
+              }
+              if (y < ymin) {
+                ymin = y;
+              }
+              if (y > ymax) {
+                ymax = y;
+              }
+              if (x < xmin) {
+                xmin = x;
+              }
+              if (x > xmax) {
+                xmax = x;
+              }
+            }
+          }
+        }
+      }
     }
   }
   else if (datatype(in) == VFF_TYP_DOUBLE)
   {
     double *I = DOUBLEDATA(in);
-    for (n = 0; n < nb; n++)
-    for (z = 0; z < ds; z++)
-    for (y = 0; y < cs; y++)
-    for (x = 0; x < rs; x++)
-      if (I[n*N + z*ps + y*rs + x] > seuil)
-    {
-      if (z < zmin) zmin = z; if (z > zmax) zmax = z; 
-      if (y < ymin) ymin = y; if (y > ymax) ymax = y; 
-      if (x < xmin) xmin = x; if (x > xmax) xmax = x; 
+    for (n = 0; n < nb; n++) {
+      for (z = 0; z < ds; z++) {
+        for (y = 0; y < cs; y++) {
+          for (x = 0; x < rs; x++) {
+            if (I[n * N + z * ps + y * rs + x] > seuil) {
+              if (z < zmin) {
+                zmin = z;
+              }
+              if (z > zmax) {
+                zmax = z;
+              }
+              if (y < ymin) {
+                ymin = y;
+              }
+              if (y > ymax) {
+                ymax = y;
+              }
+              if (x < xmin) {
+                xmin = x;
+              }
+              if (x > xmax) {
+                xmax = x;
+              }
+            }
+          }
+        }
+      }
     }
   }
   else if (datatype(in) == VFF_TYP_COMPLEX)
   {
     fcomplex *I = COMPLEXDATA(in);
-    for (n = 0; n < nb; n++)
-    for (z = 0; z < ds; z++)
-    for (y = 0; y < cs; y++)
-    for (x = 0; x < rs; x++)
-      if (((double)(I[n*N + z*ps + y*rs + x].re) > seuil) && 
-	  ((double)(I[n*N + z*ps + y*rs + x].im) > seuil))
-    {
-      if (z < zmin) zmin = z; if (z > zmax) zmax = z; 
-      if (y < ymin) ymin = y; if (y > ymax) ymax = y; 
-      if (x < xmin) xmin = x; if (x > xmax) xmax = x; 
+    for (n = 0; n < nb; n++) {
+      for (z = 0; z < ds; z++) {
+        for (y = 0; y < cs; y++) {
+          for (x = 0; x < rs; x++) {
+            if (((double)(I[n * N + z * ps + y * rs + x].re) > seuil) &&
+                ((double)(I[n * N + z * ps + y * rs + x].im) > seuil)) {
+              if (z < zmin) {
+                zmin = z;
+              }
+              if (z > zmax) {
+                zmax = z;
+              }
+              if (y < ymin) {
+                ymin = y;
+              }
+              if (y > ymax) {
+                ymax = y;
+              }
+              if (x < xmin) {
+                xmin = x;
+              }
+              if (x > xmax) {
+                xmax = x;
+              }
+            }
+          }
+        }
+      }
     }
   }
   else
@@ -1058,8 +1459,11 @@ struct xvimage * lautocrop(struct xvimage *in, double seuil)
   h = ymax - ymin + 1;
   p = zmax - zmin + 1;
 
-  if (ds == 1) return lcrop(in, xmin, ymin, w, h);
-  else return lcrop3d(in, xmin, ymin, zmin, w, h, p);
+  if (ds == 1) {
+    return lcrop(in, xmin, ymin, w, h);
+  } else {
+    return lcrop3d(in, xmin, ymin, zmin, w, h, p);
+  }
 } // lautocrop()
 
 /* =============================================================== */
@@ -1087,72 +1491,162 @@ void lautocrop2(struct xvimage *in, double seuil, index_t *Xmin, index_t *Ymin, 
   if (datatype(in) == VFF_TYP_1_BYTE)
   {
     uint8_t *I = UCHARDATA(in);
-    for (n = 0; n < nb; n++)
-    for (z = 0; z < ds; z++)
-    for (y = 0; y < cs; y++)
-    for (x = 0; x < rs; x++)
-      if ((double)(I[n*N + z*ps + y*rs + x]) > seuil)
-    {
-      if (z < zmin) zmin = z; if (z > zmax) zmax = z; 
-      if (y < ymin) ymin = y; if (y > ymax) ymax = y; 
-      if (x < xmin) xmin = x; if (x > xmax) xmax = x; 
+    for (n = 0; n < nb; n++) {
+      for (z = 0; z < ds; z++) {
+        for (y = 0; y < cs; y++) {
+          for (x = 0; x < rs; x++) {
+            if ((double)(I[n * N + z * ps + y * rs + x]) > seuil) {
+              if (z < zmin) {
+                zmin = z;
+              }
+              if (z > zmax) {
+                zmax = z;
+              }
+              if (y < ymin) {
+                ymin = y;
+              }
+              if (y > ymax) {
+                ymax = y;
+              }
+              if (x < xmin) {
+                xmin = x;
+              }
+              if (x > xmax) {
+                xmax = x;
+              }
+            }
+          }
+        }
+      }
     }
   }
   else if (datatype(in) == VFF_TYP_4_BYTE)
   {
     int32_t *I = SLONGDATA(in);
-    for (n = 0; n < nb; n++)
-    for (z = 0; z < ds; z++)
-    for (y = 0; y < cs; y++)
-    for (x = 0; x < rs; x++)
-      if ((double)(I[n*N + z*ps + y*rs + x]) > seuil)
-    {
-      if (z < zmin) zmin = z; if (z > zmax) zmax = z; 
-      if (y < ymin) ymin = y; if (y > ymax) ymax = y; 
-      if (x < xmin) xmin = x; if (x > xmax) xmax = x; 
+    for (n = 0; n < nb; n++) {
+      for (z = 0; z < ds; z++) {
+        for (y = 0; y < cs; y++) {
+          for (x = 0; x < rs; x++) {
+            if ((double)(I[n * N + z * ps + y * rs + x]) > seuil) {
+              if (z < zmin) {
+                zmin = z;
+              }
+              if (z > zmax) {
+                zmax = z;
+              }
+              if (y < ymin) {
+                ymin = y;
+              }
+              if (y > ymax) {
+                ymax = y;
+              }
+              if (x < xmin) {
+                xmin = x;
+              }
+              if (x > xmax) {
+                xmax = x;
+              }
+            }
+          }
+        }
+      }
     }
   }
   else if (datatype(in) == VFF_TYP_FLOAT)
   {
     float *I = FLOATDATA(in);
-    for (n = 0; n < nb; n++)
-    for (z = 0; z < ds; z++)
-    for (y = 0; y < cs; y++)
-    for (x = 0; x < rs; x++)
-      if ((double)(I[n*N + z*ps + y*rs + x]) > seuil)
-    {
-      if (z < zmin) zmin = z; if (z > zmax) zmax = z; 
-      if (y < ymin) ymin = y; if (y > ymax) ymax = y; 
-      if (x < xmin) xmin = x; if (x > xmax) xmax = x; 
+    for (n = 0; n < nb; n++) {
+      for (z = 0; z < ds; z++) {
+        for (y = 0; y < cs; y++) {
+          for (x = 0; x < rs; x++) {
+            if ((double)(I[n * N + z * ps + y * rs + x]) > seuil) {
+              if (z < zmin) {
+                zmin = z;
+              }
+              if (z > zmax) {
+                zmax = z;
+              }
+              if (y < ymin) {
+                ymin = y;
+              }
+              if (y > ymax) {
+                ymax = y;
+              }
+              if (x < xmin) {
+                xmin = x;
+              }
+              if (x > xmax) {
+                xmax = x;
+              }
+            }
+          }
+        }
+      }
     }
   }
   else if (datatype(in) == VFF_TYP_DOUBLE)
   {
     double *I = DOUBLEDATA(in);
-    for (n = 0; n < nb; n++)
-    for (z = 0; z < ds; z++)
-    for (y = 0; y < cs; y++)
-    for (x = 0; x < rs; x++)
-      if (I[n*N + z*ps + y*rs + x] > seuil)
-    {
-      if (z < zmin) zmin = z; if (z > zmax) zmax = z; 
-      if (y < ymin) ymin = y; if (y > ymax) ymax = y; 
-      if (x < xmin) xmin = x; if (x > xmax) xmax = x; 
+    for (n = 0; n < nb; n++) {
+      for (z = 0; z < ds; z++) {
+        for (y = 0; y < cs; y++) {
+          for (x = 0; x < rs; x++) {
+            if (I[n * N + z * ps + y * rs + x] > seuil) {
+              if (z < zmin) {
+                zmin = z;
+              }
+              if (z > zmax) {
+                zmax = z;
+              }
+              if (y < ymin) {
+                ymin = y;
+              }
+              if (y > ymax) {
+                ymax = y;
+              }
+              if (x < xmin) {
+                xmin = x;
+              }
+              if (x > xmax) {
+                xmax = x;
+              }
+            }
+          }
+        }
+      }
     }
   }
   else if (datatype(in) == VFF_TYP_COMPLEX)
   {
     fcomplex *I = COMPLEXDATA(in);
-    for (n = 0; n < nb; n++)
-    for (z = 0; z < ds; z++)
-    for (y = 0; y < cs; y++)
-    for (x = 0; x < rs; x++)
-      if (((double)(I[n*N + z*ps + y*rs + x].re) > seuil) && 
-	  ((double)(I[n*N + z*ps + y*rs + x].im) > seuil))
-    {
-      if (z < zmin) zmin = z; if (z > zmax) zmax = z; 
-      if (y < ymin) ymin = y; if (y > ymax) ymax = y; 
-      if (x < xmin) xmin = x; if (x > xmax) xmax = x; 
+    for (n = 0; n < nb; n++) {
+      for (z = 0; z < ds; z++) {
+        for (y = 0; y < cs; y++) {
+          for (x = 0; x < rs; x++) {
+            if (((double)(I[n * N + z * ps + y * rs + x].re) > seuil) &&
+                ((double)(I[n * N + z * ps + y * rs + x].im) > seuil)) {
+              if (z < zmin) {
+                zmin = z;
+              }
+              if (z > zmax) {
+                zmax = z;
+              }
+              if (y < ymin) {
+                ymin = y;
+              }
+              if (y > ymax) {
+                ymax = y;
+              }
+              if (x < xmin) {
+                xmin = x;
+              }
+              if (x > xmax) {
+                xmax = x;
+              }
+            }
+          }
+        }
+      }
     }
   }
   else

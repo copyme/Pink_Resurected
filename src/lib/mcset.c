@@ -91,7 +91,9 @@ void PrintSet(Set *s)
     t = s->tab[i];
     for (j = 0; j < 32; j++)
     {
-      if (t % 2) printf("%d ", j + (32 * i));
+      if (t % 2) {
+        printf("%d ", j + (32 * i));
+      }
       t = t >> 1;
     }
   }
@@ -110,9 +112,11 @@ int32_t IsEmpty(Set *s)
 /* ============================================ */
 {
   int32_t i;
-  for (i = 0; i < s->setsize; i++)
-    if (s->tab[i]) 
+  for (i = 0; i < s->setsize; i++) {
+    if (s->tab[i]) {
       return 0;
+    }
+  }
   return 1;
 } /* IsEmpty() */
 
@@ -121,8 +125,9 @@ void SetEmpty(Set *s)
 /* ============================================ */
 {
   int32_t i;
-  for (i = 0; i < s->setsize; i++)
+  for (i = 0; i < s->setsize; i++) {
     s->tab[i] = 0;
+  }
 } /* SetEmpty() */
 
 
@@ -183,8 +188,9 @@ void Complement(Set *s)
 {
   int32_t i;
 
-  for (i = 0; i < s->setsize; i++)
+  for (i = 0; i < s->setsize; i++) {
     s->tab[i] = ~s->tab[i];
+  }
 } /* Complement() */
 
 /* ============================================ */
@@ -197,8 +203,9 @@ void Union(Set *s, Set *sa)
 {
   int32_t i;
 
-  for (i = 0; i < s->setsize; i++)
+  for (i = 0; i < s->setsize; i++) {
     s->tab[i] |= sa->tab[i];
+  }
 } /* Union() */
 
 /* ============================================ */
@@ -211,8 +218,9 @@ void Inter(Set *s, Set *sa)
 {
   int32_t i;
 
-  for (i = 0; i < s->setsize; i++)
+  for (i = 0; i < s->setsize; i++) {
     s->tab[i] &= sa->tab[i];
+  }
 } /* Inter() */
 
 /* ============================================ */
@@ -224,9 +232,11 @@ int32_t EqualSets(Set *s1, Set *s2)
 */
 {
   int32_t i;
-  for (i = 0; i < s1->setsize; i++)
-    if (s1->tab[i] != s2->tab[i]) 
+  for (i = 0; i < s1->setsize; i++) {
+    if (s1->tab[i] != s2->tab[i]) {
       return 0;
+    }
+  }
   return 1;
 } /* EqualSets() */
 
@@ -241,8 +251,9 @@ void CopySet(Set *sd, Set *ss)
 {
   int32_t i;
 
-  for (i = 0; i < ss->setsize; i++)
+  for (i = 0; i < ss->setsize; i++) {
     sd->tab[i] = ss->tab[i];
+  }
 } /* CopySet() */
 
 /* ============================================ */
@@ -261,7 +272,9 @@ int32_t CardSet(Set *s)
     t = s->tab[il];
     for (ib = 0; ib < 32; ib++)
     {
-      if (t % 2) n++;
+      if (t % 2) {
+        n++;
+      }
       t = t >> 1;
     }
   }
@@ -307,7 +320,9 @@ void CopySetList(SetList * d, SetList * s)
 */
 {
   int32_t i;
-  for (i = 0; i < s->n; i++) CopySet(d->tab[i], s->tab[i]);
+  for (i = 0; i < s->n; i++) {
+    CopySet(d->tab[i], s->tab[i]);
+  }
   d->n = s->n;
 } /* CopySetList() */
 
@@ -334,14 +349,17 @@ void PrintGraph(SetList * graph)
   for (u = 0; u < graph->n; u++)
   {
     printf("sommet %3d : successeurs ", u);
-    for (v = 0; v < graph->n; v++)
+    for (v = 0; v < graph->n; v++) {
       if (InSet(graph->tab[u], v))
       {
-      	if (!InSet(graph->tab[v], u)) fprintf(stderr, "graphe non symetrique %d\n", (uint32_t)u);
+        if (!InSet(graph->tab[v], u)) {
+          fprintf(stderr, "graphe non symetrique %d\n", (uint32_t)u);
+        }
         printf("%d ", v);
+      } else if (InSet(graph->tab[v], u)) {
+        fprintf(stderr, "graphe non symetrique %d\n", (uint32_t)u);
       }
-      else
-      if (InSet(graph->tab[v], u)) fprintf(stderr, "graphe non symetrique %d\n", (uint32_t)u);
+    }
     printf("\n");
   }
 } /* PrintGraph() */
@@ -358,8 +376,9 @@ SetList * InitSetList(int32_t n, int32_t setsize)
     fprintf(stderr, "InitSetList: malloc failed\n");
     exit(0);
   }
-  for (i = 0; i < n; i++)
+  for (i = 0; i < n; i++) {
     l->tab[i] = CreateEmptySet(setsize);
+  }
   l->n = 0;
   l->nmax = n;
   return l;
@@ -370,8 +389,9 @@ void TermineSetList(SetList * l)
 /* ========================================== */
 {
   int32_t i;
-  for (i = 0; i < l->n; i++)
+  for (i = 0; i < l->n; i++) {
     FreeSet(l->tab[i]);
+  }
   free(l);
 } /* TermineSetList() */
 
@@ -400,9 +420,11 @@ int32_t InSetList(SetList * l, Set *s)
 /* ========================================== */
 {
   int32_t i;
-  for (i = 0; i < l->n; i++)
-    if (EqualSets(s, l->tab[i]))
+  for (i = 0; i < l->n; i++) {
+    if (EqualSets(s, l->tab[i])) {
       return 1;
+    }
+  }
   return 0;
 } /* InSetList() */
 
@@ -411,9 +433,11 @@ int32_t InclusSetList(SetList * l, Set *s)
 /* ========================================== */
 {
   int32_t i;
-  for (i = 0; i < l->n; i++)
-    if (Included(s, l->tab[i]))
+  for (i = 0; i < l->n; i++) {
+    if (Included(s, l->tab[i])) {
       return 1;
+    }
+  }
   return 0;
 } /* InclusSetList() */
 
@@ -431,13 +455,14 @@ void CliqueMax(Set *C, Set *P, SetList *G, SetList *LC)
   Set * savset = NULL;
   if (IsEmpty(P)) 
   {
-    if (!InclusSetList(LC, C))
+    if (!InclusSetList(LC, C)) {
       PushSetList(LC, C);
+    }
   }
   else
   {
     savset = CreateEmptySet(P->setsize);
-    for (i = 0; i < P->setsize * 32; i++)
+    for (i = 0; i < P->setsize * 32; i++) {
       if (InSet(P, i))
       {
         CopySet(savset, P);
@@ -448,6 +473,7 @@ void CliqueMax(Set *C, Set *P, SetList *G, SetList *LC)
         ResetElement(C, i);
         CopySet(P, savset);
       }
+    }
   } 
 } /* CliqueMax() */
 

@@ -94,9 +94,9 @@ int main(int argc, char **argv)
       exit(1);
     }
     standarddeviationval = lvariance2(image, mask);
-  }
-  else
+  } else {
     standarddeviationval = lvariance1(image);
+  }
 
   standarddeviationval = sqrt(standarddeviationval);
 
@@ -115,7 +115,9 @@ int main(int argc, char **argv)
   fclose(fd);
 
   freeimage(image);
-  if (mask) freeimage(mask);
+  if (mask) {
+    freeimage(mask);
+  }
 
   return 0;
 } /* main */

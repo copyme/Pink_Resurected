@@ -101,23 +101,39 @@ int main(int argc, char **argv)
   vmax = atoi(argv[3]);
   p = atof(argv[4]);
 
-  for (i = 0; i <= NDG_MAX; i++) histo[i] = 0;
-  for (i = 0; i < N; i++) histo[SOURCE[i]] += 1;
+  for (i = 0; i <= NDG_MAX; i++) {
+    histo[i] = 0;
+  }
+  for (i = 0; i < N; i++) {
+    histo[SOURCE[i]] += 1;
+  }
 
   /* elimine les niveaux < vmin ou > vmax */
-  for (i = 0; i < vmin; i++) histo[i] = 0;
-  for (i = vmax+1; i <= NDG_MAX; i++) histo[i] = 0;
+  for (i = 0; i < vmin; i++) {
+    histo[i] = 0;
+  }
+  for (i = vmax + 1; i <= NDG_MAX; i++) {
+    histo[i] = 0;
+  }
 
   /* elimine les niveaux extremes qui ont 0 pixels */
-  while(histo[vmin] == 0) vmin++;
-  while(histo[vmax] == 0) vmax--; 
+  while (histo[vmin] == 0) {
+    vmin++;
+  }
+  while (histo[vmax] == 0) {
+    vmax--;
+  }
 
   /* elimine les niveaux extremes qui ont moins de N/(100/p) pixels */
 #ifdef DEBUG
 printf("N/(100/p) = %g\n", (N*p)/100);
 #endif
-  while(histo[vmin] < (N*p)/100) vmin++;
-  while(histo[vmax] < (N*p)/100) vmax--; 
+while (histo[vmin] < (N * p) / 100) {
+  vmin++;
+}
+while (histo[vmax] < (N * p) / 100) {
+  vmax--;
+}
 #ifdef DEBUG
 printf("vmin = %d ; vmax = %d\n", vmin, vmax);
 #endif

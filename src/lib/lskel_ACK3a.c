@@ -145,13 +145,15 @@ static void extract_vois27(
   zz = p / ps;
   yy = (p % ps) / rs;
   xx = p % rs;
-  for (k = 0; k < 3; k++)
-    for (j = 0; j < 3; j++)
+  for (k = 0; k < 3; k++) {
+    for (j = 0; j < 3; j++) {
       for (i = 0; i < 3; i++)
       {
 	vois[(k * 9) + (j * 3) + i] =
 	  img[((zz-1+k) * ps) + ((yy-1+j) * rs) + xx-1+i];
       }
+    }
+  }
 
 } /* extract_vois27() */
 
@@ -195,10 +197,14 @@ static void insert_vois27(
   zz = p / ps;
   yy = (p % ps) / rs;
   xx = p % rs;
-  for (k = 0; k < 3; k++)
-    for (j = 0; j < 3; j++)
-      for (i = 0; i < 3; i++)
-	img[((zz-1+k) * ps) + ((yy-1+j) * rs) + xx-1+i] = vois[(k * 9) + (j * 3) + i];
+  for (k = 0; k < 3; k++) {
+    for (j = 0; j < 3; j++) {
+      for (i = 0; i < 3; i++) {
+        img[((zz - 1 + k) * ps) + ((yy - 1 + j) * rs) + xx - 1 + i] =
+            vois[(k * 9) + (j * 3) + i];
+      }
+    }
+  }
 } /* insert_vois27() */
 
 #ifdef DEBUG
@@ -244,18 +250,44 @@ Si le test réussit, le point 4 est marqué SELECTED
 */
 {
   uint8_t t;
-  if ((!IS_SIMPLE(v[ 4])) || (!IS_SIMPLE(v[13]))) return 0;
-  if ((IS_CONSTRAINT(v[ 4])) || (IS_CONSTRAINT(v[13]))) return 0;
-  if ((IS_PSEL(v[ 4])) || (IS_PSEL(v[13]))) return 0;
-  if (v[ 5] || v[14]) t = 1; else t = 0;
-  if (v[ 2] || v[11]) t |= 2;
-  if (v[ 1] || v[10]) t |= 4;
-  if (v[ 0] || v[ 9]) t |= 8;
-  if (v[ 3] || v[12]) t |= 16;
-  if (v[ 6] || v[15]) t |= 32;
-  if (v[ 7] || v[16]) t |= 64;
-  if (v[ 8] || v[17]) t |= 128;
-  if ((t4b(t) == 1) && (t8(t) == 1)) return 0; // simple 2D
+  if ((!IS_SIMPLE(v[4])) || (!IS_SIMPLE(v[13]))) {
+    return 0;
+  }
+  if ((IS_CONSTRAINT(v[4])) || (IS_CONSTRAINT(v[13]))) {
+    return 0;
+  }
+  if ((IS_PSEL(v[4])) || (IS_PSEL(v[13]))) {
+    return 0;
+  }
+  if (v[5] || v[14]) {
+    t = 1;
+  } else {
+    t = 0;
+  }
+  if (v[2] || v[11]) {
+    t |= 2;
+  }
+  if (v[1] || v[10]) {
+    t |= 4;
+  }
+  if (v[0] || v[9]) {
+    t |= 8;
+  }
+  if (v[3] || v[12]) {
+    t |= 16;
+  }
+  if (v[6] || v[15]) {
+    t |= 32;
+  }
+  if (v[7] || v[16]) {
+    t |= 64;
+  }
+  if (v[8] || v[17]) {
+    t |= 128;
+  }
+  if ((t4b(t) == 1) && (t8(t) == 1)) {
+    return 0; // simple 2D
+  }
   SET_SELECTED(v[4]);
   //printf("match 2a\n");
   return 1;
@@ -281,18 +313,44 @@ Si le test réussit, le point 10 est marqué SELECTED
 */
 {
   uint8_t t;
-  if ((!IS_SIMPLE(v[10])) || (!IS_SIMPLE(v[13]))) return 0;
-  if ((IS_CONSTRAINT(v[10])) || (IS_CONSTRAINT(v[13]))) return 0;
-  if ((IS_PSEL(v[10])) || (IS_PSEL(v[13]))) return 0;
-  if (v[14] || v[11]) t = 1; else t = 0;
-  if (v[ 5] || v[ 2]) t |= 2;
-  if (v[ 4] || v[ 1]) t |= 4;
-  if (v[ 3] || v[ 0]) t |= 8;
-  if (v[12] || v[ 9]) t |= 16;
-  if (v[21] || v[18]) t |= 32;
-  if (v[22] || v[19]) t |= 64;
-  if (v[23] || v[20]) t |= 128;
-  if ((t4b(t) == 1) && (t8(t) == 1)) return 0; // simple 2D
+  if ((!IS_SIMPLE(v[10])) || (!IS_SIMPLE(v[13]))) {
+    return 0;
+  }
+  if ((IS_CONSTRAINT(v[10])) || (IS_CONSTRAINT(v[13]))) {
+    return 0;
+  }
+  if ((IS_PSEL(v[10])) || (IS_PSEL(v[13]))) {
+    return 0;
+  }
+  if (v[14] || v[11]) {
+    t = 1;
+  } else {
+    t = 0;
+  }
+  if (v[5] || v[2]) {
+    t |= 2;
+  }
+  if (v[4] || v[1]) {
+    t |= 4;
+  }
+  if (v[3] || v[0]) {
+    t |= 8;
+  }
+  if (v[12] || v[9]) {
+    t |= 16;
+  }
+  if (v[21] || v[18]) {
+    t |= 32;
+  }
+  if (v[22] || v[19]) {
+    t |= 64;
+  }
+  if (v[23] || v[20]) {
+    t |= 128;
+  }
+  if ((t4b(t) == 1) && (t8(t) == 1)) {
+    return 0; // simple 2D
+  }
   SET_SELECTED(v[10]);
   //printf("match 2b\n");
   return 1;
@@ -321,18 +379,44 @@ Si le test réussit, le point 12 est marqué SELECTED
 */
 {
   uint8_t t;
-  if ((!IS_SIMPLE(v[12])) || (!IS_SIMPLE(v[13]))) return 0;
-  if ((IS_CONSTRAINT(v[12])) || (IS_CONSTRAINT(v[13]))) return 0;
-  if ((IS_PSEL(v[12])) || (IS_PSEL(v[13]))) return 0;
-  if (v[ 9] || v[10]) t = 1; else t = 0;
-  if (v[ 0] || v[ 1]) t |= 2;
-  if (v[ 3] || v[ 4]) t |= 4;
-  if (v[ 6] || v[ 7]) t |= 8;
-  if (v[15] || v[16]) t |= 16;
-  if (v[24] || v[25]) t |= 32;
-  if (v[21] || v[22]) t |= 64;
-  if (v[18] || v[19]) t |= 128;
-  if ((t4b(t) == 1) && (t8(t) == 1)) return 0; // simple 2D
+  if ((!IS_SIMPLE(v[12])) || (!IS_SIMPLE(v[13]))) {
+    return 0;
+  }
+  if ((IS_CONSTRAINT(v[12])) || (IS_CONSTRAINT(v[13]))) {
+    return 0;
+  }
+  if ((IS_PSEL(v[12])) || (IS_PSEL(v[13]))) {
+    return 0;
+  }
+  if (v[9] || v[10]) {
+    t = 1;
+  } else {
+    t = 0;
+  }
+  if (v[0] || v[1]) {
+    t |= 2;
+  }
+  if (v[3] || v[4]) {
+    t |= 4;
+  }
+  if (v[6] || v[7]) {
+    t |= 8;
+  }
+  if (v[15] || v[16]) {
+    t |= 16;
+  }
+  if (v[24] || v[25]) {
+    t |= 32;
+  }
+  if (v[21] || v[22]) {
+    t |= 64;
+  }
+  if (v[18] || v[19]) {
+    t |= 128;
+  }
+  if ((t4b(t) == 1) && (t8(t) == 1)) {
+    return 0; // simple 2D
+  }
   SET_SELECTED(v[12]);
   //printf("match 2c\n");
   return 1;
@@ -359,14 +443,23 @@ static int32_t match_vois1_z_1(uint8_t *v)
 // 3: A et B sont tous nuls ou [au moins un A non nul et au moins un B non nul]
 // Si le test réussit, le premier point Pi non nul est marqué SELECTED
 {
-  if (!((v[10] && v[12]) || (v[ 9] && v[13]))) return 0;
-  if ((v[10]  && ((!IS_SIMPLE(v[10])) || IS_PSEL(v[10]) || IS_CONSTRAINT(v[10]))) ||
-      (v[ 9]  && ((!IS_SIMPLE(v[ 9])) || IS_PSEL(v[ 9]) || IS_CONSTRAINT(v[ 9]))) ||
-      (v[12]  && ((!IS_SIMPLE(v[12])) || IS_PSEL(v[12]) || IS_CONSTRAINT(v[12]))) ||
-      (v[13]  && ((!IS_SIMPLE(v[13])) || IS_PSEL(v[13]) || IS_CONSTRAINT(v[13])))) return 0;
-  if ((v[ 0] || v[ 1] || v[ 3] || v[ 4] || v[18] || v[19] || v[21] || v[22]) &&
-      ((!v[ 0] && !v[ 1] && !v[ 3] && !v[ 4]) || 
-       (!v[18] && !v[19] && !v[21] && !v[22]))) return 0;
+  if (!((v[10] && v[12]) || (v[9] && v[13]))) {
+    return 0;
+  }
+  if ((v[10] &&
+       ((!IS_SIMPLE(v[10])) || IS_PSEL(v[10]) || IS_CONSTRAINT(v[10]))) ||
+      (v[9] && ((!IS_SIMPLE(v[9])) || IS_PSEL(v[9]) || IS_CONSTRAINT(v[9]))) ||
+      (v[12] &&
+       ((!IS_SIMPLE(v[12])) || IS_PSEL(v[12]) || IS_CONSTRAINT(v[12]))) ||
+      (v[13] &&
+       ((!IS_SIMPLE(v[13])) || IS_PSEL(v[13]) || IS_CONSTRAINT(v[13])))) {
+    return 0;
+  }
+  if ((v[0] || v[1] || v[3] || v[4] || v[18] || v[19] || v[21] || v[22]) &&
+      ((!v[0] && !v[1] && !v[3] && !v[4]) ||
+       (!v[18] && !v[19] && !v[21] && !v[22]))) {
+    return 0;
+  }
   if (v[ 9]) { SET_SELECTED(v[ 9]); return 1; }
   if (v[10]) { SET_SELECTED(v[10]); return 1; }
   if (v[12]) { SET_SELECTED(v[12]); return 1; }
@@ -395,14 +488,24 @@ static int32_t match_vois1_z_2(uint8_t *v)
 // 3: A et B sont tous nuls ou [au moins un A non nul et au moins un B non nul]
 // Si le test réussit, le premier point Pi non nul est marqué SELECTED
 {
-  if (!((v[10] && v[14]) || (v[11] && v[13]))) return 0;
-  if ((v[10] && ((!IS_SIMPLE(v[10])) || IS_PSEL(v[10]) || IS_CONSTRAINT(v[10]))) ||
-      (v[11] && ((!IS_SIMPLE(v[11])) || IS_PSEL(v[11]) || IS_CONSTRAINT(v[11]))) ||
-      (v[14] && ((!IS_SIMPLE(v[14])) || IS_PSEL(v[14]) || IS_CONSTRAINT(v[14]))) ||
-      (v[13] && ((!IS_SIMPLE(v[13])) || IS_PSEL(v[13]) || IS_CONSTRAINT(v[13])))) return 0;
-  if ((v[ 2] || v[ 1] || v[ 5] || v[ 4] || v[20] || v[19] || v[23] || v[22]) &&
-      ((!v[ 2] && !v[ 1] && !v[ 5] && !v[ 4]) || 
-       (!v[20] && !v[19] && !v[23] && !v[22]))) return 0;
+  if (!((v[10] && v[14]) || (v[11] && v[13]))) {
+    return 0;
+  }
+  if ((v[10] &&
+       ((!IS_SIMPLE(v[10])) || IS_PSEL(v[10]) || IS_CONSTRAINT(v[10]))) ||
+      (v[11] &&
+       ((!IS_SIMPLE(v[11])) || IS_PSEL(v[11]) || IS_CONSTRAINT(v[11]))) ||
+      (v[14] &&
+       ((!IS_SIMPLE(v[14])) || IS_PSEL(v[14]) || IS_CONSTRAINT(v[14]))) ||
+      (v[13] &&
+       ((!IS_SIMPLE(v[13])) || IS_PSEL(v[13]) || IS_CONSTRAINT(v[13])))) {
+    return 0;
+  }
+  if ((v[2] || v[1] || v[5] || v[4] || v[20] || v[19] || v[23] || v[22]) &&
+      ((!v[2] && !v[1] && !v[5] && !v[4]) ||
+       (!v[20] && !v[19] && !v[23] && !v[22]))) {
+    return 0;
+  }
   if (v[10]) { SET_SELECTED(v[10]); return 1; }
   if (v[11]) { SET_SELECTED(v[11]); return 1; }
   if (v[13]) { SET_SELECTED(v[13]); return 1; }
@@ -428,14 +531,22 @@ static int32_t match_vois1_x_1(uint8_t *v)
 // 3: A et B sont tous nuls ou [au moins un A non nul et au moins un B non nul]
 // Si le test réussit, le premier point Pi non nul est marqué SELECTED
 {
-  if (!((v[16] && v[ 4]) || (v[ 7] && v[13]))) return 0;
-  if ((v[16] && ((!IS_SIMPLE(v[16])) || IS_PSEL(v[16]) || IS_CONSTRAINT(v[16]))) ||
-      (v[ 4] && ((!IS_SIMPLE(v[ 4])) || IS_PSEL(v[ 4]) || IS_CONSTRAINT(v[ 4]))) ||
-      (v[ 7] && ((!IS_SIMPLE(v[ 7])) || IS_PSEL(v[ 7]) || IS_CONSTRAINT(v[ 7]))) ||
-      (v[13] && ((!IS_SIMPLE(v[13])) || IS_PSEL(v[13]) || IS_CONSTRAINT(v[13])))) return 0;
-  if ((v[ 6] || v[ 3] || v[15] || v[12] || v[17] || v[14] || v[ 5] || v[ 8]) &&
-      ((!v[ 6] && !v[ 3] && !v[15] && !v[12]) || 
-       (!v[17] && !v[14] && !v[ 5] && !v[ 8]))) return 0;
+  if (!((v[16] && v[4]) || (v[7] && v[13]))) {
+    return 0;
+  }
+  if ((v[16] &&
+       ((!IS_SIMPLE(v[16])) || IS_PSEL(v[16]) || IS_CONSTRAINT(v[16]))) ||
+      (v[4] && ((!IS_SIMPLE(v[4])) || IS_PSEL(v[4]) || IS_CONSTRAINT(v[4]))) ||
+      (v[7] && ((!IS_SIMPLE(v[7])) || IS_PSEL(v[7]) || IS_CONSTRAINT(v[7]))) ||
+      (v[13] &&
+       ((!IS_SIMPLE(v[13])) || IS_PSEL(v[13]) || IS_CONSTRAINT(v[13])))) {
+    return 0;
+  }
+  if ((v[6] || v[3] || v[15] || v[12] || v[17] || v[14] || v[5] || v[8]) &&
+      ((!v[6] && !v[3] && !v[15] && !v[12]) ||
+       (!v[17] && !v[14] && !v[5] && !v[8]))) {
+    return 0;
+  }
   if (v[ 4]) { SET_SELECTED(v[ 4]); return 1; }
   if (v[ 7]) { SET_SELECTED(v[ 7]); return 1; }
   if (v[13]) { SET_SELECTED(v[13]); return 1; }
@@ -461,14 +572,22 @@ static int32_t match_vois1_x_2(uint8_t *v)
 // 3: A et B sont tous nuls ou [au moins un A non nul et au moins un B non nul]
 // Si le test réussit, le premier point Pi non nul est marqué SELECTED
 {
-  if (!((v[10] && v[ 4]) || (v[ 1] && v[13]))) return 0;
-  if ((v[10] && ((!IS_SIMPLE(v[10])) || IS_PSEL(v[10]) || IS_CONSTRAINT(v[10]))) ||
-      (v[ 4] && ((!IS_SIMPLE(v[ 4])) || IS_PSEL(v[ 4]) || IS_CONSTRAINT(v[ 4]))) ||
-      (v[ 1] && ((!IS_SIMPLE(v[ 1])) || IS_PSEL(v[ 1]) || IS_CONSTRAINT(v[ 1]))) ||
-      (v[13] && ((!IS_SIMPLE(v[13])) || IS_PSEL(v[13]) || IS_CONSTRAINT(v[13])))) return 0;
-  if ((v[ 0] || v[ 3] || v[ 9] || v[12] || v[11] || v[14] || v[ 5] || v[ 2]) &&
-      ((!v[ 0] && !v[ 3] && !v[ 9] && !v[12]) || 
-       (!v[11] && !v[14] && !v[ 5] && !v[ 2]))) return 0;
+  if (!((v[10] && v[4]) || (v[1] && v[13]))) {
+    return 0;
+  }
+  if ((v[10] &&
+       ((!IS_SIMPLE(v[10])) || IS_PSEL(v[10]) || IS_CONSTRAINT(v[10]))) ||
+      (v[4] && ((!IS_SIMPLE(v[4])) || IS_PSEL(v[4]) || IS_CONSTRAINT(v[4]))) ||
+      (v[1] && ((!IS_SIMPLE(v[1])) || IS_PSEL(v[1]) || IS_CONSTRAINT(v[1]))) ||
+      (v[13] &&
+       ((!IS_SIMPLE(v[13])) || IS_PSEL(v[13]) || IS_CONSTRAINT(v[13])))) {
+    return 0;
+  }
+  if ((v[0] || v[3] || v[9] || v[12] || v[11] || v[14] || v[5] || v[2]) &&
+      ((!v[0] && !v[3] && !v[9] && !v[12]) ||
+       (!v[11] && !v[14] && !v[5] && !v[2]))) {
+    return 0;
+  }
   if (v[ 1]) { SET_SELECTED(v[ 1]); return 1; }
   if (v[ 4]) { SET_SELECTED(v[ 4]); return 1; }
   if (v[10]) { SET_SELECTED(v[10]); return 1; }
@@ -495,14 +614,22 @@ static int32_t match_vois1_y_1(uint8_t *v)
 // 3: A et B sont tous nuls ou [au moins un A non nul et au moins un B non nul]
 // Si le test réussit, le premier point Pi non nul est marqué SELECTED
 {
-  if (!((v[ 4] && v[14]) || (v[ 5] && v[13]))) return 0;
-  if ((v[ 4] && ((!IS_SIMPLE(v[ 4])) || IS_PSEL(v[ 4]) || IS_CONSTRAINT(v[ 4]))) ||
-      (v[ 5] && ((!IS_SIMPLE(v[ 5])) || IS_PSEL(v[ 5]) || IS_CONSTRAINT(v[ 5]))) ||
-      (v[14] && ((!IS_SIMPLE(v[14])) || IS_PSEL(v[14]) || IS_CONSTRAINT(v[14]))) ||
-      (v[13] && ((!IS_SIMPLE(v[13])) || IS_PSEL(v[13]) || IS_CONSTRAINT(v[13])))) return 0;
-  if ((v[ 1] || v[ 2] || v[10] || v[11] || v[ 8] || v[ 7] || v[17] || v[16]) &&
-      ((!v[ 1] && !v[ 2] && !v[10] && !v[11]) || 
-       (!v[ 8] && !v[ 7] && !v[17] && !v[16]))) return 0;
+  if (!((v[4] && v[14]) || (v[5] && v[13]))) {
+    return 0;
+  }
+  if ((v[4] && ((!IS_SIMPLE(v[4])) || IS_PSEL(v[4]) || IS_CONSTRAINT(v[4]))) ||
+      (v[5] && ((!IS_SIMPLE(v[5])) || IS_PSEL(v[5]) || IS_CONSTRAINT(v[5]))) ||
+      (v[14] &&
+       ((!IS_SIMPLE(v[14])) || IS_PSEL(v[14]) || IS_CONSTRAINT(v[14]))) ||
+      (v[13] &&
+       ((!IS_SIMPLE(v[13])) || IS_PSEL(v[13]) || IS_CONSTRAINT(v[13])))) {
+    return 0;
+  }
+  if ((v[1] || v[2] || v[10] || v[11] || v[8] || v[7] || v[17] || v[16]) &&
+      ((!v[1] && !v[2] && !v[10] && !v[11]) ||
+       (!v[8] && !v[7] && !v[17] && !v[16]))) {
+    return 0;
+  }
   if (v[ 4]) { SET_SELECTED(v[ 4]); return 1; }
   if (v[ 5]) { SET_SELECTED(v[ 5]); return 1; }
   if (v[13]) { SET_SELECTED(v[13]); return 1; }
@@ -529,14 +656,22 @@ static int32_t match_vois1_y_2(uint8_t *v)
 // 3: A et B sont tous nuls ou [au moins un A non nul et au moins un B non nul]
 // Si le test réussit, le premier point Pi non nul est marqué SELECTED
 {
-  if (!((v[ 4] && v[12]) || (v[ 3] && v[13]))) return 0;
-  if ((v[ 4] && ((!IS_SIMPLE(v[ 4])) || IS_PSEL(v[ 4]) || IS_CONSTRAINT(v[ 4]))) ||
-      (v[ 3] && ((!IS_SIMPLE(v[ 3])) || IS_PSEL(v[ 3]) || IS_CONSTRAINT(v[ 3]))) ||
-      (v[12] && ((!IS_SIMPLE(v[12])) || IS_PSEL(v[12]) || IS_CONSTRAINT(v[12]))) ||
-      (v[13] && ((!IS_SIMPLE(v[13])) || IS_PSEL(v[13]) || IS_CONSTRAINT(v[13])))) return 0;
-  if ((v[ 0] || v[ 1] || v[ 9] || v[10] || v[ 6] || v[ 7] || v[15] || v[16]) &&
-      ((!v[ 0] && !v[ 1] && !v[ 9] && !v[10]) || 
-       (!v[ 6] && !v[ 7] && !v[15] && !v[16]))) return 0;
+  if (!((v[4] && v[12]) || (v[3] && v[13]))) {
+    return 0;
+  }
+  if ((v[4] && ((!IS_SIMPLE(v[4])) || IS_PSEL(v[4]) || IS_CONSTRAINT(v[4]))) ||
+      (v[3] && ((!IS_SIMPLE(v[3])) || IS_PSEL(v[3]) || IS_CONSTRAINT(v[3]))) ||
+      (v[12] &&
+       ((!IS_SIMPLE(v[12])) || IS_PSEL(v[12]) || IS_CONSTRAINT(v[12]))) ||
+      (v[13] &&
+       ((!IS_SIMPLE(v[13])) || IS_PSEL(v[13]) || IS_CONSTRAINT(v[13])))) {
+    return 0;
+  }
+  if ((v[0] || v[1] || v[9] || v[10] || v[6] || v[7] || v[15] || v[16]) &&
+      ((!v[0] && !v[1] && !v[9] && !v[10]) ||
+       (!v[6] && !v[7] && !v[15] && !v[16]))) {
+    return 0;
+  }
   if (v[ 3]) { SET_SELECTED(v[ 3]); return 1; }
   if (v[ 4]) { SET_SELECTED(v[ 4]); return 1; }
   if (v[12]) { SET_SELECTED(v[12]); return 1; }
@@ -561,15 +696,34 @@ Si le test réussit, le premier point Pi non nul est marqué SELECTED
 */
 {
   //printf("match 01:\n");
-  if (!((v[ 0]&&v[13]) || (v[ 1]&&v[12]) || (v[ 3]&&v[10]) || (v[ 4]&&v[ 9]) )) return 0;
-  if (v[ 0] && ((!IS_SIMPLE(v[ 0])) || IS_PSEL(v[ 0]))) return 0;
-  if (v[13] && ((!IS_SIMPLE(v[13])) || IS_PSEL(v[13]))) return 0;
-  if (v[ 1] && ((!IS_SIMPLE(v[ 1])) || IS_PSEL(v[ 1]))) return 0;
-  if (v[12] && ((!IS_SIMPLE(v[12])) || IS_PSEL(v[12]))) return 0;
-  if (v[ 3] && ((!IS_SIMPLE(v[ 3])) || IS_PSEL(v[ 3]))) return 0;
-  if (v[10] && ((!IS_SIMPLE(v[10])) || IS_PSEL(v[10]))) return 0;
-  if (v[ 4] && ((!IS_SIMPLE(v[ 4])) || IS_PSEL(v[ 4]))) return 0;
-  if (v[ 9] && ((!IS_SIMPLE(v[ 9])) || IS_PSEL(v[ 9]))) return 0;
+  if (!((v[0] && v[13]) || (v[1] && v[12]) || (v[3] && v[10]) ||
+        (v[4] && v[9]))) {
+    return 0;
+  }
+  if (v[0] && ((!IS_SIMPLE(v[0])) || IS_PSEL(v[0]))) {
+    return 0;
+  }
+  if (v[13] && ((!IS_SIMPLE(v[13])) || IS_PSEL(v[13]))) {
+    return 0;
+  }
+  if (v[1] && ((!IS_SIMPLE(v[1])) || IS_PSEL(v[1]))) {
+    return 0;
+  }
+  if (v[12] && ((!IS_SIMPLE(v[12])) || IS_PSEL(v[12]))) {
+    return 0;
+  }
+  if (v[3] && ((!IS_SIMPLE(v[3])) || IS_PSEL(v[3]))) {
+    return 0;
+  }
+  if (v[10] && ((!IS_SIMPLE(v[10])) || IS_PSEL(v[10]))) {
+    return 0;
+  }
+  if (v[4] && ((!IS_SIMPLE(v[4])) || IS_PSEL(v[4]))) {
+    return 0;
+  }
+  if (v[9] && ((!IS_SIMPLE(v[9])) || IS_PSEL(v[9]))) {
+    return 0;
+  }
   if (v[ 0])  { SET_SELECTED(v[ 0]); return 1; }
   if (v[ 1])  { SET_SELECTED(v[ 1]); return 1; }
   if (v[ 3])  { SET_SELECTED(v[ 3]); return 1; }
@@ -598,15 +752,34 @@ Si le test réussit, le premier point Pi non nul est marqué SELECTED
 */
 {
   //printf("match 02:\n");
-  if (!((v[ 2]&&v[13]) || (v[ 1]&&v[14]) || (v[ 5]&&v[10]) || (v[ 4]&&v[11]) )) return 0;
-  if (v[ 2] && ((!IS_SIMPLE(v[ 2])) || IS_PSEL(v[ 2]))) return 0;
-  if (v[13] && ((!IS_SIMPLE(v[13])) || IS_PSEL(v[13]))) return 0;
-  if (v[ 1] && ((!IS_SIMPLE(v[ 1])) || IS_PSEL(v[ 1]))) return 0;
-  if (v[11] && ((!IS_SIMPLE(v[11])) || IS_PSEL(v[11]))) return 0;
-  if (v[ 5] && ((!IS_SIMPLE(v[ 5])) || IS_PSEL(v[ 5]))) return 0;
-  if (v[10] && ((!IS_SIMPLE(v[10])) || IS_PSEL(v[10]))) return 0;
-  if (v[ 4] && ((!IS_SIMPLE(v[ 4])) || IS_PSEL(v[ 4]))) return 0;
-  if (v[14] && ((!IS_SIMPLE(v[14])) || IS_PSEL(v[14]))) return 0;
+  if (!((v[2] && v[13]) || (v[1] && v[14]) || (v[5] && v[10]) ||
+        (v[4] && v[11]))) {
+    return 0;
+  }
+  if (v[2] && ((!IS_SIMPLE(v[2])) || IS_PSEL(v[2]))) {
+    return 0;
+  }
+  if (v[13] && ((!IS_SIMPLE(v[13])) || IS_PSEL(v[13]))) {
+    return 0;
+  }
+  if (v[1] && ((!IS_SIMPLE(v[1])) || IS_PSEL(v[1]))) {
+    return 0;
+  }
+  if (v[11] && ((!IS_SIMPLE(v[11])) || IS_PSEL(v[11]))) {
+    return 0;
+  }
+  if (v[5] && ((!IS_SIMPLE(v[5])) || IS_PSEL(v[5]))) {
+    return 0;
+  }
+  if (v[10] && ((!IS_SIMPLE(v[10])) || IS_PSEL(v[10]))) {
+    return 0;
+  }
+  if (v[4] && ((!IS_SIMPLE(v[4])) || IS_PSEL(v[4]))) {
+    return 0;
+  }
+  if (v[14] && ((!IS_SIMPLE(v[14])) || IS_PSEL(v[14]))) {
+    return 0;
+  }
   if (v[ 1])  { SET_SELECTED(v[ 1]); return 1; }
   if (v[ 2])  { SET_SELECTED(v[ 2]); return 1; }
   if (v[ 4])  { SET_SELECTED(v[ 4]); return 1; }
@@ -636,15 +809,34 @@ Si le test réussit, le premier point Pi non nul est marqué SELECTED
 */
 {
   //printf("match 03:\n");
-  if (!((v[ 8]&&v[13]) || (v[ 7]&&v[14]) || (v[16]&&v[ 5]) || (v[ 4]&&v[17]) )) return 0;
-  if (v[ 8] && ((!IS_SIMPLE(v[ 8])) || IS_PSEL(v[ 8]))) return 0;
-  if (v[13] && ((!IS_SIMPLE(v[13])) || IS_PSEL(v[13]))) return 0;
-  if (v[ 7] && ((!IS_SIMPLE(v[ 7])) || IS_PSEL(v[ 7]))) return 0;
-  if (v[14] && ((!IS_SIMPLE(v[14])) || IS_PSEL(v[14]))) return 0;
-  if (v[16] && ((!IS_SIMPLE(v[16])) || IS_PSEL(v[16]))) return 0;
-  if (v[ 5] && ((!IS_SIMPLE(v[ 5])) || IS_PSEL(v[ 5]))) return 0;
-  if (v[ 4] && ((!IS_SIMPLE(v[ 4])) || IS_PSEL(v[ 4]))) return 0;
-  if (v[17] && ((!IS_SIMPLE(v[17])) || IS_PSEL(v[17]))) return 0;
+  if (!((v[8] && v[13]) || (v[7] && v[14]) || (v[16] && v[5]) ||
+        (v[4] && v[17]))) {
+    return 0;
+  }
+  if (v[8] && ((!IS_SIMPLE(v[8])) || IS_PSEL(v[8]))) {
+    return 0;
+  }
+  if (v[13] && ((!IS_SIMPLE(v[13])) || IS_PSEL(v[13]))) {
+    return 0;
+  }
+  if (v[7] && ((!IS_SIMPLE(v[7])) || IS_PSEL(v[7]))) {
+    return 0;
+  }
+  if (v[14] && ((!IS_SIMPLE(v[14])) || IS_PSEL(v[14]))) {
+    return 0;
+  }
+  if (v[16] && ((!IS_SIMPLE(v[16])) || IS_PSEL(v[16]))) {
+    return 0;
+  }
+  if (v[5] && ((!IS_SIMPLE(v[5])) || IS_PSEL(v[5]))) {
+    return 0;
+  }
+  if (v[4] && ((!IS_SIMPLE(v[4])) || IS_PSEL(v[4]))) {
+    return 0;
+  }
+  if (v[17] && ((!IS_SIMPLE(v[17])) || IS_PSEL(v[17]))) {
+    return 0;
+  }
   if (v[ 4])  { SET_SELECTED(v[ 4]); return 1; }
   if (v[ 5])  { SET_SELECTED(v[ 5]); return 1; }
   if (v[ 7])  { SET_SELECTED(v[ 7]); return 1; }
@@ -673,15 +865,34 @@ Si le test réussit, le premier point Pi non nul est marqué SELECTED
 */
 {
   //printf("match 04:\n");
-  if (!((v[ 6]&&v[13]) || (v[ 7]&&v[12]) || (v[ 3]&&v[16]) || (v[ 4]&&v[15]) )) return 0;
-  if (v[ 6] && ((!IS_SIMPLE(v[ 6])) || IS_PSEL(v[ 6]))) return 0;
-  if (v[13] && ((!IS_SIMPLE(v[13])) || IS_PSEL(v[13]))) return 0;
-  if (v[ 7] && ((!IS_SIMPLE(v[ 7])) || IS_PSEL(v[ 7]))) return 0;
-  if (v[12] && ((!IS_SIMPLE(v[12])) || IS_PSEL(v[12]))) return 0;
-  if (v[ 3] && ((!IS_SIMPLE(v[ 3])) || IS_PSEL(v[ 3]))) return 0;
-  if (v[16] && ((!IS_SIMPLE(v[16])) || IS_PSEL(v[16]))) return 0;
-  if (v[ 4] && ((!IS_SIMPLE(v[ 4])) || IS_PSEL(v[ 4]))) return 0;
-  if (v[15] && ((!IS_SIMPLE(v[15])) || IS_PSEL(v[15]))) return 0;
+  if (!((v[6] && v[13]) || (v[7] && v[12]) || (v[3] && v[16]) ||
+        (v[4] && v[15]))) {
+    return 0;
+  }
+  if (v[6] && ((!IS_SIMPLE(v[6])) || IS_PSEL(v[6]))) {
+    return 0;
+  }
+  if (v[13] && ((!IS_SIMPLE(v[13])) || IS_PSEL(v[13]))) {
+    return 0;
+  }
+  if (v[7] && ((!IS_SIMPLE(v[7])) || IS_PSEL(v[7]))) {
+    return 0;
+  }
+  if (v[12] && ((!IS_SIMPLE(v[12])) || IS_PSEL(v[12]))) {
+    return 0;
+  }
+  if (v[3] && ((!IS_SIMPLE(v[3])) || IS_PSEL(v[3]))) {
+    return 0;
+  }
+  if (v[16] && ((!IS_SIMPLE(v[16])) || IS_PSEL(v[16]))) {
+    return 0;
+  }
+  if (v[4] && ((!IS_SIMPLE(v[4])) || IS_PSEL(v[4]))) {
+    return 0;
+  }
+  if (v[15] && ((!IS_SIMPLE(v[15])) || IS_PSEL(v[15]))) {
+    return 0;
+  }
   if (v[ 3])  { SET_SELECTED(v[ 3]); return 1; }
   if (v[ 4])  { SET_SELECTED(v[ 4]); return 1; }
   if (v[ 6])  { SET_SELECTED(v[ 6]); return 1; }
@@ -1158,62 +1369,78 @@ static void lskelCKSC3_process_cliques(struct xvimage *image)
 
     // DIM = 2
     // =============================
-    for (k = 1; k < ds-1; k++)
-    for (j = 1; j < cs-1; j++) 
-    for (i = 1; i < rs-1; i++) 
-    {
-      x = k*ps + j*rs + i;
-      if (F[x])
-      { 
-	extract_vois27(F, x, rs, ps, N, v); 
-	m1 = match_vois2_z(v);
-	m2 = match_vois2_y(v); 
-	m3 = match_vois2_x(v); 
-	if (m1 || m2 || m3) insert_vois27(F, x, rs, ps, N, v);
+  for (k = 1; k < ds - 1; k++) {
+    for (j = 1; j < cs - 1; j++) {
+      for (i = 1; i < rs - 1; i++) {
+        x = k * ps + j * rs + i;
+        if (F[x]) {
+          extract_vois27(F, x, rs, ps, N, v);
+          m1 = match_vois2_z(v);
+          m2 = match_vois2_y(v);
+          m3 = match_vois2_x(v);
+          if (m1 || m2 || m3) {
+            insert_vois27(F, x, rs, ps, N, v);
+          }
+        }
       }
     }
+  }
 
-    for (i = 1; i < N; i++) if (IS_SELECTED(F[i])) { UNSET_SELECTED(F[i]); SET_PSEL(F[i]); }
+  for (i = 1; i < N; i++) {
+    if (IS_SELECTED(F[i])) {
+      UNSET_SELECTED(F[i]);
+      SET_PSEL(F[i]);
+    }
+  }
 
     // DIM = 1
     // =============================
-    for (k = 1; k < ds-1; k++)
-    for (j = 1; j < cs-1; j++) 
-    for (i = 1; i < rs-1; i++) 
-    {
-      x = k*ps + j*rs + i;
-      if (F[x])
-      { 
-	extract_vois27(F, x, rs, ps, N, v);
-	m1 = match_vois1_z_1(v); 
-	m2 = match_vois1_z_2(v);
-	m3 = match_vois1_x_1(v);
-	m4 = match_vois1_x_2(v);
-	m5 = match_vois1_y_1(v);
-	m6 = match_vois1_y_2(v);
-	if (m1 || m2 || m3 || m4 || m5 || m6) insert_vois27(F, x, rs, ps, N, v);
+  for (k = 1; k < ds - 1; k++) {
+    for (j = 1; j < cs - 1; j++) {
+      for (i = 1; i < rs - 1; i++) {
+        x = k * ps + j * rs + i;
+        if (F[x]) {
+          extract_vois27(F, x, rs, ps, N, v);
+          m1 = match_vois1_z_1(v);
+          m2 = match_vois1_z_2(v);
+          m3 = match_vois1_x_1(v);
+          m4 = match_vois1_x_2(v);
+          m5 = match_vois1_y_1(v);
+          m6 = match_vois1_y_2(v);
+          if (m1 || m2 || m3 || m4 || m5 || m6) {
+            insert_vois27(F, x, rs, ps, N, v);
+          }
+        }
       }
     }
+  }
 
-    for (i = 1; i < N; i++) if (IS_SELECTED(F[i])) { UNSET_SELECTED(F[i]); SET_PSEL(F[i]); }
+  for (i = 1; i < N; i++) {
+    if (IS_SELECTED(F[i])) {
+      UNSET_SELECTED(F[i]);
+      SET_PSEL(F[i]);
+    }
+  }
 
     // DIM = 0
     // =============================
-    for (k = 1; k < ds-1; k++)
-    for (j = 1; j < cs-1; j++) 
-    for (i = 1; i < rs-1; i++) 
-    {
-      x = k*ps + j*rs + i;
-      if (F[x])
-      { 
-	extract_vois27(F, x, rs, ps, N, v);
-	m1 = match_vois0_1(v);
-	m2 = match_vois0_2(v);
-	m3 = match_vois0_3(v);
-	m4 = match_vois0_4(v);
-	if (m1 || m2 || m3 || m4) insert_vois27(F, x, rs, ps, N, v);
+  for (k = 1; k < ds - 1; k++) {
+    for (j = 1; j < cs - 1; j++) {
+      for (i = 1; i < rs - 1; i++) {
+        x = k * ps + j * rs + i;
+        if (F[x]) {
+          extract_vois27(F, x, rs, ps, N, v);
+          m1 = match_vois0_1(v);
+          m2 = match_vois0_2(v);
+          m3 = match_vois0_3(v);
+          m4 = match_vois0_4(v);
+          if (m1 || m2 || m3 || m4) {
+            insert_vois27(F, x, rs, ps, N, v);
+          }
+        }
       }
     }
+  }
 } // lskelCKSC3_process_cliques
 #endif
 
@@ -1260,23 +1487,37 @@ Attention : l'objet ne doit pas toucher le bord de l'image
     COMPARE_SIZE(image, inhibit);
     ACCEPTED_TYPES1(inhibit, VFF_TYP_1_BYTE);
     I = UCHARDATA(inhibit);
-    for (x = 0; x < N; x++) if (I[x]) SET_CONSTRAINT(F[x]);
+    for (x = 0; x < N; x++) {
+      if (I[x]) {
+        SET_CONSTRAINT(F[x]);
+      }
+    }
   }
 
-  mctopo3d_init_topo3d();  
+  mctopo3d_init_topo3d();
 
-  if (nsteps == -1) nsteps = 1000000000;
-
-  for (k = 1; k < ds-1; k++) 
-  for (j = 1; j < cs-1; j++) 
-  for (i = 1; i < rs-1; i++) 
-  {
-    x = k*ps + j*rs + i;
-    if (F[x] && ((k<2)||(j<2)||(i<2)||(k>ds-3)||(j>cs-3)||(i>rs-3))) 
-      printf("%s: WARNING - points on extended border may not be treated\n", F_NAME);
+  if (nsteps == -1) {
+    nsteps = 1000000000;
   }
 
-  for (x = 0; x < N; x++) if (F[x]) F[x] = S_OBJECT;
+  for (k = 1; k < ds - 1; k++) {
+    for (j = 1; j < cs - 1; j++) {
+      for (i = 1; i < rs - 1; i++) {
+        x = k * ps + j * rs + i;
+        if (F[x] && ((k < 2) || (j < 2) || (i < 2) || (k > ds - 3) ||
+                     (j > cs - 3) || (i > rs - 3))) {
+          printf("%s: WARNING - points on extended border may not be treated\n",
+                 F_NAME);
+        }
+      }
+    }
+  }
+
+  for (x = 0; x < N; x++) {
+    if (F[x]) {
+      F[x] = S_OBJECT;
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -1293,24 +1534,31 @@ Attention : l'objet ne doit pas toucher le bord de l'image
     stab = 1;
 
     // détection des isthmes 1D et des points simples
-    for (x = 0; x < N; x++) 
+    for (x = 0; x < N; x++) {
       if (F[x])
       { 
 	mctopo3d_top26(F, x, rs, ps, N, &t, &tb);
 	if (mode != ISTHMUS)
 	{
-	  if (mctopo3d_nbvoiso26(F, x, rs, ps, N) == 1)  SET_CONSTRAINT(F[x]);
-	}
+          if (mctopo3d_nbvoiso26(F, x, rs, ps, N) == 1) {
+            SET_CONSTRAINT(F[x]);
+          }
+        }
 	else
 	{
-	  if (t > 1) SET_CONSTRAINT(F[x]);
-	}
-	if ((t == 1) && (tb == 1)) SET_SIMPLE(F[x]);
+          if (t > 1) {
+            SET_CONSTRAINT(F[x]);
+          }
+        }
+        if ((t == 1) && (tb == 1)) {
+          SET_SIMPLE(F[x]);
+        }
       }
+    }
 
     lskelCKSC3_process_cliques(image);
 
-    for (x = 0; x < N; x++)
+    for (x = 0; x < N; x++) {
       if (IS_SIMPLE(F[x]))
       {
 	if (F[x] == (S_OBJECT|S_SIMPLE)) // pas marqué
@@ -1325,10 +1573,15 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 	  UNSET_SELECTED(F[x]);
 	}
       }
+    }
 
   } // while (!stab && (nbiter < nsteps))
 
-  for (x = 0; x < N; x++) if (F[x]) F[x] = NDG_MAX;
+  for (x = 0; x < N; x++) {
+    if (F[x]) {
+      F[x] = NDG_MAX;
+    }
+  }
 
   /* ================================================ */
   /* UN PEU DE MENAGE                                 */

@@ -84,10 +84,9 @@ int main(int argc, char **argv)
 
   rs = g1->row_size;
 
-  if (argc == 4)
+  if (argc == 4) {
     z = atof(argv[2]);
-  else
-  {
+  } else {
     /* la valeur par defaut est choisie pour donner rs(out) = 50 */
     z = 50.0 / rs;
   }
@@ -98,10 +97,11 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (argc == 4)
+  if (argc == 4) {
     writergbimage(go1, go2, go3, argv[3]);
-  else
+  } else {
     writergbimage(go1, go2, go3, argv[2]);
+  }
 
   freeimage(g1);
   freeimage(g2);

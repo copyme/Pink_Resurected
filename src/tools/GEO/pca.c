@@ -105,8 +105,9 @@ int main(int argc, char **argv)
   {
     X = (double *)malloc(n * sizeof(double)); assert(X != NULL);
     Y = (double *)malloc(n * sizeof(double)); assert(Y != NULL);
-    for (i = 0; i < n; i++)
+    for (i = 0; i < n; i++) {
       fscanf(fd, "%lf %lf\n", &(X[i]), &(Y[i]));
+    }
     if (! ldirectionsprincipales2d(X, Y, n, &x, &y, &dx1, &dy1, &dx2, &dy2))
     {
       fprintf(stderr, "%s: ldirectionsprincipales2d failed\n", argv[0]);
@@ -130,8 +131,9 @@ int main(int argc, char **argv)
     X = (double *)malloc(n * sizeof(double)); assert(X != NULL);
     Y = (double *)malloc(n * sizeof(double)); assert(Y != NULL);
     Z = (double *)malloc(n * sizeof(double)); assert(Z != NULL);
-    for (i = 0; i < n; i++)
+    for (i = 0; i < n; i++) {
       fscanf(fd, "%lf %lf %lf\n", &(X[i]), &(Y[i]), &(Z[i]));
+    }
     if (! ldirectionsprincipales3d(X, Y, Z, n, &x, &y, &z, &dx1, &dy1, &dz1, &dx2, &dy2, &dz2, &dx3, &dy3, &dz3))
     {
       fprintf(stderr, "%s: ldirectionsprincipales3d failed\n", argv[0]);

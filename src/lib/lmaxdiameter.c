@@ -82,24 +82,39 @@ int32_t lmaxdiameter(struct xvimage *image, int32_t connex)
       switch (connex)
       {
         case 4:
-          for (x = 0; x < N; x++)
-            if (T[x] && (nbvoisc8(T,x,rs,N)) == 0) I[x] = NDG_MIN;
+          for (x = 0; x < N; x++) {
+            if (T[x] && (nbvoisc8(T, x, rs, N)) == 0) {
+              I[x] = NDG_MIN;
+            }
+          }
           break;
         case 8:
-          for (x = 0; x < N; x++)
-            if (T[x] && (nbvoisc4(T,x,rs,N)) == 0) I[x] = NDG_MIN;
+          for (x = 0; x < N; x++) {
+            if (T[x] && (nbvoisc4(T, x, rs, N)) == 0) {
+              I[x] = NDG_MIN;
+            }
+          }
           break;
         case 6:
-          for (x = 0; x < N; x++)
-            if (T[x] && (mctopo3d_nbvoisc6(T,x,rs,ps,N)) == 0) I[x] = NDG_MIN;
+          for (x = 0; x < N; x++) {
+            if (T[x] && (mctopo3d_nbvoisc6(T, x, rs, ps, N)) == 0) {
+              I[x] = NDG_MIN;
+            }
+          }
           break;
         case 18:
-          for (x = 0; x < N; x++)
-            if (T[x] && (mctopo3d_nbvoisc18(T,x,rs,ps,N)) == 0) I[x] = NDG_MIN;
+          for (x = 0; x < N; x++) {
+            if (T[x] && (mctopo3d_nbvoisc18(T, x, rs, ps, N)) == 0) {
+              I[x] = NDG_MIN;
+            }
+          }
           break;
         case 26:
-          for (x = 0; x < N; x++)
-            if (T[x] && (mctopo3d_nbvoisc26(T,x,rs,ps,N)) == 0) I[x] = NDG_MIN;
+          for (x = 0; x < N; x++) {
+            if (T[x] && (mctopo3d_nbvoisc26(T, x, rs, ps, N)) == 0) {
+              I[x] = NDG_MIN;
+            }
+          }
           break;
         default:
           fprintf(stderr, "lmaxdiameter: mauvaise connexite: %d\n", connex);
@@ -140,7 +155,9 @@ int32_t lmaxdiameter(struct xvimage *image, int32_t connex)
 
 		}
 
-                for( x = 0; x < N; x++) I[x] = NDG_MIN;
+                for (x = 0; x < N; x++) {
+                  I[x] = NDG_MIN;
+                }
                 I[x1max+y1max*rs] = NDG_MAX;
                 I[x2max+y2max*rs] = NDG_MAX;
 
@@ -177,8 +194,9 @@ int32_t lmaxdiameter(struct xvimage *image, int32_t connex)
 
 		}
 
-
-                for( x = 0; x < N; x++) I[x] = NDG_MIN;
+                for (x = 0; x < N; x++) {
+                  I[x] = NDG_MIN;
+                }
                 I[x1max+y1max*rs+z1max*ps] = NDG_MAX;
                 I[x2max+y2max*rs+z2max*ps] = NDG_MAX;
 	}

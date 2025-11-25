@@ -209,9 +209,13 @@ int main(int argc, char **argv)
     }
   
     fprintf(fd, "c %d\n", npoints);
-    for (i = 0; i < npoints; i++) fprintf(fd, "%d %d\n", (int32_t)X[i], (int32_t)Y[i]);
-    for (i = 0; i < npoints-1; i++) fprintf(fd, "%g %g %g %g %g %g %g %g\n", 
-                                          C0[i], D0[i], C1[i], D1[i], C2[i], D2[i], C3[i], D3[i]);
+    for (i = 0; i < npoints; i++) {
+      fprintf(fd, "%d %d\n", (int32_t)X[i], (int32_t)Y[i]);
+    }
+    for (i = 0; i < npoints - 1; i++) {
+      fprintf(fd, "%g %g %g %g %g %g %g %g\n", C0[i], D0[i], C1[i], D1[i],
+              C2[i], D2[i], C3[i], D3[i]);
+    }
 
     fclose(fd);
     free(X); free(Y); free(t);
@@ -289,9 +293,13 @@ int main(int argc, char **argv)
     }
   
     fprintf(fd, "C %d\n", npoints);
-    for (i = 0; i < npoints; i++) fprintf(fd, "%d %d %d\n", (int32_t)X[i], (int32_t)Y[i], (int32_t)Z[i]);
-    for (i = 0; i < npoints-1; i++) fprintf(fd, "%g %g %g %g %g %g %g %g %g %g %g %g\n", 
-                                          C0[i], D0[i], E0[i], C1[i], D1[i], E1[i], C2[i], D2[i], E2[i], C3[i], D3[i], E3[i]);
+    for (i = 0; i < npoints; i++) {
+      fprintf(fd, "%d %d %d\n", (int32_t)X[i], (int32_t)Y[i], (int32_t)Z[i]);
+    }
+    for (i = 0; i < npoints - 1; i++) {
+      fprintf(fd, "%g %g %g %g %g %g %g %g %g %g %g %g\n", C0[i], D0[i], E0[i],
+              C1[i], D1[i], E1[i], C2[i], D2[i], E2[i], C3[i], D3[i], E3[i]);
+    }
 
     fclose(fd);
     free(X); free(Y); free(Z); free(t);

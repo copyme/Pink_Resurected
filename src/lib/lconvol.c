@@ -111,12 +111,16 @@ int32_t lconvol(struct xvimage *f, struct xvimage *m, int32_t mode)
       return(0);
     }
 
-    for (x = 0; x < N; x++) H[x] = F[x];
+    for (x = 0; x < N; x++) {
+      H[x] = F[x];
+    }
 
     nptb = 0;
-    for (i = 0; i < Nm; i += 1)
-      if (mcabs(M[i]) > EPSILON)
+    for (i = 0; i < Nm; i += 1) {
+      if (mcabs(M[i]) > EPSILON) {
         nptb += 1;
+      }
+    }
 
 #ifdef DEBUG
     printf("%s: nb. kernel points: %d\n", F_NAME, nptb);
@@ -134,8 +138,8 @@ int32_t lconvol(struct xvimage *f, struct xvimage *m, int32_t mode)
       return 0;
     }
     k = 0;
-    for (j = 0; j < csm; j += 1)
-      for (i = 0; i < rsm; i += 1)
+    for (j = 0; j < csm; j += 1) {
+      for (i = 0; i < rsm; i += 1) {
         if (mcabs(M[j * rsm + i]) > EPSILON)
         {
           tab_m_x[k] = i;
@@ -143,52 +147,54 @@ int32_t lconvol(struct xvimage *f, struct xvimage *m, int32_t mode)
           tab_m_val[k] = M[j * rsm + i];
           k += 1;
         }
+      }
+    }
     if (mode == 0)
     {
-      for (y = 0; y < cs; y++)
-      for (x = 0; x < rs; x++)
-      {
-        sum = 0.0;
-        for (c = 0; c < nptb ; c += 1)
-        {
-          l = y + tab_m_y[c] - yc;
-          k = x + tab_m_x[c] - xc; 
-          if ((l >= 0) && (l < cs) && (k >= 0) && (k < rs))
-            sum += H[l * rs + k] * tab_m_val[c];
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++) {
+          sum = 0.0;
+          for (c = 0; c < nptb; c += 1) {
+            l = y + tab_m_y[c] - yc;
+            k = x + tab_m_x[c] - xc;
+            if ((l >= 0) && (l < cs) && (k >= 0) && (k < rs)) {
+              sum += H[l * rs + k] * tab_m_val[c];
+            }
+          }
+          F[y * rs + x] = sum;
         }
-        F[y * rs + x] = sum;
       }
     } 
     else if (mode == 1)
     {
-      for (y = 0; y < cs; y++)
-      for (x = 0; x < rs; x++)
-      {
-        sum = 0.0;
-        for (c = 0; c < nptb ; c += 1)
-        {
-          l = y + tab_m_y[c] - yc;
-          k = x + tab_m_x[c] - xc; 
-          if ((l >= 0) && (l < cs) && (k >= 0) && (k < rs))
-            sum += H[l * rs + k] * tab_m_val[c];
-          else if ((l < 0) && (k >= 0) && (k < rs))
-            sum += H[0 * rs + k] * tab_m_val[c];
-          else if ((l >= cs) && (k >= 0) && (k < rs))
-            sum += H[(cs-1) * rs + k] * tab_m_val[c];
-          else if ((k < 0) && (l >= 0) && (l < cs))
-            sum += H[l * rs + 0] * tab_m_val[c];
-          else if ((k >= rs) && (l >= 0) && (l < cs))
-            sum += H[l * rs + rs-1] * tab_m_val[c];
-          else if ((l < 0) && (k < 0))
-            sum += H[0 * rs + 0] * tab_m_val[c];
-          else if ((l >= cs) && (k < 0))
-            sum += H[(cs-1) * rs + 0] * tab_m_val[c];
-          else if ((l < 0) && (k >= rs))
-            sum += H[0 * rs + rs-1] * tab_m_val[c];
-          else if ((l >= cs) && (k >= rs))
-            sum += H[(cs-1) * rs + rs-1] * tab_m_val[c];
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++) {
+          sum = 0.0;
+          for (c = 0; c < nptb; c += 1) {
+            l = y + tab_m_y[c] - yc;
+            k = x + tab_m_x[c] - xc;
+            if ((l >= 0) && (l < cs) && (k >= 0) && (k < rs)) {
+              sum += H[l * rs + k] * tab_m_val[c];
+            } else if ((l < 0) && (k >= 0) && (k < rs)) {
+              sum += H[0 * rs + k] * tab_m_val[c];
+            } else if ((l >= cs) && (k >= 0) && (k < rs)) {
+              sum += H[(cs - 1) * rs + k] * tab_m_val[c];
+            } else if ((k < 0) && (l >= 0) && (l < cs)) {
+              sum += H[l * rs + 0] * tab_m_val[c];
+            } else if ((k >= rs) && (l >= 0) && (l < cs)) {
+              sum += H[l * rs + rs - 1] * tab_m_val[c];
+            } else if ((l < 0) && (k < 0)) {
+              sum += H[0 * rs + 0] * tab_m_val[c];
+            } else if ((l >= cs) && (k < 0)) {
+              sum += H[(cs - 1) * rs + 0] * tab_m_val[c];
+            } else if ((l < 0) && (k >= rs)) {
+              sum += H[0 * rs + rs - 1] * tab_m_val[c];
+            } else if ((l >= cs) && (k >= rs)) {
+              sum += H[(cs - 1) * rs + rs - 1] * tab_m_val[c];
+            }
+          }
+          F[y * rs + x] = sum;
         }
-        F[y * rs + x] = sum;
       }
     } 
     free(H);
@@ -206,7 +212,9 @@ int32_t lconvol(struct xvimage *f, struct xvimage *m, int32_t mode)
 
     rs2 = mcmax(rs+rs,cs+cs);
     cs2 = 1;
-    while (cs2 < rs2) cs2 = cs2 << 1;
+    while (cs2 < rs2) {
+      cs2 = cs2 << 1;
+    }
     rs2 = cs2;
 
 #ifdef DEBUG
@@ -226,10 +234,14 @@ int32_t lconvol(struct xvimage *f, struct xvimage *m, int32_t mode)
     IF2 = FLOATDATA(if2);
     MF1 = FLOATDATA(mf1);
     MF2 = FLOATDATA(mf2);
-    for (x = 0; x < rs2*cs2; x++) MF1[x] = MF2[x] = 0.0; 
-    for (y = 0; y < csm; y++) 
-      for (x = 0; x < rsm; x++) 
-        MF1[((y-yc+cs2)%cs2)*rs2 + (x-xc+rs2)%rs2] = M[y*rsm + x];    
+    for (x = 0; x < rs2 * cs2; x++) {
+      MF1[x] = MF2[x] = 0.0;
+    }
+    for (y = 0; y < csm; y++) {
+      for (x = 0; x < rsm; x++) {
+        MF1[((y-yc+cs2)%cs2)*rs2 + (x-xc+rs2)%rs2] = M[y*rsm + x];
+      }
+    }
 #ifdef DEBUG
     writeimage(mf1, "_maskpad");
 #endif
@@ -245,10 +257,14 @@ int32_t lconvol(struct xvimage *f, struct xvimage *m, int32_t mode)
     printf("%s: xc = %d yc = %d\n", F_NAME, xc, yc);
 #endif
 
-    for (x = 0; x < rs2*cs2; x++) IF1[x] = IF2[x] = 0.0; 
-    for (y = 0; y < cs; y++) 
-      for (x = 0; x < rs; x++) 
-        IF1[y*rs2 + x] = F[y*rs + x];    
+    for (x = 0; x < rs2 * cs2; x++) {
+      IF1[x] = IF2[x] = 0.0;
+    }
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        IF1[y*rs2 + x] = F[y*rs + x];
+      }
+    }
 #ifdef DEBUG
     writeimage(if1, "_imagepad");
 #endif
@@ -263,12 +279,13 @@ int32_t lconvol(struct xvimage *f, struct xvimage *m, int32_t mode)
     writeimage(if2, "_if2");
 #endif
     // multiplication point a point
-    for (y = 0; y < cs2; y++) 
+    for (y = 0; y < cs2; y++) {
       for (x = 0; x < rs2; x++) 
       {
         IF1[y*rs2 + x] = IF1[y*rs2 + x] * MF1[y*rs2 + x];
         IF2[y*rs2 + x] = IF2[y*rs2 + x] * MF2[y*rs2 + x];
-      }    
+      }
+    }
 #ifdef DEBUG
     printf("%s: pointwise product done\n", F_NAME);
     writeimage(if1, "_pf1");
@@ -287,11 +304,12 @@ int32_t lconvol(struct xvimage *f, struct xvimage *m, int32_t mode)
     writeimage(if2, "_c2");
 #endif
 
-    for (y = 0; y < cs; y++) 
+    for (y = 0; y < cs; y++) {
       for (x = 0; x < rs; x++) 
       {
         F[y*rs + x] = IF1[y*rs2 + x];
       }
+    }
 
     freeimage(if1);
     freeimage(if2);
@@ -377,7 +395,9 @@ int32_t ldirectionalfilter(
   }
   R = FLOATDATA(result);
   T = FLOATDATA(temp);
-  for (i = 0; i < N; i++) R[i] = 0.0;
+  for (i = 0; i < N; i++) {
+    R[i] = 0.0;
+  }
 
   csk = rsk = (int32_t)(length * 5);
   x0 = rsk / 2;
@@ -400,7 +420,7 @@ int32_t ldirectionalfilter(
     theta = (n * M_PI) / ndir; 
     // calcul de la constante de normalisation k1
     t1 = t2 = 0.0;
-    for (j = 0; j < csk; j++)
+    for (j = 0; j < csk; j++) {
       for (i = 0; i < rsk; i++)
       {
         x = i - x0;
@@ -410,11 +430,12 @@ int32_t ldirectionalfilter(
         tmp = exp(-lambda*mcsqr(yr)) * exp(-sigma*mcsqr(xr));
         t1 += tmp;
         t2 += mcsqr(xr) * tmp;
-      } 
+      }
+    }
     k1 = t1 / (sigma * t2);
     // calcul de la constante de normalisation k2
     t1 = 0.0;
-    for (j = 0; j < csk; j++)
+    for (j = 0; j < csk; j++) {
       for (i = 0; i < rsk; i++)
       {
         x = i - x0;
@@ -422,9 +443,12 @@ int32_t ldirectionalfilter(
         xr = cos(theta) * x + sin(theta) * y;
         yr = -sin(theta) * x + cos(theta) * y;
         tmp = exp(-lambda*mcsqr(yr)) * exp(-sigma*mcsqr(xr));
-        t2 = 1.0 - k1 * sigma * mcsqr(xr); 
-        if (t2 > 0) t1 += t2 * tmp; 
-      } 
+        t2 = 1.0 - k1 * sigma * mcsqr(xr);
+        if (t2 > 0) {
+          t1 += t2 * tmp;
+        }
+      }
+    }
     k2 = 1.0 / t1;
     // calcul du kernel
 #ifdef DEBUG
@@ -466,8 +490,11 @@ int32_t ldirectionalfilter(
 #endif
 
     // result = mcmax(result, temp)
-    for (i = 0; i < N; i++) 
-      if (T[i] > R[i]) R[i] = T[i];
+    for (i = 0; i < N; i++) {
+      if (T[i] > R[i]) {
+        R[i] = T[i];
+      }
+    }
   } // for n
 
   copy2image(image, result);

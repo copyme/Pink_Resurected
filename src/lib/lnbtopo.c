@@ -86,29 +86,101 @@ int32_t lnbtopo(
     case 4:
       switch (whichnumber)
       {
-        case PP: for (p = 0; p < N; p++) if (nonbord(p, rs, N)) F[p] = (uint8_t)t4pp(I, p, rs, N); break;
-        case P:  for (p = 0; p < N; p++) if (nonbord(p, rs, N)) F[p] = (uint8_t)t4p(I, p, rs, N); break;
-        case M:  for (p = 0; p < N; p++) if (nonbord(p, rs, N)) F[p] = (uint8_t)t4m(I, p, rs, N); break;
-        case MM: for (p = 0; p < N; p++) if (nonbord(p, rs, N)) F[p] = (uint8_t)t4mm(I, p, rs, N); break;
+        case PP:
+          for (p = 0; p < N; p++) {
+            if (nonbord(p, rs, N)) {
+              F[p] = (uint8_t)t4pp(I, p, rs, N);
+            }
+          }
+          break;
+        case P:
+          for (p = 0; p < N; p++) {
+            if (nonbord(p, rs, N)) {
+              F[p] = (uint8_t)t4p(I, p, rs, N);
+            }
+          }
+          break;
+        case M:
+          for (p = 0; p < N; p++) {
+            if (nonbord(p, rs, N)) {
+              F[p] = (uint8_t)t4m(I, p, rs, N);
+            }
+          }
+          break;
+        case MM:
+          for (p = 0; p < N; p++) {
+            if (nonbord(p, rs, N)) {
+              F[p] = (uint8_t)t4mm(I, p, rs, N);
+            }
+          }
+          break;
       }
       break;
     case 8:
       switch (whichnumber)
       {
-        case PP: for (p = 0; p < N; p++) if (nonbord(p, rs, N)) F[p] = (uint8_t)t8pp(I, p, rs, N); break;
-        case P:  for (p = 0; p < N; p++) if (nonbord(p, rs, N)) F[p] = (uint8_t)t8p(I, p, rs, N);  break;
-        case M:  for (p = 0; p < N; p++) if (nonbord(p, rs, N)) F[p] = (uint8_t)t8m(I, p, rs, N);  break;
-        case MM: for (p = 0; p < N; p++) if (nonbord(p, rs, N)) F[p] = (uint8_t)t8mm(I, p, rs, N); break;
+        case PP:
+          for (p = 0; p < N; p++) {
+            if (nonbord(p, rs, N)) {
+              F[p] = (uint8_t)t8pp(I, p, rs, N);
+            }
+          }
+          break;
+        case P:
+          for (p = 0; p < N; p++) {
+            if (nonbord(p, rs, N)) {
+              F[p] = (uint8_t)t8p(I, p, rs, N);
+            }
+          }
+          break;
+        case M:
+          for (p = 0; p < N; p++) {
+            if (nonbord(p, rs, N)) {
+              F[p] = (uint8_t)t8m(I, p, rs, N);
+            }
+          }
+          break;
+        case MM:
+          for (p = 0; p < N; p++) {
+            if (nonbord(p, rs, N)) {
+              F[p] = (uint8_t)t8mm(I, p, rs, N);
+            }
+          }
+          break;
       }
       break;
     case 6:
       mctopo3d_init_topo3d();
       switch (whichnumber)
       {
-        case PP: for (p = 0; p < N; p++) if (nonbord3d(p, rs, ps, N)) F[p] = (uint8_t)mctopo3d_t6pp(I, p, rs, ps, N); break;
-        case P:  for (p = 0; p < N; p++) if (nonbord3d(p, rs, ps, N)) F[p] = (uint8_t)mctopo3d_t6p(I, p, rs, ps, N);  break;
-        case M:  for (p = 0; p < N; p++) if (nonbord3d(p, rs, ps, N)) F[p] = (uint8_t)mctopo3d_t6m(I, p, rs, ps, N);  break;
-        case MM: for (p = 0; p < N; p++) if (nonbord3d(p, rs, ps, N)) F[p] = (uint8_t)mctopo3d_t6mm(I, p, rs, ps, N); break;
+        case PP:
+          for (p = 0; p < N; p++) {
+            if (nonbord3d(p, rs, ps, N)) {
+              F[p] = (uint8_t)mctopo3d_t6pp(I, p, rs, ps, N);
+            }
+          }
+          break;
+        case P:
+          for (p = 0; p < N; p++) {
+            if (nonbord3d(p, rs, ps, N)) {
+              F[p] = (uint8_t)mctopo3d_t6p(I, p, rs, ps, N);
+            }
+          }
+          break;
+        case M:
+          for (p = 0; p < N; p++) {
+            if (nonbord3d(p, rs, ps, N)) {
+              F[p] = (uint8_t)mctopo3d_t6m(I, p, rs, ps, N);
+            }
+          }
+          break;
+        case MM:
+          for (p = 0; p < N; p++) {
+            if (nonbord3d(p, rs, ps, N)) {
+              F[p] = (uint8_t)mctopo3d_t6mm(I, p, rs, ps, N);
+            }
+          }
+          break;
       }
       mctopo3d_termine_topo3d();
       break;
@@ -116,10 +188,34 @@ int32_t lnbtopo(
       mctopo3d_init_topo3d();
       switch (whichnumber)
       {
-        case PP: for (p = 0; p < N; p++) if (nonbord3d(p, rs, ps, N)) F[p] = (uint8_t)mctopo3d_t26pp(I, p, rs, ps, N); break;
-        case P:  for (p = 0; p < N; p++) if (nonbord3d(p, rs, ps, N)) F[p] = (uint8_t)mctopo3d_t26p(I, p, rs, ps, N);  break;
-        case M:  for (p = 0; p < N; p++) if (nonbord3d(p, rs, ps, N)) F[p] = (uint8_t)mctopo3d_t26m(I, p, rs, ps, N);  break;
-        case MM: for (p = 0; p < N; p++) if (nonbord3d(p, rs, ps, N)) F[p] = (uint8_t)mctopo3d_t26mm(I, p, rs, ps, N); break;
+        case PP:
+          for (p = 0; p < N; p++) {
+            if (nonbord3d(p, rs, ps, N)) {
+              F[p] = (uint8_t)mctopo3d_t26pp(I, p, rs, ps, N);
+            }
+          }
+          break;
+        case P:
+          for (p = 0; p < N; p++) {
+            if (nonbord3d(p, rs, ps, N)) {
+              F[p] = (uint8_t)mctopo3d_t26p(I, p, rs, ps, N);
+            }
+          }
+          break;
+        case M:
+          for (p = 0; p < N; p++) {
+            if (nonbord3d(p, rs, ps, N)) {
+              F[p] = (uint8_t)mctopo3d_t26m(I, p, rs, ps, N);
+            }
+          }
+          break;
+        case MM:
+          for (p = 0; p < N; p++) {
+            if (nonbord3d(p, rs, ps, N)) {
+              F[p] = (uint8_t)mctopo3d_t26mm(I, p, rs, ps, N);
+            }
+          }
+          break;
       }
       mctopo3d_termine_topo3d();
       break;

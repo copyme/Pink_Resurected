@@ -140,8 +140,11 @@ int main(int argc, char **argv)
   for (x=0; x<=255; x++)
   {
     somme = 0;
-    for (y=-lissage/2; y<=lissage/2; y++)
-      if ((x-y)>=0) somme = somme + histo[x-y];
+    for (y = -lissage / 2; y <= lissage / 2; y++) {
+      if ((x - y) >= 0) {
+        somme = somme + histo[x - y];
+      }
+    }
     histolisse [x]=(index_t)(somme/(lissage+1));
   }
 
@@ -156,12 +159,14 @@ int main(int argc, char **argv)
     for (x=2; x<254; x++)
     {
       somme = somme + histo [x];   /* points déjà considérés */
-      if ((histolisse[x-1]>=histolisse[x]) && (histolisse[x]<histolisse[x+1]))
+      if ((histolisse[x - 1] >= histolisse[x]) &&
+          (histolisse[x] < histolisse[x + 1])) {
         if (labs(N-2*somme) < diff)
         {
           seuil=x;
           diff = labs(N-2*somme);
         }
+      }
     }
   }
   else
@@ -173,7 +178,9 @@ int main(int argc, char **argv)
       if ((histolisse[x-1]>=histolisse[x]) && (histolisse[x]<histolisse[x+1]))
       {
         compteur--;
-        if (compteur==0) seuil=x;
+        if (compteur == 0) {
+          seuil = x;
+        }
       }
       x++;
     }
@@ -215,7 +222,9 @@ int main(int argc, char **argv)
     }
     F = UCHARDATA(imagebin);
     FL = SLONGDATA(image);
-    for (x = 0; x < N; x++) F[x] = (uint8_t)FL[x];
+    for (x = 0; x < N; x++) {
+      F[x] = (uint8_t)FL[x];
+    }
     writeimage(imagebin, argv[argc-1]);
     freeimage(imagebin);
     freeimage(image);

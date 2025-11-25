@@ -113,28 +113,112 @@ int32_t lellipsefit(double * x, double * y, int32_t n,
   */
 
   // calcul de S
-  t = 0; for (k = 0; k < n; k++) t += x[k] * x[k] * x[k] * x[k]; S[0][0] = t;
-  t = 0; for (k = 0; k < n; k++) t += x[k] * x[k] * x[k] * y[k]; S[0][1] = t;
-  t = 0; for (k = 0; k < n; k++) t += x[k] * x[k] * y[k] * y[k]; S[0][2] = t;
-  t = 0; for (k = 0; k < n; k++) t += x[k] * x[k] * x[k]; S[0][3] = t;
-  t = 0; for (k = 0; k < n; k++) t += x[k] * x[k] * y[k]; S[0][4] = t;
-  t = 0; for (k = 0; k < n; k++) t += x[k] * x[k]; S[0][5] = t;
-  t = 0; for (k = 0; k < n; k++) t += x[k] * x[k] * y[k] * y[k]; S[1][1] = t;
-  t = 0; for (k = 0; k < n; k++) t += x[k] * y[k] * y[k] * y[k]; S[1][2] = t;
-  t = 0; for (k = 0; k < n; k++) t += x[k] * x[k] * y[k]; S[1][3] = t;
-  t = 0; for (k = 0; k < n; k++) t += x[k] * y[k] * y[k]; S[1][4] = t;
-  t = 0; for (k = 0; k < n; k++) t += x[k] * y[k]; S[1][5] = t;
-  t = 0; for (k = 0; k < n; k++) t += y[k] * y[k] * y[k] * y[k]; S[2][2] = t;
-  t = 0; for (k = 0; k < n; k++) t += x[k] * y[k] * y[k]; S[2][3] = t;
-  t = 0; for (k = 0; k < n; k++) t += y[k] * y[k] * y[k]; S[2][4] = t;
-  t = 0; for (k = 0; k < n; k++) t += y[k] * y[k]; S[2][5] = t;
-  t = 0; for (k = 0; k < n; k++) t += x[k] * x[k]; S[3][3] = t;
-  t = 0; for (k = 0; k < n; k++) t += x[k] * y[k]; S[3][4] = t;
-  t = 0; for (k = 0; k < n; k++) t += x[k]; S[3][5] = t;
-  t = 0; for (k = 0; k < n; k++) t += y[k] * y[k]; S[4][4] = t;
-  t = 0; for (k = 0; k < n; k++) t += y[k]; S[4][5] = t;
+  t = 0;
+  for (k = 0; k < n; k++) {
+    t += x[k] * x[k] * x[k] * x[k];
+  }
+  S[0][0] = t;
+  t = 0;
+  for (k = 0; k < n; k++) {
+    t += x[k] * x[k] * x[k] * y[k];
+  }
+  S[0][1] = t;
+  t = 0;
+  for (k = 0; k < n; k++) {
+    t += x[k] * x[k] * y[k] * y[k];
+  }
+  S[0][2] = t;
+  t = 0;
+  for (k = 0; k < n; k++) {
+    t += x[k] * x[k] * x[k];
+  }
+  S[0][3] = t;
+  t = 0;
+  for (k = 0; k < n; k++) {
+    t += x[k] * x[k] * y[k];
+  }
+  S[0][4] = t;
+  t = 0;
+  for (k = 0; k < n; k++) {
+    t += x[k] * x[k];
+  }
+  S[0][5] = t;
+  t = 0;
+  for (k = 0; k < n; k++) {
+    t += x[k] * x[k] * y[k] * y[k];
+  }
+  S[1][1] = t;
+  t = 0;
+  for (k = 0; k < n; k++) {
+    t += x[k] * y[k] * y[k] * y[k];
+  }
+  S[1][2] = t;
+  t = 0;
+  for (k = 0; k < n; k++) {
+    t += x[k] * x[k] * y[k];
+  }
+  S[1][3] = t;
+  t = 0;
+  for (k = 0; k < n; k++) {
+    t += x[k] * y[k] * y[k];
+  }
+  S[1][4] = t;
+  t = 0;
+  for (k = 0; k < n; k++) {
+    t += x[k] * y[k];
+  }
+  S[1][5] = t;
+  t = 0;
+  for (k = 0; k < n; k++) {
+    t += y[k] * y[k] * y[k] * y[k];
+  }
+  S[2][2] = t;
+  t = 0;
+  for (k = 0; k < n; k++) {
+    t += x[k] * y[k] * y[k];
+  }
+  S[2][3] = t;
+  t = 0;
+  for (k = 0; k < n; k++) {
+    t += y[k] * y[k] * y[k];
+  }
+  S[2][4] = t;
+  t = 0;
+  for (k = 0; k < n; k++) {
+    t += y[k] * y[k];
+  }
+  S[2][5] = t;
+  t = 0;
+  for (k = 0; k < n; k++) {
+    t += x[k] * x[k];
+  }
+  S[3][3] = t;
+  t = 0;
+  for (k = 0; k < n; k++) {
+    t += x[k] * y[k];
+  }
+  S[3][4] = t;
+  t = 0;
+  for (k = 0; k < n; k++) {
+    t += x[k];
+  }
+  S[3][5] = t;
+  t = 0;
+  for (k = 0; k < n; k++) {
+    t += y[k] * y[k];
+  }
+  S[4][4] = t;
+  t = 0;
+  for (k = 0; k < n; k++) {
+    t += y[k];
+  }
+  S[4][5] = t;
   S[5][5] = n;
-  for (i = 1; i < 6; i++) for (j = 0; j < i; j++) S[i][j] = S[j][i];
+  for (i = 1; i < 6; i++) {
+    for (j = 0; j < i; j++) {
+      S[i][j] = S[j][i];
+    }
+  }
 #ifdef ELLFIT_DEBUG
   printf("S = \n");
   lin_printmat((double *)S, 6, 6);
@@ -189,10 +273,12 @@ int32_t lellipsefit(double * x, double * y, int32_t n,
   for (j=0; j<6; j++)  /* Scan columns */
   {
     double mod = 0.0;
-    for (i=0; i<6; i++)
+    for (i = 0; i < 6; i++) {
       mod += sol[i][j] * sol[i][j];
-    for (i=0; i<6; i++)
-      sol[i][j] /= sqrt(mod); 
+    }
+    for (i = 0; i < 6; i++) {
+      sol[i][j] /= sqrt(mod);
+    }
   }
 #ifdef ELLFIT_DEBUG
   printf("sol (normalisee) = \n");
@@ -200,12 +286,15 @@ int32_t lellipsefit(double * x, double * y, int32_t n,
 #endif
   {
     int32_t solind=0;
-    for (i=0; i<6; i++)
-      if (d[i]<0 && fabs(d[i])>EPSILON)	
-	solind = i;
+    for (i = 0; i < 6; i++) {
+      if (d[i] < 0 && fabs(d[i]) > EPSILON) {
+        solind = i;
+      }
+    }
     // Now fetch the right solution (result in d)
-    for (j=0; j<6; j++)
+    for (j = 0; j < 6; j++) {
       d[j] = sol[j][solind];
+    }
   }
   //#ifdef ELLFIT_DEBUG
 #ifdef COMPUTE_DIST
@@ -244,9 +333,12 @@ int32_t lellipsefit(double * x, double * y, int32_t n,
 
     F2 = A * tx0 * tx0 + 2 * B * tx0 * ty0 + C * ty0 * ty0 + 
          2 * D * tx0 + 2 * E * ty0 + F;
-        
-    if (fabs(A-C) < EPSILON) theta = PI_4;
-    else theta = 0.5 * atan((2 * B) / (A - C));
+
+    if (fabs(A - C) < EPSILON) {
+      theta = PI_4;
+    } else {
+      theta = 0.5 * atan((2 * B) / (A - C));
+    }
 
     a =  A * cos(theta) * cos(theta) + 
 	 C * sin(theta) * sin(theta);

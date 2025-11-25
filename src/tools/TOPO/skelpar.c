@@ -192,9 +192,9 @@ int main(int argc, char **argv)
 
   if (argc == 6)
   {
-    if (mode == 34) pers = atof(argv[4]);
-    else
-    {
+    if (mode == 34) {
+      pers = atof(argv[4]);
+    } else {
       inhibit = readimage(argv[4]);
       if (inhibit == NULL)
       {

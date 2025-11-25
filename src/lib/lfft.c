@@ -167,8 +167,9 @@ int allocateBuffer(int size)
     {
       handle_error("Insufficient storage for fft buffers");
       return(ERROR);
-    }
-  else return(NO_ERROR);
+  } else {
+    return (NO_ERROR);
+  }
 }
 
 /* Free space for stageBuff */
@@ -432,22 +433,24 @@ void FFT842(int direction, int n, DCOMPLEX *b)
   n2pow = fastlog2(n);
   nthpo = n;
   fn = 1.0 / (double)nthpo; /* Scaling factor for inverse transform */
-    
-  if(direction==FFT_FORWARD) 
+
+  if (direction == FFT_FORWARD) {
     /* Conjugate the input */
     for(i=0;i<n;i++) {
       b[i].im = -b[i].im;
     }
-  
-  if(direction==FFT_INVERSE)
+  }
+
+  if (direction == FFT_INVERSE) {
     /* Scramble the inputs */
     for(i=0,j=n/2;j<n;i++,j++) 
       {
       	r = b[j].re; fi = b[j].im;
       	b[j].re = b[i].re; b[j].im = b[i].im;
       	b[i].re = r; b[i].im = fi;
-      }
-  
+    }
+  }
+
   n8pow = n2pow/3;
   
   if(n8pow)
@@ -478,28 +481,30 @@ void FFT842(int direction, int n, DCOMPLEX *b)
   for(j=1;j<=15;j++) 
     {
       L[j] = 1;
-      if(j-n2pow <= 0) L[j] = 0x1 << (n2pow + 1 - j);
+      if (j - n2pow <= 0) {
+        L[j] = 0x1 << (n2pow + 1 - j);
+      }
     }
 
   L15=L[1];L14=L[2];L13=L[3];L12=L[4];L11=L[5];L10=L[6];L9=L[7];
   L8=L[8];L7=L[9];L6=L[10];L5=L[11];L4=L[12];L3=L[13];L2=L[14];L1=L[15];
 
   ij = 1;
-    
-  for(j1=1;j1<=L1;j1++)
-    for(j2=j1;j2<=L2;j2+=L1)
-      for(j3=j2;j3<=L3;j3+=L2)
-        for(j4=j3;j4<=L4;j4+=L3)
-          for(j5=j4;j5<=L5;j5+=L4)
-            for(j6=j5;j6<=L6;j6+=L5)
-              for(j7=j6;j7<=L7;j7+=L6)
-                for(j8=j7;j8<=L8;j8+=L7)
-                  for(j9=j8;j9<=L9;j9+=L8)
-                    for(j10=j9;j10<=L10;j10+=L9)
-                      for(j11=j10;j11<=L11;j11+=L10)
-                        for(j12=j11;j12<=L12;j12+=L11)
-                          for(j13=j12;j13<=L13;j13+=L12)
-                            for(j14=j13;j14<=L14;j14+=L13)
+
+  for (j1 = 1; j1 <= L1; j1++) {
+    for (j2 = j1; j2 <= L2; j2 += L1) {
+      for (j3 = j2; j3 <= L3; j3 += L2) {
+        for (j4 = j3; j4 <= L4; j4 += L3) {
+          for (j5 = j4; j5 <= L5; j5 += L4) {
+            for (j6 = j5; j6 <= L6; j6 += L5) {
+              for (j7 = j6; j7 <= L7; j7 += L6) {
+                for (j8 = j7; j8 <= L8; j8 += L7) {
+                  for (j9 = j8; j9 <= L9; j9 += L8) {
+                    for (j10 = j9; j10 <= L10; j10 += L9) {
+                      for (j11 = j10; j11 <= L11; j11 += L10) {
+                        for (j12 = j11; j12 <= L12; j12 += L11) {
+                          for (j13 = j12; j13 <= L13; j13 += L12) {
+                            for (j14 = j13; j14 <= L14; j14 += L13) {
                               for(ji=j14;ji<=L15;ji+=L14) 
                                 {
                                   ij1 = ij-1;
@@ -514,22 +519,38 @@ void FFT842(int direction, int n, DCOMPLEX *b)
                                   	  b[ji1].im = fi;
                                   	}
                                   ij++;
-                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 
-  if(direction==FFT_FORWARD)  /* Take conjugates & unscramble outputs */
+  if (direction == FFT_FORWARD) { /* Take conjugates & unscramble outputs */
     for(i=0,j=n/2; j<n; i++,j++)
     	{
     	  r = b[j].re; fi = b[j].im;
     	  b[j].re = b[i].re; b[j].im = -b[i].im;
     	  b[i].re = r; b[i].im = -fi;
-    	}
+    }
+  }
 
-  if(direction==FFT_INVERSE) /* Scale outputs */
+  if (direction == FFT_INVERSE) { /* Scale outputs */
     for(i=0; i<nthpo; i++) 
       {
       	b[i].re *= fn;
       	b[i].im *= fn;
-      }
+    }
+  }
 }
 
 
@@ -551,25 +572,29 @@ int fft2f(fcomplex *array, int rows, int cols, int direction)
   bigBuff = array;
   maxsize = rows>cols ? rows : cols;
   errflag = allocateBuffer(maxsize);
-  if(errflag != NO_ERROR) return(errflag);
+  if (errflag != NO_ERROR) {
+    return (errflag);
+  }
 
   /* Compute transform row by row */
-  if(cols>1)
+  if (cols > 1) {
     for(i=0;i<rows;i++) 
       {
       	LoadRow(bigBuff,i,cols);
       	FFT842(direction,cols,stageBuff);
       	StoreRow(bigBuff,i,cols);
-      }
-  
+    }
+  }
+
   /* Compute transform column by column */
-  if(rows>1)
+  if (rows > 1) {
     for(i=0;i<cols;i++) 
       {
         LoadCol(bigBuff,i,rows,cols);
         FFT842(direction,rows,stageBuff);
         StoreCol(bigBuff,i,rows,cols);
-      }
+    }
+  }
 
   freeBuffer();
   return(NO_ERROR);
@@ -593,25 +618,29 @@ int fft2d(DCOMPLEX *array, int rows, int cols, int direction)
   bigBuffd = array;
   maxsize = rows>cols ? rows : cols;
   errflag = allocateBuffer(maxsize);
-  if(errflag != NO_ERROR) return(errflag);
+  if (errflag != NO_ERROR) {
+    return (errflag);
+  }
 
   /* Compute transform row by row */
-  if(cols>1)
+  if (cols > 1) {
     for(i=0;i<rows;i++) 
       {
       	LoadRow(bigBuffd,i,cols);
       	FFT842(direction,cols,stageBuff);
       	StoreRow(bigBuffd,i,cols);
-      }
-  
+    }
+  }
+
   /* Compute transform column by column */
-  if(rows>1)
+  if (rows > 1) {
     for(i=0;i<cols;i++) 
       {
         LoadCol(bigBuffd,i,rows,cols);
         FFT842(direction,rows,stageBuff);
         StoreCol(bigBuffd,i,rows,cols);
-      }
+    }
+  }
 
   freeBuffer();
   return(NO_ERROR);
@@ -724,12 +753,13 @@ int32_t lfft2(struct xvimage *image1, struct xvimage *image2, int32_t dir)
   /* Get space for the intermediate complex arrays */
   array = (fcomplex *)malloc(N * sizeof(fcomplex));
   assert(array != NULL);
-  for (j = 0; j < cs; j++) 
+  for (j = 0; j < cs; j++) {
     for (i = 0; i < rs; i++)
     { 
       array[j*rs + i].re = I1[j*rs + i];
       array[j*rs + i].im = I2[j*rs + i];
     }
+  }
 
   if (fft2f(array, rs, cs, dir) == ERROR)
   {
@@ -737,12 +767,13 @@ int32_t lfft2(struct xvimage *image1, struct xvimage *image2, int32_t dir)
     return(0);
   }
 
-  for (j = 0; j < cs; j++) 
+  for (j = 0; j < cs; j++) {
     for (i = 0; i < rs; i++)
     { 
       I1[j*rs + i] = array[j*rs + i].re;
       I2[j*rs + i] = array[j*rs + i].im;
-    }  
+    }
+  }
 
   free(array);
   return(1);

@@ -238,18 +238,19 @@ static int32_t d_Partitionner(int32_t *A, double *T, int32_t p, int32_t r)
   int32_t i = p - 1;
   int32_t j = r + 1;
   while (1) {
-    do
+    do {
       j--;
-    while (T[A[j]] > x);
-    do
+    } while (T[A[j]] > x);
+    do {
       i++;
-    while (T[A[i]] < x);
+    } while (T[A[i]] < x);
     if (i < j) {
       t = A[i];
       A[i] = A[j];
       A[j] = t;
-    } else
+    } else {
       return j;
+    }
   } /* while (1) */
 } /* d_Partitionner() */
 
@@ -312,18 +313,19 @@ static int32_t i_Partitionner(int32_t *A, int32_t *T, int32_t p, int32_t r)
   int32_t i = p - 1;
   int32_t j = r + 1;
   while (1) {
-    do
+    do {
       j--;
-    while (T[A[j]] > x);
-    do
+    } while (T[A[j]] > x);
+    do {
       i++;
-    while (T[A[i]] < x);
+    } while (T[A[i]] < x);
     if (i < j) {
       t = A[i];
       A[i] = A[j];
       A[j] = t;
-    } else
+    } else {
       return j;
+    }
   } /* while (1) */
 } /* i_Partitionner() */
 
@@ -569,8 +571,9 @@ static CompactTree *CompTree2CompactTree(CompTree *ct,
   /* construit le tableau des composantes comp */
   n = 0;
   h = 0;
-  while (!number_nodes[h])
-    h++;                       /* ATTENTION CODE FRAGILE */
+  while (!number_nodes[h]) {
+    h++; /* ATTENTION CODE FRAGILE */
+  }
   for (i = 0; i < nbcomp; i++) /* SUPPOSE CORRECTES LES DONNEES D'ENTREE */
   {                            /* PAS DE VERIFICATION */
     cpct->comp[i] = ENCODE(n, h);
@@ -578,8 +581,9 @@ static CompactTree *CompTree2CompactTree(CompTree *ct,
     n++;
     if (!number_nodes[h]) {
       n = 0;
-      while (!number_nodes[h])
+      while (!number_nodes[h]) {
         h++;
+      }
     }
   } /* for i */
 
@@ -604,13 +608,15 @@ static CompactTree *CompTree2CompactTree(CompTree *ct,
     fprintf(stderr, "%s: malloc failed\n", F_NAME);
     return NULL;
   }
-  for (i = 1; i < nbcomp; i++)
+  for (i = 1; i < nbcomp; i++) {
     nfils[cpct->pere[i]] += 1;
+  }
   /* exception : la racine (0) est fille d'elle-meme, cette relation n'est pas
    * comptee */
   cpct->dfils[CPCT_ROOT] = nfils[CPCT_ROOT];
-  for (i = 1; i < nbcomp; i++)
+  for (i = 1; i < nbcomp; i++) {
     cpct->dfils[i] = cpct->dfils[i - 1] + nfils[i];
+  }
   for (i = 1; i < nbcomp; i++) {
     t = cpct->pere[i]; /* i est fils de t */
     nfils[t] -= 1;
@@ -676,8 +682,9 @@ static int32_t surfrec(CompactTree *cpct, indexcomp_t som, int32_t *na1)
 {
   int32_t i, n, j;
   n = NBFILS(cpct, som);
-  if (n == 0)
+  if (n == 0) {
     return na1[som] = cpct->surf[som];
+  }
   na1[som] = cpct->surf[som];
   for (i = 0; i < n; i++) {
     j = INDEXFILS(cpct, som, i);
@@ -706,8 +713,9 @@ static int32_t volrec(CompactTree *cpct, indexcomp_t som, int32_t *na1)
 {
   int32_t i, n, j, nb_coupes_eq;
   n = NBFILS(cpct, som);
-  if (n == 0)
+  if (n == 0) {
     return na1[som] = cpct->surf[som];
+  }
   na1[som] = cpct->surf[som];
   for (i = 0; i < n; i++) {
     j = INDEXFILS(cpct, som, i);
@@ -747,8 +755,9 @@ static int32_t heightrec(CompactTree *cpct, indexcomp_t som, int32_t *na1)
 {
   int32_t i, n, j, h;
   n = NBFILS(cpct, som);
-  if (n == 0)
+  if (n == 0) {
     return na1[som] = DECODENIV(cpct->comp[som]);
+  }
   na1[som] = 0;
   for (i = 0; i < n; i++) {
     j = INDEXFILS(cpct, som, i);
@@ -767,8 +776,9 @@ static int32_t perimrec(CompactTree *cpct, indexcomp_t som, int32_t *nperim)
 {
   int32_t i, n, j;
   n = NBFILS(cpct, som);
-  if (n == 0)
+  if (n == 0) {
     return nperim[som] = cpct->perim[som];
+  }
   nperim[som] = cpct->perim[som];
   for (i = 0; i < n; i++) {
     j = INDEXFILS(cpct, som, i);
@@ -786,8 +796,9 @@ static int32_t hbordrec(CompactTree *cpct, indexcomp_t som, int32_t *nhbord)
 {
   int32_t i, n, j;
   n = NBFILS(cpct, som);
-  if (n == 0)
+  if (n == 0) {
     return nhbord[som] = cpct->hbord[som];
+  }
   nhbord[som] = cpct->hbord[som];
   for (i = 0; i < n; i++) {
     j = INDEXFILS(cpct, som, i);
@@ -817,8 +828,9 @@ static void CalculeAttributs(CompactTree *cpct)
 #ifdef ATTR_SURF
   assert(sizeof(attrsurf_t) == sizeof(int32_t));
   (void)surfrec(cpct, 0, na1);
-  for (i = 0; i < nbcomp; i++)
+  for (i = 0; i < nbcomp; i++) {
     cpct->surf[i] = na1[i];
+  }
 #endif
 #ifdef ATTR_VOL
   assert(sizeof(attrvol_t) == sizeof(int32_t));
@@ -827,38 +839,43 @@ static void CalculeAttributs(CompactTree *cpct)
     exit(0);
   }
   (void)volrec(cpct, 0, na1);
-  for (i = 0; i < nbcomp; i++)
+  for (i = 0; i < nbcomp; i++) {
     cpct->vol[i] = na1[i];
+  }
 #endif
 #ifdef ATTR_HEIGHT
   assert(sizeof(attrheight_t) == sizeof(int32_t));
   (void)heightrec(cpct, 0, na1);
   /* pour la mesure de la hauteur, il faut rajouter la difference de niveau avec
    * le pere */
-  for (i = 1; i < nbcomp; i++)
+  for (i = 1; i < nbcomp; i++) {
     cpct->height[i] =
         na1[i]
         /* - DECODENIV(cpct->comp[i]) + DECODENIV(cpct->comp[i]) */ /* inutile
                                                                      */
         - DECODENIV(cpct->comp[cpct->pere[i]]) - 1;
+  }
   cpct->height[0] = NDG_MAX - NDG_MIN;
 #endif
 #ifdef ATTR_PERIM
   assert(sizeof(attrperim_t) == sizeof(int32_t));
   (void)perimrec(cpct, 0, na1);
-  for (i = 0; i < nbcomp; i++)
+  for (i = 0; i < nbcomp; i++) {
     cpct->perim[i] = na1[i];
+  }
 #endif
 #ifdef ATTR_HBORD
   assert(sizeof(attrhbord_t) == sizeof(int32_t));
   (void)hbordrec(cpct, 0, na2);
-  for (i = 0; i < nbcomp; i++)
+  for (i = 0; i < nbcomp; i++) {
     cpct->hbord[i] = na2[i];
+  }
 #endif
 #ifdef ATTR_CONTRAST
   assert(sizeof(attrcontrast_t) == sizeof(double));
-  for (i = 0; i < nbcomp; i++)
+  for (i = 0; i < nbcomp; i++) {
     cpct->contrast[i] = ((double)(na2[i])) / na1[i];
+  }
 #endif
   free(na1);
   free(na2);
@@ -882,8 +899,9 @@ static indexcomp_t FiltreHeightRec(CompactTree *cpct, indexcomp_t som,
 {
   indexcomp_t i, n, j, NNM = 0;
   n = NBFILS(cpct, som);
-  if (cpct->height[som] < h)
+  if (cpct->height[som] < h) {
     cpct->flags[som] |= FILTERED_OUT;
+  }
   for (i = 0; i < n; i++) {
     j = INDEXFILS(cpct, som, i);
     j = cpct->fils[j];
@@ -891,8 +909,9 @@ static indexcomp_t FiltreHeightRec(CompactTree *cpct, indexcomp_t som,
   }
   if (cpct->height[som] >= h) /* sommet non filtre */
   {
-    if (NNM == 0)
+    if (NNM == 0) {
       cpct->flags[som] |= LEAFMIN;
+    }
     NNM++;
   }
   return NNM;
@@ -922,8 +941,9 @@ static indexcomp_t FiltreSurfRec(CompactTree *cpct, indexcomp_t som,
 {
   indexcomp_t i, n, j, NNM = 0;
   n = NBFILS(cpct, som);
-  if (cpct->surf[som] < h)
+  if (cpct->surf[som] < h) {
     cpct->flags[som] |= FILTERED_OUT;
+  }
   for (i = 0; i < n; i++) {
     j = INDEXFILS(cpct, som, i);
     j = cpct->fils[j];
@@ -931,8 +951,9 @@ static indexcomp_t FiltreSurfRec(CompactTree *cpct, indexcomp_t som,
   }
   if (cpct->surf[som] >= h) /* sommet non filtre */
   {
-    if (NNM == 0)
+    if (NNM == 0) {
       cpct->flags[som] |= LEAFMIN;
+    }
     NNM++;
   }
   return NNM;
@@ -956,8 +977,9 @@ static indexcomp_t FiltreVolRec(CompactTree *cpct, indexcomp_t som, attrvol_t h)
 {
   indexcomp_t i, n, j, NNM = 0;
   n = NBFILS(cpct, som);
-  if (cpct->vol[som] < h)
+  if (cpct->vol[som] < h) {
     cpct->flags[som] |= FILTERED_OUT;
+  }
   for (i = 0; i < n; i++) {
     j = INDEXFILS(cpct, som, i);
     j = cpct->fils[j];
@@ -965,8 +987,9 @@ static indexcomp_t FiltreVolRec(CompactTree *cpct, indexcomp_t som, attrvol_t h)
   }
   if (cpct->vol[som] >= h) /* sommet non filtre */
   {
-    if (NNM == 0)
+    if (NNM == 0) {
       cpct->flags[som] |= LEAFMIN;
+    }
     NNM++;
   }
   return NNM;
@@ -985,11 +1008,13 @@ static indexcomp_t MaximiseSegmentation(CompactTree *cpct, indexcomp_t som)
 */
 {
   indexcomp_t i, n, j, f, nf, NF = 0;
-  if (cpct->flags[som] & FILTERED_OUT)
+  if (cpct->flags[som] & FILTERED_OUT) {
     return 0;
+  }
   n = NBFILS(cpct, som);
-  if (n == 0)
+  if (n == 0) {
     return 1;
+  }
   for (i = 0; i < n; i++) {
     j = INDEXFILS(cpct, som, i);
     j = cpct->fils[j];
@@ -998,8 +1023,9 @@ static indexcomp_t MaximiseSegmentation(CompactTree *cpct, indexcomp_t som)
       NF += nf;
     }
   }
-  if (NF == 0)
+  if (NF == 0) {
     return 1;
+  }
   if (NF == 1) {
     cpct->flags[f] |= FILTERED_OUT;
     cpct->flags[som] |= LEAFMAX;
@@ -1052,13 +1078,15 @@ static void Reconstruction(CompactTree *cpct, indexcomp_t som)
       for (i = 0; i < n; i++) {
         j = INDEXFILS(cpct, k, i);
         j = cpct->fils[j];
-        if (cpct->flags[j] & LEAF)
+        if (cpct->flags[j] & LEAF) {
           break;
+        }
       }
       k = j;
 #ifdef PARANO
-      if (i >= n)
+      if (i >= n) {
         fprintf(stderr, "%s: ERREUR INATTENDUE\n", F_NAME);
+      }
 #endif
     }
     contrast[m] = cpct->contrast[k];
@@ -1072,8 +1100,9 @@ static void Reconstruction(CompactTree *cpct, indexcomp_t som)
 #endif
 
     /* trie le tableau index sur la cle contraste */
-    for (i = 0; i < m; i++)
+    for (i = 0; i < m; i++) {
       index[i] = i;
+    }
     d_TriRapideStochastique((int32_t *)index, contrast, 0, m - 1);
 
 #ifdef DEBUGRECONS
@@ -1122,8 +1151,9 @@ static indexcomp_t NbLeafs(CompactTree *cpct, indexcomp_t som)
       k += NbLeafs(cpct, j);
     }
     return k;
-  } else /* (on a trouve une LEAF) */
+  } else { /* (on a trouve une LEAF) */
     return 1;
+  }
 } /* NbLeafs() */
 
 #ifdef __GNUC__
@@ -1147,8 +1177,9 @@ RecupereImageFiltree(CompactTree *cpct, indexcomp_t *STATUS, index_t rs,
     h = ORI[i];
     c = STATUS[i];
     comp = INDEXCOMP(cpct, h, c);
-    while (cpct->flags[comp] == FILTERED_OUT)
+    while (cpct->flags[comp] == FILTERED_OUT) {
       comp = cpct->pere[comp];
+    }
     ORI[i] = DECODENIV(cpct->comp[comp]);
   }
 } /* RecupereImageFiltree() */
@@ -1177,15 +1208,17 @@ RecupereSegmentation(CompactTree *cpct, indexcomp_t *STATUS, index_t rs,
     comp = INDEXCOMP(cpct, h, c);
     while (cpct->flags[comp] & FILTERED_OUT) {
 #ifdef PARANO
-      if (comp == cpct->pere[comp])
+      if (comp == cpct->pere[comp]) {
         fprintf(stderr, "%s: la racine a ete eliminee\n", F_NAME);
+      }
 #endif
       comp = cpct->pere[comp];
     }
-    if (cpct->flags[comp] & LEAF)
+    if (cpct->flags[comp] & LEAF) {
       ORI[i] = NDG_MAX;
-    else
+    } else {
       ORI[i] = NDG_MIN;
+    }
   }
 } /* RecupereSegmentation() */
 
@@ -1343,8 +1376,9 @@ static void WriteCompactTree(CompactTree *cpct, char *filename)
     fprintf(fd, "%d %s\n", i, buf);
   }
   fprintf(fd, "arcs\n");
-  for (i = 1; i < cpct->nbcomp; i++)
+  for (i = 1; i < cpct->nbcomp; i++) {
     fprintf(fd, "%d %d\n", cpct->pere[i], i);
+  }
   fclose(fd);
 } /* WriteCompactTree() */
 
@@ -1356,9 +1390,11 @@ static indexcomp_t LeafCount(CompactTree *cpct)
 /* ==================================== */
 {
   indexcomp_t i, f = 0;
-  for (i = 0; i < cpct->nbcomp; i++)
-    if ((NBFILS(cpct, i)) == 0)
+  for (i = 0; i < cpct->nbcomp; i++) {
+    if ((NBFILS(cpct, i)) == 0) {
       f++;
+    }
+  }
   return f;
 } /* LeafCount() */
 
@@ -1370,11 +1406,12 @@ static indexcomp_t LeafMark(CompactTree *cpct)
 /* ==================================== */
 {
   indexcomp_t i, f = 0;
-  for (i = 0; i < cpct->nbcomp; i++)
+  for (i = 0; i < cpct->nbcomp; i++) {
     if ((NBFILS(cpct, i)) == 0) {
       f++;
       cpct->flags[i] |= LEAF;
     }
+  }
   return f;
 } /* LeafMark() */
 
@@ -1391,15 +1428,17 @@ static indexcomp_t NbFilsNonFiltres(CompactTree *cpct, indexcomp_t som)
 {
   indexcomp_t i, n, j, NNM = 0;
   n = NBFILS(cpct, som);
-  if (n == 0)
+  if (n == 0) {
     return 0;
+  }
   for (i = 0; i < n; i++) {
     j = INDEXFILS(cpct, som, i);
     j = cpct->fils[j];
-    if (!(cpct->flags[j] & FILTERED_OUT))
+    if (!(cpct->flags[j] & FILTERED_OUT)) {
       NNM++;
-    else if (NbFilsNonFiltres(cpct, j) >= 1)
+    } else if (NbFilsNonFiltres(cpct, j) >= 1) {
       NNM++;
+    }
   }
   return NNM;
 } /* NbFilsNonFiltres() */
@@ -1460,8 +1499,9 @@ static int32_t contrib_perim(index_t p, level_t *ORI, indexcomp_t *STATUS,
        k += incr_vois) /* compte le nombre nv de voisins deja traites */
   {
     q = voisin(p, k, rs, N);
-    if ((q != -1) && (ORI[q] >= ORI[p]) && (STATUS[q] < NOT_ANALYZED))
+    if ((q != -1) && (ORI[q] >= ORI[p]) && (STATUS[q] < NOT_ANALYZED)) {
       nv++;
+    }
   } /* for (k = 0; k < 8; k += incr_vois) */
 
   return 4 - 2 * nv;
@@ -1478,8 +1518,9 @@ static int32_t contrib_perimb(index_t p, level_t *ORI, indexcomp_t *STATUS,
   for (k = 0; k < 6; k++) /* compte le nombre nv de voisins deja traites */
   {
     q = voisin6b(p, k, rs, N, connex);
-    if ((q != -1) && (ORI[q] >= ORI[p]) && (STATUS[q] < NOT_ANALYZED))
+    if ((q != -1) && (ORI[q] >= ORI[p]) && (STATUS[q] < NOT_ANALYZED)) {
       nv++;
+    }
   } /* for (k = 0; k < 8; k += incr_vois) */
 
   return 4 - 2 * nv;
@@ -1497,8 +1538,9 @@ static int32_t contrib_hbord(index_t p, level_t *ORI, indexcomp_t *STATUS,
 
   for (k = 0; k < 8; k += incr_vois) {
     q = voisin(p, k, rs, N);
-    if (q != -1)
+    if (q != -1) {
       h += (ORI[p] - ORI[q]);
+    }
   } /* for (k = 0; k < 8; k += incr_vois) */
 
   return h;
@@ -1514,8 +1556,9 @@ static int32_t contrib_hbordb(index_t p, level_t *ORI, indexcomp_t *STATUS,
 
   for (k = 0; k < 6; k++) {
     q = voisin6b(p, k, rs, N, connex);
-    if (q != -1)
+    if (q != -1) {
       h += (ORI[p] - ORI[q]);
+    }
   } /* for (k = 0; k < 8; k += incr_vois) */
 
   return h;
@@ -1598,8 +1641,9 @@ flood(int32_t h, /* niveau a inonder */
   number_nodes[h] += 1;
 
   m = h - 1; /* second step : define the father */
-  while ((m >= 0) && (!node_at_level[m]))
+  while ((m >= 0) && (!node_at_level[m])) {
     m--; /* =============================== */
+  }
   i = number_nodes[h] - 1;
   if (m >= 0) {
     j = number_nodes[m];
@@ -1720,8 +1764,9 @@ floodb(int32_t h, /* niveau a inonder */
   number_nodes[h] += 1;
 
   m = h - 1; /* second step : define the father */
-  while ((m >= 0) && (!node_at_level[m]))
+  while ((m >= 0) && (!node_at_level[m])) {
     m--; /* =============================== */
+  }
   i = number_nodes[h] - 1;
   if (m >= 0) {
     j = number_nodes[m];
@@ -1882,8 +1927,9 @@ flood3d(int32_t h, /* niveau a inonder */
   number_nodes[h] += 1;
 
   m = h - 1; /* second step : define the father */
-  while ((m >= 0) && (!node_at_level[m]))
+  while ((m >= 0) && (!node_at_level[m])) {
     m--; /* =============================== */
+  }
   i = number_nodes[h] - 1;
   if (m >= 0) {
     j = number_nodes[m];
@@ -1940,10 +1986,12 @@ static int32_t LowestCommonAncestor(CompactTree *cpct, int32_t argc,
 {
   indexcomp_t x, lca;
   int32_t i, NoComAnc;
-  if (argc <= 0)
+  if (argc <= 0) {
     return -1;
-  if (argc == 1)
+  }
+  if (argc == 1) {
     return argv[0];
+  }
 
   x = argv[0]; /* index de la premiere cellule */
   do {
@@ -1962,17 +2010,20 @@ static int32_t LowestCommonAncestor(CompactTree *cpct, int32_t argc,
         NoComAnc = 0;
         cpct->flags[x] |= LCA2; /* on le marque LCA2 */
         break;                  /* on arrete la remontee (sort du do while) */
-      } else
+      } else {
         x = cpct->pere[x]; /* on continue la remontee */
+      }
     } while ((x != CPCT_ROOT) && (DECODENIV(cpct->comp[x]) > d));
-    if (NoComAnc)
+    if (NoComAnc) {
       break; /* pas d'AC: on sort aussi du for */
+    }
   } /* for (i = 1; i < argc; i++) */
 
   x = argv[0]; /* index de la premiere cellule */
   do {         /* derniere remontee: demarque et repere le lca */
-    if (cpct->flags[x] & LCA2)
+    if (cpct->flags[x] & LCA2) {
       lca = x;
+    }
     cpct->flags[x] &= ~LCA;
     x = cpct->pere[x];
   } while ((x != CPCT_ROOT) && (DECODENIV(cpct->comp[x]) > d));
@@ -1997,10 +2048,11 @@ static int32_t LowestCommonAncestor(CompactTree *cpct, int32_t argc,
     printf("%d\n", lca);
 #endif
 
-  if (NoComAnc) /* pas d'ancetre commun */
+  if (NoComAnc) { /* pas d'ancetre commun */
     return -1;
-  else
+  } else {
     return lca;
+  }
 } /* LowestCommonAncestor() */
 
 #ifdef __GNUC__
@@ -2033,8 +2085,9 @@ static indexcomp_t LowComAnc(CompactTree *cpct, indexcomp_t c1, indexcomp_t c2)
     }
     x = cpct->pere[x];
   } while (x != CPCT_ROOT);
-  if ((lca == -1) && (cpct->flags[x] & LCA1))
+  if ((lca == -1) && (cpct->flags[x] & LCA1)) {
     lca = x;
+  }
 
   x = c1;
   do { /* derniere remontee: demarque */
@@ -2057,8 +2110,9 @@ static int32_t Ancestor(CompactTree *cpct, indexcomp_t c1, indexcomp_t c2)
 /* ==================================== */
 {
   do {
-    if (c1 == c2)
+    if (c1 == c2) {
       return 1;
+    }
     c2 = cpct->pere[c2];
   } while (c2 != CPCT_ROOT);
   return 0;

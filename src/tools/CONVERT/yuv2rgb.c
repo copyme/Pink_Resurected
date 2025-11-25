@@ -103,11 +103,13 @@ int main(int argc, char **argv)
 
         if (argc==5)
 	{
-          if (strcmp(argv[4],"-split") == 0)
+          if (strcmp(argv[4], "-split") == 0) {
             split = 1;
-	  else
-          { printf("usage: %s %s\n", argv[0], usage); exit(1); }
-	}
+          } else {
+            printf("usage: %s %s\n", argv[0], usage);
+            exit(1);
+          }
+        }
 
 	strcpy(ufname,argv[1]);
 	strcpy(vfname,argv[1]);
@@ -138,14 +140,16 @@ int main(int argc, char **argv)
         pg = UCHARDATA(img);
         pb = UCHARDATA(imb);
 
-        if(cols & 1) fprintf(stderr,
-                             "%s: Warning: odd columns count, exceed ignored\n",
-                             argv[0]);
-        if(rows & 1) fprintf(stderr,
-                             "%s: Warning: odd rows count, exceed ignored\n",
-                             argv[0]);
+        if (cols & 1) {
+          fprintf(stderr, "%s: Warning: odd columns count, exceed ignored\n",
+                  argv[0]);
+        }
+        if (rows & 1) {
+          fprintf(stderr, "%s: Warning: odd rows count, exceed ignored\n",
+                  argv[0]);
+        }
 
-	y1buf = (uint8_t *)calloc(1,cols);
+        y1buf = (uint8_t *)calloc(1,cols);
 	y2buf = (uint8_t *)calloc(1,cols);
 	ubuf = (uint8_t *)calloc(1,cols);
         vbuf = (uint8_t *)calloc(1,cols);

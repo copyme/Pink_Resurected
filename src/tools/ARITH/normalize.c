@@ -88,10 +88,11 @@ int main(int argc, char **argv)
   else
   {
     nmin = (float)0;
-    if (datatype(image1) == VFF_TYP_FLOAT)
+    if (datatype(image1) == VFF_TYP_FLOAT) {
       nmax = (float)1;
-    else
+    } else {
       nmax = (float)255;
+    }
   }
 
   if (! lnormalize(image1, nmin, nmax))

@@ -126,6 +126,8 @@ int main(int argc, char **argv)
   writeimage(k, argv[argc-1]);
 
   freeimage(k);
-  if (inhi) freeimage(inhi);
+  if (inhi) {
+    freeimage(inhi);
+  }
   return 0;
 } /* main() */

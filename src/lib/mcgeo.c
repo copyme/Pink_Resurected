@@ -77,8 +77,12 @@ int32_t estsitue(mcgeo_point p, mcgeo_point q, mcgeo_point r)
 /* de la droite orientee qr */
 {
   double d = detpq_qr(p, q, r);
-  if (d > 0.0) return 1;
-  if (d < 0.0) return -1;
+  if (d > 0.0) {
+    return 1;
+  }
+  if (d < 0.0) {
+    return -1;
+  }
   return 0;
 } /* estsitue() */
 
@@ -169,12 +173,21 @@ int32_t sontsecants(mcgeo_point p1, mcgeo_point p2, mcgeo_point p3, mcgeo_point 
   double d4 = direction(p1, p2, p4);
 
   if (((d1 > 0 && d2 < 0) || (d1 < 0 && d2 > 0)) &&
-     ((d3 > 0 && d4 < 0) || (d3 < 0 && d4 > 0)))
+      ((d3 > 0 && d4 < 0) || (d3 < 0 && d4 > 0))) {
     return 1;
-  if ((d1 == 0) && sursegment(p3, p4, p1)) return 1;
-  if ((d2 == 0) && sursegment(p3, p4, p2)) return 1;
-  if ((d3 == 0) && sursegment(p1, p2, p3)) return 1;
-  if ((d4 == 0) && sursegment(p1, p2, p4)) return 1;
+  }
+  if ((d1 == 0) && sursegment(p3, p4, p1)) {
+    return 1;
+  }
+  if ((d2 == 0) && sursegment(p3, p4, p2)) {
+    return 1;
+  }
+  if ((d3 == 0) && sursegment(p1, p2, p3)) {
+    return 1;
+  }
+  if ((d4 == 0) && sursegment(p1, p2, p4)) {
+    return 1;
+  }
   return 0;
 } /* sontsecants() */
 
@@ -240,7 +253,9 @@ double distpointcercle(mcgeo_point p, cercle c)
 {
   double r = c.r, x = p.x - c.x0, y = p.y - c.y0;
   double d = sqrt(x*x + y*y);
-  if (d > r) return d-r;
+  if (d > r) {
+    return d - r;
+  }
   return r-d;
 } /* distpointcercle() */
 
@@ -266,7 +281,9 @@ int32_t initrectangle(rectangle *r)
   double l = r->w, L = r->h, theta = r->angle, x = r->centre.x, y = r->centre.y;
   double d, alpha;
 
-  if (L < MCGEO_EPSILON) return 0;
+  if (L < MCGEO_EPSILON) {
+    return 0;
+  }
   d = sqrt(l*l + L*L) / 2.0;
   alpha = atan(l/L);
 
@@ -279,10 +296,22 @@ int32_t initrectangle(rectangle *r)
   r->s3.x2 = r->s4.x1;  r->s3.y2 = r->s4.y1;
   r->s4.x2 = r->s1.x1;  r->s4.y2 = r->s1.y1;
 
-  if (equdroite(r->s1.x1, r->s1.y1, r->s1.x2, r->s1.y2, &(r->s1.a), &(r->s1.b), &(r->s1.c)) == 0) return 0;
-  if (equdroite(r->s2.x1, r->s2.y1, r->s2.x2, r->s2.y2, &(r->s2.a), &(r->s2.b), &(r->s2.c)) == 0) return 0;
-  if (equdroite(r->s3.x1, r->s3.y1, r->s3.x2, r->s3.y2, &(r->s3.a), &(r->s3.b), &(r->s3.c)) == 0) return 0;
-  if (equdroite(r->s4.x1, r->s4.y1, r->s4.x2, r->s4.y2, &(r->s4.a), &(r->s4.b), &(r->s4.c)) == 0) return 0;
+  if (equdroite(r->s1.x1, r->s1.y1, r->s1.x2, r->s1.y2, &(r->s1.a), &(r->s1.b),
+                &(r->s1.c)) == 0) {
+    return 0;
+  }
+  if (equdroite(r->s2.x1, r->s2.y1, r->s2.x2, r->s2.y2, &(r->s2.a), &(r->s2.b),
+                &(r->s2.c)) == 0) {
+    return 0;
+  }
+  if (equdroite(r->s3.x1, r->s3.y1, r->s3.x2, r->s3.y2, &(r->s3.a), &(r->s3.b),
+                &(r->s3.c)) == 0) {
+    return 0;
+  }
+  if (equdroite(r->s4.x1, r->s4.y1, r->s4.x2, r->s4.y2, &(r->s4.a), &(r->s4.b),
+                &(r->s4.c)) == 0) {
+    return 0;
+  }
 
   return 1;
 } /* initrectangle() */
@@ -303,12 +332,24 @@ int32_t point3cmp (point3 p1, point3 p2)
 #undef F_NAME
 #define F_NAME "point3cmp"
 {
-  if (p1.x > p2.x) return 1; 
-  if (p1.x < p2.x) return -1;
-  if (p1.y > p2.y) return 1; 
-  if (p1.y < p2.y) return -1;
-  if (p1.z > p2.z) return 1; 
-  if (p1.z < p2.z) return -1;
+  if (p1.x > p2.x) {
+    return 1;
+  }
+  if (p1.x < p2.x) {
+    return -1;
+  }
+  if (p1.y > p2.y) {
+    return 1;
+  }
+  if (p1.y < p2.y) {
+    return -1;
+  }
+  if (p1.z > p2.z) {
+    return 1;
+  }
+  if (p1.z < p2.z) {
+    return -1;
+  }
   return 0;
 } /* point3cmp() */
 
@@ -360,8 +401,9 @@ void printmat(
   int32_t i, j;
   for (i = 0; i < n; i++)
   {
-    for (j = 0; j < m; j++)  
+    for (j = 0; j < m; j++) {
       printf("%6g   ", mat[i * m + j]);
+    }
     printf("\n");
   }          
   printf("\n");
@@ -411,14 +453,24 @@ int32_t solsyst2(
   int32_t i;
   
   d = det2(m);
-  if (((d >= 0) && (d < MCGEO_EPSILON)) || ((d <= 0) && (-d < MCGEO_EPSILON))) return 0;
+  if (((d >= 0) && (d < MCGEO_EPSILON)) || ((d <= 0) && (-d < MCGEO_EPSILON))) {
+    return 0;
+  }
 
-  for (i = 0; i < 2; i++) m1[i][0] = b[i]; 
-  for (i = 0; i < 2; i++) m1[i][1] = m[i][1];
+  for (i = 0; i < 2; i++) {
+    m1[i][0] = b[i];
+  }
+  for (i = 0; i < 2; i++) {
+    m1[i][1] = m[i][1];
+  }
   d1 = det2(m1);
 
-  for (i = 0; i < 2; i++) m1[i][1] = b[i]; 
-  for (i = 0; i < 2; i++) m1[i][0] = m[i][0];
+  for (i = 0; i < 2; i++) {
+    m1[i][1] = b[i];
+  }
+  for (i = 0; i < 2; i++) {
+    m1[i][0] = m[i][0];
+  }
   d2 = det2(m1);
 
   sol[0] = d1 / d; 
@@ -438,20 +490,34 @@ int32_t solsyst3(
   int32_t i, j;
   
   d = det3(m);
-  if (((d >= 0) && (d < MCGEO_EPSILON)) || ((d <= 0) && (-d < MCGEO_EPSILON))) return 0;
+  if (((d >= 0) && (d < MCGEO_EPSILON)) || ((d <= 0) && (-d < MCGEO_EPSILON))) {
+    return 0;
+  }
 
-  for (i = 0; i < 3; i++) m1[i][0] = b[i]; 
-  for (i = 0; i < 3; i++)
-    for (j = 1; j < 3; j++)  
+  for (i = 0; i < 3; i++) {
+    m1[i][0] = b[i];
+  }
+  for (i = 0; i < 3; i++) {
+    for (j = 1; j < 3; j++) {
       m1[i][j] = m[i][j];
+    }
+  }
   d1 = det3(m1);
 
-  for (i = 0; i < 3; i++) m1[i][1] = b[i]; 
-  for (i = 0; i < 3; i++) m1[i][0] = m[i][0];
+  for (i = 0; i < 3; i++) {
+    m1[i][1] = b[i];
+  }
+  for (i = 0; i < 3; i++) {
+    m1[i][0] = m[i][0];
+  }
   d2 = det3(m1);
 
-  for (i = 0; i < 3; i++) m1[i][2] = b[i]; 
-  for (i = 0; i < 3; i++) m1[i][1] = m[i][1];
+  for (i = 0; i < 3; i++) {
+    m1[i][2] = b[i];
+  }
+  for (i = 0; i < 3; i++) {
+    m1[i][1] = m[i][1];
+  }
   d3 = det3(m1);
 
   sol[0] = d1 / d; 
@@ -467,7 +533,9 @@ int32_t invmat2(
 /* ==================================== */
 {
   double det = det2( ma );
-  if ( fabs( det ) < MCGEO_EPSILON ) return 0;
+  if (fabs(det) < MCGEO_EPSILON) {
+    return 0;
+  }
   mr[0][0] =   ma[1][1] / det;
   mr[1][0] = - ma[1][0] / det;
   mr[0][1] = - ma[0][1] / det;
@@ -482,7 +550,9 @@ int32_t invmat3(
 /* ==================================== */
 {
   double det = det3( ma );
-  if ( fabs( det ) < MCGEO_EPSILON ) return 0;
+  if (fabs(det) < MCGEO_EPSILON) {
+    return 0;
+  }
   mr[0][0] =  ( ma[1][1]*ma[2][2] - ma[1][2]*ma[2][1] ) / det;
   mr[0][1] = -( ma[0][1]*ma[2][2] - ma[2][1]*ma[0][2] ) / det;
   mr[0][2] =  ( ma[0][1]*ma[1][2] - ma[1][1]*ma[0][2] ) / det;
@@ -507,8 +577,9 @@ void multmat2vec2(
   for (i = 0; i < 2; i++)
   {
     t = 0.0;
-    for (j = 0; j < 2; j++)  
+    for (j = 0; j < 2; j++) {
       t += m[i][j] * v[j];
+    }
     sol[i] = t;    
   }          
 } // multmat2vec2()
@@ -525,8 +596,9 @@ void multmat3vec3(
   for (i = 0; i < 3; i++)
   {
     t = 0.0;
-    for (j = 0; j < 3; j++)  
+    for (j = 0; j < 3; j++) {
       t += m[i][j] * v[j];
+    }
     sol[i] = t;    
   }          
 } // multmat3vec3()
@@ -540,14 +612,16 @@ void multmat2mat2(
 {
   double t;
   int32_t i, j, k;
-  for (i = 0; i < 2; i++)
+  for (i = 0; i < 2; i++) {
     for (j = 0; j < 2; j++)  
     {
       t = 0.0;
-      for (k = 0; k < 2; k++)  
+      for (k = 0; k < 2; k++) {
         t += m1[i][k] * m2[k][j];
-      mr[i][j] = t;    
+      }
+      mr[i][j] = t;
     }
+  }
 } // multmat2mat2()
   
 /* ==================================== */
@@ -559,14 +633,16 @@ void multmat3mat3(
 {
   double t;
   int32_t i, j, k;
-  for (i = 0; i < 3; i++)
+  for (i = 0; i < 3; i++) {
     for (j = 0; j < 3; j++)  
     {
       t = 0.0;
-      for (k = 0; k < 3; k++)  
+      for (k = 0; k < 3; k++) {
         t += m1[i][k] * m2[k][j];
-      mr[i][j] = t;    
+      }
+      mr[i][j] = t;
     }
+  }
 } // multmat3mat3()
 
 /* ==================================== */
@@ -593,8 +669,9 @@ int32_t equdroite(
     *a = - (y2 - y1) / (x2 - x1);
     *c = - (*a * x1 + y1);
     return 1;
+  } else {
+    return 0;
   }
-  else return 0;
 }
 
 /* ==================================== */
@@ -603,18 +680,55 @@ int32_t inittriangle(triangle *t)
 {
   double tmp;
 
-  if (equdroite(t->xa, t->ya, t->xc, t->yc, &(t->a1), &(t->b1), &(t->c1)) == 0) return 0;
-  if (equdroite(t->xb, t->yb, t->xc, t->yc, &(t->a2), &(t->b2), &(t->c2)) == 0) return 0;
-  if (equdroite(t->xa, t->ya, t->xb, t->yb, &(t->a3), &(t->b3), &(t->c3)) == 0) return 0;
+  if (equdroite(t->xa, t->ya, t->xc, t->yc, &(t->a1), &(t->b1), &(t->c1)) ==
+      0) {
+    return 0;
+  }
+  if (equdroite(t->xb, t->yb, t->xc, t->yc, &(t->a2), &(t->b2), &(t->c2)) ==
+      0) {
+    return 0;
+  }
+  if (equdroite(t->xa, t->ya, t->xb, t->yb, &(t->a3), &(t->b3), &(t->c3)) ==
+      0) {
+    return 0;
+  }
 
   t->s1 = t->a1 * t->xb + t->b1 * t->yb + t->c1;
   t->s2 = t->a2 * t->xa + t->b2 * t->ya + t->c2;
   t->s3 = t->a3 * t->xc + t->b3 * t->yc + t->c3;
 
-  tmp = t->xa; if (t->xb < tmp) tmp = t->xb; if (t->xc < tmp) tmp = t->xc; t->xmin = tmp;
-  tmp = t->ya; if (t->yb < tmp) tmp = t->yb; if (t->yc < tmp) tmp = t->yc; t->ymin = tmp;
-  tmp = t->xa; if (t->xb > tmp) tmp = t->xb; if (t->xc > tmp) tmp = t->xc; t->xmax = tmp;
-  tmp = t->ya; if (t->yb > tmp) tmp = t->yb; if (t->yc > tmp) tmp = t->yc; t->ymax = tmp;
+  tmp = t->xa;
+  if (t->xb < tmp) {
+    tmp = t->xb;
+  }
+  if (t->xc < tmp) {
+    tmp = t->xc;
+  }
+  t->xmin = tmp;
+  tmp = t->ya;
+  if (t->yb < tmp) {
+    tmp = t->yb;
+  }
+  if (t->yc < tmp) {
+    tmp = t->yc;
+  }
+  t->ymin = tmp;
+  tmp = t->xa;
+  if (t->xb > tmp) {
+    tmp = t->xb;
+  }
+  if (t->xc > tmp) {
+    tmp = t->xc;
+  }
+  t->xmax = tmp;
+  tmp = t->ya;
+  if (t->yb > tmp) {
+    tmp = t->yb;
+  }
+  if (t->yc > tmp) {
+    tmp = t->yc;
+  }
+  t->ymax = tmp;
 
   return 1;
 }
@@ -627,9 +741,15 @@ int32_t danstriangle(
 /* ==================================== */
 /* retourne 1 si le point (x,y) est dans le triangle t1, 0 sinon */
 {
-  if ((t->a1 * x + t->b1 * y + t->c1) * t->s1 < 0.0) return 0;
-  if ((t->a2 * x + t->b2 * y + t->c2) * t->s2 < 0.0) return 0;
-  if ((t->a3 * x + t->b3 * y + t->c3) * t->s3 < 0.0) return 0;
+  if ((t->a1 * x + t->b1 * y + t->c1) * t->s1 < 0.0) {
+    return 0;
+  }
+  if ((t->a2 * x + t->b2 * y + t->c2) * t->s2 < 0.0) {
+    return 0;
+  }
+  if ((t->a3 * x + t->b3 * y + t->c3) * t->s3 < 0.0) {
+    return 0;
+  }
   return 1;
 }
 
@@ -658,9 +778,11 @@ int32_t dansdisque(
 /* ==================================== */
 /* retourne 1 si le point (x,y) est dans le disque de centre (xc,yc) et de rayon r, 0 sinon */
 {
-  if (sqrt(((x - xc) * (x - xc)) + ((y - yc) * (y - yc))) <= r)
-       return 1;
-  else return 0;
+  if (sqrt(((x - xc) * (x - xc)) + ((y - yc) * (y - yc))) <= r) {
+    return 1;
+  } else {
+    return 0;
+  }
 }
 
 /* ===================================================================
@@ -684,8 +806,9 @@ int32_t identcercle(
   vec3 b;
   vec3 sol;
 
-  for (i = 1; i <= 10; i++)
+  for (i = 1; i <= 10; i++) {
     X[i] = 0.0;
+  }
 
   for (i = 0; i < n; i++)
   {
@@ -767,8 +890,10 @@ int32_t writescene(scene *scn, char *filename)
       return 0;
     } // switch (obj->objtype)
 
-    for (j = 0; j < obj->npoints; j++)
-      fprintf(fd, "%lf %lf %lf\n", obj->points[j].x, obj->points[j].y, obj->points[j].z);
+    for (j = 0; j < obj->npoints; j++) {
+      fprintf(fd, "%lf %lf %lf\n", obj->points[j].x, obj->points[j].y,
+              obj->points[j].z);
+    }
   } // for (i = 0; i < nobj; i++)
   fclose(fd);
   return 1;
@@ -970,12 +1095,15 @@ scene * readscene(char *filename)
       return NULL;
     }
 
-    if (strncmp(buf, "line", 4) == 0) scn->tabobj[j] = loadline(fd);
-    else if (strncmp(buf, "closedline", 10) == 0) scn->tabobj[j] = loadclosedline(fd);
-    else if (strncmp(buf, "spline", 6) == 0) scn->tabobj[j] = loadspline(fd);
-    else if (strncmp(buf, "closedspline", 12) == 0) scn->tabobj[j] = loadclosedspline(fd);
-    else
-    {
+    if (strncmp(buf, "line", 4) == 0) {
+      scn->tabobj[j] = loadline(fd);
+    } else if (strncmp(buf, "closedline", 10) == 0) {
+      scn->tabobj[j] = loadclosedline(fd);
+    } else if (strncmp(buf, "spline", 6) == 0) {
+      scn->tabobj[j] = loadspline(fd);
+    } else if (strncmp(buf, "closedspline", 12) == 0) {
+      scn->tabobj[j] = loadclosedspline(fd);
+    } else {
       fprintf(stderr, "%s : bad object type : %s\n", F_NAME, buf);
       return NULL;
     }
@@ -1176,7 +1304,9 @@ void mcgeo_freescene(scene * s)
 /* =============================================================== */
 {
   int32_t j;
-  for (j = 0; j < s->nobj; j++) freeobj(s->tabobj[j]);
+  for (j = 0; j < s->nobj; j++) {
+    freeobj(s->tabobj[j]);
+  }
   free(s);
 } // mcgeo_freescene()
 

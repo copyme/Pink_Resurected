@@ -91,7 +91,11 @@ void saturation(int32_t rs, int32_t cs, int32_t N, uint8_t *F, Fahp * FAHP)
 #ifdef DEBUG
 oldFx = F[x];
 #endif
-          if (!ridge(F, x, rs, N)) F[x] = 0; else F[x] = alpha8m(F, x, rs, N);
+if (!ridge(F, x, rs, N)) {
+  F[x] = 0;
+} else {
+  F[x] = alpha8m(F, x, rs, N);
+}
 #ifdef DEBUG
 printf("point %d (%d %d), val = %d --> %d\n", x, x%rs, x/rs, oldFx, F[x]);
 #endif
@@ -180,26 +184,25 @@ int32_t lkern(struct xvimage *image, int32_t connex)
   /* met a 0 les puits et les interieurs de plateaux (T-- = 0) */
   /* et empile les voisins */
 
-  for (x = 0; x < N; x++)
-  if ((x%rs != rs-1) && (x >= rs) && (x%rs != 0) && (x < N-rs) && /* non point de bord */
-      (F[x] != 0))
-  {
-    nbtopo(F, x, rs, N, &t4mm, &t4m, &t8p, &t8pp);
-    if (t4mm == 0)
-    {
-      F[x] = 0;
-      for (k = 0; k < 8; k += 1) /* parcourt les voisins en 8-connexite */
-      {                                       /* pour empiler les voisins */
-        y = voisin(x, k, rs, N);             /* non deja empiles */
-        if ((y != -1) && (F[y] > 0) && (! IsSet(y, EN_FAHP)))
-        {
-          FahpPush(FAHP, y, F[y]);
-          Set(y, EN_FAHP);
-        } /* if y */
-      } /* for k */
-    } /* if (t4mm == 0) */
-    saturation(rs, cs, N, F, FAHP);
-  } /* for (x = 0; x < N; x++) */
+  for (x = 0; x < N; x++) {
+    if ((x % rs != rs - 1) && (x >= rs) && (x % rs != 0) &&
+        (x < N - rs) && /* non point de bord */
+        (F[x] != 0)) {
+      nbtopo(F, x, rs, N, &t4mm, &t4m, &t8p, &t8pp);
+      if (t4mm == 0) {
+        F[x] = 0;
+        for (k = 0; k < 8; k += 1) /* parcourt les voisins en 8-connexite */
+        {                          /* pour empiler les voisins */
+          y = voisin(x, k, rs, N); /* non deja empiles */
+          if ((y != -1) && (F[y] > 0) && (!IsSet(y, EN_FAHP))) {
+            FahpPush(FAHP, y, F[y]);
+            Set(y, EN_FAHP);
+          } /* if y */
+        }   /* for k */
+      }     /* if (t4mm == 0) */
+      saturation(rs, cs, N, F, FAHP);
+    } /* for (x = 0; x < N; x++) */
+  }
 
   /* ================================================ */
   /* UN PEU DE MENAGE                                 */

@@ -97,9 +97,13 @@ static int32_t TrouveComposantes(int32_t x, uint8_t *F, int32_t rs, int32_t ps, 
   case 4:
     for (k = 0; k < 8; k += 2) // parcourt les c-voisins y de x d'un niveau > F[x]
     { y = voisin(x, k, rs, N);
-      if ((y != -1) && (F[y] > maxval)) maxval = F[y];
+      if ((y != -1) && (F[y] > maxval)) {
+        maxval = F[y];
+      }
     } /* for (k = 0; k < 8; k += 2) */
-    if (maxval == F[x]) return 0;
+    if (maxval == F[x]) {
+      return 0;
+    }
     for (k = 0; k < 8; k += 2) // parcourt les c-voisins y de x d'un niveau > F[x]
 
     { y = voisin(x, k, rs, N);
@@ -111,9 +115,13 @@ static int32_t TrouveComposantes(int32_t x, uint8_t *F, int32_t rs, int32_t ps, 
   case 8:
     for (k = 0; k < 8; k += 1) // parcourt les c-voisins y de x d'un niveau > F[x]
     { y = voisin(x, k, rs, N);
-      if ((y != -1) && (F[y] > maxval)) maxval = F[y];
+      if ((y != -1) && (F[y] > maxval)) {
+        maxval = F[y];
+      }
     } /* for (k = 0; k < 8; k += 1) */
-    if (maxval == F[x]) return 0;
+    if (maxval == F[x]) {
+      return 0;
+    }
     for (k = 0; k < 8; k += 1) // parcourt les c-voisins y de x d'un niveau > F[x]
     { y = voisin(x, k, rs, N);
       if ((y != -1) && (F[y] > F[x]))
@@ -124,9 +132,13 @@ static int32_t TrouveComposantes(int32_t x, uint8_t *F, int32_t rs, int32_t ps, 
   case 6:
     for (k = 0; k <= 10; k += 2) // parcourt les c-voisins y de x d'un niveau > F[x]
     { y = voisin6(x, k, rs, ps, N);
-      if ((y != -1) && (F[y] > maxval)) maxval = F[y];
+      if ((y != -1) && (F[y] > maxval)) {
+        maxval = F[y];
+      }
     }
-    if (maxval == F[x]) return 0;
+    if (maxval == F[x]) {
+      return 0;
+    }
     for (k = 0; k <= 10; k += 2) // parcourt les c-voisins y de x d'un niveau > F[x]
     { y = voisin6(x, k, rs, ps, N);
       if ((y != -1) && (F[y] > F[x]))
@@ -137,9 +149,13 @@ static int32_t TrouveComposantes(int32_t x, uint8_t *F, int32_t rs, int32_t ps, 
   case 18:
     for (k = 0; k < 18; k += 1) // parcourt les c-voisins y de x d'un niveau > F[x]
     { y = voisin18(x, k, rs, ps, N);
-      if ((y != -1) && (F[y] > maxval)) maxval = F[y];
+      if ((y != -1) && (F[y] > maxval)) {
+        maxval = F[y];
+      }
     }
-    if (maxval == F[x]) return 0;
+    if (maxval == F[x]) {
+      return 0;
+    }
     for (k = 0; k < 18; k += 1) // parcourt les c-voisins y de x d'un niveau > F[x]
     { y = voisin18(x, k, rs, ps, N);
       if ((y != -1) && (F[y] > F[x]))
@@ -150,9 +166,13 @@ static int32_t TrouveComposantes(int32_t x, uint8_t *F, int32_t rs, int32_t ps, 
   case 26:
     for (k = 0; k < 26; k += 1) // parcourt les c-voisins y de x d'un niveau > F[x]
     { y = voisin26(x, k, rs, ps, N);
-      if ((y != -1) && (F[y] > maxval)) maxval = F[y];
+      if ((y != -1) && (F[y] > maxval)) {
+        maxval = F[y];
+      }
     }
-    if (maxval == F[x]) return 0;
+    if (maxval == F[x]) {
+      return 0;
+    }
     for (k = 0; k < 26; k += 1) // parcourt les c-voisins y de x d'un niveau > F[x]
     { y = voisin26(x, k, rs, ps, N);
       if ((y != -1) && (F[y] > F[x]))
@@ -322,8 +342,9 @@ int32_t LowComAncFast(int32_t n1, int32_t n2, int32_t *Euler, int32_t *Number, i
 
   ii = Number[n1];
   jj = Number[n2];
-  if (ii == jj)
+  if (ii == jj) {
     return ii;
+  }
 
   if (ii > jj) {
     kk = jj;
@@ -358,9 +379,9 @@ static void W_Constructible(int32_t x, uint8_t *F, int32_t rs, int32_t ps, int32
 
     if (ncomp > 0)
     {
-      if (ncomp == 1) *c = tabcomp[0];
-      else 
-      {
+      if (ncomp == 1) {
+        *c = tabcomp[0];
+      } else {
         *c = tabcomp[0];
         for (k = 1; k < ncomp; k++)
         {
@@ -369,13 +390,18 @@ static void W_Constructible(int32_t x, uint8_t *F, int32_t rs, int32_t ps, int32
 #else
 	  c1 = Represent[LowComAncFast(*c, tabcomp[k], Euler, Number, Depth, Minim)];
 #endif
-          if (c1 != tabcomp[k]) *c = c1;
+          if (c1 != tabcomp[k]) {
+            *c = c1;
+          }
         }
       }
       *lcalevel = CT->tabnodes[*c].data;
-      if (*lcalevel <= F[x]) *c = -1;
+      if (*lcalevel <= F[x]) {
+        *c = -1;
+      }
+    } else {
+      *c = -1;
     }
-    else *c = -1;
 } // W_Constructible()
 
 /* ==================================== */
@@ -634,8 +660,9 @@ int32_t lwshedtopo_lwshedtopo(struct xvimage *image, int32_t connex)
 
   IndicsInit(N);
   Watershed(image, connex, FAHS, CM, CT);
-  for (i=0; i<N; i++)
-    F[i] = CT->tabnodes[CM[i]].data; 
+  for (i = 0; i < N; i++) {
+    F[i] = CT->tabnodes[CM[i]].data;
+  }
 
   /* ================================================ */
   /* UN PEU DE MENAGE                                 */
@@ -663,9 +690,13 @@ static void Reconstruction(struct xvimage *g, struct xvimage *f, int32_t *CM, ct
   int32_t N = ps * ds;          /* taille image */
   int32_t i, c, d;
 
-  for (i = 0; i < N; i++) if (G[i] >= F[i]) CT->flags[CM[i]] = 1; // marque les feuilles
+  for (i = 0; i < N; i++) {
+    if (G[i] >= F[i]) {
+      CT->flags[CM[i]] = 1; // marque les feuilles
+    }
+  }
 
-  for (d = 0; d < CT->nbnodes; d++) 
+  for (d = 0; d < CT->nbnodes; d++) {
     if (CT->flags[d] == 1)
     {                                               // pour toutes les feuilles marquees 
       c = CT->tabnodes[d].father;
@@ -673,8 +704,9 @@ static void Reconstruction(struct xvimage *g, struct xvimage *f, int32_t *CM, ct
       {
 	CT->flags[c] = 1;                               // marque tous les ancetres de c
 	c = CT->tabnodes[c].father;
-      } 
+      }
     }
+  }
 
   for (i = 0; i < N; i++) // AMELIORATION POSSIBLE !!!
   {
@@ -750,10 +782,16 @@ int32_t lreconseros(
     fprintf(stderr, "%s: incompatible sizes\n", F_NAME);
     return 0;
   }
-  for (i = 0; i < N; i++) F[i] = NDG_MAX - F[i];
-  for (i = 0; i < N; i++) G[i] = NDG_MAX - G[i];
+  for (i = 0; i < N; i++) {
+    F[i] = NDG_MAX - F[i];
+  }
+  for (i = 0; i < N; i++) {
+    G[i] = NDG_MAX - G[i];
+  }
   ret = lwshedtopo_lreconsdilat(g, f, connex);
-  for (i = 0; i < N; i++) G[i] = NDG_MAX - G[i];
+  for (i = 0; i < N; i++) {
+    G[i] = NDG_MAX - G[i];
+  }
 
   return(ret);
 } /* lreconseros() */
@@ -767,10 +805,16 @@ static void reconsTree(ctree *CT, int32_t *CM, int32_t *newCM, int32_t N, uint8_
   printf("Reconstruction - Marquage\n");
 #endif
 
-  for (d = 0; d < CT->nbnodes; d++) CT->flags[d] = 0; // utile ???
-  for (i = 0; i < N; i++) if (G[i]) CT->flags[CM[i]] = 1; // marque les feuilles
+  for (d = 0; d < CT->nbnodes; d++) {
+    CT->flags[d] = 0; // utile ???
+  }
+  for (i = 0; i < N; i++) {
+    if (G[i]) {
+      CT->flags[CM[i]] = 1; // marque les feuilles
+    }
+  }
 
-  for (d = 0; d < CT->nbnodes; d++) 
+  for (d = 0; d < CT->nbnodes; d++) {
     if ((CT->tabnodes[d].nbsons == 0) && (CT->flags[d] == 1))
     {                                               // pour toutes les feuilles marquees 
       c = CT->tabnodes[d].father;
@@ -778,8 +822,9 @@ static void reconsTree(ctree *CT, int32_t *CM, int32_t *newCM, int32_t N, uint8_
       {
 	CT->flags[c] = 1;                               // marque tous les ancetres de c
 	c = CT->tabnodes[c].father;
-      } 
+      }
     }
+  }
 
 #ifdef _DEBUG_
   printf("Reconstruction - Elimination arbre\n");
@@ -848,7 +893,9 @@ static void compressTree(ctree *CT, int32_t *CM, int32_t *newCM, int32_t N)
   int32_t i, d, c, e, f;
 
   //ComponentTreePrint(CT);
-  for (d = 0; d < CT->nbnodes; d++) CT->flags[d] = 0; // utile !!
+  for (d = 0; d < CT->nbnodes; d++) {
+    CT->flags[d] = 0; // utile !!
+  }
   for (d = 0; d < CT->nbnodes; d++) {
     if (CT->tabnodes[d].nbsons == 0) { // C'est une feuille
       c = CT->tabnodes[d].father;
@@ -873,9 +920,10 @@ static void compressTree(ctree *CT, int32_t *CM, int32_t *newCM, int32_t N)
 	  CT->tabnodes[e].father = f;
 	  CT->tabnodes[c].nbsons = -3;
 	  newCM[c] = e;
-	  if (CT->tabnodes[c].father == -1)
-	    CT->root = e;
-	}
+          if (CT->tabnodes[c].father == -1) {
+            CT->root = e;
+          }
+        }
 	CT->flags[c] = 1;
 	c = CT->tabnodes[c].father;
       }
@@ -971,7 +1019,11 @@ int32_t lwshedtopobin_classic(struct xvimage *image, struct xvimage *marqueur, i
 
   IndicsInit(N);
   // imposition des maxima
-  for (i = 0; i < N; i++) if (G[i]) F[i] = G[i] = NDG_MAX; 
+  for (i = 0; i < N; i++) {
+    if (G[i]) {
+      F[i] = G[i] = NDG_MAX;
+    }
+  }
 
 #ifdef _DEBUG_
   printf("Component tree\n");
@@ -1062,11 +1114,13 @@ int32_t lwshedtopobin_classic(struct xvimage *image, struct xvimage *marqueur, i
 #ifdef _DEBUG_
   printf("Binarisation\n");
 #endif
-  for (i = 0; i < N; i++) 
-    if (CT->tabnodes[CM[i]].nbsons == 0) // maximum
+  for (i = 0; i < N; i++) {
+    if (CT->tabnodes[CM[i]].nbsons == 0) { // maximum
       F[i] = NDG_MAX;
-    else
+    } else {
       F[i] = NDG_MIN;
+    }
+  }
 
   /* ================================================ */
   /* UN PEU DE MENAGE                                 */

@@ -94,10 +94,11 @@ int main(int argc, char **argv)
   assert(cs > 0);
   assert(ds > 0);
 
-  if (ds > 1)
+  if (ds > 1) {
     field = allocmultimage(NULL, rs, cs, ds, 1, 3, VFF_TYP_FLOAT);
-  else
+  } else {
     field = allocmultimage(NULL, rs, cs, 1, 1, 2, VFF_TYP_FLOAT);
+  }
 
   if (field == NULL)
   {

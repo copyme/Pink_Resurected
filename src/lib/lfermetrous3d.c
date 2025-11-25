@@ -146,10 +146,11 @@ int32_t lfermetrous3dbin2_table(struct xvimage *in, struct xvimage *g, int32_t c
 int32_t lfermetrous3dbin(struct xvimage *in, int32_t connex, int32_t tailletrous)
 /* ==================================== */
 {
-  if (connex == 26) 
-    return lfermetrous3dbin_table(in, connex, tailletrous); 
-  else
-    return lfermetrous3dbin_notable(in, connex, tailletrous); 
+  if (connex == 26) {
+    return lfermetrous3dbin_table(in, connex, tailletrous);
+  } else {
+    return lfermetrous3dbin_notable(in, connex, tailletrous);
+  }
 }
 
 // public
@@ -158,10 +159,11 @@ int32_t lfermetrous3dbin2(struct xvimage *in, struct xvimage *g, int32_t connex,
 /* ==================================== */
 {
 
-  if (connex == 26) 
-    return lfermetrous3dbin2_table(in, g, connex, tailletrous); 
-  else
-    return lfermetrous3dbin2_notable(in, g, connex, tailletrous); 
+  if (connex == 26) {
+    return lfermetrous3dbin2_table(in, g, connex, tailletrous);
+  } else {
+    return lfermetrous3dbin2_notable(in, g, connex, tailletrous);
+  }
 }
 
 /* ==================================== */
@@ -199,7 +201,9 @@ int32_t lfermetrous3dbin_notable(struct xvimage *image, int32_t connex, int32_t 
 
   mctopo3d_init_topo3d();
 
-  if (tailletrous == -1) tailletrous = 1000000000;
+  if (tailletrous == -1) {
+    tailletrous = 1000000000;
+  }
 
   FAHP = CreeFahpVide(N);
   if (FAHP == NULL)
@@ -221,15 +225,25 @@ int32_t lfermetrous3dbin_notable(struct xvimage *image, int32_t connex, int32_t 
   }
   D = ULONGDATA(dist);
 
-  for (x = 0; x < N; x++) // inverse l'image
-    if (F[x]) F[x] = 0; else F[x] = NDG_MAX;
+  for (x = 0; x < N; x++) { // inverse l'image
+    if (F[x]) {
+      F[x] = 0;
+    } else {
+      F[x] = NDG_MAX;
+    }
+  }
   if (! lsedt_meijster(image, dist))
   {
     fprintf(stderr, "%s: lsedt_meijster failed\n", F_NAME);
     return 0;
   }
-  for (x = 0; x < N; x++) // inverse l'image
-    if (F[x]) F[x] = 0; else F[x] = NDG_MAX;
+  for (x = 0; x < N; x++) { // inverse l'image
+    if (F[x]) {
+      F[x] = 0;
+    } else {
+      F[x] = NDG_MAX;
+    }
+  }
 
   {
     double d;
@@ -245,18 +259,30 @@ int32_t lfermetrous3dbin_notable(struct xvimage *image, int32_t connex, int32_t 
   xmin = rs - 1; xmax = 0;
   ymin = cs - 1; ymax = 0;
   zmin = ds - 1; zmax = 0;
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    if (F[z * ps + y * rs + x])
-    {
-      F[z * ps + y * rs + x] = VAL_X;      /* marque X au passage */
-      if (x < xmin) xmin = x; else if (x > xmax) xmax = x;
-      if (y < ymin) ymin = y; else if (y > ymax) ymax = y;
-      if (z < zmin) zmin = z; else if (z > zmax) zmax = z;
-    } /* if (F[z * ps + y * rs + x]) */
-  } /* for z y x ... */
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        if (F[z * ps + y * rs + x]) {
+          F[z * ps + y * rs + x] = VAL_X; /* marque X au passage */
+          if (x < xmin) {
+            xmin = x;
+          } else if (x > xmax) {
+            xmax = x;
+          }
+          if (y < ymin) {
+            ymin = y;
+          } else if (y > ymax) {
+            ymax = y;
+          }
+          if (z < zmin) {
+            zmin = z;
+          } else if (z > zmax) {
+            zmax = z;
+          }
+        } /* if (F[z * ps + y * rs + x]) */
+      }   /* for z y x ... */
+    }
+  }
 
   if ((xmin == 0) || (ymin == 0) || (zmin == 0) || 
       (xmax == rs-1) || (ymax == cs-1) || (zmax == ds-1))
@@ -267,13 +293,15 @@ int32_t lfermetrous3dbin_notable(struct xvimage *image, int32_t connex, int32_t 
 
   /* marquage de Y \ X */
 
-  for (z = zmin; z <= zmax; z++)
-  for (y = ymin; y <= ymax; y++)
-  for (x = xmin; x <= xmax; x++)
-  {
-    if (!F[z * ps + y * rs + x]) 
-      F[z * ps + y * rs + x] = VAL_Y_X;    
-  } /* for z y x ... */
+  for (z = zmin; z <= zmax; z++) {
+    for (y = ymin; y <= ymax; y++) {
+      for (x = xmin; x <= xmax; x++) {
+        if (!F[z * ps + y * rs + x]) {
+          F[z * ps + y * rs + x] = VAL_Y_X;
+        }
+      } /* for z y x ... */
+    }
+  }
 
   if (connex == 6)
   {
@@ -467,7 +495,11 @@ int32_t lfermetrous3dbin_notable(struct xvimage *image, int32_t connex, int32_t 
     return 0;
   }
 
-  for (x = 0; x < N; x++) if (F[x] != VAL_NULLE) F[x] = VAL_X;
+  for (x = 0; x < N; x++) {
+    if (F[x] != VAL_NULLE) {
+      F[x] = VAL_X;
+    }
+  }
 
   /* ================================================ */
   /* UN PEU DE MENAGE                                 */
@@ -504,7 +536,9 @@ int32_t lfermetrous3dbin2_notable(struct xvimage *image, struct xvimage *guide, 
 
   mctopo3d_init_topo3d();
 
-  if (tailletrous == -1) tailletrous = 1000000000;
+  if (tailletrous == -1) {
+    tailletrous = 1000000000;
+  }
 
   FAHP = CreeFahpVide(N);
   if (FAHP == NULL)
@@ -526,15 +560,25 @@ int32_t lfermetrous3dbin2_notable(struct xvimage *image, struct xvimage *guide, 
   }
   D = ULONGDATA(dist);
 
-  for (x = 0; x < N; x++) // inverse l'image
-    if (F[x]) F[x] = 0; else F[x] = NDG_MAX;
+  for (x = 0; x < N; x++) { // inverse l'image
+    if (F[x]) {
+      F[x] = 0;
+    } else {
+      F[x] = NDG_MAX;
+    }
+  }
   if (! lsedt_meijster(guide, dist))
   {
     fprintf(stderr, "%s: lsedt_meijster failed\n", F_NAME);
     return 0;
   }
-  for (x = 0; x < N; x++) // inverse l'image
-    if (F[x]) F[x] = 0; else F[x] = NDG_MAX;
+  for (x = 0; x < N; x++) { // inverse l'image
+    if (F[x]) {
+      F[x] = 0;
+    } else {
+      F[x] = NDG_MAX;
+    }
+  }
 
   {
     double d;
@@ -550,18 +594,30 @@ int32_t lfermetrous3dbin2_notable(struct xvimage *image, struct xvimage *guide, 
   xmin = rs - 1; xmax = 0;
   ymin = cs - 1; ymax = 0;
   zmin = ds - 1; zmax = 0;
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    if (F[z * ps + y * rs + x])
-    {
-      F[z * ps + y * rs + x] = VAL_X;      /* marque X au passage */
-      if (x < xmin) xmin = x; else if (x > xmax) xmax = x;
-      if (y < ymin) ymin = y; else if (y > ymax) ymax = y;
-      if (z < zmin) zmin = z; else if (z > zmax) zmax = z;
-    } /* if (F[z * ps + y * rs + x]) */
-  } /* for z y x ... */
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        if (F[z * ps + y * rs + x]) {
+          F[z * ps + y * rs + x] = VAL_X; /* marque X au passage */
+          if (x < xmin) {
+            xmin = x;
+          } else if (x > xmax) {
+            xmax = x;
+          }
+          if (y < ymin) {
+            ymin = y;
+          } else if (y > ymax) {
+            ymax = y;
+          }
+          if (z < zmin) {
+            zmin = z;
+          } else if (z > zmax) {
+            zmax = z;
+          }
+        } /* if (F[z * ps + y * rs + x]) */
+      }   /* for z y x ... */
+    }
+  }
 
   if ((xmin == 0) || (ymin == 0) || (zmin == 0) || 
       (xmax == rs-1) || (ymax == cs-1) || (zmax == ds-1))
@@ -572,13 +628,15 @@ int32_t lfermetrous3dbin2_notable(struct xvimage *image, struct xvimage *guide, 
 
   /* marquage de Y \ X */
 
-  for (z = zmin; z <= zmax; z++)
-  for (y = ymin; y <= ymax; y++)
-  for (x = xmin; x <= xmax; x++)
-  {
-    if (!F[z * ps + y * rs + x]) 
-      F[z * ps + y * rs + x] = VAL_Y_X;    
-  } /* for z y x ... */
+  for (z = zmin; z <= zmax; z++) {
+    for (y = ymin; y <= ymax; y++) {
+      for (x = xmin; x <= xmax; x++) {
+        if (!F[z * ps + y * rs + x]) {
+          F[z * ps + y * rs + x] = VAL_Y_X;
+        }
+      } /* for z y x ... */
+    }
+  }
 
   if (connex == 6)
   {
@@ -684,7 +742,11 @@ int32_t lfermetrous3dbin2_notable(struct xvimage *image, struct xvimage *guide, 
     return 0;
   }
 
-  for (x = 0; x < N; x++) if (F[x] != VAL_NULLE) F[x] = VAL_X;
+  for (x = 0; x < N; x++) {
+    if (F[x] != VAL_NULLE) {
+      F[x] = VAL_X;
+    }
+  }
 
   /* ================================================ */
   /* UN PEU DE MENAGE                                 */
@@ -725,7 +787,9 @@ int32_t lfermetrous3dbin_table(struct xvimage *image, int32_t connex, int32_t ta
 
   mctopo3d_table_init_topoCN3d();
 
-  if (tailletrous == -1) tailletrous = 1000000000;
+  if (tailletrous == -1) {
+    tailletrous = 1000000000;
+  }
 
   FAHP = CreeFahpVide(N);
   if (FAHP == NULL)
@@ -747,15 +811,25 @@ int32_t lfermetrous3dbin_table(struct xvimage *image, int32_t connex, int32_t ta
   }
   D = ULONGDATA(dist);
 
-  for (x = 0; x < N; x++) // inverse l'image
-    if (F[x]) F[x] = 0; else F[x] = NDG_MAX;
+  for (x = 0; x < N; x++) { // inverse l'image
+    if (F[x]) {
+      F[x] = 0;
+    } else {
+      F[x] = NDG_MAX;
+    }
+  }
   if (! lsedt_meijster(image, dist))
   {
     fprintf(stderr, "%s: lsedt_meijster failed\n", F_NAME);
     return 0;
   }
-  for (x = 0; x < N; x++) // inverse l'image
-    if (F[x]) F[x] = 0; else F[x] = NDG_MAX;
+  for (x = 0; x < N; x++) { // inverse l'image
+    if (F[x]) {
+      F[x] = 0;
+    } else {
+      F[x] = NDG_MAX;
+    }
+  }
 
   {
     double d;
@@ -771,18 +845,30 @@ int32_t lfermetrous3dbin_table(struct xvimage *image, int32_t connex, int32_t ta
   xmin = rs - 1; xmax = 0;
   ymin = cs - 1; ymax = 0;
   zmin = ds - 1; zmax = 0;
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    if (F[z * ps + y * rs + x])
-    {
-      F[z * ps + y * rs + x] = VAL_X;      /* marque X au passage */
-      if (x < xmin) xmin = x; else if (x > xmax) xmax = x;
-      if (y < ymin) ymin = y; else if (y > ymax) ymax = y;
-      if (z < zmin) zmin = z; else if (z > zmax) zmax = z;
-    } /* if (F[z * ps + y * rs + x]) */
-  } /* for z y x ... */
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        if (F[z * ps + y * rs + x]) {
+          F[z * ps + y * rs + x] = VAL_X; /* marque X au passage */
+          if (x < xmin) {
+            xmin = x;
+          } else if (x > xmax) {
+            xmax = x;
+          }
+          if (y < ymin) {
+            ymin = y;
+          } else if (y > ymax) {
+            ymax = y;
+          }
+          if (z < zmin) {
+            zmin = z;
+          } else if (z > zmax) {
+            zmax = z;
+          }
+        } /* if (F[z * ps + y * rs + x]) */
+      }   /* for z y x ... */
+    }
+  }
 
   if ((xmin == 0) || (ymin == 0) || (zmin == 0) || 
       (xmax == rs-1) || (ymax == cs-1) || (zmax == ds-1))
@@ -793,13 +879,15 @@ int32_t lfermetrous3dbin_table(struct xvimage *image, int32_t connex, int32_t ta
 
   /* marquage de Y \ X */
 
-  for (z = zmin; z <= zmax; z++)
-  for (y = ymin; y <= ymax; y++)
-  for (x = xmin; x <= xmax; x++)
-  {
-    if (!F[z * ps + y * rs + x]) 
-      F[z * ps + y * rs + x] = VAL_Y_X;    
-  } /* for z y x ... */
+  for (z = zmin; z <= zmax; z++) {
+    for (y = ymin; y <= ymax; y++) {
+      for (x = xmin; x <= xmax; x++) {
+        if (!F[z * ps + y * rs + x]) {
+          F[z * ps + y * rs + x] = VAL_Y_X;
+        }
+      } /* for z y x ... */
+    }
+  }
   if (connex == 26)
   {
     /* ========================================================= */
@@ -853,7 +941,11 @@ int32_t lfermetrous3dbin_table(struct xvimage *image, int32_t connex, int32_t ta
     return 0;
   }
 
-  for (x = 0; x < N; x++) if (F[x] != VAL_NULLE) F[x] = VAL_X;
+  for (x = 0; x < N; x++) {
+    if (F[x] != VAL_NULLE) {
+      F[x] = VAL_X;
+    }
+  }
 
   /* ================================================ */
   /* UN PEU DE MENAGE                                 */
@@ -891,7 +983,9 @@ int32_t lfermetrous3dbin2_table(struct xvimage *image, struct xvimage *guide, in
 
   mctopo3d_table_init_topoCN3d();
 
-  if (tailletrous == -1) tailletrous = 1000000000;
+  if (tailletrous == -1) {
+    tailletrous = 1000000000;
+  }
 
   FAHP = CreeFahpVide(N);
   if (FAHP == NULL)
@@ -913,15 +1007,25 @@ int32_t lfermetrous3dbin2_table(struct xvimage *image, struct xvimage *guide, in
   }
   D = ULONGDATA(dist);
 
-  for (x = 0; x < N; x++) // inverse l'image
-    if (F[x]) F[x] = 0; else F[x] = NDG_MAX;
+  for (x = 0; x < N; x++) { // inverse l'image
+    if (F[x]) {
+      F[x] = 0;
+    } else {
+      F[x] = NDG_MAX;
+    }
+  }
   if (! lsedt_meijster(guide, dist))
   {
     fprintf(stderr, "%s: lsedt_meijster failed\n", F_NAME);
     return 0;
   }
-  for (x = 0; x < N; x++) // inverse l'image
-    if (F[x]) F[x] = 0; else F[x] = NDG_MAX;
+  for (x = 0; x < N; x++) { // inverse l'image
+    if (F[x]) {
+      F[x] = 0;
+    } else {
+      F[x] = NDG_MAX;
+    }
+  }
 
   {
     double d;
@@ -937,18 +1041,30 @@ int32_t lfermetrous3dbin2_table(struct xvimage *image, struct xvimage *guide, in
   xmin = rs - 1; xmax = 0;
   ymin = cs - 1; ymax = 0;
   zmin = ds - 1; zmax = 0;
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    if (F[z * ps + y * rs + x])
-    {
-      F[z * ps + y * rs + x] = VAL_X;      /* marque X au passage */
-      if (x < xmin) xmin = x; else if (x > xmax) xmax = x;
-      if (y < ymin) ymin = y; else if (y > ymax) ymax = y;
-      if (z < zmin) zmin = z; else if (z > zmax) zmax = z;
-    } /* if (F[z * ps + y * rs + x]) */
-  } /* for z y x ... */
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        if (F[z * ps + y * rs + x]) {
+          F[z * ps + y * rs + x] = VAL_X; /* marque X au passage */
+          if (x < xmin) {
+            xmin = x;
+          } else if (x > xmax) {
+            xmax = x;
+          }
+          if (y < ymin) {
+            ymin = y;
+          } else if (y > ymax) {
+            ymax = y;
+          }
+          if (z < zmin) {
+            zmin = z;
+          } else if (z > zmax) {
+            zmax = z;
+          }
+        } /* if (F[z * ps + y * rs + x]) */
+      }   /* for z y x ... */
+    }
+  }
 
   if ((xmin == 0) || (ymin == 0) || (zmin == 0) || 
       (xmax == rs-1) || (ymax == cs-1) || (zmax == ds-1))
@@ -959,13 +1075,15 @@ int32_t lfermetrous3dbin2_table(struct xvimage *image, struct xvimage *guide, in
 
   /* marquage de Y \ X */
 
-  for (z = zmin; z <= zmax; z++)
-  for (y = ymin; y <= ymax; y++)
-  for (x = xmin; x <= xmax; x++)
-  {
-    if (!F[z * ps + y * rs + x]) 
-      F[z * ps + y * rs + x] = VAL_Y_X;    
-  } /* for z y x ... */
+  for (z = zmin; z <= zmax; z++) {
+    for (y = ymin; y <= ymax; y++) {
+      for (x = xmin; x <= xmax; x++) {
+        if (!F[z * ps + y * rs + x]) {
+          F[z * ps + y * rs + x] = VAL_Y_X;
+        }
+      } /* for z y x ... */
+    }
+  }
 
   if (connex == 26)
   {
@@ -1025,7 +1143,11 @@ int32_t lfermetrous3dbin2_table(struct xvimage *image, struct xvimage *guide, in
     return 0;
   }
 
-  for (x = 0; x < N; x++) if (F[x] != VAL_NULLE) F[x] = VAL_X;
+  for (x = 0; x < N; x++) {
+    if (F[x] != VAL_NULLE) {
+      F[x] = VAL_X;
+    }
+  }
 
   /* ================================================ */
   /* UN PEU DE MENAGE                                 */
@@ -1088,7 +1210,9 @@ int32_t lfermetrous3d(struct xvimage *image, int32_t connex, int32_t tailletrous
   fprintf(stderr, "%s: connex = %d, tailletrous = %d\n", F_NAME, connex, tailletrous);
 #endif
 
-  if (tailletrous == -1) tailletrous = 1000000000;
+  if (tailletrous == -1) {
+    tailletrous = 1000000000;
+  }
 
   mctopo3d_init_topo3d();
 
@@ -1134,33 +1258,47 @@ int32_t lfermetrous3d(struct xvimage *image, int32_t connex, int32_t tailletrous
     }
 
     /* met 1 voxel par cavite au niveau de la cavite */
-    for (x = 0; x < N; x++) 
+    for (x = 0; x < N; x++) {
       if (L[x] && !dejavu[L[x]])
-        { P[x] = F[x]; dejavu[L[x]] = 1; }
-      else
+        { P[x] = F[x]; dejavu[L[x]] = 1;
+      } else {
         P[x] = NDG_MAX;
+      }
+    }
 
     /* met le cadre a 0 */
-    for (x = 0; x < rs; x++)
-    for (y = 0; y < cs; y++) 
-      P[0 * ps + y * rs + x] = NDG_MIN;          /* plan z = 0 */
-    for (x = 0; x < rs; x++)
-    for (y = 0; y < cs; y++) 
-      P[(ds-1) * ps + y * rs + x] = NDG_MIN;     /* plan z = ds-1 */
+    for (x = 0; x < rs; x++) {
+      for (y = 0; y < cs; y++) {
+        P[0 * ps + y * rs + x] = NDG_MIN; /* plan z = 0 */
+      }
+    }
+    for (x = 0; x < rs; x++) {
+      for (y = 0; y < cs; y++) {
+        P[(ds - 1) * ps + y * rs + x] = NDG_MIN; /* plan z = ds-1 */
+      }
+    }
 
-    for (x = 0; x < rs; x++)
-    for (z = 0; z < ds; z++) 
-      P[z * ps + 0 * rs + x] = NDG_MIN;          /* plan y = 0 */
-    for (x = 0; x < rs; x++)
-    for (z = 0; z < ds; z++) 
-      P[z * ps + (cs-1) * rs + x] = NDG_MIN;     /* plan y = cs-1 */
+    for (x = 0; x < rs; x++) {
+      for (z = 0; z < ds; z++) {
+        P[z * ps + 0 * rs + x] = NDG_MIN; /* plan y = 0 */
+      }
+    }
+    for (x = 0; x < rs; x++) {
+      for (z = 0; z < ds; z++) {
+        P[z * ps + (cs - 1) * rs + x] = NDG_MIN; /* plan y = cs-1 */
+      }
+    }
 
-    for (y = 0; y < cs; y++)
-    for (z = 0; z < ds; z++) 
-      P[z * ps + y * rs + 0] = NDG_MIN;          /* plan x = 0 */
-    for (y = 0; y < cs; y++)
-    for (z = 0; z < ds; z++) 
-      P[z * ps + y * rs + (rs-1)] = NDG_MIN;     /* plan x = rs-1 */
+    for (y = 0; y < cs; y++) {
+      for (z = 0; z < ds; z++) {
+        P[z * ps + y * rs + 0] = NDG_MIN; /* plan x = 0 */
+      }
+    }
+    for (y = 0; y < cs; y++) {
+      for (z = 0; z < ds; z++) {
+        P[z * ps + y * rs + (rs - 1)] = NDG_MIN; /* plan x = rs-1 */
+      }
+    }
 
     free(dejavu);
     freeimage(l);

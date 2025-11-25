@@ -103,13 +103,14 @@ void tricroissant( int32_t * v, int32_t * vv, int32_t n )
   while (ECHANGES) 
   {
     ECHANGES = 0;
-    for (I = 1; I < n; I++) 
+    for (I = 1; I < n; I++) {
       if (vv[I] < vv[I - 1])
       {
         TEMP = v[I]; v[I] = v[I - 1]; v[I - 1] = TEMP;
         TEMP = vv[I]; vv[I] = vv[I - 1]; vv[I - 1] = TEMP;
         ECHANGES = 1;
       } /* for, if */
+    }
     n--;
   } /* while (ECHANGES) */
 } /* tricroissant() */
@@ -206,7 +207,9 @@ printf("DEBUT ETIQUETAGE MAXIMA\n");
       for (k = 0; k < 8; k += incr_vois)
       {
         y = voisin(x, k, rs, N);
-        if ((y != -1) && (M[y] == 0)) i++;   
+        if ((y != -1) && (M[y] == 0)) {
+          i++;
+        }
       } /* for (k = 0; k < 8; k += incr_vois) */
       V[x] = i;
     } /* if (M[x] == 0)*/
@@ -229,7 +232,14 @@ printf("DEBUT ETIQUETAGE MAXIMA\n");
       for (k = 0; k < 8; k += incr_vois)
       {
         y = voisin(x, k, rs, N);
-        if ((y!=-1) && (V[y]>2)) { if (v3 == 0) v1 = y; else v2 = y; v3++; }
+        if ((y!=-1) && (V[y]>2)) {
+          if (v3 == 0) {
+            v1 = y;
+          } else {
+            v2 = y;
+          }
+          v3++;
+        }
       } /* for (k = 0; k < 8; k += incr_vois) */
       if ((v3 == 2) && (voisins8(v1, v2, rs))) 
       { 
@@ -271,9 +281,11 @@ printf("REDUCTION %d,%d : EXTREMITE %d,%d\n", x%rs, x/rs, y%rs, y/rs);
   /* reduction des points multiples par detection des voisins non "pertinents" */
 
   FahPush(FAH, -1, 0);               /* force la creation du niveau 0 dans la Fah. */
-  for (x = 0; x < N; x++)
-    if (M[x] == 0)
+  for (x = 0; x < N; x++) {
+    if (M[x] == 0) {
       FahPush(FAH, x, F[x]);
+    }
+  }
   x = FahPop(FAH);
 
   while(!FahVide(FAH))
@@ -405,9 +417,13 @@ printf("PUSH : %d,%d \n", y%rs, y/rs);
     } /* for (k = 0; k < 8; k += incr_vois) */
   } /* while(!FahVide(FAH)) */
 
-  for (x = 0; x < N; x++)
-    if (IsSet(x, RETENU)) F[x] = NDG_MAX;
-    else                  F[x] = NDG_MIN;
+  for (x = 0; x < N; x++) {
+    if (IsSet(x, RETENU)) {
+      F[x] = NDG_MAX;
+    } else {
+      F[x] = NDG_MIN;
+    }
+  }
 
   /* ================================================ */
   /* UN PEU DE MENAGE                                 */

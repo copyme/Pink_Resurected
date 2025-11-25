@@ -132,9 +132,13 @@ int main(int argc, char **argv)
 	case VFF_TYP_1_BYTE:   pixel = SOURCEc[i]; break;
 	case VFF_TYP_4_BYTE:   pixel = SOURCEi[i]; break;
 	}
-	
-	if (min > pixel) min = pixel;
-	if (max < pixel) max = pixel;
+
+        if (min > pixel) {
+          min = pixel;
+        }
+        if (max < pixel) {
+          max = pixel;
+        }
       mean += (double)pixel;
       nbPoints++;
       }
@@ -145,9 +149,13 @@ int main(int argc, char **argv)
 	case VFF_TYP_4_BYTE:   pixel = SOURCEi[i]; break;
 	}
 	if (M[i]) {
-	  if (min > pixel) min = pixel;
-	  if (max < pixel) max = pixel;
-	  mean += (double)pixel;
+          if (min > pixel) {
+            min = pixel;
+          }
+          if (max < pixel) {
+            max = pixel;
+          }
+          mean += (double)pixel;
 	  nbPoints++;
 	}
       }
@@ -164,20 +172,28 @@ int main(int argc, char **argv)
     if (M == NULL) {
       for (i=0; i<N; i++) {
 	pixelf = SOURCEf[i];
-	
-	if (minf > pixelf) minf = pixelf;
-	if (maxf < pixelf) maxf = pixelf;
-	meanf += pixelf;
+
+        if (minf > pixelf) {
+          minf = pixelf;
+        }
+        if (maxf < pixelf) {
+          maxf = pixelf;
+        }
+        meanf += pixelf;
 	nbPoints++;
       }
     } else {
       for (i=0; i<N; i++) {
 	if (M[i]) {
 	  pixelf = SOURCEf[i];
-	  
-	  if (minf > pixelf) minf = pixelf;
-	  if (maxf < pixelf) maxf = pixelf;
-	  meanf += pixelf;
+
+          if (minf > pixelf) {
+            minf = pixelf;
+          }
+          if (maxf < pixelf) {
+            maxf = pixelf;
+          }
+          meanf += pixelf;
 	  nbPoints++;
 	}
       }

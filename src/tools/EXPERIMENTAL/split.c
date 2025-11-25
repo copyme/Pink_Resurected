@@ -125,7 +125,7 @@ int main(int argc, char **argv)
   T = SLONGDATA(restmp);
   R = SLONGDATA(result);
   memset(S, 0, N);
-  for (i = 0; i < N; i++) 
+  for (i = 0; i < N; i++) {
     if (I[i])
     {
       S[i] = 255;
@@ -142,6 +142,7 @@ int main(int argc, char **argv)
       R[i] = nbmax - 1;
       S[i] = 0;
     }
+  }
 
   writeimage(result, argv[argc-1]);
   freeimage(image);

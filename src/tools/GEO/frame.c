@@ -81,7 +81,11 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (argc == 4) width = atoi(argv[2]); else width = 1;
+  if (argc == 4) {
+    width = atoi(argv[2]);
+  } else {
+    width = 1;
+  }
 
   razimage(image);
   lsetthickframe(image, width, NDG_MAX);

@@ -136,17 +136,19 @@ static char currentMessageComplete = 1; /* TRUE */
 void LSTB_show_messages(void)
 {
     int i;
-    for(i=0;i<NumMsgs;++i)
-	puts(Msgs[i]);
+    for (i = 0; i < NumMsgs; ++i) {
+      puts(Msgs[i]);
+    }
 }
 
 void LSTB_clear_messages(void)
 {
     if(Msgs != NULL) {
 	int i;
-	for(i=0;i<NumMsgs;++i)
-	    free(Msgs[i]);
-	free(Msgs);
+        for (i = 0; i < NumMsgs; ++i) {
+          free(Msgs[i]);
+        }
+        free(Msgs);
 	Msgs = NULL;
 	NumMsgs = 0;
 	currentMessageComplete = 1;
@@ -182,9 +184,11 @@ int LSTB_add_message(const char * msg,...)
 		LSTB_append_line(tokenbuff);
 
 		/* Finish when we reach the end of the string */
-		if (buff[this_index] == '\0') break;
+                if (buff[this_index] == '\0') {
+                  break;
+                }
 
-		/* Update state for next loop */
+                /* Update state for next loop */
 		last_index = this_index + 1;
 	}
 

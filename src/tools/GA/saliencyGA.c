@@ -126,8 +126,9 @@ int main(int argc, char **argv)
 	fprintf(stderr, "%s: readimage failed\n", argv[0]);
 	exit(1);
       }
-  } else 
+  } else {
     annexe = NULL;
+  }
   if (saliencyGa(ga, param, annexe) != 1)
   {
     fprintf(stderr, "%s: flowLPEAttributOpenning failed\n", argv[0]);

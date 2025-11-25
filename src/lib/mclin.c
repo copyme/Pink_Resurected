@@ -92,7 +92,9 @@ double * lin_duplicate(double *A, int32_t n, int32_t m)
     fprintf(stderr, "%s: malloc failed\n", F_NAME);
     exit(0);
   }
-  for (i = 0; i < n * m; i++) z[i] = A[i];
+  for (i = 0; i < n * m; i++) {
+    z[i] = A[i];
+  }
   return z;
 } // lin_duplicate()
 
@@ -115,7 +117,9 @@ double * lin_zeros(int32_t n, int32_t m)
     fprintf(stderr, "%s: malloc failed\n", F_NAME);
     exit(0);
   }
-  for (i = 0; i < n * m; i++) z[i] = 0.0;
+  for (i = 0; i < n * m; i++) {
+    z[i] = 0.0;
+  }
   return z;
 } // lin_zeros()
 
@@ -138,7 +142,9 @@ double * lin_ones(int32_t n, int32_t m)
     fprintf(stderr, "%s: malloc failed\n", F_NAME);
     exit(0);
   }
-  for (i = 0; i < n * m; i++) z[i] = 1.0;
+  for (i = 0; i < n * m; i++) {
+    z[i] = 1.0;
+  }
   return z;
 } // lin_ones()
 
@@ -155,8 +161,9 @@ void lin_printmat(double * mat, int32_t n, int32_t m)
   int32_t i, j;
   for (i = 0; i < n; i++)
   {
-    for (j = 0; j < m; j++)  
+    for (j = 0; j < m; j++) {
       printf("%6g   ", mat[i * m + j]);
+    }
     printf("\n");
   }          
   printf("\n");
@@ -174,8 +181,11 @@ double lin_min(double * mat, int32_t n, int32_t m)
 */
 {
   int32_t i; double min = mat[0];
-  for (i = 1; i < n*m; i++)
-    if (min < mat[i]) min = mat[i];
+  for (i = 1; i < n * m; i++) {
+    if (min < mat[i]) {
+      min = mat[i];
+    }
+  }
   return min;
 } // lin_min()
 
@@ -191,8 +201,11 @@ double lin_max(double * mat, int32_t n, int32_t m)
 */
 {
   int32_t i; double max = mat[0];
-  for (i = 1; i < n*m; i++)
-    if (max < mat[i]) max = mat[i];
+  for (i = 1; i < n * m; i++) {
+    if (max < mat[i]) {
+      max = mat[i];
+    }
+  }
   return max;
 } // lin_max()
 
@@ -208,7 +221,9 @@ double lin_sum(double * mat, int32_t n, int32_t m)
 */
 {
   int32_t i; double sum = 0.0;
-  for (i = 0; i < n*m; i++) sum += mat[i];
+  for (i = 0; i < n * m; i++) {
+    sum += mat[i];
+  }
   return sum;
 } // lin_sum()
 
@@ -224,7 +239,9 @@ double lin_norme2(double * mat, int32_t n, int32_t m)
 */
 {
   int32_t i; double sum = 0.0;
-  for (i = 0; i < n*m; i++) sum += (mat[i] * mat[i]);
+  for (i = 0; i < n * m; i++) {
+    sum += (mat[i] * mat[i]);
+  }
   return sqrt(sum);
 } // lin_norme2()
 
@@ -239,7 +256,9 @@ double lin_normevec2(double * vec, int32_t n)
 */
 {
   int32_t i; double sum = 0.0;
-  for (i = 0; i < n; i++) sum += (vec[i] * vec[i]);
+  for (i = 0; i < n; i++) {
+    sum += (vec[i] * vec[i]);
+  }
   return sqrt(sum);
 } // lin_normevec2()
 
@@ -253,13 +272,14 @@ void lin_transpose(double * mat, int32_t n)
 */
 {
   int32_t i, j; double t;
-  for (i = 0; i < n; i++)
+  for (i = 0; i < n; i++) {
     for (j = i+1; j < n; j++)  
     {
       t = mat[i*n+j];
       mat[i*n+j] = mat[j*n+i];
       mat[j*n+i] = t;
     }
+  }
 } // lin_transpose()
 
 /* ==================================== */
@@ -289,7 +309,9 @@ void lin_multscal(double * A, double r, int32_t n, int32_t m)
 */
 {
   int32_t i;
-  for (i = 0; i < n * m; i++) A[i] *= r;
+  for (i = 0; i < n * m; i++) {
+    A[i] *= r;
+  }
 } // lin_multscal()
 
 /* ==================================== */
@@ -304,7 +326,9 @@ void lin_multpoint(double * A, double * B, int32_t n, int32_t m)
 */
 {
   int32_t i;
-  for (i = 0; i < n * m; i++) A[i] *= B[i];
+  for (i = 0; i < n * m; i++) {
+    A[i] *= B[i];
+  }
 } // lin_multpoint()
 
 /* ==================================== */
@@ -319,7 +343,9 @@ void lin_sub(double * A, double * B, int32_t n, int32_t m)
 */
 {
   int32_t i;
-  for (i = 0; i < n * m; i++) A[i] -= B[i];
+  for (i = 0; i < n * m; i++) {
+    A[i] -= B[i];
+  }
 } // lin_sub()
 
 /* ==================================== */
@@ -334,7 +360,9 @@ void lin_add(double * A, double * B, int32_t n, int32_t m)
 */
 {
   int32_t i;
-  for (i = 0; i < n * m; i++) A[i] += B[i];
+  for (i = 0; i < n * m; i++) {
+    A[i] += B[i];
+  }
 } // lin_add()
 
 /* ==================================== */
@@ -353,14 +381,16 @@ void lin_mult(double * A, double * B , double * R, int32_t p, int32_t q, int32_t
 {
   double t;
   int32_t i, j, k;
-  for (i = 0; i < p; i++)
+  for (i = 0; i < p; i++) {
     for (j = 0; j < r; j++)  
     {
       t = 0.0;
-      for (k = 0; k < q; k++)  
+      for (k = 0; k < q; k++) {
         t += A[i * q + k] * B[k * r + j];
-      R[i * r + j] = t;    
+      }
+      R[i * r + j] = t;
     }
+  }
 } // lin_mult()
 
 /* ==================================== */
@@ -381,14 +411,16 @@ void lin_multAtB(double * A, double * B , double * R, int32_t nA, int32_t mA, in
 {
   double t;
   int32_t i, j, k;
-  for (i = 0; i < mA; i++)
+  for (i = 0; i < mA; i++) {
     for (j = 0; j < mB; j++)  
     {
       t = 0.0;
-      for (k = 0; k < nA; k++)  
+      for (k = 0; k < nA; k++) {
         t += A[k * mA + i] * B[k * mB + j];
-      R[i * mB + j] = t;    
+      }
+      R[i * mB + j] = t;
     }
+  }
 } // lin_multAtB()
 
 /* ==================================== */
@@ -486,7 +518,9 @@ int32_t lin_decomposition_LUP(double * A, int32_t * pi, int32_t n)
 {
   double p, t;
   int32_t i, j, k, kp;
-  for (i = 0; i < n; i++) pi[i] = i;
+  for (i = 0; i < n; i++) {
+    pi[i] = i;
+  }
 
   for (k = 0; k < n; k++)
   {
@@ -496,18 +530,25 @@ int32_t lin_decomposition_LUP(double * A, int32_t * pi, int32_t n)
       t = mcabs(A[i*n+k]);
       if (t > p) { p = t; kp = i; }
     }
-    if (p < MCLIN_EPSILON) return 0;
+    if (p < MCLIN_EPSILON) {
+      return 0;
+    }
     t = pi[k]; pi[k] = pi[kp]; pi[kp] = t; // echange
     for (i = 0; i < n; i++)
     {  t = A[k*n+i]; A[k*n+i] = A[kp*n+i]; A[kp*n+i] = t; } // echange
     for (i = k+1; i < n; i++)
     {
       A[i*n+k] /= A[k*n+k];
-      for (j = k+1; j < n; j++)
-        A[i*n+j] -= (A[i*n+k] * A[k*n+j]);
+      for (j = k + 1; j < n; j++) {
+        A[i * n + j] -= (A[i * n + k] * A[k * n + j]);
+      }
     }    
   }
-  for (k = 0; k < n; k++) if (mcabs(A[k*n+k]) < MCLIN_EPSILON) return 0; 
+  for (k = 0; k < n; k++) {
+    if (mcabs(A[k * n + k]) < MCLIN_EPSILON) {
+      return 0;
+    }
+  }
   return 1;
 } // lin_decomposition_LUP()
 
@@ -532,36 +573,39 @@ int32_t lin_decomposition_cholesky(double * a, double * l, int32_t n)
     exit(0);
   }
 
-  for (i=0; i<n; i++)
+  for (i = 0; i < n; i++) {
     for (j=i; j<n; j++)  
     {
-      for (sum=a[i*n+j],k=i-1;k>=0;k--) sum -= a[i*n+k]*a[j*n+k];
+      for (sum = a[i * n + j], k = i - 1; k >= 0; k--) {
+        sum -= a[i * n + k] * a[j * n + k];
+      }
       if (i == j) 
       {
 	if (sum<=0.0)  
 	{
 	  printf("i = %d , j = %d, sum = %g\n", i, j, sum);
           return 0;
-	}
-	else 
-	  p[i]=sqrt(sum); 
+        } else {
+          p[i]=sqrt(sum);
+        }
       }
       else 
       {
 	a[j*n+i]=sum/p[i];
       }
     } // for i,j
+  }
 
   for (i=0; i<n; i++)  
   {
-    for (j=i; j<n; j++)  
-      if (i==j)
-	l[i*n+i] = p[i];
-      else
-      {
-	l[j*n+i]=a[j*n+i];  
+    for (j = i; j < n; j++) {
+      if (i == j) {
+        l[i*n+i] = p[i];
+      } else {
+        l[j*n+i]=a[j*n+i];  
 	l[i*n+j]=0.0;
-      }    
+      }
+    }
   }
   free(p);
   return 1;
@@ -591,49 +635,57 @@ int32_t lin_inverse_gauss(double *TB, double *InvB, int32_t N)
       double *B = (double *)calloc((N+1) * (N+2), sizeof(double));
       double *A = (double *)calloc((N+1) * (N+1) * 2, sizeof(double));
       double eps = 10e-20;
-      
-      for(k=1;k<=N;k++)
-	for(j=1;j<=N;j++)
-	  B[k*mB+j]=TB[(k-1)*N+j-1];
-      
+
+      for (k = 1; k <= N; k++) {
+        for (j = 1; j <= N; j++) {
+          B[k * mB + j] = TB[(k - 1) * N + j - 1];
+        }
+      }
+
       for (k=1;k<=N;k++)
       {
-	for (j=1;j<=N+1;j++)
-	  A[k*mA+j]=B[k*mB+j];
-	for (j=N+2;j<=2*N+1;j++)
-	  A[k*mA+j]=(double)0;
-	A[k*mA + k-1+N+2]=(double)1;
+        for (j = 1; j <= N + 1; j++) {
+          A[k * mA + j] = B[k * mB + j];
+        }
+        for (j = N + 2; j <= 2 * N + 1; j++) {
+          A[k * mA + j] = (double)0;
+        }
+        A[k*mA + k-1+N+2]=(double)1;
       }
       for (k=1;k<=N;k++)
       {
 	maxpivot=mcabs(A[k*mA+k]);
 	npivot=k;
-	for (i=k;i<=N;i++)
-	  if (maxpivot>mcabs(A[i*mA+k])) // 2/3/2006 : cor. BUG ( < )
+        for (i = k; i <= N; i++) {
+          if (maxpivot>mcabs(A[i*mA+k])) // 2/3/2006 : cor. BUG ( < )
 	  {
 	    maxpivot=mcabs(A[i*mA+k]);
 	    npivot=i;
-	  }
-	if (maxpivot>=eps)
-	{      
-	  if (npivot!=k)
-	    for (j=k;j<=2*N+1;j++)
+          }
+        }
+        if (maxpivot>=eps)
+	{
+          if (npivot != k) {
+            for (j=k;j<=2*N+1;j++)
 	    {
 	      temp=A[npivot*mA+j];
 	      A[npivot*mA+j]=A[k*mA+j];
 	      A[k*mA+j]=temp;
-	    } ;
-	  D=A[k*mA+k];
-	  for (j=2*N+1;j>=k;j--)
-	    A[k*mA+j]=A[k*mA+j]/D;
-	  for (i=1;i<=N;i++)
+	    }
+          };
+          D=A[k*mA+k];
+          for (j = 2 * N + 1; j >= k; j--) {
+            A[k * mA + j] = A[k * mA + j] / D;
+          }
+          for (i=1;i<=N;i++)
 	  {
 	    if (i!=k)
 	    {
 	      mult=A[i*mA+k];
-	      for (j=2*N+1;j>=k;j--)
-		A[i*mA+j]=A[i*mA+j]-mult*A[k*mA+j] ;
-	    }
+              for (j = 2 * N + 1; j >= k; j--) {
+                A[i * mA + j] = A[i * mA + j] - mult * A[k * mA + j];
+              }
+            }
 	  }
 	}
 	else
@@ -643,9 +695,11 @@ int32_t lin_inverse_gauss(double *TB, double *InvB, int32_t N)
 	}
       }
       /* Copie le résultat dans la matrice InvB */
-      for (k=1,p=0;k<=N;k++,p++)
-	for (j=N+2,q=0;j<=2*N+1;j++,q++)
-	  InvB[p*N+q]=A[k*mA+j];
+      for (k = 1, p = 0; k <= N; k++, p++) {
+        for (j = N + 2, q = 0; j <= 2 * N + 1; j++, q++) {
+          InvB[p * N + q] = A[k * mA + j];
+        }
+      }
       return 1;
 } // lin_inverse_gauss()
     
@@ -680,14 +734,18 @@ int32_t lin_jacobi(double * A, int32_t n, double * D, double * V, int32_t nrot)
 	double *b = (double *)calloc((n+1), sizeof(double));
 	double *z = (double *)calloc((n+1), sizeof(double));
 	double *d = (double *)calloc((n+1), sizeof(double));
-	
-	for (ip=1;ip<=n;ip++)  // transfert A -> a
-	  for (iq=1;iq<=n;iq++) 
-            a[ip*N+iq] = A[(ip-1)*n + iq-1];
 
-	for (ip=1;ip<=n;ip++) {
-	  for (iq=1;iq<=n;iq++) v[ip*N+iq]=0.0;
-	  v[ip*N+ip]=1.0;
+        for (ip = 1; ip <= n; ip++) { // transfert A -> a
+          for (iq = 1; iq <= n; iq++) {
+            a[ip * N + iq] = A[(ip - 1) * n + iq - 1];
+          }
+        }
+
+        for (ip=1;ip<=n;ip++) {
+          for (iq = 1; iq <= n; iq++) {
+            v[ip * N + iq] = 0.0;
+          }
+          v[ip*N+ip]=1.0;
 	}
 	for (ip=1;ip<=n;ip++) {
 	  b[ip]=d[ip]=a[ip*N+ip];
@@ -697,30 +755,36 @@ int32_t lin_jacobi(double * A, int32_t n, double * D, double * V, int32_t nrot)
 	for (i=1;i<=50;i++) {
 	  sm=0.0;
 	  for (ip=1;ip<=n-1;ip++) {
-	    for (iq=ip+1;iq<=n;iq++)
-	      sm += mcabs(a[ip*N+iq]);
-	  }
-	  if (sm == 0.0) goto fin;
-	  if (i < 4)
-	    tresh=0.2*sm/(n*n);
-	  else
-	    tresh=0.0;
-	  for (ip=1;ip<=n-1;ip++) {
+            for (iq = ip + 1; iq <= n; iq++) {
+              sm += mcabs(a[ip * N + iq]);
+            }
+          }
+          if (sm == 0.0) {
+            goto fin;
+          }
+          if (i < 4) {
+            tresh=0.2*sm/(n*n);
+          } else {
+            tresh = 0.0;
+          }
+          for (ip=1;ip<=n-1;ip++) {
 	    for (iq=ip+1;iq<=n;iq++) {
 	      g=100.0*mcabs(a[ip*N+iq]);
-	      if (i > 4 && mcabs(d[ip])+g == mcabs(d[ip])
-		  && mcabs(d[iq])+g == mcabs(d[iq]))
-		a[ip*N+iq]=0.0;
-	      else if (mcabs(a[ip*N+iq]) > tresh) {
-		h=d[iq]-d[ip];
-		if (mcabs(h)+g == mcabs(h))
-		  t=(a[ip*N+iq])/h;
-		else {
-		  theta=0.5*h/(a[ip*N+iq]);
+              if (i > 4 && mcabs(d[ip]) + g == mcabs(d[ip]) &&
+                  mcabs(d[iq]) + g == mcabs(d[iq])) {
+                a[ip*N+iq]=0.0;
+              } else if (mcabs(a[ip * N + iq]) > tresh) {
+                h=d[iq]-d[ip];
+                if (mcabs(h) + g == mcabs(h)) {
+                  t=(a[ip*N+iq])/h;
+                } else {
+                  theta=0.5*h/(a[ip*N+iq]);
 		  t=1.0/(mcabs(theta)+sqrt(1.0+theta*theta));
-		  if (theta < 0.0) t = -t;
-		}
-		c=1.0/sqrt(1+t*t);
+                  if (theta < 0.0) {
+                    t = -t;
+                  }
+                }
+                c=1.0/sqrt(1+t*t);
 		s=t*c;
 		tau=s/(1.0+c);
 		h=t*a[ip*N+iq];
@@ -742,8 +806,8 @@ int32_t lin_jacobi(double * A, int32_t n, double * D, double * V, int32_t nrot)
 		  ROTATE(v,j,ip,j,iq,tau,s,N);
 		  }
 		++nrot;
-	      }
-	    }
+              }
+            }
 	  }
 	  for (ip=1;ip<=n;ip++) {
 	    b[ip] += z[ip];
@@ -754,11 +818,14 @@ int32_t lin_jacobi(double * A, int32_t n, double * D, double * V, int32_t nrot)
 	printf("Too many iterations in routine JACOBI");
         return 0;
       fin:
-	for (ip=1;ip<=n;ip++)  // transfert v -> V
-	  for (iq=1;iq<=n;iq++) 
-            V[(ip-1)*n + iq-1] = v[ip*N+iq];
-	for (ip=1;ip<=n;ip++)  // transfert d -> D
-          D[ip-1] = d[ip];
+        for (ip = 1; ip <= n; ip++) { // transfert v -> V
+          for (iq = 1; iq <= n; iq++) {
+            V[(ip - 1) * n + iq - 1] = v[ip * N + iq];
+          }
+        }
+        for (ip = 1; ip <= n; ip++) { // transfert d -> D
+          D[ip - 1] = d[ip];
+        }
         free(a);
         free(b);
         free(z);
@@ -779,10 +846,16 @@ void lin_permutmat(int32_t * pi, double * P, int32_t n)
 */
 {
   int32_t i, j;
-  
-  for (i = 0; i < n; i++)
-    for (j = 0; j < n; j++)
-      if (pi[i] == j) P[i*n+j] = 1; else P[i*n+j] = 0;
+
+  for (i = 0; i < n; i++) {
+    for (j = 0; j < n; j++) {
+      if (pi[i] == j) {
+        P[i * n + j] = 1;
+      } else {
+        P[i * n + j] = 0;
+      }
+    }
+  }
 } // lin_permutmat()
 
 /* ==================================== */
@@ -798,15 +871,18 @@ void lin_LU(double * A, double * L, double * U, int32_t n)
 */
 {
   int32_t i, j;
-  
-  for (i = 0; i < n; i++)
-    for (j = 0; j < n; j++)
+
+  for (i = 0; i < n; i++) {
+    for (j = 0; j < n; j++) {
       if (i > j)
       { L[i*n+j] = A[i*n+j]; U[i*n+j] = 0; }
       else if (i == j)
       { L[i*n+j] = 1; U[i*n+j] = A[i*n+j]; }
       else
-      { U[i*n+j] = A[i*n+j]; L[i*n+j] = 0; }
+      { U[i*n+j] = A[i*n+j]; L[i*n+j] = 0;
+      }
+    }
+  }
 } // lin_LU()
 
 /* ==================================== */
@@ -833,7 +909,9 @@ void lin_solveLUP(double * LU, int32_t *P, double * b, double * x, int32_t n)
   for (i = 0; i < n; i++)
   {
     t = 0;
-    for (j = 0; j < i; j++) t += LU[i*n+j] * y[j];
+    for (j = 0; j < i; j++) {
+      t += LU[i * n + j] * y[j];
+    }
     y[i] = b[P[i]] - t;  
   }
 
@@ -842,7 +920,9 @@ void lin_solveLUP(double * LU, int32_t *P, double * b, double * x, int32_t n)
   for (i = n-1; i >= 0; i--)
   {
     t = 0;
-    for (j = i+1; j < n; j++) t += LU[i*n+j] * x[j];
+    for (j = i + 1; j < n; j++) {
+      t += LU[i * n + j] * x[j];
+    }
     x[i] = (y[i] - t) / LU[i*n+i];  
     //printf("t = %g\n", t);
   }
@@ -895,9 +975,11 @@ int32_t lin_solvebidiag(double * A, double * b, double * x, int32_t n)
 #define F_NAME "lin_solvebidiag"
 {
   int32_t i;
-  for (i = n-1; i >= 0; i--)
-    if (fabs(A[i*n+i]) < MCLIN_EPSILON) 
+  for (i = n - 1; i >= 0; i--) {
+    if (fabs(A[i * n + i]) < MCLIN_EPSILON) {
       return 0;
+    }
+  }
   x[n-1] = b[n-1] / A[(n-1)*n + n-1];
   for (i = n-2; i >= 0; i--)
   {
@@ -927,7 +1009,9 @@ int32_t lin_solvetridiag(double * A, double * b, double * x, int32_t n)
   {
     A[(i)*n + i] = A[(i-1)*n + i] * A[(i)*n + i-1] - 
                    A[(i-1)*n + i-1] * A[(i)*n + i];
-    if (i < n-1) A[(i)*n + i+1] = - A[(i-1)*n + i-1] * A[(i)*n + i+1];
+    if (i < n - 1) {
+      A[(i)*n + i + 1] = -A[(i - 1) * n + i - 1] * A[(i)*n + i + 1];
+    }
     b[i] = A[(i)*n + i-1] * b[i-1] - A[(i-1)*n + i-1] * b[i];
     // A[(i)*n + i-1] = 0.0; // inutile pour la suite 
   }
@@ -971,7 +1055,9 @@ int32_t lin_invmat3(double *ma, double *mr)
 /* ==================================== */
 {
   double det = lin_det3( ma );
-  if ( fabs( det ) < MCLIN_EPSILON ) return 0;
+  if (fabs(det) < MCLIN_EPSILON) {
+    return 0;
+  }
   mr[0*3+0] =  ( ma[1*3+1]*ma[2*3+2] - ma[1*3+2]*ma[2*3+1] ) / det;
   mr[0*3+1] = -( ma[0*3+1]*ma[2*3+2] - ma[2*3+1]*ma[0*3+2] ) / det;
   mr[0*3+2] =  ( ma[0*3+1]*ma[1*3+2] - ma[1*3+1]*ma[0*3+2] ) / det;
@@ -1009,7 +1095,9 @@ int32_t lin_inverseLUP(double * A, double * R, int32_t n)
     exit(0);
   }
   ret = lin_decomposition_LUP(A, pi, n);
-  if (ret == 0) return 0;
+  if (ret == 0) {
+    return 0;
+  }
 
   x = (double *)calloc(1,n * sizeof(double));
   e = (double *)calloc(n, sizeof(double));
@@ -1020,9 +1108,14 @@ int32_t lin_inverseLUP(double * A, double * R, int32_t n)
   }
   for (i = 0; i < n; i++)
   {
-    e[i] = 1; if (i > 0) e[i-1] = 0; // prepare e_i
+    e[i] = 1;
+    if (i > 0) {
+      e[i - 1] = 0; // prepare e_i
+    }
     lin_solveLUP(A, pi, e, x, n);
-    for (j = 0; j < n; j++) R[j*n+i] = x[j];
+    for (j = 0; j < n; j++) {
+      R[j * n + i] = x[j];
+    }
   }
   free(x);
   free(e);
@@ -1054,29 +1147,41 @@ int32_t lin_trouvemin(double * x, double * d, double (*F)(double *, int32_t), in
     for (i = 0; i < n; i++)
     {
       x[i] += d[i]; Fplusd = (*F)(x, n); x[i] -= d[i];
-      if (Fplusd < Fcur) newx[i] = x[i] + d[i];
-      else
-      {
+      if (Fplusd < Fcur) {
+        newx[i] = x[i] + d[i];
+      } else {
         x[i] -= d[i]; Fmoinsd = (*F)(x, n); x[i] += d[i];
-        if (Fmoinsd < Fcur) newx[i] = x[i] - d[i];
-        else
+        if (Fmoinsd < Fcur) {
+          newx[i] = x[i] - d[i];
+        } else {
           d[i] = d[i] / 2;
+        }
       }
     } // for (i = 0; i < n; i++)
     // nouveau x = barycentre des nouvelles positions dans chaque dimension
-    for (i = 0; i < n; i++)
-      x[i] = ((n-1) * x[i] + newx[i]) / n; 
+    for (i = 0; i < n; i++) {
+      x[i] = ((n-1) * x[i] + newx[i]) / n;
+    }
     // update Fcur
     Fcur = (*F)(x, n);
     // test stabilite
-    for (i = 0; i < n; i++)
-      if (d[i] > precision[i]) break; // sort du for i
-    if (i == n) break; // sort du for k
+    for (i = 0; i < n; i++) {
+      if (d[i] > precision[i]) {
+        break; // sort du for i
+      }
+    }
+    if (i == n) {
+      break; // sort du for k
+    }
   } // for (k = 0; k < MAXITER; k++)
 
   free(newx);
-  if (k < MAXITER) return k+1; else return 0;
- 
+  if (k < MAXITER) {
+    return k + 1;
+  } else {
+    return 0;
+  }
+
 } // lin_trouvemin()
 
 /* ==================================== */
@@ -1134,7 +1239,9 @@ int32_t lidentifyline(double *pbx, double *pby, int32_t npb, double *a, double *
   free(RtXtY);
   free(YtY);
   free(R);
-  if (noresult) return 0;
+  if (noresult) {
+    return 0;
+  }
   return 1;
 } /* lidentifyline() */
 
@@ -1195,7 +1302,9 @@ int32_t lidentifyparabola3(double *pbx, double *pby, int32_t npb, double *a, dou
   free(RtXtY);
   free(YtY);
   free(R);
-  if (noresult) return 0;
+  if (noresult) {
+    return 0;
+  }
   return 1;
 } /* lidentifyparabola() */
 
@@ -1254,7 +1363,9 @@ int32_t lidentifyparabola2(double *pbx, double *pby, int32_t npb, double *a, dou
   free(RtXtY);
   free(YtY);
   free(R);
-  if (noresult) return 0;
+  if (noresult) {
+    return 0;
+  }
   return 1;
 } /* lidentifyparabola() */
 
@@ -1387,7 +1498,9 @@ int32_t lidentifyplane(double *pbx, double *pby, double *pbz, index_t npb, doubl
   free(RtXtY);
   free(YtY);
   free(R);
-  if (noresult) return 0;
+  if (noresult) {
+    return 0;
+  }
   return 1;
 } /* lidentifyplane() */
 

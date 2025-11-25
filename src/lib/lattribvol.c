@@ -135,9 +135,15 @@ int32_t lsegmentvol(struct xvimage *image, int32_t connex, int32_t param, int32_
   /* INITIALISATIONS                                  */
   /* ================================================ */
 
-  for (i = 0; i < N; i++) STATUS[i] = NOT_ANALYZED;
+  for (i = 0; i < N; i++) {
+    STATUS[i] = NOT_ANALYZED;
+  }
   k = 0;             /* recherche un pixel k de niveau de gris minimal dans l'image */
-  for (i = 1; i < N; i++) if (F[i] < F[k]) k = i;
+  for (i = 1; i < N; i++) {
+    if (F[i] < F[k]) {
+      k = i;
+    }
+  }
   FahsPush(FAHS, k, F[k]);
 
 #ifdef VERBOSE
@@ -148,10 +154,12 @@ int32_t lsegmentvol(struct xvimage *image, int32_t connex, int32_t param, int32_
   /* APPEL FONCTION RECURSIVE flood                   */
   /* ================================================ */
 
-  if ((connex == 4) || (connex == 8))
-    (void)flood(F[k], FAHS, STATUS, number_nodes, node_at_level, TREE, incr_vois, rs, N, F); 
-  else
-    (void)flood3d(F[k], FAHS, STATUS, number_nodes, node_at_level, TREE, connex, rs, ps, N, F);
+  if ((connex == 4) || (connex == 8)) {
+    (void)flood(F[k], FAHS, STATUS, number_nodes, node_at_level, TREE, incr_vois, rs, N, F);
+  } else {
+    (void)flood3d(F[k], FAHS, STATUS, number_nodes, node_at_level, TREE, connex,
+                  rs, ps, N, F);
+  }
 
 #ifdef VERBOSE
   fprintf(stderr, "flood terminee\n");
@@ -181,8 +189,9 @@ int32_t lsegmentvol(struct xvimage *image, int32_t connex, int32_t param, int32_
   fprintf(stderr, "FiltreVolRec terminee\n");
 #endif
 
-  if ( maximise )
+  if (maximise) {
     (void)MaximiseSegmentation(CTREE, 0);
+  }
 
   nbcomp = NbLeafs(CTREE, 0);
 
@@ -271,9 +280,15 @@ int32_t lvolmaxima(struct xvimage *image, int32_t connex, int32_t param)
   /* INITIALISATIONS                                  */
   /* ================================================ */
 
-  for (i = 0; i < N; i++) STATUS[i] = NOT_ANALYZED;
+  for (i = 0; i < N; i++) {
+    STATUS[i] = NOT_ANALYZED;
+  }
   k = 0;             /* recherche un pixel k de niveau de gris minimal dans l'image */
-  for (i = 1; i < N; i++) if (F[i] < F[k]) k = i;
+  for (i = 1; i < N; i++) {
+    if (F[i] < F[k]) {
+      k = i;
+    }
+  }
   FahsPush(FAHS, k, F[k]);
 
 #ifdef VERBOSE
@@ -283,11 +298,12 @@ int32_t lvolmaxima(struct xvimage *image, int32_t connex, int32_t param)
   /* ================================================ */
   /* APPEL FONCTION RECURSIVE flood                   */
   /* ================================================ */
-  
-  if ((connex == 4) || (connex == 8))
-    (void)flood(F[k], FAHS, STATUS, number_nodes, node_at_level, TREE, incr_vois, rs, N, F); 
-  else
-    (void)flood3d(F[k], FAHS, STATUS, number_nodes, node_at_level, TREE, connex, rs, ps, N, F); 
+
+  if ((connex == 4) || (connex == 8)) {
+    (void)flood(F[k], FAHS, STATUS, number_nodes, node_at_level, TREE, incr_vois, rs, N, F);
+  } else {
+    (void)flood3d(F[k], FAHS, STATUS, number_nodes, node_at_level, TREE, connex, rs, ps, N, F);
+  }
 
 #ifdef VERBOSE
   fprintf(stderr, "flood terminee\n");
@@ -400,9 +416,15 @@ int32_t lvolselnb(struct xvimage *image, int32_t connex, int32_t param)
   /* INITIALISATIONS                                  */
   /* ================================================ */
 
-  for (i = 0; i < N; i++) STATUS[i] = NOT_ANALYZED;
+  for (i = 0; i < N; i++) {
+    STATUS[i] = NOT_ANALYZED;
+  }
   k = 0;             /* recherche un pixel k de niveau de gris minimal dans l'image */
-  for (i = 1; i < N; i++) if (F[i] < F[k]) k = i;
+  for (i = 1; i < N; i++) {
+    if (F[i] < F[k]) {
+      k = i;
+    }
+  }
   FahsPush(FAHS, k, F[k]);
 
 #ifdef VERBOSE
@@ -413,10 +435,12 @@ int32_t lvolselnb(struct xvimage *image, int32_t connex, int32_t param)
   /* APPEL FONCTION RECURSIVE flood                   */
   /* ================================================ */
 
-  if ((connex == 4) || (connex == 8))
-    (void)flood(F[k], FAHS, STATUS, number_nodes, node_at_level, TREE, incr_vois, rs, N, F); 
-  else
-    (void)flood3d(F[k], FAHS, STATUS, number_nodes, node_at_level, TREE, connex, rs, ps, N, F);
+  if ((connex == 4) || (connex == 8)) {
+    (void)flood(F[k], FAHS, STATUS, number_nodes, node_at_level, TREE, incr_vois, rs, N, F);
+  } else {
+    (void)flood3d(F[k], FAHS, STATUS, number_nodes, node_at_level, TREE, connex,
+                  rs, ps, N, F);
+  }
 
 #ifdef VERBOSE
   fprintf(stderr, "flood terminee\n");
@@ -450,7 +474,9 @@ int32_t lvolselnb(struct xvimage *image, int32_t connex, int32_t param)
   {   fprintf(stderr, "lvolselnb() : malloc failed\n");
       return(0);
   }
-  for (i = 0; i < nbcomp; i++) A[i] = i;
+  for (i = 0; i < nbcomp; i++) {
+    A[i] = i;
+  }
   i_TriRapideStochastique (A, cpct->vol, 0, nbcomp-1);
   i = 0;
   while ((nbfeuilles > param) && (i < nbcomp))
@@ -462,14 +488,16 @@ int32_t lvolselnb(struct xvimage *image, int32_t connex, int32_t param)
       cpct->flags[A[i]] |= FILTERED_OUT;
       cpct->flags[A[i]] &= ~LEAF;
       k = cpct->pere[A[i]];
-      if (NbFilsNonFiltres(cpct, k) != 0) 
+      if (NbFilsNonFiltres(cpct, k) != 0) {
         nbfeuilles--;
-      else
+      } else {
         cpct->flags[k] |= LEAF;
+      }
     }
 #ifdef PARANO
-    else
+    else {
       printf("Erreur imprevue : Composante non feuille : %d\n", A[i]);
+    }
 #endif
     i++;
   } // while ((nbfeuilles > param) && (i < nbcomp))

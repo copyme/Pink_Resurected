@@ -116,8 +116,9 @@ int32_t llocalextrema(
 
     // Copy image
     F2 = UCHARDATA(img);
-    for (x=0; x<N; x++)
+    for (x = 0; x < N; x++) {
       F[x] = (int32_t)(F2[x]);
+    }
 
     maxlong = allocimage(NULL, rowsize(img), colsize(img), depth(img), VFF_TYP_4_BYTE);
     if (maxlong == NULL)
@@ -131,9 +132,11 @@ int32_t llocalextrema(
     return 0;
   }
 
-  if (d == 1) 
+  if (d == 1) {
     nbvois = 8;
-  else nbvois = 26;
+  } else {
+    nbvois = 26;
+  }
 
   switch(connex) {
   case 4: mask = vois4; break;
@@ -152,27 +155,34 @@ int32_t llocalextrema(
     {
       if (mask[k])                      /* element structurant */
       {
-	if (d==1)
-	  y = voisin(x, k, rs, N);
-	else
-	  y = voisin26(x, k, rs, n, N);
-	if (minimum) {
-	  if ((y != -1) && (F[y] < extr)) extr = F[y];
-	} else {
-	  if ((y != -1) && (F[y] > extr)) extr = F[y];
-	}
+        if (d == 1) {
+          y = voisin(x, k, rs, N);
+        } else {
+          y = voisin26(x, k, rs, n, N);
+        }
+        if (minimum) {
+          if ((y != -1) && (F[y] < extr)) {
+            extr = F[y];
+          }
+        } else {
+          if ((y != -1) && (F[y] > extr)) {
+            extr = F[y];
+          }
+        }
       }
     } /* for k */
-    if (F[x] == extr)
-      M[x] = 255; 
-    else
+    if (F[x] == extr) {
+      M[x] = 255;
+    } else {
       M[x] = 0;
+    }
   }
 
   if (datatype(img) == VFF_TYP_1_BYTE) {
     M2 = UCHARDATA(max);
-    for (x=0; x<N; x++)
-      M2[x] = (int32_t) (M[x]);
+    for (x = 0; x < N; x++) {
+      M2[x] = (int32_t)(M[x]);
+    }
     freeimage(maxlong);
     freeimage(imglong);
   } 

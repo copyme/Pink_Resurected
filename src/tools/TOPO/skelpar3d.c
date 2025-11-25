@@ -181,10 +181,9 @@ int main(int argc, char **argv)
   mode = atoi(argv[2]);
   nsteps = atoi(argv[3]);
 
-  if ((argc == 6) && (mode == 2))
+  if ((argc == 6) && (mode == 2)) {
     filter = atoi(argv[4]);
-  else if (argc == 6)
-  {
+  } else if (argc == 6) {
     inhibit = readimage(argv[4]);
     if (inhibit == NULL)
     {

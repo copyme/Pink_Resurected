@@ -107,7 +107,9 @@ int main(int argc, char **argv)
   imagefloat->ydim = imagebyte->ydim;
   imagefloat->zdim = imagebyte->zdim;
 
-  for (x = 0; x < N; x++) F[x] = (float)B[x];
+  for (x = 0; x < N; x++) {
+    F[x] = (float)B[x];
+  }
 
   writeimage(imagefloat, argv[argc-1]);
   freeimage(imagefloat);

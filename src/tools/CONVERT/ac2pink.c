@@ -105,7 +105,9 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  while ((ret != EOF) && (strncmp(buf, "world", 5) != 0)) ret = fscanf(fdin, "%s", buf); 
+  while ((ret != EOF) && (strncmp(buf, "world", 5) != 0)) {
+    ret = fscanf(fdin, "%s", buf);
+  }
   ret = fscanf(fdin, "%s", buf); 
   if (strncmp(buf, "kids", 4) != 0)
   {
@@ -125,9 +127,13 @@ int main(int argc, char **argv)
 
   for (I = 0; I < N; I++)
   {
-    while ((ret != EOF) && (strncmp(buf, "OBJECT", 6) != 0)) ret = fscanf(fdin, "%s", buf); 
+    while ((ret != EOF) && (strncmp(buf, "OBJECT", 6) != 0)) {
+      ret = fscanf(fdin, "%s", buf);
+    }
     ret = fscanf(fdin, "%s", buf);
-    if (strncmp(buf, "poly", 4) != 0) break;
+    if (strncmp(buf, "poly", 4) != 0) {
+      break;
+    }
     ret = fscanf(fdin, "%s", buf);
     if (strncmp(buf, "name", 4) != 0)
     {
@@ -135,9 +141,11 @@ int main(int argc, char **argv)
       exit(1);
     }
     ret = fscanf(fdin, "%s", buf);
-    if (strncmp(buf+1, "line", 4) == 0) typobj = TYP_OBJ_LINE; else
-    if (strncmp(buf+1, "closedline", 10) == 0) typobj = TYP_OBJ_CLOSEDLINE; else
-    {
+    if (strncmp(buf + 1, "line", 4) == 0) {
+      typobj = TYP_OBJ_LINE;
+    } else if (strncmp(buf + 1, "closedline", 10) == 0) {
+      typobj = TYP_OBJ_CLOSEDLINE;
+    } else {
       fprintf(stderr, "%s : bad object name : %s \n", argv[0], buf);
       exit(1);
     }

@@ -145,9 +145,14 @@ int main(int argc, char **argv)
     N = rowsize(image) * colsize(image) * depth(image);
     F = SLONGDATA(image);
     B = UCHARDATA(imagebin);
-    for (i = 0; i < N; i++) // inverse l'image
-      if (F[i]) B[i] = 0; else B[i] = NDG_MAX;
-  
+    for (i = 0; i < N; i++) { // inverse l'image
+      if (F[i]) {
+        B[i] = 0;
+      } else {
+        B[i] = NDG_MAX;
+      }
+    }
+
     if (priocode == 0)
     {
       if (depth(image) == 1)
@@ -230,8 +235,9 @@ int main(int argc, char **argv)
         exit(1);
       }
     }
+  } else {
+    inhibvalue = -1;
   }
-  else inhibvalue = -1;
 
   if (depth(imagebin) == 1)
   {
@@ -283,7 +289,9 @@ int main(int argc, char **argv)
   writeimage(image, argv[argc-1]);
   freeimage(image);
   freeimage(prio);
-  if (inhibimage) freeimage(inhibimage);
+  if (inhibimage) {
+    freeimage(inhibimage);
+  }
 
   return 0;
 } /* main */

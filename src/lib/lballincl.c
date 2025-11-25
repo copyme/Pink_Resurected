@@ -312,21 +312,38 @@ int32_t build_sphere(double *tab_coord, uint32_t num_points, double* c_x, double
 		if(fabs(a)<BALLINCL_EPSILON && fabs(b)<BALLINCL_EPSILON && fabs(c)<BALLINCL_EPSILON)
 		{
 			//Check if two points are the same, and therefore recall same fucntion with two disctinct points.
-			if(fabs(tab_coord[0]-tab_coord[3])<BALLINCL_EPSILON && fabs(tab_coord[1]-tab_coord[4])<BALLINCL_EPSILON && fabs(tab_coord[2]-tab_coord[5])<BALLINCL_EPSILON)
-				return build_sphere(&tab_coord[3], 2, c_x, c_y, c_z, c_r);
+                        if (fabs(tab_coord[0] - tab_coord[3]) <
+                                BALLINCL_EPSILON &&
+                            fabs(tab_coord[1] - tab_coord[4]) <
+                                BALLINCL_EPSILON &&
+                            fabs(tab_coord[2] - tab_coord[5]) <
+                                BALLINCL_EPSILON) {
+                          return build_sphere(&tab_coord[3], 2, c_x, c_y, c_z,
+                                              c_r);
 
-			else if(fabs(tab_coord[0]-tab_coord[6])<BALLINCL_EPSILON && fabs(tab_coord[1]-tab_coord[7])<BALLINCL_EPSILON && fabs(tab_coord[2]-tab_coord[8])<BALLINCL_EPSILON)
-				return build_sphere(tab_coord, 2, c_x, c_y, c_z, c_r);
+                        } else if (fabs(tab_coord[0] - tab_coord[6]) <
+                                       BALLINCL_EPSILON &&
+                                   fabs(tab_coord[1] - tab_coord[7]) <
+                                       BALLINCL_EPSILON &&
+                                   fabs(tab_coord[2] - tab_coord[8]) <
+                                       BALLINCL_EPSILON) {
+                          return build_sphere(tab_coord, 2, c_x, c_y, c_z, c_r);
 
-			else if(fabs(tab_coord[3]-tab_coord[6])<BALLINCL_EPSILON && fabs(tab_coord[4]-tab_coord[7])<BALLINCL_EPSILON && fabs(tab_coord[5]-tab_coord[8])<BALLINCL_EPSILON)
-				return build_sphere(tab_coord, 2, c_x, c_y, c_z, c_r);
+                        } else if (fabs(tab_coord[3] - tab_coord[6]) <
+                                       BALLINCL_EPSILON &&
+                                   fabs(tab_coord[4] - tab_coord[7]) <
+                                       BALLINCL_EPSILON &&
+                                   fabs(tab_coord[5] - tab_coord[8]) <
+                                       BALLINCL_EPSILON) {
+                          return build_sphere(tab_coord, 2, c_x, c_y, c_z, c_r);
 
-			else
-			{
-				fprintf(stderr, "build_sphere: function failed as the three given points are aligned.\n");
-				return(0);
-			}
-		}
+                        } else {
+                          fprintf(stderr,
+                                  "build_sphere: function failed as the three "
+                                  "given points are aligned.\n");
+                          return (0);
+                        }
+                }
 
 		//Then, define the plan ex+fy+gz+h=0 orthogonal to AB and passing by the middle of AB
 		e=tab_coord[3]-tab_coord[0];
@@ -356,10 +373,12 @@ int32_t build_sphere(double *tab_coord, uint32_t num_points, double* c_x, double
 		if(fabs(det_M)<BALLINCL_EPSILON)
 		{
 			//The four given points are colinear... Let's build a sphere on three points
-			if(build_sphere(tab_coord, 3, &x_c, &y_c, &z_c, &r_c)==0)
-				return(0);
+                        if (build_sphere(tab_coord, 3, &x_c, &y_c, &z_c,
+                                         &r_c) == 0) {
+                          return (0);
+                        }
 
-			//Check if the fourth point is on the sphere...
+                        //Check if the fourth point is on the sphere...
 			if(fabs(r_c*r_c - ((x_c-tab_coord[9])*(x_c-tab_coord[9]) + (y_c-tab_coord[10])*(y_c-tab_coord[10]) + (z_c-tab_coord[11])*(z_c-tab_coord[11]))) > BALLINCL_EPSILON)
 			{
 				fprintf(stderr, "build_sphere: function failed as four given points are coplanar but not on same circle.\n");

@@ -94,29 +94,38 @@ int main(int argc, char **argv)
   N = rs * cs;
   g = SLONGDATA(imagelong);
 
-  for (x = 1; x <= rs-2; x++)
-  for (y = 1; y <= cs-2; y++)
-  {
-    if ((g[y*rs + x] > 0) && 
-	(mcabs(g[y*rs + x-1]) <= g[y*rs + x]) &&
-	(mcabs(g[(y-1)*rs + x]) <= g[y*rs + x]) &&
-	((mcabs(g[y*rs + x+1]) <= g[y*rs + x]) || (g[y*rs + x-1] < 0)) &&
-	((mcabs(g[(y+1)*rs + x]) <= g[y*rs + x]) || (g[(y-1)*rs + x] < 0))
-       )
-      g[y*rs + x] = -g[y*rs + x];
+  for (x = 1; x <= rs - 2; x++) {
+    for (y = 1; y <= cs - 2; y++) {
+      if ((g[y * rs + x] > 0) && (mcabs(g[y * rs + x - 1]) <= g[y * rs + x]) &&
+          (mcabs(g[(y - 1) * rs + x]) <= g[y * rs + x]) &&
+          ((mcabs(g[y * rs + x + 1]) <= g[y * rs + x]) ||
+           (g[y * rs + x - 1] < 0)) &&
+          ((mcabs(g[(y + 1) * rs + x]) <= g[y * rs + x]) ||
+           (g[(y - 1) * rs + x] < 0))) {
+        g[y * rs + x] = -g[y * rs + x];
+      }
+    }
   }
 
-  for (x = rs-2; x >= 1; x--)
-  for (y = cs-2; y >= 1; y--)
-  {
-    if ((g[y*rs + x] > 0) && 
-	(((mcabs(g[y*rs + x-1]) > g[y*rs + x]) && (g[y*rs + x+1] < 0)) ||
-	 ((mcabs(g[(y-1)*rs + x]) > g[y*rs + x]) && (g[(y+1)*rs + x] < 0)))
-       )
-      g[y*rs + x] = -g[y*rs + x];    
+  for (x = rs - 2; x >= 1; x--) {
+    for (y = cs - 2; y >= 1; y--) {
+      if ((g[y * rs + x] > 0) &&
+          (((mcabs(g[y * rs + x - 1]) > g[y * rs + x]) &&
+            (g[y * rs + x + 1] < 0)) ||
+           ((mcabs(g[(y - 1) * rs + x]) > g[y * rs + x]) &&
+            (g[(y + 1) * rs + x] < 0)))) {
+        g[y * rs + x] = -g[y * rs + x];
+      }
+    }
   }
 
-  for (x = 0; x < N; x++) if (g[x] < 0) g[x] = 1; else g[x] = 0;
+  for (x = 0; x < N; x++) {
+    if (g[x] < 0) {
+      g[x] = 1;
+    } else {
+      g[x] = 0;
+    }
+  }
 
   writeimage(imagelong, argv[argc-1]);
   freeimage(imagelong);

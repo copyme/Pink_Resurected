@@ -127,7 +127,9 @@ int main(int argc, char **argv)
     bufname[namelen+7] = 'm';
     bufname[namelen+8] = '\0';
 
-    for (i = 0; i < ps; i++) O[i] = I[k * ps + i];
+    for (i = 0; i < ps; i++) {
+      O[i] = I[k * ps + i];
+    }
     writeimage(image_out, bufname);
 
   } /* for k */

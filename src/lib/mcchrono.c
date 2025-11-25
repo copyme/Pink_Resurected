@@ -108,9 +108,10 @@ int32_t usecs()
 {
    struct timeval tp;
    struct timezone tzp;
-   
-   if ( gettimeofday(&tp, &tzp) != 0 ) /* code en retour: 0=Ok, -1=erreur */
+
+   if (gettimeofday(&tp, &tzp) != 0) { /* code en retour: 0=Ok, -1=erreur */
      fprintf(stderr, "usecs() : gettimeofday failed\n");
+   }
    return(tp.tv_usec);
 }
 
@@ -121,9 +122,10 @@ void start_chrono(
 /* ==================================== */
 {
    struct timezone tzp;
-   
-   if ( gettimeofday(tp, &tzp) != 0 ) /* code en retour: 0=Ok, -1=erreur */
+
+   if (gettimeofday(tp, &tzp) != 0) { /* code en retour: 0=Ok, -1=erreur */
      fprintf(stderr, "start_chrono() : gettimeofday failed\n");
+   }
 }
 
 /*----------- Lecture chronometrage : retourne en entier le nb de microsecondes */
@@ -134,9 +136,10 @@ int32_t read_chrono(
 {
    struct timeval tp2;
    struct timezone tzp;
-   
-   if ( gettimeofday(&tp2, &tzp) != 0 ) /* code en retour: 0=Ok, -1=erreur */
+
+   if (gettimeofday(&tp2, &tzp) != 0) { /* code en retour: 0=Ok, -1=erreur */
      fprintf(stderr, "read_chrono() : gettimeofday failed\n");
+   }
    if (tp->tv_usec >  tp2.tv_usec)
    {
       tp2.tv_usec += 1000000;

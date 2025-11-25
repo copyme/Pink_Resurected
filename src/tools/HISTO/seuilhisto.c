@@ -93,9 +93,9 @@ int main(int argc, char **argv)
       fprintf(stderr, "%s: readimage failed\n", argv[0]);
       exit(1);
     }
-  }
-  else 
+  } else {
     masque = NULL;
+  }
 
   if (! lseuilhisto(image, masque, p))
   {
@@ -105,7 +105,9 @@ int main(int argc, char **argv)
   
   writeimage(image, argv[argc-1]);
   freeimage(image);
-  if (argc == 5) freeimage(masque);
+  if (argc == 5) {
+    freeimage(masque);
+  }
 
   return 0;
 } /* main */

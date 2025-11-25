@@ -82,8 +82,11 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (argc == 3) ngauss = 0;
-  else ngauss = atoi(argv[2]);
+  if (argc == 3) {
+    ngauss = 0;
+  } else {
+    ngauss = atoi(argv[2]);
+  }
 
   fd = fopen(argv[1],"r");
   if (!fd)
@@ -103,8 +106,9 @@ int main(int argc, char **argv)
     X = (int32_t *)calloc(1,npoints*sizeof(int32_t)); assert(X != NULL);
     Y = (int32_t *)calloc(1,npoints*sizeof(int32_t)); assert(Y != NULL);
     Z = (int32_t *)calloc(1,npoints*sizeof(int32_t)); assert(Z != NULL);
-    for (i = 0; i < npoints; i++)
+    for (i = 0; i < npoints; i++) {
       fscanf(fd, "%d %d %d", &(X[i]), &(Y[i]), &(Z[i]));
+    }
     fclose(fd);
 
     Xnp = (double *)malloc(2 * npoints * sizeof(double)); assert(Xnp != NULL);
@@ -125,8 +129,9 @@ int main(int argc, char **argv)
       exit(1);
     }
     fprintf(fd, "B %d\n", npoints+npoints);
-    for (i = 0; i < npoints+npoints; i++)
+    for (i = 0; i < npoints + npoints; i++) {
       fprintf(fd, "%g %g %g\n", Xnp[i], Ynp[i], Znp[i]);
+    }
     fclose(fd);
 
     free(Xnp);

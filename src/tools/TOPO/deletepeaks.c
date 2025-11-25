@@ -121,7 +121,9 @@ int main(int argc, char **argv)
 
   writeimage(image, argv[argc - 1]);
   freeimage(image);
-  if (mask) freeimage(mask);
+  if (mask) {
+    freeimage(mask);
+  }
 
   return 0;
 } /* main */

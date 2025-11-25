@@ -90,11 +90,12 @@ int main(int argc, char **argv)
   }
 
   connex = atoi(argv[2]);
-  
-  if (argc == 5)
+
+  if (argc == 5) {
     mode = atoi(argv[3]);
-  else
+  } else {
     mode = 0;
+  }
 
   order = allocimage(NULL, rowsize(image), colsize(image), depth(image), VFF_TYP_4_BYTE);
   if (order == NULL)

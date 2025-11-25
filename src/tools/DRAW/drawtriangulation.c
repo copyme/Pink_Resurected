@@ -187,7 +187,9 @@ int main(int argc, char **argv)
   free(V);
   free(nv);
   free(ec);
-  for (i = 0; i < n; i++) free(vois[i]);
+  for (i = 0; i < n; i++) {
+    free(vois[i]);
+  }
   free(vois);
   return 0;
 }

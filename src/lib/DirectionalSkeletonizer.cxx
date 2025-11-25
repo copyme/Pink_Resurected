@@ -47,11 +47,11 @@ DirectionalSkeletonizer::DirectionalSkeletonizer(unsigned int maxWidth, unsigned
 		bitIndex[i] = index;
 		index<<=1;
 	}
-	for(unsigned int i = 0; i < 26; i++)
-		bitIndexOp[i] = bitIndex[oppositeNb[i]];
+        for (unsigned int i = 0; i < 26; i++) {
+          bitIndexOp[i] = bitIndex[oppositeNb[i]];
+        }
 
-
-	gridConfig = NULL;
+        gridConfig = NULL;
 	constraints = NULL;
 	setDimensions(maxWidth, maxHeight, maxDepth);
 }
@@ -61,16 +61,21 @@ void DirectionalSkeletonizer::setDimensions(unsigned int w, unsigned int h, unsi
 	height = h;
 	depth = d;
 	size = width*height*depth;
-	if(gridConfig != NULL)delete[] gridConfig;
-	if(constraints != NULL)delete[] constraints;
-	gridConfig = new unsigned int[size];
+        if (gridConfig != NULL) {
+          delete[] gridConfig;
+        }
+        if (constraints != NULL) {
+          delete[] constraints;
+        }
+        gridConfig = new unsigned int[size];
 	constraints = new unsigned char[size];
 	
 	int decX[26]={ 0,  0,  0,  0, -1,  1,  0,  0, -1,  1,  0,  0, -1,  1, -1, -1,  1,  1, -1, -1,  1,  1, -1, -1,  1,  1};
 	int decY[26]={ 0,  0, -1,  1,  0,  0, -1,  1,  0,  0, -1,  1,  0,  0, -1,  1, -1,  1, -1,  1, -1,  1, -1,  1, -1,  1};
 	int decZ[26]={-1,  1,  0,  0,  0,  0, -1, -1, -1, -1,  1,  1,  1,  1,  0,  0,  0,  0, -1, -1, -1, -1,  1,  1,  1,  1};
-	for(unsigned int i = 0; i < 26; i++)
-		nbCoordinates[i] = decX[i]+(decY[i]+decZ[i]*height)*width;
+        for (unsigned int i = 0; i < 26; i++) {
+          nbCoordinates[i] = decX[i] + (decY[i] + decZ[i] * height) * width;
+        }
 }
 
 
@@ -87,8 +92,10 @@ DirectionalSkeletonizer::~DirectionalSkeletonizer(){
 
 
 unsigned int DirectionalSkeletonizer::skeletonize(unsigned char* grid, bool curvilinear, unsigned int nbSteps, unsigned char* initialConstraints){
-	if(nbSteps == 0) nbSteps = 100000;
-	int i, n;
+  if (nbSteps == 0) {
+    nbSteps = 100000;
+  }
+        int i, n;
 	unsigned int p, res, configNS;
 	unsigned int* config;
 	unsigned char spec;
@@ -108,41 +115,44 @@ unsigned int DirectionalSkeletonizer::skeletonize(unsigned char* grid, bool curv
 	// INITIALIZATION
 	
 	//initialization of constraints
-	if(initialConstraints!=NULL)
-		std::copy(initialConstraints, initialConstraints+size, constraints);  
-	else 
-		std::fill(constraints, constraints+size, 0);
-	
-	
-	FIFO<unsigned int> removable(size);//potentially removable for the current iteration
+        if (initialConstraints != NULL) {
+          std::copy(initialConstraints, initialConstraints + size, constraints);
+        } else {
+          std::fill(constraints, constraints + size, 0);
+        }
+
+        FIFO<unsigned int> removable(size);//potentially removable for the current iteration
 	FIFO<unsigned int> borderNextIteration(size);
 	FIFO<unsigned int> borders(size);
 	unsigned int nb;
 	int vois;
 
 	std::fill(gridConfig, gridConfig+size, 0);
-	for(i = 0; i < size; ++i)
-		if(grid[i]!=0){
-			config = gridConfig+i;
-			for(n = 0; n < 26; n++)
-				config[nbCoordinates[n]]|=bitIndexOp[n];
-			borders.push(i);
-		}
+        for (i = 0; i < size; ++i) {
+          if (grid[i] != 0) {
+            config = gridConfig + i;
+            for (n = 0; n < 26; n++) {
+              config[nbCoordinates[n]] |= bitIndexOp[n];
+            }
+            borders.push(i);
+          }
+        }
 
-
-	for(i = borders.size(); i > 0; i--){
+        for(i = borders.size(); i > 0; i--){
 		p = borders.pop();
 		if(grid[p] && !constraints[p]){
 			spec = lut[gridConfig[p]];
 			if(spec&borderMask){
 				if(spec&isthmusMask){
 					constraints[p] = 255;
-				}else
-					borders.push(p);
-				grid[p]=D6I_INTREATMENT;
-			}else
-				grid[p]=D6I_OBJECT;
-		}
+                                } else {
+                                  borders.push(p);
+                                }
+                                grid[p]=D6I_INTREATMENT;
+                        } else {
+                          grid[p] = D6I_OBJECT;
+                        }
+                }
 	}
 
  
@@ -158,11 +168,16 @@ unsigned int DirectionalSkeletonizer::skeletonize(unsigned char* grid, bool curv
 			for(i = borders.size(); i>0; i--){
 				p = borders.pop();
 				nb = gridConfig[p];
-				if((lut[nb] & dirMask)) removable.push(p);
-				else borders.push(p);
-			}
-			if(!removable.empty())stop = false;
-			//we treat all the points which will be removed
+                                if ((lut[nb] & dirMask)) {
+                                  removable.push(p);
+                                } else {
+                                  borders.push(p);
+                                }
+                        }
+                        if (!removable.empty()) {
+                          stop = false;
+                        }
+                        //we treat all the points which will be removed
 			for(i = removable.size(); i>0; i--){
 				p = removable.pop();
 				grid[p] = 0;//we remove the point
@@ -192,13 +207,15 @@ unsigned int DirectionalSkeletonizer::skeletonize(unsigned char* grid, bool curv
 			if(grid[p] && !constraints[p]){
 			spec = lut[gridConfig[p]];
 				if(spec&borderMask){
-					if(spec&isthmusMask)
-						constraints[p] = 255;
-					else
-						borders.push(p);
-				}else
-					borderNextIteration.push(p);
-			}
+                                  if (spec & isthmusMask) {
+                                    constraints[p] = 255;
+                                  } else {
+                                    borders.push(p);
+                                  }
+                                } else {
+                                  borderNextIteration.push(p);
+                                }
+                        }
 		}
 	}
 	return std::min(iteration, nbSteps);

@@ -138,18 +138,22 @@ static void print_nifti_header(struct nifti_1_header NH)
 {
   int i;
   printf("sizeof_hdr = %d /*!< MUST be 348           */  /* int sizeof_hdr;      */   /*   0 */\n", NH.sizeof_hdr);    
-  printf("dim_info = %d /*!< MRI slice ordering.   */  /* char hkey_un0;       */   /*  39 */\n", NH.dim_info);      
-  for (i = 0; i < 8; i++)
-    printf("dim[%d] = %d /*!< Data array dimensions.*/  /* short dim[8];        */   /*  40 */\n", i, NH.dim[i]);
+  printf("dim_info = %d /*!< MRI slice ordering.   */  /* char hkey_un0;       */   /*  39 */\n", NH.dim_info);
+  for (i = 0; i < 8; i++) {
+    printf("dim[%d] = %d /*!< Data array dimensions.*/  /* short dim[8];       "
+           " */   /*  40 */\n",
+           i, NH.dim[i]);
+  }
   printf("intent_p1 = %g /*!< 1st intent parameter. */  /* short unused8;       */   /*  56 */\n", NH.intent_p1);     
   printf("intent_p2 = %g /*!< 2nd intent parameter. */  /* short unused10;      */   /*  60 */\n", NH.intent_p2);     
   printf("intent_p3 = %g /*!< 3rd intent parameter. */  /* short unused12;      */   /*  64 */\n", NH.intent_p3);     
   printf("intent_code = %d /*!< NIFTIINTENT code.     */  /* short unused14;      */   /*  68 */\n", NH.intent_code);   
   printf("datatype = %d /*!< Defines data type!    */  /* short datatype;      */   /*  70 */\n", NH.datatype);      
   printf("bitpix = %d /*!< Number bits/voxel.    */  /* short bitpix;        */   /*  72 */\n", NH.bitpix);        
-  printf("slice_start = %d /*!< First slice index.    */  /* short dim_un0;       */   /*  74 */\n", NH.slice_start);   
-  for (i = 0; i < 8; i++)
-    printf("pixdim[%i] = %g /*!< Grid spacings.        */  /* float pixdim[8];     */   /*  76 */\n", i, NH.pixdim[i]);     
+  printf("slice_start = %d /*!< First slice index.    */  /* short dim_un0;       */   /*  74 */\n", NH.slice_start);
+  for (i = 0; i < 8; i++) {
+    printf("pixdim[%i] = %g /*!< Grid spacings.        */  /* float pixdim[8];     */   /*  76 */\n", i, NH.pixdim[i]);
+  }
   printf("vox_offset = %g /*!< Offset into .nii file */  /* float vox_offset;    */   /* 108 */\n", NH.vox_offset);    
   printf("scl_slope = %g /*!< Data scaling: slope.  */  /* float funused1;      */   /* 112 */\n", NH.scl_slope);     
   printf("scl_inter = %g /*!< Data scaling: offset. */  /* float funused2;      */   /* 116 */\n", NH.scl_inter);     
@@ -217,10 +221,11 @@ int main(int argc, char **argv)
 
   rs = NIFTI_HEADER.dim[1];
   cs = NIFTI_HEADER.dim[2];
-  if (NIFTI_HEADER.dim[0] == 3)
+  if (NIFTI_HEADER.dim[0] == 3) {
     ds = NIFTI_HEADER.dim[3];
-  else
+  } else {
     ds = 1;
+  }
   N = rs * cs * ds;
   headersize = NIFTI_HEADER.vox_offset;
   datatype = 1; /* TO BE EXTENDED */

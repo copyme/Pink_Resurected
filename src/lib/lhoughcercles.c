@@ -129,10 +129,12 @@ int32_t lhoughcercles(struct xvimage *f, /* image de depart - en niveaux de gris
     lellipse(M, rsm, csm, (int32_t)rayon, 0, 0, (int32_t)rayon, (int32_t)rayon, (int32_t)rayon);
 
     /* compte le nombre de points du cercle */
-    nptb = 0;             
-    for (i = 0; i < Nm; i += 1)
-      if (M[i])
+    nptb = 0;
+    for (i = 0; i < Nm; i += 1) {
+      if (M[i]) {
         nptb += 1;
+      }
+    }
 
     /* dresse la liste des points du cercle */
     tab_es_x = (int32_t *)calloc(1,nptb * sizeof(int32_t));
@@ -144,27 +146,29 @@ int32_t lhoughcercles(struct xvimage *f, /* image de depart - en niveaux de gris
     }
 
     k = 0;
-    for (j = 0; j < csm; j += 1)
-      for (i = 0; i < rsm; i += 1)
+    for (j = 0; j < csm; j += 1) {
+      for (i = 0; i < rsm; i += 1) {
         if (M[j * rsm + i])
         {
           tab_es_x[k] = i;
           tab_es_y[k] = j;
           k += 1;
-       }
+        }
+      }
+    }
 
     /* pour tous les points p de l'image, renforce les points de l'accumulateur qui sont a
        une distance 'rayon' du point p */
-    for (y = 0; y < cs; y++)
-    for (x = 0; x < rs; x++)
-    {
-      tmp = (uint32_t)F[y * rs + x];
-      for (c = 0; c < nptb ; c += 1)
-      {
-        l = y + tab_es_y[c] - rayon;
-        k = x + tab_es_x[c] - rayon; 
-        if ((l >= 0) && (l < cs) && (k >= 0) && (k < rs))
-	  Accu[l * rs + k] += tmp;
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        tmp = (uint32_t)F[y * rs + x];
+        for (c = 0; c < nptb; c += 1) {
+          l = y + tab_es_y[c] - rayon;
+          k = x + tab_es_x[c] - rayon;
+          if ((l >= 0) && (l < cs) && (k >= 0) && (k < rs)) {
+            Accu[l * rs + k] += tmp;
+          }
+        }
       }
     }
 
@@ -174,7 +178,9 @@ int32_t lhoughcercles(struct xvimage *f, /* image de depart - en niveaux de gris
     {
       tmp = Accu[x] / nptb;
       H[n * N + x] = (uint8_t)tmp;
-      if (tmp > maxh) maxh = tmp; 
+      if (tmp > maxh) {
+        maxh = tmp;
+      }
     }
 
 #ifdef VERBOSE

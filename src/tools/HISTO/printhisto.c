@@ -110,11 +110,13 @@ int main(int argc, char **argv)
     }
 
     k = 0;
-    for (i = NDG_MIN; i <= NDG_MAX; i++) 
+    for (i = NDG_MIN; i <= NDG_MAX; i++) {
       if (histo[i] != 0)
       {
 #ifdef INDEX_FIRST
-        if (k % 10 == 0) printf("\n");
+        if (k % 10 == 0) {
+          printf("\n");
+        }
 #endif
         k += 1;
 #ifdef INDEX_FIRST
@@ -131,6 +133,7 @@ int main(int argc, char **argv)
 #endif
 #endif
       }
+    }
     printf("\nNombre de niveaux differents = %d\n", k);
     free(histo);
   }
@@ -143,11 +146,13 @@ int main(int argc, char **argv)
     }
 
     k = 0;
-    for (i = 0; i < s; i++) 
+    for (i = 0; i < s; i++) {
       if (histo[i] != 0)
       {
 #ifdef INDEX_FIRST
-        if (k % 10 == 0) printf("\n");
+        if (k % 10 == 0) {
+          printf("\n");
+        }
 #endif
         k += 1;
 #ifdef INDEX_FIRST
@@ -164,6 +169,7 @@ int main(int argc, char **argv)
 #endif
 #endif
       }
+    }
     printf("\nNombre de niveaux differents = %d\n", k);
   }
   else if (datatype(image) == VFF_TYP_FLOAT)
@@ -177,11 +183,13 @@ int main(int argc, char **argv)
 
     printf("bin width = %g ; min value = %g ; max value = %g\n", w, smin, smax);
     k = 0;
-    for (i = 0; i < s; i++) 
+    for (i = 0; i < s; i++) {
       if (histo[i] != 0)
       {
 #ifdef INDEX_FIRST
-        if (k % 10 == 0) printf("\n");
+        if (k % 10 == 0) {
+          printf("\n");
+        }
 #endif
         k += 1;
 #ifdef INDEX_FIRST
@@ -198,6 +206,7 @@ int main(int argc, char **argv)
 #endif
 #endif
       }
+    }
     printf("\nNombre de niveaux differents = %d\n", k);
   }
 

@@ -107,30 +107,40 @@ int main(int argc, char **argv)
     exit(1);
   }
   C = COMPLEXDATA(im_complex);
-  if (argc == 3) razimage(im_complex);
+  if (argc == 3) {
+    razimage(im_complex);
+  }
 
   if (datatype(im_real) == VFF_TYP_1_BYTE)
   {
     uint8_t *I = UCHARDATA(im_real);
-    for (x = 0; x < N; x++) C[x].re = (float)(I[x]);
+    for (x = 0; x < N; x++) {
+      C[x].re = (float)(I[x]);
+    }
   }
   else
   if (datatype(im_real) == VFF_TYP_4_BYTE)
   {
     int32_t *I = SLONGDATA(im_real);
-    for (x = 0; x < N; x++) C[x].re = (float)I[x];
+    for (x = 0; x < N; x++) {
+      C[x].re = (float)I[x];
+    }
   }
   else
   if (datatype(im_real) == VFF_TYP_FLOAT)
   {
     float *I = FLOATDATA(im_real);
-    for (x = 0; x < N; x++) C[x].re = (float)I[x];
+    for (x = 0; x < N; x++) {
+      C[x].re = (float)I[x];
+    }
   }
   else
   if (datatype(im_real) == VFF_TYP_DOUBLE)
   {
     double *I = DOUBLEDATA(im_real);
-    for (x = 0; x < N; x++) C[x].re = (float)I[x];
+    for (x = 0; x < N; x++) {
+      C[x].re = (float)I[x];
+    }
   }
   else
   if (datatype(im_real) == VFF_TYP_COMPLEX)
@@ -150,25 +160,33 @@ int main(int argc, char **argv)
     if (datatype(im_imaginary) == VFF_TYP_1_BYTE)
     {
       uint8_t *I = UCHARDATA(im_imaginary);
-      for (x = 0; x < N; x++) C[x].im = (float)(I[x]);
+      for (x = 0; x < N; x++) {
+        C[x].im = (float)(I[x]);
+      }
     }
     else
     if (datatype(im_imaginary) == VFF_TYP_4_BYTE)
     {
       int32_t *I = SLONGDATA(im_imaginary);
-      for (x = 0; x < N; x++) C[x].im = (float)I[x];
+      for (x = 0; x < N; x++) {
+        C[x].im = (float)I[x];
+      }
     }
     else
     if (datatype(im_imaginary) == VFF_TYP_FLOAT)
     {
       float *I = FLOATDATA(im_imaginary);
-      for (x = 0; x < N; x++) C[x].im = (float)I[x];
+      for (x = 0; x < N; x++) {
+        C[x].im = (float)I[x];
+      }
     }
     else
     if (datatype(im_imaginary) == VFF_TYP_DOUBLE)
     {
       double *I = DOUBLEDATA(im_imaginary);
-      for (x = 0; x < N; x++) C[x].im = (float)I[x];
+      for (x = 0; x < N; x++) {
+        C[x].im = (float)I[x];
+      }
     }
     else
     {
@@ -184,7 +202,9 @@ int main(int argc, char **argv)
   writeimage(im_complex, argv[argc-1]);
   freeimage(im_complex);
   freeimage(im_real);
-  if (im_imaginary != NULL) freeimage(im_imaginary);
+  if (im_imaginary != NULL) {
+    freeimage(im_imaginary);
+  }
 
   return 0;
 } /* main */

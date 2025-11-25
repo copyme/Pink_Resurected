@@ -98,9 +98,10 @@ int main(int argc, char **argv)
   }
  
   fprintf(fd, "s %d\n", nbins);
-  for (i = 0; i < nbins; i++) 
+  for (i = 0; i < nbins; i++) {
 #ifdef MC_64_BITS
     fprintf(fd, "%4d %ld\n", i, histo[i]);
+  }
 #else
     fprintf(fd, "%4d %d\n", i, histo[i]);
 #endif

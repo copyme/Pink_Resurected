@@ -101,7 +101,7 @@ int32_t lquasishear(struct xvimage * image, double theta, double xc, double yc)
   bb = (int32_t)floor(omega*cos(theta/2));
   bb2 = (int32_t)floor((double)bb / 2);
 
-  for (y = 0; y < cs; y++)
+  for (y = 0; y < cs; y++) {
     for (x = 0; x < rs; x++)
     {
       xx = HQS_x(x-floor(xc), y-floor(yc), -aa, bb, bb2);
@@ -115,9 +115,11 @@ int32_t lquasishear(struct xvimage * image, double theta, double xc, double yc)
 
       xx += floor(xc);
       yy += floor(yc);
-      if ((xx >= 0) && (yy >= 0) && (xx < rs) && (yy < cs))
-	I1[yy*rs + xx] = I2[y*rs + x];
+      if ((xx >= 0) && (yy >= 0) && (xx < rs) && (yy < cs)) {
+        I1[yy * rs + xx] = I2[y * rs + x];
+      }
     } // for x for y
+  }
 
   free(I2);
   return 1;
@@ -167,14 +169,44 @@ struct xvimage * lquasishear2(struct xvimage * image, double theta)
   QSR(0, 0, &xx, &yy, 0, 0, omega, omega2, a, aa, bb, bb2);
   xmax = xmin = xx; ymax = ymin = yy;
   QSR(rs-1, 0, &xx, &yy, 0, 0, omega, omega2, a, aa, bb, bb2);
-  if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-  if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
+  if (xx > xmax) {
+    xmax = xx;
+  }
+  if (xx < xmin) {
+    xmin = xx;
+  }
+  if (yy > ymax) {
+    ymax = yy;
+  }
+  if (yy < ymin) {
+    ymin = yy;
+  }
   QSR(0, cs-1, &xx, &yy, 0, 0, omega, omega2, a, aa, bb, bb2);
-  if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-  if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
+  if (xx > xmax) {
+    xmax = xx;
+  }
+  if (xx < xmin) {
+    xmin = xx;
+  }
+  if (yy > ymax) {
+    ymax = yy;
+  }
+  if (yy < ymin) {
+    ymin = yy;
+  }
   QSR(rs-1, cs-1, &xx, &yy, 0, 0, omega, omega2, a, aa, bb, bb2);
-  if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-  if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
+  if (xx > xmax) {
+    xmax = xx;
+  }
+  if (xx < xmin) {
+    xmin = xx;
+  }
+  if (yy > ymax) {
+    ymax = yy;
+  }
+  if (yy < ymin) {
+    ymin = yy;
+  }
   rs2 = xmax - xmin + 1;
   cs2 = ymax - ymin + 1;
   n2 = rs2 * cs2;
@@ -188,7 +220,7 @@ struct xvimage * lquasishear2(struct xvimage * image, double theta)
   I2 = UCHARDATA(image2);
   memset(I2, 0, n2);
 
-  for (y = 0; y < cs; y++)
+  for (y = 0; y < cs; y++) {
     for (x = 0; x < rs; x++)
     {
       xx = HQS_x(x, y, -aa, bb, bb2);
@@ -202,6 +234,7 @@ struct xvimage * lquasishear2(struct xvimage * image, double theta)
 
       I2[(yy-ymin)*rs2 + xx-xmin] = I1[y*rs + x];
     } // for x for y
+  }
 
   return image2;
 } // lquasishear2()
@@ -238,29 +271,89 @@ of information occurs.
     ymax = ymin = xmax = xmin = 0;
     xx = (int32_t)floor(cost*(rs-1) - sint*(0));
     yy = (int32_t)floor(sint*(rs-1) + cost*(0));
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
     xx = (int32_t)floor(cost*(0) - sint*(cs-1));
     yy = (int32_t)floor(sint*(0) + cost*(cs-1));
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
     xx = (int32_t)floor(cost*(rs-1) - sint*(cs-1));
     yy = (int32_t)floor(sint*(rs-1) + cost*(cs-1));
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
 
     xx = (int32_t)ceil(cost*(rs-1) - sint*(0));
     yy = (int32_t)ceil(sint*(rs-1) + cost*(0));
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
     xx = (int32_t)ceil(cost*(0) - sint*(cs-1));
     yy = (int32_t)ceil(sint*(0) + cost*(cs-1));
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
     xx = (int32_t)ceil(cost*(rs-1) - sint*(cs-1));
     yy = (int32_t)ceil(sint*(rs-1) + cost*(cs-1));
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
 
     rs2 = xmax - xmin + 1;
     cs2 = ymax - ymin + 1;
@@ -281,14 +374,16 @@ of information occurs.
   I2 = UCHARDATA(image2);
   razimage(image2);
 
-  for (yy = ymin; yy < ymax; yy++)
+  for (yy = ymin; yy < ymax; yy++) {
     for (xx = xmin; xx < xmax; xx++)
     {
       x = (int32_t)floor( cost*(xx-xc) + sint*(yy-yc) + 0.5 + xc);
       y = (int32_t)floor(-sint*(xx-xc) + cost*(yy-yc) + 0.5 + yc);
-      if ((x >= 0) && (y >= 0) && (x < rs) && (y < cs))
-	I2[(yy-ymin)*rs2 + xx-xmin] = I1[y*rs + x];
+      if ((x >= 0) && (y >= 0) && (x < rs) && (y < cs)) {
+        I2[(yy - ymin) * rs2 + xx - xmin] = I1[y * rs + x];
+      }
     } // for xx for yy
+  }
 
   return image2;
 } // lrotationRT()
@@ -329,37 +424,117 @@ of information occurs.
 
     yy = (int32_t)floor(cost*(0-yc) - sint*(0-zc) + 0.5 + yc);
     zz = (int32_t)floor(sint*(0-yc) + cost*(0-zc) + 0.5 + zc);
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
-    if (zz > zmax) zmax = zz;  if (zz < zmin) zmin = zz;
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
+    if (zz > zmax) {
+      zmax = zz;
+    }
+    if (zz < zmin) {
+      zmin = zz;
+    }
     yy = (int32_t)floor(cost*(cs-1-yc) - sint*(0-zc) + 0.5 + yc);
     zz = (int32_t)floor(sint*(cs-1-yc) + cost*(0-zc) + 0.5 + zc);
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
-    if (zz > zmax) zmax = zz;  if (zz < zmin) zmin = zz;
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
+    if (zz > zmax) {
+      zmax = zz;
+    }
+    if (zz < zmin) {
+      zmin = zz;
+    }
     yy = (int32_t)floor(cost*(0-yc) - sint*(ds-1-zc) + 0.5 + yc);
     zz = (int32_t)floor(sint*(0-yc) + cost*(ds-1-zc) + 0.5 + zc);
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
-    if (zz > zmax) zmax = zz;  if (zz < zmin) zmin = zz;
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
+    if (zz > zmax) {
+      zmax = zz;
+    }
+    if (zz < zmin) {
+      zmin = zz;
+    }
     yy = (int32_t)floor(cost*(cs-1-yc) - sint*(ds-1-zc) + 0.5 + yc);
     zz = (int32_t)floor(sint*(cs-1-yc) + cost*(ds-1-zc) + 0.5 + zc);
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
-    if (zz > zmax) zmax = zz;  if (zz < zmin) zmin = zz;
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
+    if (zz > zmax) {
+      zmax = zz;
+    }
+    if (zz < zmin) {
+      zmin = zz;
+    }
 
     yy = (int32_t)ceil(cost*(0-yc) - sint*(0-zc) + 0.5 + yc);
     zz = (int32_t)ceil(sint*(0-yc) + cost*(0-zc) + 0.5 + zc);
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
-    if (zz > zmax) zmax = zz;  if (zz < zmin) zmin = zz;
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
+    if (zz > zmax) {
+      zmax = zz;
+    }
+    if (zz < zmin) {
+      zmin = zz;
+    }
     yy = (int32_t)ceil(cost*(cs-1-yc) - sint*(0-zc) + 0.5 + yc);
     zz = (int32_t)ceil(sint*(cs-1-yc) + cost*(0-zc) + 0.5 + zc);
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
-    if (zz > zmax) zmax = zz;  if (zz < zmin) zmin = zz;
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
+    if (zz > zmax) {
+      zmax = zz;
+    }
+    if (zz < zmin) {
+      zmin = zz;
+    }
     yy = (int32_t)ceil(cost*(0-yc) - sint*(ds-1-zc) + 0.5 + yc);
     zz = (int32_t)ceil(sint*(0-yc) + cost*(ds-1-zc) + 0.5 + zc);
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
-    if (zz > zmax) zmax = zz;  if (zz < zmin) zmin = zz;
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
+    if (zz > zmax) {
+      zmax = zz;
+    }
+    if (zz < zmin) {
+      zmin = zz;
+    }
     yy = (int32_t)ceil(cost*(cs-1-yc) - sint*(ds-1-zc) + 0.5 + yc);
     zz = (int32_t)ceil(sint*(cs-1-yc) + cost*(ds-1-zc) + 0.5 + zc);
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
-    if (zz > zmax) zmax = zz;  if (zz < zmin) zmin = zz;
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
+    if (zz > zmax) {
+      zmax = zz;
+    }
+    if (zz < zmin) {
+      zmin = zz;
+    }
 
     rs2 = rs;
     cs2 = ymax - ymin + 1;
@@ -386,14 +561,17 @@ of information occurs.
   for (xx = xmin; xx < xmax; xx++)
   {
     x = xx;
-    for (zz = zmin; zz < zmax; zz++)
+    for (zz = zmin; zz < zmax; zz++) {
       for (yy = ymin; yy < ymax; yy++)
       {
 	y = (int32_t)floor( cost*(yy-yc) + sint*(zz-zc) + 0.5 + yc);
 	z = (int32_t)floor(-sint*(yy-yc) + cost*(zz-zc) + 0.5 + zc);
-	if ((y >= 0) && (z >= 0) && (y < cs) && (z < ds))
-	  I2[(zz-zmin)*ps2 + (yy-ymin)*rs2 + xx-xmin] = I1[z*ps + y*rs + x];
+        if ((y >= 0) && (z >= 0) && (y < cs) && (z < ds)) {
+          I2[(zz - zmin) * ps2 + (yy - ymin) * rs2 + xx - xmin] =
+              I1[z * ps + y * rs + x];
+        }
       } // for yy for zz
+    }
   } // for xx
 
   *newyc = yc - ymin;
@@ -437,37 +615,117 @@ of information occurs.
 
     xx = (int32_t)floor(cost*(0-xc) - sint*(0-zc) + 0.5 + xc);
     zz = (int32_t)floor(sint*(0-xc) + cost*(0-zc) + 0.5 + zc);
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (zz > zmax) zmax = zz;  if (zz < zmin) zmin = zz;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (zz > zmax) {
+      zmax = zz;
+    }
+    if (zz < zmin) {
+      zmin = zz;
+    }
     xx = (int32_t)floor(cost*(rs-1-xc) - sint*(0-zc) + 0.5 + xc);
     zz = (int32_t)floor(sint*(rs-1-xc) + cost*(0-zc) + 0.5 + zc);
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (zz > zmax) zmax = zz;  if (zz < zmin) zmin = zz;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (zz > zmax) {
+      zmax = zz;
+    }
+    if (zz < zmin) {
+      zmin = zz;
+    }
     xx = (int32_t)floor(cost*(0-xc) - sint*(ds-1-zc) + 0.5 + xc);
     zz = (int32_t)floor(sint*(0-xc) + cost*(ds-1-zc) + 0.5 + zc);
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (zz > zmax) zmax = zz;  if (zz < zmin) zmin = zz;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (zz > zmax) {
+      zmax = zz;
+    }
+    if (zz < zmin) {
+      zmin = zz;
+    }
     xx = (int32_t)floor(cost*(rs-1-xc) - sint*(ds-1-zc) + 0.5 + xc);
     zz = (int32_t)floor(sint*(rs-1-xc) + cost*(ds-1-zc) + 0.5 + zc);
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (zz > zmax) zmax = zz;  if (zz < zmin) zmin = zz;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (zz > zmax) {
+      zmax = zz;
+    }
+    if (zz < zmin) {
+      zmin = zz;
+    }
 
     xx = (int32_t)ceil(cost*(0-xc) - sint*(0-zc) + 0.5 + xc);
     zz = (int32_t)ceil(sint*(0-xc) + cost*(0-zc) + 0.5 + zc);
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (zz > zmax) zmax = zz;  if (zz < zmin) zmin = zz;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (zz > zmax) {
+      zmax = zz;
+    }
+    if (zz < zmin) {
+      zmin = zz;
+    }
     xx = (int32_t)ceil(cost*(rs-1-xc) - sint*(0-zc) + 0.5 + xc);
     zz = (int32_t)ceil(sint*(rs-1-xc) + cost*(0-zc) + 0.5 + zc);
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (zz > zmax) zmax = zz;  if (zz < zmin) zmin = zz;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (zz > zmax) {
+      zmax = zz;
+    }
+    if (zz < zmin) {
+      zmin = zz;
+    }
     xx = (int32_t)ceil(cost*(0-xc) - sint*(ds-1-zc) + 0.5 + xc);
     zz = (int32_t)ceil(sint*(0-xc) + cost*(ds-1-zc) + 0.5 + zc);
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (zz > zmax) zmax = zz;  if (zz < zmin) zmin = zz;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (zz > zmax) {
+      zmax = zz;
+    }
+    if (zz < zmin) {
+      zmin = zz;
+    }
     xx = (int32_t)ceil(cost*(rs-1-xc) - sint*(ds-1-zc) + 0.5 + xc);
     zz = (int32_t)ceil(sint*(rs-1-xc) + cost*(ds-1-zc) + 0.5 + zc);
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (zz > zmax) zmax = zz;  if (zz < zmin) zmin = zz;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (zz > zmax) {
+      zmax = zz;
+    }
+    if (zz < zmin) {
+      zmin = zz;
+    }
 
     rs2 = xmax - xmin + 1;
     cs2 = cs;
@@ -494,14 +752,17 @@ of information occurs.
   for (yy = ymin; yy < ymax; yy++)
   {
     y = yy;
-    for (zz = zmin; zz < zmax; zz++)
+    for (zz = zmin; zz < zmax; zz++) {
       for (xx = xmin; xx < xmax; xx++)
       {
 	x = (int32_t)floor( cost*(xx-xc) + sint*(zz-zc) + 0.5 + xc);
 	z = (int32_t)floor(-sint*(xx-xc) + cost*(zz-zc) + 0.5 + zc);
-	if ((x >= 0) && (z >= 0) && (x < rs) && (z < ds))
-	  I2[(zz-zmin)*ps2 + (yy-ymin)*rs2 + xx-xmin] = I1[z*ps + y*rs + x];
+        if ((x >= 0) && (z >= 0) && (x < rs) && (z < ds)) {
+          I2[(zz - zmin) * ps2 + (yy - ymin) * rs2 + xx - xmin] =
+              I1[z * ps + y * rs + x];
+        }
       } // for xx for zz
+    }
   } // for yy
 
   *newxc = xc - xmin;
@@ -545,37 +806,117 @@ of information occurs.
 
     xx = (int32_t)floor(cost*(0-xc) - sint*(0-yc) + 0.5 + xc);
     yy = (int32_t)floor(sint*(0-xc) + cost*(0-yc) + 0.5 + yc);
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
     xx = (int32_t)floor(cost*(rs-1-xc) - sint*(0-yc) + 0.5 + xc);
     yy = (int32_t)floor(sint*(rs-1-xc) + cost*(0-yc) + 0.5 + yc);
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
     xx = (int32_t)floor(cost*(0-xc) - sint*(cs-1-yc) + 0.5 + xc);
     yy = (int32_t)floor(sint*(0-xc) + cost*(cs-1-yc) + 0.5 + yc);
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
     xx = (int32_t)floor(cost*(rs-1-xc) - sint*(cs-1-yc) + 0.5 + xc);
     yy = (int32_t)floor(sint*(rs-1-xc) + cost*(cs-1-yc) + 0.5 + yc);
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
 
     xx = (int32_t)ceil(cost*(0-xc) - sint*(0-yc) + 0.5 + xc);
     yy = (int32_t)ceil(sint*(0-xc) + cost*(0-yc) + 0.5 + yc);
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
     xx = (int32_t)ceil(cost*(rs-1-xc) - sint*(0-yc) + 0.5 + xc);
     yy = (int32_t)ceil(sint*(rs-1-xc) + cost*(0-yc) + 0.5 + yc);
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
     xx = (int32_t)ceil(cost*(0-xc) - sint*(cs-1-yc) + 0.5 + xc);
     yy = (int32_t)ceil(sint*(0-xc) + cost*(cs-1-yc) + 0.5 + yc);
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
     xx = (int32_t)ceil(cost*(rs-1-xc) - sint*(cs-1-yc) + 0.5 + xc);
     yy = (int32_t)ceil(sint*(rs-1-xc) + cost*(cs-1-yc) + 0.5 + yc);
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
 
     rs2 = xmax - xmin + 1;
     cs2 = ymax - ymin + 1;
@@ -602,14 +943,17 @@ of information occurs.
   for (zz = zmin; zz < zmax; zz++)
   {
     z = zz;
-    for (yy = ymin; yy < ymax; yy++)
+    for (yy = ymin; yy < ymax; yy++) {
       for (xx = xmin; xx < xmax; xx++)
       {
 	x = (int32_t)floor( cost*(xx-xc) + sint*(yy-yc) + 0.5 + xc);
 	y = (int32_t)floor(-sint*(xx-xc) + cost*(yy-yc) + 0.5 + yc);
-	if ((x >= 0) && (y >= 0) && (x < rs) && (y < cs))
-	  I2[(zz-zmin)*ps2 + (yy-ymin)*rs2 + xx-xmin] = I1[z*ps + y*rs + x];
+        if ((x >= 0) && (y >= 0) && (x < rs) && (y < cs)) {
+          I2[(zz - zmin) * ps2 + (yy - ymin) * rs2 + xx - xmin] =
+              I1[z * ps + y * rs + x];
+        }
       } // for xx for yy
+    }
   } // for zz
 
   *newxc = xc - xmin;
@@ -655,29 +999,89 @@ of information occurs.
     ymax = ymin = xmax = xmin = 0;
     xx = (int32_t)floor(cost*(rs-1) - sint*(0));
     yy = (int32_t)floor(sint*(rs-1) + cost*(0));
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
     xx = (int32_t)floor(cost*(0) - sint*(cs-1));
     yy = (int32_t)floor(sint*(0) + cost*(cs-1));
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
     xx = (int32_t)floor(cost*(rs-1) - sint*(cs-1));
     yy = (int32_t)floor(sint*(rs-1) + cost*(cs-1));
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
 
     xx = (int32_t)ceil(cost*(rs-1) - sint*(0));
     yy = (int32_t)ceil(sint*(rs-1) + cost*(0));
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
     xx = (int32_t)ceil(cost*(0) - sint*(cs-1));
     yy = (int32_t)ceil(sint*(0) + cost*(cs-1));
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
     xx = (int32_t)ceil(cost*(rs-1) - sint*(cs-1));
     yy = (int32_t)ceil(sint*(rs-1) + cost*(cs-1));
-    if (xx > xmax) xmax = xx;  if (xx < xmin) xmin = xx;
-    if (yy > ymax) ymax = yy;  if (yy < ymin) ymin = yy;
+    if (xx > xmax) {
+      xmax = xx;
+    }
+    if (xx < xmin) {
+      xmin = xx;
+    }
+    if (yy > ymax) {
+      ymax = yy;
+    }
+    if (yy < ymin) {
+      ymin = yy;
+    }
 
     rs2 = xmax - xmin + 1;
     cs2 = ymax - ymin + 1;
@@ -698,7 +1102,7 @@ of information occurs.
   I2 = UCHARDATA(image2);
   razimage(image2);
 
-  for (yy = ymin; yy < ymax; yy++)
+  for (yy = ymin; yy < ymax; yy++) {
     for (xx = xmin; xx < xmax; xx++)
     {
       x =  cost * (xx-xc) + sint * (yy-yc) + xc;
@@ -716,6 +1120,7 @@ of information occurs.
 	I2[(yy-ymin)*rs2 + xx-xmin] = arrondi(t);
       }
     } // for xx for yy
+  }
 
   return image2;
 } // lrotationInter()
@@ -770,7 +1175,7 @@ L'angle est exprimé en radians.
   I2 = UCHARDATA(image2);
   razimage(image2);
 
-  for (yy = ymin; yy < ymax; yy++)
+  for (yy = ymin; yy < ymax; yy++) {
     for (xx = xmin; xx < xmax; xx++)
     {
       x =  (cost * xx) / hx + (sint * yy) / hy - tx;
@@ -788,6 +1193,7 @@ L'angle est exprimé en radians.
 	I2[(yy-ymin)*rs2 + xx-xmin] = arrondi(t);
       }
     } // for xx for yy
+  }
 
   return 1;
 } // laffinetransformation()

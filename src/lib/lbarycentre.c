@@ -78,7 +78,11 @@ int32_t lbarycentrelab(struct xvimage * imagelab)
   F = SLONGDATA(imagelab);
 
   nblabels = 0;
-  for (j = 0; j < N; j++) if (F[j] > nblabels ) nblabels = F[j];
+  for (j = 0; j < N; j++) {
+    if (F[j] > nblabels) {
+      nblabels = F[j];
+    }
+  }
 
 #ifdef DEBUG
 printf("%d\n", nblabels);
@@ -101,21 +105,22 @@ printf("%d\n", nblabels);
     surf[i] = 0;
   }
 
-  for (k = 0; k < ds; k++)
-  for (j = 0; j < cs; j++)
-  for (i = 0; i < rs; i++)
-  {
-    if (F[k*ps + j*rs + i] != 0)
-    {
-      lab = F[k*ps + j*rs + i] - 1; /* les valeurs des labels sont entre 1 et nblabels */
-      surf[lab] += 1;
-      bxx[lab] += (double)i;
-      byy[lab] += (double)j;
-      bzz[lab] += (double)k;
+  for (k = 0; k < ds; k++) {
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        if (F[k * ps + j * rs + i] != 0) {
+          lab = F[k * ps + j * rs + i] -
+                1; /* les valeurs des labels sont entre 1 et nblabels */
+          surf[lab] += 1;
+          bxx[lab] += (double)i;
+          byy[lab] += (double)j;
+          bzz[lab] += (double)k;
+        }
+      }
     }
   }
 
-  for (i = 0; i < nblabels; i++)
+  for (i = 0; i < nblabels; i++) {
     if (surf[i]) 
     {
       bxx[i] = bxx[i] / surf[i];
@@ -125,19 +130,22 @@ printf("%d\n", nblabels);
 printf("%g %g %g\n", bxx[i], byy[i], bzz[i]);
 #endif
     }
+  }
 
   /* ---------------------------------------------------------- */
   /* marque l'emplacement approximatif des barycentres dans l'image */
   /* ---------------------------------------------------------- */
 
-  for (j = 0; j < N; j++) F[j] = 0;
+  for (j = 0; j < N; j++) {
+    F[j] = 0;
+  }
 
-  for (i = 0; i < nblabels; i++)
-    if (surf[i])  
-      F[(int32_t)(arrondi(bzz[i])) * ps + 
-	(int32_t)(arrondi(byy[i])) * rs + 
-	(int32_t)(arrondi(bxx[i]))
-       ] = i+1;
+  for (i = 0; i < nblabels; i++) {
+    if (surf[i]) {
+      F[(int32_t)(arrondi(bzz[i])) * ps + (int32_t)(arrondi(byy[i])) * rs +
+        (int32_t)(arrondi(bxx[i]))] = i + 1;
+    }
+  }
 
   free(bxx);
   free(byy);
@@ -197,17 +205,18 @@ int32_t lbarycentre(struct xvimage * image1, int32_t connex)
     surf[i] = 0;
   }
 
-  for (k = 0; k < ds; k++)
-  for (j = 0; j < cs; j++)
-  for (i = 0; i < rs; i++)
-  {
-    if (F[k*ps + j*rs + i] != 0)
-    {
-      lab = LABEL[k*ps + j*rs + i] - 1; /* les valeurs des labels sont entre 1 et nblabels */
-      surf[lab] += 1;
-      bxx[lab] += (double)i;
-      byy[lab] += (double)j;
-      bzz[lab] += (double)k;
+  for (k = 0; k < ds; k++) {
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        if (F[k * ps + j * rs + i] != 0) {
+          lab = LABEL[k * ps + j * rs + i] -
+                1; /* les valeurs des labels sont entre 1 et nblabels */
+          surf[lab] += 1;
+          bxx[lab] += (double)i;
+          byy[lab] += (double)j;
+          bzz[lab] += (double)k;
+        }
+      }
     }
   }
 
@@ -229,7 +238,9 @@ printf("nlabels = %d\n", nblabels);
   /* marque l'emplacement approximatif des barycentres dans l'image */
   /* ---------------------------------------------------------- */
 
-  for (j = 0; j < N; j++) F[j] = 0;
+  for (j = 0; j < N; j++) {
+    F[j] = 0;
+  }
 
   for (i = 0; i < nblabels-1; i++)
   {

@@ -93,31 +93,49 @@ int32_t loffset(
   {
     case 0:
       memset(pti, 0, N);
-      for (zz = 0; zz < ds; zz++)
-        for (yy = 0; yy < cs; yy++)
+      for (zz = 0; zz < ds; zz++) {
+        for (yy = 0; yy < cs; yy++) {
           for (xx = 0; xx < rs; xx++)
           {
             z = zz - oz;
             y = yy - oy;
             x = xx - ox;
-            if ((z >= 0) && (y >= 0) && (x >= 0) && (z < ds) && (y < cs) && (x < rs))
-              pti[zz*ps + yy*rs + xx] = ptt[z*ps + y*rs + x];
+            if ((z >= 0) && (y >= 0) && (x >= 0) && (z < ds) && (y < cs) &&
+                (x < rs)) {
+              pti[zz * ps + yy * rs + xx] = ptt[z * ps + y * rs + x];
+            }
           }
+        }
+      }
       break;
     case 1:
       memset(pti, 0, N);
-      for (zz = 0; zz < ds; zz++)
-        for (yy = 0; yy < cs; yy++)
+      for (zz = 0; zz < ds; zz++) {
+        for (yy = 0; yy < cs; yy++) {
           for (xx = 0; xx < rs; xx++)
           {
             z = zz - oz;
-            if (z < 0) z += ds; else if (z >= ds) z -= ds;
+            if (z < 0) {
+              z += ds;
+            } else if (z >= ds) {
+              z -= ds;
+            }
             y = yy - oy;
-            if (y < 0) y += cs; else if (y >= cs) y -= cs;
+            if (y < 0) {
+              y += cs;
+            } else if (y >= cs) {
+              y -= cs;
+            }
             x = xx - ox;
-            if (x < 0) x += rs; else if (x >= rs) x -= rs;
+            if (x < 0) {
+              x += rs;
+            } else if (x >= rs) {
+              x -= rs;
+            }
             pti[zz*ps + yy*rs + xx] = ptt[z*ps + y*rs + x];
           }
+        }
+      }
       break;
     default:
       fprintf(stderr, "loffset: bad mode %d\n", mode);

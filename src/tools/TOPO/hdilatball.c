@@ -200,12 +200,22 @@ int main(int argc, char **argv)
       exit(1);
     }
   }
-  
-  for (i = 0; i < N; i++) // calcule la dilation inversee
-    if (P[i] <= radius) I[i] = 0; else I[i] = NDG_MAX;
 
-  for (i = 0; i < N; i++) // inverse l'image
-    if (F[i]) F[i] = 0; else F[i] = NDG_MAX;
+  for (i = 0; i < N; i++) { // calcule la dilation inversee
+    if (P[i] <= radius) {
+      I[i] = 0;
+    } else {
+      I[i] = NDG_MAX;
+    }
+  }
+
+  for (i = 0; i < N; i++) { // inverse l'image
+    if (F[i]) {
+      F[i] = 0;
+    } else {
+      F[i] = NDG_MAX;
+    }
+  }
 
   if (depth(image) == 1)
   {
@@ -223,8 +233,13 @@ int main(int argc, char **argv)
       exit(1);
     }
   }
-  for (i = 0; i < N; i++) // re-inverse l'image
-    if (F[i]) F[i] = 0; else F[i] = NDG_MAX;
+  for (i = 0; i < N; i++) { // re-inverse l'image
+    if (F[i]) {
+      F[i] = 0;
+    } else {
+      F[i] = NDG_MAX;
+    }
+  }
 
   writeimage(image, argv[argc-1]);
   freeimage(image);

@@ -79,21 +79,35 @@ int32_t mctopo3d_lborder(struct xvimage *image, int32_t connex)
       razimage(image);
       switch (connex)
       {
-        case 4: 
-          for (x = 0; x < N; x++)
-            if (T[x] && (nbvoisc8(T, x, rs, N)) != 0) I[x] = NDG_MAX;
+        case 4:
+          for (x = 0; x < N; x++) {
+            if (T[x] && (nbvoisc8(T, x, rs, N)) != 0) {
+              I[x] = NDG_MAX;
+            }
+          }
           break;
-        case 8: 
-          for (x = 0; x < N; x++)
-            if (T[x] && (nbvoisc4(T, x, rs, N)) != 0) I[x] = NDG_MAX;
+        case 8:
+          for (x = 0; x < N; x++) {
+            if (T[x] && (nbvoisc4(T, x, rs, N)) != 0) {
+              I[x] = NDG_MAX;
+            }
+          }
           break;
-        case 6: 
-          for (x = 0; x < N; x++)
-            if (T[x] && nonbord3d(x,rs,ps,N) && (mctopo3d_nbvoisc26(T,x,rs,ps,N)) != 0) I[x] = NDG_MAX;
+        case 6:
+          for (x = 0; x < N; x++) {
+            if (T[x] && nonbord3d(x, rs, ps, N) &&
+                (mctopo3d_nbvoisc26(T, x, rs, ps, N)) != 0) {
+              I[x] = NDG_MAX;
+            }
+          }
           break;
-        case 26: 
-          for (x = 0; x < N; x++)
-            if (T[x] && nonbord3d(x,rs,ps,N) && (mctopo3d_nbvoisc6(T,x,rs,ps,N)) != 0) I[x] = NDG_MAX;
+        case 26:
+          for (x = 0; x < N; x++) {
+            if (T[x] && nonbord3d(x, rs, ps, N) &&
+                (mctopo3d_nbvoisc6(T, x, rs, ps, N)) != 0) {
+              I[x] = NDG_MAX;
+            }
+          }
           break;
         default: 
           fprintf(stderr, "mctopo3d_lborder: mauvaise connexite: %d\n", connex);
@@ -111,19 +125,27 @@ int32_t mctopo3d_lborder(struct xvimage *image, int32_t connex)
       razimage(tmp);
       switch (connex)
       {
-        case 4: 
-          for (x = 0; x < N; x++)
-            if (nbvois8neq(IL,x,rs,N) != 0) T[x] = NDG_MAX;
+        case 4:
+          for (x = 0; x < N; x++) {
+            if (nbvois8neq(IL, x, rs, N) != 0) {
+              T[x] = NDG_MAX;
+            }
+          }
           break;
-        case 8: 
-          for (x = 0; x < N; x++)
-            if (nbvois4neq(IL,x,rs,N) != 0) T[x] = NDG_MAX;
+        case 8:
+          for (x = 0; x < N; x++) {
+            if (nbvois4neq(IL, x, rs, N) != 0) {
+              T[x] = NDG_MAX;
+            }
+          }
           break;
         default: 
           fprintf(stderr, "mctopo3d_lborder: mauvaise connexite: %d\n", connex);
           return 0;
       } /* switch (connex) */
-      for (x = 0; x < N; x++) IL[x] = (int32_t) T[x];
+      for (x = 0; x < N; x++) {
+        IL[x] = (int32_t)T[x];
+      }
       break;
     default:
       fprintf(stderr,"mctopo3d_lborder() : bad data type %d\n", datatype(image));

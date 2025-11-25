@@ -99,7 +99,11 @@ TypListechainee * ListechaineeVide()
 int32_t EstVideListechainee(TypListechainee * l) 
 { 
                         /* retourne 1 si listechainee vide */
-  if (l == NULL) return(1); else return(0);
+                        if (l == NULL) {
+                          return (1);
+                        } else {
+                          return (0);
+                        }
 } /* Vide() */
   
 /*************************************************/
@@ -134,8 +138,9 @@ TypListechainee * Cons (TypElement el, TypListechainee * lis)
 void AfficheListechainee(TypListechainee * lis) 
 {
                               /* affiche les elements de la listechainee */
-  for (; lis != NULL; lis = lis->suite) 
-    printf("%d ", lis->elt);
+                              for (; lis != NULL; lis = lis->suite) {
+                                printf("%d ", lis->elt);
+                              }
 } /* AfficheListechainee() */
 
 /*************************************************/
@@ -157,8 +162,11 @@ void DetruitListechainee(TypListechainee * lis)
 TypListechainee * InListechainee(TypElement el, TypListechainee * lis) 
 {
                               /* retourne la premiere sous-listechainee qui a el en tete */
-  for (; lis != NULL; lis = lis->suite)
-    if (lis->elt == el) return lis;                        
+                              for (; lis != NULL; lis = lis->suite) {
+                                if (lis->elt == el) {
+                                  return lis;
+                                }
+                              }
   return NULL;
 } /* InListechainee() */
 
@@ -167,9 +175,11 @@ TypListechainee * UnionListechainee (TypListechainee * lis1, TypListechainee * l
 {
                               /* retourne la listechainee lis1 qui contient, si lis1 et lis2
                                  representent des ensembles, l'union des elements */
-  for (; lis2 != NULL; lis2 = lis2->suite)
-    if (InListechainee(lis2->elt, lis1) == NULL)
-      lis1 = Cons(lis2->elt, lis1);
+                              for (; lis2 != NULL; lis2 = lis2->suite) {
+                                if (InListechainee(lis2->elt, lis1) == NULL) {
+                                  lis1 = Cons(lis2->elt, lis1);
+                                }
+                              }
   return lis1;
 } /* Union() */
 

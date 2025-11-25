@@ -82,7 +82,9 @@ int main(int argc, char **argv)
   cen = (int32_t)ceil(radius);
   size = 2* cen + 1;
 
-  if (argc == 4) dim = atoi(argv[2]);
+  if (argc == 4) {
+    dim = atoi(argv[2]);
+  }
 
   if (dim == 3)
   {

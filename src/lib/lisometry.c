@@ -98,9 +98,11 @@ int32_t lisometry(struct xvimage * image1, char *mode, struct xvimage **im2)
       return 0;
     }
     I2 = UCHARDATA(image2);
-    for (j = 0; j < rs; j++)
-      for (i = 0; i < cs; i++)
-	I2[j * cs + i] = I1[i * rs + rs-j-1]; 
+    for (j = 0; j < rs; j++) {
+      for (i = 0; i < cs; i++) {
+        I2[j * cs + i] = I1[i * rs + rs-j-1];
+      }
+    }
   }
   else
   if (strcmp(mode, "2") == 0)  // rotation 180 clockwise
@@ -117,9 +119,11 @@ int32_t lisometry(struct xvimage * image1, char *mode, struct xvimage **im2)
       return 0;
     }
     I2 = UCHARDATA(image2);
-    for (j = 0; j < cs; j++)
-      for (i = 0; i < rs; i++)
-	I2[j * rs + i] = I1[(cs-j-1) * rs + rs-i-1]; 
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        I2[j * rs + i] = I1[(cs-j-1) * rs + rs-i-1];
+      }
+    }
   }
   else
   if (strcmp(mode, "3") == 0)  // rotation 270 clockwise
@@ -136,9 +140,11 @@ int32_t lisometry(struct xvimage * image1, char *mode, struct xvimage **im2)
       return 0;
     }
     I2 = UCHARDATA(image2);
-    for (j = 0; j < rs; j++)
-      for (i = 0; i < cs; i++)
-	I2[j * cs + i] = I1[(cs-i-1) * rs + j]; 
+    for (j = 0; j < rs; j++) {
+      for (i = 0; i < cs; i++) {
+        I2[j * cs + i] = I1[(cs-i-1) * rs + j];
+      }
+    }
   }
   else
   if (strcmp(mode, "4") == 0)  // symmetry / vertical axis 
@@ -155,9 +161,11 @@ int32_t lisometry(struct xvimage * image1, char *mode, struct xvimage **im2)
       return 0;
     }
     I2 = UCHARDATA(image2);
-    for (j = 0; j < cs; j++)
-      for (i = 0; i < rs; i++)
-	I2[j * rs + i] = I1[j * rs + rs-i-1]; 
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        I2[j * rs + i] = I1[j * rs + rs-i-1];
+      }
+    }
   }
   else
   if (strcmp(mode, "5") == 0)  // symmetry / horizontal axis 
@@ -174,9 +182,11 @@ int32_t lisometry(struct xvimage * image1, char *mode, struct xvimage **im2)
       return 0;
     }
     I2 = UCHARDATA(image2);
-    for (j = 0; j < cs; j++)
-      for (i = 0; i < rs; i++)
-	I2[j * rs + i] = I1[(cs-j-1) * rs + i]; 
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        I2[j * rs + i] = I1[(cs-j-1) * rs + i];
+      }
+    }
   }
   else
   if (strcmp(mode, "xzy") == 0)
@@ -189,10 +199,13 @@ int32_t lisometry(struct xvimage * image1, char *mode, struct xvimage **im2)
     }
     nps = rs * d;
     I2 = UCHARDATA(image2);
-    for (k = 0; k < cs; k++)
-      for (j = 0; j < d; j++)
-        for (i = 0; i < rs; i++)
-          I2[k * nps + j * rs + i] = I1[j * ps + k * rs + i]; 
+    for (k = 0; k < cs; k++) {
+      for (j = 0; j < d; j++) {
+        for (i = 0; i < rs; i++) {
+          I2[k * nps + j * rs + i] = I1[j * ps + k * rs + i];
+        }
+      }
+    }
   }
   else
   if (strcmp(mode, "yxz") == 0)
@@ -205,10 +218,13 @@ int32_t lisometry(struct xvimage * image1, char *mode, struct xvimage **im2)
     }
     nps = rs * cs;
     I2 = UCHARDATA(image2);
-    for (k = 0; k < d; k++)
-      for (j = 0; j < rs; j++)
-        for (i = 0; i < cs; i++)
-          I2[k * nps + j * cs + i] = I1[k * ps + i * rs + j]; 
+    for (k = 0; k < d; k++) {
+      for (j = 0; j < rs; j++) {
+        for (i = 0; i < cs; i++) {
+          I2[k * nps + j * cs + i] = I1[k * ps + i * rs + j];
+        }
+      }
+    }
   }
   else
   if (strcmp(mode, "yzx") == 0)
@@ -221,10 +237,13 @@ int32_t lisometry(struct xvimage * image1, char *mode, struct xvimage **im2)
     }
     nps = d * cs;
     I2 = UCHARDATA(image2);
-    for (k = 0; k < rs; k++)
-      for (j = 0; j < d; j++)
-        for (i = 0; i < cs; i++)
-          I2[k * nps + j * cs + i] = I1[j * ps + i * rs + k]; 
+    for (k = 0; k < rs; k++) {
+      for (j = 0; j < d; j++) {
+        for (i = 0; i < cs; i++) {
+          I2[k * nps + j * cs + i] = I1[j * ps + i * rs + k];
+        }
+      }
+    }
   }
   else
   if (strcmp(mode, "zxy") == 0)
@@ -237,10 +256,13 @@ int32_t lisometry(struct xvimage * image1, char *mode, struct xvimage **im2)
     }
     nps = d * rs;
     I2 = UCHARDATA(image2);
-    for (k = 0; k < cs; k++)
-      for (j = 0; j < rs; j++)
-        for (i = 0; i < d; i++)
-          I2[k * nps + j * d + i] = I1[i * ps + k * rs + j]; 
+    for (k = 0; k < cs; k++) {
+      for (j = 0; j < rs; j++) {
+        for (i = 0; i < d; i++) {
+          I2[k * nps + j * d + i] = I1[i * ps + k * rs + j];
+        }
+      }
+    }
   }
   else
   if (strcmp(mode, "zyx") == 0)
@@ -253,10 +275,13 @@ int32_t lisometry(struct xvimage * image1, char *mode, struct xvimage **im2)
     }
     nps = d * cs;
     I2 = UCHARDATA(image2);
-    for (k = 0; k < rs; k++)
-      for (j = 0; j < cs; j++)
-        for (i = 0; i < d; i++)
-          I2[k * nps + j * d + i] = I1[i * ps + j * rs + k]; 
+    for (k = 0; k < rs; k++) {
+      for (j = 0; j < cs; j++) {
+        for (i = 0; i < d; i++) {
+          I2[k * nps + j * d + i] = I1[i * ps + j * rs + k];
+        }
+      }
+    }
   }
   else
   {   

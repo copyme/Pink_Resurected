@@ -98,10 +98,18 @@ int32_t uniquevoisin4(
 /* retourne l'indice du premier voisin objet de p trouvé dans le voisinage */
 {
   register uint8_t * ptr = img+p;
-  if ((p%rs!=rs-1) && (*(ptr+1))) return p+1;
-  if ((p>=rs) && (*(ptr-rs))) return p-rs;
-  if ((p%rs!=0) && (*(ptr-1))) return p-1;
-  if ((p<N-rs) && (*(ptr+rs))) return p+rs;  
+  if ((p % rs != rs - 1) && (*(ptr + 1))) {
+    return p + 1;
+  }
+  if ((p >= rs) && (*(ptr - rs))) {
+    return p - rs;
+  }
+  if ((p % rs != 0) && (*(ptr - 1))) {
+    return p - 1;
+  }
+  if ((p < N - rs) && (*(ptr + rs))) {
+    return p + rs;
+  }
   assert(1); exit(1);
 } // uniquevoisin4()
 
@@ -115,14 +123,30 @@ int32_t uniquevoisin8(
 /* retourne l'indice du premier voisin objet de p trouvé dans le voisinage */
 {
   register uint8_t * ptr = img+p;
-  if ((p%rs!=rs-1) && (*(ptr+1))) return p+1;
-  if (((p%rs!=rs-1)&&(p>=rs)) && (*(ptr+1-rs))) return p+1-rs;
-  if ((p>=rs) && (*(ptr-rs))) return p-rs;
-  if (((p>=rs)&&(p%rs!=0)) && (*(ptr-rs-1))) return p-rs-1;
-  if ((p%rs!=0) && (*(ptr-1))) return p-1;
-  if (((p%rs!=0)&&(p<N-rs)) && (*(ptr-1+rs))) return p-1+rs;
-  if ((p<N-rs) && (*(ptr+rs))) return p+rs;
-  if (((p<N-rs)&&(p%rs!=rs-1)) && (*(ptr+rs+1))) return p+rs+1;
+  if ((p % rs != rs - 1) && (*(ptr + 1))) {
+    return p + 1;
+  }
+  if (((p % rs != rs - 1) && (p >= rs)) && (*(ptr + 1 - rs))) {
+    return p + 1 - rs;
+  }
+  if ((p >= rs) && (*(ptr - rs))) {
+    return p - rs;
+  }
+  if (((p >= rs) && (p % rs != 0)) && (*(ptr - rs - 1))) {
+    return p - rs - 1;
+  }
+  if ((p % rs != 0) && (*(ptr - 1))) {
+    return p - 1;
+  }
+  if (((p % rs != 0) && (p < N - rs)) && (*(ptr - 1 + rs))) {
+    return p - 1 + rs;
+  }
+  if ((p < N - rs) && (*(ptr + rs))) {
+    return p + rs;
+  }
+  if (((p < N - rs) && (p % rs != rs - 1)) && (*(ptr + rs + 1))) {
+    return p + rs + 1;
+  }
   assert(1); exit(1);
 } // uniquevoisin8()
 
@@ -136,12 +160,24 @@ int32_t uniquevoisin6(
 /* ========================================== */
 /* retourne l'indice du premier voisin objet de i trouvé dans le voisinage */
 {
-  if ((i%rs!=rs-1) && B[i+1]) return i+1;
-  if (((i%ps)>=rs) && B[i-rs]) return i-rs;
-  if ((i%rs!=0) && B[i-1]) return i-1;
-  if (((i%ps)<ps-rs) && B[i+rs]) return i+rs;
-  if ((i>=ps) && B[i-ps]) return i-ps;
-  if ((i<N-ps) && B[i+ps]) return i+ps;
+  if ((i % rs != rs - 1) && B[i + 1]) {
+    return i + 1;
+  }
+  if (((i % ps) >= rs) && B[i - rs]) {
+    return i - rs;
+  }
+  if ((i % rs != 0) && B[i - 1]) {
+    return i - 1;
+  }
+  if (((i % ps) < ps - rs) && B[i + rs]) {
+    return i + rs;
+  }
+  if ((i >= ps) && B[i - ps]) {
+    return i - ps;
+  }
+  if ((i < N - ps) && B[i + ps]) {
+    return i + ps;
+  }
   assert(1); exit(1);
 } /* uniquevoisin6() */
 
@@ -155,24 +191,60 @@ int32_t uniquevoisin18(
 /* ========================================== */
 /* retourne l'indice du premier voisin objet de i trouvé dans le voisinage */
 {
-  if (((i<N-ps)&&(i%rs!=rs-1)) && B[ps+i+1]) return ps+i+1;
-  if (((i<N-ps)&&(i%ps>=rs)) && B[ps+i-rs]) return ps+i-rs;
-  if (((i<N-ps)&&(i%rs!=0)) && B[ps+i-1]) return ps+i-1;
-  if (((i<N-ps)&&(i%ps<ps-rs)) && B[ps+i+rs]) return ps+i+rs;
-  if (((i<N-ps)) && B[ps+i]) return ps+i;
-  if (((i%rs!=rs-1)) && B[i+1]) return i+1;
-  if (((i%rs!=rs-1)&&(i%ps>=rs)) && B[i+1-rs]) return i+1-rs;
-  if (((i%ps>=rs)) && B[i-rs]) return i-rs;
-  if (((i%ps>=rs)&&(i%rs!=0)) && B[i-rs-1]) return i-rs-1;
-  if (((i%rs!=0)) && B[i-1]) return i-1;
-  if (((i%rs!=0)&&(i%ps<ps-rs)) && B[i-1+rs]) return i-1+rs;
-  if (((i%ps<ps-rs)) && B[i+rs]) return i+rs;
-  if (((i%ps<ps-rs)&&(i%rs!=rs-1)) && B[i+rs+1]) return i+rs+1;
-  if (((i>=ps)&&(i%rs!=rs-1)) && B[-ps+i+1]) return -ps+i+1;
-  if (((i>=ps)&&(i%ps>=rs)) && B[-ps+i-rs]) return -ps+i-rs;
-  if (((i>=ps)&&(i%rs!=0)) && B[-ps+i-1]) return -ps+i-1;
-  if (((i>=ps)&&(i%ps<ps-rs)) && B[-ps+i+rs]) return -ps+i+rs;
-  if (((i>=ps)) && B[-ps+i]) return -ps+i;
+  if (((i < N - ps) && (i % rs != rs - 1)) && B[ps + i + 1]) {
+    return ps + i + 1;
+  }
+  if (((i < N - ps) && (i % ps >= rs)) && B[ps + i - rs]) {
+    return ps + i - rs;
+  }
+  if (((i < N - ps) && (i % rs != 0)) && B[ps + i - 1]) {
+    return ps + i - 1;
+  }
+  if (((i < N - ps) && (i % ps < ps - rs)) && B[ps + i + rs]) {
+    return ps + i + rs;
+  }
+  if (((i < N - ps)) && B[ps + i]) {
+    return ps + i;
+  }
+  if (((i % rs != rs - 1)) && B[i + 1]) {
+    return i + 1;
+  }
+  if (((i % rs != rs - 1) && (i % ps >= rs)) && B[i + 1 - rs]) {
+    return i + 1 - rs;
+  }
+  if (((i % ps >= rs)) && B[i - rs]) {
+    return i - rs;
+  }
+  if (((i % ps >= rs) && (i % rs != 0)) && B[i - rs - 1]) {
+    return i - rs - 1;
+  }
+  if (((i % rs != 0)) && B[i - 1]) {
+    return i - 1;
+  }
+  if (((i % rs != 0) && (i % ps < ps - rs)) && B[i - 1 + rs]) {
+    return i - 1 + rs;
+  }
+  if (((i % ps < ps - rs)) && B[i + rs]) {
+    return i + rs;
+  }
+  if (((i % ps < ps - rs) && (i % rs != rs - 1)) && B[i + rs + 1]) {
+    return i + rs + 1;
+  }
+  if (((i >= ps) && (i % rs != rs - 1)) && B[-ps + i + 1]) {
+    return -ps + i + 1;
+  }
+  if (((i >= ps) && (i % ps >= rs)) && B[-ps + i - rs]) {
+    return -ps + i - rs;
+  }
+  if (((i >= ps) && (i % rs != 0)) && B[-ps + i - 1]) {
+    return -ps + i - 1;
+  }
+  if (((i >= ps) && (i % ps < ps - rs)) && B[-ps + i + rs]) {
+    return -ps + i + rs;
+  }
+  if (((i >= ps)) && B[-ps + i]) {
+    return -ps + i;
+  }
   assert(1); exit(1);
 } /* uniquevoisin18() */
 
@@ -186,32 +258,90 @@ int32_t uniquevoisin26(
 /* ========================================== */
 /* retourne l'indice du premier voisin objet de i trouvé dans le voisinage */
 {
-  if (((i<N-ps)&&(i%rs!=rs-1)) && B[ps+i+1]) return ps+i+1;
-  if (((i<N-ps)&&(i%rs!=rs-1)&&(i%ps>=rs)) && B[ps+i+1-rs]) return ps+i+1-rs;
-  if (((i<N-ps)&&(i%ps>=rs)) && B[ps+i-rs]) return ps+i-rs;
-  if (((i<N-ps)&&(i%ps>=rs)&&(i%rs!=0)) && B[ps+i-rs-1]) return ps+i-rs-1;
-  if (((i<N-ps)&&(i%rs!=0)) && B[ps+i-1]) return ps+i-1;
-  if (((i<N-ps)&&(i%rs!=0)&&(i%ps<ps-rs)) && B[ps+i-1+rs]) return ps+i-1+rs;
-  if (((i<N-ps)&&(i%ps<ps-rs)) && B[ps+i+rs]) return ps+i+rs;
-  if (((i<N-ps)&&(i%ps<ps-rs)&&(i%rs!=rs-1)) && B[ps+i+rs+1]) return ps+i+rs+1;
-  if (((i<N-ps)) && B[ps+i]) return ps+i;
-  if (((i%rs!=rs-1)) && B[i+1]) return i+1;
-  if (((i%rs!=rs-1)&&(i%ps>=rs)) && B[i+1-rs]) return i+1-rs;
-  if (((i%ps>=rs)) && B[i-rs]) return i-rs;
-  if (((i%ps>=rs)&&(i%rs!=0)) && B[i-rs-1]) return i-rs-1;
-  if (((i%rs!=0)) && B[i-1]) return i-1;
-  if (((i%rs!=0)&&(i%ps<ps-rs)) && B[i-1+rs]) return i-1+rs;
-  if (((i%ps<ps-rs)) && B[i+rs]) return i+rs;
-  if (((i%ps<ps-rs)&&(i%rs!=rs-1)) && B[i+rs+1]) return i+rs+1;
-  if (((i>=ps)&&(i%rs!=rs-1)) && B[-ps+i+1]) return -ps+i+1;
-  if (((i>=ps)&&(i%rs!=rs-1)&&(i%ps>=rs)) && B[-ps+i+1-rs]) return -ps+i+1-rs;
-  if (((i>=ps)&&(i%ps>=rs)) && B[-ps+i-rs]) return -ps+i-rs;
-  if (((i>=ps)&&(i%ps>=rs)&&(i%rs!=0)) && B[-ps+i-rs-1]) return -ps+i-rs-1;
-  if (((i>=ps)&&(i%rs!=0)) && B[-ps+i-1]) return -ps+i-1;
-  if (((i>=ps)&&(i%rs!=0)&&(i%ps<ps-rs)) && B[-ps+i-1+rs]) return -ps+i-1+rs;
-  if (((i>=ps)&&(i%ps<ps-rs)) && B[-ps+i+rs]) return -ps+i+rs;
-  if (((i>=ps)&&(i%ps<ps-rs)&&(i%rs!=rs-1)) && B[-ps+i+rs+1]) return -ps+i+rs+1;
-  if (((i>=ps)) && B[-ps+i]) return -ps+i;
+  if (((i < N - ps) && (i % rs != rs - 1)) && B[ps + i + 1]) {
+    return ps + i + 1;
+  }
+  if (((i < N - ps) && (i % rs != rs - 1) && (i % ps >= rs)) &&
+      B[ps + i + 1 - rs]) {
+    return ps + i + 1 - rs;
+  }
+  if (((i < N - ps) && (i % ps >= rs)) && B[ps + i - rs]) {
+    return ps + i - rs;
+  }
+  if (((i < N - ps) && (i % ps >= rs) && (i % rs != 0)) && B[ps + i - rs - 1]) {
+    return ps + i - rs - 1;
+  }
+  if (((i < N - ps) && (i % rs != 0)) && B[ps + i - 1]) {
+    return ps + i - 1;
+  }
+  if (((i < N - ps) && (i % rs != 0) && (i % ps < ps - rs)) &&
+      B[ps + i - 1 + rs]) {
+    return ps + i - 1 + rs;
+  }
+  if (((i < N - ps) && (i % ps < ps - rs)) && B[ps + i + rs]) {
+    return ps + i + rs;
+  }
+  if (((i < N - ps) && (i % ps < ps - rs) && (i % rs != rs - 1)) &&
+      B[ps + i + rs + 1]) {
+    return ps + i + rs + 1;
+  }
+  if (((i < N - ps)) && B[ps + i]) {
+    return ps + i;
+  }
+  if (((i % rs != rs - 1)) && B[i + 1]) {
+    return i + 1;
+  }
+  if (((i % rs != rs - 1) && (i % ps >= rs)) && B[i + 1 - rs]) {
+    return i + 1 - rs;
+  }
+  if (((i % ps >= rs)) && B[i - rs]) {
+    return i - rs;
+  }
+  if (((i % ps >= rs) && (i % rs != 0)) && B[i - rs - 1]) {
+    return i - rs - 1;
+  }
+  if (((i % rs != 0)) && B[i - 1]) {
+    return i - 1;
+  }
+  if (((i % rs != 0) && (i % ps < ps - rs)) && B[i - 1 + rs]) {
+    return i - 1 + rs;
+  }
+  if (((i % ps < ps - rs)) && B[i + rs]) {
+    return i + rs;
+  }
+  if (((i % ps < ps - rs) && (i % rs != rs - 1)) && B[i + rs + 1]) {
+    return i + rs + 1;
+  }
+  if (((i >= ps) && (i % rs != rs - 1)) && B[-ps + i + 1]) {
+    return -ps + i + 1;
+  }
+  if (((i >= ps) && (i % rs != rs - 1) && (i % ps >= rs)) &&
+      B[-ps + i + 1 - rs]) {
+    return -ps + i + 1 - rs;
+  }
+  if (((i >= ps) && (i % ps >= rs)) && B[-ps + i - rs]) {
+    return -ps + i - rs;
+  }
+  if (((i >= ps) && (i % ps >= rs) && (i % rs != 0)) && B[-ps + i - rs - 1]) {
+    return -ps + i - rs - 1;
+  }
+  if (((i >= ps) && (i % rs != 0)) && B[-ps + i - 1]) {
+    return -ps + i - 1;
+  }
+  if (((i >= ps) && (i % rs != 0) && (i % ps < ps - rs)) &&
+      B[-ps + i - 1 + rs]) {
+    return -ps + i - 1 + rs;
+  }
+  if (((i >= ps) && (i % ps < ps - rs)) && B[-ps + i + rs]) {
+    return -ps + i + rs;
+  }
+  if (((i >= ps) && (i % ps < ps - rs) && (i % rs != rs - 1)) &&
+      B[-ps + i + rs + 1]) {
+    return -ps + i + rs + 1;
+  }
+  if (((i >= ps)) && B[-ps + i]) {
+    return -ps + i;
+  }
   assert(1); exit(1);
 } /* uniquevoisin26() */
 
@@ -246,16 +376,18 @@ int main(int argc, char **argv)
     connex = connex / 10;
     sav = copyimage(image);
     S = UCHARDATA(sav);
+  } else {
+    val = 0;
   }
-  else val = 0;
 
   if (argc > 4)
   { 
     x = atoi(argv[3]);
     y = atoi(argv[4]);
   }
-  if (argc > 6)
+  if (argc > 6) {
     z = atoi(argv[5]);
+  }
 
   rs = rowsize(image);
   cs = colsize(image);
@@ -271,8 +403,12 @@ int main(int argc, char **argv)
   }
 
   if (argc > 4)
-  {   
-    if (argc > 6) p = z*ps + y*rs + x; else p = y*rs + x;
+  {
+    if (argc > 6) {
+      p = z * ps + y * rs + x;
+    } else {
+      p = y * rs + x;
+    }
 
     if (!F[p])
     {
@@ -310,15 +446,42 @@ int main(int argc, char **argv)
   {
     p = -1;
     if (connex == 4)
-    { for (x = 0; x < N; x++) if ((F[x]) && (nbvois4(F, x, rs, N) == 2)) { p = x; break; } }
-    else if (connex == 8)
-    { for (x = 0; x < N; x++) if ((F[x]) && (nbvois8(F, x, rs, N) == 2)) { p = x; break; } }
-    else if (connex == 6)
-    { for (x = 0; x < N; x++) if ((F[x]) && (mctopo3d_nbvoiso6(F, x, rs, ps, N) != 2)) { p = x; break; } }
-    else if (connex == 18)
-    { for (x = 0; x < N; x++) if ((F[x]) && (mctopo3d_nbvoiso18(F, x, rs, ps, N) != 2)) { p = x; break; } }
-    else if (connex == 26)
-    { for (x = 0; x < N; x++) if ((F[x]) && (mctopo3d_nbvoiso26(F, x, rs, ps, N) != 2)) { p = x; break; } }
+    {
+      for (x = 0; x < N; x++) {
+        if ((F[x]) && (nbvois4(F, x, rs, N) == 2)) {
+          p = x;
+          break;
+        }
+      }
+    } else if (connex == 8) {
+      for (x = 0; x < N; x++) {
+        if ((F[x]) && (nbvois8(F, x, rs, N) == 2)) {
+          p = x;
+          break;
+        }
+      }
+    } else if (connex == 6) {
+      for (x = 0; x < N; x++) {
+        if ((F[x]) && (mctopo3d_nbvoiso6(F, x, rs, ps, N) != 2)) {
+          p = x;
+          break;
+        }
+      }
+    } else if (connex == 18) {
+      for (x = 0; x < N; x++) {
+        if ((F[x]) && (mctopo3d_nbvoiso18(F, x, rs, ps, N) != 2)) {
+          p = x;
+          break;
+        }
+      }
+    } else if (connex == 26) {
+      for (x = 0; x < N; x++) {
+        if ((F[x]) && (mctopo3d_nbvoiso26(F, x, rs, ps, N) != 2)) {
+          p = x;
+          break;
+        }
+      }
+    }
     if (p == -1)
     {
       fprintf(stderr, "%s: no curve point\n", argv[0]);
@@ -343,12 +506,14 @@ int main(int argc, char **argv)
       p = uniquevoisin4(F, p, rs, N);
     } while (nbvois4(F, p, rs, N) == 1);
     P[n] = p; n++;
-    if (nbvois4(F, p, rs, N) != 0)
+    if (nbvois4(F, p, rs, N) != 0) {
       fprintf(stderr, "%s: warning: final point not a curve point\n", argv[0]);
-    if (!voisins4(p, sp, rs))
+    }
+    if (!voisins4(p, sp, rs)) {
       fprintf(stderr, "%s: warning: not a closed curve\n", argv[0]);
-    else
+    } else {
       P[n] = sp;
+    }
     n++;
   }
   else if (connex == 8)
@@ -359,12 +524,14 @@ int main(int argc, char **argv)
       p = uniquevoisin8(F, p, rs, N);
     } while (nbvois8(F, p, rs, N) == 1);
     P[n] = p; n++;
-    if (nbvois8(F, p, rs, N) != 0)
+    if (nbvois8(F, p, rs, N) != 0) {
       fprintf(stderr, "%s: warning: final point not a curve point\n", argv[0]);
-    if (!voisins8(p, sp, rs))
+    }
+    if (!voisins8(p, sp, rs)) {
       fprintf(stderr, "%s: warning: not a closed curve\n", argv[0]);
-    else
+    } else {
       P[n] = sp;
+    }
     n++;
   }
   else if (connex == 6)
@@ -375,12 +542,14 @@ int main(int argc, char **argv)
       p = uniquevoisin6(F, p, rs, ps, N);
     } while (mctopo3d_nbvoiso6(F, p, rs, ps, N) == 1);
     P[n] = p; n++;
-    if (mctopo3d_nbvoiso6(F, p, rs, ps, N) != 0)
+    if (mctopo3d_nbvoiso6(F, p, rs, ps, N) != 0) {
       fprintf(stderr, "%s: warning: final point not a curve point\n", argv[0]);
-    if (!voisins6(p, sp, rs, ps))
+    }
+    if (!voisins6(p, sp, rs, ps)) {
       fprintf(stderr, "%s: warning: not a closed curve\n", argv[0]);
-    else
+    } else {
       P[n] = sp;
+    }
     n++;
   }
   else if (connex == 18)
@@ -391,12 +560,14 @@ int main(int argc, char **argv)
       p = uniquevoisin18(F, p, rs, ps, N);
     } while (mctopo3d_nbvoiso18(F, p, rs, ps, N) == 1);
     P[n] = p; n++;
-    if (mctopo3d_nbvoiso18(F, p, rs, ps, N) != 0)
+    if (mctopo3d_nbvoiso18(F, p, rs, ps, N) != 0) {
       fprintf(stderr, "%s: warning: final point not a curve point\n", argv[0]);
-    if (!voisins18(p, sp, rs, ps))
+    }
+    if (!voisins18(p, sp, rs, ps)) {
       fprintf(stderr, "%s: warning: not a closed curve\n", argv[0]);
-    else
+    } else {
       P[n] = sp;
+    }
     n++;
   }
   else if (connex == 26)
@@ -407,12 +578,14 @@ int main(int argc, char **argv)
       p = uniquevoisin26(F, p, rs, ps, N);
     } while (mctopo3d_nbvoiso26(F, p, rs, ps, N) == 1);
     P[n] = p; n++;
-    if (mctopo3d_nbvoiso26(F, p, rs, ps, N) != 0)
+    if (mctopo3d_nbvoiso26(F, p, rs, ps, N) != 0) {
       fprintf(stderr, "%s: warning: final point not a curve point\n", argv[0]);
-    if (!voisins26(p, sp, rs, ps))
+    }
+    if (!voisins26(p, sp, rs, ps)) {
       fprintf(stderr, "%s: warning: not a closed curve\n", argv[0]);
-    else
+    } else {
       P[n] = sp;
+    }
     n++;
   }
 
@@ -420,30 +593,41 @@ int main(int argc, char **argv)
   {
     if ((connex == 4) || (connex == 8))
     {
-      fprintf(fd, "n %d\n", n); 
-      for (x = 0; x < n; x++) fprintf(fd, "%d %d %d\n", P[x] % rs, P[x] / rs, S[P[x]]);
+      fprintf(fd, "n %d\n", n);
+      for (x = 0; x < n; x++) {
+        fprintf(fd, "%d %d %d\n", P[x] % rs, P[x] / rs, S[P[x]]);
+      }
     }
     else
     {
-      fprintf(fd, "N %d\n", n); 
-      for (x = 0; x < n; x++) fprintf(fd, "%d %d %d %d\n", P[x] % rs, (P[x] % ps) / rs, P[x] / ps, S[P[x]]);
+      fprintf(fd, "N %d\n", n);
+      for (x = 0; x < n; x++) {
+        fprintf(fd, "%d %d %d %d\n", P[x] % rs, (P[x] % ps) / rs, P[x] / ps,
+                S[P[x]]);
+      }
     }
   }
   else
   {
     if ((connex == 4) || (connex == 8))
     {
-      fprintf(fd, "b %d\n", n); 
-      for (x = 0; x < n; x++) fprintf(fd, "%d %d\n", P[x] % rs, P[x] / rs);
+      fprintf(fd, "b %d\n", n);
+      for (x = 0; x < n; x++) {
+        fprintf(fd, "%d %d\n", P[x] % rs, P[x] / rs);
+      }
     }
     else
     {
-      fprintf(fd, "B %d\n", n); 
-      for (x = 0; x < n; x++) fprintf(fd, "%d %d %d\n", P[x] % rs, (P[x] % ps) / rs, P[x] / ps);
+      fprintf(fd, "B %d\n", n);
+      for (x = 0; x < n; x++) {
+        fprintf(fd, "%d %d %d\n", P[x] % rs, (P[x] % ps) / rs, P[x] / ps);
+      }
     }
   }
   fclose(fd);
-  if (val) freeimage(sav);
+  if (val) {
+    freeimage(sav);
+  }
   freeimage(image);
   free(P);
   return 0;

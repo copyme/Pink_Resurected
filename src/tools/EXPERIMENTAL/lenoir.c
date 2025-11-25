@@ -70,11 +70,13 @@ int main(int argc, char **argv)
 	  exit(0);
   	}
 
-	if (argc == 8)
-	  connex = atoi(argv[6]);
-	else connex = atoi(argv[8]);
+        if (argc == 8) {
+          connex = atoi(argv[6]);
+        } else {
+          connex = atoi(argv[8]);
+        }
 
-	if ((argc == 8) && ( (connex != 4) && (connex != 8))) {
+        if ((argc == 8) && ( (connex != 4) && (connex != 8))) {
 	  fprintf(stderr, "%s: connexity for 2D images should be 4 or 8\n", argv[0]);
 	  exit(0);
 	}
@@ -114,11 +116,12 @@ int main(int argc, char **argv)
 	out = allocimage(NULL, rs, cs, ds, VFF_TYP_1_BYTE);
 
 	Lenoir(image, x, y, connex, out);//Application de l'algorithme
-	if (argc == 8)
-	  writeascimage(out, argv[7]);
-	else
-	  writeascimage(out, argv[9]);
-	freeimage(image);
+        if (argc == 8) {
+          writeascimage(out, argv[7]);
+        } else {
+          writeascimage(out, argv[9]);
+        }
+        freeimage(image);
 	freeimage(out);
 	
 	return 1;

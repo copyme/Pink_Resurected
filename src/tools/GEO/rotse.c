@@ -92,18 +92,16 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (strcmp(argv[2], "0") == 0) writese(image1, argv[argc - 1], x, y, z);
-  else if (strcmp(argv[2], "180") == 0) 
-  {
+  if (strcmp(argv[2], "0") == 0) {
+    writese(image1, argv[argc - 1], x, y, z);
+  } else if (strcmp(argv[2], "180") == 0) {
     if (! lsym(image1, 'c'))
     {
       fprintf(stderr, "%s: function lsym failed\n", argv[0]);
       exit(1);
     }
     writese(image1, argv[argc - 1], rs - 1 - x, cs - 1 - y, 1);
-  }
-  else if ((strcmp(argv[2], "90") == 0) || (strcmp(argv[2], "270") == 0))
-  {
+  } else if ((strcmp(argv[2], "90") == 0) || (strcmp(argv[2], "270") == 0)) {
     struct xvimage * image2 = NULL;
     uint8_t *I1 = NULL, *I2 = NULL;
     image2 = allocimage(NULL, cs, rs, 1, VFF_TYP_1_BYTE);
@@ -114,13 +112,14 @@ int main(int argc, char **argv)
     }
     I1 = UCHARDATA(image1);
     I2 = UCHARDATA(image2);
-    for (j2 = i1 = 0; i1 < rs; j2++, i1++)
-      for (i2 = cs-1, j1 = 0; i2 >= 0; i2--, j1++)
-	I2[j2*cs + i2] = I1[j1*rs + i1];
-    if (strcmp(argv[2], "90") == 0) 
+    for (j2 = i1 = 0; i1 < rs; j2++, i1++) {
+      for (i2 = cs - 1, j1 = 0; i2 >= 0; i2--, j1++) {
+        I2[j2 * cs + i2] = I1[j1 * rs + i1];
+      }
+    }
+    if (strcmp(argv[2], "90") == 0) {
       writese(image2, argv[argc - 1], cs - 1 - y, x, 1);
-    else
-    {
+    } else {
       if (! lsym(image2, 'c'))
       {
 	fprintf(stderr, "%s: function lsym failed\n", argv[0]);
@@ -129,9 +128,7 @@ int main(int argc, char **argv)
       writese(image2, argv[argc - 1], y, rs - 1 - x, 1);
     }
     freeimage(image2);
-  }
-  else
-  {
+  } else {
     fprintf(stderr, "%s: bad angle value (must be 0, 90, 180, 270) : %s\n", argv[0], argv[2]);
     exit(1);
   }

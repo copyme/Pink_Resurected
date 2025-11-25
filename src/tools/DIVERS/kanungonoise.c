@@ -91,8 +91,9 @@ int main(int argc, char **argv)
   int32_t rs, cs, ds, N;
   double eta, alpha0, alpha, beta0, beta, k, k2 ;
 
-  if (argc != 9)
+  if (argc != 9) {
     usage(argc, argv);
+  }
 
 #ifdef RANDOMIZE
   ResetProb(usecs());
@@ -134,31 +135,54 @@ int main(int argc, char **argv)
     fprintf(stderr, "%s: ldistquad failed\n", argv[0]);
     exit(1);
   }
-  for (i = 0; i < N; i++) if (I[i]) I[i] = 0; else I[i] = NDG_MAX; // inverse l'image
+  for (i = 0; i < N; i++) {
+    if (I[i]) {
+      I[i] = 0;
+    } else {
+      I[i] = NDG_MAX; // inverse l'image
+    }
+  }
   if (! ldistquad(image, distc)) // calcule les distances au carré au complémentaire
   {
     fprintf(stderr, "%s: ldistquad failed\n", argv[0]);
     exit(1);
   }
-  for (i = 0; i < N; i++) if (I[i]) I[i] = 0; else I[i] = NDG_MAX; // inverse l'image
+  for (i = 0; i < N; i++) {
+    if (I[i]) {
+      I[i] = 0;
+    } else {
+      I[i] = NDG_MAX; // inverse l'image
+    }
+  }
   D = ULONGDATA(dist);
   DC = ULONGDATA(distc);
-  for (i = 0; i < N; i++) D[i] += DC[i];
+  for (i = 0; i < N; i++) {
+    D[i] += DC[i];
+  }
 
   for (i = 0; i < N; i++) 
   {
     if (I[i])
     {
-      if (Prob() < (alpha0 * exp(-alpha*DC[i]) + eta)) I[i] = 0;
+      if (Prob() < (alpha0 * exp(-alpha * DC[i]) + eta)) {
+        I[i] = 0;
+      }
     }
     else // I[i] == 0
     {
-      if (Prob() < (beta0 * exp(-beta*D[i]) + eta)) I[i] = NDG_MAX;
+      if (Prob() < (beta0 * exp(-beta * D[i]) + eta)) {
+        I[i] = NDG_MAX;
+      }
     }
-  } // for (i = 0; i < N; i++) 
-  
+  } // for (i = 0; i < N; i++)
 
-  for (i = 0; i < N; i++) if (I[i]) I[i] = 0; else I[i] = NDG_MAX; // inversion 
+  for (i = 0; i < N; i++) {
+    if (I[i]) {
+      I[i] = 0;
+    } else {
+      I[i] = NDG_MAX; // inversion
+    }
+  }
 
   // dilation by a disk of radius k
   if (! ldistquad(image, dist)) // calcule les distances au carré à l'objet
@@ -166,7 +190,13 @@ int main(int argc, char **argv)
     fprintf(stderr, "%s: ldistquad failed\n", argv[0]);
     exit(1);
   }
-  for (i = 0; i < N; i++) if (D[i] <= k2) I[i] = 0; else I[i] = NDG_MAX; // seuil et inversion
+  for (i = 0; i < N; i++) {
+    if (D[i] <= k2) {
+      I[i] = 0;
+    } else {
+      I[i] = NDG_MAX; // seuil et inversion
+    }
+  }
 
   // dilation by a disk of radius k
   if (! ldistquad(image, dist)) // calcule les distances au carré à l'objet
@@ -174,7 +204,13 @@ int main(int argc, char **argv)
     fprintf(stderr, "%s: ldistquad failed\n", argv[0]);
     exit(1);
   }
-  for (i = 0; i < N; i++) if (D[i] <= k2) I[i] = NDG_MAX; else I[i] = 0; // seuil
+  for (i = 0; i < N; i++) {
+    if (D[i] <= k2) {
+      I[i] = NDG_MAX;
+    } else {
+      I[i] = 0; // seuil
+    }
+  }
 
   writeimage(image, argv[argc-1]);
   freeimage(image);

@@ -108,12 +108,13 @@ int32_t l3dkhalimskize(struct xvimage * ima, struct xvimage **k, int32_t mode)
   fprintf(stderr, "%s: Debut traitement\n", F_NAME);
 #endif
 
-  if ((mode == 1) || (mode == 2) || (mode == 5))
+  if ((mode == 1) || (mode == 2) || (mode == 5)) {
     *k = KhalimskizeNDG3d(ima);
-  else if (mode == 6)
+  } else if (mode == 6) {
     *k = DeKhalimskize3d(ima);
-  else
+  } else {
     *k = Khalimskize3d(ima);
+  }
   if (*k == NULL)
   {
     fprintf(stderr, "%s: Khalimskize3d failed\n", F_NAME);
@@ -124,18 +125,19 @@ int32_t l3dkhalimskize(struct xvimage * ima, struct xvimage **k, int32_t mode)
   fprintf(stderr, "%s: Khalimskisation terminee\n", F_NAME);
 #endif
 
-  if (mode == 4)
+  if (mode == 4) {
     Connex6Obj3d(*k);
-  else if (mode == 3)
+  } else if (mode == 3) {
     Connex26Obj3d(*k);
-  else if (mode == 0)
+  } else if (mode == 0) {
     SatureAlphacarre3d(*k);
-  else if (mode == 1)
+  } else if (mode == 1) {
     ndgmin3d(*k);
-  else if (mode == 2)
+  } else if (mode == 2) {
     ndgmax3d(*k);
-  else if (mode == 5)
+  } else if (mode == 5) {
     ndgmoy3d(*k);
+  }
 
   return 1;
 
@@ -176,13 +178,19 @@ int32_t l3d_is_complex(struct xvimage * k)
   ACCEPTED_TYPES1(k, VFF_TYP_1_BYTE);
   ONLY_3D(k);
 
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  if (K[z*ps + y*rs + x])
-  {
-    Alphacarre3d(rs, cs, ds, x, y, z, tab, &n);
-    for (u = 0; u < n; u++) if (!K[tab[u]]) return 0;
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        if (K[z * ps + y * rs + x]) {
+          Alphacarre3d(rs, cs, ds, x, y, z, tab, &n);
+          for (u = 0; u < n; u++) {
+            if (!K[tab[u]]) {
+              return 0;
+            }
+          }
+        }
+      }
+    }
   }
   return 1;
 } /* l3d_is_complex() */
@@ -276,61 +284,91 @@ int32_t l3dplane(struct xvimage * k, double a, double b, double c, double d)
 
   A = (mcabs(a) + mcabs(b) + mcabs(c)) / 2;
 
-  for (z = 0; z < (ds+1)/2; z++)
-  for (y = 0; y < (cs+1)/2; y++)
-  for (x = 0; x < (rs+1)/2; x++)
-  {
-    //cube
-    X = a * x + b * y + c * z + d;
-    xx = 2 * x + 1; yy = 2 * y + 1; zz = 2 * z + 1; 
-    if ((-A < X) && (X < A)) K[zz*ps + yy*rs + xx] = NDG_CUBE3D;
-    //singleton
-    X = a * (x-0.5) + b * (y-0.5) + c * (z-0.5) + d;
-    xx = 2 * x; yy = 2 * y; zz = 2 * z; 
-    if (X == 0) K[zz*ps + yy*rs + xx] = NDG_SINGL3D;
-    //interx
-    X1 = a * (x-0.5) + b * (y-0.5) + c * (z-0.5) + d;
-    X2 = a * (x+0.5) + b * (y-0.5) + c * (z-0.5) + d;
-    xx = 2 * x + 1; yy = 2 * y; zz = 2 * z; 
-    if (((X1 == 0) && (X2 == 0)) || (X1 * X2 < 0)) K[zz*ps + yy*rs + xx] = NDG_INTER3DX;
-    //intery
-    X1 = a * (x-0.5) + b * (y-0.5) + c * (z-0.5) + d;
-    X2 = a * (x-0.5) + b * (y+0.5) + c * (z-0.5) + d;
-    xx = 2 * x; yy = 2 * y + 1; zz = 2 * z; 
-    if (((X1 == 0) && (X2 == 0)) || (X1 * X2 < 0)) K[zz*ps + yy*rs + xx] = NDG_INTER3DY;
-    //interz
-    X1 = a * (x-0.5) + b * (y-0.5) + c * (z-0.5) + d;
-    X2 = a * (x-0.5) + b * (y-0.5) + c * (z+0.5) + d;
-    xx = 2 * x; yy = 2 * y; zz = 2 * z + 1; 
-    if (((X1 == 0) && (X2 == 0)) || (X1 * X2 < 0)) K[zz*ps + yy*rs + xx] = NDG_INTER3DZ;
-    //carrexy
-    X1 = a * (x-0.5) + b * (y-0.5) + c * (z-0.5) + d;
-    X2 = a * (x-0.5) + b * (y+0.5) + c * (z-0.5) + d;
-    X3 = a * (x+0.5) + b * (y-0.5) + c * (z-0.5) + d;
-    X4 = a * (x+0.5) + b * (y+0.5) + c * (z-0.5) + d;
-    xx = 2 * x + 1; yy = 2 * y + 1; zz = 2 * z; 
-    if ((X1 * X2 < 0) || (X1 * X3 < 0) || (X1 * X4 < 0) ||
-        (X2 * X3 < 0) || (X2 * X4 < 0) || (X3 * X4 < 0))
-      K[zz*ps + yy*rs + xx] = NDG_CARRE3DXY;
-    //carrexz
-    X1 = a * (x-0.5) + b * (y-0.5) + c * (z-0.5) + d;
-    X2 = a * (x-0.5) + b * (y-0.5) + c * (z+0.5) + d;
-    X3 = a * (x+0.5) + b * (y-0.5) + c * (z-0.5) + d;
-    X4 = a * (x+0.5) + b * (y-0.5) + c * (z+0.5) + d;
-    xx = 2 * x + 1; yy = 2 * y; zz = 2 * z + 1; 
-    if ((X1 * X2 < 0) || (X1 * X3 < 0) || (X1 * X4 < 0) ||
-        (X2 * X3 < 0) || (X2 * X4 < 0) || (X3 * X4 < 0))
-      K[zz*ps + yy*rs + xx] = NDG_CARRE3DXZ;
-    //carreyz
-    X1 = a * (x-0.5) + b * (y-0.5) + c * (z-0.5) + d;
-    X2 = a * (x-0.5) + b * (y-0.5) + c * (z+0.5) + d;
-    X3 = a * (x-0.5) + b * (y+0.5) + c * (z-0.5) + d;
-    X4 = a * (x-0.5) + b * (y+0.5) + c * (z+0.5) + d;
-    xx = 2 * x; yy = 2 * y + 1; zz = 2 * z + 1; 
-    if ((X1 * X2 < 0) || (X1 * X3 < 0) || (X1 * X4 < 0) ||
-        (X2 * X3 < 0) || (X2 * X4 < 0) || (X3 * X4 < 0))
-      K[zz*ps + yy*rs + xx] = NDG_CARRE3DYZ;
-  } // for z, y, x
+  for (z = 0; z < (ds + 1) / 2; z++) {
+    for (y = 0; y < (cs + 1) / 2; y++) {
+      for (x = 0; x < (rs + 1) / 2; x++) {
+        // cube
+        X = a * x + b * y + c * z + d;
+        xx = 2 * x + 1;
+        yy = 2 * y + 1;
+        zz = 2 * z + 1;
+        if ((-A < X) && (X < A)) {
+          K[zz * ps + yy * rs + xx] = NDG_CUBE3D;
+        }
+        // singleton
+        X = a * (x - 0.5) + b * (y - 0.5) + c * (z - 0.5) + d;
+        xx = 2 * x;
+        yy = 2 * y;
+        zz = 2 * z;
+        if (X == 0) {
+          K[zz * ps + yy * rs + xx] = NDG_SINGL3D;
+        }
+        // interx
+        X1 = a * (x - 0.5) + b * (y - 0.5) + c * (z - 0.5) + d;
+        X2 = a * (x + 0.5) + b * (y - 0.5) + c * (z - 0.5) + d;
+        xx = 2 * x + 1;
+        yy = 2 * y;
+        zz = 2 * z;
+        if (((X1 == 0) && (X2 == 0)) || (X1 * X2 < 0)) {
+          K[zz * ps + yy * rs + xx] = NDG_INTER3DX;
+        }
+        // intery
+        X1 = a * (x - 0.5) + b * (y - 0.5) + c * (z - 0.5) + d;
+        X2 = a * (x - 0.5) + b * (y + 0.5) + c * (z - 0.5) + d;
+        xx = 2 * x;
+        yy = 2 * y + 1;
+        zz = 2 * z;
+        if (((X1 == 0) && (X2 == 0)) || (X1 * X2 < 0)) {
+          K[zz * ps + yy * rs + xx] = NDG_INTER3DY;
+        }
+        // interz
+        X1 = a * (x - 0.5) + b * (y - 0.5) + c * (z - 0.5) + d;
+        X2 = a * (x - 0.5) + b * (y - 0.5) + c * (z + 0.5) + d;
+        xx = 2 * x;
+        yy = 2 * y;
+        zz = 2 * z + 1;
+        if (((X1 == 0) && (X2 == 0)) || (X1 * X2 < 0)) {
+          K[zz * ps + yy * rs + xx] = NDG_INTER3DZ;
+        }
+        // carrexy
+        X1 = a * (x - 0.5) + b * (y - 0.5) + c * (z - 0.5) + d;
+        X2 = a * (x - 0.5) + b * (y + 0.5) + c * (z - 0.5) + d;
+        X3 = a * (x + 0.5) + b * (y - 0.5) + c * (z - 0.5) + d;
+        X4 = a * (x + 0.5) + b * (y + 0.5) + c * (z - 0.5) + d;
+        xx = 2 * x + 1;
+        yy = 2 * y + 1;
+        zz = 2 * z;
+        if ((X1 * X2 < 0) || (X1 * X3 < 0) || (X1 * X4 < 0) || (X2 * X3 < 0) ||
+            (X2 * X4 < 0) || (X3 * X4 < 0)) {
+          K[zz * ps + yy * rs + xx] = NDG_CARRE3DXY;
+        }
+        // carrexz
+        X1 = a * (x - 0.5) + b * (y - 0.5) + c * (z - 0.5) + d;
+        X2 = a * (x - 0.5) + b * (y - 0.5) + c * (z + 0.5) + d;
+        X3 = a * (x + 0.5) + b * (y - 0.5) + c * (z - 0.5) + d;
+        X4 = a * (x + 0.5) + b * (y - 0.5) + c * (z + 0.5) + d;
+        xx = 2 * x + 1;
+        yy = 2 * y;
+        zz = 2 * z + 1;
+        if ((X1 * X2 < 0) || (X1 * X3 < 0) || (X1 * X4 < 0) || (X2 * X3 < 0) ||
+            (X2 * X4 < 0) || (X3 * X4 < 0)) {
+          K[zz * ps + yy * rs + xx] = NDG_CARRE3DXZ;
+        }
+        // carreyz
+        X1 = a * (x - 0.5) + b * (y - 0.5) + c * (z - 0.5) + d;
+        X2 = a * (x - 0.5) + b * (y - 0.5) + c * (z + 0.5) + d;
+        X3 = a * (x - 0.5) + b * (y + 0.5) + c * (z - 0.5) + d;
+        X4 = a * (x - 0.5) + b * (y + 0.5) + c * (z + 0.5) + d;
+        xx = 2 * x;
+        yy = 2 * y + 1;
+        zz = 2 * z + 1;
+        if ((X1 * X2 < 0) || (X1 * X3 < 0) || (X1 * X4 < 0) || (X2 * X3 < 0) ||
+            (X2 * X4 < 0) || (X3 * X4 < 0)) {
+          K[zz * ps + yy * rs + xx] = NDG_CARRE3DYZ;
+        }
+      } // for z, y, x
+    }
+  }
   return 1;
 } /* l3dplane() */
 
@@ -367,164 +405,185 @@ int32_t l3dsphere(struct xvimage * k, index_t x0, index_t y0, index_t z0, double
 
 #define D2(x,y,z) (double)((x)*(x)+(y)*(y)+(z)*(z))
 
-  for (z = zmin; z <= zmax; z++)
-  for (y = ymin; y <= ymax; y++)
-  {
-    zz = z * 2 + z00;
-    yy = y * 2 + y00;
-    for (x = xmin; x < 0 ; x++)
-    {
-      xx = x * 2 + x00;
-      t_ = D2(x,y,z);
-      t = D2((x+1),y,z);
-      if (t_ == r2) 
-      {
-        if ((zz >= 0) && (zz < ds) && (yy >= 0) && (yy < cs) && (xx >= 0) && (xx < rs))
-          K[zz*ps + yy*rs + xx] = NDG_SINGL3D;
-      }
-      if ((t_ > r2) && (t < r2)) 
-      {
-        if ((zz >= 0) && (zz < ds) && (yy >= 0) && (yy < cs) && (xx+1 >= 0) && (xx+1 < rs))
-          K[zz*ps + yy*rs + xx+1] = NDG_INTER3DX;
-        Betacarre3d(rs, cs, ds, xx+1, yy, zz, tab, &n);
-        for (i = 0; i < n; i++) K[tab[i]] = NDG_MAX;          
-      }
-      t_ = t;
-    } // for x 
-    for (x = 0; x < xmax ; x++)
-    {
-      xx = x * 2 + x00;
-      t_ = D2(x,y,z);
-      t = D2((x+1),y,z);
-      if (t_ == r2) 
-      {
-        if ((zz >= 0) && (zz < ds) && (yy >= 0) && (yy < cs) && (xx >= 0) && (xx < rs))
-          K[zz*ps + yy*rs + xx] = NDG_SINGL3D;
-      }
-      if ((t_ < r2) && (t > r2)) 
-      {
-        if ((zz >= 0) && (zz < ds) && (yy >= 0) && (yy < cs) && (xx+1 >= 0) && (xx+1 < rs))
-          K[zz*ps + yy*rs + xx+1] = NDG_INTER3DX;
-        Betacarre3d(rs, cs, ds, xx+1, yy, zz, tab, &n);
-        for (i = 0; i < n; i++) K[tab[i]] = NDG_MAX;          
-      }
-      t_ = t;
-    } // for x 
-
-    if (t == r2) 
-    {
-      xx = xmax * 2 + x00;
-      if ((zz >= 0) && (zz < ds) && (yy >= 0) && (yy < cs) && (xx >= 0) && (xx < rs))
-        K[zz*ps + yy*rs + xx] = NDG_SINGL3D;
-    }
-
-  } // for y, z
-
-  for (y = ymin; y <= ymax; y++)
-  for (x = xmin; x <= xmax; x++)
-  {
-    xx = x * 2 + x00;
-    yy = y * 2 + y00;
-    for (z = zmin; z < 0 ; z++)
-    {
+  for (z = zmin; z <= zmax; z++) {
+    for (y = ymin; y <= ymax; y++) {
       zz = z * 2 + z00;
-      t_ = D2(x,y,z);
-      t = D2(x,y,(z+1));
-      if (t_ == r2) 
-      {
-        if ((zz >= 0) && (zz < ds) && (yy >= 0) && (yy < cs) && (xx >= 0) && (xx < rs))
-          K[zz*ps + yy*rs + xx] = NDG_SINGL3D;
+      yy = y * 2 + y00;
+      for (x = xmin; x < 0; x++) {
+        xx = x * 2 + x00;
+        t_ = D2(x, y, z);
+        t = D2((x + 1), y, z);
+        if (t_ == r2) {
+          if ((zz >= 0) && (zz < ds) && (yy >= 0) && (yy < cs) && (xx >= 0) &&
+              (xx < rs)) {
+            K[zz * ps + yy * rs + xx] = NDG_SINGL3D;
+          }
+        }
+        if ((t_ > r2) && (t < r2)) {
+          if ((zz >= 0) && (zz < ds) && (yy >= 0) && (yy < cs) &&
+              (xx + 1 >= 0) && (xx + 1 < rs)) {
+            K[zz * ps + yy * rs + xx + 1] = NDG_INTER3DX;
+          }
+          Betacarre3d(rs, cs, ds, xx + 1, yy, zz, tab, &n);
+          for (i = 0; i < n; i++) {
+            K[tab[i]] = NDG_MAX;
+          }
+        }
+        t_ = t;
+      } // for x
+      for (x = 0; x < xmax; x++) {
+        xx = x * 2 + x00;
+        t_ = D2(x, y, z);
+        t = D2((x + 1), y, z);
+        if (t_ == r2) {
+          if ((zz >= 0) && (zz < ds) && (yy >= 0) && (yy < cs) && (xx >= 0) &&
+              (xx < rs)) {
+            K[zz * ps + yy * rs + xx] = NDG_SINGL3D;
+          }
+        }
+        if ((t_ < r2) && (t > r2)) {
+          if ((zz >= 0) && (zz < ds) && (yy >= 0) && (yy < cs) &&
+              (xx + 1 >= 0) && (xx + 1 < rs)) {
+            K[zz * ps + yy * rs + xx + 1] = NDG_INTER3DX;
+          }
+          Betacarre3d(rs, cs, ds, xx + 1, yy, zz, tab, &n);
+          for (i = 0; i < n; i++) {
+            K[tab[i]] = NDG_MAX;
+          }
+        }
+        t_ = t;
+      } // for x
+
+      if (t == r2) {
+        xx = xmax * 2 + x00;
+        if ((zz >= 0) && (zz < ds) && (yy >= 0) && (yy < cs) && (xx >= 0) &&
+            (xx < rs)) {
+          K[zz * ps + yy * rs + xx] = NDG_SINGL3D;
+        }
       }
-      if ((t_ > r2) && (t < r2)) 
-      {
-        if ((zz+1 >= 0) && (zz+1 < ds) && (yy >= 0) && (yy < cs) && (xx >= 0) && (xx < rs))
-          K[(zz+1)*ps + yy*rs + xx] = NDG_INTER3DZ;
-        Betacarre3d(rs, cs, ds, xx, yy, zz+1, tab, &n);
-        for (i = 0; i < n; i++) K[tab[i]] = NDG_MAX;          
+
+    } // for y, z
+  }
+
+  for (y = ymin; y <= ymax; y++) {
+    for (x = xmin; x <= xmax; x++) {
+      xx = x * 2 + x00;
+      yy = y * 2 + y00;
+      for (z = zmin; z < 0; z++) {
+        zz = z * 2 + z00;
+        t_ = D2(x, y, z);
+        t = D2(x, y, (z + 1));
+        if (t_ == r2) {
+          if ((zz >= 0) && (zz < ds) && (yy >= 0) && (yy < cs) && (xx >= 0) &&
+              (xx < rs)) {
+            K[zz * ps + yy * rs + xx] = NDG_SINGL3D;
+          }
+        }
+        if ((t_ > r2) && (t < r2)) {
+          if ((zz + 1 >= 0) && (zz + 1 < ds) && (yy >= 0) && (yy < cs) &&
+              (xx >= 0) && (xx < rs)) {
+            K[(zz + 1) * ps + yy * rs + xx] = NDG_INTER3DZ;
+          }
+          Betacarre3d(rs, cs, ds, xx, yy, zz + 1, tab, &n);
+          for (i = 0; i < n; i++) {
+            K[tab[i]] = NDG_MAX;
+          }
+        }
+        t_ = t;
+      } // for z
+      for (z = 0; z < zmax; z++) {
+        zz = z * 2 + z00;
+        t_ = D2(x, y, z);
+        t = D2(x, y, (z + 1));
+        if (t_ == r2) {
+          if ((zz >= 0) && (zz < ds) && (yy >= 0) && (yy < cs) && (xx >= 0) &&
+              (xx < rs)) {
+            K[zz * ps + yy * rs + xx] = NDG_SINGL3D;
+          }
+        }
+        if ((t_ < r2) && (t > r2)) {
+          if ((zz + 1 >= 0) && (zz + 1 < ds) && (yy >= 0) && (yy < cs) &&
+              (xx >= 0) && (xx < rs)) {
+            K[(zz + 1) * ps + yy * rs + xx] = NDG_INTER3DZ;
+          }
+          Betacarre3d(rs, cs, ds, xx, yy, zz + 1, tab, &n);
+          for (i = 0; i < n; i++) {
+            K[tab[i]] = NDG_MAX;
+          }
+        }
+        t_ = t;
+      } // for z
+
+      if (t == r2) {
+        zz = zmax * 2 + z00;
+        if ((zz >= 0) && (zz < ds) && (yy >= 0) && (yy < cs) && (xx >= 0) &&
+            (xx < rs)) {
+          K[zz * ps + yy * rs + xx] = NDG_SINGL3D;
+        }
       }
-      t_ = t;
-    } // for z
-    for (z = 0; z < zmax ; z++)
-    {
+
+    } // for y, x
+  }
+
+  for (z = zmin; z <= zmax; z++) {
+    for (x = xmin; x <= xmax; x++) {
       zz = z * 2 + z00;
-      t_ = D2(x,y,z);
-      t = D2(x,y,(z+1));
-      if (t_ == r2) 
-      {
-        if ((zz >= 0) && (zz < ds) && (yy >= 0) && (yy < cs) && (xx >= 0) && (xx < rs))
-          K[zz*ps + yy*rs + xx] = NDG_SINGL3D;
-      }
-      if ((t_ < r2) && (t > r2)) 
-      {
-        if ((zz+1 >= 0) && (zz+1 < ds) && (yy >= 0) && (yy < cs) && (xx >= 0) && (xx < rs))
-          K[(zz+1)*ps + yy*rs + xx] = NDG_INTER3DZ;
-        Betacarre3d(rs, cs, ds, xx, yy, zz+1, tab, &n);
-        for (i = 0; i < n; i++) K[tab[i]] = NDG_MAX;          
-      }
-      t_ = t;
-    } // for z
+      xx = x * 2 + x00;
+      for (y = ymin; y < 0; y++) {
+        yy = y * 2 + y00;
+        t_ = D2(x, y, z);
+        t = D2(x, (y + 1), z);
+        if (t_ == r2) {
+          if ((zz >= 0) && (zz < ds) && (yy >= 0) && (yy < cs) && (xx >= 0) &&
+              (xx < rs)) {
+            K[zz * ps + yy * rs + xx] = NDG_SINGL3D;
+          }
+        }
+        if ((t_ > r2) && (t < r2)) {
+          if ((zz >= 0) && (zz < ds) && (yy + 1 >= 0) && (yy + 1 < cs) &&
+              (xx >= 0) && (xx < rs)) {
+            K[zz * ps + (yy + 1) * rs + xx] = NDG_INTER3DY;
+          }
+          Betacarre3d(rs, cs, ds, xx, yy + 1, zz, tab, &n);
+          for (i = 0; i < n; i++) {
+            K[tab[i]] = NDG_MAX;
+          }
+        }
+        t_ = t;
+      } // for y
+      for (y = 0; y < ymax; y++) {
+        yy = y * 2 + y00;
+        t_ = D2(x, y, z);
+        t = D2(x, (y + 1), z);
+        if (t_ == r2) {
+          if ((zz >= 0) && (zz < ds) && (yy >= 0) && (yy < cs) && (xx >= 0) &&
+              (xx < rs)) {
+            K[zz * ps + yy * rs + xx] = NDG_SINGL3D;
+          }
+        }
+        if ((t_ < r2) && (t > r2)) {
+          if ((zz >= 0) && (zz < ds) && (yy + 1 >= 0) && (yy + 1 < cs) &&
+              (xx >= 0) && (xx < rs)) {
+            K[zz * ps + (yy + 1) * rs + xx] = NDG_INTER3DY;
+          }
+          Betacarre3d(rs, cs, ds, xx, yy + 1, zz, tab, &n);
+          for (i = 0; i < n; i++) {
+            K[tab[i]] = NDG_MAX;
+          }
+        }
+        t_ = t;
+      } // for y
 
-    if (t == r2) 
-    {
-      zz = zmax * 2 + z00;
-      if ((zz >= 0) && (zz < ds) && (yy >= 0) && (yy < cs) && (xx >= 0) && (xx < rs))
-        K[zz*ps + yy*rs + xx] = NDG_SINGL3D;
-    }
-
-  } // for y, x
-
-  for (z = zmin; z <= zmax; z++)
-  for (x = xmin; x <= xmax; x++)
-  {
-    zz = z * 2 + z00;
-    xx = x * 2 + x00;
-    for (y = ymin; y < 0 ; y++)
-    {
-      yy = y * 2 + y00;
-      t_ = D2(x,y,z);
-      t = D2(x,(y+1),z);
-      if (t_ == r2) 
-      {
-        if ((zz >= 0) && (zz < ds) && (yy >= 0) && (yy < cs) && (xx >= 0) && (xx < rs))
-          K[zz*ps + yy*rs + xx] = NDG_SINGL3D;
+      if (t == r2) {
+        yy = ymax * 2 + y00;
+        if ((zz >= 0) && (zz < ds) && (yy >= 0) && (yy < cs) && (xx >= 0) &&
+            (xx < rs)) {
+          K[zz * ps + yy * rs + xx] = NDG_SINGL3D;
+        }
       }
-      if ((t_ > r2) && (t < r2)) 
-      {
-        if ((zz >= 0) && (zz < ds) && (yy+1 >= 0) && (yy+1 < cs) && (xx >= 0) && (xx < rs))
-          K[zz*ps + (yy+1)*rs + xx] = NDG_INTER3DY;
-        Betacarre3d(rs, cs, ds, xx, yy+1, zz, tab, &n);
-        for (i = 0; i < n; i++) K[tab[i]] = NDG_MAX;          
-      }
-      t_ = t;
-    } // for y
-    for (y = 0; y < ymax ; y++)
-    {
-      yy = y * 2 + y00;
-      t_ = D2(x,y,z);
-      t = D2(x,(y+1),z);
-      if (t_ == r2) 
-      {
-        if ((zz >= 0) && (zz < ds) && (yy >= 0) && (yy < cs) && (xx >= 0) && (xx < rs))
-          K[zz*ps + yy*rs + xx] = NDG_SINGL3D;
-      }
-      if ((t_ < r2) && (t > r2)) 
-      {
-        if ((zz >= 0) && (zz < ds) && (yy+1 >= 0) && (yy+1 < cs) && (xx >= 0) && (xx < rs))
-          K[zz*ps + (yy+1)*rs + xx] = NDG_INTER3DY;
-        Betacarre3d(rs, cs, ds, xx, yy+1, zz, tab, &n);
-        for (i = 0; i < n; i++) K[tab[i]] = NDG_MAX;          
-      }
-      t_ = t;
-    } // for y
 
-    if (t == r2) 
-    {
-      yy = ymax * 2 + y00;
-      if ((zz >= 0) && (zz < ds) && (yy >= 0) && (yy < cs) && (xx >= 0) && (xx < rs))
-        K[zz*ps + yy*rs + xx] = NDG_SINGL3D;
-    }
-
-  } // for x, z
+    } // for x, z
+  }
   return 1;
 } /* l3dsphere() */
 
@@ -564,7 +623,9 @@ int32_t l3dthin(struct xvimage * k, int32_t nsteps)
   }  
   KP = UCHARDATA(kp);
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
   for (i = 1; i <= nsteps; i++)
   {
@@ -574,24 +635,36 @@ int32_t l3dthin(struct xvimage * k, int32_t nsteps)
     if (i % 2)
     {
       stablealpha = 1;
-      for (z = 0; z < d; z++)
-      for (y = 0; y < cs; y++)
-      for (x = 0; x < rs; x++)
-        if (K[z * ps + y * rs + x] && Alpha3Simple3d(k, x, y, z))
-          { KP[z * ps + y * rs + x] = 0; stablealpha = 0; }
+      for (z = 0; z < d; z++) {
+        for (y = 0; y < cs; y++) {
+          for (x = 0; x < rs; x++) {
+            if (K[z * ps + y * rs + x] && Alpha3Simple3d(k, x, y, z)) {
+              KP[z * ps + y * rs + x] = 0;
+              stablealpha = 0;
+            }
+          }
+        }
+      }
       memcpy(K, KP, N);
     }
     else
     {
       stablebeta = 1;
-      for (z = 0; z < d; z++)
-      for (y = 0; y < cs; y++)
-      for (x = 0; x < rs; x++)
-        if (K[z * ps + y * rs + x] && Beta3Simple3d(k, x, y, z))
-          { KP[z * ps + y * rs + x] = 0; stablebeta = 0; }
+      for (z = 0; z < d; z++) {
+        for (y = 0; y < cs; y++) {
+          for (x = 0; x < rs; x++) {
+            if (K[z * ps + y * rs + x] && Beta3Simple3d(k, x, y, z)) {
+              KP[z * ps + y * rs + x] = 0;
+              stablebeta = 0;
+            }
+          }
+        }
+      }
       memcpy(K, KP, N);
     }
-    if (stablealpha && stablebeta) break;
+    if (stablealpha && stablebeta) {
+      break;
+    }
   }
 
   TerminePileGrilles3d();
@@ -636,7 +709,9 @@ int32_t l3dskelsurf(struct xvimage * k, int32_t nsteps)
   }  
   KP = UCHARDATA(kp);
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
   for (i = 1; i <= nsteps; i++)
   {
@@ -646,24 +721,38 @@ int32_t l3dskelsurf(struct xvimage * k, int32_t nsteps)
     if (i % 2)
     {
       stablealpha = 1;
-      for (z = 0; z < d; z++)
-      for (y = 0; y < cs; y++)
-      for (x = 0; x < rs; x++)
-        if (K[z * ps + y * rs + x] && Alpha3Simple3d(k, x, y, z) && !Surfend3d(k, x, y, z))
-          { KP[z * ps + y * rs + x] = 0; stablealpha = 0; }
+      for (z = 0; z < d; z++) {
+        for (y = 0; y < cs; y++) {
+          for (x = 0; x < rs; x++) {
+            if (K[z * ps + y * rs + x] && Alpha3Simple3d(k, x, y, z) &&
+                !Surfend3d(k, x, y, z)) {
+              KP[z * ps + y * rs + x] = 0;
+              stablealpha = 0;
+            }
+          }
+        }
+      }
       memcpy(K, KP, N);
     }
     else
     {
       stablebeta = 1;
-      for (z = 0; z < d; z++)
-      for (y = 0; y < cs; y++)
-      for (x = 0; x < rs; x++)
-        if (K[z * ps + y * rs + x] && Beta3Simple3d(k, x, y, z) && !Surfend3d(k, x, y, z))
-          { KP[z * ps + y * rs + x] = 0; stablebeta = 0; }
+      for (z = 0; z < d; z++) {
+        for (y = 0; y < cs; y++) {
+          for (x = 0; x < rs; x++) {
+            if (K[z * ps + y * rs + x] && Beta3Simple3d(k, x, y, z) &&
+                !Surfend3d(k, x, y, z)) {
+              KP[z * ps + y * rs + x] = 0;
+              stablebeta = 0;
+            }
+          }
+        }
+      }
       memcpy(K, KP, N);
     }
-    if (stablealpha && stablebeta) break;
+    if (stablealpha && stablebeta) {
+      break;
+    }
   }
 
   TerminePileGrilles3d();
@@ -723,7 +812,9 @@ int32_t l3disthmus(struct xvimage * f)
       if (t == 2)
       {
         tb = Tbar3d(fp, x % rs, (x % ps) / rs, x / ps, g);
-        if (tb == 1) F[x] = 0;
+        if (tb == 1) {
+          F[x] = 0;
+        }
       }
 #ifdef DEBUGISTHMUS
       printf("point %d %d %d : t = %d ; [tb = %d](si t==2) ; new val = %d\n",
@@ -1025,7 +1116,9 @@ int32_t l3dinvariants(struct xvimage *f, index_t *nbcc, index_t *nbcav, index_t 
   /* calcul du nombre de cavites */
   /* ======================================== */
 
-  for (x = 0; x < N; x++) F[x] = ((F[x]==0) ? 255 : 0);  
+  for (x = 0; x < N; x++) {
+    F[x] = ((F[x] == 0) ? 255 : 0);
+  }
 
   nlabels = 0;
   for (x = 0; x < N; x++)
@@ -1102,21 +1195,25 @@ int32_t l3dboundary(struct xvimage * f)
   G = UCHARDATA(g);
   memset(F, 0, N);
 
-  for (z = 0; z < ds; z++)
-    for (y = 0; y < cs; y++)
-      for (x = 0; x < rs; x++)
-	if (G[z*ps + y*rs + x])
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        if (G[z*ps + y*rs + x])
         {
 	  Thetacarre3d(rs, cs, ds, x, y, z, tab, &n);
-	  for (u = 0; u < n; u++)
-	    if (G[tab[u]] == 0) 
+          for (u = 0; u < n; u++) {
+            if (G[tab[u]] == 0) 
 	    {
 	      F[z*ps + y*rs + x] = NDG_MAX;
 	      goto next;
-	    }
-	next:;
-	} 
-  
+            }
+          }
+        next:;
+	}
+      }
+    }
+  }
+
   freeimage(g);
   return 1;
 } /* l3dboundary() */
@@ -1150,11 +1247,15 @@ int32_t l3dborder(struct xvimage * f)
   }  
   G = UCHARDATA(g);
   razimage(f);
-  for (z = 0; z < ds; z++)
-    for (y = 0; y < cs; y++)
-      for (x = 0; x < rs; x++)
-	if (G[z*ps + y*rs + x] && FaceLibre3d(g, x, y, z))
-	  F[z*ps + y*rs + x] = VAL_OBJET;
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        if (G[z * ps + y * rs + x] && FaceLibre3d(g, x, y, z)) {
+          F[z * ps + y * rs + x] = VAL_OBJET;
+        }
+      }
+    }
+  }
   l3dmakecomplex(f);
   freeimage(g);
   return 1;
@@ -1199,38 +1300,47 @@ int32_t l3dseltype(struct xvimage * k, uint8_t d1, uint8_t d2, uint8_t a1, uint8
   KP = UCHARDATA(kp);
   memset(KP, 0, N);
 
-  for (k1 = 0; k1 < ds; k1++)
-  for (j1 = 0; j1 < cs; j1++)
-  for (i1 = 0; i1 < rs; i1++)
-  {
-    x = k1*ps + j1*rs + i1;
-    d = DIM3D(i1,j1,k1);
-    if (K[x] && (d1 <= d) && (d <= d2))
-    {
-      Alphacarre3d(rs, cs, ds, i1, j1, k1, tab, &n);
-      for (a = u = 0; u < n; u++) /* parcourt les eventuels alpha-voisins */
-      {
-	y = tab[u];
-	i2 = y%rs; j2 = (y%ps)/rs; k2 = y/ps;
-	if (K[y] && (DIM3D(i2,j2,k2) == (d-1))) a++;
-      }
-      if ((a1 <= a) && (a <= a2))
-      {
-	Betacarre3d(rs, cs, ds, i1, j1, k1, tab, &n);
-	for (b = u = 0; u < n; u++) /* parcourt les eventuels beta-voisins */
-	{
-	  y = tab[u];
-	  i2 = y%rs; j2 = (y%ps)/rs; k2 = y/ps;
-	  if (K[y] && (DIM3D(i2,j2,k2) == (d+1))) b++;
-	}
-	if ((b1 <= b) && (b <= b2))
-	{
-	  KP[x] = NDG_MAX;
-	}
-      }
+  for (k1 = 0; k1 < ds; k1++) {
+    for (j1 = 0; j1 < cs; j1++) {
+      for (i1 = 0; i1 < rs; i1++) {
+        x = k1 * ps + j1 * rs + i1;
+        d = DIM3D(i1, j1, k1);
+        if (K[x] && (d1 <= d) && (d <= d2)) {
+          Alphacarre3d(rs, cs, ds, i1, j1, k1, tab, &n);
+          for (a = u = 0; u < n; u++) /* parcourt les eventuels alpha-voisins */
+          {
+            y = tab[u];
+            i2 = y % rs;
+            j2 = (y % ps) / rs;
+            k2 = y / ps;
+            if (K[y] && (DIM3D(i2, j2, k2) == (d - 1))) {
+              a++;
+            }
+          }
+          if ((a1 <= a) && (a <= a2)) {
+            Betacarre3d(rs, cs, ds, i1, j1, k1, tab, &n);
+            for (b = u = 0; u < n;
+                 u++) /* parcourt les eventuels beta-voisins */
+            {
+              y = tab[u];
+              i2 = y % rs;
+              j2 = (y % ps) / rs;
+              k2 = y / ps;
+              if (K[y] && (DIM3D(i2, j2, k2) == (d + 1))) {
+                b++;
+              }
+            }
+            if ((b1 <= b) && (b <= b2)) {
+              KP[x] = NDG_MAX;
+            }
+          }
+        }
+      } // for k1, j1, i1
     }
-  } // for k1, j1, i1
-  for (x = 0; x < N; x++) K[x] = KP[x];
+  }
+  for (x = 0; x < N; x++) {
+    K[x] = KP[x];
+  }
   freeimage(kp);
   return 1;
 } /* l3dseltype() */

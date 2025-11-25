@@ -61,7 +61,14 @@ static void trouve2voisins(int32_t i, int32_t rs, int32_t ps, int32_t N, int32_t
     {
       j = voisin(i, k, rs, N);
       if ((j != -1) && F[j])
-      { if (n == 0) *v1 = j; else *v2 = j; n++; }
+      {
+        if (n == 0) {
+          *v1 = j;
+        } else {
+          *v2 = j;
+        }
+        n++;
+      }
     } // for k
     break;
   case 8:
@@ -69,7 +76,14 @@ static void trouve2voisins(int32_t i, int32_t rs, int32_t ps, int32_t N, int32_t
     {
       j = voisin(i, k, rs, N);
       if ((j != -1) && F[j])
-      { if (n == 0) *v1 = j; else *v2 = j; n++; }
+      {
+        if (n == 0) {
+          *v1 = j;
+        } else {
+          *v2 = j;
+        }
+        n++;
+      }
     } // for k
     break;
   case 6:
@@ -77,7 +91,14 @@ static void trouve2voisins(int32_t i, int32_t rs, int32_t ps, int32_t N, int32_t
     {
       j = voisin6(i, k, rs, ps, N);
       if ((j != -1) && F[j])
-      { if (n == 0) *v1 = j; else *v2 = j; n++; }
+      {
+        if (n == 0) {
+          *v1 = j;
+        } else {
+          *v2 = j;
+        }
+        n++;
+      }
     } // for k
     break;
   case 18:
@@ -85,7 +106,14 @@ static void trouve2voisins(int32_t i, int32_t rs, int32_t ps, int32_t N, int32_t
     {
       j = voisin18(i, k, rs, ps, N);
       if ((j != -1) && F[j])
-      { if (n == 0) *v1 = j; else *v2 = j; n++; }
+      {
+        if (n == 0) {
+          *v1 = j;
+        } else {
+          *v2 = j;
+        }
+        n++;
+      }
     } // for k
     break;
   case 26:
@@ -93,15 +121,24 @@ static void trouve2voisins(int32_t i, int32_t rs, int32_t ps, int32_t N, int32_t
     {
       j = voisin26(i, k, rs, ps, N);
       if ((j != -1) && F[j])
-      { if (n == 0) *v1 = j; else *v2 = j; n++; }
+      {
+        if (n == 0) {
+          *v1 = j;
+        } else {
+          *v2 = j;
+        }
+        n++;
+      }
     } // for k
     break;
   default:
     fprintf(stderr, "%s: bad connectivity: %d\n", F_NAME, connex);
     exit(0);
   } // switch (connex)
-  if (n != 2) printf("%s: error n = %d != 2; point %d %d %d\n", F_NAME, n, 
-		     i % rs, (i % ps) / rs, i / ps);
+  if (n != 2) {
+    printf("%s: error n = %d != 2; point %d %d %d\n", F_NAME, n, i % rs,
+           (i % ps) / rs, i / ps);
+  }
   assert(n == 2);
 } // trouve2voisins()
 
@@ -120,7 +157,14 @@ static void trouve2voisinslab(int32_t i, int32_t rs, int32_t ps, int32_t N, int3
     {
       j = voisin(i, k, rs, N);
       if ((j != -1) && (F[j]==lab))
-      { if (n == 0) *v1 = j; else *v2 = j; n++; }
+      {
+        if (n == 0) {
+          *v1 = j;
+        } else {
+          *v2 = j;
+        }
+        n++;
+      }
     } // for k
     break;
   case 8:
@@ -128,7 +172,14 @@ static void trouve2voisinslab(int32_t i, int32_t rs, int32_t ps, int32_t N, int3
     {
       j = voisin(i, k, rs, N);
       if ((j != -1) && (F[j]==lab))
-      { if (n == 0) *v1 = j; else *v2 = j; n++; }
+      {
+        if (n == 0) {
+          *v1 = j;
+        } else {
+          *v2 = j;
+        }
+        n++;
+      }
     } // for k
     break;
   case 6:
@@ -136,7 +187,14 @@ static void trouve2voisinslab(int32_t i, int32_t rs, int32_t ps, int32_t N, int3
     {
       j = voisin6(i, k, rs, ps, N);
       if ((j != -1) && (F[j]==lab))
-      { if (n == 0) *v1 = j; else *v2 = j; n++; }
+      {
+        if (n == 0) {
+          *v1 = j;
+        } else {
+          *v2 = j;
+        }
+        n++;
+      }
     } // for k
     break;
   case 18:
@@ -144,7 +202,14 @@ static void trouve2voisinslab(int32_t i, int32_t rs, int32_t ps, int32_t N, int3
     {
       j = voisin18(i, k, rs, ps, N);
       if ((j != -1) && (F[j]==lab))
-      { if (n == 0) *v1 = j; else *v2 = j; n++; }
+      {
+        if (n == 0) {
+          *v1 = j;
+        } else {
+          *v2 = j;
+        }
+        n++;
+      }
     } // for k
     break;
   case 26:
@@ -152,7 +217,14 @@ static void trouve2voisinslab(int32_t i, int32_t rs, int32_t ps, int32_t N, int3
     {
       j = voisin26(i, k, rs, ps, N);
       if ((j != -1) && (F[j]==lab))
-      { if (n == 0) *v1 = j; else *v2 = j; n++; }
+      {
+        if (n == 0) {
+          *v1 = j;
+        } else {
+          *v2 = j;
+        }
+        n++;
+      }
     } // for k
     break;
   default:
@@ -181,35 +253,45 @@ static int32_t trouve1voisin(int32_t i, int32_t rs, int32_t ps, int32_t N, int32
     for (k = 0; k < 8; k += 2)
     {
       j = voisin(i, k, rs, N);
-      if ((j != -1) && F[j]) return j;
+      if ((j != -1) && F[j]) {
+        return j;
+      }
     } // for k
     break;
   case 8:
     for (k = 0; k < 8; k += 1)
     {
       j = voisin(i, k, rs, N);
-      if ((j != -1) && F[j]) return j;
+      if ((j != -1) && F[j]) {
+        return j;
+      }
     } // for k
     break;
   case 6:
     for (k = 0; k <= 10; k += 2)
     {
       j = voisin6(i, k, rs, ps, N);
-      if ((j != -1) && F[j]) return j;
+      if ((j != -1) && F[j]) {
+        return j;
+      }
     } // for k
     break;
   case 18:
     for (k = 0; k < 18; k += 1)
     {
       j = voisin18(i, k, rs, ps, N);
-      if ((j != -1) && F[j]) return j;
+      if ((j != -1) && F[j]) {
+        return j;
+      }
     } // for k
     break;
   case 26:
     for (k = 0; k < 26; k += 1)
     {
       j = voisin26(i, k, rs, ps, N);
-      if ((j != -1) && F[j]) return j;
+      if ((j != -1) && F[j]) {
+        return j;
+      }
     } // for k
     break;
   default:
@@ -233,35 +315,45 @@ static int32_t trouve1voisinlab(int32_t i, int32_t rs, int32_t ps, int32_t N, in
     for (k = 0; k < 8; k += 2)
     {
       j = voisin(i, k, rs, N);
-      if ((j != -1) && (F[j]==lab)) return j;
+      if ((j != -1) && (F[j] == lab)) {
+        return j;
+      }
     } // for k
     break;
   case 8:
     for (k = 0; k < 8; k += 1)
     {
       j = voisin(i, k, rs, N);
-      if ((j != -1) && (F[j]==lab)) return j;
+      if ((j != -1) && (F[j] == lab)) {
+        return j;
+      }
     } // for k
     break;
   case 6:
     for (k = 0; k <= 10; k += 2)
     {
       j = voisin6(i, k, rs, ps, N);
-      if ((j != -1) && (F[j]==lab)) return j;
+      if ((j != -1) && (F[j] == lab)) {
+        return j;
+      }
     } // for k
     break;
   case 18:
     for (k = 0; k < 18; k += 1)
     {
       j = voisin18(i, k, rs, ps, N);
-      if ((j != -1) && (F[j]==lab)) return j;
+      if ((j != -1) && (F[j] == lab)) {
+        return j;
+      }
     } // for k
     break;
   case 26:
     for (k = 0; k < 26; k += 1)
     {
       j = voisin26(i, k, rs, ps, N);
-      if ((j != -1) && (F[j]==lab)) return j;
+      if ((j != -1) && (F[j] == lab)) {
+        return j;
+      }
     } // for k
     break;
   default:
@@ -278,15 +370,35 @@ static int32_t is_end(int32_t x, uint8_t *F, int32_t rs, int32_t ps, int32_t N, 
   switch (connex)
   {
   case 4:
-    if (nbvois4(F, x, rs, N) == 1) return 1; else return 0;
+    if (nbvois4(F, x, rs, N) == 1) {
+      return 1;
+    } else {
+      return 0;
+    }
   case 8:
-    if (nbvois8(F, x, rs, N) == 1) return 1; else return 0;
+    if (nbvois8(F, x, rs, N) == 1) {
+      return 1;
+    } else {
+      return 0;
+    }
   case 6:
-    if (mctopo3d_nbvoiso6(F, x, rs, ps, N) == 1) return 1; else return 0;
+    if (mctopo3d_nbvoiso6(F, x, rs, ps, N) == 1) {
+      return 1;
+    } else {
+      return 0;
+    }
   case 18:
-    if (mctopo3d_nbvoiso18(F, x, rs, ps, N) == 1) return 1; else return 0;
+    if (mctopo3d_nbvoiso18(F, x, rs, ps, N) == 1) {
+      return 1;
+    } else {
+      return 0;
+    }
   case 26:
-    if (mctopo3d_nbvoiso26(F, x, rs, ps, N) == 1) return 1; else return 0;
+    if (mctopo3d_nbvoiso26(F, x, rs, ps, N) == 1) {
+      return 1;
+    } else {
+      return 0;
+    }
   default: assert(0);
   }
 } // is_end()
@@ -302,11 +414,23 @@ int32_t is_endlab(int32_t x, int32_t *F, int32_t rs, int32_t ps, int32_t N, int3
   case 8:
     fprintf(stderr,"non implémenté\n"); assert(0);
   case 6:
-    if (mctopo3d_nbvoislab6(F, x, rs, ps, N) == 1) return 1; else return 0;
+    if (mctopo3d_nbvoislab6(F, x, rs, ps, N) == 1) {
+      return 1;
+    } else {
+      return 0;
+    }
   case 18:
-    if (mctopo3d_nbvoislab18(F, x, rs, ps, N) == 1) return 1; else return 0;
+    if (mctopo3d_nbvoislab18(F, x, rs, ps, N) == 1) {
+      return 1;
+    } else {
+      return 0;
+    }
   case 26:
-    if (mctopo3d_nbvoislab26(F, x, rs, ps, N) == 1) return 1; else return 0;
+    if (mctopo3d_nbvoislab26(F, x, rs, ps, N) == 1) {
+      return 1;
+    } else {
+      return 0;
+    }
   default: assert(0);
   }
 } // is_endlab()

@@ -119,9 +119,10 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (argc == 5)
+  if (argc == 5) {
     len = atof(argv[3]);
-  
+  }
+
   fscanf(fd, "%c %d", &type, &nsplines);
   if ((type != 'd') && (type != 'D'))
   {

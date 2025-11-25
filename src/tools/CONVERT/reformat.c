@@ -114,19 +114,21 @@ struct xvimage * readimage_old(char *filename)
   do 
   {
     fgets(buffer, BUFFERSIZE, fd); /* commentaire */
-    if (strncmp(buffer, "#xdim", 5) == 0)
+    if (strncmp(buffer, "#xdim", 5) == 0) {
       sscanf(buffer+5, "%lf", &xdim);
-    else if (strncmp(buffer, "#ydim", 5) == 0)
+    } else if (strncmp(buffer, "#ydim", 5) == 0) {
       sscanf(buffer+5, "%lf", &ydim);
-    else if (strncmp(buffer, "#zdim", 5) == 0)
-      sscanf(buffer+5, "%lf", &zdim);
+    } else if (strncmp(buffer, "#zdim", 5) == 0) {
+      sscanf(buffer + 5, "%lf", &zdim);
+    }
   } while (!isdigit(buffer[0]));
 
   c = sscanf(buffer, "%d %d %d", &rs, &cs, &d);
-  if (c == 2) d = 1;
-  else if (c != 3)
-  {   fprintf(stderr,"%s : invalid image format\n", F_NAME);
-      return NULL;
+  if (c == 2) {
+    d = 1;
+  } else if (c != 3) {
+    fprintf(stderr, "%s : invalid image format\n", F_NAME);
+    return NULL;
   }
 
   fgets(buffer, BUFFERSIZE, fd);
@@ -147,20 +149,19 @@ struct xvimage * readimage_old(char *filename)
   {
     if (ascii)
     {
-      if (ndgmax == 255)
+      if (ndgmax == 255) {
         for (i = 0; i < N; i++)
         {
           fscanf(fd, "%d", &c);
           UCHARDATA(image)[i] = (uint8_t)c;
         } /* for i */
-      else if (ndgmax == 65535)
+      } else if (ndgmax == 65535) {
         for (i = 0; i < N; i++)
         {
           fscanf(fd, "%d", &c);
           UCHARDATA(image)[i] = (uint8_t)(c/256);
         } /* for i */
-      else
-      {
+      } else {
         fprintf(stderr,"%s : wrong ndgmax = %d\n", F_NAME, ndgmax);
         return(NULL);
       }

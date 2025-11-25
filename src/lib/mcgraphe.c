@@ -149,8 +149,11 @@ static void AjouteTete(pcell * plibre, pcell * pliste, int32_t a, TYP_VARC v)
 static int32_t EstDansListe(pcell p, int32_t a) 
 /* ====================================================================== */
 {
-  for (; p != NULL; p = p->next)
-    if (p->som == a) return 1;
+  for (; p != NULL; p = p->next) {
+    if (p->som == a) {
+      return 1;
+    }
+  }
   return 0;
 } /* EstDansListe() */
 
@@ -227,8 +230,9 @@ graphe * InitGraphe(int32_t nsom, int32_t nmaxarc)
   g->narc = 0;
 
   /* construit la liste initiale de cellules libres */
-  for (i = 0; i < nmaxarc - 1; i++)
-    (g->reserve+i)->next = g->reserve+i+1;
+  for (i = 0; i < nmaxarc - 1; i++) {
+    (g->reserve + i)->next = g->reserve + i + 1;
+  }
   (g->reserve+i)->next = NULL;
   g->libre = g->reserve;  
 
@@ -249,18 +253,32 @@ void TermineGraphe(graphe * g)
 {
   int32_t i, n = g->nsom;
   free(g->reserve);
-  if (g->gamma) free(g->gamma);
+  if (g->gamma) {
+    free(g->gamma);
+  }
   if (g->tete) { free(g->tete); free(g->queue); }
-  if (g->v_arcs) free(g->v_arcs);
-  if (g->v_sommets) free(g->v_sommets);
+  if (g->v_arcs) {
+    free(g->v_arcs);
+  }
+  if (g->v_sommets) {
+    free(g->v_sommets);
+  }
   if (g->nomsommet)
   {
-    for (i = 0; i < n; i++) free(g->nomsommet[i]);
+    for (i = 0; i < n; i++) {
+      free(g->nomsommet[i]);
+    }
     free(g->nomsommet);
   }
-  if (g->x) free(g->x);
-  if (g->y) free(g->y);
-  if (g->z) free(g->z);
+  if (g->x) {
+    free(g->x);
+  }
+  if (g->y) {
+    free(g->y);
+  }
+  if (g->z) {
+    free(g->z);
+  }
   free(g);
 } /* TermineGraphe() */
 
@@ -299,7 +317,9 @@ void CopyVsom(graphe * g1, graphe * g2)
   {   fprintf(stderr, "%s : graphs must have the same number of vertices\n", F_NAME);
       exit(0);
   }
-  for (i = 0; i < n; i++) g2->v_sommets[i] = g1->v_sommets[i];
+  for (i = 0; i < n; i++) {
+    g2->v_sommets[i] = g1->v_sommets[i];
+  }
 } /* CopyVsom() */
 
 /* ====================================================================== */
@@ -322,26 +342,30 @@ graphe * CopyGraphe(graphe * g1)
 
   g = InitGraphe(nsom, nmaxarc);
 
-  if (g1->v_sommets)
-    for (i = 0; i < nsom; i++) 
+  if (g1->v_sommets) {
+    for (i = 0; i < nsom; i++) {
       g->v_sommets[i] = g1->v_sommets[i];
+    }
+  }
 
-  if (g1->x)
+  if (g1->x) {
     for (i = 0; i < nsom; i++) 
     {
       g->x[i] = g1->x[i];
       g->y[i] = g1->y[i];
       g->z[i] = g1->z[i];
     }
+  }
 
-  for (i = 0; i < nsom; i++) 
+  for (i = 0; i < nsom; i++) {
     for (p = g1->gamma[i]; p != NULL; p = p->next)
     {
       j = p->som;
       v = p->v_arc;
       AjouteArcValue(g, i, j, (TYP_VARC)v);
     }
-  
+  }
+
   return g;
 } /* CopyGraphe() */
 
@@ -370,18 +394,21 @@ void UnionGraphes(graphe * g1, graphe * g2)
       exit(0);
   }
 
-  for (i = 0; i < n; i++) 
+  for (i = 0; i < n; i++) {
     for (p = g2->gamma[i]; p != NULL; p = p->next)
     {
       j = p->som;
       v = p->v_arc;
       AjouteArcValue(g1, i, j, v);
     }
+  }
 
-  for (i = 0; i < n; i++) 
-    if (g2->v_sommets[i] > g1->v_sommets[i])
+  for (i = 0; i < n; i++) {
+    if (g2->v_sommets[i] > g1->v_sommets[i]) {
       g1->v_sommets[i] = g2->v_sommets[i];
-  
+    }
+  }
+
 } /* UnionGraphes() */
 
 /* ====================================================================== */
@@ -396,9 +423,11 @@ void UnitLength(graphe * g)
 {
   int32_t i, n = g->nsom;
   pcell p;
-  for (i = 0; i < n; i++) 
-    for (p = g->gamma[i]; p != NULL; p = p->next)
+  for (i = 0; i < n; i++) {
+    for (p = g->gamma[i]; p != NULL; p = p->next) {
       p->v_arc = (TYP_VARC)1;
+    }
+  }
 } /* UnitLength() */
 
 /* ====================================================================== */
@@ -545,26 +574,29 @@ void SaveGraphe( graphe * g, const char *filename )
   if (g->v_sommets)
   {
     fprintf(fd, "val sommets\n");
-    for (i = 0; i < n; i++) 
+    for (i = 0; i < n; i++) {
       fprintf(fd, "%d %g\n", i, (double)(g->v_sommets[i]));
+    }
   }
 
   if (g->x)
   {
     fprintf(fd, "coord sommets\n");
-    for (i = 0; i < n; i++) 
+    for (i = 0; i < n; i++) {
       fprintf(fd, "%d %g %g\n", i, g->x[i], g->y[i]);
+    }
   }
 
   fprintf(fd, "arcs values\n");
-  for (i = 0; i < n; i++) 
+  for (i = 0; i < n; i++) {
     for (p = g->gamma[i]; p != NULL; p = p->next)
     {
       j = p->som;
       v = p->v_arc;
       fprintf(fd, "%d %d %g\n", i, j, (double)v);
     }
-  
+  }
+
   fclose(fd);
 } /* SaveGraphe() */
 
@@ -620,7 +652,7 @@ A weight W(P,Q) is assigned to each edge, according to the value of \b mode:
     N = rs * cs;
     M = 2 * ((rs-1) * cs + (cs-1) * rs); 
     g = InitGraphe(N, M);
-    for (j = 0; j < cs; j++)  
+    for (j = 0; j < cs; j++) {
       for (i = 0; i < rs; i++)  
       {
 	p = j*rs + i;
@@ -649,13 +681,14 @@ A weight W(P,Q) is assigned to each edge, according to the value of \b mode:
 	  AjouteArcValue(g, p+rs, p, v*v);
 	}
       }
+    }
   }
   else if ((ds == 1) && (connex == 8))
   {
     N = rs * cs;
     M = 4 * ((rs-1) * cs + (cs-1) * rs); 
     g = InitGraphe(N, M);
-    for (j = 0; j < cs; j++)  
+    for (j = 0; j < cs; j++) {
       for (i = 0; i < rs; i++)  
       {
 	p = j*rs + i;
@@ -706,6 +739,7 @@ A weight W(P,Q) is assigned to each edge, according to the value of \b mode:
 	  AjouteArcValue(g, p-rs+1, p, v);
 	}
       }
+    }
   }
   else
   {
@@ -754,7 +788,7 @@ and E = {(P,Q) in VxV ; P and Q are adjacent}.
     N = rs * cs;
     M = 2 * ((rs-1) * cs + (cs-1) * rs); // max nb of arcs
     g = InitGraphe(N, M);
-    for (j = 0; j < cs; j++)  
+    for (j = 0; j < cs; j++) {
       for (i = 0; i < rs; i++)  
       {
 	p = j*rs + i;
@@ -776,13 +810,14 @@ and E = {(P,Q) in VxV ; P and Q are adjacent}.
 	  }
 	}
       }
+    }
   }
   else if ((ds == 1) && (connex == 8))
   {
     N = rs * cs;
     M = 4 * ((rs-1) * cs + (cs-1) * rs); 
     g = InitGraphe(N, M);
-    for (j = 0; j < cs; j++)  
+    for (j = 0; j < cs; j++) {
       for (i = 0; i < rs; i++)  
       {
 	p = j*rs + i;
@@ -814,6 +849,7 @@ and E = {(P,Q) in VxV ; P and Q are adjacent}.
 	  }
 	}
       }
+    }
   }
   else if (ds == 1)
   {
@@ -865,8 +901,10 @@ struct xvimage *Graphe2Image(graphe * g, int32_t rs)
   }
   F = UCHARDATA(image);
   memset(F, 0, N);
-  
-  for (i = 0; i < N; i++) F[i] = (uint8_t)g->v_sommets[i]; 
+
+  for (i = 0; i < N; i++) {
+    F[i] = (uint8_t)g->v_sommets[i];
+  }
 
   return image;
 } /* Graphe2Image() */
@@ -921,9 +959,12 @@ void RetireArc(graphe * g, int32_t i, int32_t s)
 {
   pcell * pliste = NULL;
   pliste = g->gamma + i;
-  while ((*pliste != NULL) && (((*pliste)->som) != s))
+  while ((*pliste != NULL) && (((*pliste)->som) != s)) {
     pliste = &((*pliste)->next);
-  if (*pliste != NULL) RetireTete(&(g->libre), pliste);
+  }
+  if (*pliste != NULL) {
+    RetireTete(&(g->libre), pliste);
+  }
   g->narc--;
 } /* RetireArc() */
 
@@ -975,7 +1016,7 @@ void Gamma2ListArcs(graphe *g)
   pcell p;
 
   a = 0;
-  for (i = 0; i < n; i++) 
+  for (i = 0; i < n; i++) {
     for (p = g->gamma[i]; p != NULL; p = p->next)
     {
       g->tete[a] = i;
@@ -983,6 +1024,7 @@ void Gamma2ListArcs(graphe *g)
       g->v_arcs[a] = p->v_arc;
       a++;
     }
+  }
 } /* Gamma2ListArcs() */
 
 /* ====================================================================== */
@@ -1033,16 +1075,20 @@ graphe * GrapheAleatoire(int32_t nsom, int32_t narc)
       AjouteArc(g, i, j);
       g->tete[narc] = i;
       g->queue[narc] = j;
-      if (g->v_arcs) g->v_arcs[narc] = (TYP_VARC)(rand()*100.0);
+      if (g->v_arcs) {
+        g->v_arcs[narc] = (TYP_VARC)(rand() * 100.0);
+      }
     }
   }
   else /* on part du graphe complet et on retire des arcs au hasard */
   {
     /* construit un graphe complet antisymetrique sans boucle */
     g = InitGraphe(nsom, (int32_t)mmax);
-    for (i = 0; i < nsom ; i++)
-      for (j = i+1; j < nsom; j++)
-        AjouteArc(g, i, j);         
+    for (i = 0; i < nsom; i++) {
+      for (j = i + 1; j < nsom; j++) {
+        AjouteArc(g, i, j);
+      }
+    }
 
     /* retire mmax - narc arcs */
     m = (int32_t)mmax;
@@ -1059,15 +1105,19 @@ graphe * GrapheAleatoire(int32_t nsom, int32_t narc)
 
     /* rajoute la liste des arcs et les poids */
     m = 0;
-    for (i = 0; i < nsom ; i++)
-      for (j = i+1; j < nsom; j++)
+    for (i = 0; i < nsom; i++) {
+      for (j = i + 1; j < nsom; j++) {
         if (EstSuccesseur(g, i, j))
 	{
           g->tete[m] = i;
           g->queue[m] = j;
-          if (g->v_arcs) g->v_arcs[narc] = (TYP_VARC)(rand()*100.0);
+          if (g->v_arcs) {
+            g->v_arcs[narc] = (TYP_VARC)(rand() * 100.0);
+          }
           m++;
-	}
+        }
+      }
+    }
   }
 
   return g;
@@ -1126,7 +1176,9 @@ int32_t Degre(graphe * g, int32_t s)
 {
   int32_t d = 0;
   pcell p;
-  for (p = g->gamma[s]; p != NULL; p = p->next) d++;
+  for (p = g->gamma[s]; p != NULL; p = p->next) {
+    d++;
+  }
   return d;
 } /* Degre() */
 
@@ -1252,7 +1304,9 @@ void CompFortConnexe(graphe * g, graphe *g_1, int32_t a, boolean * Ca)
   n = g->nsom;
   D = Descendants(g, a);
   A = Descendants(g_1, a);
-  for (i = 0; i < n; i++) Ca[i] = (D[i] && A[i]);
+  for (i = 0; i < n; i++) {
+    Ca[i] = (D[i] && A[i]);
+  }
   free(A);
   free(D);
 } /* CompFortConnexe() */
@@ -1367,7 +1421,12 @@ boolean Connexe(graphe * g, graphe *g_1)
   int32_t n = g->nsom;
   boolean * C = EnsembleVide(n);
   CompConnexe(g, g_1, 0, C);
-  for (i = 0; i < n; i++) if (!C[i]) { ret = FALSE; break; }
+  for (i = 0; i < n; i++) {
+    if (!C[i]) {
+      ret = FALSE;
+      break;
+    }
+  }
   free(C);
   return ret;
 } /* Connexe() */
@@ -1405,24 +1464,27 @@ boolean CircuitNiveaux(graphe * g)
     exit(0);
   }
   i = N = 0;
-  
-  for (x = 0; x < n; x++)
+
+  for (x = 0; x < n; x++) {
     for (p = g->gamma[x]; p != NULL; p = p->next)
     { 
       y = p->som;
       D[y] += 1;
     }
+  }
 
-  for (x = 0; x < n; x++)
+  for (x = 0; x < n; x++) {
     g->v_sommets[x] = -1;
-  
-  for (x = 0; x < n; x++)
+  }
+
+  for (x = 0; x < n; x++) {
     if (D[x] == 0)
     {
       g->v_sommets[x] = i;
       N++;
       LifoPush(T, x);
     }
+  }
 
   while ((N < n) && !LifoVide(T))
   {
@@ -1448,7 +1510,11 @@ boolean CircuitNiveaux(graphe * g)
   free(D);
   LifoTermine(T);
   LifoTermine(U);
-  if (N < n) return TRUE; else return FALSE;
+  if (N < n) {
+    return TRUE;
+  } else {
+    return FALSE;
+  }
 } /* CircuitNiveaux() */
 
 /* ====================================================================== */
@@ -1486,10 +1552,16 @@ static int32_t mcgraphe_Partitionner(int32_t *A, TypeCle *T, int32_t p, int32_t 
   int32_t j = r + 1;
   while (1)
   {
-    do j--; while (T[A[j]] > x);
-    do i++; while (T[A[i]] < x);
-    if (i < j) { t = A[i]; A[i] = A[j]; A[j] = t; }
-    else return j;
+    do {
+      j--;
+    } while (T[A[j]] > x);
+    do {
+      i++;
+    } while (T[A[i]] < x);
+    if (i < j) { t = A[i]; A[i] = A[j]; A[j] = t;
+    } else {
+      return j;
+    }
   } /* while (1) */   
 } /* mcgraphe_Partitionner() */
 
@@ -1558,8 +1630,10 @@ graphe * Kruskal1(graphe * g, graphe *g_1)
   if (A == NULL)
   {   fprintf(stderr, "%s: malloc failed\n", F_NAME);
       exit(0);
-  }  
-  for (i = 0; i < m; i++) A[i] = i; /* indexation initiale */
+  }
+  for (i = 0; i < m; i++) {
+    A[i] = i; /* indexation initiale */
+  }
   TriRapideStochastique(A, g->v_arcs, 0, m-1);
 
   /* construit le graphe resultat, initialement vide */
@@ -1589,8 +1663,10 @@ graphe * Kruskal1(graphe * g, graphe *g_1)
     }  
   } // while (j < n-1)
 
-  if (g->x != NULL) // recopie les coordonnees des sommets pour l'affichage
-    for (i = 0; i < n; i++) { apm->x[i] = g->x[i];  apm->y[i] = g->y[i]; }
+  if (g->x != NULL) { // recopie les coordonnees des sommets pour l'affichage
+    for (i = 0; i < n; i++) { apm->x[i] = g->x[i];  apm->y[i] = g->y[i];
+    }
+  }
 
   free(A);
   free(Ct);
@@ -1628,8 +1704,10 @@ graphe * Kruskal2(graphe * g, graphe *g_1)
   if (A == NULL)
   {   fprintf(stderr, "%s: malloc failed\n", F_NAME);
       exit(0);
-  }  
-  for (i = 0; i < m; i++) A[i] = i; /* indexation initiale */
+  }
+  for (i = 0; i < m; i++) {
+    A[i] = i; /* indexation initiale */
+  }
   TriRapideStochastique(A, g->v_arcs, 0, m-1);
 
   /* Boucle sur les arcs pris par ordre croissant:
@@ -1641,10 +1719,9 @@ graphe * Kruskal2(graphe * g, graphe *g_1)
     t = g->tete[A[i]]; q = g->queue[A[i]]; 
     RetireArc(g, t, q);
     RetireArc(g_1, q, t);
-    if (Connexe(g, g_1)) 
-      m--; 
-    else 
-    {
+    if (Connexe(g, g_1)) {
+      m--;
+    } else {
       AjouteArc(g, t, q);
       AjouteArc(g_1, q, t);
     }
@@ -1666,8 +1743,10 @@ graphe * Kruskal2(graphe * g, graphe *g_1)
     }
   } // for i
 
-  if (g->x)
-    for (i = 0; i < n; i++) { apm->x[i] = g->x[i];  apm->y[i] = g->y[i]; }
+  if (g->x) {
+    for (i = 0; i < n; i++) { apm->x[i] = g->x[i];  apm->y[i] = g->y[i];
+    }
+  }
 
   free(A);
   return apm;
@@ -1695,7 +1774,9 @@ void DepthTree(graphe * g, int32_t a, TYP_VARC *depth, int32_t *farthest)
   n = g->nsom;
   dist = (TYP_VARC *)malloc(n * sizeof(TYP_VARC));
   T = CreeLifoVide(n);
-  for (i = 0; i < n; i++) dist[i] = -1;
+  for (i = 0; i < n; i++) {
+    dist[i] = -1;
+  }
 
   d = dist[a] = 0;
   LifoPush(T, a);  
@@ -1738,9 +1819,11 @@ graphe * MaxDiameterTree(graphe * g)
 
   diam = (TYP_VARC *)malloc(n * sizeof(TYP_VARC *));
   opp_som = (int32_t *)malloc(n * sizeof(int32_t *));
-  for (i = 0; i < n; i++) diam[i] = -1;
-  
-  for (i = 0; i < n; i++)
+  for (i = 0; i < n; i++) {
+    diam[i] = -1;
+  }
+
+  for (i = 0; i < n; i++) {
     if (Degre(g, i) == 1)
     {
       DepthTree(g, i, &d, &f);
@@ -1748,6 +1831,7 @@ graphe * MaxDiameterTree(graphe * g)
       opp_som[i] = f;
       if (d > maxdiam) { maxdiam = d; imd = i; }
     }
+  }
   Lee(g, imd);
   pcc = PCCna(g, imd, opp_som[imd]);
   return pcc;
@@ -1793,11 +1877,11 @@ int32_t LCA(graphe * g, int32_t i, int32_t j)
     i = p->som;
     M[i] = TRUE;
     p = g->gamma[i]; 
-  } 
+  }
 
-  if (M[j]) k = j; // recherche un element de M parmi les ancêtres de j
-  else
-  {
+  if (M[j]) {
+    k = j; // recherche un element de M parmi les ancêtres de j
+  } else {
     p = g->gamma[j]; 
     while (p != NULL) 
     {
@@ -1811,7 +1895,7 @@ int32_t LCA(graphe * g, int32_t i, int32_t j)
       j = p->som;
       if (M[j]) { k = j; break; }
       p = g->gamma[j];
-    } 
+    }
   }
 
 #ifdef CHECK_TREE
@@ -1866,7 +1950,9 @@ graphe * RootTree(graphe * g, graphe * g_1, int32_t i)
     exit(0);
   }
 
-  for (k = 0; k < n; k++) tree->v_sommets[k] = -1;
+  for (k = 0; k < n; k++) {
+    tree->v_sommets[k] = -1;
+  }
   tree->v_sommets[i] = 0;
   FifoPush(T, i);
 
@@ -1916,7 +2002,9 @@ void DistRoot(graphe * g, int32_t r)
   pcell p;
   Fifo * T = CreeFifoVide(n);
 
-  for (k = 0; k < n; k++) g->v_sommets[k] = -1;
+  for (k = 0; k < n; k++) {
+    g->v_sommets[k] = -1;
+  }
   g->v_sommets[r] = 0;
   FifoPush(T, r);
 
@@ -1964,7 +2052,9 @@ void Dijkstra1(graphe * g, int32_t i)
   TYP_VSOM vmin;
 
   S[i] = TRUE;
-  for (k = 0; k < n; k++) g->v_sommets[k] = MAX_VSOM;
+  for (k = 0; k < n; k++) {
+    g->v_sommets[k] = MAX_VSOM;
+  }
   g->v_sommets[i] = 0;
   k = 1;
   x = i;
@@ -1980,9 +2070,12 @@ void Dijkstra1(graphe * g, int32_t i)
     } // for p
     // extraire un sommet x hors de S de valeur g->v_sommets minimale
     vmin = MAX_VSOM;
-    for (y = 0; y < n; y++)
-      if (!S[y]) 
-        if (g->v_sommets[y] <= vmin) { x = y; vmin = g->v_sommets[y]; }
+    for (y = 0; y < n; y++) {
+      if (!S[y]) {
+        if (g->v_sommets[y] <= vmin) { x = y; vmin = g->v_sommets[y];
+        }
+      }
+    }
     k++; 
     S[x] = TRUE;
   } // while ((k < n) && (g->v_sommets[x] < MAX_VSOM))
@@ -2020,7 +2113,9 @@ void Dijkstra(graphe * g, int32_t i)
 
   S[i] = TRUE;
   TT[i] = TRUE;
-  for (k = 0; k < n; k++) g->v_sommets[k] = MAX_VSOM;
+  for (k = 0; k < n; k++) {
+    g->v_sommets[k] = MAX_VSOM;
+  }
   g->v_sommets[i] = 0;
   x = i;
   do
@@ -2050,7 +2145,9 @@ void Dijkstra(graphe * g, int32_t i)
       if (g->v_sommets[y] <= vmin) { x = y; tx = ty; vmin = g->v_sommets[y]; }
     }
     S[x] = TRUE;
-    for (; tx < tt-1; tx++) T[tx] = T[tx+1]; // retire x de T
+    for (; tx < tt - 1; tx++) {
+      T[tx] = T[tx + 1]; // retire x de T
+    }
     tt--;
   } while (tt > 0);
 
@@ -2077,7 +2174,9 @@ void Lee(graphe * g, int32_t i)
   pcell p;
   Fifo * T = CreeFifoVide(n);
 
-  for (k = 0; k < n; k++) g->v_sommets[k] = -1;
+  for (k = 0; k < n; k++) {
+    g->v_sommets[k] = -1;
+  }
   g->v_sommets[i] = 0;
   FifoPush(T, i);
 
@@ -2116,7 +2215,9 @@ void LeeNO(graphe * g, graphe * g_1, int32_t i)
   pcell p;
   Fifo * T = CreeFifoVide(n);
 
-  for (k = 0; k < n; k++) g->v_sommets[k] = -1;
+  for (k = 0; k < n; k++) {
+    g->v_sommets[k] = -1;
+  }
   g->v_sommets[i] = 0;
   FifoPush(T, i);
 
@@ -2271,7 +2372,9 @@ void BellmanSC(graphe * g)
   for (x = 0; x < n; x++)
   {
     r = (int32_t)g->v_sommets[x];
-    if (r > rmax) rmax = r;
+    if (r > rmax) {
+      rmax = r;
+    }
   }
   H = (int32_t *)calloc(rmax + 1, sizeof(int32_t));
   if (H == NULL)
@@ -2279,7 +2382,9 @@ void BellmanSC(graphe * g)
     fprintf(stderr, "%s : calloc failed\n", F_NAME);
     exit(0);
   }
-  for (x = 0; x < n; x++) H[(int32_t)g->v_sommets[x]]++; // calcule l'histo
+  for (x = 0; x < n; x++) {
+    H[(int32_t)g->v_sommets[x]]++; // calcule l'histo
+  }
   cumul = H[0];
   H[0] = 0;
   for (i = 1; i <= rmax; i++) // calcule l'histo cumulé
@@ -2302,22 +2407,25 @@ void BellmanSC(graphe * g)
   }
   free(H);
 
-  for (x = 0; x < n; x++)
+  for (x = 0; x < n; x++) {
     g->v_sommets[x] = MAX_VSOM;
+  }
 
   for (i = 0; i < n; i++)
   {
     x = T[i];
     p = g_1->gamma[x];
-    if (p == NULL) g->v_sommets[x] = 0;
-    else
-    {
+    if (p == NULL) {
+      g->v_sommets[x] = 0;
+    } else {
       minv = MAX_VARC; 
       for (; p != NULL; p = p->next)
       { /* pour tout y prédécesseur de x */
 	y = p->som;
 	tmp = p->v_arc + g->v_sommets[y];
-	if (tmp < minv) minv = tmp;
+        if (tmp < minv) {
+          minv = tmp;
+        }
       } // for p
       g->v_sommets[x] = minv;
     }
@@ -2357,7 +2465,9 @@ void BellmanSCmax(graphe * g)
   for (x = 0; x < n; x++)
   {
     r = (int32_t)g->v_sommets[x];
-    if (r > rmax) rmax = r;
+    if (r > rmax) {
+      rmax = r;
+    }
   }
   H = (int32_t *)calloc(rmax + 1, sizeof(int32_t));
   if (H == NULL)
@@ -2365,7 +2475,9 @@ void BellmanSCmax(graphe * g)
     fprintf(stderr, "%s : calloc failed\n", F_NAME);
     exit(0);
   }
-  for (x = 0; x < n; x++) H[(int32_t)g->v_sommets[x]]++; // calcule l'histo
+  for (x = 0; x < n; x++) {
+    H[(int32_t)g->v_sommets[x]]++; // calcule l'histo
+  }
   cumul = H[0];
   H[0] = 0;
   for (i = 1; i <= rmax; i++) // calcule l'histo cumulé
@@ -2388,22 +2500,25 @@ void BellmanSCmax(graphe * g)
   }
   free(H);
 
-  for (x = 0; x < n; x++)
+  for (x = 0; x < n; x++) {
     g->v_sommets[x] = MAX_VSOM;
+  }
 
   for (i = 0; i < n; i++)
   {
     x = T[i];
     p = g_1->gamma[x];
-    if (p == NULL) g->v_sommets[x] = 0;
-    else
-    {
+    if (p == NULL) {
+      g->v_sommets[x] = 0;
+    } else {
       maxv = MIN_VARC; 
       for (; p != NULL; p = p->next)
       { /* pour tout y prédécesseur de x */
 	y = p->som;
 	tmp = p->v_arc + g->v_sommets[y];
-	if (tmp > maxv) maxv = tmp;
+        if (tmp > maxv) {
+          maxv = tmp;
+        }
       } // for p
       g->v_sommets[x] = maxv;
     }
@@ -2447,7 +2562,9 @@ void BellmanSC1(graphe * g, int32_t dep)
   for (x = 0; x < n; x++)
   {
     r = (int32_t)g->v_sommets[x];
-    if (r > rmax) rmax = r;
+    if (r > rmax) {
+      rmax = r;
+    }
   }
   H = (int32_t *)calloc(rmax + 1, sizeof(int32_t));
   if (H == NULL)
@@ -2455,7 +2572,9 @@ void BellmanSC1(graphe * g, int32_t dep)
     fprintf(stderr, "%s : calloc failed\n", F_NAME);
     exit(0);
   }
-  for (x = 0; x < n; x++) H[(int32_t)g->v_sommets[x]]++; // calcule l'histo
+  for (x = 0; x < n; x++) {
+    H[(int32_t)g->v_sommets[x]]++; // calcule l'histo
+  }
   cumul = H[0];
   H[0] = 0;
   for (i = 1; i <= rmax; i++) // calcule l'histo cumulé
@@ -2478,10 +2597,15 @@ void BellmanSC1(graphe * g, int32_t dep)
   }
   free(H);
 
-  for (x = 0; x < n; x++)
+  for (x = 0; x < n; x++) {
     g->v_sommets[x] = MAX_VSOM;
+  }
 
-  for (i = 0; i < n; i++) if (T[i] == dep) break;
+  for (i = 0; i < n; i++) {
+    if (T[i] == dep) {
+      break;
+    }
+  }
   g->v_sommets[dep] = 0;
   for (; i < n; i++)
   {
@@ -2491,7 +2615,9 @@ void BellmanSC1(graphe * g, int32_t dep)
     { /* pour tout y prédécesseur de x */
       y = p->som;
       tmp = p->v_arc + g->v_sommets[y];
-      if (tmp < minv) minv = tmp;
+      if (tmp < minv) {
+        minv = tmp;
+      }
     } // for p
     g->v_sommets[x] = minv;
   }
@@ -2523,7 +2649,9 @@ void AlphaTopologicalMap(graphe * g, boolean * head, TYP_VSOM alpha)
   pcell p;
 
   M = (TYP_VSOM *)malloc(n * sizeof(TYP_VSOM)); assert(M != NULL);
-  for (x = 0; x < n; x++) M[x] = g->v_sommets[x];
+  for (x = 0; x < n; x++) {
+    M[x] = g->v_sommets[x];
+  }
   if (CircuitNiveaux(g))
   {
     fprintf(stderr, "%s: the graph is not acyclic\n", F_NAME);
@@ -2533,10 +2661,14 @@ void AlphaTopologicalMap(graphe * g, boolean * head, TYP_VSOM alpha)
   for (x = 0; x < n; x++)
   {
     r = (int32_t)g->v_sommets[x];
-    if (r > rmax) rmax = r;
+    if (r > rmax) {
+      rmax = r;
+    }
   }
   H = (int32_t *)calloc(rmax + 1, sizeof(int32_t)); assert(H != NULL);
-  for (x = 0; x < n; x++) H[(int32_t)g->v_sommets[x]]++; // calcule l'histo
+  for (x = 0; x < n; x++) {
+    H[(int32_t)g->v_sommets[x]]++; // calcule l'histo
+  }
   cumul = H[0];
   H[0] = 0;
   for (i = 1; i <= rmax; i++) // calcule l'histo cumulé
@@ -2571,13 +2703,16 @@ void AlphaTopologicalMap(graphe * g, boolean * head, TYP_VSOM alpha)
       }
       else
       {
-	if (M[x] < (M[y] + alpha))
-	  M[x] = M[y] + alpha;
+        if (M[x] < (M[y] + alpha)) {
+          M[x] = M[y] + alpha;
+        }
       }
     }
   }
 
-  for (x = 0; x < n; x++) g->v_sommets[x] = M[x];
+  for (x = 0; x < n; x++) {
+    g->v_sommets[x] = M[x];
+  }
   free(M);
   TermineGraphe(g_1);  
   free(T);
@@ -2592,7 +2727,9 @@ static TYP_VSOM IntegreGSC_Aux(graphe * g, graphe * g_1, int32_t s)
   int32_t t;
   TYP_VSOM sum;
 
-  if (g_1->v_sommets[s] == (TYP_VSOM)1) return g->v_sommets[s];
+  if (g_1->v_sommets[s] == (TYP_VSOM)1) {
+    return g->v_sommets[s];
+  }
   sum = g->v_sommets[s];
   for (p = g_1->gamma[s]; p != NULL; p = p->next)
   {
@@ -2624,17 +2761,23 @@ void IntegreGSC(graphe * g)
   pcell p;
 
   // ce champ de g_1 sera utilisé comme indicateur: 0=non traité, 1=traité
-  for (s = 0; s < n; s++) g_1->v_sommets[s] = (TYP_VSOM)0;
+  for (s = 0; s < n; s++) {
+    g_1->v_sommets[s] = (TYP_VSOM)0;
+  }
   // ce champ de g_1 sera utilisé pour stocker le degré sortant (pour g) de s 
   for (s = 0; s < n; s++)
-  {  
-    for (d = 0, p = g->gamma[s]; p != NULL; p = p->next) d += 1;
+  {
+    for (d = 0, p = g->gamma[s]; p != NULL; p = p->next) {
+      d += 1;
+    }
     g_1->x[s] = d;
   }
   // lance la fonction récursive pour tous les sommets
-  for (s = 0; s < n; s++)
-    if (g_1->v_sommets[s] == (TYP_VSOM)0)
+  for (s = 0; s < n; s++) {
+    if (g_1->v_sommets[s] == (TYP_VSOM)0) {
       IntegreGSC_Aux(g, g_1, s);
+    }
+  }
   TermineGraphe(g_1);
 } /* IntegreGSC() */
 
@@ -2678,13 +2821,15 @@ boolean EstConfluent(graphe * g, graphe *g_1, int32_t a)
   } // while (!LifoVide(T))
 
   // vérification de la prop.
-  for (i = 0; i < n; i++) 
-    if (A[i])
+  for (i = 0; i < n; i++) {
+    if (A[i]) {
       for (p = g->gamma[i]; p != NULL; p = p->next) 
       { /* pour tout s successeur de i */
 	s = p->som;
 	if (!A[s] && (s != a)) { ret = FALSE; goto fin; }
       }
+    }
+  }
 
  fin:    
   free(A);
@@ -2713,7 +2858,9 @@ boolean * LeastDecreasingPath(graphe * g, int32_t a)
   while (1)
   {
     p = g->gamma[a];
-    if (p == NULL) break;
+    if (p == NULL) {
+      break;
+    }
     vmax = VSOM_HUGE_NEGATIVE;
     for (; p != NULL; p = p->next) 
     { /* pour tout s successeur de a */
@@ -2739,11 +2886,13 @@ void PointsConfluents(graphe * g, graphe *g_1)
 {
   int32_t i, n;
   n = g->nsom;
-  for (i = 0; i < n; i++) 
-    if (EstConfluent(g, g_1, i))
+  for (i = 0; i < n; i++) {
+    if (EstConfluent(g, g_1, i)) {
       g->v_sommets[i] = (TYP_VSOM)1;
-    else
+    } else {
       g->v_sommets[i] = (TYP_VSOM)0;
+    }
+  }
 } // PointsConfluents()
 
 /* ====================================================================== */
@@ -2784,7 +2933,9 @@ graphe * ForetPCC(graphe * g)
   for (x = 0; x < n; x++)
   {
     r = (int32_t)g->v_sommets[x];
-    if (r > rmax) rmax = r;
+    if (r > rmax) {
+      rmax = r;
+    }
   }
   H = (int32_t *)calloc(rmax + 1, sizeof(int32_t));
   if (H == NULL)
@@ -2792,7 +2943,9 @@ graphe * ForetPCC(graphe * g)
     fprintf(stderr, "%s : calloc failed\n", F_NAME);
     exit(0);
   }
-  for (x = 0; x < n; x++) H[(int32_t)g->v_sommets[x]]++; // calcule l'histo
+  for (x = 0; x < n; x++) {
+    H[(int32_t)g->v_sommets[x]]++; // calcule l'histo
+  }
   cumul = H[0];
   H[0] = 0;
   for (i = 1; i <= rmax; i++) // calcule l'histo cumulé
@@ -2815,16 +2968,17 @@ graphe * ForetPCC(graphe * g)
   }
   free(H);
 
-  for (x = 0; x < n; x++)
+  for (x = 0; x < n; x++) {
     g->v_sommets[x] = MAX_VSOM;
+  }
 
   for (i = 0; i < n; i++)
   {
     x = T[i];
     p = g_1->gamma[x];
-    if (p == NULL) foret->v_sommets[x] = g->v_sommets[x] = 0; // cas des sources
-    else
-    {
+    if (p == NULL) {
+      foret->v_sommets[x] = g->v_sommets[x] = 0; // cas des sources
+    } else {
       miny = p->som;
       minv = p->v_arc + g->v_sommets[miny];
       p = p->next; 
@@ -2913,9 +3067,11 @@ void IntegreForet(graphe * g)
   int32_t x;
   graphe * g_1 = Symetrique(g);
 
-  for (x = 0; x < n; x++)
-    if (g->gamma[x] == NULL)
+  for (x = 0; x < n; x++) {
+    if (g->gamma[x] == NULL) {
       IntegreForet_Aux(g, g_1, x);
+    }
+  }
   TermineGraphe(g_1);
 } /* IntegreForet() */
 
@@ -2935,7 +3091,11 @@ void AfficheEnsemble(boolean *s, int32_t n)
 /* ====================================================================== */
 {
   int32_t i;
-  for (i = 0; i < n; i++) if (s[i]) printf("%d ", i);
+  for (i = 0; i < n; i++) {
+    if (s[i]) {
+      printf("%d ", i);
+    }
+  }
   printf("\n");
 } /* AfficheEnsemble() */
 
@@ -2946,7 +3106,9 @@ void AfficheEnsemble(boolean *s, int32_t n)
 void AfficheListe(pcell p) 
 /* ====================================================================== */
 {
-  for (; p != NULL; p = p->next) printf("%d (%g); ", p->som, (double)(p->v_arc));
+  for (; p != NULL; p = p->next) {
+    printf("%d (%g); ", p->som, (double)(p->v_arc));
+  }
   printf("\n");
 } /* AfficheListe() */
 
@@ -2970,8 +3132,9 @@ void AfficheSuccesseurs(graphe * g)
       AfficheListe(g->gamma[i]);
     }
     printf("\n");
+  } else {
+    fprintf(stderr, "%s: representation successeurs absente\n", F_NAME);
   }
-  else fprintf(stderr, "%s: representation successeurs absente\n", F_NAME);
 } /* AfficheSuccesseurs() */
 
 /* ====================================================================== */
@@ -2988,17 +3151,20 @@ void AfficheArcs(graphe * g)
 
   if (g->tete && g->v_arcs)
   {
-    for (i = 0; i < g->narc; i++)
+    for (i = 0; i < g->narc; i++) {
       printf("[%d, %d] %g\n", g->tete[i], g->queue[i], (double)(g->v_arcs[i]));
+    }
     printf("\n");
   }
   else if (g->tete)
   {
-    for (i = 0; i < g->narc; i++)
+    for (i = 0; i < g->narc; i++) {
       printf("[%d, %d]\n", g->tete[i], g->queue[i]);
+    }
     printf("\n");
+  } else {
+    fprintf(stderr, "%s: representation arcs absente\n", F_NAME);
   }
-  else fprintf(stderr, "%s: representation arcs absente\n", F_NAME);
 } /* AfficheArcs() */
 
 /* ====================================================================== */
@@ -3015,11 +3181,13 @@ void AfficheValeursSommets(graphe * g)
 
   if (g->v_sommets)
   {
-    for (i = 0; i < g->nsom; i++)
+    for (i = 0; i < g->nsom; i++) {
       printf("sommet %d : valeur %g\n", i, (double)(g->v_sommets[i]));
+    }
     printf("\n");
+  } else {
+    fprintf(stderr, "%s: valeurs sommets absentes\n", F_NAME);
   }
-  else fprintf(stderr, "%s: valeurs sommets absentes\n", F_NAME);
 } /* AfficheValeursSommets() */
 
 
@@ -3071,59 +3239,75 @@ void PSGraphe(graphe * g, const char *filename, double r, double t, double marge
   ymin = ymax = g->y[0];
   for (i = 1; i < n; i++) 
   {
-    if (g->x[i] < xmin) xmin = g->x[i]; else if (g->x[i] > xmax) xmax = g->x[i];
-    if (g->y[i] < ymin) ymin = g->y[i]; else if (g->y[i] > ymax) ymax = g->y[i];
+    if (g->x[i] < xmin) {
+      xmin = g->x[i];
+    } else if (g->x[i] > xmax) {
+      xmax = g->x[i];
+    }
+    if (g->y[i] < ymin) {
+      ymin = g->y[i];
+    } else if (g->y[i] > ymax) {
+      ymax = g->y[i];
+    }
   }
   EPSHeader(fd, xmax - xmin + 2.0 * marge, ymax - ymin + 2.0 * marge, 1.0, 14);
   
   /* dessine les sommets */
-  for (i = 0; i < n; i++) 
-    PSDrawcircle(fd, g->x[i]-xmin+marge, g->y[i]-ymin+marge, r);
-  if (g->nomsommet)
-    for (i = 0; i < n; i++) 
-      PSString(fd, g->x[i]-xmin+marge+2*r, g->y[i]-ymin+marge+2*r, g->nomsommet[i]);
+  for (i = 0; i < n; i++) {
+    PSDrawcircle(fd, g->x[i] - xmin + marge, g->y[i] - ymin + marge, r);
+  }
+  if (g->nomsommet) {
+    for (i = 0; i < n; i++) {
+      PSString(fd, g->x[i] - xmin + marge + 2 * r,
+               g->y[i] - ymin + marge + 2 * r, g->nomsommet[i]);
+    }
+  }
 
   /* dessine les arcs */
-  if (r > 0.0)
-  for (i = 0; i < n; i++) 
-    for (p = g->gamma[i]; p != NULL; p = p->next)
-    {
-      j = p->som;
-      PSLine(fd, g->x[i]-xmin+marge, g->y[i]-ymin+marge, g->x[j]-xmin+marge, g->y[j]-ymin+marge);
-    }
-
-  /* dessine les fleches sur les arcs */
-  if (t > 0.0)
-  for (i = 0; i < n; i++) 
-    for (p = g->gamma[i]; p != NULL; p = p->next)
-    {
-      j = p->som;
-      x1 = g->x[i]-xmin+marge;
-      y1 = g->y[i]-ymin+marge;
-      x2 = g->x[j]-xmin+marge;
-      y2 = g->y[j]-ymin+marge;
-      x = (x2 + x1) / 2;
-      y = (y2 + y1) / 2;
-      a = x2 - x1;
-      b = y2 - y1;             /* (a,b) est un vecteur directeur de l'arc */
-      d = sqrt(a * a + b * b); /* longueur de l'arc */
-      if (d > 1) // sinon on ne dessine rien
-      { 
-        a /= d; b /= d;          /* norme le vecteur */
-        x1 = x + 2 * t * a;
-        y1 = y + 2 * t * b;      /* pointe de la fleche */
-        x2 = x - 2 * t * a;
-        y2 = y - 2 * t * b;      /* base de la fleche */
-        x3 = x2 + t * -b;        /* (-b,a) est normal a (a,b) */
-        y3 = y2 + t * a;
-        x2 = x2 - t * -b;
-        y2 = y2 - t * a;
-        PSLine(fd, x1, y1, x2, y2);
-        PSLine(fd, x2, y2, x3, y3);
-        PSLine(fd, x3, y3, x1, y1);
+  if (r > 0.0) {
+    for (i = 0; i < n; i++) {
+      for (p = g->gamma[i]; p != NULL; p = p->next) {
+        j = p->som;
+        PSLine(fd, g->x[i] - xmin + marge, g->y[i] - ymin + marge,
+               g->x[j] - xmin + marge, g->y[j] - ymin + marge);
       }
     }
-  
+  }
+
+  /* dessine les fleches sur les arcs */
+  if (t > 0.0) {
+    for (i = 0; i < n; i++) {
+      for (p = g->gamma[i]; p != NULL; p = p->next) {
+        j = p->som;
+        x1 = g->x[i] - xmin + marge;
+        y1 = g->y[i] - ymin + marge;
+        x2 = g->x[j] - xmin + marge;
+        y2 = g->y[j] - ymin + marge;
+        x = (x2 + x1) / 2;
+        y = (y2 + y1) / 2;
+        a = x2 - x1;
+        b = y2 - y1;             /* (a,b) est un vecteur directeur de l'arc */
+        d = sqrt(a * a + b * b); /* longueur de l'arc */
+        if (d > 1)               // sinon on ne dessine rien
+        {
+          a /= d;
+          b /= d; /* norme le vecteur */
+          x1 = x + 2 * t * a;
+          y1 = y + 2 * t * b; /* pointe de la fleche */
+          x2 = x - 2 * t * a;
+          y2 = y - 2 * t * b; /* base de la fleche */
+          x3 = x2 + t * -b;   /* (-b,a) est normal a (a,b) */
+          y3 = y2 + t * a;
+          x2 = x2 - t * -b;
+          y2 = y2 - t * a;
+          PSLine(fd, x1, y1, x2, y2);
+          PSLine(fd, x2, y2, x3, y3);
+          PSLine(fd, x3, y3, x1, y1);
+        }
+      }
+    }
+  }
+
   PSFooter(fd);
   fclose(fd);
 } /* PSGraphe() */
@@ -3176,8 +3360,16 @@ void EPSGraphe(graphe * g, const char *filename, double s, double r, double t, d
   ymin = ymax = s*g->y[0];
   for (i = 1; i < n; i++) 
   {
-    if (s*g->x[i] < xmin) xmin = s*g->x[i]; else if (s*g->x[i] > xmax) xmax = s*g->x[i];
-    if (s*g->y[i] < ymin) ymin = s*g->y[i]; else if (s*g->y[i] > ymax) ymax = s*g->y[i];
+    if (s * g->x[i] < xmin) {
+      xmin = s * g->x[i];
+    } else if (s * g->x[i] > xmax) {
+      xmax = s * g->x[i];
+    }
+    if (s * g->y[i] < ymin) {
+      ymin = s * g->y[i];
+    } else if (s * g->y[i] > ymax) {
+      ymax = s * g->y[i];
+    }
   }
   EPSHeader(fd, xmax - xmin + 2.0 * marge, ymax - ymin + 2.0 * marge, 1.0, 14);
   
@@ -3187,84 +3379,92 @@ void EPSGraphe(graphe * g, const char *filename, double s, double r, double t, d
   PSSetColor (fd, 0);
 
   /* dessine les sommets */
-  if (r > 0.0)
-  for (i = 0; i < n; i++)
-  {
-    if (col_sommets && (g->v_sommets[i] != 0)) 
-      PSDrawdisc(fd, s*g->x[i]-xmin+marge, s*g->y[i]-ymin+marge, r);
-    else
-      PSDrawcircle(fd, s*g->x[i]-xmin+marge, s*g->y[i]-ymin+marge, r);
+  if (r > 0.0) {
+    for (i = 0; i < n; i++) {
+      if (col_sommets && (g->v_sommets[i] != 0)) {
+        PSDrawdisc(fd, s * g->x[i] - xmin + marge, s * g->y[i] - ymin + marge,
+                   r);
+      } else {
+        PSDrawcircle(fd, s * g->x[i] - xmin + marge, s * g->y[i] - ymin + marge,
+                     r);
+      }
+    }
   }
-  if (noms_sommets && g->nomsommet)
-    for (i = 0; i < n; i++) 
-      PSString(fd, s*g->x[i]-xmin+marge+2*r, s*g->y[i]-ymin+marge-2*r, g->nomsommet[i]);
-  if (v_sommets)
+  if (noms_sommets && g->nomsommet) {
+    for (i = 0; i < n; i++) {
+      PSString(fd, s * g->x[i] - xmin + marge + 2 * r,
+               s * g->y[i] - ymin + marge - 2 * r, g->nomsommet[i]);
+    }
+  }
+  if (v_sommets) {
     for (i = 0; i < n; i++) 
     {
       sprintf(buf, "%g", (double)(g->v_sommets[i]));      
       PSString(fd, s*g->x[i]-xmin+marge+2*r, s*g->y[i]-ymin+marge+2*r, buf);
     }
+  }
 
   /* dessine les arcs */
-  for (i = 0; i < n; i++) 
+  for (i = 0; i < n; i++) {
     for (p = g->gamma[i]; p != NULL; p = p->next)
     {
       j = p->som;
       PSLine(fd, s*g->x[i]-xmin+marge, s*g->y[i]-ymin+marge, s*g->x[j]-xmin+marge, s*g->y[j]-ymin+marge);
     }
+  }
 
   /* dessine les fleches sur les arcs */
   if (t > 0.0)
   {
-    for (i = 0; i < n; i++) 
-    for (p = g->gamma[i]; p != NULL; p = p->next)
-    {
-      j = p->som;
-      x1 = s*g->x[i]-xmin+marge;
-      y1 = s*g->y[i]-ymin+marge;
-      x2 = s*g->x[j]-xmin+marge;
-      y2 = s*g->y[j]-ymin+marge;
-      x = (x2 + x1) / 2; // milieu de l'arc
-      y = (y2 + y1) / 2;
-      if (v_arcs)
-      {
-        sprintf(buf, "%g", (double)(p->v_arc));      
-        PSString(fd, x + r, y, buf);
-      }
-      a = x2 - x1;
-      b = y2 - y1;             /* (a,b) est un vecteur directeur de l'arc */
-      d = sqrt(a * a + b * b); /* longueur de l'arc */
-      if (d > 1) // sinon on ne dessine pas la fleche
-      { 
-        a /= d; b /= d;          /* norme le vecteur */
-        x1 = x + 2 * t * a;
-        y1 = y + 2 * t * b;      /* pointe de la fleche */
-        x2 = x - 2 * t * a;
-        y2 = y - 2 * t * b;      /* base de la fleche */
-        x3 = x2 + t * -b;        /* (-b,a) est normal a (a,b) */
-        y3 = y2 + t * a;
-        x2 = x2 - t * -b;
-        y2 = y2 - t * a;
-        PSLine(fd, x1, y1, x2, y2);
-        PSLine(fd, x2, y2, x3, y3);
-        PSLine(fd, x3, y3, x1, y1);
+    for (i = 0; i < n; i++) {
+      for (p = g->gamma[i]; p != NULL; p = p->next) {
+        j = p->som;
+        x1 = s * g->x[i] - xmin + marge;
+        y1 = s * g->y[i] - ymin + marge;
+        x2 = s * g->x[j] - xmin + marge;
+        y2 = s * g->y[j] - ymin + marge;
+        x = (x2 + x1) / 2; // milieu de l'arc
+        y = (y2 + y1) / 2;
+        if (v_arcs) {
+          sprintf(buf, "%g", (double)(p->v_arc));
+          PSString(fd, x + r, y, buf);
+        }
+        a = x2 - x1;
+        b = y2 - y1;             /* (a,b) est un vecteur directeur de l'arc */
+        d = sqrt(a * a + b * b); /* longueur de l'arc */
+        if (d > 1)               // sinon on ne dessine pas la fleche
+        {
+          a /= d;
+          b /= d; /* norme le vecteur */
+          x1 = x + 2 * t * a;
+          y1 = y + 2 * t * b; /* pointe de la fleche */
+          x2 = x - 2 * t * a;
+          y2 = y - 2 * t * b; /* base de la fleche */
+          x3 = x2 + t * -b;   /* (-b,a) est normal a (a,b) */
+          y3 = y2 + t * a;
+          x2 = x2 - t * -b;
+          y2 = y2 - t * a;
+          PSLine(fd, x1, y1, x2, y2);
+          PSLine(fd, x2, y2, x3, y3);
+          PSLine(fd, x3, y3, x1, y1);
+        }
       }
     }
   }
   else if (v_arcs)
   {
-    for (i = 0; i < n; i++) 
-    for (p = g->gamma[i]; p != NULL; p = p->next)
-    {
-      j = p->som;
-      x1 = s*g->x[i]-xmin+marge;
-      y1 = s*g->y[i]-ymin+marge;
-      x2 = s*g->x[j]-xmin+marge;
-      y2 = s*g->y[j]-ymin+marge;
-      x = (x2 + x1) / 2; // milieu de l'arc
-      y = (y2 + y1) / 2;
-      sprintf(buf, "%g", (double)(p->v_arc));      
-      PSString(fd, x, y, buf);
+    for (i = 0; i < n; i++) {
+      for (p = g->gamma[i]; p != NULL; p = p->next) {
+        j = p->som;
+        x1 = s * g->x[i] - xmin + marge;
+        y1 = s * g->y[i] - ymin + marge;
+        x2 = s * g->x[j] - xmin + marge;
+        y2 = s * g->y[j] - ymin + marge;
+        x = (x2 + x1) / 2; // milieu de l'arc
+        y = (y2 + y1) / 2;
+        sprintf(buf, "%g", (double)(p->v_arc));
+        PSString(fd, x, y, buf);
+      }
     }
   }
   
@@ -3311,12 +3511,14 @@ void ldrawgraph(graphe * g, xvimage *image)
   for (i = 0; i < n; i++) 
   {
     X1 = (int32_t)floor(g->x[i]); 
-    Y1 = (int32_t)floor(g->y[i]); 
-    if ((X1 >= 0) && (Y1 >= 0) && (X1 < rs) && (Y1 < cs)) F[Y1*rs + X1] = NDG_MAX;
+    Y1 = (int32_t)floor(g->y[i]);
+    if ((X1 >= 0) && (Y1 >= 0) && (X1 < rs) && (Y1 < cs)) {
+      F[Y1 * rs + X1] = NDG_MAX;
+    }
   }
 
   /* dessine les arcs */
-  for (i = 0; i < n; i++) 
+  for (i = 0; i < n; i++) {
     for (p = g->gamma[i]; p != NULL; p = p->next)
     {
       j = p->som;
@@ -3326,6 +3528,7 @@ void ldrawgraph(graphe * g, xvimage *image)
       Y2 = (int32_t)floor(g->y[j]); 
       ldrawline(image, X1, Y1, X2, Y2);
     }
+  }
 } /* ldrawgraph() */
 
 /* ====================================================================== */

@@ -275,8 +275,10 @@ MCM * MCM_Init(int32_t taillemax)
   M->Edges = NULL;
   M->Links = NULL;
   M->RBTP = CreeRbtpVide(taillemax);
-  if ((M == NULL) || (M->Vertices == NULL) || (M->Faces == NULL) || (M->RBTP == NULL))
+  if ((M == NULL) || (M->Vertices == NULL) || (M->Faces == NULL) ||
+      (M->RBTP == NULL)) {
     exit(0);
+  }
   return M;
 } /* InitMesh() */
 
@@ -287,8 +289,9 @@ void InitMesh(int32_t taillemax)
   Vertices = MCM_AllocVertices(taillemax);
   Faces = MCM_AllocFaces(taillemax);
   RBTP = CreeRbtpVide(taillemax);
-  if ((Vertices == NULL) || (Faces == NULL) || (RBTP == NULL))
+  if ((Vertices == NULL) || (Faces == NULL) || (RBTP == NULL)) {
     exit(0);
+  }
 } /* InitMesh() */
 
 /* ==================================== */
@@ -299,7 +302,9 @@ void MCM_Termine(MCM *M)
   free(M->Vertices->tmp);
   free(M->Vertices);
   free(M->Faces);
-  if (Edges) free(M->Edges);
+  if (Edges) {
+    free(M->Edges);
+  }
   if (Links) 
   { 
     free(M->Links->lastneigh); 
@@ -318,7 +323,9 @@ void TermineMesh()
   free(Vertices->tmp);
   free(Vertices);
   free(Faces);
-  if (Edges) free(Edges);
+  if (Edges) {
+    free(Edges);
+  }
   if (Links) { free(Links->lastneigh); free(Links->neigh); free(Links); }
   RbtpTermine(RBTP);
 } /* TermineMesh() */
@@ -334,8 +341,11 @@ int32_t mcmesh_NotIn(
 /* e : l'element a rechercher */
 /* list : la liste (tableau d'entiers) */
 /* n : le nombre d'elements dans la liste */
-  while (n > 0)
-    if (list[--n] == e) return 0;
+while (n > 0) {
+  if (list[--n] == e) {
+    return 0;
+  }
+}
   return 1;
 } /* mcmesh_NotIn() */
 
@@ -368,9 +378,10 @@ int32_t MCM_AddVertex(MCM *M, double x, double y, double z, int32_t indface)
     }
 skipadd:
     return i;
-  } /* if (re != RBTP->nil) */
-  else 
-    return MCM_AddVertexStraight(M, x, y, z, indface);
+} /* if (re != RBTP->nil) */
+else {
+  return MCM_AddVertexStraight(M, x, y, z, indface);
+}
 } /* MCM_AddVertex() */
 
 /* ==================================== */
@@ -383,7 +394,9 @@ int32_t MCM_AddVertexStraight(MCM *M, double x, double y, double z, int32_t indf
   int32_t i;
   TypRbtpKey point;
   point.x = x; point.y = y; point.z = z;
-  if (M->Vertices->cur >= M->Vertices->max) MCM_ReAllocVertices(&(M->Vertices));
+  if (M->Vertices->cur >= M->Vertices->max) {
+    MCM_ReAllocVertices(&(M->Vertices));
+  }
   i = M->Vertices->cur;
   M->Vertices->cur += 1;
   M->Vertices->v[i].x = x;
@@ -405,7 +418,9 @@ int32_t MCM_AddVertexStraight2(MCM *M, double x, double y, double z)
   int32_t i;
   TypRbtpKey point;
   point.x = x; point.y = y; point.z = z;
-  if (M->Vertices->cur >= M->Vertices->max) MCM_ReAllocVertices(&(M->Vertices));
+  if (M->Vertices->cur >= M->Vertices->max) {
+    MCM_ReAllocVertices(&(M->Vertices));
+  }
   i = M->Vertices->cur;
   M->Vertices->cur += 1;
   M->Vertices->v[i].x = x;
@@ -448,9 +463,10 @@ void MCM_VertexRemoveFace(MCM *M, int32_t indvert, int32_t indface)
   for (i = 0; i < n; i++)
   {
     if (M->Vertices->v[indvert].face[i] == indface)
-    {  
-      for (j = i+1; j < n; j++)
-	M->Vertices->v[indvert].face[j-1] = M->Vertices->v[indvert].face[j];
+    {
+      for (j = i + 1; j < n; j++) {
+        M->Vertices->v[indvert].face[j - 1] = M->Vertices->v[indvert].face[j];
+      }
       M->Vertices->v[indvert].nfaces -= 1;
       return;
     }
@@ -489,9 +505,10 @@ void MCM_VertexRemoveEdge(MCM *M, int32_t indvert, int32_t indedge)
   for (i = 0; i < n; i++)
   {
     if (M->Vertices->v[indvert].edge[i] == indedge)
-    {  
-      for (j = i+1; j < n; j++)
-	M->Vertices->v[indvert].edge[j-1] = M->Vertices->v[indvert].edge[j];
+    {
+      for (j = i + 1; j < n; j++) {
+        M->Vertices->v[indvert].edge[j - 1] = M->Vertices->v[indvert].edge[j];
+      }
       M->Vertices->v[indvert].nedges -= 1;
       return;
     }
@@ -621,7 +638,9 @@ int32_t AddVertex(double x, double y, double z, int32_t indface)
 skipadd:
     return i;
   } /* if (re != RBTP->nil) */
-  if (Vertices->cur >= Vertices->max) MCM_ReAllocVertices(&Vertices);
+  if (Vertices->cur >= Vertices->max) {
+    MCM_ReAllocVertices(&Vertices);
+  }
   i = Vertices->cur;
   Vertices->cur += 1;
   Vertices->v[i].x = x;
@@ -654,7 +673,9 @@ int32_t MCM_AddFace(
 /* ==================================== */
 {
   int32_t iv1, iv2, iv3, i;
-  if (M->Faces->cur >= M->Faces->max) MCM_ReAllocFaces(&(M->Faces));
+  if (M->Faces->cur >= M->Faces->max) {
+    MCM_ReAllocFaces(&(M->Faces));
+  }
   i = M->Faces->cur;
   M->Faces->cur += 1;
   iv1 = MCM_AddVertex(M, x1, y1, z1, i);
@@ -676,7 +697,9 @@ int32_t MCM_AddFaceWithExistingVertices(
 /* ==================================== */
 {
   int32_t i;
-  if (M->Faces->cur >= M->Faces->max) MCM_ReAllocFaces(&(M->Faces));
+  if (M->Faces->cur >= M->Faces->max) {
+    MCM_ReAllocFaces(&(M->Faces));
+  }
   i = M->Faces->cur;
   M->Faces->cur += 1;
   MCM_VertexAddFace(M, iv1, i);
@@ -700,7 +723,9 @@ int32_t MCM_AddFace2(
 /* ==================================== */
 {
   int32_t iv1, iv2, iv3, i;
-  if (M->Faces->cur >= M->Faces->max) MCM_ReAllocFaces(&(M->Faces));
+  if (M->Faces->cur >= M->Faces->max) {
+    MCM_ReAllocFaces(&(M->Faces));
+  }
   i = M->Faces->cur;
   M->Faces->cur += 1;
   iv1 = MCM_AddVertex(M, x1, y1, z1, i);
@@ -724,7 +749,9 @@ int32_t MCM_AddEdge(MCM *M, int32_t v1, int32_t v2)
 #define F_NAME "MCM_AddEdge"
 {
   int32_t indedge;
-  if (M->Edges->cur >= M->Edges->max) MCM_ReAllocEdges(&(M->Edges));
+  if (M->Edges->cur >= M->Edges->max) {
+    MCM_ReAllocEdges(&(M->Edges));
+  }
   indedge = M->Edges->cur;
   M->Edges->cur += 1;
   M->Edges->e[indedge].v1 = v1;
@@ -763,9 +790,11 @@ void MCM_ComputeEdges(MCM *M)
   {
     fprintf(stderr, "%s : MCM_AllocEdges failed\n", F_NAME);
     exit(0);
-  }  
+  }
 
-  for (i = 0; i < nvertices; i++) M->Vertices->v[i].nedges = 0;
+  for (i = 0; i < nvertices; i++) {
+    M->Vertices->v[i].nedges = 0;
+  }
   for (i = 0; i < nvertices; i++)
   {
     V = M->Vertices->v[i];
@@ -773,9 +802,18 @@ void MCM_ComputeEdges(MCM *M)
     for (j = 0; j < V.nfaces; j++) /* parcourt les faces adjacentes */
     {                                         /* et calcule le link */
       F = M->Faces->f[V.face[j]];
-      k = F.vert[0]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
-      k = F.vert[1]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
-      k = F.vert[2]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
+      k = F.vert[0];
+      if ((k != i) && mcmesh_NotIn(k, link, n)) {
+        link[n++] = k;
+      }
+      k = F.vert[1];
+      if ((k != i) && mcmesh_NotIn(k, link, n)) {
+        link[n++] = k;
+      }
+      k = F.vert[2];
+      if ((k != i) && mcmesh_NotIn(k, link, n)) {
+        link[n++] = k;
+      }
     } /* for j */
 
     for (k = 0; k < n; k++)   /* parcourt le link et cree les cotes */
@@ -811,7 +849,9 @@ int32_t AddFace(double x1, double y1, double z1,
 /* modifie les var. globales Faces, Vertices */
 {
   int32_t iv1, iv2, iv3, i;
-  if (Faces->cur >= Faces->max) MCM_ReAllocFaces(&Faces);
+  if (Faces->cur >= Faces->max) {
+    MCM_ReAllocFaces(&Faces);
+  }
   i = Faces->cur;
   Faces->cur += 1;
   iv1 = AddVertex(x1, y1, z1, i);
@@ -835,21 +875,26 @@ int32_t AddFaceFixe(double x1, double y1, double z1,
 /* modifie les var. globales Faces, Vertices */
 {
   int32_t iv1, iv2, iv3, i;
-  if (Faces->cur >= Faces->max) MCM_ReAllocFaces(&Faces);
+  if (Faces->cur >= Faces->max) {
+    MCM_ReAllocFaces(&Faces);
+  }
   i = Faces->cur;
   Faces->cur += 1;
-  if (fix1)
+  if (fix1) {
     iv1 = AddVertexFixe(x1, y1, z1, i);
-  else 
+  } else {
     iv1 = AddVertex(x1, y1, z1, i);
-  if (fix2)
+  }
+  if (fix2) {
     iv2 = AddVertexFixe(x2, y2, z2, i);
-  else 
+  } else {
     iv2 = AddVertex(x2, y2, z2, i);
-  if (fix3)
+  }
+  if (fix3) {
     iv3 = AddVertexFixe(x3, y3, z3, i);
-  else 
+  } else {
     iv3 = AddVertex(x3, y3, z3, i);
+  }
   Faces->f[i].vert[0] = iv1;
   Faces->f[i].vert[1] = iv2;
   Faces->f[i].vert[2] = iv3;
@@ -864,7 +909,9 @@ int32_t AddEdge(int32_t v1, int32_t v2, int32_t f1, int32_t f2)
 /* modifie la var. globales Edges */
 {
   int32_t indedge;
-  if (Edges->cur >= Edges->max) ReAllocEdges(&Edges);
+  if (Edges->cur >= Edges->max) {
+    ReAllocEdges(&Edges);
+  }
   indedge = Edges->cur;
   Edges->cur += 1;
   Edges->e[indedge].v1 = v1;
@@ -923,7 +970,9 @@ void ComputeEdges()
     exit(0);
   }  
   nvertices = Vertices->cur;
-  for (i = 0; i < nvertices; i++) Vertices->v[i].nedges = 0;
+  for (i = 0; i < nvertices; i++) {
+    Vertices->v[i].nedges = 0;
+  }
   for (i = 0; i < nvertices; i++)
   {
     V = Vertices->v[i];
@@ -931,9 +980,18 @@ void ComputeEdges()
     for (j = 0; j < V.nfaces; j++) /* parcourt les faces adjacentes */
     {                                         /* et calcule le link */
       F = Faces->f[V.face[j]];
-      k = F.vert[0]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
-      k = F.vert[1]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
-      k = F.vert[2]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
+      k = F.vert[0];
+      if ((k != i) && mcmesh_NotIn(k, link, n)) {
+        link[n++] = k;
+      }
+      k = F.vert[1];
+      if ((k != i) && mcmesh_NotIn(k, link, n)) {
+        link[n++] = k;
+      }
+      k = F.vert[2];
+      if ((k != i) && mcmesh_NotIn(k, link, n)) {
+        link[n++] = k;
+      }
     } /* for j */
 
     for (k = 0; k < n; k++)   /* parcourt le link et cree les cotes */
@@ -946,8 +1004,13 @@ void ComputeEdges()
           F = Faces->f[V.face[j]];
           if ((F.vert[0] == link[k]) || (F.vert[1] == link[k]) || (F.vert[2] == link[k]))
 	  {
-            if (f1 == -1) f1 = V.face[j]; else { f2 = V.face[j]; break; }
-	  }
+            if (f1 == -1) {
+              f1 = V.face[j];
+            } else {
+              f2 = V.face[j];
+              break;
+            }
+          }
         } /* for j */
         e = AddEdge(i, link[k], f1, f2);
         Vertices->v[i].edge[Vertices->v[i].nedges++] = e;
@@ -979,13 +1042,25 @@ static int32_t inclusedge(MCM *M, int32_t i, int32_t j, int32_t k)
   pc1 = ijx * iky - ikx * ijy;
   pc2 = ijx * ikz - ikx * ijz;
   pc3 = ijz * iky - ikz * ijy;
-  if (mcabs(pc1) > COLLINTEST_EPSILON) return 0;
-  if (mcabs(pc2) > COLLINTEST_EPSILON) return 0;
-  if (mcabs(pc3) > COLLINTEST_EPSILON) return 0;
+  if (mcabs(pc1) > COLLINTEST_EPSILON) {
+    return 0;
+  }
+  if (mcabs(pc2) > COLLINTEST_EPSILON) {
+    return 0;
+  }
+  if (mcabs(pc3) > COLLINTEST_EPSILON) {
+    return 0;
+  }
   // teste si les vecteurs ont des sens opposés
-  if (signe(ijx) != signe(ikx)) return 0;
-  if (signe(ijy) != signe(iky)) return 0;
-  if (signe(ijz) != signe(ikz)) return 0;
+  if (signe(ijx) != signe(ikx)) {
+    return 0;
+  }
+  if (signe(ijy) != signe(iky)) {
+    return 0;
+  }
+  if (signe(ijz) != signe(ikz)) {
+    return 0;
+  }
   return 1;							 
 } // inclusedge()
 
@@ -1010,9 +1085,15 @@ static int32_t collinear(MCM *M, int32_t i, int32_t j, int32_t k)
   pc1 = ijx * iky - ikx * ijy;
   pc2 = ijx * ikz - ikx * ijz;
   pc3 = ijz * iky - ikz * ijy;
-  if (mcabs(pc1) > COLLINTEST_EPSILON) return 0;
-  if (mcabs(pc2) > COLLINTEST_EPSILON) return 0;
-  if (mcabs(pc3) > COLLINTEST_EPSILON) return 0;
+  if (mcabs(pc1) > COLLINTEST_EPSILON) {
+    return 0;
+  }
+  if (mcabs(pc2) > COLLINTEST_EPSILON) {
+    return 0;
+  }
+  if (mcabs(pc3) > COLLINTEST_EPSILON) {
+    return 0;
+  }
   return 1;							 
 } // collinear()
 
@@ -1028,10 +1109,11 @@ static int32_t nearest(MCM *M, int32_t i, int32_t j, int32_t k)
   double xk = M->Vertices->v[k].x;
   double yk = M->Vertices->v[k].y;
   double zk = M->Vertices->v[k].z;
-  if (dist3(xi, yi, zi, xj, yj, zj) <= dist3(xi, yi, zi, xk, yk, zk))
-    return j; 
-  else
-    return k; 
+  if (dist3(xi, yi, zi, xj, yj, zj) <= dist3(xi, yi, zi, xk, yk, zk)) {
+    return j;
+  } else {
+    return k;
+  }
 } // nearest()
 
 /* ==================================== */
@@ -1060,15 +1142,24 @@ int32_t MCM_CheckComplex(MCM *M)
     for (j = 0; j < V.nfaces; j++) /* parcourt les faces adjacentes */
     {                                         /* et calcule le link */
       F = M->Faces->f[V.face[j]];
-      k = F.vert[0]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
+      k = F.vert[0];
+      if ((k != i) && mcmesh_NotIn(k, link, n)) {
+        link[n++] = k;
+      }
       assert(n <= MCM_MAXADJFACES);
-      k = F.vert[1]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
+      k = F.vert[1];
+      if ((k != i) && mcmesh_NotIn(k, link, n)) {
+        link[n++] = k;
+      }
       assert(n <= MCM_MAXADJFACES);
-      k = F.vert[2]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
+      k = F.vert[2];
+      if ((k != i) && mcmesh_NotIn(k, link, n)) {
+        link[n++] = k;
+      }
       assert(n <= MCM_MAXADJFACES);
     } /* for j */
 
-    for (j = 0; j < n; j++)   /* parcourt le link et vérifie les cotes */
+    for (j = 0; j < n; j++) { /* parcourt le link et vérifie les cotes */
       for (k = j+1; k < n; k++)
       {
 	if (inclusedge(M, i, link[j], link[k]))
@@ -1079,6 +1170,7 @@ int32_t MCM_CheckComplex(MCM *M)
 #endif
 	}
       } /* for j */
+    }
   } /* for i */
   return nbv;
 } /* MCM_CheckComplex() */
@@ -1119,15 +1211,24 @@ int32_t MCM_CheckPM(MCM *M)
     for (j = 0; j < V.nfaces; j++) /* parcourt les faces adjacentes */
     {                                         /* et calcule le link */
       F = M->Faces->f[V.face[j]];
-      k = F.vert[0]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
+      k = F.vert[0];
+      if ((k != i) && mcmesh_NotIn(k, link, n)) {
+        link[n++] = k;
+      }
       assert(n <= MCM_MAXADJFACES);
-      k = F.vert[1]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
+      k = F.vert[1];
+      if ((k != i) && mcmesh_NotIn(k, link, n)) {
+        link[n++] = k;
+      }
       assert(n <= MCM_MAXADJFACES);
-      k = F.vert[2]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
+      k = F.vert[2];
+      if ((k != i) && mcmesh_NotIn(k, link, n)) {
+        link[n++] = k;
+      }
       assert(n <= MCM_MAXADJFACES);
     } /* for j */
 
-    for (j = 0; j < n; j++)   /* parcourt le link et vérifie les cotes */
+    for (j = 0; j < n; j++) { /* parcourt le link et vérifie les cotes */
       for (k = j+1; k < n; k++)
       {
 	if (inclusedge(M, i, link[j], link[k]))
@@ -1138,6 +1239,7 @@ int32_t MCM_CheckPM(MCM *M)
 #endif
 	}
       } /* for j */
+    }
   } /* for i */
   return nbv;
 } /* MCM_CheckPM() */
@@ -1166,15 +1268,24 @@ int32_t MCM_HealMesh(MCM *M)
     for (f = 0; f < V.nfaces; f++) /* parcourt les faces adjacentes */
     {                                         /* et calcule le link */
       F = &(M->Faces->f[V.face[f]]);
-      k = F->vert[0]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
+      k = F->vert[0];
+      if ((k != i) && mcmesh_NotIn(k, link, n)) {
+        link[n++] = k;
+      }
       assert(n <= MCM_MAXADJFACES);
-      k = F->vert[1]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
+      k = F->vert[1];
+      if ((k != i) && mcmesh_NotIn(k, link, n)) {
+        link[n++] = k;
+      }
       assert(n <= MCM_MAXADJFACES);
-      k = F->vert[2]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
+      k = F->vert[2];
+      if ((k != i) && mcmesh_NotIn(k, link, n)) {
+        link[n++] = k;
+      }
       assert(n <= MCM_MAXADJFACES);
     } /* for f */
 
-    for (j = 0; j < n; j++)   /* parcourt le link et vérifie les cotes */
+    for (j = 0; j < n; j++) { /* parcourt le link et vérifie les cotes */
       for (k = j+1; k < n; k++)
       {
 	if (inclusedge(M, i, link[j], link[k]))
@@ -1184,21 +1295,43 @@ int32_t MCM_HealMesh(MCM *M)
 	  printf("edge inclusion: (%d,%d) (%d,%d)\n", i, link[j], i, link[k]);
 #endif
 	  near = nearest(M, i, link[j], link[k]);
-	  if (near == link[j]) far = link[k]; else far = link[j];
-	  // retrouve le 3eme sommet (third) de toute face 
+          if (near == link[j]) {
+            far = link[k];
+          } else {
+            far = link[j];
+          }
+          // retrouve le 3eme sommet (third) de toute face 
 	  // ayant (i, far) pour cote
 	  for (f = 0; f < V.nfaces; f++) /* parcourt les faces adjacentes a i */
 	  {
 	    F = &(M->Faces->f[V.face[f]]);
 	    m = 0;
 	    if (F->vert[0] == far)
-	    { m=1; if (F->vert[1] == i) third = F->vert[2]; else third = F->vert[1]; }
-	    if (F->vert[1] == far)
-	    { m=1; if (F->vert[0] == i) third = F->vert[2]; else third = F->vert[0]; }
-	    if (F->vert[2] == far)
-	    { m=1; if (F->vert[1] == i) third = F->vert[0]; else third = F->vert[1]; }
+	    { m=1;
+              if (F->vert[1] == i) {
+                third = F->vert[2];
+              } else {
+                third = F->vert[1];
+              }
+            }
+            if (F->vert[1] == far)
+	    { m=1;
+              if (F->vert[0] == i) {
+                third = F->vert[2];
+              } else {
+                third = F->vert[0];
+              }
+            }
+            if (F->vert[2] == far)
+	    { m=1;
+              if (F->vert[1] == i) {
+                third = F->vert[0];
+              } else {
+                third = F->vert[1];
+              }
+            }
 
-	    if (m)
+            if (m)
 	    // si match, retire (marque) la face (i, far, third) et ajoute les faces
 	    // (i, near, third) et (near, far, third)
 	    {
@@ -1218,6 +1351,7 @@ printf("creation nouvelle face %d avec sommets %d,%d,%d\n", f2, near, far, third
 	  } // for (f = 0; f < V.nfaces; f++)
 	}
       } /* for j */
+    }
   } /* for i */
   return nheal;
 } /* MCM_HealMesh() */
@@ -1265,8 +1399,11 @@ int32_t MCM_RemoveDegenerateFaces(MCM *M)
     {
       E = &(M->Edges->e[i]);
       del = 1;
-      for (j = 0; j < E->nfaces; j++)
-	if (M->Faces->f[E->face[j]].aux == 0) del = 0;
+      for (j = 0; j < E->nfaces; j++) {
+        if (M->Faces->f[E->face[j]].aux == 0) {
+          del = 0;
+        }
+      }
       if (del)
       {
 	MCM_VertexRemoveEdge(M, E->v1, i);
@@ -1305,9 +1442,18 @@ void ComputeLinks()
     for (j = 0; j < V.nfaces; j++) /* parcourt les faces adjacentes */
     {                                         /* et calcule le link */
       F = Faces->f[V.face[j]];
-      k = F.vert[0]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
-      k = F.vert[1]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
-      k = F.vert[2]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
+      k = F.vert[0];
+      if ((k != i) && mcmesh_NotIn(k, link, n)) {
+        link[n++] = k;
+      }
+      k = F.vert[1];
+      if ((k != i) && mcmesh_NotIn(k, link, n)) {
+        link[n++] = k;
+      }
+      k = F.vert[2];
+      if ((k != i) && mcmesh_NotIn(k, link, n)) {
+        link[n++] = k;
+      }
     } /* for j */
     e += n;
   }
@@ -1325,12 +1471,22 @@ void ComputeLinks()
     for (j = 0; j < V.nfaces; j++) /* parcourt les faces adjacentes */
     {                                         /* et calcule le link */
       F = Faces->f[V.face[j]];
-      k = F.vert[0]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
-      k = F.vert[1]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
-      k = F.vert[2]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
+      k = F.vert[0];
+      if ((k != i) && mcmesh_NotIn(k, link, n)) {
+        link[n++] = k;
+      }
+      k = F.vert[1];
+      if ((k != i) && mcmesh_NotIn(k, link, n)) {
+        link[n++] = k;
+      }
+      k = F.vert[2];
+      if ((k != i) && mcmesh_NotIn(k, link, n)) {
+        link[n++] = k;
+      }
     } /* for j */
-    for (k = 0; k < n; k++)   /* stocke le link */
+    for (k = 0; k < n; k++) { /* stocke le link */
       Links->neigh[e++] = link[k];
+    }
     Links->lastneigh[i] = e-1;
   } /* for i */
 } /* ComputeLinks() */
@@ -1405,10 +1561,9 @@ double AngleFaces(int32_t f1, int32_t f2)
   {
     b = a;
     a = F1.vert[1];
-    if ((a != F2.vert[0]) && (a != F2.vert[1]) && (a != F2.vert[2]))
+    if ((a != F2.vert[0]) && (a != F2.vert[1]) && (a != F2.vert[2])) {
       c = F1.vert[2];
-    else
-    {
+    } else {
       c = a;
       a = F1.vert[2];
     }
@@ -1435,11 +1590,14 @@ double AngleFaces(int32_t f1, int32_t f2)
   // coordonnees de n2 dans la base de la face f1 (resultat dans n1)
   multmat3vec3(mr, n2, n1);
   // l'angle est positif si la 1ere coordonnee du resultat l'est
-  if (s > 1.0) s = 1.0;
-  if (n1[0] >= 0)
+  if (s > 1.0) {
+    s = 1.0;
+  }
+  if (n1[0] >= 0) {
     return acos(s);
-  else
+  } else {
     return -acos(s);
+  }
 } // AngleFaces()
 
 /* ==================================== */
@@ -1462,7 +1620,9 @@ double MaxAngleFaces()
     f2 = (Edges->e[i]).f2;
     angle = AngleFaces(f1,f2);
     angle = mcabs(angle);
-    if (angle > maxangle) maxangle = angle;
+    if (angle > maxangle) {
+      maxangle = angle;
+    }
   }
   return maxangle;
 } // MaxAngleFaces()
@@ -1514,7 +1674,9 @@ double MaxLengthEdges()
     v2 = (Edges->e[i]).v2;
     length = dist3(Vertices->v[v1].x, Vertices->v[v1].y, Vertices->v[v1].z,
 		   Vertices->v[v2].x, Vertices->v[v2].y, Vertices->v[v2].z);
-    if (length > maxlength) maxlength = length;
+    if (length > maxlength) {
+      maxlength = length;
+    }
   }
   return maxlength;
 } // MaxLengthEdges()
@@ -1533,8 +1695,9 @@ void ComputeCurvatures()
   for (i = 0; i < Edges->cur; i++)
   {
     E = Edges->e[i];
-    if (E.f2 != -1)
+    if (E.f2 != -1) {
       Edges->e[i].curv = AngleFaces(E.f1, E.f2);
+    }
   }
 } // ComputeCurvatures()
 
@@ -1569,8 +1732,11 @@ void RegulMeshLaplacian(int32_t niters)
   double x, y, z, sx, sy, sz, alpha;
 
   a = 0; // calcule a = nb max de voisins pour 1 vertex
-  for (i = 0; i < Vertices->cur; i++)
-    if (Vertices->v[i].nfaces > a) a = Vertices->v[i].nfaces; 
+  for (i = 0; i < Vertices->cur; i++) {
+    if (Vertices->v[i].nfaces > a) {
+      a = Vertices->v[i].nfaces;
+    }
+  }
   alpha = 1.0 / (4 * a);
 
 #ifdef MESURE
@@ -1600,9 +1766,18 @@ void RegulMeshLaplacian(int32_t niters)
         for (j = 0; j < V.nfaces; j++) /* parcourt les faces adjacentes */
           {                                      /* et calcule le link */
           F = Faces->f[V.face[j]];
-          k = F.vert[0]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
-          k = F.vert[1]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
-          k = F.vert[2]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
+          k = F.vert[0];
+          if ((k != i) && mcmesh_NotIn(k, link, n)) {
+            link[n++] = k;
+          }
+          k = F.vert[1];
+          if ((k != i) && mcmesh_NotIn(k, link, n)) {
+            link[n++] = k;
+          }
+          k = F.vert[2];
+          if ((k != i) && mcmesh_NotIn(k, link, n)) {
+            link[n++] = k;
+          }
         } /* for j */
 #ifdef WARN_NON_CYCLE
         if (n != V.nfaces)
@@ -1662,8 +1837,11 @@ void RegulMeshLaplacian2D(int32_t niters)
   double x, y, z, sx, sy, sz, alpha;
 
   a = 0; // calcule a = nb max de voisins pour 1 vertex
-  for (i = 0; i < Vertices->cur; i++)
-    if (Vertices->v[i].nfaces > a) a = Vertices->v[i].nfaces; 
+  for (i = 0; i < Vertices->cur; i++) {
+    if (Vertices->v[i].nfaces > a) {
+      a = Vertices->v[i].nfaces;
+    }
+  }
   alpha = 1.0 / (4 * a);
 
   for (iter = 0; iter < niters; iter++)
@@ -1677,9 +1855,18 @@ void RegulMeshLaplacian2D(int32_t niters)
         for (j = 0; j < V.nfaces; j++) /* parcourt les faces adjacentes */
           {                                      /* et calcule le link */
           F = Faces->f[V.face[j]];
-          k = F.vert[0]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
-          k = F.vert[1]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
-          k = F.vert[2]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
+          k = F.vert[0];
+          if ((k != i) && mcmesh_NotIn(k, link, n)) {
+            link[n++] = k;
+          }
+          k = F.vert[1];
+          if ((k != i) && mcmesh_NotIn(k, link, n)) {
+            link[n++] = k;
+          }
+          k = F.vert[2];
+          if ((k != i) && mcmesh_NotIn(k, link, n)) {
+            link[n++] = k;
+          }
         } /* for j */
         if (n == V.nfaces) // sommet non bord
         {
@@ -1778,11 +1965,16 @@ void RegulMeshHamam(double theta)
   }
 
   a = 0; // calcule a = nb max de voisins pour 1 vertex
-  for (i = 0; i < Vertices->cur; i++)
-    if (Vertices->v[i].nfaces > a) a = Vertices->v[i].nfaces; 
+  for (i = 0; i < Vertices->cur; i++) {
+    if (Vertices->v[i].nfaces > a) {
+      a = Vertices->v[i].nfaces;
+    }
+  }
   // calcule alpha pour une convergence monotone
   alphax = alphay = alphaz = 1.0 / (1.0 + 4.0 * a * a * theta);
-  if (Links == NULL) ComputeLinks();
+  if (Links == NULL) {
+    ComputeLinks();
+  }
   iter = 0;
   stabilite = 0;
   while ((stabilite == 0) && (iter < nitermax))
@@ -1931,11 +2123,12 @@ void RegulMeshHamam(double theta)
       normgradx += sx*sx;
       normgrady += sy*sy;
       normgradz += sz*sz; 
-    }    
+    }
 
-    if ((sqrt(normgradx) > RMH_EPSILON) || 
-	(sqrt(normgrady) > RMH_EPSILON) ||
-	(sqrt(normgradz) > RMH_EPSILON)) stabilite = 0;
+    if ((sqrt(normgradx) > RMH_EPSILON) || (sqrt(normgrady) > RMH_EPSILON) ||
+        (sqrt(normgradz) > RMH_EPSILON)) {
+      stabilite = 0;
+    }
 
 #ifdef DEBUG
   fprintf(stderr, "%s: normgradx = %g ; normgrady = %g ; normgradz = %g ; niter = %d\n", 
@@ -1944,8 +2137,9 @@ void RegulMeshHamam(double theta)
 
   } // while (!stabilite && (iter < nitermax))
 
-  if (iter == nitermax)
+  if (iter == nitermax) {
     fprintf(stderr, "%s: WARNING: non-convergence\n", F_NAME);
+  }
 
 #ifdef VERBOSE
 #ifndef PLOTCOSTFUNCTION 
@@ -2006,12 +2200,17 @@ void RegulMeshHamam1(double theta)
   }
 
   a = 0; // calcule a = nb max de voisins pour 1 vertex
-  for (i = 0; i < Vertices->cur; i++)
-    if (Vertices->v[i].nfaces > a) a = Vertices->v[i].nfaces; 
+  for (i = 0; i < Vertices->cur; i++) {
+    if (Vertices->v[i].nfaces > a) {
+      a = Vertices->v[i].nfaces;
+    }
+  }
   // calcule alpha pour une convergence monotone
   alphax = alphay = alphaz = 1.0 / (1.0 + 2.0 * a * theta);
 
-  if (Links == NULL) ComputeLinks();
+  if (Links == NULL) {
+    ComputeLinks();
+  }
 
   iter = 0;
   stabilite = 0;
@@ -2127,11 +2326,12 @@ void RegulMeshHamam1(double theta)
       normgradx += sx*sx;
       normgrady += sy*sy;
       normgradz += sz*sz; 
-    }    
+    }
 
-    if ((sqrt(normgradx) > RMH_EPSILON) || 
-	(sqrt(normgrady) > RMH_EPSILON) ||
-	(sqrt(normgradz) > RMH_EPSILON)) stabilite = 0;
+    if ((sqrt(normgradx) > RMH_EPSILON) || (sqrt(normgrady) > RMH_EPSILON) ||
+        (sqrt(normgradz) > RMH_EPSILON)) {
+      stabilite = 0;
+    }
 
 #ifdef DEBUG
   fprintf(stderr, "%s: normgradx = %g ; normgrady = %g ; normgradz = %g ; niter = %d\n", 
@@ -2147,8 +2347,9 @@ void RegulMeshHamam1(double theta)
 #endif
 #endif
 
-  if (iter == nitermax)
+  if (iter == nitermax) {
     fprintf(stderr, "%s: WARNING: non-convergence\n", F_NAME);
+  }
 
   free(gx); free(gy); free(gz); 
   free(tx); free(ty); free(tz); 
@@ -2171,7 +2372,9 @@ void RegulMeshHamam2(int32_t nitermax)
   double normgradx, normgrady, normgradz;
   int32_t stabilite;
 
-  if (nitermax == -1) nitermax = NITERMAX;
+  if (nitermax == -1) {
+    nitermax = NITERMAX;
+  }
 
   tx = (double *)calloc(1,Vertices->cur * sizeof(double));
   ty = (double *)calloc(1,Vertices->cur * sizeof(double));
@@ -2190,11 +2393,16 @@ void RegulMeshHamam2(int32_t nitermax)
   }
 
   a = 0; // calcule a = nb max de voisins pour 1 vertex
-  for (i = 0; i < Vertices->cur; i++)
-    if (Vertices->v[i].nfaces > a) a = Vertices->v[i].nfaces; 
+  for (i = 0; i < Vertices->cur; i++) {
+    if (Vertices->v[i].nfaces > a) {
+      a = Vertices->v[i].nfaces;
+    }
+  }
   // calcule alpha pour une convergence monotone
   alpha = 1.0 / (1.0 + 4.0 * a * a);
-  if (Links == NULL) ComputeLinks();
+  if (Links == NULL) {
+    ComputeLinks();
+  }
 
 #ifdef MESURE
   Edges = MCM_AllocEdges(1);
@@ -2268,9 +2476,10 @@ void RegulMeshHamam2(int32_t nitermax)
 
     } // for (i = 0; i < Vertices->cur; i++)
 
-    if ((sqrt(normgradx) > RMH_EPSILON) || 
-	(sqrt(normgrady) > RMH_EPSILON) ||
-	(sqrt(normgradz) > RMH_EPSILON)) stabilite = 0;
+    if ((sqrt(normgradx) > RMH_EPSILON) || (sqrt(normgrady) > RMH_EPSILON) ||
+        (sqrt(normgradz) > RMH_EPSILON)) {
+      stabilite = 0;
+    }
 
 #ifdef DEBUG
   fprintf(stderr, "%s: normgradx = %g ; normgrady = %g ; normgradz = %g ; niter = %d\n", 
@@ -2280,8 +2489,9 @@ void RegulMeshHamam2(int32_t nitermax)
   } // while (!stabilite && (iter < nitermax))
 
 #ifdef VERBOSE
-  if (iter < nitermax)
+  if (iter < nitermax) {
     fprintf(stderr, "%s: convergence reached at iteration %d\n", F_NAME, iter);
+  }
 #endif
 
   free(tx); free(ty); free(tz); 
@@ -2352,7 +2562,9 @@ void RegulMeshHamam3(double theta)
     Vertices->v[i].zo = Vertices->v[i].z;
   }
 
-  if (Links == NULL) ComputeLinks();
+  if (Links == NULL) {
+    ComputeLinks();
+  }
 
   for (n = 0, i = 0; i < Vertices->cur; i++) // calcule A x --- resultat dans tx, ty, tz
   {
@@ -2563,9 +2775,18 @@ void RegulMeshHC(double alpha, double beta)
         for (j = 0; j < V.nfaces; j++) /* parcourt les faces adjacentes */
           {                                      /* et calcule le link */
           F = Faces->f[V.face[j]];
-          k = F.vert[0]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
-          k = F.vert[1]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
-          k = F.vert[2]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
+          k = F.vert[0];
+          if ((k != i) && mcmesh_NotIn(k, link, n)) {
+            link[n++] = k;
+          }
+          k = F.vert[1];
+          if ((k != i) && mcmesh_NotIn(k, link, n)) {
+            link[n++] = k;
+          }
+          k = F.vert[2];
+          if ((k != i) && mcmesh_NotIn(k, link, n)) {
+            link[n++] = k;
+          }
         } /* for j */
 #ifdef WARN_NON_CYCLE
         if (n != V.nfaces)
@@ -2573,8 +2794,10 @@ void RegulMeshHC(double alpha, double beta)
           fprintf(stderr, "%s: warning: link[%d] non cycle\n", F_NAME, i);
         }
 #endif
-        if (n == 0) break; // point isole
-                                
+        if (n == 0) {
+          break; // point isole
+        }
+
         sx = sy = sz = 0.0;
         for (j = 0; j < n; j++)
         {
@@ -2614,12 +2837,23 @@ void RegulMeshHC(double alpha, double beta)
         for (j = 0; j < V.nfaces; j++) /* parcourt les faces adjacentes */
           {                                      /* et calcule le link */
           F = Faces->f[V.face[j]];
-          k = F.vert[0]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
-          k = F.vert[1]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
-          k = F.vert[2]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
+          k = F.vert[0];
+          if ((k != i) && mcmesh_NotIn(k, link, n)) {
+            link[n++] = k;
+          }
+          k = F.vert[1];
+          if ((k != i) && mcmesh_NotIn(k, link, n)) {
+            link[n++] = k;
+          }
+          k = F.vert[2];
+          if ((k != i) && mcmesh_NotIn(k, link, n)) {
+            link[n++] = k;
+          }
         } /* for j */
-        if (n == 0) break; // point isole
-                                
+        if (n == 0) {
+          break; // point isole
+        }
+
         sx = sy = sz = 0.0;
         for (j = 0; j < n; j++)
         {
@@ -2654,17 +2888,17 @@ void RegulMeshHC(double alpha, double beta)
       normgradz += dz*dz; 
     }
 
-
-    if ((sqrt(normgradx) > RMH_EPSILON) || 
-	(sqrt(normgrady) > RMH_EPSILON) ||
-	(sqrt(normgradz) > RMH_EPSILON)) stabilite = 0;
+    if ((sqrt(normgradx) > RMH_EPSILON) || (sqrt(normgrady) > RMH_EPSILON) ||
+        (sqrt(normgradz) > RMH_EPSILON)) {
+      stabilite = 0;
+    }
 
   } // while ((stabilite == 0) && (iter < nitermax))
 
 #ifdef VERBOSE
-  if (iter < nitermax
-)
+  if (iter < nitermax) {
     printf("%d\t", iter);
+  }
   //printf("%s: convergence reached at iteration %d\n", F_NAME, iter);
 #endif
 
@@ -2740,9 +2974,18 @@ void RegulMeshTaubin(double lambda, double mu, int nitermax)
         for (j = 0; j < V.nfaces; j++) /* parcourt les faces adjacentes */
           {                                      /* et calcule le link */
           F = Faces->f[V.face[j]];
-          k = F.vert[0]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
-          k = F.vert[1]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
-          k = F.vert[2]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
+          k = F.vert[0];
+          if ((k != i) && mcmesh_NotIn(k, link, n)) {
+            link[n++] = k;
+          }
+          k = F.vert[1];
+          if ((k != i) && mcmesh_NotIn(k, link, n)) {
+            link[n++] = k;
+          }
+          k = F.vert[2];
+          if ((k != i) && mcmesh_NotIn(k, link, n)) {
+            link[n++] = k;
+          }
         } /* for j */
 #ifdef WARN_NON_CYCLE
         if (n != V.nfaces)
@@ -2750,8 +2993,10 @@ void RegulMeshTaubin(double lambda, double mu, int nitermax)
           fprintf(stderr, "%s: warning: link[%d] non cycle\n", F_NAME, i);
         }
 #endif
-        if (n == 0) break; // point isole
-                                
+        if (n == 0) {
+          break; // point isole
+        }
+
         sx = sy = sz = 0.0;
         for (j = 0; j < n; j++)
         {
@@ -2791,9 +3036,18 @@ void RegulMeshTaubin(double lambda, double mu, int nitermax)
         for (j = 0; j < V.nfaces; j++) /* parcourt les faces adjacentes */
           {                                      /* et calcule le link */
           F = Faces->f[V.face[j]];
-          k = F.vert[0]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
-          k = F.vert[1]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
-          k = F.vert[2]; if ((k != i) && mcmesh_NotIn(k, link, n)) link[n++] = k;
+          k = F.vert[0];
+          if ((k != i) && mcmesh_NotIn(k, link, n)) {
+            link[n++] = k;
+          }
+          k = F.vert[1];
+          if ((k != i) && mcmesh_NotIn(k, link, n)) {
+            link[n++] = k;
+          }
+          k = F.vert[2];
+          if ((k != i) && mcmesh_NotIn(k, link, n)) {
+            link[n++] = k;
+          }
         } /* for j */
 #ifdef WARN_NON_CYCLE
         if (n != V.nfaces)
@@ -2801,8 +3055,10 @@ void RegulMeshTaubin(double lambda, double mu, int nitermax)
           fprintf(stderr, "%s: warning: link[%d] non cycle\n", F_NAME, i);
         }
 #endif
-        if (n == 0) break; // point isole
-                                
+        if (n == 0) {
+          break; // point isole
+        }
+
         sx = sy = sz = 0.0;
         for (j = 0; j < n; j++)
         {
@@ -2843,16 +3099,17 @@ void RegulMeshTaubin(double lambda, double mu, int nitermax)
       normgradz += dz*dz; 
     }
 
-    if ((sqrt(normgradx) > RMH_EPSILON) || 
-	(sqrt(normgrady) > RMH_EPSILON) ||
-	(sqrt(normgradz) > RMH_EPSILON)) stabilite = 0;
+    if ((sqrt(normgradx) > RMH_EPSILON) || (sqrt(normgrady) > RMH_EPSILON) ||
+        (sqrt(normgradz) > RMH_EPSILON)) {
+      stabilite = 0;
+    }
 
   } // while ((stabilite == 0) && (iter < nitermax))
 
 #ifdef VERBOSE
-  if (iter < nitermax
-)
+  if (iter < nitermax) {
     printf("%d\t", iter);
+  }
   //printf("%s: convergence reached at iteration %d\n", F_NAME, iter);
 #endif
 
@@ -2872,9 +3129,21 @@ void BoundingBoxMesh(meshbox *B)
   for (i = 1; i < Vertices->cur; i++)
   {                              /* pour chaque sommet de la grille */
     V = Vertices->v[i];
-    if (V.x < B->bxmin) B->bxmin = V.x; else if (V.x > B->bxmax) B->bxmax = V.x;
-    if (V.y < B->bymin) B->bymin = V.y; else if (V.y > B->bymax) B->bymax = V.y;
-    if (V.z < B->bzmin) B->bzmin = V.z; else if (V.z > B->bzmax) B->bzmax = V.z;
+    if (V.x < B->bxmin) {
+      B->bxmin = V.x;
+    } else if (V.x > B->bxmax) {
+      B->bxmax = V.x;
+    }
+    if (V.y < B->bymin) {
+      B->bymin = V.y;
+    } else if (V.y > B->bymax) {
+      B->bymax = V.y;
+    }
+    if (V.z < B->bzmin) {
+      B->bzmin = V.z;
+    } else if (V.z > B->bzmax) {
+      B->bzmax = V.z;
+    }
   } /* for i */
 } /* BoundingBoxMesh() */
 
@@ -2957,8 +3226,9 @@ void ZoomMeshX(double k)
 /* ==================================== */
 {
   int32_t i;
-  for (i = 0; i < Vertices->cur; i++)
+  for (i = 0; i < Vertices->cur; i++) {
     Vertices->v[i].x *= k;
+  }
 } /* ZoomMeshX() */
 
 /* ==================================== */
@@ -2966,8 +3236,9 @@ void ZoomMeshY(double k)
 /* ==================================== */
 {
   int32_t i;
-  for (i = 0; i < Vertices->cur; i++)
+  for (i = 0; i < Vertices->cur; i++) {
     Vertices->v[i].y *= k;
+  }
 } /* ZoomMeshY() */
 
 /* ==================================== */
@@ -2975,8 +3246,9 @@ void ZoomMeshZ(double k)
 /* ==================================== */
 {
   int32_t i;
-  for (i = 0; i < Vertices->cur; i++)
+  for (i = 0; i < Vertices->cur; i++) {
     Vertices->v[i].z *= k;
+  }
 } /* ZoomMeshZ() */
 
 /* ==================================== */
@@ -3127,21 +3399,24 @@ void MCM_Print(MCM *M)
 	   M->Vertices->v[i].aux);
     //    printf("v[%d]: xp=%g, yp=%g, zp=%g;", i, 
     //       M->Vertices->v[i].xp, M->Vertices->v[i].yp, M->Vertices->v[i].zp);
-    for (j = 0; j < M->Vertices->v[i].nfaces; j++)
+    for (j = 0; j < M->Vertices->v[i].nfaces; j++) {
       printf("%d  ", M->Vertices->v[i].face[j]);
+    }
     printf("  edges ");
-    for (j = 0; j < M->Vertices->v[i].nedges; j++)
+    for (j = 0; j < M->Vertices->v[i].nedges; j++) {
       printf("%d  ", M->Vertices->v[i].edge[j]);
+    }
     printf("\n");
   }
   printf(" ============ FACES ===========\n");
   for (i = 0; i < M->Faces->cur; i++)
   {
-    if (M->Faces->f[i].aux == 0)
-      printf("f[%d]: v1=%d, v2=%d, v3=%d ; normale = %g %g %g\n", i, 
-	     M->Faces->f[i].vert[0], M->Faces->f[i].vert[1], 
-	     M->Faces->f[i].vert[2], M->Faces->f[i].xn, 
-	     M->Faces->f[i].yn, M->Faces->f[i].zn);
+    if (M->Faces->f[i].aux == 0) {
+      printf("f[%d]: v1=%d, v2=%d, v3=%d ; normale = %g %g %g\n", i,
+             M->Faces->f[i].vert[0], M->Faces->f[i].vert[1],
+             M->Faces->f[i].vert[2], M->Faces->f[i].xn, M->Faces->f[i].yn,
+             M->Faces->f[i].zn);
+    }
   }
   if (M->Edges)
   {
@@ -3150,8 +3425,9 @@ void MCM_Print(MCM *M)
     {
       printf("e[%d]: v1=%d, v2=%d, faces ", i, 
              M->Edges->e[i].v1, M->Edges->e[i].v2);
-      for (j = 0; j < M->Edges->e[i].nfaces; j++)
-	printf("%d  ", M->Edges->e[i].face[j]);
+      for (j = 0; j < M->Edges->e[i].nfaces; j++) {
+        printf("%d  ", M->Edges->e[i].face[j]);
+      }
       printf("\n");
     }
   }
@@ -3162,8 +3438,9 @@ void MCM_Print(MCM *M)
     for (i = 0; i < M->Vertices->cur; i++)
     {
       printf("neigh[%d]: ", i);
-      for (; j <= M->Links->lastneigh[i]; j++)
+      for (; j <= M->Links->lastneigh[i]; j++) {
         printf("%d ", M->Links->neigh[j]);
+      }
       printf("\n");
     }
   }
@@ -3181,8 +3458,9 @@ void PrintMesh()
            Vertices->v[i].x, Vertices->v[i].y, Vertices->v[i].z);
     printf("v[%d]: xp=%g, yp=%g, zp=%g;  faces ", i, 
        Vertices->v[i].xp, Vertices->v[i].yp, Vertices->v[i].zp);
-    for (j = 0; j < Vertices->v[i].nfaces; j++)
+    for (j = 0; j < Vertices->v[i].nfaces; j++) {
       printf("%d  ", Vertices->v[i].face[j]);
+    }
     printf("\n");
   }
   printf(" ============ FACES ===========\n");
@@ -3209,8 +3487,9 @@ void PrintMesh()
     for (i = 0; i < Vertices->cur; i++)
     {
       printf("neigh[%d]: ", i);
-      for (; j <= Links->lastneigh[i]; j++)
+      for (; j <= Links->lastneigh[i]; j++) {
         printf("%d ", Links->neigh[j]);
+      }
       printf("\n");
     }
   }

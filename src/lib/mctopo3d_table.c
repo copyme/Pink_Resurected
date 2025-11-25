@@ -187,12 +187,24 @@ int32_t mctopo3d_table_nbvoisc6(
 */
 {
   int32_t mctopo3d_table_nbvois = 0;
-  if ((i%rs!=rs-1) && !B[i+1])    mctopo3d_table_nbvois++;
-  if (((i%ps)>=rs) && !B[i-rs])   mctopo3d_table_nbvois++;
-  if ((i%rs!=0) && !B[i-1])       mctopo3d_table_nbvois++;
-  if (((i%ps)<ps-rs) && !B[i+rs]) mctopo3d_table_nbvois++;
-  if ((i>=ps) && !B[i-ps])        mctopo3d_table_nbvois++;
-  if ((i<N-ps) && !B[i+ps])      mctopo3d_table_nbvois++;
+  if ((i % rs != rs - 1) && !B[i + 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % ps) >= rs) && !B[i - rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if ((i % rs != 0) && !B[i - 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % ps) < ps - rs) && !B[i + rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if ((i >= ps) && !B[i - ps]) {
+    mctopo3d_table_nbvois++;
+  }
+  if ((i < N - ps) && !B[i + ps]) {
+    mctopo3d_table_nbvois++;
+  }
   return mctopo3d_table_nbvois;
 } /* mctopo3d_table_nbvoisc6() */
 
@@ -209,24 +221,60 @@ int32_t mctopo3d_table_nbvoisc18(
 */
 {
   int32_t mctopo3d_table_nbvois = 0;
-  if (((i<N-ps)&&(i%rs!=rs-1)) && !B[ps+i+1]) mctopo3d_table_nbvois++;
-  if (((i<N-ps)&&(i%ps>=rs)) && !B[ps+i-rs]) mctopo3d_table_nbvois++;
-  if (((i<N-ps)&&(i%rs!=0)) && !B[ps+i-1]) mctopo3d_table_nbvois++;
-  if (((i<N-ps)&&(i%ps<ps-rs)) && !B[ps+i+rs]) mctopo3d_table_nbvois++;
-  if (((i<N-ps)) && !B[ps+i]) mctopo3d_table_nbvois++;
-  if (((i%rs!=rs-1)) && !B[i+1]) mctopo3d_table_nbvois++;
-  if (((i%rs!=rs-1)&&(i%ps>=rs)) && !B[i+1-rs]) mctopo3d_table_nbvois++;
-  if (((i%ps>=rs)) && !B[i-rs]) mctopo3d_table_nbvois++;
-  if (((i%ps>=rs)&&(i%rs!=0)) && !B[i-rs-1]) mctopo3d_table_nbvois++;
-  if (((i%rs!=0)) && !B[i-1]) mctopo3d_table_nbvois++;
-  if (((i%rs!=0)&&(i%ps<ps-rs)) && !B[i-1+rs]) mctopo3d_table_nbvois++;
-  if (((i%ps<ps-rs)) && !B[i+rs]) mctopo3d_table_nbvois++;
-  if (((i%ps<ps-rs)&&(i%rs!=rs-1)) && !B[i+rs+1]) mctopo3d_table_nbvois++;
-  if (((i>=ps)&&(i%rs!=rs-1)) && !B[-ps+i+1]) mctopo3d_table_nbvois++;
-  if (((i>=ps)&&(i%ps>=rs)) && !B[-ps+i-rs]) mctopo3d_table_nbvois++;
-  if (((i>=ps)&&(i%rs!=0)) && !B[-ps+i-1]) mctopo3d_table_nbvois++;
-  if (((i>=ps)&&(i%ps<ps-rs)) && !B[-ps+i+rs]) mctopo3d_table_nbvois++;
-  if (((i>=ps)) && !B[-ps+i]) mctopo3d_table_nbvois++;
+  if (((i < N - ps) && (i % rs != rs - 1)) && !B[ps + i + 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps >= rs)) && !B[ps + i - rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i < N - ps) && (i % rs != 0)) && !B[ps + i - 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps < ps - rs)) && !B[ps + i + rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i < N - ps)) && !B[ps + i]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % rs != rs - 1)) && !B[i + 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % rs != rs - 1) && (i % ps >= rs)) && !B[i + 1 - rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % ps >= rs)) && !B[i - rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % ps >= rs) && (i % rs != 0)) && !B[i - rs - 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % rs != 0)) && !B[i - 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % rs != 0) && (i % ps < ps - rs)) && !B[i - 1 + rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % ps < ps - rs)) && !B[i + rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % ps < ps - rs) && (i % rs != rs - 1)) && !B[i + rs + 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != rs - 1)) && !B[-ps + i + 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps) && (i % ps >= rs)) && !B[-ps + i - rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != 0)) && !B[-ps + i - 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps) && (i % ps < ps - rs)) && !B[-ps + i + rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps)) && !B[-ps + i]) {
+    mctopo3d_table_nbvois++;
+  }
   return mctopo3d_table_nbvois;
 } /* mctopo3d_table_nbvoisc18() */
 
@@ -243,32 +291,91 @@ int32_t mctopo3d_table_nbvoisc26(
 */
 {
   int32_t mctopo3d_table_nbvois = 0;
-  if (((i<N-ps)&&(i%rs!=rs-1)) && !B[ps+i+1]) mctopo3d_table_nbvois++;
-  if (((i<N-ps)&&(i%rs!=rs-1)&&(i%ps>=rs)) && !B[ps+i+1-rs]) mctopo3d_table_nbvois++;
-  if (((i<N-ps)&&(i%ps>=rs)) && !B[ps+i-rs]) mctopo3d_table_nbvois++;
-  if (((i<N-ps)&&(i%ps>=rs)&&(i%rs!=0)) && !B[ps+i-rs-1]) mctopo3d_table_nbvois++;
-  if (((i<N-ps)&&(i%rs!=0)) && !B[ps+i-1]) mctopo3d_table_nbvois++;
-  if (((i<N-ps)&&(i%rs!=0)&&(i%ps<ps-rs)) && !B[ps+i-1+rs]) mctopo3d_table_nbvois++;
-  if (((i<N-ps)&&(i%ps<ps-rs)) && !B[ps+i+rs]) mctopo3d_table_nbvois++;
-  if (((i<N-ps)&&(i%ps<ps-rs)&&(i%rs!=rs-1)) && !B[ps+i+rs+1]) mctopo3d_table_nbvois++;
-  if (((i<N-ps)) && !B[ps+i]) mctopo3d_table_nbvois++;
-  if (((i%rs!=rs-1)) && !B[i+1]) mctopo3d_table_nbvois++;
-  if (((i%rs!=rs-1)&&(i%ps>=rs)) && !B[i+1-rs]) mctopo3d_table_nbvois++;
-  if (((i%ps>=rs)) && !B[i-rs]) mctopo3d_table_nbvois++;
-  if (((i%ps>=rs)&&(i%rs!=0)) && !B[i-rs-1]) mctopo3d_table_nbvois++;
-  if (((i%rs!=0)) && !B[i-1]) mctopo3d_table_nbvois++;
-  if (((i%rs!=0)&&(i%ps<ps-rs)) && !B[i-1+rs]) mctopo3d_table_nbvois++;
-  if (((i%ps<ps-rs)) && !B[i+rs]) mctopo3d_table_nbvois++;
-  if (((i%ps<ps-rs)&&(i%rs!=rs-1)) && !B[i+rs+1]) mctopo3d_table_nbvois++;
-  if (((i>=ps)&&(i%rs!=rs-1)) && !B[-ps+i+1]) mctopo3d_table_nbvois++;
-  if (((i>=ps)&&(i%rs!=rs-1)&&(i%ps>=rs)) && !B[-ps+i+1-rs]) mctopo3d_table_nbvois++;
-  if (((i>=ps)&&(i%ps>=rs)) && !B[-ps+i-rs]) mctopo3d_table_nbvois++;
-  if (((i>=ps)&&(i%ps>=rs)&&(i%rs!=0)) && !B[-ps+i-rs-1]) mctopo3d_table_nbvois++;
-  if (((i>=ps)&&(i%rs!=0)) && !B[-ps+i-1]) mctopo3d_table_nbvois++;
-  if (((i>=ps)&&(i%rs!=0)&&(i%ps<ps-rs)) && !B[-ps+i-1+rs]) mctopo3d_table_nbvois++;
-  if (((i>=ps)&&(i%ps<ps-rs)) && !B[-ps+i+rs]) mctopo3d_table_nbvois++;
-  if (((i>=ps)&&(i%ps<ps-rs)&&(i%rs!=rs-1)) && !B[-ps+i+rs+1]) mctopo3d_table_nbvois++;
-  if (((i>=ps)) && !B[-ps+i]) mctopo3d_table_nbvois++;
+  if (((i < N - ps) && (i % rs != rs - 1)) && !B[ps + i + 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i < N - ps) && (i % rs != rs - 1) && (i % ps >= rs)) &&
+      !B[ps + i + 1 - rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps >= rs)) && !B[ps + i - rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps >= rs) && (i % rs != 0)) &&
+      !B[ps + i - rs - 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i < N - ps) && (i % rs != 0)) && !B[ps + i - 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i < N - ps) && (i % rs != 0) && (i % ps < ps - rs)) &&
+      !B[ps + i - 1 + rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps < ps - rs)) && !B[ps + i + rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps < ps - rs) && (i % rs != rs - 1)) &&
+      !B[ps + i + rs + 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i < N - ps)) && !B[ps + i]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % rs != rs - 1)) && !B[i + 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % rs != rs - 1) && (i % ps >= rs)) && !B[i + 1 - rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % ps >= rs)) && !B[i - rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % ps >= rs) && (i % rs != 0)) && !B[i - rs - 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % rs != 0)) && !B[i - 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % rs != 0) && (i % ps < ps - rs)) && !B[i - 1 + rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % ps < ps - rs)) && !B[i + rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % ps < ps - rs) && (i % rs != rs - 1)) && !B[i + rs + 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != rs - 1)) && !B[-ps + i + 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != rs - 1) && (i % ps >= rs)) &&
+      !B[-ps + i + 1 - rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps) && (i % ps >= rs)) && !B[-ps + i - rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps) && (i % ps >= rs) && (i % rs != 0)) && !B[-ps + i - rs - 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != 0)) && !B[-ps + i - 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != 0) && (i % ps < ps - rs)) &&
+      !B[-ps + i - 1 + rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps) && (i % ps < ps - rs)) && !B[-ps + i + rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps) && (i % ps < ps - rs) && (i % rs != rs - 1)) &&
+      !B[-ps + i + rs + 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps)) && !B[-ps + i]) {
+    mctopo3d_table_nbvois++;
+  }
   return mctopo3d_table_nbvois;
 } /* mctopo3d_table_nbvoisc26() */
 
@@ -285,12 +392,24 @@ int32_t mctopo3d_table_nbvoiso6(
 */
 {
   int32_t mctopo3d_table_nbvois = 0;
-  if ((i%rs!=rs-1) && B[i+1])    mctopo3d_table_nbvois++;
-  if (((i%ps)>=rs) && B[i-rs])   mctopo3d_table_nbvois++;
-  if ((i%rs!=0) && B[i-1])       mctopo3d_table_nbvois++;
-  if (((i%ps)<ps-rs) && B[i+rs]) mctopo3d_table_nbvois++;
-  if ((i>=ps) && B[i-ps])        mctopo3d_table_nbvois++;
-  if ((i<N-ps) && B[i+ps])      mctopo3d_table_nbvois++;
+  if ((i % rs != rs - 1) && B[i + 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % ps) >= rs) && B[i - rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if ((i % rs != 0) && B[i - 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % ps) < ps - rs) && B[i + rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if ((i >= ps) && B[i - ps]) {
+    mctopo3d_table_nbvois++;
+  }
+  if ((i < N - ps) && B[i + ps]) {
+    mctopo3d_table_nbvois++;
+  }
   return mctopo3d_table_nbvois;
 } /* mctopo3d_table_nbvoiso6() */
 
@@ -307,24 +426,60 @@ int32_t mctopo3d_table_nbvoiso18(
 */
 {
   int32_t mctopo3d_table_nbvois = 0;
-  if (((i<N-ps)&&(i%rs!=rs-1)) && B[ps+i+1]) mctopo3d_table_nbvois++;
-  if (((i<N-ps)&&(i%ps>=rs)) && B[ps+i-rs]) mctopo3d_table_nbvois++;
-  if (((i<N-ps)&&(i%rs!=0)) && B[ps+i-1]) mctopo3d_table_nbvois++;
-  if (((i<N-ps)&&(i%ps<ps-rs)) && B[ps+i+rs]) mctopo3d_table_nbvois++;
-  if (((i<N-ps)) && B[ps+i]) mctopo3d_table_nbvois++;
-  if (((i%rs!=rs-1)) && B[i+1]) mctopo3d_table_nbvois++;
-  if (((i%rs!=rs-1)&&(i%ps>=rs)) && B[i+1-rs]) mctopo3d_table_nbvois++;
-  if (((i%ps>=rs)) && B[i-rs]) mctopo3d_table_nbvois++;
-  if (((i%ps>=rs)&&(i%rs!=0)) && B[i-rs-1]) mctopo3d_table_nbvois++;
-  if (((i%rs!=0)) && B[i-1]) mctopo3d_table_nbvois++;
-  if (((i%rs!=0)&&(i%ps<ps-rs)) && B[i-1+rs]) mctopo3d_table_nbvois++;
-  if (((i%ps<ps-rs)) && B[i+rs]) mctopo3d_table_nbvois++;
-  if (((i%ps<ps-rs)&&(i%rs!=rs-1)) && B[i+rs+1]) mctopo3d_table_nbvois++;
-  if (((i>=ps)&&(i%rs!=rs-1)) && B[-ps+i+1]) mctopo3d_table_nbvois++;
-  if (((i>=ps)&&(i%ps>=rs)) && B[-ps+i-rs]) mctopo3d_table_nbvois++;
-  if (((i>=ps)&&(i%rs!=0)) && B[-ps+i-1]) mctopo3d_table_nbvois++;
-  if (((i>=ps)&&(i%ps<ps-rs)) && B[-ps+i+rs]) mctopo3d_table_nbvois++;
-  if (((i>=ps)) && B[-ps+i]) mctopo3d_table_nbvois++;
+  if (((i < N - ps) && (i % rs != rs - 1)) && B[ps + i + 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps >= rs)) && B[ps + i - rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i < N - ps) && (i % rs != 0)) && B[ps + i - 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps < ps - rs)) && B[ps + i + rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i < N - ps)) && B[ps + i]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % rs != rs - 1)) && B[i + 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % rs != rs - 1) && (i % ps >= rs)) && B[i + 1 - rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % ps >= rs)) && B[i - rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % ps >= rs) && (i % rs != 0)) && B[i - rs - 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % rs != 0)) && B[i - 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % rs != 0) && (i % ps < ps - rs)) && B[i - 1 + rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % ps < ps - rs)) && B[i + rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % ps < ps - rs) && (i % rs != rs - 1)) && B[i + rs + 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != rs - 1)) && B[-ps + i + 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps) && (i % ps >= rs)) && B[-ps + i - rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != 0)) && B[-ps + i - 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps) && (i % ps < ps - rs)) && B[-ps + i + rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps)) && B[-ps + i]) {
+    mctopo3d_table_nbvois++;
+  }
   return mctopo3d_table_nbvois;
 } /* mctopo3d_table_nbvoiso18() */
 
@@ -341,32 +496,90 @@ int32_t mctopo3d_table_nbvoiso26(
 */
 {
   int32_t mctopo3d_table_nbvois = 0;
-  if (((i<N-ps)&&(i%rs!=rs-1)) && B[ps+i+1]) mctopo3d_table_nbvois++;
-  if (((i<N-ps)&&(i%rs!=rs-1)&&(i%ps>=rs)) && B[ps+i+1-rs]) mctopo3d_table_nbvois++;
-  if (((i<N-ps)&&(i%ps>=rs)) && B[ps+i-rs]) mctopo3d_table_nbvois++;
-  if (((i<N-ps)&&(i%ps>=rs)&&(i%rs!=0)) && B[ps+i-rs-1]) mctopo3d_table_nbvois++;
-  if (((i<N-ps)&&(i%rs!=0)) && B[ps+i-1]) mctopo3d_table_nbvois++;
-  if (((i<N-ps)&&(i%rs!=0)&&(i%ps<ps-rs)) && B[ps+i-1+rs]) mctopo3d_table_nbvois++;
-  if (((i<N-ps)&&(i%ps<ps-rs)) && B[ps+i+rs]) mctopo3d_table_nbvois++;
-  if (((i<N-ps)&&(i%ps<ps-rs)&&(i%rs!=rs-1)) && B[ps+i+rs+1]) mctopo3d_table_nbvois++;
-  if (((i<N-ps)) && B[ps+i]) mctopo3d_table_nbvois++;
-  if (((i%rs!=rs-1)) && B[i+1]) mctopo3d_table_nbvois++;
-  if (((i%rs!=rs-1)&&(i%ps>=rs)) && B[i+1-rs]) mctopo3d_table_nbvois++;
-  if (((i%ps>=rs)) && B[i-rs]) mctopo3d_table_nbvois++;
-  if (((i%ps>=rs)&&(i%rs!=0)) && B[i-rs-1]) mctopo3d_table_nbvois++;
-  if (((i%rs!=0)) && B[i-1]) mctopo3d_table_nbvois++;
-  if (((i%rs!=0)&&(i%ps<ps-rs)) && B[i-1+rs]) mctopo3d_table_nbvois++;
-  if (((i%ps<ps-rs)) && B[i+rs]) mctopo3d_table_nbvois++;
-  if (((i%ps<ps-rs)&&(i%rs!=rs-1)) && B[i+rs+1]) mctopo3d_table_nbvois++;
-  if (((i>=ps)&&(i%rs!=rs-1)) && B[-ps+i+1]) mctopo3d_table_nbvois++;
-  if (((i>=ps)&&(i%rs!=rs-1)&&(i%ps>=rs)) && B[-ps+i+1-rs]) mctopo3d_table_nbvois++;
-  if (((i>=ps)&&(i%ps>=rs)) && B[-ps+i-rs]) mctopo3d_table_nbvois++;
-  if (((i>=ps)&&(i%ps>=rs)&&(i%rs!=0)) && B[-ps+i-rs-1]) mctopo3d_table_nbvois++;
-  if (((i>=ps)&&(i%rs!=0)) && B[-ps+i-1]) mctopo3d_table_nbvois++;
-  if (((i>=ps)&&(i%rs!=0)&&(i%ps<ps-rs)) && B[-ps+i-1+rs]) mctopo3d_table_nbvois++;
-  if (((i>=ps)&&(i%ps<ps-rs)) && B[-ps+i+rs]) mctopo3d_table_nbvois++;
-  if (((i>=ps)&&(i%ps<ps-rs)&&(i%rs!=rs-1)) && B[-ps+i+rs+1]) mctopo3d_table_nbvois++;
-  if (((i>=ps)) && B[-ps+i]) mctopo3d_table_nbvois++;
+  if (((i < N - ps) && (i % rs != rs - 1)) && B[ps + i + 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i < N - ps) && (i % rs != rs - 1) && (i % ps >= rs)) &&
+      B[ps + i + 1 - rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps >= rs)) && B[ps + i - rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps >= rs) && (i % rs != 0)) && B[ps + i - rs - 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i < N - ps) && (i % rs != 0)) && B[ps + i - 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i < N - ps) && (i % rs != 0) && (i % ps < ps - rs)) &&
+      B[ps + i - 1 + rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps < ps - rs)) && B[ps + i + rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps < ps - rs) && (i % rs != rs - 1)) &&
+      B[ps + i + rs + 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i < N - ps)) && B[ps + i]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % rs != rs - 1)) && B[i + 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % rs != rs - 1) && (i % ps >= rs)) && B[i + 1 - rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % ps >= rs)) && B[i - rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % ps >= rs) && (i % rs != 0)) && B[i - rs - 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % rs != 0)) && B[i - 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % rs != 0) && (i % ps < ps - rs)) && B[i - 1 + rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % ps < ps - rs)) && B[i + rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i % ps < ps - rs) && (i % rs != rs - 1)) && B[i + rs + 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != rs - 1)) && B[-ps + i + 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != rs - 1) && (i % ps >= rs)) &&
+      B[-ps + i + 1 - rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps) && (i % ps >= rs)) && B[-ps + i - rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps) && (i % ps >= rs) && (i % rs != 0)) && B[-ps + i - rs - 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != 0)) && B[-ps + i - 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != 0) && (i % ps < ps - rs)) &&
+      B[-ps + i - 1 + rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps) && (i % ps < ps - rs)) && B[-ps + i + rs]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps) && (i % ps < ps - rs) && (i % rs != rs - 1)) &&
+      B[-ps + i + rs + 1]) {
+    mctopo3d_table_nbvois++;
+  }
+  if (((i >= ps)) && B[-ps + i]) {
+    mctopo3d_table_nbvois++;
+  }
   return mctopo3d_table_nbvois;
 } /* mctopo3d_table_nbvoiso26() */
 
@@ -486,7 +699,9 @@ void mctopo3d_table_top26(                   /* pour un objet en 26-connexite */
   for (k = 0; k < 26; k++)
   {    
     v = voisin26(p, k, rs, ps, N);
-    if (img[v]) mask = mask | (1 << k);
+    if (img[v]) {
+      mask = mask | (1 << k);
+    }
   }
   *t = (int32_t)CN26(mask);
   *tb = (int32_t)CN6b(mask);
@@ -540,9 +755,13 @@ int32_t mctopo3d_table_simple26(                  /* pour un objet en 26-connexi
   for (k = 0; k < 26; k++)
   {    
     v = voisin26(p, k, rs, ps, N);
-    if (img[v]) mask = mask | (1 << k);
+    if (img[v]) {
+      mask = mask | (1 << k);
+    }
   }
-  if (IsSimple26(mask)) return 1;
+  if (IsSimple26(mask)) {
+    return 1;
+  }
   return 0;
 } /* mctopo3d_table_simple26() */
 
@@ -556,7 +775,9 @@ int32_t mctopo3d_table_simple26mask(              /* pour un objet en 26-connexi
 #undef F_NAME
 #define F_NAME "mctopo3d_table_simple26mask"
 {
-  if (IsSimple26(mask)) return 1;
+  if (IsSimple26(mask)) {
+    return 1;
+  }
   return 0;
 } /* mctopo3d_table_simple26mask() */
 
@@ -639,7 +860,9 @@ int32_t mctopo3d_table_tbar26h(              /* pour un objet en 26-connexite */
   for (k = 0; k < 26; k++)
   {    
     v = voisin26(p, k, rs, ps, N);
-    if (img[v] >= h) mask = mask | (1 << k);
+    if (img[v] >= h) {
+      mask = mask | (1 << k);
+    }
   }
   return (int32_t)CN6b(mask);
 } /* mctopo3d_table_tbar26h() */
@@ -682,12 +905,16 @@ uint8_t mctopo3d_table_alpha26m(
         for (k = 0; k < 26; k += 1)
         {
           q = voisin26(p, k, rs, ps, N);
-          if ((q != -1) && ((v=img[q]) < val) && ((int32_t)v > mctopo3d_table_alpha)) mctopo3d_table_alpha = (int32_t)v;
-	}
-        if (mctopo3d_table_alpha == NDG_MIN - 1) 
+          if ((q != -1) && ((v = img[q]) < val) &&
+              ((int32_t)v > mctopo3d_table_alpha)) {
+            mctopo3d_table_alpha = (int32_t)v;
+          }
+        }
+        if (mctopo3d_table_alpha == NDG_MIN - 1) {
           return val;
-        else
+        } else {
           return (uint8_t)mctopo3d_table_alpha;
+        }
 } /* mctopo3d_table_alpha26m() */
 
 /* ==================================== */
@@ -710,12 +937,16 @@ int32_t mctopo3d_table_alpha26m_l(
         for (k = 0; k < 26; k += 1)
         {
           q = voisin26(p, k, rs, ps, N);
-          if ((q != -1) && ((v=img[q]) < val) && ((int32_t)v > mctopo3d_table_alpha)) mctopo3d_table_alpha = (int32_t)v;
-	}
-        if (mctopo3d_table_alpha == NDG_MIN - 1) 
+          if ((q != -1) && ((v = img[q]) < val) &&
+              ((int32_t)v > mctopo3d_table_alpha)) {
+            mctopo3d_table_alpha = (int32_t)v;
+          }
+        }
+        if (mctopo3d_table_alpha == NDG_MIN - 1) {
           return val;
-        else
+        } else {
           return (int32_t)mctopo3d_table_alpha;
+        }
 } /* mctopo3d_table_alpha26m_l() */
 
 /* ==================================== */
@@ -738,12 +969,16 @@ uint8_t mctopo3d_table_alpha6m(
         for (k = 0; k <= 10; k += 2)
         {
           q = voisin6(p, k, rs, ps, N);
-          if ((q != -1) && ((v=img[q]) < val) && ((int32_t)v > mctopo3d_table_alpha)) mctopo3d_table_alpha = (int32_t)v;
-	}
-        if (mctopo3d_table_alpha == NDG_MIN - 1) 
+          if ((q != -1) && ((v = img[q]) < val) &&
+              ((int32_t)v > mctopo3d_table_alpha)) {
+            mctopo3d_table_alpha = (int32_t)v;
+          }
+        }
+        if (mctopo3d_table_alpha == NDG_MIN - 1) {
           return val;
-        else
+        } else {
           return (uint8_t)mctopo3d_table_alpha;
+        }
 } /* mctopo3d_table_alpha6m() */
 
 /* ==================================== */
@@ -766,12 +1001,16 @@ uint8_t mctopo3d_table_alpha26p(
         for (k = 0; k < 26; k += 1)
         {
           q = voisin26(p, k, rs, ps, N);
-          if ((q != -1) && ((v=img[q]) > val) && ((int32_t)v < mctopo3d_table_alpha)) mctopo3d_table_alpha = (int32_t)v;
-	}
-        if (mctopo3d_table_alpha == NDG_MAX + 1) 
+          if ((q != -1) && ((v = img[q]) > val) &&
+              ((int32_t)v < mctopo3d_table_alpha)) {
+            mctopo3d_table_alpha = (int32_t)v;
+          }
+        }
+        if (mctopo3d_table_alpha == NDG_MAX + 1) {
           return val;
-        else
+        } else {
           return (uint8_t)mctopo3d_table_alpha;
+        }
 } /* mctopo3d_table_alpha26p() */
 
 /* ==================================== */
@@ -794,12 +1033,16 @@ uint8_t mctopo3d_table_alpha6p(
         for (k = 0; k <= 10; k += 2)
         {
           q = voisin6(p, k, rs, ps, N);
-          if ((q != -1) && ((v=img[q]) > val) && ((int32_t)v < mctopo3d_table_alpha)) mctopo3d_table_alpha = (int32_t)v;
-	}
-        if (mctopo3d_table_alpha == NDG_MAX + 1) 
+          if ((q != -1) && ((v = img[q]) > val) &&
+              ((int32_t)v < mctopo3d_table_alpha)) {
+            mctopo3d_table_alpha = (int32_t)v;
+          }
+        }
+        if (mctopo3d_table_alpha == NDG_MAX + 1) {
           return val;
-        else
+        } else {
           return (uint8_t)mctopo3d_table_alpha;
+        }
 } /* mctopo3d_table_alpha6p() */
 
 
@@ -813,7 +1056,9 @@ int32_t mctopo3d_table_bordext6(uint8_t *F, index_t x, index_t rs, index_t ps, i
   for (k = 0; k <= 10; k += 2) /* parcourt les voisins en 6-connexite */
   {
     y = voisin6(x, k, rs, ps, N);
-    if ((y != -1) && (F[y] == 0)) return 1;
+    if ((y != -1) && (F[y] == 0)) {
+      return 1;
+    }
   } /* for k */      
   return 0;
 } /* mctopo3d_table_bordext6() */
@@ -828,7 +1073,9 @@ int32_t mctopo3d_table_bordext26(uint8_t *F, index_t x, index_t rs, index_t ps, 
   for (k = 0; k < 26; k += 1) /* parcourt les voisins en 26-connexite */
   {
     y = voisin26(x, k, rs, ps, N);
-    if ((y != -1) && (F[y] == 0)) return 1;
+    if ((y != -1) && (F[y] == 0)) {
+      return 1;
+    }
   } /* for k */      
   return 0;
 } /* mctopo3d_table_bordext26() */

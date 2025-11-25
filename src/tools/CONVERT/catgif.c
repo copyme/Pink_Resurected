@@ -172,7 +172,9 @@ void read_header(FILE *fd, FILE *fdout)
   char signature[7];
   int32_t i;
   signature[6] = '\0';
-  for (i = 0; i < 6; i++) signature[i] = (char)getc(fd);
+  for (i = 0; i < 6; i++) {
+    signature[i] = (char)getc(fd);
+  }
   fwrite(signature, sizeof(char), 6, fdout);
 } /* read_header() */
 
@@ -183,7 +185,9 @@ void skip_header(FILE *fd)
   char signature[7];
   int32_t i;
   signature[6] = '\0';
-  for (i = 0; i < 6; i++) signature[i] = (char)getc(fd);
+  for (i = 0; i < 6; i++) {
+    signature[i] = (char)getc(fd);
+  }
 } /* skip_header() */
 
 /* =============================================================== */
@@ -419,16 +423,15 @@ void read_extension(FILE *fd, FILE *fdout)
 /* =============================================================== */
 {
   int32_t c = getc(fd);
-  if (c == 0xF9)
+  if (c == 0xF9) {
     read_graphic_extension(fd, fdout);
-  else if (c == 0xFE)
+  } else if (c == 0xFE) {
     read_comment_extension(fd, fdout);
-  else if (c == 0xFF)
+  } else if (c == 0xFF) {
     read_application_extension(fd, fdout);
-  else if (c == 0x01)
+  } else if (c == 0x01) {
     read_plain_text_extension(fd, fdout);
-  else 
-  {
+  } else {
     fprintf(stderr, "read_extension: FORMAT ERROR\n");
     exit(1);
   }
@@ -558,8 +561,10 @@ int main(int argc, char **argv)
   fin = atoi(argv[3]);  
   delai = atoi(argv[4]);  
   namelen = strlen(argv[1]);
-  if (argc == 7) interact = 1;
-  
+  if (argc == 7) {
+    interact = 1;
+  }
+
   bufname[namelen] = '0' + (debut / 1000) % 10;
   bufname[namelen+1] = '0' + (debut / 100) % 10;
   bufname[namelen+2] = '0' + (debut / 10) % 10;
@@ -591,7 +596,11 @@ int main(int argc, char **argv)
     long int d;
     printf("delay for image %d (-1 to quit interactive mode)?\n", debut);
     scanf("%ld", &d);
-    if (d == -1) interact = 0; else delai = d;
+    if (d == -1) {
+      interact = 0;
+    } else {
+      delai = d;
+    }
   }
   write_graphic_extension(delai, fdout);
   if (interact)
@@ -599,11 +608,12 @@ int main(int argc, char **argv)
     char rep[64];
     printf("loop ? (y/n)\n");
     scanf("%s", rep);
-    if (rep[0] == 'y')
+    if (rep[0] == 'y') {
       write_application_extension(fdout);
-  }
-  else
+    }
+  } else {
     write_application_extension(fdout);
+  }
   read_data(fd, fdout);
   fclose(fd);
 
@@ -631,7 +641,11 @@ int main(int argc, char **argv)
       long int d;
       printf("delay for image %d (-1 to quit interactive mode)?\n", i);
       scanf("%ld", &d);
-      if (d == -1) interact = 0; else delai = d;
+      if (d == -1) {
+        interact = 0;
+      } else {
+        delai = d;
+      }
     }
     write_graphic_extension(delai, fdout);
     read_data(fd, fdout);

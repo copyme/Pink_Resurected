@@ -91,7 +91,11 @@ int main(int argc, char **argv)
   }
 
   connex = atoi(argv[3]);
-  if (argc == 6) inhibit = atoi(argv[4]); else inhibit = -1;
+  if (argc == 6) {
+    inhibit = atoi(argv[4]);
+  } else {
+    inhibit = -1;
+  }
 
   if (depth(image) == 1)
   {

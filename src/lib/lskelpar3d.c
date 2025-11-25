@@ -300,7 +300,9 @@ static void isometrieXZ_vois(uint8_t *vois)
   v[16] = vois[23];  v[17] = vois[ 0];  v[18] = vois[18];  v[19] = vois[19];
   v[20] = vois[ 1];  v[21] = vois[10];  v[22] = vois[ 9];  v[23] = vois[16];
   v[24] = vois[ 7];  v[25] = vois[25];
-  for (i = 0; i < 26; i++) vois[i] = v[i];
+  for (i = 0; i < 26; i++) {
+    vois[i] = v[i];
+  }
 } /* isometrieXZ_vois() */
 
 /* ==================================== */
@@ -318,7 +320,9 @@ static void isometrieYZ_vois(uint8_t *vois)
   v[16] = vois[16];  v[17] = vois[ 2];  v[18] = vois[ 1];  v[19] = vois[19];
   v[20] = vois[20];  v[21] = vois[21];  v[22] = vois[ 3];  v[23] = vois[12];
   v[24] = vois[11];  v[25] = vois[10];
-  for (i = 0; i < 26; i++) vois[i] = v[i];
+  for (i = 0; i < 26; i++) {
+    vois[i] = v[i];
+  }
 } /* isometrieYZ_vois() */
 
 /* ==================================== */
@@ -349,53 +353,61 @@ Teste si au moins un des points 12, 11, 13, 8, 3, 2, 4 est objet et tous les aut
   }
 #endif
 
-  if ((v[19] || v[20] || v[18] || v[17] || v[2] || v[1] || v[0]) &&
-      !v[3 ] && !v[4 ] && !v[21] && !v[22] && 
-      !v[25] && !v[24] && !v[7 ] && !v[6 ] && !v[23] && !v[5] && 
-      !v[12] && !v[11] && !v[10] && !v[13] && 
-      !v[8 ] && !v[9 ] && !v[14] && !v[15] && !v[16]) return 1;
+  if ((v[19] || v[20] || v[18] || v[17] || v[2] || v[1] || v[0]) && !v[3] &&
+      !v[4] && !v[21] && !v[22] && !v[25] && !v[24] && !v[7] && !v[6] &&
+      !v[23] && !v[5] && !v[12] && !v[11] && !v[10] && !v[13] && !v[8] &&
+      !v[9] && !v[14] && !v[15] && !v[16]) {
+    return 1;
+  }
 
-  if ((v[21] || v[20] || v[22] || v[17] || v[2] || v[3] || v[4]) &&
-      !v[1 ] && !v[0 ] && !v[19] && !v[18] && 
-      !v[23] && !v[24] && !v[5 ] && !v[6 ] && !v[25] && !v[7] && 
-      !v[12] && !v[11] && !v[10] && !v[13] && 
-      !v[8 ] && !v[9 ] && !v[14] && !v[15] && !v[16]) return 1;
+  if ((v[21] || v[20] || v[22] || v[17] || v[2] || v[3] || v[4]) && !v[1] &&
+      !v[0] && !v[19] && !v[18] && !v[23] && !v[24] && !v[5] && !v[6] &&
+      !v[25] && !v[7] && !v[12] && !v[11] && !v[10] && !v[13] && !v[8] &&
+      !v[9] && !v[14] && !v[15] && !v[16]) {
+    return 1;
+  }
 
-  if ((v[17] || v[22] || v[24] || v[23] || v[4] || v[5] || v[6]) &&
-      !v[2 ] && !v[3 ] && !v[20] && !v[21] && 
-      !v[18] && !v[25] && !v[0 ] && !v[7 ] && !v[19] && !v[1] && 
-      !v[12] && !v[11] && !v[10] && !v[13] && 
-      !v[8 ] && !v[9 ] && !v[14] && !v[15] && !v[16]) return 1;
+  if ((v[17] || v[22] || v[24] || v[23] || v[4] || v[5] || v[6]) && !v[2] &&
+      !v[3] && !v[20] && !v[21] && !v[18] && !v[25] && !v[0] && !v[7] &&
+      !v[19] && !v[1] && !v[12] && !v[11] && !v[10] && !v[13] && !v[8] &&
+      !v[9] && !v[14] && !v[15] && !v[16]) {
+    return 1;
+  }
 
-  if ((v[17] || v[18] || v[24] || v[25] || v[0] || v[7] || v[6]) &&
-      !v[2 ] && !v[1 ] && !v[20] && !v[19] && 
-      !v[22] && !v[23] && !v[4 ] && !v[5 ] && !v[21] && !v[3] && 
-      !v[12] && !v[11] && !v[10] && !v[13] && 
-      !v[8 ] && !v[9 ] && !v[14] && !v[15] && !v[16]) return 1;
+  if ((v[17] || v[18] || v[24] || v[25] || v[0] || v[7] || v[6]) && !v[2] &&
+      !v[1] && !v[20] && !v[19] && !v[22] && !v[23] && !v[4] && !v[5] &&
+      !v[21] && !v[3] && !v[12] && !v[11] && !v[10] && !v[13] && !v[8] &&
+      !v[9] && !v[14] && !v[15] && !v[16]) {
+    return 1;
+  }
 
-  if ((v[9 ] || v[8] || v[16] || v[15] || v[0] || v[7] || v[6]) &&
-      !v[10] && !v[11] && !v[1 ] && !v[2 ] && 
-      !v[13] && !v[14] && !v[4 ] && !v[5 ] && !v[12] && !v[3] && 
-      !v[21] && !v[20] && !v[19] && !v[22] && 
-      !v[17] && !v[18] && !v[23] && !v[24] && !v[25]) return 1;
+  if ((v[9] || v[8] || v[16] || v[15] || v[0] || v[7] || v[6]) && !v[10] &&
+      !v[11] && !v[1] && !v[2] && !v[13] && !v[14] && !v[4] && !v[5] &&
+      !v[12] && !v[3] && !v[21] && !v[20] && !v[19] && !v[22] && !v[17] &&
+      !v[18] && !v[23] && !v[24] && !v[25]) {
+    return 1;
+  }
 
-  if ((v[13] || v[8] || v[14] || v[15] || v[4] || v[5] || v[6]) &&
-      !v[12] && !v[11] && !v[3 ] && !v[2 ] && 
-      !v[9 ] && !v[16] && !v[0 ] && !v[7 ] && !v[10] && !v[1] && 
-      !v[21] && !v[20] && !v[19] && !v[22] && 
-      !v[17] && !v[18] && !v[23] && !v[24] && !v[25]) return 1;
+  if ((v[13] || v[8] || v[14] || v[15] || v[4] || v[5] || v[6]) && !v[12] &&
+      !v[11] && !v[3] && !v[2] && !v[9] && !v[16] && !v[0] && !v[7] && !v[10] &&
+      !v[1] && !v[21] && !v[20] && !v[19] && !v[22] && !v[17] && !v[18] &&
+      !v[23] && !v[24] && !v[25]) {
+    return 1;
+  }
 
-  if ((v[11] || v[10] || v[8] || v[9] || v[2] || v[1] || v[0]) &&
-      !v[12] && !v[13] && !v[3 ] && !v[4 ] && 
-      !v[15] && !v[16] && !v[6 ] && !v[7 ] && !v[14] && !v[5] && 
-      !v[21] && !v[20] && !v[19] && !v[22] && 
-      !v[17] && !v[18] && !v[23] && !v[24] && !v[25]) return 1;
+  if ((v[11] || v[10] || v[8] || v[9] || v[2] || v[1] || v[0]) && !v[12] &&
+      !v[13] && !v[3] && !v[4] && !v[15] && !v[16] && !v[6] && !v[7] &&
+      !v[14] && !v[5] && !v[21] && !v[20] && !v[19] && !v[22] && !v[17] &&
+      !v[18] && !v[23] && !v[24] && !v[25]) {
+    return 1;
+  }
 
-  if ((v[12] || v[11] || v[13] || v[8] || v[3 ] || v[2 ] || v[4 ]) &&
-      !v[10] && !v[9 ] && !v[1 ] && !v[0 ] && 
-      !v[14] && !v[15] && !v[5 ] && !v[6 ] && !v[16] && !v[7] && 
-      !v[21] && !v[20] && !v[19] && !v[22] && 
-      !v[17] && !v[18] && !v[23] && !v[24] && !v[25]) return 1;
+  if ((v[12] || v[11] || v[13] || v[8] || v[3] || v[2] || v[4]) && !v[10] &&
+      !v[9] && !v[1] && !v[0] && !v[14] && !v[15] && !v[5] && !v[6] && !v[16] &&
+      !v[7] && !v[21] && !v[20] && !v[19] && !v[22] && !v[17] && !v[18] &&
+      !v[23] && !v[24] && !v[25]) {
+    return 1;
+  }
 
   return 0;
 } // match_end()
@@ -425,16 +437,38 @@ Si le test réussit, les points 8, 26 sont marqués DCRUCIAL
     print_vois(v);
   }
 #endif
-  if (!IS_SIMPLE(v[8]) || !IS_SIMPLE(v[26])) return 0;
-  if (v[0] || v[9]) t = 1; else t = 0;
-  if (v[1] || v[10]) t |= 2;
-  if (v[2] || v[11]) t |= 4;
-  if (v[3] || v[12]) t |= 8;
-  if (v[4] || v[13]) t |= 16;
-  if (v[5] || v[14]) t |= 32;
-  if (v[6] || v[15]) t |= 64;
-  if (v[7] || v[16]) t |= 128;
-  if ((t4b(t) == 1) && (t8(t) == 1)) return 0; // simple 2D
+  if (!IS_SIMPLE(v[8]) || !IS_SIMPLE(v[26])) {
+    return 0;
+  }
+  if (v[0] || v[9]) {
+    t = 1;
+  } else {
+    t = 0;
+  }
+  if (v[1] || v[10]) {
+    t |= 2;
+  }
+  if (v[2] || v[11]) {
+    t |= 4;
+  }
+  if (v[3] || v[12]) {
+    t |= 8;
+  }
+  if (v[4] || v[13]) {
+    t |= 16;
+  }
+  if (v[5] || v[14]) {
+    t |= 32;
+  }
+  if (v[6] || v[15]) {
+    t |= 64;
+  }
+  if (v[7] || v[16]) {
+    t |= 128;
+  }
+  if ((t4b(t) == 1) && (t8(t) == 1)) {
+    return 0; // simple 2D
+  }
   SET_DCRUCIAL(v[8]);
   SET_DCRUCIAL(v[26]);
 #ifdef DEBUG
@@ -472,16 +506,38 @@ Si le test réussit, alors les points 8, 26 sont marqués DCRUCIAL, de plus:
     print_vois(v);
   }
 #endif
-  if (!IS_SIMPLE(v[8]) || !IS_SIMPLE(v[26])) return 0;
-  if (v[0] || v[9]) t = 1; else t = 0;
-  if (v[1] || v[10]) t |= 2;
-  if (v[2] || v[11]) t |= 4;
-  if (v[3] || v[12]) t |= 8;
-  if (v[4] || v[13]) t |= 16;
-  if (v[5] || v[14]) t |= 32;
-  if (v[6] || v[15]) t |= 64;
-  if (v[7] || v[16]) t |= 128;
-  if ((t4b(t) == 1) && (t8(t) == 1)) return 0; // simple 2D
+  if (!IS_SIMPLE(v[8]) || !IS_SIMPLE(v[26])) {
+    return 0;
+  }
+  if (v[0] || v[9]) {
+    t = 1;
+  } else {
+    t = 0;
+  }
+  if (v[1] || v[10]) {
+    t |= 2;
+  }
+  if (v[2] || v[11]) {
+    t |= 4;
+  }
+  if (v[3] || v[12]) {
+    t |= 8;
+  }
+  if (v[4] || v[13]) {
+    t |= 16;
+  }
+  if (v[5] || v[14]) {
+    t |= 32;
+  }
+  if (v[6] || v[15]) {
+    t |= 64;
+  }
+  if (v[7] || v[16]) {
+    t |= 128;
+  }
+  if ((t4b(t) == 1) && (t8(t) == 1)) {
+    return 0; // simple 2D
+  }
   SET_DCRUCIAL(v[8]);
   SET_DCRUCIAL(v[26]);
   if (t4b(t) == 0) { SET_SURF(v[8]); SET_SURF(v[26]); }
@@ -523,32 +579,60 @@ static int32_t match_vois1(uint8_t *v)
     print_vois(v);
   }
 #endif
-  if (!((v[2] && v[4]) || (v[3] && v[26]))) goto next1;
-  if ((IS_OBJECT(v[2])  && (!IS_SIMPLE(v[2])  || IS_DCRUCIAL(v[2]))) ||
-      (IS_OBJECT(v[3])  && (!IS_SIMPLE(v[3])  || IS_DCRUCIAL(v[3]))) ||
-      (IS_OBJECT(v[4])  && (!IS_SIMPLE(v[4])  || IS_DCRUCIAL(v[4]))) ||
-      (IS_OBJECT(v[26]) && (!IS_SIMPLE(v[26]) || IS_DCRUCIAL(v[26])))) goto next1;
+  if (!((v[2] && v[4]) || (v[3] && v[26]))) {
+    goto next1;
+  }
+  if ((IS_OBJECT(v[2]) && (!IS_SIMPLE(v[2]) || IS_DCRUCIAL(v[2]))) ||
+      (IS_OBJECT(v[3]) && (!IS_SIMPLE(v[3]) || IS_DCRUCIAL(v[3]))) ||
+      (IS_OBJECT(v[4]) && (!IS_SIMPLE(v[4]) || IS_DCRUCIAL(v[4]))) ||
+      (IS_OBJECT(v[26]) && (!IS_SIMPLE(v[26]) || IS_DCRUCIAL(v[26])))) {
+    goto next1;
+  }
   if ((v[12] || v[11] || v[13] || v[8] || v[21] || v[20] || v[22] || v[17]) &&
-      ((!v[12] && !v[11] && !v[13] && !v[8]) || 
-       (!v[21] && !v[20] && !v[22] && !v[17]))) goto next1;
-  if (v[2])  SET_DCRUCIAL(v[2]);
-  if (v[3])  SET_DCRUCIAL(v[3]);
-  if (v[4])  SET_DCRUCIAL(v[4]);
-  if (v[26]) SET_DCRUCIAL(v[26]);
+      ((!v[12] && !v[11] && !v[13] && !v[8]) ||
+       (!v[21] && !v[20] && !v[22] && !v[17]))) {
+    goto next1;
+  }
+  if (v[2]) {
+    SET_DCRUCIAL(v[2]);
+  }
+  if (v[3]) {
+    SET_DCRUCIAL(v[3]);
+  }
+  if (v[4]) {
+    SET_DCRUCIAL(v[4]);
+  }
+  if (v[26]) {
+    SET_DCRUCIAL(v[26]);
+  }
   ret = 1;
  next1:
-  if (!((v[2] && v[0]) || (v[1] && v[26]))) goto next2;
-  if ((IS_OBJECT(v[2])  && (!IS_SIMPLE(v[2])  || IS_DCRUCIAL(v[2]))) ||
-      (IS_OBJECT(v[1])  && (!IS_SIMPLE(v[1])  || IS_DCRUCIAL(v[1]))) ||
-      (IS_OBJECT(v[0])  && (!IS_SIMPLE(v[0])  || IS_DCRUCIAL(v[0]))) ||
-      (IS_OBJECT(v[26]) && (!IS_SIMPLE(v[26]) || IS_DCRUCIAL(v[26])))) goto next2;
-  if ((v[10] || v[11] || v[9] || v[8] || v[19] || v[20] || v[18] || v[17]) &&
-      ((!v[10] && !v[11] && !v[9] && !v[8]) || 
-       (!v[19] && !v[20] && !v[18] && !v[17]))) goto next2;
-  if (v[2])  SET_DCRUCIAL(v[2]);
-  if (v[1])  SET_DCRUCIAL(v[1]);
-  if (v[0])  SET_DCRUCIAL(v[0]);
-  if (v[26]) SET_DCRUCIAL(v[26]);
+   if (!((v[2] && v[0]) || (v[1] && v[26]))) {
+     goto next2;
+   }
+   if ((IS_OBJECT(v[2]) && (!IS_SIMPLE(v[2]) || IS_DCRUCIAL(v[2]))) ||
+       (IS_OBJECT(v[1]) && (!IS_SIMPLE(v[1]) || IS_DCRUCIAL(v[1]))) ||
+       (IS_OBJECT(v[0]) && (!IS_SIMPLE(v[0]) || IS_DCRUCIAL(v[0]))) ||
+       (IS_OBJECT(v[26]) && (!IS_SIMPLE(v[26]) || IS_DCRUCIAL(v[26])))) {
+     goto next2;
+   }
+   if ((v[10] || v[11] || v[9] || v[8] || v[19] || v[20] || v[18] || v[17]) &&
+       ((!v[10] && !v[11] && !v[9] && !v[8]) ||
+        (!v[19] && !v[20] && !v[18] && !v[17]))) {
+     goto next2;
+   }
+   if (v[2]) {
+     SET_DCRUCIAL(v[2]);
+   }
+   if (v[1]) {
+     SET_DCRUCIAL(v[1]);
+   }
+   if (v[0]) {
+     SET_DCRUCIAL(v[0]);
+   }
+   if (v[26]) {
+     SET_DCRUCIAL(v[26]);
+   }
   ret = 1;
  next2:
 #ifdef DEBUG
@@ -585,30 +669,58 @@ static int32_t match_vois1s(uint8_t *v)
     print_vois(v);
   }
 #endif
-  if (!((v[2] && v[4]) || (v[3] && v[26]))) goto next1;
-  if ((IS_OBJECT(v[2])  && (!IS_SIMPLE(v[2]) || IS_DCRUCIAL(v[2]))) ||
-      (IS_OBJECT(v[3])  && (!IS_SIMPLE(v[3]) || IS_DCRUCIAL(v[3]))) ||
-      (IS_OBJECT(v[4])  && (!IS_SIMPLE(v[4]) || IS_DCRUCIAL(v[4]))) ||
-      (IS_OBJECT(v[26]) && (!IS_SIMPLE(v[26]) || IS_DCRUCIAL(v[26])))) goto next1;
-  if ((!v[12] && !v[11] && !v[13] && !v[8]) || 
-      (!v[21] && !v[20] && !v[22] && !v[17])) goto next1;
-  if (v[2])  SET_CURVE(v[2]);
-  if (v[3])  SET_CURVE(v[3]);
-  if (v[4])  SET_CURVE(v[4]);
-  if (v[26]) SET_CURVE(v[26]);
+  if (!((v[2] && v[4]) || (v[3] && v[26]))) {
+    goto next1;
+  }
+  if ((IS_OBJECT(v[2]) && (!IS_SIMPLE(v[2]) || IS_DCRUCIAL(v[2]))) ||
+      (IS_OBJECT(v[3]) && (!IS_SIMPLE(v[3]) || IS_DCRUCIAL(v[3]))) ||
+      (IS_OBJECT(v[4]) && (!IS_SIMPLE(v[4]) || IS_DCRUCIAL(v[4]))) ||
+      (IS_OBJECT(v[26]) && (!IS_SIMPLE(v[26]) || IS_DCRUCIAL(v[26])))) {
+    goto next1;
+  }
+  if ((!v[12] && !v[11] && !v[13] && !v[8]) ||
+      (!v[21] && !v[20] && !v[22] && !v[17])) {
+    goto next1;
+  }
+  if (v[2]) {
+    SET_CURVE(v[2]);
+  }
+  if (v[3]) {
+    SET_CURVE(v[3]);
+  }
+  if (v[4]) {
+    SET_CURVE(v[4]);
+  }
+  if (v[26]) {
+    SET_CURVE(v[26]);
+  }
   ret = 1;
  next1:
-  if (!((v[2] && v[0]) || (v[1] && v[26]))) goto next2;
-  if ((IS_OBJECT(v[2])  && (!IS_SIMPLE(v[2]) || IS_DCRUCIAL(v[2]))) ||
-      (IS_OBJECT(v[1])  && (!IS_SIMPLE(v[1]) || IS_DCRUCIAL(v[1]))) ||
-      (IS_OBJECT(v[0])  && (!IS_SIMPLE(v[0]) || IS_DCRUCIAL(v[0]))) ||
-      (IS_OBJECT(v[26]) && (!IS_SIMPLE(v[26]) || IS_DCRUCIAL(v[26])))) goto next2;
-  if ((!v[10] && !v[11] && !v[9] && !v[8]) || 
-      (!v[19] && !v[20] && !v[18] && !v[17])) goto next2;
-  if (v[2])  SET_CURVE(v[2]);
-  if (v[1])  SET_CURVE(v[1]);
-  if (v[0])  SET_CURVE(v[0]);
-  if (v[26]) SET_CURVE(v[26]);
+   if (!((v[2] && v[0]) || (v[1] && v[26]))) {
+     goto next2;
+   }
+   if ((IS_OBJECT(v[2]) && (!IS_SIMPLE(v[2]) || IS_DCRUCIAL(v[2]))) ||
+       (IS_OBJECT(v[1]) && (!IS_SIMPLE(v[1]) || IS_DCRUCIAL(v[1]))) ||
+       (IS_OBJECT(v[0]) && (!IS_SIMPLE(v[0]) || IS_DCRUCIAL(v[0]))) ||
+       (IS_OBJECT(v[26]) && (!IS_SIMPLE(v[26]) || IS_DCRUCIAL(v[26])))) {
+     goto next2;
+   }
+   if ((!v[10] && !v[11] && !v[9] && !v[8]) ||
+       (!v[19] && !v[20] && !v[18] && !v[17])) {
+     goto next2;
+   }
+   if (v[2]) {
+     SET_CURVE(v[2]);
+   }
+   if (v[1]) {
+     SET_CURVE(v[1]);
+   }
+   if (v[0]) {
+     SET_CURVE(v[0]);
+   }
+   if (v[26]) {
+     SET_CURVE(v[26]);
+   }
   ret = 1;
  next2:
 #ifdef DEBUG
@@ -641,29 +753,63 @@ Si le test réussit, les points non nuls sont marqués DCRUCIAL
     print_vois(v);
   }
 #endif
-  if (!v[26]) return 0;
-  if (!IS_SIMPLE(v[26]) || IS_DCRUCIAL(v[26])) return 0;
-  if (!(v[12] || v[10] || v[14] || v[21])) return 0;
+  if (!v[26]) {
+    return 0;
+  }
+  if (!IS_SIMPLE(v[26]) || IS_DCRUCIAL(v[26])) {
+    return 0;
+  }
+  if (!(v[12] || v[10] || v[14] || v[21])) {
+    return 0;
+  }
   if (v[12])
   { /*         12      11
                13       8
 
 		3	2
 		4      26 */
-     if (!IS_SIMPLE(v[12]) || IS_DCRUCIAL(v[12])) return 0;
-     if (v[11] && (!IS_SIMPLE(v[11]) || IS_DCRUCIAL(v[11]))) return 0;
-     if (v[13] && (!IS_SIMPLE(v[13]) || IS_DCRUCIAL(v[13]))) return 0;
-     if (v[ 8] && (!IS_SIMPLE(v[ 8]) || IS_DCRUCIAL(v[ 8]))) return 0;
-     if (v[ 3] && (!IS_SIMPLE(v[ 3]) || IS_DCRUCIAL(v[ 3]))) return 0;
-     if (v[ 2] && (!IS_SIMPLE(v[ 2]) || IS_DCRUCIAL(v[ 2]))) return 0;
-     if (v[ 4] && (!IS_SIMPLE(v[ 4]) || IS_DCRUCIAL(v[ 4]))) return 0;
-     if (v[12]) SET_DCRUCIAL(v[12]);
-     if (v[11]) SET_DCRUCIAL(v[11]);
-     if (v[ 4]) SET_DCRUCIAL(v[ 4]);
-     if (v[13]) SET_DCRUCIAL(v[13]);
-     if (v[ 2]) SET_DCRUCIAL(v[ 2]);
-     if (v[ 8]) SET_DCRUCIAL(v[ 8]);
-     if (v[ 3]) SET_DCRUCIAL(v[ 3]);
+    if (!IS_SIMPLE(v[12]) || IS_DCRUCIAL(v[12])) {
+      return 0;
+    }
+    if (v[11] && (!IS_SIMPLE(v[11]) || IS_DCRUCIAL(v[11]))) {
+      return 0;
+    }
+    if (v[13] && (!IS_SIMPLE(v[13]) || IS_DCRUCIAL(v[13]))) {
+      return 0;
+    }
+    if (v[8] && (!IS_SIMPLE(v[8]) || IS_DCRUCIAL(v[8]))) {
+      return 0;
+    }
+    if (v[3] && (!IS_SIMPLE(v[3]) || IS_DCRUCIAL(v[3]))) {
+      return 0;
+    }
+    if (v[2] && (!IS_SIMPLE(v[2]) || IS_DCRUCIAL(v[2]))) {
+      return 0;
+    }
+    if (v[4] && (!IS_SIMPLE(v[4]) || IS_DCRUCIAL(v[4]))) {
+      return 0;
+    }
+    if (v[12]) {
+      SET_DCRUCIAL(v[12]);
+    }
+    if (v[11]) {
+      SET_DCRUCIAL(v[11]);
+    }
+    if (v[4]) {
+      SET_DCRUCIAL(v[4]);
+    }
+    if (v[13]) {
+      SET_DCRUCIAL(v[13]);
+    }
+    if (v[2]) {
+      SET_DCRUCIAL(v[2]);
+    }
+    if (v[8]) {
+      SET_DCRUCIAL(v[8]);
+    }
+    if (v[3]) {
+      SET_DCRUCIAL(v[3]);
+    }
   }
   if (v[10])
   { /*
@@ -672,20 +818,48 @@ Si le test réussit, les points non nuls sont marqués DCRUCIAL
 
 		2	1
 		26	0 */
-     if (!IS_SIMPLE(v[10]) || IS_DCRUCIAL(v[10])) return 0;
-     if (v[11] && (!IS_SIMPLE(v[11]) || IS_DCRUCIAL(v[11]))) return 0;
-     if (v[ 8] && (!IS_SIMPLE(v[ 8]) || IS_DCRUCIAL(v[ 8]))) return 0;
-     if (v[ 9] && (!IS_SIMPLE(v[ 9]) || IS_DCRUCIAL(v[ 9]))) return 0;
-     if (v[ 1] && (!IS_SIMPLE(v[ 1]) || IS_DCRUCIAL(v[ 1]))) return 0;
-     if (v[ 2] && (!IS_SIMPLE(v[ 2]) || IS_DCRUCIAL(v[ 2]))) return 0;
-     if (v[ 0] && (!IS_SIMPLE(v[ 0]) || IS_DCRUCIAL(v[ 0]))) return 0;
-     if (v[10]) SET_DCRUCIAL(v[10]);
-     if (v[11]) SET_DCRUCIAL(v[11]);
-     if (v[ 8]) SET_DCRUCIAL(v[ 8]);
-     if (v[ 9]) SET_DCRUCIAL(v[ 9]);
-     if (v[ 1]) SET_DCRUCIAL(v[ 1]);
-     if (v[ 2]) SET_DCRUCIAL(v[ 2]);
-     if (v[ 0]) SET_DCRUCIAL(v[ 0]);
+    if (!IS_SIMPLE(v[10]) || IS_DCRUCIAL(v[10])) {
+      return 0;
+    }
+    if (v[11] && (!IS_SIMPLE(v[11]) || IS_DCRUCIAL(v[11]))) {
+      return 0;
+    }
+    if (v[8] && (!IS_SIMPLE(v[8]) || IS_DCRUCIAL(v[8]))) {
+      return 0;
+    }
+    if (v[9] && (!IS_SIMPLE(v[9]) || IS_DCRUCIAL(v[9]))) {
+      return 0;
+    }
+    if (v[1] && (!IS_SIMPLE(v[1]) || IS_DCRUCIAL(v[1]))) {
+      return 0;
+    }
+    if (v[2] && (!IS_SIMPLE(v[2]) || IS_DCRUCIAL(v[2]))) {
+      return 0;
+    }
+    if (v[0] && (!IS_SIMPLE(v[0]) || IS_DCRUCIAL(v[0]))) {
+      return 0;
+    }
+    if (v[10]) {
+      SET_DCRUCIAL(v[10]);
+    }
+    if (v[11]) {
+      SET_DCRUCIAL(v[11]);
+    }
+    if (v[8]) {
+      SET_DCRUCIAL(v[8]);
+    }
+    if (v[9]) {
+      SET_DCRUCIAL(v[9]);
+    }
+    if (v[1]) {
+      SET_DCRUCIAL(v[1]);
+    }
+    if (v[2]) {
+      SET_DCRUCIAL(v[2]);
+    }
+    if (v[0]) {
+      SET_DCRUCIAL(v[0]);
+    }
   }
   if (v[14])
   { /*         13       8
@@ -693,20 +867,48 @@ Si le test réussit, les points non nuls sont marqués DCRUCIAL
 
 		4      26
 		5	6 */
-     if (!IS_SIMPLE(v[14]) || IS_DCRUCIAL(v[14])) return 0;
-     if (v[13] && (!IS_SIMPLE(v[13]) || IS_DCRUCIAL(v[13]))) return 0;
-     if (v[15] && (!IS_SIMPLE(v[15]) || IS_DCRUCIAL(v[15]))) return 0;
-     if (v[ 8] && (!IS_SIMPLE(v[ 8]) || IS_DCRUCIAL(v[ 8]))) return 0;
-     if (v[ 6] && (!IS_SIMPLE(v[ 6]) || IS_DCRUCIAL(v[ 6]))) return 0;
-     if (v[ 5] && (!IS_SIMPLE(v[ 5]) || IS_DCRUCIAL(v[ 5]))) return 0;
-     if (v[ 4] && (!IS_SIMPLE(v[ 4]) || IS_DCRUCIAL(v[ 4]))) return 0;
-     if (v[14]) SET_DCRUCIAL(v[14]);
-     if (v[13]) SET_DCRUCIAL(v[13]);
-     if (v[15]) SET_DCRUCIAL(v[15]);
-     if (v[ 8]) SET_DCRUCIAL(v[ 8]);
-     if (v[ 6]) SET_DCRUCIAL(v[ 6]);
-     if (v[ 5]) SET_DCRUCIAL(v[ 5]);
-     if (v[ 4]) SET_DCRUCIAL(v[ 4]);
+    if (!IS_SIMPLE(v[14]) || IS_DCRUCIAL(v[14])) {
+      return 0;
+    }
+    if (v[13] && (!IS_SIMPLE(v[13]) || IS_DCRUCIAL(v[13]))) {
+      return 0;
+    }
+    if (v[15] && (!IS_SIMPLE(v[15]) || IS_DCRUCIAL(v[15]))) {
+      return 0;
+    }
+    if (v[8] && (!IS_SIMPLE(v[8]) || IS_DCRUCIAL(v[8]))) {
+      return 0;
+    }
+    if (v[6] && (!IS_SIMPLE(v[6]) || IS_DCRUCIAL(v[6]))) {
+      return 0;
+    }
+    if (v[5] && (!IS_SIMPLE(v[5]) || IS_DCRUCIAL(v[5]))) {
+      return 0;
+    }
+    if (v[4] && (!IS_SIMPLE(v[4]) || IS_DCRUCIAL(v[4]))) {
+      return 0;
+    }
+    if (v[14]) {
+      SET_DCRUCIAL(v[14]);
+    }
+    if (v[13]) {
+      SET_DCRUCIAL(v[13]);
+    }
+    if (v[15]) {
+      SET_DCRUCIAL(v[15]);
+    }
+    if (v[8]) {
+      SET_DCRUCIAL(v[8]);
+    }
+    if (v[6]) {
+      SET_DCRUCIAL(v[6]);
+    }
+    if (v[5]) {
+      SET_DCRUCIAL(v[5]);
+    }
+    if (v[4]) {
+      SET_DCRUCIAL(v[4]);
+    }
   }
   if (v[21])
   {  /*		3	2
@@ -714,20 +916,48 @@ Si le test réussit, les points non nuls sont marqués DCRUCIAL
 
                21      20
                22      17 */
-     if (!IS_SIMPLE(v[21]) || IS_DCRUCIAL(v[21])) return 0;
-     if (v[17] && (!IS_SIMPLE(v[17]) || IS_DCRUCIAL(v[17]))) return 0;
-     if (v[20] && (!IS_SIMPLE(v[20]) || IS_DCRUCIAL(v[20]))) return 0;
-     if (v[22] && (!IS_SIMPLE(v[22]) || IS_DCRUCIAL(v[22]))) return 0;
-     if (v[ 3] && (!IS_SIMPLE(v[ 3]) || IS_DCRUCIAL(v[ 3]))) return 0;
-     if (v[ 2] && (!IS_SIMPLE(v[ 2]) || IS_DCRUCIAL(v[ 2]))) return 0;
-     if (v[ 4] && (!IS_SIMPLE(v[ 4]) || IS_DCRUCIAL(v[ 4]))) return 0;
-     if (v[21]) SET_DCRUCIAL(v[21]);
-     if (v[17]) SET_DCRUCIAL(v[17]);
-     if (v[20]) SET_DCRUCIAL(v[20]);
-     if (v[22]) SET_DCRUCIAL(v[22]);
-     if (v[ 3]) SET_DCRUCIAL(v[ 3]);
-     if (v[ 2]) SET_DCRUCIAL(v[ 2]);
-     if (v[ 4]) SET_DCRUCIAL(v[ 4]);
+    if (!IS_SIMPLE(v[21]) || IS_DCRUCIAL(v[21])) {
+      return 0;
+    }
+    if (v[17] && (!IS_SIMPLE(v[17]) || IS_DCRUCIAL(v[17]))) {
+      return 0;
+    }
+    if (v[20] && (!IS_SIMPLE(v[20]) || IS_DCRUCIAL(v[20]))) {
+      return 0;
+    }
+    if (v[22] && (!IS_SIMPLE(v[22]) || IS_DCRUCIAL(v[22]))) {
+      return 0;
+    }
+    if (v[3] && (!IS_SIMPLE(v[3]) || IS_DCRUCIAL(v[3]))) {
+      return 0;
+    }
+    if (v[2] && (!IS_SIMPLE(v[2]) || IS_DCRUCIAL(v[2]))) {
+      return 0;
+    }
+    if (v[4] && (!IS_SIMPLE(v[4]) || IS_DCRUCIAL(v[4]))) {
+      return 0;
+    }
+    if (v[21]) {
+      SET_DCRUCIAL(v[21]);
+    }
+    if (v[17]) {
+      SET_DCRUCIAL(v[17]);
+    }
+    if (v[20]) {
+      SET_DCRUCIAL(v[20]);
+    }
+    if (v[22]) {
+      SET_DCRUCIAL(v[22]);
+    }
+    if (v[3]) {
+      SET_DCRUCIAL(v[3]);
+    }
+    if (v[2]) {
+      SET_DCRUCIAL(v[2]);
+    }
+    if (v[4]) {
+      SET_DCRUCIAL(v[4]);
+    }
   }
   SET_DCRUCIAL(v[26]);
 
@@ -743,12 +973,18 @@ static int32_t match2(uint8_t *v)
 /* ==================================== */
 {
   int32_t ret = 0;
-  if (match_vois2(v)) ret = 1;
+  if (match_vois2(v)) {
+    ret = 1;
+  }
   isometrieXZ_vois(v);
-  if (match_vois2(v)) ret = 1;
+  if (match_vois2(v)) {
+    ret = 1;
+  }
   isometrieXZ_vois(v);
   isometrieYZ_vois(v);
-  if (match_vois2(v)) ret = 1;
+  if (match_vois2(v)) {
+    ret = 1;
+  }
   isometrieYZ_vois(v); // nécessaire à cause du insert_vois qui suit
   return ret;
 } /* match2() */
@@ -758,12 +994,18 @@ static int32_t match2s(uint8_t *v)
 /* ==================================== */
 {
   int32_t ret = 0;
-  if (match_vois2s(v)) ret = 1;
+  if (match_vois2s(v)) {
+    ret = 1;
+  }
   isometrieXZ_vois(v);
-  if (match_vois2s(v)) ret = 1;
+  if (match_vois2s(v)) {
+    ret = 1;
+  }
   isometrieXZ_vois(v);
   isometrieYZ_vois(v);
-  if (match_vois2s(v)) ret = 1;
+  if (match_vois2s(v)) {
+    ret = 1;
+  }
   isometrieYZ_vois(v); // nécessaire à cause du insert_vois qui suit
   return ret;
 } /* match2s() */
@@ -773,12 +1015,18 @@ static int32_t match1(uint8_t *v)
 /* ==================================== */
 {
   int32_t ret = 0;
-  if (match_vois1(v)) ret = 1;
+  if (match_vois1(v)) {
+    ret = 1;
+  }
   isometrieXZ_vois(v);
-  if (match_vois1(v)) ret = 1;
+  if (match_vois1(v)) {
+    ret = 1;
+  }
   isometrieXZ_vois(v);
   isometrieYZ_vois(v);
-  if (match_vois1(v)) ret = 1;
+  if (match_vois1(v)) {
+    ret = 1;
+  }
   isometrieYZ_vois(v); // nécessaire à cause du insert_vois qui suit
   return ret;
 } /* match1() */
@@ -788,12 +1036,18 @@ static int32_t match1s(uint8_t *v)
 /* ==================================== */
 {
   int32_t ret = 0;
-  if (match_vois1s(v)) ret = 1;
+  if (match_vois1s(v)) {
+    ret = 1;
+  }
   isometrieXZ_vois(v);
-  if (match_vois1s(v)) ret = 1;
+  if (match_vois1s(v)) {
+    ret = 1;
+  }
   isometrieXZ_vois(v);
   isometrieYZ_vois(v);
-  if (match_vois1s(v)) ret = 1;
+  if (match_vois1s(v)) {
+    ret = 1;
+  }
   isometrieYZ_vois(v); // nécessaire à cause du insert_vois qui suit
   return ret;
 } /* match1s() */
@@ -803,7 +1057,9 @@ static int32_t match0(uint8_t *v)
 /* ==================================== */
 {
   int32_t ret = 0;
-  if (match_vois0(v)) ret = 1;
+  if (match_vois0(v)) {
+    ret = 1;
+  }
   return ret;
 } /* match0() */
 
@@ -846,9 +1102,15 @@ Attention : l'objet ne doit pas toucher le bord de l'image
     return 0;
   }
 
-  if (n_steps == -1) n_steps = 1000000000;
+  if (n_steps == -1) {
+    n_steps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
 
   mctopo3d_init_topo3d();
 
@@ -867,83 +1129,102 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 #endif
 
     // PREMIERE SOUS-ITERATION : MARQUE LES POINTS SIMPLES
-    for (i = 0; i < N; i++) 
-      if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N))
-	SET_SIMPLE(S[i]);
+    for (i = 0; i < N; i++) {
+      if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N)) {
+        SET_SIMPLE(S[i]);
+      }
+    }
 #ifdef DEBUG_SKEL_MK3A
 writeimage(image,"_S");
 #endif
 
     // DEUXIEME SOUS-ITERATION : MARQUE LES CLIQUES CRUCIALES CORRESPONDANT AUX 2-FACES
-    for (i = 0; i < N; i++) 
-      if (IS_SIMPLE(S[i]))
-      { 
-	extract_vois(S, i, rs, ps, N, v);
-	if (match2(v))
-	{
+for (i = 0; i < N; i++) {
+  if (IS_SIMPLE(S[i])) {
+    extract_vois(S, i, rs, ps, N, v);
+    if (match2(v)) {
 #ifdef DEBUG_SKEL_MK3A
 printf("match 2-clique\n");
 #endif	  
 	  insert_vois(v, S, i, rs, ps, N);
 	}
-      }
+  }
+}
 
     // TROISIEME SOUS-ITERATION : MARQUE LES CLIQUES CRUCIALES CORRESPONDANT AUX 1-FACES
-    for (i = 0; i < N; i++) 
-      if (IS_SIMPLE(S[i]))
-      { 
-	extract_vois(S, i, rs, ps, N, v);
-	if (match1(v))
-	{
+for (i = 0; i < N; i++) {
+  if (IS_SIMPLE(S[i])) {
+    extract_vois(S, i, rs, ps, N, v);
+    if (match1(v)) {
 #ifdef DEBUG_SKEL_MK3A
 printf("match 1-clique\n");
 #endif	  
 	  insert_vois(v, S, i, rs, ps, N);
 	}
-      }
+  }
+}
 
     // QUATRIEME SOUS-ITERATION : MARQUE LES CLIQUES CRUCIALES CORRESPONDANT AUX 0-FACES
-    for (i = 0; i < N; i++) 
-      if (IS_SIMPLE(S[i]))
-      { 
-	extract_vois(S, i, rs, ps, N, v);
-	if (match0(v))
-	{
+for (i = 0; i < N; i++) {
+  if (IS_SIMPLE(S[i])) {
+    extract_vois(S, i, rs, ps, N, v);
+    if (match0(v)) {
 #ifdef DEBUG_SKEL_MK3A
 printf("match 0-clique\n");
 #endif	  
 	  insert_vois(v, S, i, rs, ps, N);
 	}
-      }
+  }
+}
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++) // T := [S \ P] \cup  R, où R représente les pts marqués
-      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i]))
-	T[i] = 1;
+    for (i = 0; i < N;
+         i++) { // T := [S \ P] \cup  R, où R représente les pts marqués
+      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i])) {
+        T[i] = 1;
+      }
+    }
 #ifdef DEBUG_SKEL_MK3A
 writeimage(t,"_T");
 #endif
 
     memset(R, 0, N);
-    for (i = 0; i < N; i++)
-      if (mctopo3d_nbvoiso26(T, i, rs, ps, N) >= 1) R[i] = 1; // calcule R = Dilat(T)
-    for (i = 0; i < N; i++)
-      if (T[i] || (S[i] && !R[i])) T[i] = 1; else T[i] = 0; // T := T \cup [S \ R]
+    for (i = 0; i < N; i++) {
+      if (mctopo3d_nbvoiso26(T, i, rs, ps, N) >= 1) {
+        R[i] = 1; // calcule R = Dilat(T)
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (T[i] || (S[i] && !R[i])) {
+        T[i] = 1;
+      } else {
+        T[i] = 0; // T := T \cup [S \ R]
+      }
+    }
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (S[i] && !T[i]) 
       {
 	S[i] = 0; 
-	nonstab = 1; 
+	nonstab = 1;
       }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+    }
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = S_OBJECT;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = 255; // normalize values
+      }
+    }
 
   freeimage(t);
   freeimage(r);
@@ -994,9 +1275,15 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   }
   I = UCHARDATA(inhibit);
 
-  if (n_steps == -1) n_steps = 1000000000;
+  if (n_steps == -1) {
+    n_steps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
 
   mctopo3d_init_topo3d();
 
@@ -1015,65 +1302,87 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 #endif
 
     // AJOUTE LES EXTREMITES DANS I
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_OBJECT(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match_end(v)) I[i] = 1;
+        if (match_end(v)) {
+          I[i] = 1;
+        }
       }
+    }
 
     // MARQUE LES POINTS SIMPLES NON DANS I
-    for (i = 0; i < N; i++) 
-      if (IS_OBJECT(S[i]) && !I[i] && mctopo3d_simple26(S, i, rs, ps, N))
-	SET_SIMPLE(S[i]);
+    for (i = 0; i < N; i++) {
+      if (IS_OBJECT(S[i]) && !I[i] && mctopo3d_simple26(S, i, rs, ps, N)) {
+        SET_SIMPLE(S[i]);
+      }
+    }
 
     // MARQUE LES POINTS 2-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 1-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match1(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match1(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 0-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match0(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match0(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++) // T := [S \ P] \cup M, où M représente les pts marqués
-      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i]))
-	T[i] = 1;
+    for (i = 0; i < N;
+         i++) { // T := [S \ P] \cup M, où M représente les pts marqués
+      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i])) {
+        T[i] = 1;
+      }
+    }
 #ifdef DEBUG
 writeimage(t,"_T");
 #endif
 
-    for (i = 0; i < N; i++)
-      if (S[i] && !T[i]) 
-      {
-	S[i] = 0; 
-	nonstab = 1; 
-      }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+for (i = 0; i < N; i++) {
+  if (S[i] && !T[i]) {
+    S[i] = 0;
+    nonstab = 1;
+  }
+}
+for (i = 0; i < N; i++) {
+  if (S[i]) {
+    S[i] = S_OBJECT;
+  }
+}
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = 255; // normalize values
+      }
+    }
 
   freeimage(t);
   mctopo3d_termine_topo3d();
@@ -1125,9 +1434,15 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   }
   I = UCHARDATA(inhibit);
 
-  if (n_steps == -1) n_steps = 1000000000;
+  if (n_steps == -1) {
+    n_steps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
 
   mctopo3d_init_topo3d();
 
@@ -1146,25 +1461,31 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 #endif
 
     // MARQUE LES POINTS SIMPLES NON DANS I
-    for (i = 0; i < N; i++) 
-      if (IS_OBJECT(S[i]) && !I[i] && mctopo3d_simple26(S, i, rs, ps, N))
-	SET_SIMPLE(S[i]);
+    for (i = 0; i < N; i++) {
+      if (IS_OBJECT(S[i]) && !I[i] && mctopo3d_simple26(S, i, rs, ps, N)) {
+        SET_SIMPLE(S[i]);
+      }
+    }
     // DEUXIEME SOUS-ITERATION : MARQUE LES POINTS DE COURBE (2)
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2s(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2s(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // TROISIEME SOUS-ITERATION : MARQUE LES POINTS DE COURBE (1)
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match1s(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match1s(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS DE COURBE (3)
     for (i = 0; i < N; i++)
     {
@@ -1172,7 +1493,9 @@ Attention : l'objet ne doit pas toucher le bord de l'image
       {    
 	mctopo3d_top26(S, i, rs, ps, N, &top, &topb);
 #ifdef NEW_ISTHMUS
-	if ((top == 2) && (topb == 1)) SET_CURVE(S[i]);
+        if ((top == 2) && (topb == 1)) {
+          SET_CURVE(S[i]);
+        }
 #else
 	if (top > 1) SET_CURVE(S[i]);
 #endif
@@ -1185,23 +1508,27 @@ Attention : l'objet ne doit pas toucher le bord de l'image
       if (IS_CURVE(S[i])) { UNSET_SIMPLE(S[i]); I[i] = 1; }
     }
     // MARQUE LES POINTS 2-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 1-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match1(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match1(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 0-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
@@ -1213,29 +1540,41 @@ printf("match 0-clique\n");
 	  insert_vois(v, S, i, rs, ps, N);
 	}
       }
+    }
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++) // T := [S \ P] \cup M, où M représente les pts marqués
-      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i]))
-	T[i] = 1;
+    for (i = 0; i < N;
+         i++) { // T := [S \ P] \cup M, où M représente les pts marqués
+      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i])) {
+        T[i] = 1;
+      }
+    }
 #ifdef DEBUG
 writeimage(t,"_T");
 #endif
 
-    for (i = 0; i < N; i++)
-      if (S[i] && !T[i]) 
-      {
-	S[i] = 0; 
-	nonstab = 1; 
-      }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+for (i = 0; i < N; i++) {
+  if (S[i] && !T[i]) {
+    S[i] = 0;
+    nonstab = 1;
+  }
+}
+for (i = 0; i < N; i++) {
+  if (S[i]) {
+    S[i] = S_OBJECT;
+  }
+}
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = 255; // normalize values
+      }
+    }
 
   freeimage(t);
   mctopo3d_termine_topo3d();
@@ -1292,9 +1631,15 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   }
   I = UCHARDATA(inhibit);
 
-  if (n_steps == -1) n_steps = 1000000000;
+  if (n_steps == -1) {
+    n_steps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
 
   mctopo3d_init_topo3d();
 
@@ -1314,32 +1659,41 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 
     // AJOUTE LES EXTREMITES DANS E
     memset(E, 0, N);
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_OBJECT(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match_end(v)) E[i] = 1;
+        if (match_end(v)) {
+          E[i] = 1;
+        }
       }
+    }
     // MARQUE LES POINTS SIMPLES NON DANS I
-    for (i = 0; i < N; i++) 
-      if (IS_OBJECT(S[i]) && !I[i] && mctopo3d_simple26(S, i, rs, ps, N))
-	SET_SIMPLE(S[i]);
+    for (i = 0; i < N; i++) {
+      if (IS_OBJECT(S[i]) && !I[i] && mctopo3d_simple26(S, i, rs, ps, N)) {
+        SET_SIMPLE(S[i]);
+      }
+    }
     // DEUXIEME SOUS-ITERATION : MARQUE LES POINTS DE COURBE (2)
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2s(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2s(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // TROISIEME SOUS-ITERATION : MARQUE LES POINTS DE COURBE (1)
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match1s(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match1s(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS DE COURBE (3)
     for (i = 0; i < N; i++)
     {
@@ -1347,7 +1701,9 @@ Attention : l'objet ne doit pas toucher le bord de l'image
       {    
 	mctopo3d_top26(S, i, rs, ps, N, &top, &topb);
 #ifdef NEW_ISTHMUS
-	if ((top == 2) && (topb == 1)) SET_CURVE(S[i]);
+        if ((top == 2) && (topb == 1)) {
+          SET_CURVE(S[i]);
+        }
 #else
 	if (top > 1) SET_CURVE(S[i]);
 #endif
@@ -1375,52 +1731,69 @@ Attention : l'objet ne doit pas toucher le bord de l'image
       }
     }
     // MARQUE LES POINTS 2-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 1-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match1(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match1(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 0-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match0(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match0(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++) // T := [S \ P] \cup M, où M représente les pts marqués
-      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i]))
-	T[i] = 1;
+    for (i = 0; i < N;
+         i++) { // T := [S \ P] \cup M, où M représente les pts marqués
+      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i])) {
+        T[i] = 1;
+      }
+    }
 #ifdef DEBUG
 writeimage(t,"_T");
 #endif
 
-    for (i = 0; i < N; i++)
-      if (S[i] && !T[i]) 
-      {
-	S[i] = 0; 
-	nonstab = 1; 
-      }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+for (i = 0; i < N; i++) {
+  if (S[i] && !T[i]) {
+    S[i] = 0;
+    nonstab = 1;
+  }
+}
+for (i = 0; i < N; i++) {
+  if (S[i]) {
+    S[i] = S_OBJECT;
+  }
+}
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = 255; // normalize values
+      }
+    }
 
   freeimage(t);
   freeimage(e);
@@ -1474,9 +1847,15 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   }
   I = UCHARDATA(inhibit);
 
-  if (n_steps == -1) n_steps = 1000000000;
+  if (n_steps == -1) {
+    n_steps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
 
   mctopo3d_init_topo3d();
 
@@ -1495,25 +1874,33 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 #endif
 
     // MARQUE LES POINTS SIMPLES NON DANS I
-    for (i = 0; i < N; i++) 
-      if (IS_OBJECT(S[i]) && !I[i] && mctopo3d_simple26(S, i, rs, ps, N))
-	SET_SIMPLE(S[i]);
+    for (i = 0; i < N; i++) {
+      if (IS_OBJECT(S[i]) && !I[i] && mctopo3d_simple26(S, i, rs, ps, N)) {
+        SET_SIMPLE(S[i]);
+      }
+    }
     // MARQUE LES POINTS DE SURFACE (2)
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2s(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2s(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS DE SURFACE (3) ET LES POINTS INTERIEURS
     for (i = 0; i < N; i++)
     {
       if (IS_OBJECT(S[i]) && !IS_SIMPLE(S[i]))
       {    
 	mctopo3d_top26(S, i, rs, ps, N, &top, &topb);
-	if (topb > 1) SET_SURF(S[i]);
-	if (topb == 0) SET_SELECTED(S[i]);
+        if (topb > 1) {
+          SET_SURF(S[i]);
+        }
+        if (topb == 0) {
+          SET_SELECTED(S[i]);
+        }
       }
     }
 
@@ -1527,8 +1914,10 @@ Attention : l'objet ne doit pas toucher le bord de l'image
         for (k = 0; k < 12; k += 2)        /* parcourt les voisins en 6-connexite */
         {
           j = voisin6(i, k, rs, ps, N);
-          if ((j != -1) && IS_SELECTED(S[j])) break;
-	}
+          if ((j != -1) && IS_SELECTED(S[j])) {
+            break;
+          }
+        }
 	if (k == 12) // le voxel est résiduel
 #else
 	for (k = 0; k < 26; k += 1)        /* parcourt les voisins en 26-connexite */
@@ -1542,59 +1931,80 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 	  for (k = 0; k < 26; k += 1)        /* parcourt les voisins en 26-connexite */
           {
 	    j = voisin26(i, k, rs, ps, N);
-	    if ((j != -1) && IS_SURF(S[j]))break;
-	  }
-	  if (k == 26) UNSET_SIMPLE(S[i]);
-	}
+            if ((j != -1) && IS_SURF(S[j])) {
+              break;
+            }
+          }
+          if (k == 26) {
+            UNSET_SIMPLE(S[i]);
+          }
+        }
       }
     }
     // MARQUE LES POINTS 2-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 1-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match1(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match1(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 0-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match0(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match0(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++) // T := [S \ P] \cup M, où M représente les pts marqués
-      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i]))
-	T[i] = 1;
+    for (i = 0; i < N;
+         i++) { // T := [S \ P] \cup M, où M représente les pts marqués
+      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i])) {
+        T[i] = 1;
+      }
+    }
 #ifdef DEBUG
 writeimage(t,"_T");
 #endif
 
-    for (i = 0; i < N; i++)
-      if (S[i] && !T[i]) 
-      {
-	S[i] = 0; 
-	nonstab = 1; 
-      }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+for (i = 0; i < N; i++) {
+  if (S[i] && !T[i]) {
+    S[i] = 0;
+    nonstab = 1;
+  }
+}
+for (i = 0; i < N; i++) {
+  if (S[i]) {
+    S[i] = S_OBJECT;
+  }
+}
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = 255; // normalize values
+      }
+    }
 
   freeimage(t);
   mctopo3d_termine_topo3d();
@@ -1657,9 +2067,15 @@ Attention : l'objet ne doit pas toucher le bord de l'image
     return 0;
   }
 
-  if (n_steps == -1) n_steps = 1000000000;
+  if (n_steps == -1) {
+    n_steps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = 1; // normalize values
+    }
+  }
 
   mctopo3d_init_topo3d();
 
@@ -1682,78 +2098,111 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 
     //  E := T \ominus \Gamma_6 
     memset(E, 0, N);
-    for (i = 0; i < N; i++) 
-      if (T[i] && (mctopo3d_nbvoiso6(T, i, rs, ps, N) == 6)) E[i] = 1;
+    for (i = 0; i < N; i++) {
+      if (T[i] && (mctopo3d_nbvoiso6(T, i, rs, ps, N) == 6)) {
+        E[i] = 1;
+      }
+    }
 
     //  D := E \oplus \Gamma_6
     memset(D, 0, N);
-    for (i = 0; i < N; i++)
-      if (E[i] || (mctopo3d_nbvoiso6(E, i, rs, ps, N) >= 1)) D[i] = 1;
+    for (i = 0; i < N; i++) {
+      if (E[i] || (mctopo3d_nbvoiso6(E, i, rs, ps, N) >= 1)) {
+        D[i] = 1;
+      }
+    }
 
     //  D := T \ D
-    for (i = 0; i < N; i++)
-      if (T[i] && !D[i]) D[i] = 1; else D[i] = 0;
+    for (i = 0; i < N; i++) {
+      if (T[i] && !D[i]) {
+        D[i] = 1;
+      } else {
+        D[i] = 0;
+      }
+    }
 
     //  T := E
     memcpy(T, E, N);
 
     //  K := K \cup D
-    for (i = 0; i < N; i++)
-      if (D[i]) K[i] = 1;
+    for (i = 0; i < N; i++) {
+      if (D[i]) {
+        K[i] = 1;
+      }
+    }
 
     // PREMIERE SOUS-ITERATION : MARQUE LES POINTS SIMPLES qui ne sont pas dans K
     if (step > filter)
     {
-      for (i = 0; i < N; i++) 
-	if (S[i] && !K[i] && mctopo3d_simple26(S, i, rs, ps, N))
-	  SET_SIMPLE(S[i]);
+      for (i = 0; i < N; i++) {
+        if (S[i] && !K[i] && mctopo3d_simple26(S, i, rs, ps, N)) {
+          SET_SIMPLE(S[i]);
+        }
+      }
     }
     else
     {
-      for (i = 0; i < N; i++) 
-	if (S[i] && mctopo3d_simple26(S, i, rs, ps, N))
-	  SET_SIMPLE(S[i]);
+      for (i = 0; i < N; i++) {
+        if (S[i] && mctopo3d_simple26(S, i, rs, ps, N)) {
+          SET_SIMPLE(S[i]);
+        }
+      }
     }
 
     // DEUXIEME SOUS-ITERATION : MARQUE LES CLIQUES CRUCIALES CORRESPONDANT AUX 2-FACES
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
     // TROISIEME SOUS-ITERATION : MARQUE LES CLIQUES CRUCIALES CORRESPONDANT AUX 1-FACES
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match1(v))
-	  //if (match1s(v))  // VARIANTE POUR EVITER LES "ECHANCRURES" (à voir)
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match1(v)) {
+          //if (match1s(v))  // VARIANTE POUR EVITER LES "ECHANCRURES" (à voir)
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
     // D := [S \ P] \cup  R, où R représente les pts marqués
     memset(D, 0, N);
-    for (i = 0; i < N; i++) 
-      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i]))
-	D[i] = 1;
+    for (i = 0; i < N; i++) {
+      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i])) {
+        D[i] = 1;
+      }
+    }
 
-    for (i = 0; i < N; i++) // pour  tester la stabilité
+    for (i = 0; i < N; i++) { // pour  tester la stabilité
       if (S[i] && !D[i]) 
       {
 	S[i] = 0; 
-	nonstab = 1; 
+	nonstab = 1;
       }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = 1;
+    }
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = 1;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = 255; // normalize values
+      }
+    }
 
   freeimage(t);
   freeimage(r);
@@ -1800,11 +2249,19 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   int32_t step, nonstab;
   uint8_t v[27];
 
-  if (n_steps == -1) n_steps = 1000000000;
+  if (n_steps == -1) {
+    n_steps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
 
-  if (inhibit != NULL) I = UCHARDATA(inhibit);
+  if (inhibit != NULL) {
+    I = UCHARDATA(inhibit);
+  }
 
   mctopo3d_init_topo3d();
 
@@ -1823,55 +2280,76 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 #endif
 
     // PREMIERE SOUS-ITERATION : MARQUE LES POINTS SIMPLES ET PAS DANS I
-    for (i = 0; i < N; i++) 
-      if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N) && (!I || !I[i]))
-	SET_SIMPLE(S[i]);
+    for (i = 0; i < N; i++) {
+      if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N) &&
+          (!I || !I[i])) {
+        SET_SIMPLE(S[i]);
+      }
+    }
     // DEUXIEME SOUS-ITERATION : MARQUE LES POINTS 2-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
     // TROISIEME SOUS-ITERATION : MARQUE LES POINTS 1-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match1(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match1(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
     // QUATRIEME SOUS-ITERATION : MARQUE LES POINTS 0-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match0(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match0(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++) // T := [S \ P] \cup  R, où R représente les pts marqués
-      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i]))
-	T[i] = 1;
+    for (i = 0; i < N;
+         i++) { // T := [S \ P] \cup  R, où R représente les pts marqués
+      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i])) {
+        T[i] = 1;
+      }
+    }
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (S[i] && !T[i]) 
       {
 	S[i] = 0; 
-	nonstab = 1; 
+	nonstab = 1;
       }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+    }
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = S_OBJECT;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = 255; // normalize values
+      }
+    }
 
   freeimage(t);
   mctopo3d_termine_topo3d();
@@ -1922,8 +2400,18 @@ Les points non enlevés sont marqués MARK_INFTY.
     return(0);
   }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
-  for (i = 0; i < N; i++) if (S[i]) O[i] = MARK_INFTY; else O[i] = 0;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      O[i] = MARK_INFTY;
+    } else {
+      O[i] = 0;
+    }
+  }
 
   if (inhibit != NULL) 
   {
@@ -1949,54 +2437,71 @@ Les points non enlevés sont marqués MARK_INFTY.
 #endif
 
     // PREMIERE SOUS-ITERATION : MARQUE LES POINTS SIMPLES
-    for (i = 0; i < N; i++) 
-      if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N))
-	SET_SIMPLE(S[i]);
+    for (i = 0; i < N; i++) {
+      if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N)) {
+        SET_SIMPLE(S[i]);
+      }
+    }
 #ifdef DEBUG
 writeimage(image,"_S");
 #endif
     // DEUXIEME SOUS-ITERATION : MARQUE LES POINTS 2-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
-      if (IS_SIMPLE(S[i]))
-      { 
-	extract_vois(S, i, rs, ps, N, v);
-	if (match2(v))
-	  insert_vois(v, S, i, rs, ps, N);
-      }
+for (i = 0; i < N; i++) {
+  if (IS_SIMPLE(S[i])) {
+    extract_vois(S, i, rs, ps, N, v);
+    if (match2(v)) {
+      insert_vois(v, S, i, rs, ps, N);
+    }
+  }
+}
 
     // TROISIEME SOUS-ITERATION : MARQUE LES POINTS 1-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
-      if (IS_SIMPLE(S[i]))
-      { 
-	extract_vois(S, i, rs, ps, N, v);
-	if (match1(v))
-	  insert_vois(v, S, i, rs, ps, N);
-      }
+for (i = 0; i < N; i++) {
+  if (IS_SIMPLE(S[i])) {
+    extract_vois(S, i, rs, ps, N, v);
+    if (match1(v)) {
+      insert_vois(v, S, i, rs, ps, N);
+    }
+  }
+}
 
     // QUATRIEME SOUS-ITERATION : MARQUE LES POINTS 0-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
-      if (IS_SIMPLE(S[i]))
-      { 
-	extract_vois(S, i, rs, ps, N, v);
-	if (match0(v))
-	  insert_vois(v, S, i, rs, ps, N);
-      }
+for (i = 0; i < N; i++) {
+  if (IS_SIMPLE(S[i])) {
+    extract_vois(S, i, rs, ps, N, v);
+    if (match0(v)) {
+      insert_vois(v, S, i, rs, ps, N);
+    }
+  }
+}
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++) // T := [S \ P] \cup  R, où R représente les pts marqués
-      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i]))
-	T[i] = 1;
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N;
+         i++) { // T := [S \ P] \cup  R, où R représente les pts marqués
+      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i])) {
+        T[i] = 1;
+      }
+    }
+    for (i = 0; i < N; i++) {
       if (S[i] && !T[i]) 
       {
 	S[i] = 0; 
 	O[i] = step;
-	nonstab = 1; 
+	nonstab = 1;
       }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+    }
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = S_OBJECT;
+      }
+    }
   }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = 255; // normalize values
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = 255; // normalize values
+    }
+  }
 
   freeimage(t);
   mctopo3d_termine_topo3d();
@@ -2057,8 +2562,18 @@ Retourne dans image l'axe topologique.
     return 0;
   }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
-  for (i = 0; i < N; i++) if (S[i]) O[i] = MARK_INFTY; else O[i] = 0;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      O[i] = MARK_INFTY;
+    } else {
+      O[i] = 0;
+    }
+  }
 
   mctopo3d_init_topo3d();
 
@@ -2077,43 +2592,65 @@ Retourne dans image l'axe topologique.
 #endif
 
     // PREMIERE SOUS-ITERATION : MARQUE LES POINTS SIMPLES
-    for (i = 0; i < N; i++) 
-      if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N))
-	SET_SIMPLE(S[i]);
+    for (i = 0; i < N; i++) {
+      if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N)) {
+        SET_SIMPLE(S[i]);
+      }
+    }
     // DEUXIEME SOUS-ITERATION : MARQUE LES CLIQUES CRUCIALES CORRESPONDANT AUX 2-FACES
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // TROISIEME SOUS-ITERATION : MARQUE LES CLIQUES CRUCIALES CORRESPONDANT AUX 1-FACES
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match1(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match1(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     memset(T, 0, N);
-    for (i = 0; i < N; i++) // T := [S \ P] \cup  R, où R représente les pts marqués
-      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i]))
-	T[i] = 1;
+    for (i = 0; i < N;
+         i++) { // T := [S \ P] \cup  R, où R représente les pts marqués
+      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i])) {
+        T[i] = 1;
+      }
+    }
     memset(R, 0, N);
-    for (i = 0; i < N; i++)
-      if (mctopo3d_nbvoiso26(T, i, rs, ps, N) >= 1) R[i] = 1; // calcule R = Dilat(T)
-    for (i = 0; i < N; i++)
-      if (T[i] || (S[i] && !R[i])) T[i] = 1; else T[i] = 0; // T := T \cup [S \ R]
+    for (i = 0; i < N; i++) {
+      if (mctopo3d_nbvoiso26(T, i, rs, ps, N) >= 1) {
+        R[i] = 1; // calcule R = Dilat(T)
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (T[i] || (S[i] && !R[i])) {
+        T[i] = 1;
+      } else {
+        T[i] = 0; // T := T \cup [S \ R]
+      }
+    }
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (S[i] && !T[i]) 
       {
 	S[i] = 0; 
 	nonstab = 1; 
 	O[i] = step;
       }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+    }
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = S_OBJECT;
+      }
+    }
   } // while (nonstab)
 
 #ifdef VERBOSE1
@@ -2122,13 +2659,12 @@ Retourne dans image l'axe topologique.
 
   // CALCUL AXE TOPOLOGIQUE
   memset(S, 0, N);
-  for (i = 0; i < N; i++) if (O[i] > 0)
-  {
-    if (O[i] == MARK_INFTY)
-      S[i] = 255;
-    else
-    {
-      minvois = MARK_INFTY;
+  for (i = 0; i < N; i++) {
+    if (O[i] > 0) {
+      if (O[i] == MARK_INFTY) {
+        S[i] = 255;
+      } else {
+        minvois = MARK_INFTY;
 #define VOISIN26
 #ifdef VOISIN6
       for (k = 0; k <= 10; k += 2)        /* parcourt les voisins en 6-connexite */
@@ -2141,10 +2677,15 @@ Retourne dans image l'axe topologique.
       for (k = 0; k < 26; k += 1)        /* parcourt les voisins en 26-connexite */
       {
 	j = voisin26(i, k, rs, ps, N);
-	if ((j != -1) && (O[j] > 0) && (O[j] < minvois)) minvois = O[j];
+        if ((j != -1) && (O[j] > 0) && (O[j] < minvois)) {
+          minvois = O[j];
+        }
       }
 #endif
-      if ((O[i] - minvois) > 1)  S[i] = 255;
+      if ((O[i] - minvois) > 1) {
+        S[i] = 255;
+      }
+      }
     }
   }
 
@@ -2200,16 +2741,39 @@ Si le test réussit, le point 8 est marqué SELECTED
 */
 {
   uint8_t t;
-  if (!IS_SIMPLE(v[8]) || !IS_SIMPLE(v[26]) || IS_SELECTED(v[8]) || IS_SELECTED(v[26])) return 0;
-  if (v[0] || v[9]) t = 1; else t = 0;
-  if (v[1] || v[10]) t |= 2;
-  if (v[2] || v[11]) t |= 4;
-  if (v[3] || v[12]) t |= 8;
-  if (v[4] || v[13]) t |= 16;
-  if (v[5] || v[14]) t |= 32;
-  if (v[6] || v[15]) t |= 64;
-  if (v[7] || v[16]) t |= 128;
-  if ((t4b(t) == 1) && (t8(t) == 1)) return 0; // simple 2D
+  if (!IS_SIMPLE(v[8]) || !IS_SIMPLE(v[26]) || IS_SELECTED(v[8]) ||
+      IS_SELECTED(v[26])) {
+    return 0;
+  }
+  if (v[0] || v[9]) {
+    t = 1;
+  } else {
+    t = 0;
+  }
+  if (v[1] || v[10]) {
+    t |= 2;
+  }
+  if (v[2] || v[11]) {
+    t |= 4;
+  }
+  if (v[3] || v[12]) {
+    t |= 8;
+  }
+  if (v[4] || v[13]) {
+    t |= 16;
+  }
+  if (v[5] || v[14]) {
+    t |= 32;
+  }
+  if (v[6] || v[15]) {
+    t |= 64;
+  }
+  if (v[7] || v[16]) {
+    t |= 128;
+  }
+  if ((t4b(t) == 1) && (t8(t) == 1)) {
+    return 0; // simple 2D
+  }
   SET_SELECTED(v[8]);
   return 1;
 } // seq_asym_match_vois2()
@@ -2232,16 +2796,38 @@ Si le test réussit, le point 8 est marqué SELECTED
 */
 {
   uint8_t t;
-  if (!IS_SIMPLE(v[8]) || !IS_SIMPLE(v[26])) return 0;
-  if (v[0] || v[9]) t = 1; else t = 0;
-  if (v[1] || v[10]) t |= 2;
-  if (v[2] || v[11]) t |= 4;
-  if (v[3] || v[12]) t |= 8;
-  if (v[4] || v[13]) t |= 16;
-  if (v[5] || v[14]) t |= 32;
-  if (v[6] || v[15]) t |= 64;
-  if (v[7] || v[16]) t |= 128;
-  if ((t4b(t) == 1) && (t8(t) == 1)) return 0; // simple 2D
+  if (!IS_SIMPLE(v[8]) || !IS_SIMPLE(v[26])) {
+    return 0;
+  }
+  if (v[0] || v[9]) {
+    t = 1;
+  } else {
+    t = 0;
+  }
+  if (v[1] || v[10]) {
+    t |= 2;
+  }
+  if (v[2] || v[11]) {
+    t |= 4;
+  }
+  if (v[3] || v[12]) {
+    t |= 8;
+  }
+  if (v[4] || v[13]) {
+    t |= 16;
+  }
+  if (v[5] || v[14]) {
+    t |= 32;
+  }
+  if (v[6] || v[15]) {
+    t |= 64;
+  }
+  if (v[7] || v[16]) {
+    t |= 128;
+  }
+  if ((t4b(t) == 1) && (t8(t) == 1)) {
+    return 0; // simple 2D
+  }
   SET_SELECTED(v[8]);
   return 1;
 } // asym_match_vois2()
@@ -2265,32 +2851,54 @@ int32_t seq_asym_match_vois1(uint8_t *v)
 // Si le test réussit, un des points Pi non nuls est marqué SELECTED
 {
   int32_t ret = 0;
-  if (!((v[2] && v[4]) || (v[3] && v[26]))) goto next1;
-  if ((IS_OBJECT(v[2])  && (!IS_SIMPLE(v[2])  || IS_SELECTED(v[2]))) ||
-      (IS_OBJECT(v[3])  && (!IS_SIMPLE(v[3])  || IS_SELECTED(v[3]))) ||
-      (IS_OBJECT(v[4])  && (!IS_SIMPLE(v[4])  || IS_SELECTED(v[4]))) ||
-      (IS_OBJECT(v[26]) && (!IS_SIMPLE(v[26]) || IS_SELECTED(v[26])))) goto next1;
+  if (!((v[2] && v[4]) || (v[3] && v[26]))) {
+    goto next1;
+  }
+  if ((IS_OBJECT(v[2]) && (!IS_SIMPLE(v[2]) || IS_SELECTED(v[2]))) ||
+      (IS_OBJECT(v[3]) && (!IS_SIMPLE(v[3]) || IS_SELECTED(v[3]))) ||
+      (IS_OBJECT(v[4]) && (!IS_SIMPLE(v[4]) || IS_SELECTED(v[4]))) ||
+      (IS_OBJECT(v[26]) && (!IS_SIMPLE(v[26]) || IS_SELECTED(v[26])))) {
+    goto next1;
+  }
   if ((v[12] || v[11] || v[13] || v[8] || v[21] || v[20] || v[22] || v[17]) &&
-      ((!v[12] && !v[11] && !v[13] && !v[8]) || 
-       (!v[21] && !v[20] && !v[22] && !v[17]))) goto next1;
-  if (v[2])  SET_SELECTED(v[2]);
-  else if (v[3])  SET_SELECTED(v[3]);
-  else if (v[4])  SET_SELECTED(v[4]);
-  else if (v[26]) SET_SELECTED(v[26]);
+      ((!v[12] && !v[11] && !v[13] && !v[8]) ||
+       (!v[21] && !v[20] && !v[22] && !v[17]))) {
+    goto next1;
+  }
+  if (v[2]) {
+    SET_SELECTED(v[2]);
+  } else if (v[3]) {
+    SET_SELECTED(v[3]);
+  } else if (v[4]) {
+    SET_SELECTED(v[4]);
+  } else if (v[26]) {
+    SET_SELECTED(v[26]);
+  }
   ret = 1;
  next1:
-  if (!((v[2] && v[0]) || (v[1] && v[26]))) goto next2;
-  if ((IS_OBJECT(v[2])  && (!IS_SIMPLE(v[2])  || IS_SELECTED(v[2]))) ||
-      (IS_OBJECT(v[1])  && (!IS_SIMPLE(v[1])  || IS_SELECTED(v[1]))) ||
-      (IS_OBJECT(v[0])  && (!IS_SIMPLE(v[0])  || IS_SELECTED(v[0]))) ||
-      (IS_OBJECT(v[26]) && (!IS_SIMPLE(v[26]) || IS_SELECTED(v[26])))) goto next2;
-  if ((v[10] || v[11] || v[9] || v[8] || v[19] || v[20] || v[18] || v[17]) &&
-      ((!v[10] && !v[11] && !v[9] && !v[8]) || 
-       (!v[19] && !v[20] && !v[18] && !v[17]))) goto next2;
-  if (v[2])  SET_SELECTED(v[2]);
-  else if (v[1])  SET_SELECTED(v[1]);
-  else if (v[0])  SET_SELECTED(v[0]);
-  else if (v[26]) SET_SELECTED(v[26]);
+   if (!((v[2] && v[0]) || (v[1] && v[26]))) {
+     goto next2;
+   }
+   if ((IS_OBJECT(v[2]) && (!IS_SIMPLE(v[2]) || IS_SELECTED(v[2]))) ||
+       (IS_OBJECT(v[1]) && (!IS_SIMPLE(v[1]) || IS_SELECTED(v[1]))) ||
+       (IS_OBJECT(v[0]) && (!IS_SIMPLE(v[0]) || IS_SELECTED(v[0]))) ||
+       (IS_OBJECT(v[26]) && (!IS_SIMPLE(v[26]) || IS_SELECTED(v[26])))) {
+     goto next2;
+   }
+   if ((v[10] || v[11] || v[9] || v[8] || v[19] || v[20] || v[18] || v[17]) &&
+       ((!v[10] && !v[11] && !v[9] && !v[8]) ||
+        (!v[19] && !v[20] && !v[18] && !v[17]))) {
+     goto next2;
+   }
+   if (v[2]) {
+     SET_SELECTED(v[2]);
+   } else if (v[1]) {
+     SET_SELECTED(v[1]);
+   } else if (v[0]) {
+     SET_SELECTED(v[0]);
+   } else if (v[26]) {
+     SET_SELECTED(v[26]);
+   }
   ret = 1;
  next2:
   return ret;
@@ -2315,32 +2923,54 @@ int32_t asym_match_vois1(uint8_t *v)
 // Si le test réussit, un des points Pi non nuls est marqué SELECTED
 {
   int32_t ret = 0;
-  if (!((v[2] && v[4]) || (v[3] && v[26]))) goto next1;
-  if ((IS_OBJECT(v[2])  && (!IS_SIMPLE(v[2])  || IS_DCRUCIAL(v[2]))) ||
-      (IS_OBJECT(v[3])  && (!IS_SIMPLE(v[3])  || IS_DCRUCIAL(v[3]))) ||
-      (IS_OBJECT(v[4])  && (!IS_SIMPLE(v[4])  || IS_DCRUCIAL(v[4]))) ||
-      (IS_OBJECT(v[26]) && (!IS_SIMPLE(v[26]) || IS_DCRUCIAL(v[26])))) goto next1;
+  if (!((v[2] && v[4]) || (v[3] && v[26]))) {
+    goto next1;
+  }
+  if ((IS_OBJECT(v[2]) && (!IS_SIMPLE(v[2]) || IS_DCRUCIAL(v[2]))) ||
+      (IS_OBJECT(v[3]) && (!IS_SIMPLE(v[3]) || IS_DCRUCIAL(v[3]))) ||
+      (IS_OBJECT(v[4]) && (!IS_SIMPLE(v[4]) || IS_DCRUCIAL(v[4]))) ||
+      (IS_OBJECT(v[26]) && (!IS_SIMPLE(v[26]) || IS_DCRUCIAL(v[26])))) {
+    goto next1;
+  }
   if ((v[12] || v[11] || v[13] || v[8] || v[21] || v[20] || v[22] || v[17]) &&
-      ((!v[12] && !v[11] && !v[13] && !v[8]) || 
-       (!v[21] && !v[20] && !v[22] && !v[17]))) goto next1;
-  if (v[2])  SET_SELECTED(v[2]);
-  else if (v[3])  SET_SELECTED(v[3]);
-  else if (v[4])  SET_SELECTED(v[4]);
-  else if (v[26]) SET_SELECTED(v[26]);
+      ((!v[12] && !v[11] && !v[13] && !v[8]) ||
+       (!v[21] && !v[20] && !v[22] && !v[17]))) {
+    goto next1;
+  }
+  if (v[2]) {
+    SET_SELECTED(v[2]);
+  } else if (v[3]) {
+    SET_SELECTED(v[3]);
+  } else if (v[4]) {
+    SET_SELECTED(v[4]);
+  } else if (v[26]) {
+    SET_SELECTED(v[26]);
+  }
   ret = 1;
  next1:
-  if (!((v[2] && v[0]) || (v[1] && v[26]))) goto next2;
-  if ((IS_OBJECT(v[2])  && (!IS_SIMPLE(v[2])  || IS_DCRUCIAL(v[2]))) ||
-      (IS_OBJECT(v[1])  && (!IS_SIMPLE(v[1])  || IS_DCRUCIAL(v[1]))) ||
-      (IS_OBJECT(v[0])  && (!IS_SIMPLE(v[0])  || IS_DCRUCIAL(v[0]))) ||
-      (IS_OBJECT(v[26]) && (!IS_SIMPLE(v[26]) || IS_DCRUCIAL(v[26])))) goto next2;
-  if ((v[10] || v[11] || v[9] || v[8] || v[19] || v[20] || v[18] || v[17]) &&
-      ((!v[10] && !v[11] && !v[9] && !v[8]) || 
-       (!v[19] && !v[20] && !v[18] && !v[17]))) goto next2;
-  if (v[2])  SET_SELECTED(v[2]);
-  else if (v[1])  SET_SELECTED(v[1]);
-  else if (v[0])  SET_SELECTED(v[0]);
-  else if (v[26]) SET_SELECTED(v[26]);
+   if (!((v[2] && v[0]) || (v[1] && v[26]))) {
+     goto next2;
+   }
+   if ((IS_OBJECT(v[2]) && (!IS_SIMPLE(v[2]) || IS_DCRUCIAL(v[2]))) ||
+       (IS_OBJECT(v[1]) && (!IS_SIMPLE(v[1]) || IS_DCRUCIAL(v[1]))) ||
+       (IS_OBJECT(v[0]) && (!IS_SIMPLE(v[0]) || IS_DCRUCIAL(v[0]))) ||
+       (IS_OBJECT(v[26]) && (!IS_SIMPLE(v[26]) || IS_DCRUCIAL(v[26])))) {
+     goto next2;
+   }
+   if ((v[10] || v[11] || v[9] || v[8] || v[19] || v[20] || v[18] || v[17]) &&
+       ((!v[10] && !v[11] && !v[9] && !v[8]) ||
+        (!v[19] && !v[20] && !v[18] && !v[17]))) {
+     goto next2;
+   }
+   if (v[2]) {
+     SET_SELECTED(v[2]);
+   } else if (v[1]) {
+     SET_SELECTED(v[1]);
+   } else if (v[0]) {
+     SET_SELECTED(v[0]);
+   } else if (v[26]) {
+     SET_SELECTED(v[26]);
+   }
   ret = 1;
  next2:
   return ret;
@@ -2369,22 +2999,42 @@ Teste si les conditions suivantes sont réunies:
 Si le test réussit, le point 26 est marqué SELECTED
 */
 {
-  if (!v[26]) return 0;
-  if (!IS_SIMPLE(v[26]) || IS_SELECTED(v[26])) return 0;
-  if (!(v[12] || v[10] || v[14] || v[21])) return 0;
+  if (!v[26]) {
+    return 0;
+  }
+  if (!IS_SIMPLE(v[26]) || IS_SELECTED(v[26])) {
+    return 0;
+  }
+  if (!(v[12] || v[10] || v[14] || v[21])) {
+    return 0;
+  }
   if (v[12])
   { /*         12      11
                13       8
 
 		3	2
 		4      26 */
-     if (!IS_SIMPLE(v[12]) || IS_SELECTED(v[12])) return 0;
-     if (v[11] && (!IS_SIMPLE(v[11]) || IS_SELECTED(v[11]))) return 0;
-     if (v[13] && (!IS_SIMPLE(v[13]) || IS_SELECTED(v[13]))) return 0;
-     if (v[ 8] && (!IS_SIMPLE(v[ 8]) || IS_SELECTED(v[ 8]))) return 0;
-     if (v[ 3] && (!IS_SIMPLE(v[ 3]) || IS_SELECTED(v[ 3]))) return 0;
-     if (v[ 2] && (!IS_SIMPLE(v[ 2]) || IS_SELECTED(v[ 2]))) return 0;
-     if (v[ 4] && (!IS_SIMPLE(v[ 4]) || IS_SELECTED(v[ 4]))) return 0;
+    if (!IS_SIMPLE(v[12]) || IS_SELECTED(v[12])) {
+      return 0;
+    }
+    if (v[11] && (!IS_SIMPLE(v[11]) || IS_SELECTED(v[11]))) {
+      return 0;
+    }
+    if (v[13] && (!IS_SIMPLE(v[13]) || IS_SELECTED(v[13]))) {
+      return 0;
+    }
+    if (v[8] && (!IS_SIMPLE(v[8]) || IS_SELECTED(v[8]))) {
+      return 0;
+    }
+    if (v[3] && (!IS_SIMPLE(v[3]) || IS_SELECTED(v[3]))) {
+      return 0;
+    }
+    if (v[2] && (!IS_SIMPLE(v[2]) || IS_SELECTED(v[2]))) {
+      return 0;
+    }
+    if (v[4] && (!IS_SIMPLE(v[4]) || IS_SELECTED(v[4]))) {
+      return 0;
+    }
   }
   if (v[10])
   { /*
@@ -2393,13 +3043,27 @@ Si le test réussit, le point 26 est marqué SELECTED
 
 		2	1
 		26	0 */
-     if (!IS_SIMPLE(v[10]) || IS_SELECTED(v[10])) return 0;
-     if (v[11] && (!IS_SIMPLE(v[11]) || IS_SELECTED(v[11]))) return 0;
-     if (v[ 8] && (!IS_SIMPLE(v[ 8]) || IS_SELECTED(v[ 8]))) return 0;
-     if (v[ 9] && (!IS_SIMPLE(v[ 9]) || IS_SELECTED(v[ 9]))) return 0;
-     if (v[ 1] && (!IS_SIMPLE(v[ 1]) || IS_SELECTED(v[ 1]))) return 0;
-     if (v[ 2] && (!IS_SIMPLE(v[ 2]) || IS_SELECTED(v[ 2]))) return 0;
-     if (v[ 0] && (!IS_SIMPLE(v[ 0]) || IS_SELECTED(v[ 0]))) return 0;
+    if (!IS_SIMPLE(v[10]) || IS_SELECTED(v[10])) {
+      return 0;
+    }
+    if (v[11] && (!IS_SIMPLE(v[11]) || IS_SELECTED(v[11]))) {
+      return 0;
+    }
+    if (v[8] && (!IS_SIMPLE(v[8]) || IS_SELECTED(v[8]))) {
+      return 0;
+    }
+    if (v[9] && (!IS_SIMPLE(v[9]) || IS_SELECTED(v[9]))) {
+      return 0;
+    }
+    if (v[1] && (!IS_SIMPLE(v[1]) || IS_SELECTED(v[1]))) {
+      return 0;
+    }
+    if (v[2] && (!IS_SIMPLE(v[2]) || IS_SELECTED(v[2]))) {
+      return 0;
+    }
+    if (v[0] && (!IS_SIMPLE(v[0]) || IS_SELECTED(v[0]))) {
+      return 0;
+    }
   }
   if (v[14])
   { /*         13       8
@@ -2407,13 +3071,27 @@ Si le test réussit, le point 26 est marqué SELECTED
 
 		4      26
 		5	6 */
-     if (!IS_SIMPLE(v[14]) || IS_SELECTED(v[14])) return 0;
-     if (v[13] && (!IS_SIMPLE(v[13]) || IS_SELECTED(v[13]))) return 0;
-     if (v[15] && (!IS_SIMPLE(v[15]) || IS_SELECTED(v[15]))) return 0;
-     if (v[ 8] && (!IS_SIMPLE(v[ 8]) || IS_SELECTED(v[ 8]))) return 0;
-     if (v[ 6] && (!IS_SIMPLE(v[ 6]) || IS_SELECTED(v[ 6]))) return 0;
-     if (v[ 5] && (!IS_SIMPLE(v[ 5]) || IS_SELECTED(v[ 5]))) return 0;
-     if (v[ 4] && (!IS_SIMPLE(v[ 4]) || IS_SELECTED(v[ 4]))) return 0;
+    if (!IS_SIMPLE(v[14]) || IS_SELECTED(v[14])) {
+      return 0;
+    }
+    if (v[13] && (!IS_SIMPLE(v[13]) || IS_SELECTED(v[13]))) {
+      return 0;
+    }
+    if (v[15] && (!IS_SIMPLE(v[15]) || IS_SELECTED(v[15]))) {
+      return 0;
+    }
+    if (v[8] && (!IS_SIMPLE(v[8]) || IS_SELECTED(v[8]))) {
+      return 0;
+    }
+    if (v[6] && (!IS_SIMPLE(v[6]) || IS_SELECTED(v[6]))) {
+      return 0;
+    }
+    if (v[5] && (!IS_SIMPLE(v[5]) || IS_SELECTED(v[5]))) {
+      return 0;
+    }
+    if (v[4] && (!IS_SIMPLE(v[4]) || IS_SELECTED(v[4]))) {
+      return 0;
+    }
   }
   if (v[21])
   {  /*		3	2
@@ -2421,13 +3099,27 @@ Si le test réussit, le point 26 est marqué SELECTED
 
                21      20
                22      17 */
-     if (!IS_SIMPLE(v[21]) || IS_SELECTED(v[21])) return 0;
-     if (v[17] && (!IS_SIMPLE(v[17]) || IS_SELECTED(v[17]))) return 0;
-     if (v[20] && (!IS_SIMPLE(v[20]) || IS_SELECTED(v[20]))) return 0;
-     if (v[22] && (!IS_SIMPLE(v[22]) || IS_SELECTED(v[22]))) return 0;
-     if (v[ 3] && (!IS_SIMPLE(v[ 3]) || IS_SELECTED(v[ 3]))) return 0;
-     if (v[ 2] && (!IS_SIMPLE(v[ 2]) || IS_SELECTED(v[ 2]))) return 0;
-     if (v[ 4] && (!IS_SIMPLE(v[ 4]) || IS_SELECTED(v[ 4]))) return 0;
+    if (!IS_SIMPLE(v[21]) || IS_SELECTED(v[21])) {
+      return 0;
+    }
+    if (v[17] && (!IS_SIMPLE(v[17]) || IS_SELECTED(v[17]))) {
+      return 0;
+    }
+    if (v[20] && (!IS_SIMPLE(v[20]) || IS_SELECTED(v[20]))) {
+      return 0;
+    }
+    if (v[22] && (!IS_SIMPLE(v[22]) || IS_SELECTED(v[22]))) {
+      return 0;
+    }
+    if (v[3] && (!IS_SIMPLE(v[3]) || IS_SELECTED(v[3]))) {
+      return 0;
+    }
+    if (v[2] && (!IS_SIMPLE(v[2]) || IS_SELECTED(v[2]))) {
+      return 0;
+    }
+    if (v[4] && (!IS_SIMPLE(v[4]) || IS_SELECTED(v[4]))) {
+      return 0;
+    }
   }
   SET_SELECTED(v[26]);
   return 1;
@@ -2456,22 +3148,42 @@ Teste si les conditions suivantes sont réunies:
 Si le test réussit, le point 26 est marqué SELECTED
 */
 {
-  if (!v[26]) return 0;
-  if (!IS_SIMPLE(v[26]) || IS_DCRUCIAL(v[26])) return 0;
-  if (!(v[12] || v[10] || v[14] || v[21])) return 0;
+  if (!v[26]) {
+    return 0;
+  }
+  if (!IS_SIMPLE(v[26]) || IS_DCRUCIAL(v[26])) {
+    return 0;
+  }
+  if (!(v[12] || v[10] || v[14] || v[21])) {
+    return 0;
+  }
   if (v[12])
   { /*         12      11
                13       8
 
 		3	2
 		4      26 */
-     if (!IS_SIMPLE(v[12]) || IS_DCRUCIAL(v[12])) return 0;
-     if (v[11] && (!IS_SIMPLE(v[11]) || IS_DCRUCIAL(v[11]))) return 0;
-     if (v[13] && (!IS_SIMPLE(v[13]) || IS_DCRUCIAL(v[13]))) return 0;
-     if (v[ 8] && (!IS_SIMPLE(v[ 8]) || IS_DCRUCIAL(v[ 8]))) return 0;
-     if (v[ 3] && (!IS_SIMPLE(v[ 3]) || IS_DCRUCIAL(v[ 3]))) return 0;
-     if (v[ 2] && (!IS_SIMPLE(v[ 2]) || IS_DCRUCIAL(v[ 2]))) return 0;
-     if (v[ 4] && (!IS_SIMPLE(v[ 4]) || IS_DCRUCIAL(v[ 4]))) return 0;
+    if (!IS_SIMPLE(v[12]) || IS_DCRUCIAL(v[12])) {
+      return 0;
+    }
+    if (v[11] && (!IS_SIMPLE(v[11]) || IS_DCRUCIAL(v[11]))) {
+      return 0;
+    }
+    if (v[13] && (!IS_SIMPLE(v[13]) || IS_DCRUCIAL(v[13]))) {
+      return 0;
+    }
+    if (v[8] && (!IS_SIMPLE(v[8]) || IS_DCRUCIAL(v[8]))) {
+      return 0;
+    }
+    if (v[3] && (!IS_SIMPLE(v[3]) || IS_DCRUCIAL(v[3]))) {
+      return 0;
+    }
+    if (v[2] && (!IS_SIMPLE(v[2]) || IS_DCRUCIAL(v[2]))) {
+      return 0;
+    }
+    if (v[4] && (!IS_SIMPLE(v[4]) || IS_DCRUCIAL(v[4]))) {
+      return 0;
+    }
   }
   if (v[10])
   { /*
@@ -2480,13 +3192,27 @@ Si le test réussit, le point 26 est marqué SELECTED
 
 		2	1
 		26	0 */
-     if (!IS_SIMPLE(v[10]) || IS_DCRUCIAL(v[10])) return 0;
-     if (v[11] && (!IS_SIMPLE(v[11]) || IS_DCRUCIAL(v[11]))) return 0;
-     if (v[ 8] && (!IS_SIMPLE(v[ 8]) || IS_DCRUCIAL(v[ 8]))) return 0;
-     if (v[ 9] && (!IS_SIMPLE(v[ 9]) || IS_DCRUCIAL(v[ 9]))) return 0;
-     if (v[ 1] && (!IS_SIMPLE(v[ 1]) || IS_DCRUCIAL(v[ 1]))) return 0;
-     if (v[ 2] && (!IS_SIMPLE(v[ 2]) || IS_DCRUCIAL(v[ 2]))) return 0;
-     if (v[ 0] && (!IS_SIMPLE(v[ 0]) || IS_DCRUCIAL(v[ 0]))) return 0;
+    if (!IS_SIMPLE(v[10]) || IS_DCRUCIAL(v[10])) {
+      return 0;
+    }
+    if (v[11] && (!IS_SIMPLE(v[11]) || IS_DCRUCIAL(v[11]))) {
+      return 0;
+    }
+    if (v[8] && (!IS_SIMPLE(v[8]) || IS_DCRUCIAL(v[8]))) {
+      return 0;
+    }
+    if (v[9] && (!IS_SIMPLE(v[9]) || IS_DCRUCIAL(v[9]))) {
+      return 0;
+    }
+    if (v[1] && (!IS_SIMPLE(v[1]) || IS_DCRUCIAL(v[1]))) {
+      return 0;
+    }
+    if (v[2] && (!IS_SIMPLE(v[2]) || IS_DCRUCIAL(v[2]))) {
+      return 0;
+    }
+    if (v[0] && (!IS_SIMPLE(v[0]) || IS_DCRUCIAL(v[0]))) {
+      return 0;
+    }
   }
   if (v[14])
   { /*         13       8
@@ -2494,13 +3220,27 @@ Si le test réussit, le point 26 est marqué SELECTED
 
 		4      26
 		5	6 */
-     if (!IS_SIMPLE(v[14]) || IS_DCRUCIAL(v[14])) return 0;
-     if (v[13] && (!IS_SIMPLE(v[13]) || IS_DCRUCIAL(v[13]))) return 0;
-     if (v[15] && (!IS_SIMPLE(v[15]) || IS_DCRUCIAL(v[15]))) return 0;
-     if (v[ 8] && (!IS_SIMPLE(v[ 8]) || IS_DCRUCIAL(v[ 8]))) return 0;
-     if (v[ 6] && (!IS_SIMPLE(v[ 6]) || IS_DCRUCIAL(v[ 6]))) return 0;
-     if (v[ 5] && (!IS_SIMPLE(v[ 5]) || IS_DCRUCIAL(v[ 5]))) return 0;
-     if (v[ 4] && (!IS_SIMPLE(v[ 4]) || IS_DCRUCIAL(v[ 4]))) return 0;
+    if (!IS_SIMPLE(v[14]) || IS_DCRUCIAL(v[14])) {
+      return 0;
+    }
+    if (v[13] && (!IS_SIMPLE(v[13]) || IS_DCRUCIAL(v[13]))) {
+      return 0;
+    }
+    if (v[15] && (!IS_SIMPLE(v[15]) || IS_DCRUCIAL(v[15]))) {
+      return 0;
+    }
+    if (v[8] && (!IS_SIMPLE(v[8]) || IS_DCRUCIAL(v[8]))) {
+      return 0;
+    }
+    if (v[6] && (!IS_SIMPLE(v[6]) || IS_DCRUCIAL(v[6]))) {
+      return 0;
+    }
+    if (v[5] && (!IS_SIMPLE(v[5]) || IS_DCRUCIAL(v[5]))) {
+      return 0;
+    }
+    if (v[4] && (!IS_SIMPLE(v[4]) || IS_DCRUCIAL(v[4]))) {
+      return 0;
+    }
   }
   if (v[21])
   {  /*		3	2
@@ -2508,13 +3248,27 @@ Si le test réussit, le point 26 est marqué SELECTED
 
                21      20
                22      17 */
-     if (!IS_SIMPLE(v[21]) || IS_DCRUCIAL(v[21])) return 0;
-     if (v[17] && (!IS_SIMPLE(v[17]) || IS_DCRUCIAL(v[17]))) return 0;
-     if (v[20] && (!IS_SIMPLE(v[20]) || IS_DCRUCIAL(v[20]))) return 0;
-     if (v[22] && (!IS_SIMPLE(v[22]) || IS_DCRUCIAL(v[22]))) return 0;
-     if (v[ 3] && (!IS_SIMPLE(v[ 3]) || IS_DCRUCIAL(v[ 3]))) return 0;
-     if (v[ 2] && (!IS_SIMPLE(v[ 2]) || IS_DCRUCIAL(v[ 2]))) return 0;
-     if (v[ 4] && (!IS_SIMPLE(v[ 4]) || IS_DCRUCIAL(v[ 4]))) return 0;
+    if (!IS_SIMPLE(v[21]) || IS_DCRUCIAL(v[21])) {
+      return 0;
+    }
+    if (v[17] && (!IS_SIMPLE(v[17]) || IS_DCRUCIAL(v[17]))) {
+      return 0;
+    }
+    if (v[20] && (!IS_SIMPLE(v[20]) || IS_DCRUCIAL(v[20]))) {
+      return 0;
+    }
+    if (v[22] && (!IS_SIMPLE(v[22]) || IS_DCRUCIAL(v[22]))) {
+      return 0;
+    }
+    if (v[3] && (!IS_SIMPLE(v[3]) || IS_DCRUCIAL(v[3]))) {
+      return 0;
+    }
+    if (v[2] && (!IS_SIMPLE(v[2]) || IS_DCRUCIAL(v[2]))) {
+      return 0;
+    }
+    if (v[4] && (!IS_SIMPLE(v[4]) || IS_DCRUCIAL(v[4]))) {
+      return 0;
+    }
   }
   SET_SELECTED(v[26]);
   return 1;
@@ -2525,12 +3279,18 @@ int32_t seq_asym_match2(uint8_t *v)
 /* ==================================== */
 {
   int32_t ret = 0;
-  if (seq_asym_match_vois2(v)) ret = 1;
+  if (seq_asym_match_vois2(v)) {
+    ret = 1;
+  }
   isometrieXZ_vois(v);
-  if (seq_asym_match_vois2(v)) ret = 1;
+  if (seq_asym_match_vois2(v)) {
+    ret = 1;
+  }
   isometrieXZ_vois(v);
   isometrieYZ_vois(v);
-  if (seq_asym_match_vois2(v)) ret = 1;
+  if (seq_asym_match_vois2(v)) {
+    ret = 1;
+  }
   isometrieYZ_vois(v);
   return ret;
 } /* seq_asym_match2() */
@@ -2540,12 +3300,18 @@ int32_t seq_asym_match1(uint8_t *v)
 /* ==================================== */
 {
   int32_t ret = 0;
-  if (seq_asym_match_vois1(v)) ret = 1;
+  if (seq_asym_match_vois1(v)) {
+    ret = 1;
+  }
   isometrieXZ_vois(v);
-  if (seq_asym_match_vois1(v)) ret = 1;
+  if (seq_asym_match_vois1(v)) {
+    ret = 1;
+  }
   isometrieXZ_vois(v);
   isometrieYZ_vois(v);
-  if (seq_asym_match_vois1(v)) ret = 1;
+  if (seq_asym_match_vois1(v)) {
+    ret = 1;
+  }
   isometrieYZ_vois(v);
   return ret;
 } /* seq_asym_match1() */
@@ -2555,7 +3321,9 @@ int32_t seq_asym_match0(uint8_t *v)
 /* ==================================== */
 {
   int32_t ret = 0;
-  if (seq_asym_match_vois0(v)) ret = 1;
+  if (seq_asym_match_vois0(v)) {
+    ret = 1;
+  }
   return ret;
 } /* seq_asym_match0() */
 
@@ -2564,12 +3332,18 @@ int32_t asym_match2(uint8_t *v)
 /* ==================================== */
 {
   int32_t ret = 0;
-  if (asym_match_vois2(v)) ret = 1;
+  if (asym_match_vois2(v)) {
+    ret = 1;
+  }
   isometrieXZ_vois(v);
-  if (asym_match_vois2(v)) ret = 1;
+  if (asym_match_vois2(v)) {
+    ret = 1;
+  }
   isometrieXZ_vois(v);
   isometrieYZ_vois(v);
-  if (asym_match_vois2(v)) ret = 1;
+  if (asym_match_vois2(v)) {
+    ret = 1;
+  }
   isometrieYZ_vois(v);
   return ret;
 } /* asym_match2() */
@@ -2579,12 +3353,18 @@ int32_t asym_match1(uint8_t *v)
 /* ==================================== */
 {
   int32_t ret = 0;
-  if (asym_match_vois1(v)) ret = 1;
+  if (asym_match_vois1(v)) {
+    ret = 1;
+  }
   isometrieXZ_vois(v);
-  if (asym_match_vois1(v)) ret = 1;
+  if (asym_match_vois1(v)) {
+    ret = 1;
+  }
   isometrieXZ_vois(v);
   isometrieYZ_vois(v);
-  if (asym_match_vois1(v)) ret = 1;
+  if (asym_match_vois1(v)) {
+    ret = 1;
+  }
   isometrieYZ_vois(v);
   return ret;
 } /* asym_match1() */
@@ -2594,7 +3374,9 @@ int32_t asym_match0(uint8_t *v)
 /* ==================================== */
 {
   int32_t ret = 0;
-  if (asym_match_vois0(v)) ret = 1;
+  if (asym_match_vois0(v)) {
+    ret = 1;
+  }
   return ret;
 } /* asym_match0() */
 
@@ -2633,11 +3415,19 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   int32_t step, nonstab;
   uint8_t v[27];
 
-  if (n_steps == -1) n_steps = 1000000000;
+  if (n_steps == -1) {
+    n_steps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
 
-  if (inhibit != NULL) I = UCHARDATA(inhibit);
+  if (inhibit != NULL) {
+    I = UCHARDATA(inhibit);
+  }
 
   mctopo3d_init_topo3d();
 
@@ -2656,59 +3446,95 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 #endif
 
     // PREMIERE SOUS-ITERATION : MARQUE LES POINTS SIMPLES ET PAS DANS I
-    for (i = 0; i < N; i++) 
-      if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N) && (!I || !I[i]))
-	SET_SIMPLE(S[i]);
+    for (i = 0; i < N; i++) {
+      if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N) &&
+          (!I || !I[i])) {
+        SET_SIMPLE(S[i]);
+      }
+    }
 
     // DEUXIEME SOUS-ITERATION : MARQUE LES POINTS 2-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (asym_match2(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (asym_match2(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
-    for (i = 1; i < N; i++) if (IS_SELECTED(S[i])) { UNSET_SELECTED(S[i]); SET_DCRUCIAL(S[i]); }
+    }
+    for (i = 1; i < N; i++) {
+      if (IS_SELECTED(S[i])) {
+        UNSET_SELECTED(S[i]);
+        SET_DCRUCIAL(S[i]);
+      }
+    }
 
     // TROISIEME SOUS-ITERATION : MARQUE LES POINTS 1-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (asym_match1(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (asym_match1(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
-    for (i = 1; i < N; i++) if (IS_SELECTED(S[i])) { UNSET_SELECTED(S[i]); SET_DCRUCIAL(S[i]); }
+    }
+    for (i = 1; i < N; i++) {
+      if (IS_SELECTED(S[i])) {
+        UNSET_SELECTED(S[i]);
+        SET_DCRUCIAL(S[i]);
+      }
+    }
 
     // QUATRIEME SOUS-ITERATION : MARQUE LES POINTS 0-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (asym_match0(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (asym_match0(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
-    for (i = 1; i < N; i++) if (IS_SELECTED(S[i])) { UNSET_SELECTED(S[i]); SET_DCRUCIAL(S[i]); }
+    }
+    for (i = 1; i < N; i++) {
+      if (IS_SELECTED(S[i])) {
+        UNSET_SELECTED(S[i]);
+        SET_DCRUCIAL(S[i]);
+      }
+    }
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++) // T := [S \ P] \cup  R, où R représente les pts marqués
-      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i]))
-	T[i] = 1;
+    for (i = 0; i < N;
+         i++) { // T := [S \ P] \cup  R, où R représente les pts marqués
+      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i])) {
+        T[i] = 1;
+      }
+    }
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (S[i] && !T[i]) 
       {
 	S[i] = 0; 
-	nonstab = 1; 
+	nonstab = 1;
       }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+    }
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = S_OBJECT;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = 255; // normalize values
+      }
+    }
 
   freeimage(t);
   mctopo3d_termine_topo3d();
@@ -2722,9 +3548,13 @@ static int32_t is_end(uint8_t *S, index_t p, index_t rs, index_t ps, index_t N)
   for (n = k = 0; k < 26; k += 1)
   {
     y = voisin26(p, k, rs, ps, N);
-    if ((y != -1) && S[y]) n++;
+    if ((y != -1) && S[y]) {
+      n++;
+    }
   } // for k
-  if (n == 1) return 1;
+  if (n == 1) {
+    return 1;
+  }
   return 0;
 } //is_end()
 
@@ -2777,12 +3607,22 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   else
   {
     I = UCHARDATA(inhibit);
-    for (i = 0; i < N; i++) if (I[i]) I[i] = I_INHIBIT;
+    for (i = 0; i < N; i++) {
+      if (I[i]) {
+        I[i] = I_INHIBIT;
+      }
+    }
   }
 
-  if (n_steps == -1) n_steps = 1000000000;
+  if (n_steps == -1) {
+    n_steps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
 
   mctopo3d_init_topo3d();
 
@@ -2803,58 +3643,92 @@ Attention : l'objet ne doit pas toucher le bord de l'image
     // MARQUE LES POINTS EXTREMITES
     for (i = 0; i < N; i++)
     {
-      if (IS_OBJECT(S[i]))
-	if (is_end(S, i, rs, ps, N)) 
-	  SET_INHIBIT(I[i]);
+      if (IS_OBJECT(S[i])) {
+        if (is_end(S, i, rs, ps, N)) {
+          SET_INHIBIT(I[i]);
+        }
+      }
     }
 
     // MARQUE LES POINTS SIMPLES NON DANS I
-    for (i = 0; i < N; i++) 
-      if (IS_OBJECT(S[i]) && !IS_INHIBIT(I[i]) && mctopo3d_simple26(S, i, rs, ps, N))
-	SET_SIMPLE(S[i]);
+    for (i = 0; i < N; i++) {
+      if (IS_OBJECT(S[i]) && !IS_INHIBIT(I[i]) &&
+          mctopo3d_simple26(S, i, rs, ps, N)) {
+        SET_SIMPLE(S[i]);
+      }
+    }
 
     // MARQUE LES POINTS 2-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (asym_match2(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (asym_match2(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
-    for (i = 1; i < N; i++) if (IS_SELECTED(S[i])) { UNSET_SELECTED(S[i]); SET_DCRUCIAL(S[i]); }
+    }
+    for (i = 1; i < N; i++) {
+      if (IS_SELECTED(S[i])) {
+        UNSET_SELECTED(S[i]);
+        SET_DCRUCIAL(S[i]);
+      }
+    }
 
     // MARQUE LES POINTS 1-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (asym_match1(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (asym_match1(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
-    for (i = 1; i < N; i++) if (IS_SELECTED(S[i])) { UNSET_SELECTED(S[i]); SET_DCRUCIAL(S[i]); }
+    }
+    for (i = 1; i < N; i++) {
+      if (IS_SELECTED(S[i])) {
+        UNSET_SELECTED(S[i]);
+        SET_DCRUCIAL(S[i]);
+      }
+    }
 
     // MARQUE LES POINTS 0-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (asym_match0(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (asym_match0(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
-    for (i = 1; i < N; i++) if (IS_SELECTED(S[i])) { UNSET_SELECTED(S[i]); SET_DCRUCIAL(S[i]); }
+    }
+    for (i = 1; i < N; i++) {
+      if (IS_SELECTED(S[i])) {
+        UNSET_SELECTED(S[i]);
+        SET_DCRUCIAL(S[i]);
+      }
+    }
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++) // T := [S \ P] \cup M, où M représente les pts marqués
-      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i]))
-	T[i] = 1;
+    for (i = 0; i < N;
+         i++) { // T := [S \ P] \cup M, où M représente les pts marqués
+      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i])) {
+        T[i] = 1;
+      }
+    }
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (S[i] && !T[i]) 
       {
 	S[i] = 0; 
-	nonstab = 1; 
+	nonstab = 1;
       }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+    }
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = S_OBJECT;
+      }
+    }
   }
 
 #ifdef VERBOSE1
@@ -2945,12 +3819,22 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   else
   {
     I = UCHARDATA(inhibit);
-    for (i = 0; i < N; i++) if (I[i]) I[i] = I_INHIBIT;
+    for (i = 0; i < N; i++) {
+      if (I[i]) {
+        I[i] = I_INHIBIT;
+      }
+    }
   }
 
-  if (n_steps == -1) n_steps = 1000000000;
+  if (n_steps == -1) {
+    n_steps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
 
   mctopo3d_init_topo3d();
 
@@ -2976,7 +3860,9 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 //#ifdef USE_NKP_END
 //	if (NKP_end(S, i, rs, ps, N)) SET_CURVE(S[i]);
 #ifdef USE_END
-        if (mctopo3d_nbvoiso26(S, i, rs, ps, N) == 1)  SET_CURVE(S[i]);
+        if (mctopo3d_nbvoiso26(S, i, rs, ps, N) == 1) {
+          SET_CURVE(S[i]);
+        }
 #else
 	mctopo3d_top26(S, i, rs, ps, N, &top, &topb);
 	if (top > 1) 
@@ -2989,9 +3875,12 @@ Attention : l'objet ne doit pas toucher le bord de l'image
     }
 
     // MARQUE LES POINTS SIMPLES NON DANS I
-    for (i = 0; i < N; i++) 
-      if (IS_OBJECT(S[i]) && !IS_INHIBIT(I[i]) && mctopo3d_simple26(S, i, rs, ps, N))
-	SET_SIMPLE(S[i]);
+    for (i = 0; i < N; i++) {
+      if (IS_OBJECT(S[i]) && !IS_INHIBIT(I[i]) &&
+          mctopo3d_simple26(S, i, rs, ps, N)) {
+        SET_SIMPLE(S[i]);
+      }
+    }
 
     // DEMARQUE PTS DE COURBE ET LES MEMORISE DANS I
     for (i = 0; i < N; i++)
@@ -2999,61 +3888,82 @@ Attention : l'objet ne doit pas toucher le bord de l'image
       if (IS_CURVE(S[i])) { UNSET_SIMPLE(S[i]); SET_INHIBIT(I[i]); }
     }
     // MARQUE LES POINTS 2-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (seq_asym_match2(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (seq_asym_match2(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
     // MARQUE LES POINTS 1-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (seq_asym_match1(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (seq_asym_match1(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
     // MARQUE LES POINTS 0-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (seq_asym_match0(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (seq_asym_match0(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++) // T := [S \ P] \cup M, où M représente les pts marqués
-      if ((S[i] && !IS_SIMPLE(S[i])) || IS_SELECTED(S[i]))
-	T[i] = 1;
+    for (i = 0; i < N;
+         i++) { // T := [S \ P] \cup M, où M représente les pts marqués
+      if ((S[i] && !IS_SIMPLE(S[i])) || IS_SELECTED(S[i])) {
+        T[i] = 1;
+      }
+    }
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (S[i] && !T[i]) 
       {
 	S[i] = 0; 
-	nonstab = 1; 
+	nonstab = 1;
       }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+    }
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = S_OBJECT;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) 
-    if (S[i]) 
-    {
-      if (IS_EARLYCURVE(I[i]))
-	S[i] = NDG_EARLY;
-      else
-	S[i] = NDG_MAX;
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        if (IS_EARLYCURVE(I[i])) {
+          S[i] = NDG_EARLY;
+        } else {
+          S[i] = NDG_MAX;
+        }
+      }
     }
-  for (i = 0; i < N; i++) if (I[i]) I[i] = NDG_MAX;
+    for (i = 0; i < N; i++) {
+      if (I[i]) {
+        I[i] = NDG_MAX;
+      }
+    }
 
-  if (allocinhib) freeimage(inhibit); 
+    if (allocinhib) {
+      freeimage(inhibit);
+    }
   freeimage(t);
   mctopo3d_termine_topo3d();
   return(1);
@@ -3279,9 +4189,15 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   }
   I = UCHARDATA(inhibit);
 
-  if (n_steps == -1) n_steps = 1000000000;
+  if (n_steps == -1) {
+    n_steps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
 
   mctopo3d_init_topo3d();
 
@@ -3300,25 +4216,33 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 #endif
 
     // MARQUE LES POINTS SIMPLES NON DANS I
-    for (i = 0; i < N; i++) 
-      if (IS_OBJECT(S[i]) && !I[i] && mctopo3d_simple26(S, i, rs, ps, N))
-	SET_SIMPLE(S[i]);
+    for (i = 0; i < N; i++) {
+      if (IS_OBJECT(S[i]) && !I[i] && mctopo3d_simple26(S, i, rs, ps, N)) {
+        SET_SIMPLE(S[i]);
+      }
+    }
     // MARQUE LES POINTS DE SURFACE (2)
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2s(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2s(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS DE SURFACE (3) ET LES POINTS INTERIEURS
     for (i = 0; i < N; i++)
     {
       if (IS_OBJECT(S[i]) && !IS_SIMPLE(S[i]))
       {    
 	mctopo3d_top26(S, i, rs, ps, N, &top, &topb);
-	if (topb > 1) SET_SURF(S[i]);
-	if (topb == 0) SET_SELECTED(S[i]);
+        if (topb > 1) {
+          SET_SURF(S[i]);
+        }
+        if (topb == 0) {
+          SET_SELECTED(S[i]);
+        }
       }
     }
 
@@ -3331,74 +4255,114 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 	for (k = 0; k < 26; k += 1)        /* parcourt les voisins en 26-connexite */
         {
 	  j = voisin26(i, k, rs, ps, N);
-          if ((j != -1) && IS_SELECTED(S[j])) break;
-	}
+          if ((j != -1) && IS_SELECTED(S[j])) {
+            break;
+          }
+        }
 	if (k == 26) // le voxel est résiduel
 	{
 	  for (k = 0; k < 26; k += 1)        /* parcourt les voisins en 26-connexite */
           {
 	    j = voisin26(i, k, rs, ps, N);
-	    if ((j != -1) && IS_SURF(S[j]))break;
-	  }
-	  if (k == 26) UNSET_SIMPLE(S[i]);
-	}
+            if ((j != -1) && IS_SURF(S[j])) {
+              break;
+            }
+          }
+          if (k == 26) {
+            UNSET_SIMPLE(S[i]);
+          }
+        }
       }
     }
 
-    for (i = 0; i < N; i++)  UNSET_SELECTED(S[i]);
+    for (i = 0; i < N; i++) {
+      UNSET_SELECTED(S[i]);
+    }
 
     // MARQUE LES POINTS 2-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (asym_match2(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (asym_match2(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
-    for (i = 1; i < N; i++) if (IS_SELECTED(S[i])) { UNSET_SELECTED(S[i]); SET_DCRUCIAL(S[i]); }
+    }
+    for (i = 1; i < N; i++) {
+      if (IS_SELECTED(S[i])) {
+        UNSET_SELECTED(S[i]);
+        SET_DCRUCIAL(S[i]);
+      }
+    }
 
     // MARQUE LES POINTS 1-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (asym_match1(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (asym_match1(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
-    for (i = 1; i < N; i++) if (IS_SELECTED(S[i])) { UNSET_SELECTED(S[i]); SET_DCRUCIAL(S[i]); }
+    }
+    for (i = 1; i < N; i++) {
+      if (IS_SELECTED(S[i])) {
+        UNSET_SELECTED(S[i]);
+        SET_DCRUCIAL(S[i]);
+      }
+    }
 
     // MARQUE LES POINTS 0-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (asym_match0(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (asym_match0(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
-    for (i = 1; i < N; i++) if (IS_SELECTED(S[i])) { UNSET_SELECTED(S[i]); SET_DCRUCIAL(S[i]); }
+    }
+    for (i = 1; i < N; i++) {
+      if (IS_SELECTED(S[i])) {
+        UNSET_SELECTED(S[i]);
+        SET_DCRUCIAL(S[i]);
+      }
+    }
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++) // T := [S \ P] \cup M, où M représente les pts marqués
-      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i]))
-	T[i] = 1;
+    for (i = 0; i < N;
+         i++) { // T := [S \ P] \cup M, où M représente les pts marqués
+      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i])) {
+        T[i] = 1;
+      }
+    }
 #ifdef DEBUG
 writeimage(t,"_T");
 #endif
 
-    for (i = 0; i < N; i++)
-      if (S[i] && !T[i]) 
-      {
-	S[i] = 0; 
-	nonstab = 1; 
-      }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+for (i = 0; i < N; i++) {
+  if (S[i] && !T[i]) {
+    S[i] = 0;
+    nonstab = 1;
+  }
+}
+for (i = 0; i < N; i++) {
+  if (S[i]) {
+    S[i] = S_OBJECT;
+  }
+}
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = 255; // normalize values
+      }
+    }
 
   freeimage(t);
   mctopo3d_termine_topo3d();
@@ -3456,9 +4420,15 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   }
   I = UCHARDATA(inhibit);
 
-  if (n_steps == -1) n_steps = 1000000000;
+  if (n_steps == -1) {
+    n_steps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
 
   mctopo3d_init_topo3d();
 
@@ -3477,9 +4447,11 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 #endif
 
     // MARQUE LES POINTS SIMPLES NON DANS I
-    for (i = 0; i < N; i++) 
-      if (IS_OBJECT(S[i]) && !I[i] && mctopo3d_simple26(S, i, rs, ps, N))
-	SET_SIMPLE(S[i]);
+    for (i = 0; i < N; i++) {
+      if (IS_OBJECT(S[i]) && !I[i] && mctopo3d_simple26(S, i, rs, ps, N)) {
+        SET_SIMPLE(S[i]);
+      }
+    }
 
     // MARQUE LES POINTS INTERIEURS
     for (i = 0; i < N; i++)
@@ -3487,7 +4459,9 @@ Attention : l'objet ne doit pas toucher le bord de l'image
       if (IS_OBJECT(S[i]) && !IS_SIMPLE(S[i]))
       {    
 	mctopo3d_top26(S, i, rs, ps, N, &top, &topb);
-	if (topb == 0) SET_SELECTED(S[i]);
+        if (topb == 0) {
+          SET_SELECTED(S[i]);
+        }
       }
     }
 
@@ -3499,59 +4473,79 @@ Attention : l'objet ne doit pas toucher le bord de l'image
         for (k = 0; k < 12; k += 2)        /* parcourt les voisins en 6-connexite */
         {
           j = voisin6(i, k, rs, ps, N);
-          if ((j != -1) && IS_SELECTED(S[j])) break;
-	}
-	if (k == 12) // le voxel est résiduel
-	  UNSET_SIMPLE(S[i]);
+          if ((j != -1) && IS_SELECTED(S[j])) {
+            break;
+          }
+        }
+        if (k == 12) { // le voxel est résiduel
+          UNSET_SIMPLE(S[i]);
+        }
       }
     }
     // MARQUE LES POINTS 2-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 1-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match1(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match1(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 0-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match0(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match0(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++) // T := [S \ P] \cup M, où M représente les pts marqués
-      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i]))
-	T[i] = 1;
+    for (i = 0; i < N;
+         i++) { // T := [S \ P] \cup M, où M représente les pts marqués
+      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i])) {
+        T[i] = 1;
+      }
+    }
 #ifdef DEBUG
 writeimage(t,"_T");
 #endif
 
-    for (i = 0; i < N; i++)
-      if (S[i] && !T[i]) 
-      {
-	S[i] = 0; 
-	nonstab = 1; 
-      }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+for (i = 0; i < N; i++) {
+  if (S[i] && !T[i]) {
+    S[i] = 0;
+    nonstab = 1;
+  }
+}
+for (i = 0; i < N; i++) {
+  if (S[i]) {
+    S[i] = S_OBJECT;
+  }
+}
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = 255; // normalize values
+      }
+    }
 
   freeimage(t);
   mctopo3d_termine_topo3d();
@@ -3603,9 +4597,15 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   }
   I = UCHARDATA(inhibit);
 
-  if (n_steps == -1) n_steps = 1000000000;
+  if (n_steps == -1) {
+    n_steps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
 
   mctopo3d_init_topo3d();
 
@@ -3624,9 +4624,11 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 #endif
 
     // MARQUE LES POINTS SIMPLES NON DANS I
-    for (i = 0; i < N; i++) 
-      if (IS_OBJECT(S[i]) && !I[i] && mctopo3d_simple26(S, i, rs, ps, N))
-	SET_SIMPLE(S[i]);
+    for (i = 0; i < N; i++) {
+      if (IS_OBJECT(S[i]) && !I[i] && mctopo3d_simple26(S, i, rs, ps, N)) {
+        SET_SIMPLE(S[i]);
+      }
+    }
 
     // MARQUE LES POINTS INTERIEURS
     for (i = 0; i < N; i++)
@@ -3634,7 +4636,9 @@ Attention : l'objet ne doit pas toucher le bord de l'image
       if (IS_OBJECT(S[i]) && !IS_SIMPLE(S[i]))
       {    
 	mctopo3d_top26(S, i, rs, ps, N, &top, &topb);
-	if (topb == 0) SET_SELECTED(S[i]);
+        if (topb == 0) {
+          SET_SELECTED(S[i]);
+        }
       }
     }
 
@@ -3646,59 +4650,79 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 	for (k = 0; k < 26; k += 1)        /* parcourt les voisins en 26-connexite */
         {
 	  j = voisin26(i, k, rs, ps, N);
-          if ((j != -1) && IS_SELECTED(S[j])) break;
-	}
-	if (k == 26) // le voxel est résiduel
-	  UNSET_SIMPLE(S[i]);
+          if ((j != -1) && IS_SELECTED(S[j])) {
+            break;
+          }
+        }
+        if (k == 26) { // le voxel est résiduel
+          UNSET_SIMPLE(S[i]);
+        }
       }
     }
     // MARQUE LES POINTS 2-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 1-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match1(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match1(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 0-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match0(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match0(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++) // T := [S \ P] \cup M, où M représente les pts marqués
-      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i]))
-	T[i] = 1;
+    for (i = 0; i < N;
+         i++) { // T := [S \ P] \cup M, où M représente les pts marqués
+      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i])) {
+        T[i] = 1;
+      }
+    }
 #ifdef DEBUG
 writeimage(t,"_T");
 #endif
 
-    for (i = 0; i < N; i++)
-      if (S[i] && !T[i]) 
-      {
-	S[i] = 0; 
-	nonstab = 1; 
-      }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+for (i = 0; i < N; i++) {
+  if (S[i] && !T[i]) {
+    S[i] = 0;
+    nonstab = 1;
+  }
+}
+for (i = 0; i < N; i++) {
+  if (S[i]) {
+    S[i] = S_OBJECT;
+  }
+}
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = 255; // normalize values
+      }
+    }
 
   freeimage(t);
   mctopo3d_termine_topo3d();
@@ -3750,9 +4774,15 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   }
   I = UCHARDATA(inhibit);
 
-  if (n_steps == -1) n_steps = 1000000000;
+  if (n_steps == -1) {
+    n_steps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
 
   mctopo3d_init_topo3d();
 
@@ -3771,17 +4801,21 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 #endif
 
     // MARQUE LES POINTS SIMPLES NON DANS I
-    for (i = 0; i < N; i++) 
-      if (IS_OBJECT(S[i]) && !I[i] && mctopo3d_simple26(S, i, rs, ps, N))
-	SET_SIMPLE(S[i]);
+    for (i = 0; i < N; i++) {
+      if (IS_OBJECT(S[i]) && !I[i] && mctopo3d_simple26(S, i, rs, ps, N)) {
+        SET_SIMPLE(S[i]);
+      }
+    }
     // MARQUE LES POINTS DE SURFACE (2)
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2s(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2s(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS DE SURFACE (3)
     for (i = 0; i < N; i++)
     {
@@ -3789,7 +4823,9 @@ Attention : l'objet ne doit pas toucher le bord de l'image
       {    
 	mctopo3d_top26(S, i, rs, ps, N, &top, &topb);
 #ifdef NEW_ISTHMUS
-	if ((topb == 2) && (top == 1)) SET_SURF(S[i]);
+        if ((topb == 2) && (top == 1)) {
+          SET_SURF(S[i]);
+        }
 #else
 	if (topb > 1) SET_SURF(S[i]);
 #endif
@@ -3800,56 +4836,77 @@ Attention : l'objet ne doit pas toucher le bord de l'image
     for (i = 0; i < N; i++)
     { 
       UNSET_DCRUCIAL(S[i]);
-      if (IS_SURF(S[i])) I[i] = 1; 
-      if (I[i]) UNSET_SIMPLE(S[i]);
+      if (IS_SURF(S[i])) {
+        I[i] = 1;
+      }
+      if (I[i]) {
+        UNSET_SIMPLE(S[i]);
+      }
     }
     // MARQUE LES POINTS 2-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 1-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match1(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match1(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 0-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match0(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match0(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++) // T := [S \ P] \cup M, où M représente les pts marqués
-      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i]))
-	T[i] = 1;
+    for (i = 0; i < N;
+         i++) { // T := [S \ P] \cup M, où M représente les pts marqués
+      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i])) {
+        T[i] = 1;
+      }
+    }
 #ifdef DEBUG
 writeimage(t,"_T");
 #endif
 
-    for (i = 0; i < N; i++)
-      if (S[i] && !T[i]) 
-      {
-	S[i] = 0; 
-	nonstab = 1; 
-      }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+for (i = 0; i < N; i++) {
+  if (S[i] && !T[i]) {
+    S[i] = 0;
+    nonstab = 1;
+  }
+}
+for (i = 0; i < N; i++) {
+  if (S[i]) {
+    S[i] = S_OBJECT;
+  }
+}
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = 255; // normalize values
+      }
+    }
 
   freeimage(t);
   mctopo3d_termine_topo3d();
@@ -3901,9 +4958,15 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   }
   I = UCHARDATA(inhibit);
 
-  if (n_steps == -1) n_steps = 1000000000;
+  if (n_steps == -1) {
+    n_steps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
 
   mctopo3d_init_topo3d();
 
@@ -3922,25 +4985,31 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 #endif
 
     // MARQUE LES POINTS SIMPLES NON DANS I
-    for (i = 0; i < N; i++) 
-      if (IS_OBJECT(S[i]) && !I[i] && mctopo3d_simple26(S, i, rs, ps, N))
-	SET_SIMPLE(S[i]);
+    for (i = 0; i < N; i++) {
+      if (IS_OBJECT(S[i]) && !I[i] && mctopo3d_simple26(S, i, rs, ps, N)) {
+        SET_SIMPLE(S[i]);
+      }
+    }
     // MARQUE LES POINTS DE SURFACE (2)
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2s(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2s(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS DE COURBE (1)
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match1s(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match1s(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS DE COURBE ET DE SURFACE (3)
     for (i = 0; i < N; i++)
     {
@@ -3948,8 +5017,12 @@ Attention : l'objet ne doit pas toucher le bord de l'image
       {    
 	mctopo3d_top26(S, i, rs, ps, N, &top, &topb);
 #ifdef NEW_ISTHMUS
-	if ((top == 2) && (topb == 1)) SET_CURVE(S[i]);
-	if ((topb == 2) && (top == 1)) SET_SURF(S[i]);
+        if ((top == 2) && (topb == 1)) {
+          SET_CURVE(S[i]);
+        }
+        if ((topb == 2) && (top == 1)) {
+          SET_SURF(S[i]);
+        }
 #else
 	if (top > 1) SET_CURVE(S[i]);
 	if (topb > 1) SET_SURF(S[i]);
@@ -3961,57 +5034,80 @@ Attention : l'objet ne doit pas toucher le bord de l'image
     for (i = 0; i < N; i++)
     { 
       UNSET_DCRUCIAL(S[i]);
-      if (IS_SURF(S[i])) I[i] = 1; 
-      if (IS_CURVE(S[i])) I[i] = 1; 
-      if (I[i]) UNSET_SIMPLE(S[i]);
+      if (IS_SURF(S[i])) {
+        I[i] = 1;
+      }
+      if (IS_CURVE(S[i])) {
+        I[i] = 1;
+      }
+      if (I[i]) {
+        UNSET_SIMPLE(S[i]);
+      }
     }
     // MARQUE LES POINTS 2-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 1-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match1(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match1(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 0-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match0(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match0(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++) // T := [S \ P] \cup M, où M représente les pts marqués
-      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i]))
-	T[i] = 1;
+    for (i = 0; i < N;
+         i++) { // T := [S \ P] \cup M, où M représente les pts marqués
+      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i])) {
+        T[i] = 1;
+      }
+    }
 #ifdef DEBUG
 writeimage(t,"_T");
 #endif
 
-    for (i = 0; i < N; i++)
-      if (S[i] && !T[i]) 
-      {
-	S[i] = 0; 
-	nonstab = 1; 
-      }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+for (i = 0; i < N; i++) {
+  if (S[i] && !T[i]) {
+    S[i] = 0;
+    nonstab = 1;
+  }
+}
+for (i = 0; i < N; i++) {
+  if (S[i]) {
+    S[i] = S_OBJECT;
+  }
+}
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = 255; // normalize values
+      }
+    }
 
   freeimage(t);
   mctopo3d_termine_topo3d();
@@ -4062,9 +5158,15 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   }
   I = UCHARDATA(inhibit);
 
-  if (n_steps == -1) n_steps = 1000000000;
+  if (n_steps == -1) {
+    n_steps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
 
   mctopo3d_init_topo3d();
 
@@ -4083,25 +5185,31 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 #endif
 
     // MARQUE LES POINTS SIMPLES NON DANS I
-    for (i = 0; i < N; i++) 
-      if (IS_OBJECT(S[i]) && !I[i] && mctopo3d_simple26(S, i, rs, ps, N))
-	SET_SIMPLE(S[i]);
+    for (i = 0; i < N; i++) {
+      if (IS_OBJECT(S[i]) && !I[i] && mctopo3d_simple26(S, i, rs, ps, N)) {
+        SET_SIMPLE(S[i]);
+      }
+    }
     // MARQUE LES POINTS DE COURBE (1)
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match1s(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match1s(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS DE COURBE OU SURFACE (2)
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2s(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2s(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS DE COURBE OU SURFACE(3)
     for (i = 0; i < N; i++)
     {
@@ -4109,8 +5217,12 @@ Attention : l'objet ne doit pas toucher le bord de l'image
       {    
 	mctopo3d_top26(S, i, rs, ps, N, &top, &topb);
 #ifdef NEW_ISTHMUS
-	if ((top == 2) && (topb == 1)) SET_CURVE(S[i]);
-	if ((topb == 2) && (top == 1)) SET_SURF(S[i]);
+        if ((top == 2) && (topb == 1)) {
+          SET_CURVE(S[i]);
+        }
+        if ((topb == 2) && (top == 1)) {
+          SET_SURF(S[i]);
+        }
 #else
 	if (top > 1) SET_CURVE(S[i]);
 	if (topb > 1) SET_SURF(S[i]);
@@ -4122,56 +5234,77 @@ Attention : l'objet ne doit pas toucher le bord de l'image
     for (i = 0; i < N; i++)
     { 
       UNSET_DCRUCIAL(S[i]);
-      if ((IS_SURF(S[i]))||(IS_CURVE(S[i]))) I[i] = 1; 
-      if (I[i]) UNSET_SIMPLE(S[i]);
+      if ((IS_SURF(S[i])) || (IS_CURVE(S[i]))) {
+        I[i] = 1;
+      }
+      if (I[i]) {
+        UNSET_SIMPLE(S[i]);
+      }
     }
     // MARQUE LES POINTS 2-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 1-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match1(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match1(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 0-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match0(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match0(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++) // T := [S \ P] \cup M, où M représente les pts marqués
-      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i]))
-	T[i] = 1;
+    for (i = 0; i < N;
+         i++) { // T := [S \ P] \cup M, où M représente les pts marqués
+      if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i])) {
+        T[i] = 1;
+      }
+    }
 #ifdef DEBUG
 writeimage(t,"_T");
 #endif
 
-    for (i = 0; i < N; i++)
-      if (S[i] && !T[i]) 
-      {
-	S[i] = 0; 
-	nonstab = 1; 
-      }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+for (i = 0; i < N; i++) {
+  if (S[i] && !T[i]) {
+    S[i] = 0;
+    nonstab = 1;
+  }
+}
+for (i = 0; i < N; i++) {
+  if (S[i]) {
+    S[i] = S_OBJECT;
+  }
+}
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = 255; // normalize values
+      }
+    }
 
   freeimage(t);
   mctopo3d_termine_topo3d();
@@ -4239,13 +5372,43 @@ static int32_t direction(
   switch (dir)
   {
 #ifdef DIRTOURNE
-  case 0: if (*(ptr-1)) return 0; else return 1;
-  case 1: if (*(ptr-rs)) return 0; else return 1;
-  case 2: if (*(ptr-ps)) return 0; else return 1;
+  case 0:
+    if (*(ptr - 1)) {
+      return 0;
+    } else {
+      return 1;
+    }
+  case 1:
+    if (*(ptr - rs)) {
+      return 0;
+    } else {
+      return 1;
+    }
+  case 2:
+    if (*(ptr - ps)) {
+      return 0;
+    } else {
+      return 1;
+    }
 
-  case 3: if (*(ptr+1)) return 0; else return 1;
-  case 4: if (*(ptr+rs)) return 0; else return 1;
-  case 5: if (*(ptr+ps)) return 0; else return 1;
+  case 3:
+    if (*(ptr + 1)) {
+      return 0;
+    } else {
+      return 1;
+    }
+  case 4:
+    if (*(ptr + rs)) {
+      return 0;
+    } else {
+      return 1;
+    }
+  case 5:
+    if (*(ptr + ps)) {
+      return 0;
+    } else {
+      return 1;
+    }
 #else
   case 0: if (*(ptr-1)) return 0; else return 1;
   case 1: if (*(ptr+1)) return 0; else return 1;
@@ -4298,11 +5461,19 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   int32_t step, nonstab, d;
   uint8_t v[27];
 
-  if (n_steps == -1) n_steps = 1000000000;
+  if (n_steps == -1) {
+    n_steps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
 
-  if (inhibit != NULL) I = UCHARDATA(inhibit);
+  if (inhibit != NULL) {
+    I = UCHARDATA(inhibit);
+  }
 
   mctopo3d_init_topo3d();
 
@@ -4324,50 +5495,66 @@ Attention : l'objet ne doit pas toucher le bord de l'image
     {
 
       // PREMIERE SOUS-ITERATION : MARQUE LES POINTS SIMPLES DE DIRECTION d ET PAS DANS I
-      for (i = 0; i < N; i++) 
-	if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N) && 
-	    direction(S, i, d, rs, ps, N) && (!I || !I[i]))
-	  SET_SIMPLE(S[i]);
+      for (i = 0; i < N; i++) {
+        if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N) &&
+            direction(S, i, d, rs, ps, N) && (!I || !I[i])) {
+          SET_SIMPLE(S[i]);
+        }
+      }
 
       // DEUXIEME SOUS-ITERATION : MARQUE LES POINTS 2-D-CRUCIAUX
-      for (i = 0; i < N; i++) 
-	if (IS_SIMPLE(S[i]))
+      for (i = 0; i < N; i++) {
+        if (IS_SIMPLE(S[i]))
 	{ 
 	  extract_vois(S, i, rs, ps, N, v);
-	  if (match2(v))
-	    insert_vois(v, S, i, rs, ps, N);
-	}
+          if (match2(v)) {
+            insert_vois(v, S, i, rs, ps, N);
+          }
+        }
+      }
 
       // TROISIEME SOUS-ITERATION : MARQUE LES POINTS 1-D-CRUCIAUX
-      for (i = 0; i < N; i++) 
-	if (IS_SIMPLE(S[i]))
+      for (i = 0; i < N; i++) {
+        if (IS_SIMPLE(S[i]))
 	{ 
 	  extract_vois(S, i, rs, ps, N, v);
-	  if (match1(v))
-	    insert_vois(v, S, i, rs, ps, N);
-	}
+          if (match1(v)) {
+            insert_vois(v, S, i, rs, ps, N);
+          }
+        }
+      }
 
       // QUATRIEME SOUS-ITERATION : MARQUE LES POINTS 0-D-CRUCIAUX
-      for (i = 0; i < N; i++) 
-	if (IS_SIMPLE(S[i]))
+      for (i = 0; i < N; i++) {
+        if (IS_SIMPLE(S[i]))
 	{ 
 	  extract_vois(S, i, rs, ps, N, v);
-	  if (match0(v))
-	    insert_vois(v, S, i, rs, ps, N);
-	}
+          if (match0(v)) {
+            insert_vois(v, S, i, rs, ps, N);
+          }
+        }
+      }
 
       memset(T, 0, N);
-      for (i = 0; i < N; i++) // T := [S \ P] \cup  R, où R représente les pts marqués
-	if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i]))
-	  T[i] = 1;
+      for (i = 0; i < N;
+           i++) { // T := [S \ P] \cup  R, où R représente les pts marqués
+        if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i])) {
+          T[i] = 1;
+        }
+      }
 
-      for (i = 0; i < N; i++)
-	if (S[i] && !T[i]) 
+      for (i = 0; i < N; i++) {
+        if (S[i] && !T[i]) 
 	{
 	  S[i] = 0; 
-	  nonstab = 1; 
-	}
-      for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+	  nonstab = 1;
+        }
+      }
+      for (i = 0; i < N; i++) {
+        if (S[i]) {
+          S[i] = S_OBJECT;
+        }
+      }
     } // for (d = 0; d < 6; d++)
   } // while (nonstab && (step < n_steps))
 
@@ -4375,7 +5562,11 @@ Attention : l'objet ne doit pas toucher le bord de l'image
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = 255; // normalize values
+      }
+    }
 
   freeimage(t);
   mctopo3d_termine_topo3d();
@@ -4421,11 +5612,19 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   uint8_t v[27];
   int32_t top, topb;
 
-  if (n_steps == -1) n_steps = 1000000000;
+  if (n_steps == -1) {
+    n_steps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
 
-  if (inhibit != NULL) I = UCHARDATA(inhibit);
+  if (inhibit != NULL) {
+    I = UCHARDATA(inhibit);
+  }
 
   mctopo3d_init_topo3d();
 
@@ -4447,10 +5646,12 @@ Attention : l'objet ne doit pas toucher le bord de l'image
     {
 
       // PREMIERE SOUS-ITERATION : MARQUE LES POINTS SIMPLES DE DIRECTION d ET PAS DANS I
-      for (i = 0; i < N; i++) 
-	if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N) && 
-	    direction(S, i, d, rs, ps, N) && (!I || !I[i]))
-	  SET_SIMPLE(S[i]);
+      for (i = 0; i < N; i++) {
+        if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N) &&
+            direction(S, i, d, rs, ps, N) && (!I || !I[i])) {
+          SET_SIMPLE(S[i]);
+        }
+      }
 
       // MARQUE LES POINTS INTERIEURS
       for (i = 0; i < N; i++)
@@ -4458,8 +5659,10 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 	if (IS_OBJECT(S[i]) && !IS_SIMPLE(S[i]))
 	{    
 	  mctopo3d_top26(S, i, rs, ps, N, &top, &topb);
-	  if (topb == 0) SET_SELECTED(S[i]);
-	}
+          if (topb == 0) {
+            SET_SELECTED(S[i]);
+          }
+        }
       }
 
       // DEMARQUE PTS ET REND "NON-SIMPLES" LES POINTS RESIDUELS
@@ -4471,10 +5674,13 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 	  for (k = 0; k < 12; k += 2)        /* parcourt les voisins en 6-connexite */
 	  {
 	    j = voisin6(i, k, rs, ps, N);
-	    if ((j != -1) && IS_SELECTED(S[j])) break;
-	  }
-	  if (k == 12) // le voxel est résiduel
-	    UNSET_SIMPLE(S[i]);
+            if ((j != -1) && IS_SELECTED(S[j])) {
+              break;
+            }
+          }
+          if (k == 12) { // le voxel est résiduel
+            UNSET_SIMPLE(S[i]);
+          }
 #else
 	  for (k = 0; k < 26; k += 1)        /* parcourt les voisins en 26-connexite */
           {
@@ -4488,44 +5694,58 @@ Attention : l'objet ne doit pas toucher le bord de l'image
       }
 
       // DEUXIEME SOUS-ITERATION : MARQUE LES POINTS 2-D-CRUCIAUX
-      for (i = 0; i < N; i++) 
-	if (IS_SIMPLE(S[i]))
+      for (i = 0; i < N; i++) {
+        if (IS_SIMPLE(S[i]))
 	{ 
 	  extract_vois(S, i, rs, ps, N, v);
-	  if (match2(v))
-	    insert_vois(v, S, i, rs, ps, N);
-	}
+          if (match2(v)) {
+            insert_vois(v, S, i, rs, ps, N);
+          }
+        }
+      }
 
       // TROISIEME SOUS-ITERATION : MARQUE LES POINTS 1-D-CRUCIAUX
-      for (i = 0; i < N; i++) 
-	if (IS_SIMPLE(S[i]))
+      for (i = 0; i < N; i++) {
+        if (IS_SIMPLE(S[i]))
 	{ 
 	  extract_vois(S, i, rs, ps, N, v);
-	  if (match1(v))
-	    insert_vois(v, S, i, rs, ps, N);
-	}
+          if (match1(v)) {
+            insert_vois(v, S, i, rs, ps, N);
+          }
+        }
+      }
 
       // QUATRIEME SOUS-ITERATION : MARQUE LES POINTS 0-D-CRUCIAUX
-      for (i = 0; i < N; i++) 
-	if (IS_SIMPLE(S[i]))
+      for (i = 0; i < N; i++) {
+        if (IS_SIMPLE(S[i]))
 	{ 
 	  extract_vois(S, i, rs, ps, N, v);
-	  if (match0(v))
-	    insert_vois(v, S, i, rs, ps, N);
-	}
+          if (match0(v)) {
+            insert_vois(v, S, i, rs, ps, N);
+          }
+        }
+      }
 
       memset(T, 0, N);
-      for (i = 0; i < N; i++) // T := [S \ P] \cup  R, où R représente les pts marqués
-	if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i]))
-	  T[i] = 1;
+      for (i = 0; i < N;
+           i++) { // T := [S \ P] \cup  R, où R représente les pts marqués
+        if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i])) {
+          T[i] = 1;
+        }
+      }
 
-      for (i = 0; i < N; i++)
-	if (S[i] && !T[i]) 
+      for (i = 0; i < N; i++) {
+        if (S[i] && !T[i]) 
 	{
 	  S[i] = 0; 
-	  nonstab = 1; 
-	}
-      for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+	  nonstab = 1;
+        }
+      }
+      for (i = 0; i < N; i++) {
+        if (S[i]) {
+          S[i] = S_OBJECT;
+        }
+      }
     } // for (d = 0; d < 6; d++)
   } // while (nonstab && (step < n_steps))
 
@@ -4533,7 +5753,11 @@ Attention : l'objet ne doit pas toucher le bord de l'image
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = 255; // normalize values
+      }
+    }
 
   freeimage(t);
   mctopo3d_termine_topo3d();
@@ -4579,9 +5803,15 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   uint8_t v[27];
   int32_t top, topb;
 
-  if (n_steps == -1) n_steps = 1000000000;
+  if (n_steps == -1) {
+    n_steps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
 
   if (inhibit == NULL) 
   {
@@ -4610,10 +5840,12 @@ Attention : l'objet ne doit pas toucher le bord de l'image
     {
 
       // PREMIERE SOUS-ITERATION : MARQUE LES POINTS SIMPLES DE DIRECTION d ET PAS DANS I
-      for (i = 0; i < N; i++) 
-	if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N) && 
-	    direction(S, i, d, rs, ps, N) && (!I || !I[i]))
-	  SET_SIMPLE(S[i]);
+      for (i = 0; i < N; i++) {
+        if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N) &&
+            direction(S, i, d, rs, ps, N) && (!I || !I[i])) {
+          SET_SIMPLE(S[i]);
+        }
+      }
 
       // MARQUE LES ISTHMES 2D
       for (i = 0; i < N; i++)
@@ -4626,44 +5858,58 @@ Attention : l'objet ne doit pas toucher le bord de l'image
       }
 
       // DEUXIEME SOUS-ITERATION : MARQUE LES POINTS 2-D-CRUCIAUX
-      for (i = 0; i < N; i++) 
-	if (IS_SIMPLE(S[i]))
+      for (i = 0; i < N; i++) {
+        if (IS_SIMPLE(S[i]))
 	{ 
 	  extract_vois(S, i, rs, ps, N, v);
-	  if (match2(v))
-	    insert_vois(v, S, i, rs, ps, N);
-	}
+          if (match2(v)) {
+            insert_vois(v, S, i, rs, ps, N);
+          }
+        }
+      }
 
       // TROISIEME SOUS-ITERATION : MARQUE LES POINTS 1-D-CRUCIAUX
-      for (i = 0; i < N; i++) 
-	if (IS_SIMPLE(S[i]))
+      for (i = 0; i < N; i++) {
+        if (IS_SIMPLE(S[i]))
 	{ 
 	  extract_vois(S, i, rs, ps, N, v);
-	  if (match1(v))
-	    insert_vois(v, S, i, rs, ps, N);
-	}
+          if (match1(v)) {
+            insert_vois(v, S, i, rs, ps, N);
+          }
+        }
+      }
 
       // QUATRIEME SOUS-ITERATION : MARQUE LES POINTS 0-D-CRUCIAUX
-      for (i = 0; i < N; i++) 
-	if (IS_SIMPLE(S[i]))
+      for (i = 0; i < N; i++) {
+        if (IS_SIMPLE(S[i]))
 	{ 
 	  extract_vois(S, i, rs, ps, N, v);
-	  if (match0(v))
-	    insert_vois(v, S, i, rs, ps, N);
-	}
+          if (match0(v)) {
+            insert_vois(v, S, i, rs, ps, N);
+          }
+        }
+      }
 
       memset(T, 0, N);
-      for (i = 0; i < N; i++) // T := [S \ P] \cup  R, où R représente les pts marqués
-	if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i]))
-	  T[i] = 1;
+      for (i = 0; i < N;
+           i++) { // T := [S \ P] \cup  R, où R représente les pts marqués
+        if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i])) {
+          T[i] = 1;
+        }
+      }
 
-      for (i = 0; i < N; i++)
-	if (S[i] && !T[i]) 
+      for (i = 0; i < N; i++) {
+        if (S[i] && !T[i]) 
 	{
 	  S[i] = 0; 
-	  nonstab = 1; 
-	}
-      for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+	  nonstab = 1;
+        }
+      }
+      for (i = 0; i < N; i++) {
+        if (S[i]) {
+          S[i] = S_OBJECT;
+        }
+      }
     } // for (d = 0; d < 6; d++)
   } // while (nonstab && (step < n_steps))
 
@@ -4671,7 +5917,11 @@ Attention : l'objet ne doit pas toucher le bord de l'image
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = 255; // normalize values
+      }
+    }
 
   freeimage(t);
   mctopo3d_termine_topo3d();
@@ -4716,9 +5966,15 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   uint8_t v[27];
   int32_t top, topb;
 
-  if (n_steps == -1) n_steps = 1000000000;
+  if (n_steps == -1) {
+    n_steps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
 
   if (inhibit == NULL) 
   {
@@ -4747,10 +6003,12 @@ Attention : l'objet ne doit pas toucher le bord de l'image
     {
 
       // PREMIERE SOUS-ITERATION : MARQUE LES POINTS SIMPLES DE DIRECTION d ET PAS DANS I
-      for (i = 0; i < N; i++) 
-	if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N) && 
-	    direction(S, i, d, rs, ps, N) && (!I || !I[i]))
-	  SET_SIMPLE(S[i]);
+      for (i = 0; i < N; i++) {
+        if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N) &&
+            direction(S, i, d, rs, ps, N) && (!I || !I[i])) {
+          SET_SIMPLE(S[i]);
+        }
+      }
 
       // MARQUE LES ISTHMES 2D et 1D
       for (i = 0; i < N; i++)
@@ -4763,44 +6021,58 @@ Attention : l'objet ne doit pas toucher le bord de l'image
       }
 
       // DEUXIEME SOUS-ITERATION : MARQUE LES POINTS 2-D-CRUCIAUX
-      for (i = 0; i < N; i++) 
-	if (IS_SIMPLE(S[i]))
+      for (i = 0; i < N; i++) {
+        if (IS_SIMPLE(S[i]))
 	{ 
 	  extract_vois(S, i, rs, ps, N, v);
-	  if (match2(v))
-	    insert_vois(v, S, i, rs, ps, N);
-	}
+          if (match2(v)) {
+            insert_vois(v, S, i, rs, ps, N);
+          }
+        }
+      }
 
       // TROISIEME SOUS-ITERATION : MARQUE LES POINTS 1-D-CRUCIAUX
-      for (i = 0; i < N; i++) 
-	if (IS_SIMPLE(S[i]))
+      for (i = 0; i < N; i++) {
+        if (IS_SIMPLE(S[i]))
 	{ 
 	  extract_vois(S, i, rs, ps, N, v);
-	  if (match1(v))
-	    insert_vois(v, S, i, rs, ps, N);
-	}
+          if (match1(v)) {
+            insert_vois(v, S, i, rs, ps, N);
+          }
+        }
+      }
 
       // QUATRIEME SOUS-ITERATION : MARQUE LES POINTS 0-D-CRUCIAUX
-      for (i = 0; i < N; i++) 
-	if (IS_SIMPLE(S[i]))
+      for (i = 0; i < N; i++) {
+        if (IS_SIMPLE(S[i]))
 	{ 
 	  extract_vois(S, i, rs, ps, N, v);
-	  if (match0(v))
-	    insert_vois(v, S, i, rs, ps, N);
-	}
+          if (match0(v)) {
+            insert_vois(v, S, i, rs, ps, N);
+          }
+        }
+      }
 
       memset(T, 0, N);
-      for (i = 0; i < N; i++) // T := [S \ P] \cup  R, où R représente les pts marqués
-	if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i]))
-	  T[i] = 1;
+      for (i = 0; i < N;
+           i++) { // T := [S \ P] \cup  R, où R représente les pts marqués
+        if ((S[i] && !IS_SIMPLE(S[i])) || IS_DCRUCIAL(S[i])) {
+          T[i] = 1;
+        }
+      }
 
-      for (i = 0; i < N; i++)
-	if (S[i] && !T[i]) 
+      for (i = 0; i < N; i++) {
+        if (S[i] && !T[i]) 
 	{
 	  S[i] = 0; 
-	  nonstab = 1; 
-	}
-      for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+	  nonstab = 1;
+        }
+      }
+      for (i = 0; i < N; i++) {
+        if (S[i]) {
+          S[i] = S_OBJECT;
+        }
+      }
     } // for (d = 0; d < 6; d++)
   } // while (nonstab && (step < n_steps))
 
@@ -4808,7 +6080,11 @@ Attention : l'objet ne doit pas toucher le bord de l'image
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = 255; // normalize values
+      }
+    }
 
   freeimage(t);
   mctopo3d_termine_topo3d();
@@ -4842,41 +6118,58 @@ int32_t lskel1Disthmuspoints(struct xvimage *image)
   int32_t top, topb;
   uint8_t v[27];
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
   mctopo3d_init_topo3d();
 
   // MARQUE LES POINTS SIMPLES
-  for (i = 0; i < N; i++) 
-    if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N))
-	SET_SIMPLE(S[i]);
+  for (i = 0; i < N; i++) {
+    if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N)) {
+      SET_SIMPLE(S[i]);
+    }
+  }
   // DEUXIEME SOUS-ITERATION : MARQUE LES POINTS DE COURBE (2)
-  for (i = 0; i < N; i++) 
+  for (i = 0; i < N; i++) {
     if (IS_SIMPLE(S[i]))
     { 
       extract_vois(S, i, rs, ps, N, v);
-      if (match2s(v))
-	insert_vois(v, S, i, rs, ps, N);
+      if (match2s(v)) {
+        insert_vois(v, S, i, rs, ps, N);
+      }
     }
+  }
   // TROISIEME SOUS-ITERATION : MARQUE LES POINTS DE COURBE (1)
-  for (i = 0; i < N; i++) 
+  for (i = 0; i < N; i++) {
     if (IS_SIMPLE(S[i]))
     { 
       extract_vois(S, i, rs, ps, N, v);
-      if (match1s(v))
-	insert_vois(v, S, i, rs, ps, N);
+      if (match1s(v)) {
+        insert_vois(v, S, i, rs, ps, N);
+      }
     }
+  }
   // MARQUE LES POINTS DE COURBE (3)
   for (i = 0; i < N; i++)
   {
     if (IS_OBJECT(S[i]) && !IS_SIMPLE(S[i]))
     {    
       mctopo3d_top26(S, i, rs, ps, N, &top, &topb);
-      if (top > 1) SET_CURVE(S[i]);
+      if (top > 1) {
+        SET_CURVE(S[i]);
+      }
     }
   }
   // RETOURNE PTS DE COURBE DANS S
-  for (i = 0; i < N; i++)
-    if (IS_CURVE(S[i])) S[i] = NDG_MAX; else S[i] = 0;
+  for (i = 0; i < N; i++) {
+    if (IS_CURVE(S[i])) {
+      S[i] = NDG_MAX;
+    } else {
+      S[i] = 0;
+    }
+  }
 
   mctopo3d_termine_topo3d();
   return(1);
@@ -4934,8 +6227,12 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 #endif
 
   assert(n_steps <= INT16_MAX);
-  if (n_steps == -1) n_steps = INT16_MAX;
-  if (isthmus_persistence == -1) isthmus_persistence = INT16_MAX;
+  if (n_steps == -1) {
+    n_steps = INT16_MAX;
+  }
+  if (isthmus_persistence == -1) {
+    isthmus_persistence = INT16_MAX;
+  }
 
   if (inhibit == NULL) 
   {
@@ -4946,13 +6243,23 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   else
   {
     I = UCHARDATA(inhibit);
-    for (i = 0; i < N; i++) if (I[i]) I[i] = I_INHIBIT;
+    for (i = 0; i < N; i++) {
+      if (I[i]) {
+        I[i] = I_INHIBIT;
+      }
+    }
   }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
 
   T = (int16_t *)malloc(N * sizeof(int16_t)); assert(T != NULL);
-  for (i = 0; i < N; i++) T[i] = PERS_INIT_VAL;
+  for (i = 0; i < N; i++) {
+    T[i] = PERS_INIT_VAL;
+  }
 
   mctopo3d_init_topo3d();
 
@@ -4976,15 +6283,19 @@ Attention : l'objet ne doit pas toucher le bord de l'image
       if (IS_OBJECT(S[i]))
       {    
 	mctopo3d_top26(S, i, rs, ps, N, &top, &topb);
-	if ((top > 1) && (T[i] == PERS_INIT_VAL))
-	  T[i] = (int16_t)step;
+        if ((top > 1) && (T[i] == PERS_INIT_VAL)) {
+          T[i] = (int16_t)step;
+        }
       }
     }
 
     // MARQUE LES POINTS SIMPLES NON DANS I
-    for (i = 0; i < N; i++) 
-      if (IS_OBJECT(S[i]) && !IS_INHIBIT(I[i]) && mctopo3d_simple26(S, i, rs, ps, N))
-	SET_SIMPLE(S[i]);
+    for (i = 0; i < N; i++) {
+      if (IS_OBJECT(S[i]) && !IS_INHIBIT(I[i]) &&
+          mctopo3d_simple26(S, i, rs, ps, N)) {
+        SET_SIMPLE(S[i]);
+      }
+    }
     // MEMORISE DANS I LES ISTHMES PERSISTANTS
     for (i = 0; i < N; i++)
     { 
@@ -4995,45 +6306,75 @@ Attention : l'objet ne doit pas toucher le bord de l'image
       }
     }
     // MARQUE LES POINTS 2-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (asym_match2(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (asym_match2(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
-    for (i = 1; i < N; i++) if (IS_SELECTED(S[i])) { UNSET_SELECTED(S[i]); SET_DCRUCIAL(S[i]); }
+    }
+    for (i = 1; i < N; i++) {
+      if (IS_SELECTED(S[i])) {
+        UNSET_SELECTED(S[i]);
+        SET_DCRUCIAL(S[i]);
+      }
+    }
 
     // MARQUE LES POINTS 1-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (asym_match1(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (asym_match1(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
-    for (i = 1; i < N; i++) if (IS_SELECTED(S[i])) { UNSET_SELECTED(S[i]); SET_DCRUCIAL(S[i]); }
+    }
+    for (i = 1; i < N; i++) {
+      if (IS_SELECTED(S[i])) {
+        UNSET_SELECTED(S[i]);
+        SET_DCRUCIAL(S[i]);
+      }
+    }
 
     // MARQUE LES POINTS 0-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (asym_match0(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (asym_match0(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
-    for (i = 1; i < N; i++) if (IS_SELECTED(S[i])) { UNSET_SELECTED(S[i]); SET_DCRUCIAL(S[i]); }
+    }
+    for (i = 1; i < N; i++) {
+      if (IS_SELECTED(S[i])) {
+        UNSET_SELECTED(S[i]);
+        SET_DCRUCIAL(S[i]);
+      }
+    }
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (S[i] && IS_SIMPLE(S[i]) && !IS_DCRUCIAL(S[i])) 
       {
 	S[i] = 0; 
-	nonstab = 1; 
+	nonstab = 1;
       }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+    }
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = S_OBJECT;
+      }
+    }
   } // while (nonstab && (step < n_steps))
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = NDG_MAX;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = NDG_MAX;
+    }
+  }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
@@ -5088,8 +6429,14 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   ACCEPTED_TYPES1(image, VFF_TYP_1_BYTE);
   ACCEPTED_TYPES1(persistence, VFF_TYP_FLOAT);
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
-  for (i = 0; i < N; i++) P[i] = PERS_INIT_VAL;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
+  for (i = 0; i < N; i++) {
+    P[i] = PERS_INIT_VAL;
+  }
 
   mctopo3d_init_topo3d();
 
@@ -5113,56 +6460,92 @@ Attention : l'objet ne doit pas toucher le bord de l'image
       if (IS_OBJECT(S[i]))
       {    
 	mctopo3d_top26(S, i, rs, ps, N, &top, &topb);
-	if ((top > 1) && (P[i] == PERS_INIT_VAL))
-	  P[i] = (float)step;
+        if ((top > 1) && (P[i] == PERS_INIT_VAL)) {
+          P[i] = (float)step;
+        }
       }
     }
 
     // MARQUE LES POINTS SIMPLES
-    for (i = 0; i < N; i++) 
-      if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N))
-	SET_SIMPLE(S[i]);
+    for (i = 0; i < N; i++) {
+      if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N)) {
+        SET_SIMPLE(S[i]);
+      }
+    }
     // MARQUE LES POINTS 2-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (asym_match2(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (asym_match2(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
-    for (i = 1; i < N; i++) if (IS_SELECTED(S[i])) { UNSET_SELECTED(S[i]); SET_DCRUCIAL(S[i]); }
+    }
+    for (i = 1; i < N; i++) {
+      if (IS_SELECTED(S[i])) {
+        UNSET_SELECTED(S[i]);
+        SET_DCRUCIAL(S[i]);
+      }
+    }
 
     // MARQUE LES POINTS 1-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (asym_match1(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (asym_match1(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
-    for (i = 1; i < N; i++) if (IS_SELECTED(S[i])) { UNSET_SELECTED(S[i]); SET_DCRUCIAL(S[i]); }
+    }
+    for (i = 1; i < N; i++) {
+      if (IS_SELECTED(S[i])) {
+        UNSET_SELECTED(S[i]);
+        SET_DCRUCIAL(S[i]);
+      }
+    }
 
     // MARQUE LES POINTS 0-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (asym_match0(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (asym_match0(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
-    for (i = 1; i < N; i++) if (IS_SELECTED(S[i])) { UNSET_SELECTED(S[i]); SET_DCRUCIAL(S[i]); }
+    }
+    for (i = 1; i < N; i++) {
+      if (IS_SELECTED(S[i])) {
+        UNSET_SELECTED(S[i]);
+        SET_DCRUCIAL(S[i]);
+      }
+    }
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (S[i] && IS_SIMPLE(S[i]) && !IS_DCRUCIAL(S[i])) 
       {
 	S[i] = 0; 
-	nonstab = 1; 
-	if (P[i] != PERS_INIT_VAL) P[i] = (float)step - P[i];
+	nonstab = 1;
+        if (P[i] != PERS_INIT_VAL) {
+          P[i] = (float)step - P[i];
+        }
       }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+    }
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = S_OBJECT;
+      }
+    }
   } // while (nonstab)
 
-  for (i = 0; i < N; i++) if (S[i]) { S[i] = NDG_MAX; P[i] = MAXFLOAT; }
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = NDG_MAX;
+      P[i] = MAXFLOAT;
+    }
+  }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
@@ -5216,8 +6599,12 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 #endif
 
   assert(n_steps <= INT16_MAX);
-  if (n_steps == -1) n_steps = INT16_MAX;
-  if (isthmus_persistence == -1) isthmus_persistence = INT16_MAX;
+  if (n_steps == -1) {
+    n_steps = INT16_MAX;
+  }
+  if (isthmus_persistence == -1) {
+    isthmus_persistence = INT16_MAX;
+  }
 
   if (inhibit == NULL) 
   {
@@ -5228,13 +6615,23 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   else
   {
     I = UCHARDATA(inhibit);
-    for (i = 0; i < N; i++) if (I[i]) I[i] = I_INHIBIT;
+    for (i = 0; i < N; i++) {
+      if (I[i]) {
+        I[i] = I_INHIBIT;
+      }
+    }
   }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
 
   T = (int16_t *)malloc(N * sizeof(int16_t)); assert(T != NULL);
-  for (i = 0; i < N; i++) T[i] = PERS_INIT_VAL;
+  for (i = 0; i < N; i++) {
+    T[i] = PERS_INIT_VAL;
+  }
 
   mctopo3d_init_topo3d();
 
@@ -5258,15 +6655,19 @@ Attention : l'objet ne doit pas toucher le bord de l'image
       if (IS_OBJECT(S[i]))
       {    
 	mctopo3d_top26(S, i, rs, ps, N, &top, &topb);
-	if ((topb > 1) && (T[i] == PERS_INIT_VAL))
-	  T[i] = (int16_t)step;
+        if ((topb > 1) && (T[i] == PERS_INIT_VAL)) {
+          T[i] = (int16_t)step;
+        }
       }
     }
 
     // MARQUE LES POINTS SIMPLES NON DANS I
-    for (i = 0; i < N; i++) 
-      if (IS_OBJECT(S[i]) && !IS_INHIBIT(I[i]) && mctopo3d_simple26(S, i, rs, ps, N))
-	SET_SIMPLE(S[i]);
+    for (i = 0; i < N; i++) {
+      if (IS_OBJECT(S[i]) && !IS_INHIBIT(I[i]) &&
+          mctopo3d_simple26(S, i, rs, ps, N)) {
+        SET_SIMPLE(S[i]);
+      }
+    }
 
     // MEMORISE DANS I LES ISTHMES PERSISTANTS
     for (i = 0; i < N; i++)
@@ -5278,45 +6679,75 @@ Attention : l'objet ne doit pas toucher le bord de l'image
       }
     }
     // MARQUE LES POINTS 2-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (asym_match2(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (asym_match2(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
-    for (i = 1; i < N; i++) if (IS_SELECTED(S[i])) { UNSET_SELECTED(S[i]); SET_DCRUCIAL(S[i]); }
+    }
+    for (i = 1; i < N; i++) {
+      if (IS_SELECTED(S[i])) {
+        UNSET_SELECTED(S[i]);
+        SET_DCRUCIAL(S[i]);
+      }
+    }
 
     // MARQUE LES POINTS 1-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (asym_match1(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (asym_match1(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
-    for (i = 1; i < N; i++) if (IS_SELECTED(S[i])) { UNSET_SELECTED(S[i]); SET_DCRUCIAL(S[i]); }
+    }
+    for (i = 1; i < N; i++) {
+      if (IS_SELECTED(S[i])) {
+        UNSET_SELECTED(S[i]);
+        SET_DCRUCIAL(S[i]);
+      }
+    }
 
     // MARQUE LES POINTS 0-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (asym_match0(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (asym_match0(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
-    for (i = 1; i < N; i++) if (IS_SELECTED(S[i])) { UNSET_SELECTED(S[i]); SET_DCRUCIAL(S[i]); }
+    }
+    for (i = 1; i < N; i++) {
+      if (IS_SELECTED(S[i])) {
+        UNSET_SELECTED(S[i]);
+        SET_DCRUCIAL(S[i]);
+      }
+    }
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (S[i] && IS_SIMPLE(S[i]) && !IS_DCRUCIAL(S[i])) 
       {
 	S[i] = 0; 
-	nonstab = 1; 
+	nonstab = 1;
       }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+    }
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = S_OBJECT;
+      }
+    }
   } // while (nonstab && (step < n_steps))
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = NDG_MAX;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = NDG_MAX;
+    }
+  }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
@@ -5378,8 +6809,12 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 #endif
 
   assert(n_steps <= INT16_MAX);
-  if (n_steps == -1) n_steps = INT16_MAX;
-  if (isthmus_persistence == -1) isthmus_persistence = INT16_MAX;
+  if (n_steps == -1) {
+    n_steps = INT16_MAX;
+  }
+  if (isthmus_persistence == -1) {
+    isthmus_persistence = INT16_MAX;
+  }
 
   if (inhibit == NULL) 
   {
@@ -5390,13 +6825,23 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   else
   {
     I = UCHARDATA(inhibit);
-    for (i = 0; i < N; i++) if (I[i]) I[i] = I_INHIBIT;
+    for (i = 0; i < N; i++) {
+      if (I[i]) {
+        I[i] = I_INHIBIT;
+      }
+    }
   }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
 
   T = (int16_t *)malloc(N * sizeof(int16_t)); assert(T != NULL);
-  for (i = 0; i < N; i++) T[i] = PERS_INIT_VAL;
+  for (i = 0; i < N; i++) {
+    T[i] = PERS_INIT_VAL;
+  }
 
   mctopo3d_init_topo3d();
 
@@ -5415,27 +6860,33 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 #endif
 
     // MARQUE LES POINTS SIMPLES
-    for (i = 0; i < N; i++) 
-      if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N))
-	SET_SIMPLE(S[i]);
+    for (i = 0; i < N; i++) {
+      if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N)) {
+        SET_SIMPLE(S[i]);
+      }
+    }
 
     // DEUXIEME SOUS-ITERATION : MARQUE LES POINTS DE COURBE (2)
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2s(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2s(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
     // TROISIEME SOUS-ITERATION : MARQUE LES POINTS DE COURBE (1)
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match1s(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match1s(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
     // MARQUE LES POINTS DE COURBE (3)
     for (i = 0; i < N; i++)
@@ -5443,7 +6894,9 @@ Attention : l'objet ne doit pas toucher le bord de l'image
       if (IS_OBJECT(S[i]) && !IS_SIMPLE(S[i]))
       {    
 	mctopo3d_top26(S, i, rs, ps, N, &top, &topb);
-	if (top > 1) SET_CURVE(S[i]);
+        if (top > 1) {
+          SET_CURVE(S[i]);
+        }
       }
       if (IS_CURVE(S[i]) && (T[i] == PERS_INIT_VAL)) 
       { 
@@ -5455,29 +6908,35 @@ Attention : l'objet ne doit pas toucher le bord de l'image
     }
 
     // MARQUE LES POINTS 2-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 1-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match1(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match1(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 0-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match0(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match0(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
     // MEMORISE DANS I LES ISTHMES PERSISTANTS
     for (i = 0; i < N; i++)
@@ -5490,23 +6949,34 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 	printf("point %d (%d %d %d) ajout à K\n", i, i % rs, (i % ps) / rs,  i / ps);
 #endif	
       }
-      if (IS_INHIBIT(I[i])) UNSET_SIMPLE(S[i]);
+      if (IS_INHIBIT(I[i])) {
+        UNSET_SIMPLE(S[i]);
+      }
     }
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (S[i] && IS_SIMPLE(S[i]) && !IS_DCRUCIAL(S[i])) 
       {
 	S[i] = 0; 
-	nonstab = 1; 
+	nonstab = 1;
       }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+    }
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = S_OBJECT;
+      }
+    }
 #ifdef DEBUG_SKEL_CK3P
 sprintf(buf, "_S%d", step);
 writeimage(image, buf);
 #endif
   } // while (nonstab && (step < n_steps))
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = NDG_MAX;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = NDG_MAX;
+    }
+  }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
@@ -5561,8 +7031,12 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 #endif
 
   assert(n_steps <= INT16_MAX);
-  if (n_steps == -1) n_steps = INT16_MAX;
-  if (isthmus_persistence == -1) isthmus_persistence = INT16_MAX;
+  if (n_steps == -1) {
+    n_steps = INT16_MAX;
+  }
+  if (isthmus_persistence == -1) {
+    isthmus_persistence = INT16_MAX;
+  }
 
   if (inhibit == NULL) 
   {
@@ -5573,13 +7047,23 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   else
   {
     I = UCHARDATA(inhibit);
-    for (i = 0; i < N; i++) if (I[i]) I[i] = I_INHIBIT;
+    for (i = 0; i < N; i++) {
+      if (I[i]) {
+        I[i] = I_INHIBIT;
+      }
+    }
   }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
 
   T = (int16_t *)malloc(N * sizeof(int16_t)); assert(T != NULL);
-  for (i = 0; i < N; i++) T[i] = PERS_INIT_VAL;
+  for (i = 0; i < N; i++) {
+    T[i] = PERS_INIT_VAL;
+  }
 
   mctopo3d_init_topo3d();
 
@@ -5598,71 +7082,98 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 #endif
 
     // MARQUE LES POINTS SIMPLES
-    for (i = 0; i < N; i++) 
-      if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N))
-	SET_SIMPLE(S[i]);
+    for (i = 0; i < N; i++) {
+      if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N)) {
+        SET_SIMPLE(S[i]);
+      }
+    }
 
     // MARQUE LES POINTS DE SURFACE (2)
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2s(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2s(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS DE SURFACE (3)
     for (i = 0; i < N; i++)
     {
       if (IS_OBJECT(S[i]) && !IS_SIMPLE(S[i]))
       {    
 	mctopo3d_top26(S, i, rs, ps, N, &top, &topb);
-	if (topb > 1) SET_SURF(S[i]);
+        if (topb > 1) {
+          SET_SURF(S[i]);
+        }
       }
-      if (IS_SURF(S[i]) && (T[i] == PERS_INIT_VAL)) T[i] = (int16_t)step;
+      if (IS_SURF(S[i]) && (T[i] == PERS_INIT_VAL)) {
+        T[i] = (int16_t)step;
+      }
     }
 
     // MEMORISE DANS I LES ISTHMES PERSISTANTS
     for (i = 0; i < N; i++)
-    { 
-      if ((T[i] > PERS_INIT_VAL) && ((step + 1 - T[i]) >= isthmus_persistence)) 
-	SET_INHIBIT(I[i]); 
-      if (IS_INHIBIT(I[i])) UNSET_SIMPLE(S[i]);
+    {
+      if ((T[i] > PERS_INIT_VAL) &&
+          ((step + 1 - T[i]) >= isthmus_persistence)) {
+        SET_INHIBIT(I[i]);
+      }
+      if (IS_INHIBIT(I[i])) {
+        UNSET_SIMPLE(S[i]);
+      }
     }
     // MARQUE LES POINTS 2-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 1-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match1(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match1(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 0-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match0(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match0(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (S[i] && IS_SIMPLE(S[i]) && !IS_DCRUCIAL(S[i])) 
       {
 	S[i] = 0; 
-	nonstab = 1; 
+	nonstab = 1;
       }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+    }
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = S_OBJECT;
+      }
+    }
   } // while (nonstab && (step < n_steps))
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = NDG_MAX;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = NDG_MAX;
+    }
+  }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
@@ -5717,8 +7228,12 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 #endif
 
   assert(n_steps <= INT16_MAX);
-  if (n_steps == -1) n_steps = INT16_MAX;
-  if (isthmus_persistence == -1) isthmus_persistence = INT16_MAX;
+  if (n_steps == -1) {
+    n_steps = INT16_MAX;
+  }
+  if (isthmus_persistence == -1) {
+    isthmus_persistence = INT16_MAX;
+  }
 
   if (inhibit == NULL) 
   {
@@ -5729,13 +7244,23 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   else
   {
     I = UCHARDATA(inhibit);
-    for (i = 0; i < N; i++) if (I[i]) I[i] = I_INHIBIT;
+    for (i = 0; i < N; i++) {
+      if (I[i]) {
+        I[i] = I_INHIBIT;
+      }
+    }
   }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
 
   T = (int16_t *)malloc(N * sizeof(int16_t)); assert(T != NULL);
-  for (i = 0; i < N; i++) T[i] = PERS_INIT_VAL;
+  for (i = 0; i < N; i++) {
+    T[i] = PERS_INIT_VAL;
+  }
 
   mctopo3d_init_topo3d();
 
@@ -5754,27 +7279,33 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 #endif
 
     // MARQUE LES POINTS SIMPLES
-    for (i = 0; i < N; i++) 
-      if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N))
-	SET_SIMPLE(S[i]);
+    for (i = 0; i < N; i++) {
+      if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N)) {
+        SET_SIMPLE(S[i]);
+      }
+    }
 
     // MARQUE LES POINTS DE COURBE OU DE SURFACE(2)
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2s(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2s(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
     // MARQUE LES POINTS DE COURBE (1)
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match1s(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match1s(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
     // MARQUE LES POINTS DE COURBE OU DE SURFACE(3)
     for (i = 0; i < N; i++)
@@ -5782,54 +7313,78 @@ Attention : l'objet ne doit pas toucher le bord de l'image
       if (IS_OBJECT(S[i]) && !IS_SIMPLE(S[i]))
       {    
 	mctopo3d_top26(S, i, rs, ps, N, &top, &topb);
-	if (top > 1) SET_CURVE(S[i]);
-	if (topb > 1) SET_SURF(S[i]);
+        if (top > 1) {
+          SET_CURVE(S[i]);
+        }
+        if (topb > 1) {
+          SET_SURF(S[i]);
+        }
       }
-      if ((IS_CURVE(S[i]) || IS_SURF(S[i])) && (T[i] == PERS_INIT_VAL)) T[i] = (int16_t)step;
+      if ((IS_CURVE(S[i]) || IS_SURF(S[i])) && (T[i] == PERS_INIT_VAL)) {
+        T[i] = (int16_t)step;
+      }
     }
 
     // MEMORISE DANS I LES ISTHMES PERSISTANTS
     for (i = 0; i < N; i++)
-    { 
-      if ((T[i] > PERS_INIT_VAL) && ((step - T[i]) >= isthmus_persistence)) 
-	SET_INHIBIT(I[i]); 
-      if (IS_INHIBIT(I[i])) UNSET_SIMPLE(S[i]);
+    {
+      if ((T[i] > PERS_INIT_VAL) && ((step - T[i]) >= isthmus_persistence)) {
+        SET_INHIBIT(I[i]);
+      }
+      if (IS_INHIBIT(I[i])) {
+        UNSET_SIMPLE(S[i]);
+      }
     }
     // MARQUE LES POINTS 2-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 1-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match1(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match1(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 0-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match0(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match0(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (S[i] && IS_SIMPLE(S[i]) && !IS_DCRUCIAL(S[i])) 
       {
 	S[i] = 0; 
-	nonstab = 1; 
+	nonstab = 1;
       }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+    }
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = S_OBJECT;
+      }
+    }
   } // while (nonstab && (step < n_steps))
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = NDG_MAX;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = NDG_MAX;
+    }
+  }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
@@ -5884,8 +7439,12 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 #endif
 
   assert(n_steps <= INT16_MAX);
-  if (n_steps == -1) n_steps = INT16_MAX;
-  if (isthmus_persistence == -1) isthmus_persistence = INT16_MAX;
+  if (n_steps == -1) {
+    n_steps = INT16_MAX;
+  }
+  if (isthmus_persistence == -1) {
+    isthmus_persistence = INT16_MAX;
+  }
 
   if (inhibit == NULL) 
   {
@@ -5896,13 +7455,23 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   else
   {
     I = UCHARDATA(inhibit);
-    for (i = 0; i < N; i++) if (I[i]) I[i] = I_INHIBIT;
+    for (i = 0; i < N; i++) {
+      if (I[i]) {
+        I[i] = I_INHIBIT;
+      }
+    }
   }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
 
   T = (int16_t *)malloc(N * sizeof(int16_t)); assert(T != NULL);
-  for (i = 0; i < N; i++) T[i] = PERS_INIT_VAL;
+  for (i = 0; i < N; i++) {
+    T[i] = PERS_INIT_VAL;
+  }
 
   mctopo3d_init_topo3d();
 
@@ -5926,16 +7495,25 @@ Attention : l'objet ne doit pas toucher le bord de l'image
       if (IS_OBJECT(S[i]) && !IS_SIMPLE(S[i]))
       {    
 	mctopo3d_top26(S, i, rs, ps, N, &top, &topb);
-	if (top > 1) SET_CURVE(S[i]);
-	if (topb > 1) SET_SURF(S[i]);
+        if (top > 1) {
+          SET_CURVE(S[i]);
+        }
+        if (topb > 1) {
+          SET_SURF(S[i]);
+        }
       }
-      if ((IS_CURVE(S[i]) || IS_SURF(S[i])) && (T[i] == PERS_INIT_VAL)) T[i] = (int16_t)step;
+      if ((IS_CURVE(S[i]) || IS_SURF(S[i])) && (T[i] == PERS_INIT_VAL)) {
+        T[i] = (int16_t)step;
+      }
     }
 
     // MARQUE LES POINTS SIMPLES NON DANS I
-    for (i = 0; i < N; i++) 
-      if (IS_OBJECT(S[i]) && !IS_INHIBIT(I[i]) && mctopo3d_simple26(S, i, rs, ps, N))
-	SET_SIMPLE(S[i]);
+    for (i = 0; i < N; i++) {
+      if (IS_OBJECT(S[i]) && !IS_INHIBIT(I[i]) &&
+          mctopo3d_simple26(S, i, rs, ps, N)) {
+        SET_SIMPLE(S[i]);
+      }
+    }
 
     // MEMORISE DANS I LES ISTHMES PERSISTANTS
     for (i = 0; i < N; i++)
@@ -5947,45 +7525,75 @@ Attention : l'objet ne doit pas toucher le bord de l'image
       }
     }
     // MARQUE LES POINTS 2-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (asym_match2(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (asym_match2(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
-    for (i = 1; i < N; i++) if (IS_SELECTED(S[i])) { UNSET_SELECTED(S[i]); SET_DCRUCIAL(S[i]); }
+    }
+    for (i = 1; i < N; i++) {
+      if (IS_SELECTED(S[i])) {
+        UNSET_SELECTED(S[i]);
+        SET_DCRUCIAL(S[i]);
+      }
+    }
 
     // MARQUE LES POINTS 1-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (asym_match1(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (asym_match1(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
-    for (i = 1; i < N; i++) if (IS_SELECTED(S[i])) { UNSET_SELECTED(S[i]); SET_DCRUCIAL(S[i]); }
+    }
+    for (i = 1; i < N; i++) {
+      if (IS_SELECTED(S[i])) {
+        UNSET_SELECTED(S[i]);
+        SET_DCRUCIAL(S[i]);
+      }
+    }
 
     // MARQUE LES POINTS 0-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (asym_match0(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (asym_match0(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
-    for (i = 1; i < N; i++) if (IS_SELECTED(S[i])) { UNSET_SELECTED(S[i]); SET_DCRUCIAL(S[i]); }
+    }
+    for (i = 1; i < N; i++) {
+      if (IS_SELECTED(S[i])) {
+        UNSET_SELECTED(S[i]);
+        SET_DCRUCIAL(S[i]);
+      }
+    }
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (S[i] && IS_SIMPLE(S[i]) && !IS_DCRUCIAL(S[i])) 
       {
 	S[i] = 0; 
-	nonstab = 1; 
+	nonstab = 1;
       }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+    }
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = S_OBJECT;
+      }
+    }
   } // while (nonstab && (step < n_steps))
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = NDG_MAX;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = NDG_MAX;
+    }
+  }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
@@ -6041,8 +7649,14 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   ACCEPTED_TYPES1(image, VFF_TYP_1_BYTE);
   ACCEPTED_TYPES1(persistence, VFF_TYP_FLOAT);
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
-  for (i = 0; i < N; i++) P[i] = PERS_INIT_VAL;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
+  for (i = 0; i < N; i++) {
+    P[i] = PERS_INIT_VAL;
+  }
 
   mctopo3d_init_topo3d();
 
@@ -6061,27 +7675,33 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 #endif
 
     // MARQUE LES POINTS SIMPLES
-    for (i = 0; i < N; i++) 
-      if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N))
-	SET_SIMPLE(S[i]);
+    for (i = 0; i < N; i++) {
+      if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N)) {
+        SET_SIMPLE(S[i]);
+      }
+    }
 
     // DEUXIEME SOUS-ITERATION : MARQUE LES POINTS DE COURBE (2)
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2s(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2s(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
     // TROISIEME SOUS-ITERATION : MARQUE LES POINTS DE COURBE (1)
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match1s(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match1s(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
     // MARQUE LES POINTS DE COURBE (3)
     for (i = 0; i < N; i++)
@@ -6089,56 +7709,78 @@ Attention : l'objet ne doit pas toucher le bord de l'image
       if (IS_OBJECT(S[i]) && !IS_SIMPLE(S[i]))
       {    
 	mctopo3d_top26(S, i, rs, ps, N, &top, &topb);
-	if (top > 1) SET_CURVE(S[i]);
+        if (top > 1) {
+          SET_CURVE(S[i]);
+        }
       }
     }
 
     // ENREGISTRE LA DATE DE NAISSANCE DES POINTS DE COURBE
     for (i = 0; i < N; i++)
     {
-      if ((P[i] == PERS_INIT_VAL) && IS_CURVE(S[i])) P[i] = (float)step;
+      if ((P[i] == PERS_INIT_VAL) && IS_CURVE(S[i])) {
+        P[i] = (float)step;
+      }
     }
 
     // MARQUE LES POINTS 2-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 1-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match1(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match1(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 0-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match0(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match0(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (S[i] && IS_SIMPLE(S[i]) && !IS_DCRUCIAL(S[i])) 
       {
 	S[i] = 0; 
-	nonstab = 1; 
-	if (P[i] != PERS_INIT_VAL) P[i] = (float)step - P[i];
+	nonstab = 1;
+        if (P[i] != PERS_INIT_VAL) {
+          P[i] = (float)step - P[i];
+        }
       }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+    }
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = S_OBJECT;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (S[i]) { S[i] = NDG_MAX; P[i] = MAXFLOAT; }
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = NDG_MAX;
+        P[i] = MAXFLOAT;
+      }
+    }
 
   mctopo3d_termine_topo3d();
   return(1);
@@ -6189,8 +7831,14 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   ACCEPTED_TYPES1(image, VFF_TYP_1_BYTE);
   ACCEPTED_TYPES1(persistence, VFF_TYP_FLOAT);
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
-  for (i = 0; i < N; i++) P[i] = PERS_INIT_VAL;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
+  for (i = 0; i < N; i++) {
+    P[i] = PERS_INIT_VAL;
+  }
 
   mctopo3d_init_topo3d();
 
@@ -6209,74 +7857,100 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 #endif
 
     // MARQUE LES POINTS SIMPLES
-    for (i = 0; i < N; i++) 
-      if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N))
-	SET_SIMPLE(S[i]);
+    for (i = 0; i < N; i++) {
+      if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N)) {
+        SET_SIMPLE(S[i]);
+      }
+    }
 
     // MARQUE LES POINTS DE SURFACE (2)
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2s(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2s(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS DE SURFACE (3)
     for (i = 0; i < N; i++)
     {
       if (IS_OBJECT(S[i]) && !IS_SIMPLE(S[i]))
       {    
 	mctopo3d_top26(S, i, rs, ps, N, &top, &topb);
-	if (topb > 1) SET_SURF(S[i]);
+        if (topb > 1) {
+          SET_SURF(S[i]);
+        }
       }
     }
 
     // ENREGISTRE LA DATE DE NAISSANCE DES POINTS DE SURFACE
     for (i = 0; i < N; i++)
     {
-      if ((P[i] == PERS_INIT_VAL) && IS_SURF(S[i])) P[i] = (float)step;
+      if ((P[i] == PERS_INIT_VAL) && IS_SURF(S[i])) {
+        P[i] = (float)step;
+      }
     }
 
     // MARQUE LES POINTS 2-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 1-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match1(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match1(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 0-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match0(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match0(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (S[i] && IS_SIMPLE(S[i]) && !IS_DCRUCIAL(S[i])) 
       {
 	S[i] = 0; 
-	nonstab = 1; 
-	if (P[i] != PERS_INIT_VAL) P[i] = (float)step - P[i];
+	nonstab = 1;
+        if (P[i] != PERS_INIT_VAL) {
+          P[i] = (float)step - P[i];
+        }
       }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+    }
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = S_OBJECT;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (S[i]) { S[i] = NDG_MAX; P[i] = MAXFLOAT; }
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = NDG_MAX;
+        P[i] = MAXFLOAT;
+      }
+    }
 
   mctopo3d_termine_topo3d();
   return(1);
@@ -6327,8 +8001,14 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   ACCEPTED_TYPES1(image, VFF_TYP_1_BYTE);
   ACCEPTED_TYPES1(persistence, VFF_TYP_FLOAT);
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
-  for (i = 0; i < N; i++) P[i] = PERS_INIT_VAL;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
+  for (i = 0; i < N; i++) {
+    P[i] = PERS_INIT_VAL;
+  }
 
   mctopo3d_init_topo3d();
 
@@ -6347,27 +8027,33 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 #endif
 
     // MARQUE LES POINTS SIMPLES
-    for (i = 0; i < N; i++) 
-      if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N))
-	SET_SIMPLE(S[i]);
+    for (i = 0; i < N; i++) {
+      if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N)) {
+        SET_SIMPLE(S[i]);
+      }
+    }
 
     // DEUXIEME SOUS-ITERATION : MARQUE LES POINTS DE COURBE ET DE SURFACE (2)
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2s(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2s(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
     // TROISIEME SOUS-ITERATION : MARQUE LES POINTS DE COURBE (1)
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match1s(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match1s(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
     // MARQUE LES POINTS DE COURBE ET DE SURFACE (3)
     for (i = 0; i < N; i++)
@@ -6375,58 +8061,81 @@ Attention : l'objet ne doit pas toucher le bord de l'image
       if (IS_OBJECT(S[i]) && !IS_SIMPLE(S[i]))
       {    
 	mctopo3d_top26(S, i, rs, ps, N, &top, &topb);
-	if (top > 1) SET_CURVE(S[i]);
-	if (topb > 1) SET_SURF(S[i]);
+        if (top > 1) {
+          SET_CURVE(S[i]);
+        }
+        if (topb > 1) {
+          SET_SURF(S[i]);
+        }
       }
     }
 
     // ENREGISTRE LA DATE DE NAISSANCE DES POINTS DE COURBE OU DE SURFACE
     for (i = 0; i < N; i++)
     {
-      if ((P[i] == PERS_INIT_VAL) && (IS_CURVE(S[i]) || IS_SURF(S[i]))) 
-	P[i] = (float)step;
+      if ((P[i] == PERS_INIT_VAL) && (IS_CURVE(S[i]) || IS_SURF(S[i]))) {
+        P[i] = (float)step;
+      }
     }
 
     // MARQUE LES POINTS 2-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match2(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match2(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 1-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match1(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match1(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
     // MARQUE LES POINTS 0-D-CRUCIAUX
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(S[i]))
       { 
 	extract_vois(S, i, rs, ps, N, v);
-	if (match0(v))
-	  insert_vois(v, S, i, rs, ps, N);
+        if (match0(v)) {
+          insert_vois(v, S, i, rs, ps, N);
+        }
       }
+    }
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (S[i] && IS_SIMPLE(S[i]) && !IS_DCRUCIAL(S[i])) 
       {
 	S[i] = 0; 
-	nonstab = 1; 
-	if (P[i] != PERS_INIT_VAL) P[i] = (float)step - P[i];
+	nonstab = 1;
+        if (P[i] != PERS_INIT_VAL) {
+          P[i] = (float)step - P[i];
+        }
       }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+    }
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = S_OBJECT;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (S[i]) { S[i] = NDG_MAX; P[i] = MAXFLOAT; }
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = NDG_MAX;
+        P[i] = MAXFLOAT;
+      }
+    }
 
   mctopo3d_termine_topo3d();
   return(1);
@@ -6454,30 +8163,40 @@ Detecte les isthmes "épais"
 
   mctopo3d_init_topo3d();
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = S_OBJECT;
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = S_OBJECT;
+    }
+  }
 
   // MARQUE LES POINTS SIMPLES
-  for (i = 0; i < N; i++) 
-    if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N))
+  for (i = 0; i < N; i++) {
+    if (IS_OBJECT(S[i]) && mctopo3d_simple26(S, i, rs, ps, N)) {
       SET_SIMPLE(S[i]);
+    }
+  }
 
   // DEUXIEME SOUS-ITERATION : MARQUE LES POINTS DE COURBE (2)
-  for (i = 0; i < N; i++) 
+  for (i = 0; i < N; i++) {
     if (IS_SIMPLE(S[i]))
     { 
       extract_vois(S, i, rs, ps, N, v);
-      if (match2s(v))
-	insert_vois(v, S, i, rs, ps, N);
+      if (match2s(v)) {
+        insert_vois(v, S, i, rs, ps, N);
+      }
     }
+  }
 
   // TROISIEME SOUS-ITERATION : MARQUE LES POINTS DE COURBE (1)
-  for (i = 0; i < N; i++) 
+  for (i = 0; i < N; i++) {
     if (IS_SIMPLE(S[i]))
     { 
       extract_vois(S, i, rs, ps, N, v);
-      if (match1s(v))
-	insert_vois(v, S, i, rs, ps, N);
+      if (match1s(v)) {
+        insert_vois(v, S, i, rs, ps, N);
+      }
     }
+  }
 
   // MARQUE LES POINTS DE COURBE (3)
   for (i = 0; i < N; i++)
@@ -6486,7 +8205,9 @@ Detecte les isthmes "épais"
     {    
       mctopo3d_top26(S, i, rs, ps, N, &top, &topb);
 #ifdef NEW_ISTHMUS
-      if ((top == 2) && (topb == 1)) SET_CURVE(S[i]);
+      if ((top == 2) && (topb == 1)) {
+        SET_CURVE(S[i]);
+      }
 #else
       if (top > 1) SET_CURVE(S[i]);
 #endif
@@ -6494,8 +8215,13 @@ Detecte les isthmes "épais"
   }
 
   // TRANSFERE PTS DE COURBE DANS S
-  for (i = 0; i < N; i++)
-    if (IS_CURVE(S[i])) S[i] = NDG_MAX; else S[i] = 0; 
+  for (i = 0; i < N; i++) {
+    if (IS_CURVE(S[i])) {
+      S[i] = NDG_MAX;
+    } else {
+      S[i] = 0;
+    }
+  }
 
   mctopo3d_termine_topo3d();
   return(1);

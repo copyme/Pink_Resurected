@@ -94,7 +94,9 @@ int main(int argc, char **argv)
   i = 2;
   do
   {
-    for (x = 0; x < N; x++) F[x] += I[x];
+    for (x = 0; x < N; x++) {
+      F[x] += I[x];
+    }
 
     freeimage(image);
     image = readimage(argv[i]);
@@ -111,8 +113,10 @@ int main(int argc, char **argv)
     I = UCHARDATA(image);
     i++;
   } while (i <= argc-2);
-  
-  for (x = 0; x < N; x++) I[x] = (uint8_t)(F[x]/(argc - 2));
+
+  for (x = 0; x < N; x++) {
+    I[x] = (uint8_t)(F[x] / (argc - 2));
+  }
 
   writeimage(image, argv[argc-1]);
   freeimage(image);

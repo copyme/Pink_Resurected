@@ -146,50 +146,145 @@ uint32_t PrincBetacarre3d(uint8_t *X, index_t rs, index_t cs, index_t ds, int32_
 
   if (i % 2 == 0)
   {
-    if ((i>0)      && IS_PRINC(X[k*ps + j*rs + i-1])) b |= b1; b1 = b1 << 1;
-    if (((i+1)<rs) && IS_PRINC(X[k*ps + j*rs + i+1])) b |= b1; b1 = b1 << 1;
+    if ((i > 0) && IS_PRINC(X[k * ps + j * rs + i - 1])) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i + 1) < rs) && IS_PRINC(X[k * ps + j * rs + i + 1])) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if (j % 2 == 0)
   {
-    if ((j>0)      && IS_PRINC(X[k*ps + (j-1)*rs + i])) b |= b1; b1 = b1 << 1;
-    if (((j+1)<cs) && IS_PRINC(X[k*ps + (j+1)*rs + i])) b |= b1; b1 = b1 << 1;
+    if ((j > 0) && IS_PRINC(X[k * ps + (j - 1) * rs + i])) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((j + 1) < cs) && IS_PRINC(X[k * ps + (j + 1) * rs + i])) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if (k % 2 == 0)
   {
-    if ((k>0)      && IS_PRINC(X[(k-1)*ps + j*rs + i])) b |= b1; b1 = b1 << 1;
-    if (((k+1)<ds) && IS_PRINC(X[(k+1)*ps + j*rs + i])) b |= b1; b1 = b1 << 1;
+    if ((k > 0) && IS_PRINC(X[(k - 1) * ps + j * rs + i])) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((k + 1) < ds) && IS_PRINC(X[(k + 1) * ps + j * rs + i])) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if ((i%2) + (j%2) == 0)
   {
-    if (((i>0)&&(j>0))           && IS_PRINC(X[k*ps + (j-1)*rs + i-1])) b |= b1; b1 = b1 << 1;
-    if (((i>0)&&((j+1)<cs))      && IS_PRINC(X[k*ps + (j+1)*rs + i-1])) b |= b1; b1 = b1 << 1;
-    if ((((i+1)<rs)&&(j>0))      && IS_PRINC(X[k*ps + (j-1)*rs + i+1])) b |= b1; b1 = b1 << 1;
-    if ((((i+1)<rs)&&((j+1)<cs)) && IS_PRINC(X[k*ps + (j+1)*rs + i+1])) b |= b1; b1 = b1 << 1;
+    if (((i > 0) && (j > 0)) && IS_PRINC(X[k * ps + (j - 1) * rs + i - 1])) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i > 0) && ((j + 1) < cs)) &&
+        IS_PRINC(X[k * ps + (j + 1) * rs + i - 1])) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && (j > 0)) &&
+        IS_PRINC(X[k * ps + (j - 1) * rs + i + 1])) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && ((j + 1) < cs)) &&
+        IS_PRINC(X[k * ps + (j + 1) * rs + i + 1])) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if ((i%2) + (k%2) == 0)
   {
-    if (((i>0)&&(k>0))           && IS_PRINC(X[(k-1)*ps + j*rs + i-1])) b |= b1; b1 = b1 << 1;
-    if (((i>0)&&((k+1)<ds))      && IS_PRINC(X[(k+1)*ps + j*rs + i-1])) b |= b1; b1 = b1 << 1;
-    if ((((i+1)<rs)&&(k>0))      && IS_PRINC(X[(k-1)*ps + j*rs + i+1])) b |= b1; b1 = b1 << 1;
-    if ((((i+1)<rs)&&((k+1)<ds)) && IS_PRINC(X[(k+1)*ps + j*rs + i+1])) b |= b1; b1 = b1 << 1;
+    if (((i > 0) && (k > 0)) && IS_PRINC(X[(k - 1) * ps + j * rs + i - 1])) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i > 0) && ((k + 1) < ds)) &&
+        IS_PRINC(X[(k + 1) * ps + j * rs + i - 1])) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && (k > 0)) &&
+        IS_PRINC(X[(k - 1) * ps + j * rs + i + 1])) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && ((k + 1) < ds)) &&
+        IS_PRINC(X[(k + 1) * ps + j * rs + i + 1])) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if ((k%2) + (j%2) == 0)
   {
-    if (((k>0)&&(j>0))           && IS_PRINC(X[(k-1)*ps + (j-1)*rs + i])) b |= b1; b1 = b1 << 1;
-    if (((k>0)&&((j+1)<cs))      && IS_PRINC(X[(k-1)*ps + (j+1)*rs + i])) b |= b1; b1 = b1 << 1;
-    if ((((k+1)<ds)&&(j>0))      && IS_PRINC(X[(k+1)*ps + (j-1)*rs + i])) b |= b1; b1 = b1 << 1;
-    if ((((k+1)<ds)&&((j+1)<cs)) && IS_PRINC(X[(k+1)*ps + (j+1)*rs + i])) b |= b1; b1 = b1 << 1;
+    if (((k > 0) && (j > 0)) && IS_PRINC(X[(k - 1) * ps + (j - 1) * rs + i])) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((k > 0) && ((j + 1) < cs)) &&
+        IS_PRINC(X[(k - 1) * ps + (j + 1) * rs + i])) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((k + 1) < ds) && (j > 0)) &&
+        IS_PRINC(X[(k + 1) * ps + (j - 1) * rs + i])) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((k + 1) < ds) && ((j + 1) < cs)) &&
+        IS_PRINC(X[(k + 1) * ps + (j + 1) * rs + i])) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if ((i%2) + (j%2) + (k%2) == 0)
   {
-    if (((i>0)&&(j>0)&&(k>0))                && IS_PRINC(X[(k-1)*ps + (j-1)*rs + i-1])) b |= b1; b1 = b1<<1;
-    if (((i>0)&&((j+1)<cs)&&(k>0))           && IS_PRINC(X[(k-1)*ps + (j+1)*rs + i-1])) b |= b1; b1 = b1<<1;
-    if ((((i+1)<rs)&&(j>0)&&(k>0))           && IS_PRINC(X[(k-1)*ps + (j-1)*rs + i+1])) b |= b1; b1 = b1<<1;
-    if ((((i+1)<rs)&&((j+1)<cs)&&(k>0))      && IS_PRINC(X[(k-1)*ps + (j+1)*rs + i+1])) b |= b1; b1 = b1<<1;
-    if (((i>0)&&(j>0)&&((k+1)<ds))           && IS_PRINC(X[(k+1)*ps + (j-1)*rs + i-1])) b |= b1; b1 = b1<<1;
-    if (((i>0)&&((j+1)<cs)&&((k+1)<ds))      && IS_PRINC(X[(k+1)*ps + (j+1)*rs + i-1])) b |= b1; b1 = b1<<1;
-    if ((((i+1)<rs)&&(j>0)&&((k+1)<ds))      && IS_PRINC(X[(k+1)*ps + (j-1)*rs + i+1])) b |= b1; b1 = b1<<1;
-    if ((((i+1)<rs)&&((j+1)<cs)&&((k+1)<ds)) && IS_PRINC(X[(k+1)*ps + (j+1)*rs + i+1])) b |= b1; b1 = b1<<1;
+    if (((i > 0) && (j > 0) && (k > 0)) &&
+        IS_PRINC(X[(k - 1) * ps + (j - 1) * rs + i - 1])) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i > 0) && ((j + 1) < cs) && (k > 0)) &&
+        IS_PRINC(X[(k - 1) * ps + (j + 1) * rs + i - 1])) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && (j > 0) && (k > 0)) &&
+        IS_PRINC(X[(k - 1) * ps + (j - 1) * rs + i + 1])) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && ((j + 1) < cs) && (k > 0)) &&
+        IS_PRINC(X[(k - 1) * ps + (j + 1) * rs + i + 1])) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i > 0) && (j > 0) && ((k + 1) < ds)) &&
+        IS_PRINC(X[(k + 1) * ps + (j - 1) * rs + i - 1])) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i > 0) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        IS_PRINC(X[(k + 1) * ps + (j + 1) * rs + i - 1])) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && (j > 0) && ((k + 1) < ds)) &&
+        IS_PRINC(X[(k + 1) * ps + (j - 1) * rs + i + 1])) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        IS_PRINC(X[(k + 1) * ps + (j + 1) * rs + i + 1])) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   return b;
 } /* PrincBetacarre3d() */
@@ -210,26 +305,50 @@ int32_t mcskel3d_K3_CheckFrame(struct xvimage *k)
   index_t rs = rowsize(k), cs = colsize(k), ds = depth(k), ps = rs*cs;
   unsigned char *K = UCHARDATA(k);
 
-  for (x = 0; x < rs; x++)
-    for (y = 0; y < cs; y++)
-      if (K[0 * ps + y * rs + x]) return 0;          /* plan z = 0 */
-  for (x = 0; x < rs; x++)
-    for (y = 0; y < cs; y++)
-      if (K[(ds-1) * ps + y * rs + x]) return 0;     /* plan z = ds-1 */
+  for (x = 0; x < rs; x++) {
+    for (y = 0; y < cs; y++) {
+      if (K[0 * ps + y * rs + x]) {
+        return 0; /* plan z = 0 */
+      }
+    }
+  }
+  for (x = 0; x < rs; x++) {
+    for (y = 0; y < cs; y++) {
+      if (K[(ds - 1) * ps + y * rs + x]) {
+        return 0; /* plan z = ds-1 */
+      }
+    }
+  }
 
-  for (x = 0; x < rs; x++)
-    for (z = 0; z < ds; z++)
-      if (K[z * ps + 0 * rs + x]) return 0;          /* plan y = 0 */
-  for (x = 0; x < rs; x++)
-    for (z = 0; z < ds; z++)
-      if (K[z * ps + (cs-1) * rs + x]) return 0;     /* plan y = cs-1 */
+  for (x = 0; x < rs; x++) {
+    for (z = 0; z < ds; z++) {
+      if (K[z * ps + 0 * rs + x]) {
+        return 0; /* plan y = 0 */
+      }
+    }
+  }
+  for (x = 0; x < rs; x++) {
+    for (z = 0; z < ds; z++) {
+      if (K[z * ps + (cs - 1) * rs + x]) {
+        return 0; /* plan y = cs-1 */
+      }
+    }
+  }
 
-  for (y = 0; y < cs; y++)
-    for (z = 0; z < ds; z++)
-      if (K[z * ps + y * rs + 0]) return 0;          /* plan x = 0 */
-  for (y = 0; y < cs; y++)
-    for (z = 0; z < ds; z++)
-      if (K[z * ps + y * rs + (rs-1)]) return 0;     /* plan x = rs-1 */
+  for (y = 0; y < cs; y++) {
+    for (z = 0; z < ds; z++) {
+      if (K[z * ps + y * rs + 0]) {
+        return 0; /* plan x = 0 */
+      }
+    }
+  }
+  for (y = 0; y < cs; y++) {
+    for (z = 0; z < ds; z++) {
+      if (K[z * ps + y * rs + (rs - 1)]) {
+        return 0; /* plan x = rs-1 */
+      }
+    }
+  }
 
   return 1;
 } // mcskel3d_K3_CheckFrame()
@@ -250,16 +369,21 @@ int32_t mcskel3d_K3_CheckComplex(struct xvimage *k)
   unsigned char *K = UCHARDATA(k);
   index_t tab[26] = {0};
   int32_t u, n;
-  
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-    if (K[z*ps + y*rs + x])
-    {
-      Alphacarre3d(rs, cs, ds, x, y, z, tab, &n);
-      for (u = 0; u < n; u++)
-	if (K[tab[u]] == 0) return 0;
+
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        if (K[z * ps + y * rs + x]) {
+          Alphacarre3d(rs, cs, ds, x, y, z, tab, &n);
+          for (u = 0; u < n; u++) {
+            if (K[tab[u]] == 0) {
+              return 0;
+            }
+          }
+        }
+      }
     }
+  }
   return 1;
 } // mcskel3d_K3_CheckComplex()
 
@@ -278,15 +402,19 @@ void mcskel3d_K3_CloseComplex(struct xvimage *k)
   unsigned char *K = UCHARDATA(k);
   index_t tab[26] = {0};
   int32_t u, n;
-  
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-    if (K[z*ps + y*rs + x])
-    {
-      Alphacarre3d(rs, cs, ds, x, y, z, tab, &n);
-      for (u = 0; u < n; u++) K[tab[u]] = FLAG_OBJ;
+
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        if (K[z * ps + y * rs + x]) {
+          Alphacarre3d(rs, cs, ds, x, y, z, tab, &n);
+          for (u = 0; u < n; u++) {
+            K[tab[u]] = FLAG_OBJ;
+          }
+        }
+      }
     }
+  }
 } // mcskel3d_K3_CloseComplex()
 
 // already implemented in mcskel2d3d.c
@@ -302,7 +430,13 @@ void mcskel3d_K3_MarkObj(struct xvimage *k)
 #define F_NAME "mcskel3d_K3_MarkObj"
   index_t i, N = rowsize(k) * colsize(k) * depth(k);
   unsigned char *K = UCHARDATA(k);
-  for (i = 0; i < N; i++) if (K[i]) K[i] = FLAG_OBJ; else K[i] = 0;
+  for (i = 0; i < N; i++) {
+    if (K[i]) {
+      K[i] = FLAG_OBJ;
+    } else {
+      K[i] = 0;
+    }
+  }
 } // mcskel3d_K3_MarkObj()
 
 
@@ -312,7 +446,11 @@ index_t mcskel3d_K3_CardObj(struct xvimage *k)
 {
   index_t i, N = rowsize(k) * colsize(k) * depth(k), n=0;
   unsigned char *K = UCHARDATA(k);
-  for (i = 0; i < N; i++) if (K[i]) n++;
+  for (i = 0; i < N; i++) {
+    if (K[i]) {
+      n++;
+    }
+  }
   return n;
 } // mcskel3d_K3_CardObj()
 
@@ -329,7 +467,13 @@ void mcskel3d_K3_Binarize(struct xvimage *k)
 #define F_NAME "mcskel3d_K3_Binarize"
   index_t i, N = rowsize(k) * colsize(k) * depth(k);
   unsigned char *K = UCHARDATA(k);
-  for (i = 0; i < N; i++) if (K[i]) K[i] = NDG_MAX; else K[i] = 0;
+  for (i = 0; i < N; i++) {
+    if (K[i]) {
+      K[i] = NDG_MAX;
+    } else {
+      K[i] = 0;
+    }
+  }
 } // mcskel3d_K3_Binarize()
 
 // already implemented in mcskel2d3d.c
@@ -346,7 +490,13 @@ void mcskel3d_K3_SelMarked(struct xvimage *k, unsigned char mask)
 #define F_NAME "mcskel3d_K3_SelMarked"
   index_t i, N = rowsize(k) * colsize(k) * depth(k);
   unsigned char *K = UCHARDATA(k);
-  for (i = 0; i < N; i++) if (K[i] & mask) K[i] = FLAG_OBJ; else K[i] = 0;
+  for (i = 0; i < N; i++) {
+    if (K[i] & mask) {
+      K[i] = FLAG_OBJ;
+    } else {
+      K[i] = 0;
+    }
+  }
 } // mcskel3d_K3_SelMarked()
 
 // already implemented in mcskel2d3d.c
@@ -368,7 +518,9 @@ void mcskel3d_K3_MarkAlphaCarre(struct xvimage *k, index_t f, unsigned char mask
   int32_t u, n;
   unsigned char *K = UCHARDATA(k);
   Alphacarre3d(rs, cs, ds, x, y, z, tab, &n);
-  for (u = 0; u < n; u++) K[tab[u]] |= mask;
+  for (u = 0; u < n; u++) {
+    K[tab[u]] |= mask;
+  }
 } // mcskel3d_K3_MarkAlphaCarre()
 
 /* ========================================== */
@@ -389,7 +541,9 @@ void mcskel3d_K3_UnMarkAlphaCarre(struct xvimage *k, index_t f, unsigned char ma
   int32_t u, n;
   unsigned char *K = UCHARDATA(k);
   Alphacarre3d(rs, cs, ds, x, y, z, tab, &n);
-  for (u = 0; u < n; u++) K[tab[u]] &= ~mask;
+  for (u = 0; u < n; u++) {
+    K[tab[u]] &= ~mask;
+  }
 } // mcskel3d_K3_UnMarkAlphaCarre()
 
 // already implemented in mcskel2d3d.c
@@ -408,17 +562,23 @@ void mcskel3d_K3_MarkPrinc(struct xvimage *k)
   unsigned char *K = UCHARDATA(k);
   index_t tab[26] = {0};
   int32_t u, n;
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    i = z*ps + y*rs + x;
-    if (IS_OBJ(K[i])) 
-    {
-      Betacarre3d(rs, cs, ds, x, y, z, tab, &n);
-      card = 0;
-      for (u = 0; u < n; u++) if (IS_OBJ(K[tab[u]])) card++;
-      if (card == 0) K[i] |= FLAG_PRINC;
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        i = z * ps + y * rs + x;
+        if (IS_OBJ(K[i])) {
+          Betacarre3d(rs, cs, ds, x, y, z, tab, &n);
+          card = 0;
+          for (u = 0; u < n; u++) {
+            if (IS_OBJ(K[tab[u]])) {
+              card++;
+            }
+          }
+          if (card == 0) {
+            K[i] |= FLAG_PRINC;
+          }
+        }
+      }
     }
   }
 } // mcskel3d_K3_MarkPrinc()
@@ -502,39 +662,50 @@ void mcskel3d_K3_MarkEss(struct xvimage *k)
     exit(1);
   }
 
-  for (i = 0; i < N; i++) if (IS_PRINC(K[i])) P[i] = 1;
+  for (i = 0; i < N; i++) {
+    if (IS_PRINC(K[i])) {
+      P[i] = 1;
+    }
+  }
 
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    i = z*ps + y*rs + x;
-    if (IS_OBJ(K[i])) 
-    {
-      if (CUBE3D(x,y,z)) 
-      { 
-	if (P[i]) K[i] |= FLAG_ESS; 
-      }
-      else if (CARRE3D(x,y,z)) 
-      {
-	int32_t card = 0;
-	Betacarre3d(rs, cs, ds, x, y, z, tab, &n);
-	for (u = 0; u < n; u++) if (P[tab[u]]) card++;
-	if (P[i] && ((card == 0) || (card == 2))) K[i] |= FLAG_ESS; 
-	if (!P[i] && (card == 2)) K[i] |= FLAG_ESS; 
-      }
-      else if (INTER3D(x,y,z)) 
-      {
-	uint32_t mask = XBetacarre3d(P, rs, cs, ds, x, y, z);
-	if ((INTER3DX(x,y,z) && EssTab2X[mask]) || 
-	    (INTER3DY(x,y,z) && EssTab2Y[mask]) || 
-	    (INTER3DZ(x,y,z) && EssTab2Z[mask]))
-	    K[i] |= FLAG_ESS;
-      }
-      else // SINGL3D
-      {
-	uint32_t mask = XBetacarre3d(P, rs, cs, ds, x, y, z);
-	if (IsEss3(mask)) K[i] |= FLAG_ESS;
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        i = z * ps + y * rs + x;
+        if (IS_OBJ(K[i])) {
+          if (CUBE3D(x, y, z)) {
+            if (P[i]) {
+              K[i] |= FLAG_ESS;
+            }
+          } else if (CARRE3D(x, y, z)) {
+            int32_t card = 0;
+            Betacarre3d(rs, cs, ds, x, y, z, tab, &n);
+            for (u = 0; u < n; u++) {
+              if (P[tab[u]]) {
+                card++;
+              }
+            }
+            if (P[i] && ((card == 0) || (card == 2))) {
+              K[i] |= FLAG_ESS;
+            }
+            if (!P[i] && (card == 2)) {
+              K[i] |= FLAG_ESS;
+            }
+          } else if (INTER3D(x, y, z)) {
+            uint32_t mask = XBetacarre3d(P, rs, cs, ds, x, y, z);
+            if ((INTER3DX(x, y, z) && EssTab2X[mask]) ||
+                (INTER3DY(x, y, z) && EssTab2Y[mask]) ||
+                (INTER3DZ(x, y, z) && EssTab2Z[mask])) {
+              K[i] |= FLAG_ESS;
+            }
+          } else // SINGL3D
+          {
+            uint32_t mask = XBetacarre3d(P, rs, cs, ds, x, y, z);
+            if (IsEss3(mask)) {
+              K[i] |= FLAG_ESS;
+            }
+          }
+        }
       }
     }
   }
@@ -689,7 +860,11 @@ int32_t mcskel3d_K3_CardCore(struct xvimage *k, index_t f)
   int32_t x = f % rs, y = (f % ps) / rs, z = f / ps;
 
   Alphacarre3d(rs, cs, ds, x, y, z, tab, &n);
-  for (u = 0; u < n; u++) if (IS_ESS(K[tab[u]])) nf++; 
+  for (u = 0; u < n; u++) {
+    if (IS_ESS(K[tab[u]])) {
+      nf++;
+    }
+  }
   return nf;
 } // mcskel3d_K3_CardCore()
 
@@ -717,7 +892,11 @@ int32_t mcskel3d_K3_CardCore2(struct xvimage *k, struct xvimage *m, index_t f)
   int32_t x = f % rs, y = (f % ps) / rs, z = f / ps;
 
   Alphacarre3d(rs, cs, ds, x, y, z, tab, &n);
-  for (u = 0; u < n; u++) if (IS_ESS(K[tab[u]]) || M[tab[u]]) nf++; 
+  for (u = 0; u < n; u++) {
+    if (IS_ESS(K[tab[u]]) || M[tab[u]]) {
+      nf++;
+    }
+  }
   return nf;
 } // mcskel3d_K3_CardCore2()
 
@@ -735,7 +914,9 @@ int32_t  get3Dconfiguration(
   for (k = 0; k < 26; k++)
   {    
     v = voisin26(p, k, rs, ps, N);
-    if (img[v] & flag) mask = mask | (1 << k);
+    if (img[v] & flag) {
+      mask = mask | (1 << k);
+    }
   }
   return mask;
 } /* get3Dconfiguration() */
@@ -754,7 +935,9 @@ int32_t  get3Dcount(
   for (k = 0; k < 26; k++)
   {    
     v = voisin26(p, k, rs, ps, N);
-    if (img[v] & flag) count++;
+    if (img[v] & flag) {
+      count++;
+    }
   }
   return count;
 } /* get3Dcount() */
@@ -764,27 +947,83 @@ void print3Dconfiguration(int32_t mask)
 /* ==================================== */
 {
   uint32_t k;
-  for (k = 0; k < 3; k++) if (mask & (1 << k)) printf("1 "); else printf("0 ");
+  for (k = 0; k < 3; k++) {
+    if (mask & (1 << k)) {
+      printf("1 ");
+    } else {
+      printf("0 ");
+    }
+  }
   printf("\n");
-  for (k = 3; k < 6; k++) if (mask & (1 << k)) printf("1 "); else printf("0 ");
+  for (k = 3; k < 6; k++) {
+    if (mask & (1 << k)) {
+      printf("1 ");
+    } else {
+      printf("0 ");
+    }
+  }
   printf("\n");
-  for (k = 6; k < 9; k++) if (mask & (1 << k)) printf("1 "); else printf("0 ");
+  for (k = 6; k < 9; k++) {
+    if (mask & (1 << k)) {
+      printf("1 ");
+    } else {
+      printf("0 ");
+    }
+  }
   printf("\n\n");
 
-  for (k = 9; k < 12; k++) if (mask & (1 << k)) printf("1 "); else printf("0 ");
+  for (k = 9; k < 12; k++) {
+    if (mask & (1 << k)) {
+      printf("1 ");
+    } else {
+      printf("0 ");
+    }
+  }
   printf("\n");
-  if (mask & (1 << 12)) printf("1 "); else printf("0 ");
+  if (mask & (1 << 12)) {
+    printf("1 ");
+  } else {
+    printf("0 ");
+  }
   printf("1 ");
-  if (mask & (1 << 13)) printf("1 "); else printf("0 ");
+  if (mask & (1 << 13)) {
+    printf("1 ");
+  } else {
+    printf("0 ");
+  }
   printf("\n");
-  for (k = 14; k < 17; k++) if (mask & (1 << k)) printf("1 "); else printf("0 ");
+  for (k = 14; k < 17; k++) {
+    if (mask & (1 << k)) {
+      printf("1 ");
+    } else {
+      printf("0 ");
+    }
+  }
   printf("\n\n");
 
-  for (k = 17; k < 20; k++) if (mask & (1 << k)) printf("1 "); else printf("0 ");
+  for (k = 17; k < 20; k++) {
+    if (mask & (1 << k)) {
+      printf("1 ");
+    } else {
+      printf("0 ");
+    }
+  }
   printf("\n");
-  for (k = 20; k < 23; k++) if (mask & (1 << k)) printf("1 "); else printf("0 ");
+  for (k = 20; k < 23; k++) {
+    if (mask & (1 << k)) {
+      printf("1 ");
+    } else {
+      printf("0 ");
+    }
+  }
   printf("\n");
-  for (k = 23; k < 26; k++) if (mask & (1 << k)) printf("1 "); else printf("0 ");
+  for (k = 23; k < 26; k++) {
+    if (mask & (1 << k)) {
+      printf("1 ");
+    } else {
+      printf("0 ");
+    }
+  }
   printf("\n\n");
 } /* print3Dconfiguration() */
 
@@ -803,38 +1042,86 @@ int32_t get2Dconfiguration(
 
   if (z%2==0)
   {
-    if (img[z*ps + y    *rs + x+1] & flag) mask  = 1;
-    if (img[z*ps + (y-1)*rs + x+1] & flag) mask |= 2;
-    if (img[z*ps + (y-1)*rs + x  ] & flag) mask |= 4;
-    if (img[z*ps + (y-1)*rs + x-1] & flag) mask |= 8;
-    if (img[z*ps + y    *rs + x-1] & flag) mask |= 16;
-    if (img[z*ps + (y+1)*rs + x-1] & flag) mask |= 32;
-    if (img[z*ps + (y+1)*rs + x  ] & flag) mask |= 64;
-    if (img[z*ps + (y+1)*rs + x+1] & flag) mask |= 128;
+    if (img[z * ps + y * rs + x + 1] & flag) {
+      mask = 1;
+    }
+    if (img[z * ps + (y - 1) * rs + x + 1] & flag) {
+      mask |= 2;
+    }
+    if (img[z * ps + (y - 1) * rs + x] & flag) {
+      mask |= 4;
+    }
+    if (img[z * ps + (y - 1) * rs + x - 1] & flag) {
+      mask |= 8;
+    }
+    if (img[z * ps + y * rs + x - 1] & flag) {
+      mask |= 16;
+    }
+    if (img[z * ps + (y + 1) * rs + x - 1] & flag) {
+      mask |= 32;
+    }
+    if (img[z * ps + (y + 1) * rs + x] & flag) {
+      mask |= 64;
+    }
+    if (img[z * ps + (y + 1) * rs + x + 1] & flag) {
+      mask |= 128;
+    }
   }
 
   if (y%2==0)
   {
-    if (img[z    *ps + y*rs + x+1] & flag) mask  = 1;
-    if (img[(z-1)*ps + y*rs + x+1] & flag) mask |= 2;
-    if (img[(z-1)*ps + y*rs + x  ] & flag) mask |= 4;
-    if (img[(z-1)*ps + y*rs + x-1] & flag) mask |= 8;
-    if (img[z    *ps + y*rs + x-1] & flag) mask |= 16;
-    if (img[(z+1)*ps + y*rs + x-1] & flag) mask |= 32;
-    if (img[(z+1)*ps + y*rs + x  ] & flag) mask |= 64;
-    if (img[(z+1)*ps + y*rs + x+1] & flag) mask |= 128;
+    if (img[z * ps + y * rs + x + 1] & flag) {
+      mask = 1;
+    }
+    if (img[(z - 1) * ps + y * rs + x + 1] & flag) {
+      mask |= 2;
+    }
+    if (img[(z - 1) * ps + y * rs + x] & flag) {
+      mask |= 4;
+    }
+    if (img[(z - 1) * ps + y * rs + x - 1] & flag) {
+      mask |= 8;
+    }
+    if (img[z * ps + y * rs + x - 1] & flag) {
+      mask |= 16;
+    }
+    if (img[(z + 1) * ps + y * rs + x - 1] & flag) {
+      mask |= 32;
+    }
+    if (img[(z + 1) * ps + y * rs + x] & flag) {
+      mask |= 64;
+    }
+    if (img[(z + 1) * ps + y * rs + x + 1] & flag) {
+      mask |= 128;
+    }
   }
 
   if (x%2==0)
   {
-    if (img[(z+1)*ps + y    *rs + x] & flag) mask  = 1;
-    if (img[(z+1)*ps + (y-1)*rs + x] & flag) mask |= 2;
-    if (img[z    *ps + (y-1)*rs + x] & flag) mask |= 4;
-    if (img[(z-1)*ps + (y-1)*rs + x] & flag) mask |= 8;
-    if (img[(z-1)*ps + y    *rs + x] & flag) mask |= 16;
-    if (img[(z-1)*ps + (y+1)*rs + x] & flag) mask |= 32;
-    if (img[z    *ps + (y+1)*rs + x] & flag) mask |= 64;
-    if (img[(z+1)*ps + (y+1)*rs + x] & flag) mask |= 128;
+    if (img[(z + 1) * ps + y * rs + x] & flag) {
+      mask = 1;
+    }
+    if (img[(z + 1) * ps + (y - 1) * rs + x] & flag) {
+      mask |= 2;
+    }
+    if (img[z * ps + (y - 1) * rs + x] & flag) {
+      mask |= 4;
+    }
+    if (img[(z - 1) * ps + (y - 1) * rs + x] & flag) {
+      mask |= 8;
+    }
+    if (img[(z - 1) * ps + y * rs + x] & flag) {
+      mask |= 16;
+    }
+    if (img[(z - 1) * ps + (y + 1) * rs + x] & flag) {
+      mask |= 32;
+    }
+    if (img[z * ps + (y + 1) * rs + x] & flag) {
+      mask |= 64;
+    }
+    if (img[(z + 1) * ps + (y + 1) * rs + x] & flag) {
+      mask |= 128;
+    }
   }
 
   return mask;
@@ -855,38 +1142,86 @@ int32_t get2Dcount(
 
   if (z%2==0)
   {
-    if (img[z*ps + y    *rs + x+1] & flag) count++;
-    if (img[z*ps + (y-1)*rs + x+1] & flag) count++;
-    if (img[z*ps + (y-1)*rs + x  ] & flag) count++;
-    if (img[z*ps + (y-1)*rs + x-1] & flag) count++;
-    if (img[z*ps + y    *rs + x-1] & flag) count++;
-    if (img[z*ps + (y+1)*rs + x-1] & flag) count++;
-    if (img[z*ps + (y+1)*rs + x  ] & flag) count++;
-    if (img[z*ps + (y+1)*rs + x+1] & flag) count++;
+    if (img[z * ps + y * rs + x + 1] & flag) {
+      count++;
+    }
+    if (img[z * ps + (y - 1) * rs + x + 1] & flag) {
+      count++;
+    }
+    if (img[z * ps + (y - 1) * rs + x] & flag) {
+      count++;
+    }
+    if (img[z * ps + (y - 1) * rs + x - 1] & flag) {
+      count++;
+    }
+    if (img[z * ps + y * rs + x - 1] & flag) {
+      count++;
+    }
+    if (img[z * ps + (y + 1) * rs + x - 1] & flag) {
+      count++;
+    }
+    if (img[z * ps + (y + 1) * rs + x] & flag) {
+      count++;
+    }
+    if (img[z * ps + (y + 1) * rs + x + 1] & flag) {
+      count++;
+    }
   }
 
   if (y%2==0)
   {
-    if (img[z    *ps + y*rs + x+1] & flag) count++;
-    if (img[(z-1)*ps + y*rs + x+1] & flag) count++;
-    if (img[(z-1)*ps + y*rs + x  ] & flag) count++;
-    if (img[(z-1)*ps + y*rs + x-1] & flag) count++;
-    if (img[z    *ps + y*rs + x-1] & flag) count++;
-    if (img[(z+1)*ps + y*rs + x-1] & flag) count++;
-    if (img[(z+1)*ps + y*rs + x  ] & flag) count++;
-    if (img[(z+1)*ps + y*rs + x+1] & flag) count++;
+    if (img[z * ps + y * rs + x + 1] & flag) {
+      count++;
+    }
+    if (img[(z - 1) * ps + y * rs + x + 1] & flag) {
+      count++;
+    }
+    if (img[(z - 1) * ps + y * rs + x] & flag) {
+      count++;
+    }
+    if (img[(z - 1) * ps + y * rs + x - 1] & flag) {
+      count++;
+    }
+    if (img[z * ps + y * rs + x - 1] & flag) {
+      count++;
+    }
+    if (img[(z + 1) * ps + y * rs + x - 1] & flag) {
+      count++;
+    }
+    if (img[(z + 1) * ps + y * rs + x] & flag) {
+      count++;
+    }
+    if (img[(z + 1) * ps + y * rs + x + 1] & flag) {
+      count++;
+    }
   }
 
   if (x%2==0)
   {
-    if (img[(z+1)*ps + y    *rs + x] & flag) count++;
-    if (img[(z+1)*ps + (y-1)*rs + x] & flag) count++;
-    if (img[z    *ps + (y-1)*rs + x] & flag) count++;
-    if (img[(z-1)*ps + (y-1)*rs + x] & flag) count++;
-    if (img[(z-1)*ps + y    *rs + x] & flag) count++;
-    if (img[(z-1)*ps + (y+1)*rs + x] & flag) count++;
-    if (img[z    *ps + (y+1)*rs + x] & flag) count++;
-    if (img[(z+1)*ps + (y+1)*rs + x] & flag) count++;
+    if (img[(z + 1) * ps + y * rs + x] & flag) {
+      count++;
+    }
+    if (img[(z + 1) * ps + (y - 1) * rs + x] & flag) {
+      count++;
+    }
+    if (img[z * ps + (y - 1) * rs + x] & flag) {
+      count++;
+    }
+    if (img[(z - 1) * ps + (y - 1) * rs + x] & flag) {
+      count++;
+    }
+    if (img[(z - 1) * ps + y * rs + x] & flag) {
+      count++;
+    }
+    if (img[(z - 1) * ps + (y + 1) * rs + x] & flag) {
+      count++;
+    }
+    if (img[z * ps + (y + 1) * rs + x] & flag) {
+      count++;
+    }
+    if (img[(z + 1) * ps + (y + 1) * rs + x] & flag) {
+      count++;
+    }
   }
 
   return count;
@@ -909,24 +1244,34 @@ void mcskel3d_K3_MarkCritic(struct xvimage *k)
   int32_t x, y, z, n, ncore;
   uint32_t mask;
 
-  for (i = 0; i < N; i++) if (IS_ESS(K[i])) K[i] |= FLAG_CRITIC; 
+  for (i = 0; i < N; i++) {
+    if (IS_ESS(K[i])) {
+      K[i] |= FLAG_CRITIC;
+    }
+  }
 
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    if (CARRE3D(x,y,z)) n = 8; else 
-      if (INTER3D(x,y,z)) n = 2; else 
-	if (SINGL3D(x,y,z)) n = 0; else n = 26; 
-    i = z*ps + y*rs + x;
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        if (CARRE3D(x, y, z)) {
+          n = 8;
+        } else if (INTER3D(x, y, z)) {
+          n = 2;
+        } else if (SINGL3D(x, y, z)) {
+          n = 0;
+        } else {
+          n = 26;
+        }
+        i = z * ps + y * rs + x;
 
-    if (IS_ESS(K[i])) 
-    {
-      ncore = mcskel3d_K3_MarkCore(k, i);
+        if (IS_ESS(K[i])) {
+          ncore = mcskel3d_K3_MarkCore(k, i);
 #ifdef DEBUGMARKCRITIC
 printf("%s ess : %d,%d,%d ; n = %d, ncore = %d\n", F_NAME, x, y, z, n, ncore);
 #endif
-      if (ncore == 0) goto next;
+if (ncore == 0) {
+  goto next;
+}
       if (ncore == n) 
       { 
 	mcskel3d_K3_UnMarkAlphaCarre(k, i, FLAG_CORE); 
@@ -971,14 +1316,17 @@ printf("  cube, REGUL\n");
 
     next:;
     }
+      }
+    }
   }
 
-  for (i = 0; i < N; i++) 
+  for (i = 0; i < N; i++) {
     if (IS_CRITIC(K[i])) 
     {
       K[i] |= FLAG_CRITIC_E;
       mcskel3d_K3_MarkAlphaCarre(k, i, FLAG_CRITIC_E);
     }
+  }
 } // mcskel3d_K3_MarkCritic()
 
 /* ========================================== */
@@ -1002,23 +1350,33 @@ void mcskel3d_K3_MarkCritic2(struct xvimage *k, struct xvimage *m)
   int32_t x, y, z, n, ncore;
   uint32_t mask;
 
-  for (i = 0; i < N; i++) if (IS_ESS(K[i])) K[i] |= FLAG_CRITIC; 
+  for (i = 0; i < N; i++) {
+    if (IS_ESS(K[i])) {
+      K[i] |= FLAG_CRITIC;
+    }
+  }
 
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    if (CARRE3D(x,y,z)) n = 8; else 
-      if (INTER3D(x,y,z)) n = 2; else 
-	if (SINGL3D(x,y,z)) n = 0; else n = 26; 
-    i = z*ps + y*rs + x;
-    if (IS_ESS(K[i])) 
-    {
-      ncore = mcskel3d_K3_MarkCore2(k, m, i);
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        if (CARRE3D(x, y, z)) {
+          n = 8;
+        } else if (INTER3D(x, y, z)) {
+          n = 2;
+        } else if (SINGL3D(x, y, z)) {
+          n = 0;
+        } else {
+          n = 26;
+        }
+        i = z * ps + y * rs + x;
+        if (IS_ESS(K[i])) {
+          ncore = mcskel3d_K3_MarkCore2(k, m, i);
 #ifdef DEBUGMARKCRITIC2
 printf("%s ess : %d,%d,%d ; n = %d, ncore = %d\n", F_NAME, x, y, z, n, ncore);
 #endif
-      if (ncore == 0) goto next;
+if (ncore == 0) {
+  goto next;
+}
       if (ncore == n) 
       { 
 	mcskel3d_K3_UnMarkAlphaCarre(k, i, FLAG_CORE); 
@@ -1064,13 +1422,16 @@ print3Dconfiguration(mask);
 
     next:;
     }
+      }
+    }
   }
 
-  for (i = 0; i < N; i++) if (M[i] || IS_CRITIC(K[i]))
-  {
-    K[i] |= FLAG_CRITIC_E;
-    K[i] |= FLAG_CRITIC;
-    mcskel3d_K3_MarkAlphaCarre(k, i, FLAG_CRITIC_E);
+  for (i = 0; i < N; i++) {
+    if (M[i] || IS_CRITIC(K[i])) {
+      K[i] |= FLAG_CRITIC_E;
+      K[i] |= FLAG_CRITIC;
+      mcskel3d_K3_MarkAlphaCarre(k, i, FLAG_CRITIC_E);
+    }
   }
 } // mcskel3d_K3_MarkCritic2()
 
@@ -1092,24 +1453,34 @@ void mcskel3d_K3_MarkMCritic(struct xvimage *k)
   int32_t u, x, y, z, n, ncore;
   uint32_t mask;
 
-  for (i = 0; i < N; i++) if (IS_ESS(K[i])) K[i] |= FLAG_CRITIC; 
+  for (i = 0; i < N; i++) {
+    if (IS_ESS(K[i])) {
+      K[i] |= FLAG_CRITIC;
+    }
+  }
 
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    if (CARRE3D(x,y,z)) n = 8; else 
-      if (INTER3D(x,y,z)) n = 2; else 
-	if (SINGL3D(x,y,z)) n = 0; else n = 26; 
-    i = z*ps + y*rs + x;
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        if (CARRE3D(x, y, z)) {
+          n = 8;
+        } else if (INTER3D(x, y, z)) {
+          n = 2;
+        } else if (SINGL3D(x, y, z)) {
+          n = 0;
+        } else {
+          n = 26;
+        }
+        i = z * ps + y * rs + x;
 
-    if (IS_ESS(K[i])) 
-    {
-      ncore = mcskel3d_K3_MarkCore(k, i);
+        if (IS_ESS(K[i])) {
+          ncore = mcskel3d_K3_MarkCore(k, i);
 #ifdef DEBUGMARKCRITIC
       printf("%s ess : %d,%d,%d ; n = %d, ncore = %d\n", F_NAME, x, y, z, n, ncore);
 #endif
-      if (ncore == 0) goto next;
+      if (ncore == 0) {
+        goto next;
+      }
       if (ncore == n) 
       { 
 	mcskel3d_K3_UnMarkAlphaCarre(k, i, FLAG_CORE); 
@@ -1118,35 +1489,53 @@ void mcskel3d_K3_MarkMCritic(struct xvimage *k)
       // le core d'un singl est forcément vide (cas déjà traité)
       if (INTER3D(x,y,z))
       {
-	if (ncore == 1) K[i] &= ~FLAG_CRITIC;
-	mcskel3d_K3_UnMarkAlphaCarre(k, i, FLAG_CORE);
+        if (ncore == 1) {
+          K[i] &= ~FLAG_CRITIC;
+        }
+        mcskel3d_K3_UnMarkAlphaCarre(k, i, FLAG_CORE);
 	goto next;
       }
       if (CARRE3D(x,y,z))
       {
 	mask = get2Dconfiguration(K, FLAG_CORE, x, y, z, rs, ps);
-	if ((t8(mask) == 1) && (t4b(mask) == 1)) K[i] &= ~FLAG_CRITIC;
-	mcskel3d_K3_UnMarkAlphaCarre(k, i, FLAG_CORE);
+        if ((t8(mask) == 1) && (t4b(mask) == 1)) {
+          K[i] &= ~FLAG_CRITIC;
+        }
+        mcskel3d_K3_UnMarkAlphaCarre(k, i, FLAG_CORE);
       }
       //if (CUBE3D(x,y,z)) // inutile car c'est le seul choix qui reste
       mask = get3Dconfiguration(K, FLAG_CORE, i, rs, ps, N);
-      if (mctopo3d_table_simple26mask(mask)) K[i] &= ~FLAG_CRITIC;
+      if (mctopo3d_table_simple26mask(mask)) {
+        K[i] &= ~FLAG_CRITIC;
+      }
       mcskel3d_K3_UnMarkAlphaCarre(k, i, FLAG_CORE);
 
     next:;
     }
+      }
+    }
   }
 
-  for (i = 0; i < N; i++) if (IS_CRITIC(K[i])) 
-  {
-    Betacarre3d(rs, cs, ds, i%rs, (i%ps)/rs, i/ps, tab, &n);
-    for (u = 0; u < n; u++) if (IS_CRITIC(K[tab[u]])) break;	
-    if (u == n) K[i] |= FLAG_TMP1;
+  for (i = 0; i < N; i++) {
+    if (IS_CRITIC(K[i])) {
+      Betacarre3d(rs, cs, ds, i % rs, (i % ps) / rs, i / ps, tab, &n);
+      for (u = 0; u < n; u++) {
+        if (IS_CRITIC(K[tab[u]])) {
+          break;
+        }
+      }
+      if (u == n) {
+        K[i] |= FLAG_TMP1;
+      }
+    }
   }
-  for (i = 0; i < N; i++) if (IS_CRITIC(K[i])) 
-  {
-    if (!IS_TMP1(K[i])) K[i] &= ~FLAG_CRITIC;
-    K[i] &= ~FLAG_TMP1;
+  for (i = 0; i < N; i++) {
+    if (IS_CRITIC(K[i])) {
+      if (!IS_TMP1(K[i])) {
+        K[i] &= ~FLAG_CRITIC;
+      }
+      K[i] &= ~FLAG_TMP1;
+    }
   }
 } // mcskel3d_K3_MarkMCritic()
 
@@ -1171,19 +1560,27 @@ void mcskel3d_K3_MarkMCritic2(struct xvimage *k, struct xvimage *m)
   int32_t x, y, z, u, n, ncore;
   uint32_t mask;
 
-  for (i = 0; i < N; i++) if (IS_ESS(K[i])) K[i] |= FLAG_CRITIC; 
+  for (i = 0; i < N; i++) {
+    if (IS_ESS(K[i])) {
+      K[i] |= FLAG_CRITIC;
+    }
+  }
 
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    if (CARRE3D(x,y,z)) n = 8; else 
-      if (INTER3D(x,y,z)) n = 2; else 
-	if (SINGL3D(x,y,z)) n = 0; else n = 26; 
-    i = z*ps + y*rs + x;
-    if (IS_ESS(K[i])) 
-    {
-      ncore = mcskel3d_K3_MarkCore2(k, m, i);
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        if (CARRE3D(x, y, z)) {
+          n = 8;
+        } else if (INTER3D(x, y, z)) {
+          n = 2;
+        } else if (SINGL3D(x, y, z)) {
+          n = 0;
+        } else {
+          n = 26;
+        }
+        i = z * ps + y * rs + x;
+        if (IS_ESS(K[i])) {
+          ncore = mcskel3d_K3_MarkCore2(k, m, i);
 #ifdef DEBUGMARKCRITIC2
 printf("%s ess : %d,%d,%d ; n = %d, ncore = %d\n", F_NAME, x, y, z, n, ncore);
 #endif
@@ -1237,19 +1634,35 @@ print3Dconfiguration(mask);
 
     next:;
     }
+      }
+    }
   }
 
-  for (i = 0; i < N; i++) if (M[i]) K[i] |= FLAG_CRITIC;
-  for (i = 0; i < N; i++) if (IS_CRITIC(K[i])) 
-  {
-    Betacarre3d(rs, cs, ds, i%rs, (i%ps)/rs, i/ps, tab, &n);
-    for (u = 0; u < n; u++) if (IS_CRITIC(K[tab[u]])) break;	
-    if (u == n) K[i] |= FLAG_TMP1;
+  for (i = 0; i < N; i++) {
+    if (M[i]) {
+      K[i] |= FLAG_CRITIC;
+    }
   }
-  for (i = 0; i < N; i++) if (IS_CRITIC(K[i])) 
-  {
-    if (!IS_TMP1(K[i])) K[i] &= ~FLAG_CRITIC;
-    K[i] &= ~FLAG_TMP1;
+  for (i = 0; i < N; i++) {
+    if (IS_CRITIC(K[i])) {
+      Betacarre3d(rs, cs, ds, i % rs, (i % ps) / rs, i / ps, tab, &n);
+      for (u = 0; u < n; u++) {
+        if (IS_CRITIC(K[tab[u]])) {
+          break;
+        }
+      }
+      if (u == n) {
+        K[i] |= FLAG_TMP1;
+      }
+    }
+  }
+  for (i = 0; i < N; i++) {
+    if (IS_CRITIC(K[i])) {
+      if (!IS_TMP1(K[i])) {
+        K[i] &= ~FLAG_CRITIC;
+      }
+      K[i] &= ~FLAG_TMP1;
+    }
   }
 } // mcskel3d_K3_MarkMCritic2()
 
@@ -1266,14 +1679,15 @@ index_t mcskel3d_K3_Critic2Obj(struct xvimage *k)
 #define F_NAME "mcskel3d_K3_Critic2Obj"
   index_t i, N = rowsize(k) * colsize(k) * depth(k), n = 0;
   unsigned char *K = UCHARDATA(k);
-  for (i = 0; i < N; i++) 
+  for (i = 0; i < N; i++) {
     if (IS_CRITIC(K[i]))
     {
       K[i] = FLAG_OBJ;
       n++;
-    }
-    else
+    } else {
       K[i] = 0;
+    }
+  }
   return n;
 } // mcskel3d_K3_Critic2Obj()
 
@@ -1290,14 +1704,15 @@ index_t mcskel3d_K3_CriticE2Obj(struct xvimage *k)
 #define F_NAME "mcskel3d_K3_CriticE2Obj"
   index_t i, N = rowsize(k) * colsize(k) * depth(k), n = 0;
   unsigned char *K = UCHARDATA(k);
-  for (i = 0; i < N; i++) 
+  for (i = 0; i < N; i++) {
     if (IS_CRITIC_E(K[i]))
     {
       K[i] = FLAG_OBJ;
       n++;
-    }
-    else
+    } else {
       K[i] = 0;
+    }
+  }
   return n;
 } // mcskel3d_K3_CriticE2Obj()
 
@@ -1318,34 +1733,43 @@ index_t mcskel3d_K3_MCritic2Obj(struct xvimage *k)
   unsigned char *K = UCHARDATA(k);
   index_t tab1[26] = {0}, tab2[26] = {0};
   int32_t u, v, n1, n2, x, y, z;
-  for (i = 0; i < N; i++) K[i] &= ~FLAG_OBJ;
+  for (i = 0; i < N; i++) {
+    K[i] &= ~FLAG_OBJ;
+  }
 
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    i = z*ps + y*rs + x;
-    if (IS_CRITIC(K[i])) 
-    {
-      K[i] |= FLAG_OBJ;
-      Betacarre3d(rs, cs, ds, x, y, z, tab1, &n1);
-      for (u = 0; u < n1; u++) 
-      {
-	j = tab1[u];
-	if (K[j])
-	{
-	  K[j] |= FLAG_OBJ;
-	  Alphacarre3d(rs, cs, ds, j%rs, (j%ps)/rs, j/ps, tab2, &n2);
-	  for (v = 0; v < n2; v++) K[tab2[v]] |= FLAG_OBJ;
-	}
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        i = z * ps + y * rs + x;
+        if (IS_CRITIC(K[i])) {
+          K[i] |= FLAG_OBJ;
+          Betacarre3d(rs, cs, ds, x, y, z, tab1, &n1);
+          for (u = 0; u < n1; u++) {
+            j = tab1[u];
+            if (K[j]) {
+              K[j] |= FLAG_OBJ;
+              Alphacarre3d(rs, cs, ds, j % rs, (j % ps) / rs, j / ps, tab2,
+                           &n2);
+              for (v = 0; v < n2; v++) {
+                K[tab2[v]] |= FLAG_OBJ;
+              }
+            }
+          }
+          Alphacarre3d(rs, cs, ds, x, y, z, tab2, &n2);
+          for (v = 0; v < n2; v++) {
+            K[tab2[v]] |= FLAG_OBJ;
+          }
+        }
       }
-      Alphacarre3d(rs, cs, ds, x, y, z, tab2, &n2);
-      for (v = 0; v < n2; v++) K[tab2[v]] |= FLAG_OBJ;
     }
   }
 
-  for (i = 0; i < N; i++) 
-    if (IS_OBJ(K[i])) { n++; K[i] = FLAG_OBJ; } else K[i] = 0;
+  for (i = 0; i < N; i++) {
+    if (IS_OBJ(K[i])) { n++; K[i] = FLAG_OBJ;
+    } else {
+      K[i] = 0;
+    }
+  }
   return n;
 } // mcskel3d_K3_MCritic2Obj()
 
@@ -1368,31 +1792,40 @@ index_t mcskel3d_K3_MCriticOrMarked2Obj(struct xvimage *k, struct xvimage *m)
   unsigned char *M = UCHARDATA(m);
   index_t tab1[26] = {0}, tab2[26] = {0};
   int32_t u, v, n1, n2, x, y, z;
-  for (i = 0; i < N; i++) K[i] &= ~FLAG_OBJ;
+  for (i = 0; i < N; i++) {
+    K[i] &= ~FLAG_OBJ;
+  }
 
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    i = z*ps + y*rs + x;
-    if (M[i] || IS_CRITIC(K[i])) 
-    {
-      K[i] |= FLAG_OBJ;
-      Betacarre3d(rs, cs, ds, x, y, z, tab1, &n1);
-      for (u = 0; u < n1; u++) 
-      {
-	j = tab1[u];
-	K[j] |= FLAG_OBJ;
-	Alphacarre3d(rs, cs, ds, j%rs, (j%ps)/rs, j/ps, tab2, &n2);
-	for (v = 0; v < n2; v++) K[tab2[v]] |= FLAG_OBJ;
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        i = z * ps + y * rs + x;
+        if (M[i] || IS_CRITIC(K[i])) {
+          K[i] |= FLAG_OBJ;
+          Betacarre3d(rs, cs, ds, x, y, z, tab1, &n1);
+          for (u = 0; u < n1; u++) {
+            j = tab1[u];
+            K[j] |= FLAG_OBJ;
+            Alphacarre3d(rs, cs, ds, j % rs, (j % ps) / rs, j / ps, tab2, &n2);
+            for (v = 0; v < n2; v++) {
+              K[tab2[v]] |= FLAG_OBJ;
+            }
+          }
+          Alphacarre3d(rs, cs, ds, x, y, z, tab2, &n2);
+          for (v = 0; v < n2; v++) {
+            K[tab2[v]] |= FLAG_OBJ;
+          }
+        }
       }
-      Alphacarre3d(rs, cs, ds, x, y, z, tab2, &n2);
-      for (v = 0; v < n2; v++) K[tab2[v]] |= FLAG_OBJ;
     }
   }
 
-  for (i = 0; i < N; i++) 
-    if (IS_OBJ(K[i])) { n++; K[i] = FLAG_OBJ; } else K[i] = 0;
+  for (i = 0; i < N; i++) {
+    if (IS_OBJ(K[i])) { n++; K[i] = FLAG_OBJ;
+    } else {
+      K[i] = 0;
+    }
+  }
   return n;
 } // mcskel3d_K3_MCriticOrMarked2Obj()
 
@@ -1411,8 +1844,12 @@ index_t mcskel3d_K3_CriticOrMarked2Obj(struct xvimage *k, struct xvimage *m)
   index_t i, N = rowsize(k) * colsize(k) * depth(k), nobj = 0;
   unsigned char *K = UCHARDATA(k);
   unsigned char *M = UCHARDATA(m);
-  for (i = 0; i < N; i++) 
-    if (M[i] || IS_CRITIC(K[i]) || IS_CRITIC_E(K[i])) { K[i] = FLAG_OBJ; nobj++; } else K[i] = 0;
+  for (i = 0; i < N; i++) {
+    if (M[i] || IS_CRITIC(K[i]) || IS_CRITIC_E(K[i])) { K[i] = FLAG_OBJ; nobj++;
+    } else {
+      K[i] = 0;
+    }
+  }
   return nobj;
 } // mcskel3d_K3_CriticOrMarked2Obj()
 
@@ -1431,24 +1868,27 @@ void mcskel3d_K3_HitPrinc(struct xvimage *k)
   index_t tab1[26] = {0}, tab2[26] = {0};
   int32_t u, v, n1, n2, x, y, z;
 
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    i = z*ps + y*rs + x;
-    if (IS_PRINC(K[i])) 
-    {
-      K[i] |= FLAG_OBJ;
-      Betacarre3d(rs, cs, ds, x, y, z, tab1, &n1);
-      for (u = 0; u < n1; u++) 
-      {
-	j = tab1[u];
-	K[j] |= FLAG_OBJ;
-	Alphacarre3d(rs, cs, ds, j%rs, (j%ps)/rs, j/ps, tab2, &n2);
-	for (v = 0; v < n2; v++) K[tab2[v]] |= FLAG_OBJ;
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        i = z * ps + y * rs + x;
+        if (IS_PRINC(K[i])) {
+          K[i] |= FLAG_OBJ;
+          Betacarre3d(rs, cs, ds, x, y, z, tab1, &n1);
+          for (u = 0; u < n1; u++) {
+            j = tab1[u];
+            K[j] |= FLAG_OBJ;
+            Alphacarre3d(rs, cs, ds, j % rs, (j % ps) / rs, j / ps, tab2, &n2);
+            for (v = 0; v < n2; v++) {
+              K[tab2[v]] |= FLAG_OBJ;
+            }
+          }
+          Alphacarre3d(rs, cs, ds, x, y, z, tab2, &n2);
+          for (v = 0; v < n2; v++) {
+            K[tab2[v]] |= FLAG_OBJ;
+          }
+        }
       }
-      Alphacarre3d(rs, cs, ds, x, y, z, tab2, &n2);
-      for (v = 0; v < n2; v++) K[tab2[v]] |= FLAG_OBJ;
     }
   }
 } // mcskel3d_K3_HitPrinc()
@@ -1479,50 +1919,119 @@ void mcskel3d_K3_CopieComplCore3d(struct xvimage *b, int32_t i, int32_t j, int32
   /* copie le Alphacarre */
   if (i % 2)
   {
-    if (!(i>0)||!IS_CORE(B[k*ps+j*rs+i-1])) G[z*gps+y*grs+x-1] = VAL_OBJET;
-    if (!((i+1)<rs)||!IS_CORE(B[k*ps+j*rs+i+1])) G[z*gps+y*grs+x+1] = VAL_OBJET;
+    if (!(i > 0) || !IS_CORE(B[k * ps + j * rs + i - 1])) {
+      G[z * gps + y * grs + x - 1] = VAL_OBJET;
+    }
+    if (!((i + 1) < rs) || !IS_CORE(B[k * ps + j * rs + i + 1])) {
+      G[z * gps + y * grs + x + 1] = VAL_OBJET;
+    }
   }
   if (j % 2)
   {
-    if (!(j>0)||!IS_CORE(B[k*ps+(j-1)*rs+i])) G[z*gps+(y-1)*grs+x] = VAL_OBJET;
-    if (!((j+1)<cs)||!IS_CORE(B[k*ps+(j+1)*rs+i])) G[z*gps+(y+1)*grs+x] = VAL_OBJET;
+    if (!(j > 0) || !IS_CORE(B[k * ps + (j - 1) * rs + i])) {
+      G[z * gps + (y - 1) * grs + x] = VAL_OBJET;
+    }
+    if (!((j + 1) < cs) || !IS_CORE(B[k * ps + (j + 1) * rs + i])) {
+      G[z * gps + (y + 1) * grs + x] = VAL_OBJET;
+    }
   }
   if (k % 2)
   {
-    if (!(k>0)||!IS_CORE(B[(k-1)*ps+j*rs+i])) G[(z-1)*gps+y*grs+x] = VAL_OBJET;
-    if (!((k+1)<ds)||!IS_CORE(B[(k+1)*ps+j*rs+i])) G[(z+1)*gps+y*grs+x] = VAL_OBJET;
+    if (!(k > 0) || !IS_CORE(B[(k - 1) * ps + j * rs + i])) {
+      G[(z - 1) * gps + y * grs + x] = VAL_OBJET;
+    }
+    if (!((k + 1) < ds) || !IS_CORE(B[(k + 1) * ps + j * rs + i])) {
+      G[(z + 1) * gps + y * grs + x] = VAL_OBJET;
+    }
   }
   if ((i%2) + (j%2) == 2)
   {
-    if (!((i>0)&&(j>0))||!IS_CORE(B[k*ps+(j-1)*rs+i-1])) G[z*gps+(y-1)*grs+x-1] = VAL_OBJET;
-    if (!((i>0)&&((j+1)<cs))||!IS_CORE(B[k*ps+(j+1)*rs+i-1])) G[z*gps+(y+1)*grs+x-1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&(j>0))||!IS_CORE(B[k*ps+(j-1)*rs+i+1])) G[z*gps+(y-1)*grs+x+1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&((j+1)<cs))||!IS_CORE(B[k*ps+(j+1)*rs+i+1])) G[z*gps+(y+1)*grs+x+1] = VAL_OBJET;
+    if (!((i > 0) && (j > 0)) || !IS_CORE(B[k * ps + (j - 1) * rs + i - 1])) {
+      G[z * gps + (y - 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (!((i > 0) && ((j + 1) < cs)) ||
+        !IS_CORE(B[k * ps + (j + 1) * rs + i - 1])) {
+      G[z * gps + (y + 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && (j > 0)) ||
+        !IS_CORE(B[k * ps + (j - 1) * rs + i + 1])) {
+      G[z * gps + (y - 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && ((j + 1) < cs)) ||
+        !IS_CORE(B[k * ps + (j + 1) * rs + i + 1])) {
+      G[z * gps + (y + 1) * grs + x + 1] = VAL_OBJET;
+    }
   }
   if ((i%2) + (k%2) == 2)
   {
-    if (!((i>0)&&(k>0))||!IS_CORE(B[(k-1)*ps+j*rs+i-1])) G[(z-1)*gps+y*grs+x-1] = VAL_OBJET;
-    if (!((i>0)&&((k+1)<ds))||!IS_CORE(B[(k+1)*ps+j*rs+i-1])) G[(z+1)*gps+y*grs+x-1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&(k>0))||!IS_CORE(B[(k-1)*ps+j*rs+i+1])) G[(z-1)*gps+y*grs+x+1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&((k+1)<ds))||!IS_CORE(B[(k+1)*ps+j*rs+i+1])) G[(z+1)*gps+y*grs+x+1] = VAL_OBJET;
+    if (!((i > 0) && (k > 0)) || !IS_CORE(B[(k - 1) * ps + j * rs + i - 1])) {
+      G[(z - 1) * gps + y * grs + x - 1] = VAL_OBJET;
+    }
+    if (!((i > 0) && ((k + 1) < ds)) ||
+        !IS_CORE(B[(k + 1) * ps + j * rs + i - 1])) {
+      G[(z + 1) * gps + y * grs + x - 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && (k > 0)) ||
+        !IS_CORE(B[(k - 1) * ps + j * rs + i + 1])) {
+      G[(z - 1) * gps + y * grs + x + 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && ((k + 1) < ds)) ||
+        !IS_CORE(B[(k + 1) * ps + j * rs + i + 1])) {
+      G[(z + 1) * gps + y * grs + x + 1] = VAL_OBJET;
+    }
   }
   if ((k%2) + (j%2) == 2)
   {
-    if (!((k>0)&&(j>0))||!IS_CORE(B[(k-1)*ps+(j-1)*rs+i])) G[(z-1)*gps+(y-1)*grs+x] = VAL_OBJET;
-    if (!((k>0)&&((j+1)<cs))||!IS_CORE(B[(k-1)*ps+(j+1)*rs+i])) G[(z-1)*gps+(y+1)*grs+x] = VAL_OBJET;
-    if (!(((k+1)<ds)&&(j>0))||!IS_CORE(B[(k+1)*ps+(j-1)*rs+i])) G[(z+1)*gps+(y-1)*grs+x] = VAL_OBJET;
-    if (!(((k+1)<ds)&&((j+1)<cs))||!IS_CORE(B[(k+1)*ps+(j+1)*rs+i])) G[(z+1)*gps+(y+1)*grs+x] = VAL_OBJET;
+    if (!((k > 0) && (j > 0)) || !IS_CORE(B[(k - 1) * ps + (j - 1) * rs + i])) {
+      G[(z - 1) * gps + (y - 1) * grs + x] = VAL_OBJET;
+    }
+    if (!((k > 0) && ((j + 1) < cs)) ||
+        !IS_CORE(B[(k - 1) * ps + (j + 1) * rs + i])) {
+      G[(z - 1) * gps + (y + 1) * grs + x] = VAL_OBJET;
+    }
+    if (!(((k + 1) < ds) && (j > 0)) ||
+        !IS_CORE(B[(k + 1) * ps + (j - 1) * rs + i])) {
+      G[(z + 1) * gps + (y - 1) * grs + x] = VAL_OBJET;
+    }
+    if (!(((k + 1) < ds) && ((j + 1) < cs)) ||
+        !IS_CORE(B[(k + 1) * ps + (j + 1) * rs + i])) {
+      G[(z + 1) * gps + (y + 1) * grs + x] = VAL_OBJET;
+    }
   }
   if ((i%2) + (j%2) + (k%2) == 3)
   {
-    if (!((i>0)&&(j>0)&&(k>0))||!IS_CORE(B[(k-1)*ps+(j-1)*rs+i-1])) G[(z-1)*gps+(y-1)*grs+x-1] = VAL_OBJET;
-    if (!((i>0)&&((j+1)<cs)&&(k>0))||!IS_CORE(B[(k-1)*ps+(j+1)*rs+i-1])) G[(z-1)*gps+(y+1)*grs+x-1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&(j>0)&&(k>0))||!IS_CORE(B[(k-1)*ps+(j-1)*rs+i+1])) G[(z-1)*gps+(y-1)*grs+x+1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&((j+1)<cs)&&(k>0))||!IS_CORE(B[(k-1)*ps+(j+1)*rs+i+1])) G[(z-1)*gps+(y+1)*grs+x+1] = VAL_OBJET;
-    if (!((i>0)&&(j>0)&&((k+1)<ds))||!IS_CORE(B[(k+1)*ps+(j-1)*rs+i-1])) G[(z+1)*gps+(y-1)*grs+x-1] = VAL_OBJET;
-    if (!((i>0)&&((j+1)<cs)&&((k+1)<ds))||!IS_CORE(B[(k+1)*ps+(j+1)*rs+i-1])) G[(z+1)*gps+(y+1)*grs+x-1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&(j>0)&&((k+1)<ds))||!IS_CORE(B[(k+1)*ps+(j-1)*rs+i+1])) G[(z+1)*gps+(y-1)*grs+x+1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&((j+1)<cs)&&((k+1)<ds))||!IS_CORE(B[(k+1)*ps+(j+1)*rs+i+1])) G[(z+1)*gps+(y+1)*grs+x+1] = VAL_OBJET;
+    if (!((i > 0) && (j > 0) && (k > 0)) ||
+        !IS_CORE(B[(k - 1) * ps + (j - 1) * rs + i - 1])) {
+      G[(z - 1) * gps + (y - 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (!((i > 0) && ((j + 1) < cs) && (k > 0)) ||
+        !IS_CORE(B[(k - 1) * ps + (j + 1) * rs + i - 1])) {
+      G[(z - 1) * gps + (y + 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && (j > 0) && (k > 0)) ||
+        !IS_CORE(B[(k - 1) * ps + (j - 1) * rs + i + 1])) {
+      G[(z - 1) * gps + (y - 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && ((j + 1) < cs) && (k > 0)) ||
+        !IS_CORE(B[(k - 1) * ps + (j + 1) * rs + i + 1])) {
+      G[(z - 1) * gps + (y + 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if (!((i > 0) && (j > 0) && ((k + 1) < ds)) ||
+        !IS_CORE(B[(k + 1) * ps + (j - 1) * rs + i - 1])) {
+      G[(z + 1) * gps + (y - 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (!((i > 0) && ((j + 1) < cs) && ((k + 1) < ds)) ||
+        !IS_CORE(B[(k + 1) * ps + (j + 1) * rs + i - 1])) {
+      G[(z + 1) * gps + (y + 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && (j > 0) && ((k + 1) < ds)) ||
+        !IS_CORE(B[(k + 1) * ps + (j - 1) * rs + i + 1])) {
+      G[(z + 1) * gps + (y - 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && ((j + 1) < cs) && ((k + 1) < ds)) ||
+        !IS_CORE(B[(k + 1) * ps + (j + 1) * rs + i + 1])) {
+      G[(z + 1) * gps + (y + 1) * grs + x + 1] = VAL_OBJET;
+    }
   }
 
   mcskel3d_K3_UnMarkAlphaCarre(b, I, FLAG_CORE); 
@@ -1555,50 +2064,119 @@ void mcskel3d_K3_CopieCore3d(struct xvimage *b, int32_t i, int32_t j, int32_t k,
   /* copie le Alphacarre */
   if (i % 2)
   {
-    if (!(i>0)||IS_CORE(B[k*ps+j*rs+i-1])) G[z*gps+y*grs+x-1] = VAL_OBJET;
-    if (!((i+1)<rs)||IS_CORE(B[k*ps+j*rs+i+1])) G[z*gps+y*grs+x+1] = VAL_OBJET;
+    if (!(i > 0) || IS_CORE(B[k * ps + j * rs + i - 1])) {
+      G[z * gps + y * grs + x - 1] = VAL_OBJET;
+    }
+    if (!((i + 1) < rs) || IS_CORE(B[k * ps + j * rs + i + 1])) {
+      G[z * gps + y * grs + x + 1] = VAL_OBJET;
+    }
   }
   if (j % 2)
   {
-    if (!(j>0)||IS_CORE(B[k*ps+(j-1)*rs+i])) G[z*gps+(y-1)*grs+x] = VAL_OBJET;
-    if (!((j+1)<cs)||IS_CORE(B[k*ps+(j+1)*rs+i])) G[z*gps+(y+1)*grs+x] = VAL_OBJET;
+    if (!(j > 0) || IS_CORE(B[k * ps + (j - 1) * rs + i])) {
+      G[z * gps + (y - 1) * grs + x] = VAL_OBJET;
+    }
+    if (!((j + 1) < cs) || IS_CORE(B[k * ps + (j + 1) * rs + i])) {
+      G[z * gps + (y + 1) * grs + x] = VAL_OBJET;
+    }
   }
   if (k % 2)
   {
-    if (!(k>0)||IS_CORE(B[(k-1)*ps+j*rs+i])) G[(z-1)*gps+y*grs+x] = VAL_OBJET;
-    if (!((k+1)<ds)||IS_CORE(B[(k+1)*ps+j*rs+i])) G[(z+1)*gps+y*grs+x] = VAL_OBJET;
+    if (!(k > 0) || IS_CORE(B[(k - 1) * ps + j * rs + i])) {
+      G[(z - 1) * gps + y * grs + x] = VAL_OBJET;
+    }
+    if (!((k + 1) < ds) || IS_CORE(B[(k + 1) * ps + j * rs + i])) {
+      G[(z + 1) * gps + y * grs + x] = VAL_OBJET;
+    }
   }
   if ((i%2) + (j%2) == 2)
   {
-    if (!((i>0)&&(j>0))||IS_CORE(B[k*ps+(j-1)*rs+i-1])) G[z*gps+(y-1)*grs+x-1] = VAL_OBJET;
-    if (!((i>0)&&((j+1)<cs))||IS_CORE(B[k*ps+(j+1)*rs+i-1])) G[z*gps+(y+1)*grs+x-1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&(j>0))||IS_CORE(B[k*ps+(j-1)*rs+i+1])) G[z*gps+(y-1)*grs+x+1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&((j+1)<cs))||IS_CORE(B[k*ps+(j+1)*rs+i+1])) G[z*gps+(y+1)*grs+x+1] = VAL_OBJET;
+    if (!((i > 0) && (j > 0)) || IS_CORE(B[k * ps + (j - 1) * rs + i - 1])) {
+      G[z * gps + (y - 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (!((i > 0) && ((j + 1) < cs)) ||
+        IS_CORE(B[k * ps + (j + 1) * rs + i - 1])) {
+      G[z * gps + (y + 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && (j > 0)) ||
+        IS_CORE(B[k * ps + (j - 1) * rs + i + 1])) {
+      G[z * gps + (y - 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && ((j + 1) < cs)) ||
+        IS_CORE(B[k * ps + (j + 1) * rs + i + 1])) {
+      G[z * gps + (y + 1) * grs + x + 1] = VAL_OBJET;
+    }
   }
   if ((i%2) + (k%2) == 2)
   {
-    if (!((i>0)&&(k>0))||IS_CORE(B[(k-1)*ps+j*rs+i-1])) G[(z-1)*gps+y*grs+x-1] = VAL_OBJET;
-    if (!((i>0)&&((k+1)<ds))||IS_CORE(B[(k+1)*ps+j*rs+i-1])) G[(z+1)*gps+y*grs+x-1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&(k>0))||IS_CORE(B[(k-1)*ps+j*rs+i+1])) G[(z-1)*gps+y*grs+x+1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&((k+1)<ds))||IS_CORE(B[(k+1)*ps+j*rs+i+1])) G[(z+1)*gps+y*grs+x+1] = VAL_OBJET;
+    if (!((i > 0) && (k > 0)) || IS_CORE(B[(k - 1) * ps + j * rs + i - 1])) {
+      G[(z - 1) * gps + y * grs + x - 1] = VAL_OBJET;
+    }
+    if (!((i > 0) && ((k + 1) < ds)) ||
+        IS_CORE(B[(k + 1) * ps + j * rs + i - 1])) {
+      G[(z + 1) * gps + y * grs + x - 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && (k > 0)) ||
+        IS_CORE(B[(k - 1) * ps + j * rs + i + 1])) {
+      G[(z - 1) * gps + y * grs + x + 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && ((k + 1) < ds)) ||
+        IS_CORE(B[(k + 1) * ps + j * rs + i + 1])) {
+      G[(z + 1) * gps + y * grs + x + 1] = VAL_OBJET;
+    }
   }
   if ((k%2) + (j%2) == 2)
   {
-    if (!((k>0)&&(j>0))||IS_CORE(B[(k-1)*ps+(j-1)*rs+i])) G[(z-1)*gps+(y-1)*grs+x] = VAL_OBJET;
-    if (!((k>0)&&((j+1)<cs))||IS_CORE(B[(k-1)*ps+(j+1)*rs+i])) G[(z-1)*gps+(y+1)*grs+x] = VAL_OBJET;
-    if (!(((k+1)<ds)&&(j>0))||IS_CORE(B[(k+1)*ps+(j-1)*rs+i])) G[(z+1)*gps+(y-1)*grs+x] = VAL_OBJET;
-    if (!(((k+1)<ds)&&((j+1)<cs))||IS_CORE(B[(k+1)*ps+(j+1)*rs+i])) G[(z+1)*gps+(y+1)*grs+x] = VAL_OBJET;
+    if (!((k > 0) && (j > 0)) || IS_CORE(B[(k - 1) * ps + (j - 1) * rs + i])) {
+      G[(z - 1) * gps + (y - 1) * grs + x] = VAL_OBJET;
+    }
+    if (!((k > 0) && ((j + 1) < cs)) ||
+        IS_CORE(B[(k - 1) * ps + (j + 1) * rs + i])) {
+      G[(z - 1) * gps + (y + 1) * grs + x] = VAL_OBJET;
+    }
+    if (!(((k + 1) < ds) && (j > 0)) ||
+        IS_CORE(B[(k + 1) * ps + (j - 1) * rs + i])) {
+      G[(z + 1) * gps + (y - 1) * grs + x] = VAL_OBJET;
+    }
+    if (!(((k + 1) < ds) && ((j + 1) < cs)) ||
+        IS_CORE(B[(k + 1) * ps + (j + 1) * rs + i])) {
+      G[(z + 1) * gps + (y + 1) * grs + x] = VAL_OBJET;
+    }
   }
   if ((i%2) + (j%2) + (k%2) == 3)
   {
-    if (!((i>0)&&(j>0)&&(k>0))||IS_CORE(B[(k-1)*ps+(j-1)*rs+i-1])) G[(z-1)*gps+(y-1)*grs+x-1] = VAL_OBJET;
-    if (!((i>0)&&((j+1)<cs)&&(k>0))||IS_CORE(B[(k-1)*ps+(j+1)*rs+i-1])) G[(z-1)*gps+(y+1)*grs+x-1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&(j>0)&&(k>0))||IS_CORE(B[(k-1)*ps+(j-1)*rs+i+1])) G[(z-1)*gps+(y-1)*grs+x+1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&((j+1)<cs)&&(k>0))||IS_CORE(B[(k-1)*ps+(j+1)*rs+i+1])) G[(z-1)*gps+(y+1)*grs+x+1] = VAL_OBJET;
-    if (!((i>0)&&(j>0)&&((k+1)<ds))||IS_CORE(B[(k+1)*ps+(j-1)*rs+i-1])) G[(z+1)*gps+(y-1)*grs+x-1] = VAL_OBJET;
-    if (!((i>0)&&((j+1)<cs)&&((k+1)<ds))||IS_CORE(B[(k+1)*ps+(j+1)*rs+i-1])) G[(z+1)*gps+(y+1)*grs+x-1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&(j>0)&&((k+1)<ds))||IS_CORE(B[(k+1)*ps+(j-1)*rs+i+1])) G[(z+1)*gps+(y-1)*grs+x+1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&((j+1)<cs)&&((k+1)<ds))||IS_CORE(B[(k+1)*ps+(j+1)*rs+i+1])) G[(z+1)*gps+(y+1)*grs+x+1] = VAL_OBJET;
+    if (!((i > 0) && (j > 0) && (k > 0)) ||
+        IS_CORE(B[(k - 1) * ps + (j - 1) * rs + i - 1])) {
+      G[(z - 1) * gps + (y - 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (!((i > 0) && ((j + 1) < cs) && (k > 0)) ||
+        IS_CORE(B[(k - 1) * ps + (j + 1) * rs + i - 1])) {
+      G[(z - 1) * gps + (y + 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && (j > 0) && (k > 0)) ||
+        IS_CORE(B[(k - 1) * ps + (j - 1) * rs + i + 1])) {
+      G[(z - 1) * gps + (y - 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && ((j + 1) < cs) && (k > 0)) ||
+        IS_CORE(B[(k - 1) * ps + (j + 1) * rs + i + 1])) {
+      G[(z - 1) * gps + (y + 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if (!((i > 0) && (j > 0) && ((k + 1) < ds)) ||
+        IS_CORE(B[(k + 1) * ps + (j - 1) * rs + i - 1])) {
+      G[(z + 1) * gps + (y - 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (!((i > 0) && ((j + 1) < cs) && ((k + 1) < ds)) ||
+        IS_CORE(B[(k + 1) * ps + (j + 1) * rs + i - 1])) {
+      G[(z + 1) * gps + (y + 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && (j > 0) && ((k + 1) < ds)) ||
+        IS_CORE(B[(k + 1) * ps + (j - 1) * rs + i + 1])) {
+      G[(z + 1) * gps + (y - 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && ((j + 1) < cs) && ((k + 1) < ds)) ||
+        IS_CORE(B[(k + 1) * ps + (j + 1) * rs + i + 1])) {
+      G[(z + 1) * gps + (y + 1) * grs + x + 1] = VAL_OBJET;
+    }
   }
 
   mcskel3d_K3_UnMarkAlphaCarre(b, I, FLAG_CORE); 
@@ -1659,37 +2237,44 @@ void mcskel3d_K3_Mark2DIsthmus(struct xvimage *k, struct xvimage *m)
     exit(0);
   }
 
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    i = z*ps + y*rs + x;
-    if (!K[i]) goto next;
-    if (SINGL3D(x,y,z)) goto next; // ne peut être séparant
-    if (INTER3D(x,y,z)) goto next; // ne peut être séparant
-    if (IS_ESS(K[i])) 
-    {
-      if (CARRE3D(x,y,z)) // séparant seulement s'il est principal
-      {
-	if (IS_PRINC(K[i]))
-	{
-	  K[i] |= FLAG_TMP1;
-	  mcskel3d_K3_MarkAlphaCarre(k, i, FLAG_TMP1);
-	}
-	goto next;
-      }
-      else // CUBE3D
-      {
-	if (mcskel3d_K3_Tbar3D(k, x, y, z, g) > 1)
-	{
-	  K[i] |= FLAG_TMP1;
-	  mcskel3d_K3_MarkAlphaCarre(k, i, FLAG_TMP1);
-	}
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        i = z * ps + y * rs + x;
+        if (!K[i]) {
+          goto next;
+        }
+        if (SINGL3D(x, y, z)) {
+          goto next; // ne peut être séparant
+        }
+        if (INTER3D(x, y, z)) {
+          goto next; // ne peut être séparant
+        }
+        if (IS_ESS(K[i])) {
+          if (CARRE3D(x, y, z)) // séparant seulement s'il est principal
+          {
+            if (IS_PRINC(K[i])) {
+              K[i] |= FLAG_TMP1;
+              mcskel3d_K3_MarkAlphaCarre(k, i, FLAG_TMP1);
+            }
+            goto next;
+          } else // CUBE3D
+          {
+            if (mcskel3d_K3_Tbar3D(k, x, y, z, g) > 1) {
+              K[i] |= FLAG_TMP1;
+              mcskel3d_K3_MarkAlphaCarre(k, i, FLAG_TMP1);
+            }
+          }
+        }
+      next:;
       }
     }
-  next:;
   }
-  for (i = 0; i < N; i++) if (IS_TMP1(K[i])) M[i] = 1;
+  for (i = 0; i < N; i++) {
+    if (IS_TMP1(K[i])) {
+      M[i] = 1;
+    }
+  }
   freeimage(g);
 } // mcskel3d_K3_Mark2DIsthmus()
 
@@ -1722,43 +2307,47 @@ void mcskel3d_K3_Mark1DIsthmus(struct xvimage *k, struct xvimage *m)
     exit(0);
   }
 
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    i = z*ps + y*rs + x;
-    if (!K[i]) goto next;
-    if (SINGL3D(x,y,z)) goto next; // ne peut être un isthme 1D
-    if (IS_ESS(K[i])) 
-    {
-      if (INTER3D(x,y,z)) // isthme 1D seulement s'il est principal
-      {
-	if (IS_PRINC(K[i]))
-	{
-	  K[i] |= FLAG_TMP1;
-	  mcskel3d_K3_MarkAlphaCarre(k, i, FLAG_TMP1);
-	}
-	goto next;
-      }
-      else
-      if (CARRE3D(x,y,z)) 
-      {
-	mask = get2Dconfiguration(K, FLAG_OBJ, x, y, z, rs, ps);
-	if (t8(mask) > 1) K[i] |= FLAG_TMP1;
-	goto next;
-      }
-      else // CUBE3D
-      {
-	if (mcskel3d_K3_T3D(k, x, y, z, g) > 1)
-	{
-	  K[i] |= FLAG_TMP1;
-	  mcskel3d_K3_MarkAlphaCarre(k, i, FLAG_TMP1);
-	}
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        i = z * ps + y * rs + x;
+        if (!K[i]) {
+          goto next;
+        }
+        if (SINGL3D(x, y, z)) {
+          goto next; // ne peut être un isthme 1D
+        }
+        if (IS_ESS(K[i])) {
+          if (INTER3D(x, y, z)) // isthme 1D seulement s'il est principal
+          {
+            if (IS_PRINC(K[i])) {
+              K[i] |= FLAG_TMP1;
+              mcskel3d_K3_MarkAlphaCarre(k, i, FLAG_TMP1);
+            }
+            goto next;
+          } else if (CARRE3D(x, y, z)) {
+            mask = get2Dconfiguration(K, FLAG_OBJ, x, y, z, rs, ps);
+            if (t8(mask) > 1) {
+              K[i] |= FLAG_TMP1;
+            }
+            goto next;
+          } else // CUBE3D
+          {
+            if (mcskel3d_K3_T3D(k, x, y, z, g) > 1) {
+              K[i] |= FLAG_TMP1;
+              mcskel3d_K3_MarkAlphaCarre(k, i, FLAG_TMP1);
+            }
+          }
+        }
+      next:;
       }
     }
-  next:;
   }
-  for (i = 0; i < N; i++) if (IS_TMP1(K[i])) M[i] = 1;
+  for (i = 0; i < N; i++) {
+    if (IS_TMP1(K[i])) {
+      M[i] = 1;
+    }
+  }
   freeimage(g);
 } // mcskel3d_K3_Mark1DIsthmus()
 
@@ -1782,43 +2371,47 @@ void mcskel3d_K3_MarkCurveElts(struct xvimage *k, struct xvimage *m)
   unsigned char *K = UCHARDATA(k);
   unsigned char *M = UCHARDATA(m);
 
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    i = z*ps + y*rs + x;
-    if (!K[i]) goto next;
-    if (SINGL3D(x,y,z)) goto next; // ne peut être un isthme 1D
-    if (IS_ESS(K[i])) 
-    {
-      if (INTER3D(x,y,z)) // element de courbe seulement s'il est principal
-      {
-	if (IS_PRINC(K[i]))
-	{
-	  K[i] |= FLAG_TMP1;
-	  mcskel3d_K3_MarkAlphaCarre(k, i, FLAG_TMP1);
-	}
-	goto next;
-      }
-      else
-      if (CARRE3D(x,y,z)) 
-      {
-	if (get2Dcount(K, FLAG_PRINC, x, y, z, rs, ps) == 2)
-	  K[i] |= FLAG_TMP1;
-	goto next;
-      }
-      else // CUBE3D
-      {
-	if (get3Dcount(K, FLAG_PRINC, i, rs, ps, N) == 2)
-	{
-	  K[i] |= FLAG_TMP1;
-	  mcskel3d_K3_MarkAlphaCarre(k, i, FLAG_TMP1);
-	}
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        i = z * ps + y * rs + x;
+        if (!K[i]) {
+          goto next;
+        }
+        if (SINGL3D(x, y, z)) {
+          goto next; // ne peut être un isthme 1D
+        }
+        if (IS_ESS(K[i])) {
+          if (INTER3D(x, y,
+                      z)) // element de courbe seulement s'il est principal
+          {
+            if (IS_PRINC(K[i])) {
+              K[i] |= FLAG_TMP1;
+              mcskel3d_K3_MarkAlphaCarre(k, i, FLAG_TMP1);
+            }
+            goto next;
+          } else if (CARRE3D(x, y, z)) {
+            if (get2Dcount(K, FLAG_PRINC, x, y, z, rs, ps) == 2) {
+              K[i] |= FLAG_TMP1;
+            }
+            goto next;
+          } else // CUBE3D
+          {
+            if (get3Dcount(K, FLAG_PRINC, i, rs, ps, N) == 2) {
+              K[i] |= FLAG_TMP1;
+              mcskel3d_K3_MarkAlphaCarre(k, i, FLAG_TMP1);
+            }
+          }
+        }
+      next:;
       }
     }
-  next:;
   }
-  for (i = 0; i < N; i++) if (IS_TMP1(K[i])) M[i] = 1;
+  for (i = 0; i < N; i++) {
+    if (IS_TMP1(K[i])) {
+      M[i] = 1;
+    }
+  }
 } // mcskel3d_K3_MarkCurveElts()
 
 /* =============================================================== */
@@ -1914,8 +2507,12 @@ int32_t lskeleuc3d(struct xvimage * k, struct xvimage * inhi, int32_t nsteps)
       exit(0);
   }
 
-  if (nsteps == -1) nsteps = 2000000000;
-  if (nsteps == 0) goto fin;
+  if (nsteps == -1) {
+    nsteps = 2000000000;
+  }
+  if (nsteps == 0) {
+    goto fin;
+  }
 
 // --------------------------
 // Init RBT
@@ -1940,8 +2537,10 @@ int32_t lskeleuc3d(struct xvimage * k, struct xvimage * inhi, int32_t nsteps)
 	  t = D[j] + (D[i] - D[j]) / 
 	    dist3((double)(j%rs), (double)((j % ps) / rs), (double)(j/ps), 
 		  (double)(i%rs), (double)((i % ps) / rs), (double)(i/ps));
-	  if (t < p) p = t;
-	}
+          if (t < p) {
+            p = t;
+          }
+        }
       } // for l
       x = i % rs;
       y = (i % ps) / rs;
@@ -1961,8 +2560,10 @@ int32_t lskeleuc3d(struct xvimage * k, struct xvimage * inhi, int32_t nsteps)
 		t = D[j2] + (D[i] - D[j2]) / 
 		  dist3((double)(j2%rs), (double)((j2 % ps) / rs), (double)(j2/ps), 
 			(double)(i%rs), (double)((i % ps) / rs), (double)(i/ps));
-		if (t < p) p = t;
-	      }
+                if (t < p) {
+                  p = t;
+                }
+              }
 	    } // for q
 	  } // if (j != -1)
 	} // for l
@@ -2885,8 +3486,12 @@ int32_t lskel3d1(struct xvimage * k, int32_t nsteps)
 
   ACCEPTED_TYPES1(k, VFF_TYP_1_BYTE);
 
-  if (nsteps == -1) nsteps = 2000000000;
-  if (nsteps == 0) return 1;
+  if (nsteps == -1) {
+    nsteps = 2000000000;
+  }
+  if (nsteps == 0) {
+    return 1;
+  }
 
   if (!mcskel3d_K3_CheckComplex(k))
   {
@@ -2939,8 +3544,12 @@ int32_t lskel3d1b(struct xvimage * k, struct xvimage * m, int32_t nsteps)
 
   ACCEPTED_TYPES1(k, VFF_TYP_1_BYTE);
 
-  if (nsteps == -1) nsteps = 2000000000;
-  if (nsteps == 0) return 1;
+  if (nsteps == -1) {
+    nsteps = 2000000000;
+  }
+  if (nsteps == 0) {
+    return 1;
+  }
 
   if (!mcskel3d_K3_CheckComplex(k))
   {
@@ -2995,8 +3604,12 @@ int32_t lskel3d2(struct xvimage * k, int32_t nsteps)
 
   ACCEPTED_TYPES1(k, VFF_TYP_1_BYTE);
 
-  if (nsteps == -1) nsteps = 2000000000;
-  if (nsteps == 0) return 1;
+  if (nsteps == -1) {
+    nsteps = 2000000000;
+  }
+  if (nsteps == 0) {
+    return 1;
+  }
 
   if (!mcskel3d_K3_CheckComplex(k))
   {
@@ -3057,8 +3670,12 @@ int32_t lskel3d21(struct xvimage * k, int32_t nsteps)
 
   ACCEPTED_TYPES1(k, VFF_TYP_1_BYTE);
 
-  if (nsteps == -1) nsteps = 2000000000;
-  if (nsteps == 0) return 1;
+  if (nsteps == -1) {
+    nsteps = 2000000000;
+  }
+  if (nsteps == 0) {
+    return 1;
+  }
 
   if (!mcskel3d_K3_CheckComplex(k))
   {
@@ -3120,8 +3737,12 @@ int32_t lskel3d3(struct xvimage * k, int32_t nsteps)
 
   ACCEPTED_TYPES1(k, VFF_TYP_1_BYTE);
 
-  if (nsteps == -1) nsteps = 2000000000;
-  if (nsteps == 0) return 1;
+  if (nsteps == -1) {
+    nsteps = 2000000000;
+  }
+  if (nsteps == 0) {
+    return 1;
+  }
 
   if (!mcskel3d_K3_CheckComplex(k))
   {
@@ -3182,9 +3803,13 @@ int32_t lskel3d4(struct xvimage * k, int32_t nsteps)
 #endif
 
   ACCEPTED_TYPES1(k, VFF_TYP_1_BYTE);
-  
-  if (nsteps == -1) nsteps = 2000000000;
-  if (nsteps == 0) return 1;
+
+  if (nsteps == -1) {
+    nsteps = 2000000000;
+  }
+  if (nsteps == 0) {
+    return 1;
+  }
 
   if (!mcskel3d_K3_CheckComplex(k))
   {
@@ -3253,8 +3878,12 @@ int32_t lskel3d4b(struct xvimage * k, struct xvimage * m, int32_t nsteps)
   ACCEPTED_TYPES1(k, VFF_TYP_1_BYTE);
   ACCEPTED_TYPES1(m, VFF_TYP_1_BYTE);
 
-  if (nsteps == -1) nsteps = 2000000000;
-  if (nsteps == 0) return 1;
+  if (nsteps == -1) {
+    nsteps = 2000000000;
+  }
+  if (nsteps == 0) {
+    return 1;
+  }
 
   if (!mcskel3d_K3_CheckComplex(k))
   {
@@ -3328,8 +3957,12 @@ int32_t lskel3d5(struct xvimage * k, int32_t nsteps)
 
   ACCEPTED_TYPES1(k, VFF_TYP_1_BYTE);
 
-  if (nsteps == -1) nsteps = 2000000000;
-  if (nsteps == 0) return 1;
+  if (nsteps == -1) {
+    nsteps = 2000000000;
+  }
+  if (nsteps == 0) {
+    return 1;
+  }
 
   if (!mcskel3d_K3_CheckComplex(k))
   {
@@ -3391,8 +4024,12 @@ int32_t lskel3d6(struct xvimage * k, int32_t nsteps)
 
   ACCEPTED_TYPES1(k, VFF_TYP_1_BYTE);
 
-  if (nsteps == -1) nsteps = 2000000000;
-  if (nsteps == 0) return 1;
+  if (nsteps == -1) {
+    nsteps = 2000000000;
+  }
+  if (nsteps == 0) {
+    return 1;
+  }
 
   if (!mcskel3d_K3_CheckComplex(k))
   {
@@ -3467,13 +4104,19 @@ then the points of this image will be left unchanged.
 
   switch(mode)
   {
-  case 0: 
-    if (inhi != NULL) return lskel3d4b(k, inhi, nsteps);
-    else return lskel3d4(k, nsteps);
+  case 0:
+    if (inhi != NULL) {
+      return lskel3d4b(k, inhi, nsteps);
+    } else {
+      return lskel3d4(k, nsteps);
+    }
     break;
-  case 1: 
-    if (inhi != NULL) return lskel3d1b(k, inhi, nsteps);
-    else return lskel3d1(k, nsteps);
+  case 1:
+    if (inhi != NULL) {
+      return lskel3d1b(k, inhi, nsteps);
+    } else {
+      return lskel3d1(k, nsteps);
+    }
     break;
   case 2: 
     return lskel3d2(k, nsteps);

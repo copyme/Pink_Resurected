@@ -163,7 +163,9 @@ Rbt * mcrbt_CreeRbtVide(
   T->root = T->nil;
 
   /* chaine les elements libres a l'aide du pointeur right */
-  for (i = 1; i < taillemax; i++) T->elts[i].right = &(T->elts[i+1]);
+  for (i = 1; i < taillemax; i++) {
+    T->elts[i].right = &(T->elts[i + 1]);
+  }
   T->elts[taillemax].right = NULL;
   T->libre = &(T->elts[1]);
 
@@ -175,7 +177,9 @@ void RbtTransRec(
   Rbt **T, Rbt * A, RbtElt * x)
 /* ==================================== */
 {
-  if (x == A->nil) return;
+  if (x == A->nil) {
+    return;
+  }
   mcrbt_RbtInsert(T, x->key, x->auxdata);
   RbtTransRec(T, A, x->left);
   RbtTransRec(T, A, x->right);
@@ -210,7 +214,9 @@ void RbtFlush(
 {
   index_t i;
   T->util = 0;
-  for (i = 0; i < T->max - 1; i++) T->elts[i].right = &(T->elts[i+1]);
+  for (i = 0; i < T->max - 1; i++) {
+    T->elts[i].right = &(T->elts[i + 1]);
+  }
   T->elts[T->max - 1].right = NULL;
   T->root = T->nil;
 } /* RbtFlush() */
@@ -240,15 +246,23 @@ void RbtPrintRec(
 /* ==================================== */
 {
   index_t i;
-  if (x == T->nil) return;
+  if (x == T->nil) {
+    return;
+  }
   RbtPrintRec(T, x->left, niv+1);
-  for (i = 0; i < niv; i++) printf("    ");
+  for (i = 0; i < niv; i++) {
+    printf("    ");
+  }
 #ifdef MC_64_BITS
   printf("%g [%lld] (", x->key, (long long)x->auxdata);
 #else
   printf("%g [%d] (", x->key, x->auxdata);
 #endif
-  if (x->color == RBT_Red) printf("r"); else  printf("b");
+  if (x->color == RBT_Red) {
+    printf("r");
+  } else {
+    printf("b");
+  }
   printf(")\n");
   RbtPrintRec(T, x->right, niv+1);
 } /* RbtPrintRec() */
@@ -267,8 +281,13 @@ RbtElt * RbtSearch(
 /* ==================================== */
 {
   RbtElt * x = T->root;
-  while ((x != T->nil) && (k != x->key))
-    if (k < x->key) x = x->left; else x = x->right;
+  while ((x != T->nil) && (k != x->key)) {
+    if (k < x->key) {
+      x = x->left;
+    } else {
+      x = x->right;
+    }
+  }
   return x;
 } /* RbtSearch() */
 
@@ -277,7 +296,9 @@ RbtElt * mcrbt_RbtMinimum(
   Rbt * T, RbtElt * x)
 /* ==================================== */
 {
-  while (x->left != T->nil) x = x->left;
+  while (x->left != T->nil) {
+    x = x->left;
+  }
   return x;
 } /* mcrbt_RbtMinimum() */
 
@@ -286,7 +307,9 @@ RbtElt * RbtMaximum(
   Rbt * T, RbtElt * x)
 /* ==================================== */
 {
-  while (x->right != T->nil) x = x->right;
+  while (x->right != T->nil) {
+    x = x->right;
+  }
   return x;
 } /* RbtMaximum() */
 
@@ -296,7 +319,9 @@ RbtElt * mcrbt_RbtSuccessor(
 /* ==================================== */
 {
   RbtElt * y = NULL;
-  if (x->right != T->nil) return mcrbt_RbtMinimum(T, x->right);
+  if (x->right != T->nil) {
+    return mcrbt_RbtMinimum(T, x->right);
+  }
   y = x->parent;
   while ((y != T->nil) && (x == y->right))
   {
@@ -324,13 +349,20 @@ printf("z=%x ; z->key = %g\n", (int32_t)z, z->key);
   while (x != T->nil)
   {
     y = x;
-    if (z->key < x->key) x = x->left; else x = x->right;
+    if (z->key < x->key) {
+      x = x->left;
+    } else {
+      x = x->right;
+    }
   }
   z->parent = y;
-  if (y == T->nil)
+  if (y == T->nil) {
     T->root = z;
-  else
-    if (z->key < y->key) y->left = z; else y->right = z;
+  } else if (z->key < y->key) {
+    y->left = z;
+  } else {
+    y->right = z;
+  }
 
 #ifdef DEBUGINSERT
 printf("FIN mcrbt_RbtInsertSimple\n");
@@ -349,9 +381,13 @@ RbtElt * mcrbt_RbtInsertAux(  /* allocation et insertion simple */
 printf("mcrbt_RbtInsertAux\n");
 #endif
 
-  if ((*T)->libre == NULL) RbtReAlloc(T);
+if ((*T)->libre == NULL) {
+  RbtReAlloc(T);
+}
   (*T)->util++;
-  if ((*T)->util > (*T)->maxutil) (*T)->maxutil = (*T)->util;
+  if ((*T)->util > (*T)->maxutil) {
+    (*T)->maxutil = (*T)->util;
+  }
   z = (*T)->libre;
   (*T)->libre = (*T)->libre->right;
   z->key = k;
@@ -376,16 +412,18 @@ static void LeftRotate(
 
   y = x->right;                    /* assume right(x) != NIL */
   x->right = y->left;              /* move y's child over */
-  if (y->left != T->nil)
+  if (y->left != T->nil) {
     y->left->parent = x;
+  }
   y->parent = x->parent;           /* move y up to x's position */
-  if (x->parent == T->nil)
+  if (x->parent == T->nil) {
     T->root = y;
-  else 
-  {
-    if (x == x->parent->left)
+  } else {
+    if (x == x->parent->left) {
       x->parent->left = y;
-    else x->parent->right = y;
+    } else {
+      x->parent->right = y;
+    }
   }
   y->left = x;                     /* move x down */
   x->parent = y;
@@ -400,16 +438,18 @@ static void RightRotate(
 
   y = x->left;              /* assume left(x) != NIL */
   x->left = y->right;
-  if (y->right != T->nil)
+  if (y->right != T->nil) {
     y->right->parent = x;
+  }
   y->parent = x->parent;
-  if (x->parent == T->nil)
+  if (x->parent == T->nil) {
     T->root = y;
-  else 
-  {
-    if (x == x->parent->right)
-       x->parent->right = y;
-    else x->parent->left = y;
+  } else {
+    if (x == x->parent->right) {
+      x->parent->right = y;
+    } else {
+      x->parent->left = y;
+    }
   }
   y->right = x;
   x->parent = y;
@@ -586,31 +626,34 @@ RbtElt * mcrbt_RbtDeleteAux(         /* return deleted node */
 printf("mcrbt_RbtDeleteAux\n");
 #endif
 
-  if ((z->left == T->nil) || (z->right == T->nil))
-    d = z;
-  else 
-    d = mcrbt_RbtSuccessor(T, z);
-  if (d->left != T->nil)
-    c = d->left;
-  else 
-    c = d->right;
+if ((z->left == T->nil) || (z->right == T->nil)) {
+  d = z;
+} else {
+  d = mcrbt_RbtSuccessor(T, z);
+}
+if (d->left != T->nil) {
+  c = d->left;
+} else {
+  c = d->right;
+}
   c->parent = d->parent;      /* no test for NIL with sentinel */
-  if (d->parent == T->nil)
+  if (d->parent == T->nil) {
     T->root = c;
-  else 
-  {
-    if (d == d->parent->left)
+  } else {
+    if (d == d->parent->left) {
       d->parent->left = c;
-    else 
+    } else {
       d->parent->right = c;
+    }
   }
   if (d != z)
   {
     z->key = d->key;
     z->auxdata = d->auxdata;
   }
-  if (d->color == RBT_Black)
-    mcrbt_RbtDeleteFixup(T, c);     /* c is now "Double-Black" */
+  if (d->color == RBT_Black) {
+    mcrbt_RbtDeleteFixup(T, c); /* c is now "Double-Black" */
+  }
 
 #ifdef DEBUGDELETE
 printf("FIN mcrbt_RbtDeleteAux\n");
@@ -650,7 +693,9 @@ TypRbtAuxData RbtPopMin(
 */
 {
   RbtElt * z = T->root;
-  while (z->left != T->nil) z = z->left; /* recherche le min */
+  while (z->left != T->nil) {
+    z = z->left; /* recherche le min */
+  }
   z = mcrbt_RbtDeleteAux(T, z);                /* efface de l'arbre */
   z->right = T->libre;
   T->libre = z;
@@ -668,7 +713,9 @@ TypRbtAuxData RbtPopMax(
 */
 {
   RbtElt * z = T->root;
-  while (z->left != T->nil) z = z->right; /* recherche le max */
+  while (z->left != T->nil) {
+    z = z->right; /* recherche le max */
+  }
   z = mcrbt_RbtDeleteAux(T, z);                 /* efface de l'arbre */
   z->right = T->libre;
   T->libre = z;
@@ -682,7 +729,9 @@ TypRbtKey RbtMinLevel(
 /* ==================================== */
 {
   RbtElt * x = T->root;
-  while (x->left != T->nil) x = x->left;
+  while (x->left != T->nil) {
+    x = x->left;
+  }
   return x->key;
 } /* RbtMinLevel() */
 
@@ -692,7 +741,9 @@ TypRbtKey RbtMaxLevel(
 /* ==================================== */
 {
   RbtElt * x = T->root;
-  while (x->right != T->nil) x = x->right;
+  while (x->right != T->nil) {
+    x = x->right;
+  }
   return x->key;
 } /* RbtMaxLevel() */
 

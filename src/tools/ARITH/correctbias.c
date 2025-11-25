@@ -103,26 +103,34 @@ int main(int argc, char **argv)
 
   if (type == '0')
   {
-    for (x = 0; x < rs; x++)
-    for (y = 0; y < cs; y++)
-    {
-      R = sqrt((xc-x)*(xc-x) + (yc-y)*(yc-y));
-      T = (double)(I[y*rs + x]) - (a * R);
-      if (T > 255) T = 255; 
-      if (T < 0) T = 0; 
-      I[y*rs + x] = arrondi(T);
+    for (x = 0; x < rs; x++) {
+      for (y = 0; y < cs; y++) {
+        R = sqrt((xc - x) * (xc - x) + (yc - y) * (yc - y));
+        T = (double)(I[y * rs + x]) - (a * R);
+        if (T > 255) {
+          T = 255;
+        }
+        if (T < 0) {
+          T = 0;
+        }
+        I[y * rs + x] = arrondi(T);
+      }
     }
   } 
   else if (type == '1')
   {
-    for (x = 0; x < rs; x++)
-    for (y = 0; y < cs; y++)
-    {
-      R = sqrt((xc-x)*(xc-x) + (yc-y)*(yc-y));
-      T = (double)(I[y*rs + x]) - (a * R * R);
-      if (T > 255) T = 255; 
-      if (T < 0) T = 0; 
-      I[y*rs + x] = arrondi(T);
+    for (x = 0; x < rs; x++) {
+      for (y = 0; y < cs; y++) {
+        R = sqrt((xc - x) * (xc - x) + (yc - y) * (yc - y));
+        T = (double)(I[y * rs + x]) - (a * R * R);
+        if (T > 255) {
+          T = 255;
+        }
+        if (T < 0) {
+          T = 0;
+        }
+        I[y * rs + x] = arrondi(T);
+      }
     }
   } 
   else

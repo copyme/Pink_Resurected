@@ -149,9 +149,10 @@ void FifoPrint(
   printf("Max = %d ; Out = %d ; In = %d\n", L->Max, L->Out, L->In);
 #endif
   printf("[ ");
-  for (i = L->Out; i != L->In; i = (i+1) % L->Max)
+  for (i = L->Out; i != L->In; i = (i + 1) % L->Max) {
 #ifdef MC_64_BITS
-  printf("%ld ", L->Pts[i]);
+    printf("%ld ", L->Pts[i]);
+  }
 #else
   printf("%d ", L->Pts[i]);
 #endif
@@ -171,10 +172,11 @@ index_t FifoTaille(
   Fifo * L)
 /* ==================================== */
 {
-  if (L->In < L->Out)
-     return (L->Max - (L->Out-L->In));
-  else
-     return (L->In - L->Out);
+  if (L->In < L->Out) {
+    return (L->Max - (L->Out - L->In));
+  } else {
+    return (L->In - L->Out);
+  }
 }
 
 #ifdef TESTFIFO

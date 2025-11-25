@@ -117,7 +117,9 @@ if (datatype(image) == VFF_TYP_1_BYTE)
     }
     t = rs * cs;
     offset = n * t;
-    for (i = 0; i < t; i++) R[i] = I[i + offset];    
+    for (i = 0; i < t; i++) {
+      R[i] = I[i + offset];
+    }
   } 
   else if ((argv[3][0] == 'y') && (argv[3][1] == 'x'))
   {
@@ -129,9 +131,11 @@ if (datatype(image) == VFF_TYP_1_BYTE)
       exit(1);
     }
     t = rs * cs;
-    for (j = 0; j < cs ; j++)
-      for (i = 0; i < rs ; i++)
-        R[i*cs + j] = I[n*t + j*rs + i];
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        R[i * cs + j] = I[n * t + j * rs + i];
+      }
+    }
   } 
   else if ((argv[3][0] == 'x') && (argv[3][1] == 'z'))
   {
@@ -143,9 +147,11 @@ if (datatype(image) == VFF_TYP_1_BYTE)
       exit(1);
     }
     t = rs * cs;
-    for (k = 0; k < ds ; k++)
-      for (i = 0; i < rs ; i++)
-        R[k*rs + i] = I[k*t + n*rs + i];
+    for (k = 0; k < ds; k++) {
+      for (i = 0; i < rs; i++) {
+        R[k * rs + i] = I[k * t + n * rs + i];
+      }
+    }
   }
   else if ((argv[3][0] == 'z') && (argv[3][1] == 'x'))
   {
@@ -157,9 +163,11 @@ if (datatype(image) == VFF_TYP_1_BYTE)
       exit(1);
     }
     t = rs * cs;
-    for (k = 0; k < ds ; k++)
-      for (i = 0; i < rs ; i++)
-        R[i*ds + k] = I[k*t + n*rs + i];
+    for (k = 0; k < ds; k++) {
+      for (i = 0; i < rs; i++) {
+        R[i * ds + k] = I[k * t + n * rs + i];
+      }
+    }
   }
   else if ((argv[3][0] == 'y') && (argv[3][1] == 'z'))
   {
@@ -171,9 +179,11 @@ if (datatype(image) == VFF_TYP_1_BYTE)
       exit(1);
     }
     t = rs * cs;
-    for (k = 0; k < ds ; k++)
-      for (j = 0; j < cs ; j++)
-        R[k*cs + j] = I[k*t + j*rs + n];
+    for (k = 0; k < ds; k++) {
+      for (j = 0; j < cs; j++) {
+        R[k * cs + j] = I[k * t + j * rs + n];
+      }
+    }
   }
   else if ((argv[3][0] == 'z') && (argv[3][1] == 'y'))
   {
@@ -185,9 +195,11 @@ if (datatype(image) == VFF_TYP_1_BYTE)
       exit(1);
     }
     t = rs * cs;
-    for (k = 0; k < ds ; k++)
-      for (j = 0; j < cs ; j++)
-        R[j*ds + k] = I[k*t + j*rs + n];
+    for (k = 0; k < ds; k++) {
+      for (j = 0; j < cs; j++) {
+        R[j * ds + k] = I[k * t + j * rs + n];
+      }
+    }
   }
   else
   {
@@ -213,7 +225,9 @@ else if (datatype(image) == VFF_TYP_4_BYTE)
     }
     t = rs * cs;
     offset = n * t;
-    for (i = 0; i < t; i++) R[i] = I[i + offset];    
+    for (i = 0; i < t; i++) {
+      R[i] = I[i + offset];
+    }
   } 
   else if ((argv[3][0] == 'y') && (argv[3][1] == 'x'))
   {
@@ -225,9 +239,11 @@ else if (datatype(image) == VFF_TYP_4_BYTE)
       exit(1);
     }
     t = rs * cs;
-    for (j = 0; j < cs ; j++)
-      for (i = 0; i < rs ; i++)
-        R[i*cs + j] = I[n*t + j*rs + i];
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        R[i * cs + j] = I[n * t + j * rs + i];
+      }
+    }
   } 
   else if ((argv[3][0] == 'x') && (argv[3][1] == 'z'))
   {
@@ -239,9 +255,11 @@ else if (datatype(image) == VFF_TYP_4_BYTE)
       exit(1);
     }
     t = rs * cs;
-    for (k = 0; k < ds ; k++)
-      for (i = 0; i < rs ; i++)
-        R[k*rs + i] = I[k*t + n*rs + i];
+    for (k = 0; k < ds; k++) {
+      for (i = 0; i < rs; i++) {
+        R[k * rs + i] = I[k * t + n * rs + i];
+      }
+    }
   }
   else if ((argv[3][0] == 'z') && (argv[3][1] == 'x'))
   {
@@ -253,9 +271,11 @@ else if (datatype(image) == VFF_TYP_4_BYTE)
       exit(1);
     }
     t = rs * cs;
-    for (k = 0; k < ds ; k++)
-      for (i = 0; i < rs ; i++)
-        R[i*ds + k] = I[k*t + n*rs + i];
+    for (k = 0; k < ds; k++) {
+      for (i = 0; i < rs; i++) {
+        R[i * ds + k] = I[k * t + n * rs + i];
+      }
+    }
   }
   else if ((argv[3][0] == 'y') && (argv[3][1] == 'z'))
   {
@@ -267,9 +287,11 @@ else if (datatype(image) == VFF_TYP_4_BYTE)
       exit(1);
     }
     t = rs * cs;
-    for (k = 0; k < ds ; k++)
-      for (j = 0; j < cs ; j++)
-        R[k*cs + j] = I[k*t + j*rs + n];
+    for (k = 0; k < ds; k++) {
+      for (j = 0; j < cs; j++) {
+        R[k * cs + j] = I[k * t + j * rs + n];
+      }
+    }
   }
   else if ((argv[3][0] == 'z') && (argv[3][1] == 'y'))
   {
@@ -281,9 +303,11 @@ else if (datatype(image) == VFF_TYP_4_BYTE)
       exit(1);
     }
     t = rs * cs;
-    for (k = 0; k < ds ; k++)
-      for (j = 0; j < cs ; j++)
-        R[j*ds + k] = I[k*t + j*rs + n];
+    for (k = 0; k < ds; k++) {
+      for (j = 0; j < cs; j++) {
+        R[j * ds + k] = I[k * t + j * rs + n];
+      }
+    }
   }
   else
   {
@@ -309,7 +333,9 @@ else if (datatype(image) == VFF_TYP_FLOAT)
     }
     t = rs * cs;
     offset = n * t;
-    for (i = 0; i < t; i++) R[i] = I[i + offset];    
+    for (i = 0; i < t; i++) {
+      R[i] = I[i + offset];
+    }
   } 
   else if ((argv[3][0] == 'y') && (argv[3][1] == 'x'))
   {
@@ -321,9 +347,11 @@ else if (datatype(image) == VFF_TYP_FLOAT)
       exit(1);
     }
     t = rs * cs;
-    for (j = 0; j < cs ; j++)
-      for (i = 0; i < rs ; i++)
-        R[i*cs + j] = I[n*t + j*rs + i];
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        R[i * cs + j] = I[n * t + j * rs + i];
+      }
+    }
   } 
   else if ((argv[3][0] == 'x') && (argv[3][1] == 'z'))
   {
@@ -335,9 +363,11 @@ else if (datatype(image) == VFF_TYP_FLOAT)
       exit(1);
     }
     t = rs * cs;
-    for (k = 0; k < ds ; k++)
-      for (i = 0; i < rs ; i++)
-        R[k*rs + i] = I[k*t + n*rs + i];
+    for (k = 0; k < ds; k++) {
+      for (i = 0; i < rs; i++) {
+        R[k * rs + i] = I[k * t + n * rs + i];
+      }
+    }
   }
   else if ((argv[3][0] == 'z') && (argv[3][1] == 'x'))
   {
@@ -349,9 +379,11 @@ else if (datatype(image) == VFF_TYP_FLOAT)
       exit(1);
     }
     t = rs * cs;
-    for (k = 0; k < ds ; k++)
-      for (i = 0; i < rs ; i++)
-        R[i*ds + k] = I[k*t + n*rs + i];
+    for (k = 0; k < ds; k++) {
+      for (i = 0; i < rs; i++) {
+        R[i * ds + k] = I[k * t + n * rs + i];
+      }
+    }
   }
   else if ((argv[3][0] == 'y') && (argv[3][1] == 'z'))
   {
@@ -363,9 +395,11 @@ else if (datatype(image) == VFF_TYP_FLOAT)
       exit(1);
     }
     t = rs * cs;
-    for (k = 0; k < ds ; k++)
-      for (j = 0; j < cs ; j++)
-        R[k*cs + j] = I[k*t + j*rs + n];
+    for (k = 0; k < ds; k++) {
+      for (j = 0; j < cs; j++) {
+        R[k * cs + j] = I[k * t + j * rs + n];
+      }
+    }
   }
   else if ((argv[3][0] == 'z') && (argv[3][1] == 'y'))
   {
@@ -377,9 +411,11 @@ else if (datatype(image) == VFF_TYP_FLOAT)
       exit(1);
     }
     t = rs * cs;
-    for (k = 0; k < ds ; k++)
-      for (j = 0; j < cs ; j++)
-        R[j*ds + k] = I[k*t + j*rs + n];
+    for (k = 0; k < ds; k++) {
+      for (j = 0; j < cs; j++) {
+        R[j * ds + k] = I[k * t + j * rs + n];
+      }
+    }
   }
   else
   {

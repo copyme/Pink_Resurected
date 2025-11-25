@@ -134,11 +134,17 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (argc == 4) dir = atoi(argv[2]);
+  if (argc == 4) {
+    dir = atoi(argv[2]);
+  }
 
   rs2 = cs2 = 1;
-  while (rs2 < rs) rs2 = rs2 << 1;
-  while (cs2 < cs) cs2 = cs2 << 1;
+  while (rs2 < rs) {
+    rs2 = rs2 << 1;
+  }
+  while (cs2 < cs) {
+    cs2 = cs2 << 1;
+  }
   if ((rs2 != rs) || (cs2 != cs))
   {
     image2 = allocimage(NULL, rs2, cs2, 1, VFF_TYP_COMPLEX);

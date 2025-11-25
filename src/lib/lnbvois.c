@@ -60,70 +60,85 @@ int32_t lnbvois(
 
   switch (connex)
   {
-    case 4: 
-      for (p = 0; p < N; p++)
+    case 4:
+      for (p = 0; p < N; p++) {
         if (F[p])
         {
           nvois = 0;                /* compte le nombre de voisins non nuls */
           for (k = 0; k < 8; k += 2)
           {
             q = voisin(p, k, rs, N);
-            if ((q != -1) && (F[q])) nvois++;
+            if ((q != -1) && (F[q])) {
+              nvois++;
+            }
           }
           F[p] = nvois;
         }
+      }
       break;
-    case 8: 
-      for (p = 0; p < N; p++)
+    case 8:
+      for (p = 0; p < N; p++) {
         if (F[p])
         {
           nvois = 0;                /* compte le nombre de voisins non nuls */
           for (k = 0; k < 8; k += 1)
           {
             q = voisin(p, k, rs, N);
-            if ((q != -1) && (F[q])) nvois++;
+            if ((q != -1) && (F[q])) {
+              nvois++;
+            }
           }
           F[p] = nvois;
         }
+      }
       break;
-    case 6: 
-      for (p = 0; p < N; p++)
+    case 6:
+      for (p = 0; p < N; p++) {
         if (F[p])
         {
           nvois = 0;                /* compte le nombre de voisins non nuls */
           for (k = 0; k <= 10; k += 2)
           {
             q = voisin6(p, k, rs, ps, N);
-            if ((q != -1) && (F[q])) nvois++;
+            if ((q != -1) && (F[q])) {
+              nvois++;
+            }
           }
           F[p] = nvois;
         }
+      }
       break;
-    case 18: 
-      for (p = 0; p < N; p++)
+    case 18:
+      for (p = 0; p < N; p++) {
         if (F[p])
         {
           nvois = 0;                /* compte le nombre de voisins non nuls */
           for (k = 0; k < 18; k += 1)
           {
             q = voisin18(p, k, rs, ps, N);
-            if ((q != -1) && (F[q])) nvois++;
+            if ((q != -1) && (F[q])) {
+              nvois++;
+            }
           }
           F[p] = nvois;
         }
+      }
       break;
-    case 26: 
-      for (p = 0; p < N; p++)
+    case 26:
+      for (p = 0; p < N; p++) {
         if (F[p])
         {
           nvois = 0;                /* compte le nombre de voisins non nuls */
           for (k = 0; k < 26; k += 1)
           {
             q = voisin26(p, k, rs, ps, N);
-            if ((q != -1) && (F[q])) nvois++;
+            if ((q != -1) && (F[q])) {
+              nvois++;
+            }
           }
           F[p] = nvois;
         }
+      }
       break;
     default: 
       fprintf(stderr, "lnbvois: mauvaise connexite: %d\n", connex);

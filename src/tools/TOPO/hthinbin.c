@@ -120,7 +120,9 @@ int main(int argc, char **argv)
 
   writeimage(image, argv[argc - 1]);
   freeimage(image);
-  if (contr) freeimage(contr);
+  if (contr) {
+    freeimage(contr);
+  }
 
   return 0;
 } /* main */

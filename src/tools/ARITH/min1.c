@@ -94,9 +94,9 @@ int main(int argc, char **argv)
     fprintf(fd, "e %d\n", 1); 
     fprintf(fd, "%g\n", minval); 
     fclose(fd);
-  }
-  else
+  } else {
     printf("%g\n", minval);
+  }
 
   freeimage(image);
 

@@ -98,7 +98,9 @@ int main(int argc, char **argv)
 
   writeimage(image, argv[4]);
   freeimage(image);
-  if (imagecond != NULL) freeimage(imagecond);
+  if (imagecond != NULL) {
+    freeimage(imagecond);
+  }
 
   return 0;
 } /* main */

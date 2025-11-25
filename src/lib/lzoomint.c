@@ -90,24 +90,34 @@ int32_t lzoomint(
 
     if (z > 0)
     {
-      if (fill)  /* pas efficace - a ameliorer */
-        for (yy = 0; yy < cs; yy++)
-          for (j = 0; j < z; j++)
-            for (xx = 0; xx < rs; xx++)
+      if (fill) { /* pas efficace - a ameliorer */
+        for (yy = 0; yy < cs; yy++) {
+          for (j = 0; j < z; j++) {
+            for (xx = 0; xx < rs; xx++) {
               for (i = 0; i < z; i++)
               {
                 ptout[(yy*z+j)*rs*z + xx*z+i] = ptin[zz*ps + yy*rs + xx]; // BUG: Memory corruption! zz is not set when used here!
- 	      }
-      else
-        for (yy = 0; yy < cs; yy++)
-          for (xx = 0; xx < rs; xx++)
-            ptout[(yy*z)*rs*z + xx*z] = ptin[zz*ps + yy*rs + xx];
+              }
+            }
+          }
+        }
+      } else {
+        for (yy = 0; yy < cs; yy++) {
+          for (xx = 0; xx < rs; xx++) {
+            ptout[(yy * z) * rs * z + xx * z] = ptin[zz * ps + yy * rs + xx];
+          }
+        }
+      }
+    } else {
+      for (yy = 0; yy < cs; yy++) {
+        for (xx = 0; xx < rs; xx++) {
+          if (((zz % (-z)) == 0) && ((yy % (-z)) == 0) && ((xx % (-z)) == 0)) {
+            ptout[(yy / (-z)) * (rs / (-z)) + (xx / (-z))] =
+                ptin[zz * ps + yy * rs + xx];
+          }
+        }
+      }
     }
-    else
-      for (yy = 0; yy < cs; yy++)
-        for (xx = 0; xx < rs; xx++)
-          if (((zz % (-z)) == 0) && ((yy % (-z)) == 0) && ((xx % (-z)) == 0)) 
-            ptout[(yy/(-z))*(rs/(-z)) + (xx/(-z))] = ptin[zz*ps + yy*rs + xx];
 
   }
   else /* ds != 1 */
@@ -135,28 +145,44 @@ int32_t lzoomint(
 
     if (z > 0)
     {
-      if (fill)  /* pas efficace - a ameliorer */
-        for (zz = 0; zz < ds; zz++)
-          for (k = 0; k < z; k++)
-            for (yy = 0; yy < cs; yy++)
-              for (j = 0; j < z; j++)
-                for (xx = 0; xx < rs; xx++)
+      if (fill) { /* pas efficace - a ameliorer */
+        for (zz = 0; zz < ds; zz++) {
+          for (k = 0; k < z; k++) {
+            for (yy = 0; yy < cs; yy++) {
+              for (j = 0; j < z; j++) {
+                for (xx = 0; xx < rs; xx++) {
                   for (i = 0; i < z; i++)
 	          {
                     ptout[(zz*z+k)*psz + (yy*z+j)*rsz + xx*z+i] = ptin[zz*ps + yy*rs + xx];
-	          }
-      else
-        for (zz = 0; zz < ds; zz++)
-          for (yy = 0; yy < cs; yy++)
-            for (xx = 0; xx < rs; xx++)
-              ptout[(zz*z)*psz + (yy*z)*rsz + xx*z] = ptin[zz*ps + yy*rs + xx];
+                  }
+                }
+              }
+            }
+          }
+        }
+      } else {
+        for (zz = 0; zz < ds; zz++) {
+          for (yy = 0; yy < cs; yy++) {
+            for (xx = 0; xx < rs; xx++) {
+              ptout[(zz * z) * psz + (yy * z) * rsz + xx * z] =
+                  ptin[zz * ps + yy * rs + xx];
+            }
+          }
+        }
+      }
+    } else {
+      for (zz = 0; zz < ds; zz++) {
+        for (yy = 0; yy < cs; yy++) {
+          for (xx = 0; xx < rs; xx++) {
+            if (((zz % (-z)) == 0) && ((yy % (-z)) == 0) &&
+                ((xx % (-z)) == 0)) {
+              ptout[(zz / (-z)) * (psz) + (yy / (-z)) * (rsz) + (xx / (-z))] =
+                  ptin[zz * ps + yy * rs + xx];
+            }
+          }
+        }
+      }
     }
-    else
-      for (zz = 0; zz < ds; zz++)
-        for (yy = 0; yy < cs; yy++)
-          for (xx = 0; xx < rs; xx++)
-            if (((zz % (-z)) == 0) && ((yy % (-z)) == 0) && ((xx % (-z)) == 0)) 
-              ptout[(zz/(-z))*(psz) + (yy/(-z))*(rsz) + (xx/(-z))] = ptin[zz*ps + yy*rs + xx];
   }
   return 1;
 }
@@ -217,25 +243,35 @@ struct xvimage* lzoomintxyz(
 
     if (zoomx>0 && zoomy>0 && zoomz>0)
     {
-      if (fill)  /* pas efficace - a ameliorer */
-        for (yy = 0; yy < cs; yy++)
-          for (j = 0; j < zoomy; j++)
-            for (xx = 0; xx < rs; xx++)
+      if (fill) { /* pas efficace - a ameliorer */
+        for (yy = 0; yy < cs; yy++) {
+          for (j = 0; j < zoomy; j++) {
+            for (xx = 0; xx < rs; xx++) {
               for (i = 0; i < zoomx; i++)
               {
                 ptout[(yy*zoomy+j)*rs*zoomx + xx*zoomx+i] = ptin[yy*rs + xx];
- 	      }
-      else
-        for (yy = 0; yy < cs; yy++)
-          for (xx = 0; xx < rs; xx++)
-            ptout[(yy*zoomy)*rs*zoomx + xx*zoomx] = ptin[yy*rs + xx];
+              }
+            }
+          }
+        }
+      } else {
+        for (yy = 0; yy < cs; yy++) {
+          for (xx = 0; xx < rs; xx++) {
+            ptout[(yy * zoomy) * rs * zoomx + xx * zoomx] = ptin[yy * rs + xx];
+          }
+        }
+      }
     }
     else if (zoomx<0 && zoomy<0 && zoomz<0)
     {
-      for (yy = 0; yy < (cs); yy++)
-        for (xx = 0; xx < (rs); xx++)
-	  if ( yy%zoomy==0 && xx%zoomx==0)
-            ptout[(yy/(-zoomy))*(rs/(-zoomx)) + (xx/(-zoomx))] = ptin[ yy*rs + xx];
+      for (yy = 0; yy < (cs); yy++) {
+        for (xx = 0; xx < (rs); xx++) {
+          if (yy % zoomy == 0 && xx % zoomx == 0) {
+            ptout[(yy / (-zoomy)) * (rs / (-zoomx)) + (xx / (-zoomx))] =
+                ptin[yy * rs + xx];
+          }
+        }
+      }
     }
     else 
     {
@@ -276,32 +312,44 @@ struct xvimage* lzoomintxyz(
 
     if (zoomx > 0) //zoomy>0 et zoomz>0 aussi
     {
-      if (fill)  /* pas efficace - a ameliorer */
-        for (zz = 0; zz < ds; zz++)
-          for (k = 0; k < zoomz; k++)
-            for (yy = 0; yy < cs; yy++)
-              for (j = 0; j < zoomy; j++)
-                for (xx = 0; xx < rs; xx++)
+      if (fill) { /* pas efficace - a ameliorer */
+        for (zz = 0; zz < ds; zz++) {
+          for (k = 0; k < zoomz; k++) {
+            for (yy = 0; yy < cs; yy++) {
+              for (j = 0; j < zoomy; j++) {
+                for (xx = 0; xx < rs; xx++) {
                   for (i = 0; i < zoomx; i++)
 	          {
                     ptout[(zz*zoomz+k)*psz + (yy*zoomy+j)*rsz + xx*zoomx+i] = ptin[zz*ps + yy*rs + xx];
-	          }
-      else
-        for (zz = 0; zz < ds; zz++)
-          for (yy = 0; yy < cs; yy++)
-            for (xx = 0; xx < rs; xx++)
-              ptout[(zz*zoomz)*psz + (yy*zoomy)*rsz + (xx*zoomx)] = ptin[zz*ps + yy*rs + xx];
-    } 
-    else // zoomx<0 et zoomy<0 et zoomz<0 
-      for (zz = 0; zz < ds; zz++)
-        for (yy = 0; yy < cs; yy++)
-          for (xx = 0; xx < rs; xx++)
-           if ( xx%zoomx==0 && yy%zoomy==0 && zz%zoomz==0 &&
-		xx/(-zoomx) < rsz && yy/(-zoomy) < csz && zz/(-zoomz) < dsz
-	      )
-	   {
+                  }
+                }
+              }
+            }
+          }
+        }
+      } else {
+        for (zz = 0; zz < ds; zz++) {
+          for (yy = 0; yy < cs; yy++) {
+            for (xx = 0; xx < rs; xx++) {
+              ptout[(zz * zoomz) * psz + (yy * zoomy) * rsz + (xx * zoomx)] =
+                  ptin[zz * ps + yy * rs + xx];
+            }
+          }
+        }
+      }
+    } else { // zoomx<0 et zoomy<0 et zoomz<0
+      for (zz = 0; zz < ds; zz++) {
+        for (yy = 0; yy < cs; yy++) {
+          for (xx = 0; xx < rs; xx++) {
+            if (xx % zoomx == 0 && yy % zoomy == 0 && zz % zoomz == 0 &&
+                xx / (-zoomx) < rsz && yy / (-zoomy) < csz &&
+                zz / (-zoomz) < dsz) {
               ptout[(zz/(-zoomz))*psz + ((yy/(-zoomy)))*rsz + (xx/(-zoomx))] = ptin[zz*ps + yy*rs + xx];
-	   }
+            }
+          }
+        }
+      }
+    }
   }
   return out;
 }

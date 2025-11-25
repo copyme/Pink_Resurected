@@ -75,10 +75,11 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (argc == 4)
+  if (argc == 4) {
     alpha = 0.5;
-  else
+  } else {
     alpha = atof(argv[3]);
+  }
   if ((alpha < 0.0) || (alpha > 1.0))
   {
     fprintf(stderr, "%s: parameter alpha must be between 0 and 1\n", argv[0]);

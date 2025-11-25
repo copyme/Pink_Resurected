@@ -117,14 +117,23 @@ int main(int argc, char **argv)
     fprintf(stderr, "usage: %s in.pgm {6|26|h|m|M|a|R} out.pgm \n", argv[0]);
     exit(1);
   }
-  if (mode == 'h') mode = 0; else 
-  if (mode == 'm') mode = 1; else 
-  if (mode == 'M') mode = 2; else 
-  if (mode == '2') mode = 3; else 
-  if (mode == '6') mode = 4; else
-  if (mode == 'a') mode = 5; else 
-  if (mode == 'R') mode = 6; else 
-  if (mode == 'b') mode = 7;
+  if (mode == 'h') {
+    mode = 0;
+  } else if (mode == 'm') {
+    mode = 1;
+  } else if (mode == 'M') {
+    mode = 2;
+  } else if (mode == '2') {
+    mode = 3;
+  } else if (mode == '6') {
+    mode = 4;
+  } else if (mode == 'a') {
+    mode = 5;
+  } else if (mode == 'R') {
+    mode = 6;
+  } else if (mode == 'b') {
+    mode = 7;
+  }
 
   if (! l3dkhalimskize(o, &k, mode))
   {

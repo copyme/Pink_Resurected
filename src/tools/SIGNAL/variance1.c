@@ -94,9 +94,9 @@ int main(int argc, char **argv)
       exit(1);
     }
     varianceval = lvariance2(image, mask);
-  }
-  else
+  } else {
     varianceval = lvariance1(image);
+  }
 
 #ifdef VERBOSE
     printf("varianceval: %g\n", varianceval);
@@ -113,7 +113,9 @@ int main(int argc, char **argv)
   fclose(fd);
 
   freeimage(image);
-  if (mask) freeimage(mask);
+  if (mask) {
+    freeimage(mask);
+  }
 
   return 0;
 } /* main */

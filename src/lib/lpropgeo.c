@@ -172,7 +172,9 @@ int32_t lpropgeo(
   {
     for (x = 0; x < N; x++)       /* recherche dans toute l'image */
     {
-      if (!MASK[x]) SOURCE[x] = NDG_MIN;
+      if (!MASK[x]) {
+        SOURCE[x] = NDG_MIN;
+      }
       if (MASK[x] && (!IsSet(x, TRAITE1)))   /* on est dans une CC non traitee */
       {
         valcomp = MASK[x];
@@ -191,8 +193,12 @@ int32_t lpropgeo(
         while (! LifoVide(LIFO))  /* parcourt la CC */
         {
           w = LifoPop(LIFO);
-          if ((SOURCE[w] < min)) min = SOURCE[w];
-          if ((SOURCE[w] > max)) max = SOURCE[w];
+          if ((SOURCE[w] < min)) {
+            min = SOURCE[w];
+          }
+          if ((SOURCE[w] > max)) {
+            max = SOURCE[w];
+          }
           surf += 1;
           sumndg += SOURCE[w];
 	  switch (connex)
@@ -217,9 +223,13 @@ int32_t lpropgeo(
 	      if ((y != -1) && (MASK[y] == 0) && (!IsSet(y, TRAITE1)))
 #endif
 	      {
-		if ((SOURCE[y] < minb)) minb = SOURCE[y];
-		if ((SOURCE[y] > maxb)) maxb = SOURCE[y];
-		surfb += 1;
+                if ((SOURCE[y] < minb)) {
+                  minb = SOURCE[y];
+                }
+                if ((SOURCE[y] > maxb)) {
+                  maxb = SOURCE[y];
+                }
+                surfb += 1;
 		sumndgb += SOURCE[y];
 		sumndgc += SOURCE[y] * SOURCE[y];
 		Set(y, TRAITE1);
@@ -245,9 +255,13 @@ int32_t lpropgeo(
 	      if ((y != -1) && (MASK[y] == 0) && (!IsSet(y, TRAITE1)))
 #endif
 	      {
-		if ((SOURCE[y] < minb)) minb = SOURCE[y];
-		if ((SOURCE[y] > maxb)) maxb = SOURCE[y];
-		surfb += 1;
+                if ((SOURCE[y] < minb)) {
+                  minb = SOURCE[y];
+                }
+                if ((SOURCE[y] > maxb)) {
+                  maxb = SOURCE[y];
+                }
+                surfb += 1;
 		sumndgb += SOURCE[y];
 		sumndgc += SOURCE[y] * SOURCE[y];
 		Set(y, TRAITE1);
@@ -273,9 +287,13 @@ int32_t lpropgeo(
 	      if ((y != -1) && (MASK[y] == 0) && (!IsSet(y, TRAITE1)))
 #endif
 	      {
-		if ((SOURCE[y] < minb)) minb = SOURCE[y];
-		if ((SOURCE[y] > maxb)) maxb = SOURCE[y];
-		surfb += 1;
+                if ((SOURCE[y] < minb)) {
+                  minb = SOURCE[y];
+                }
+                if ((SOURCE[y] > maxb)) {
+                  maxb = SOURCE[y];
+                }
+                surfb += 1;
 		sumndgb += SOURCE[y];
 		sumndgc += SOURCE[y] * SOURCE[y];
 		Set(y, TRAITE1);
@@ -333,8 +351,12 @@ printf("composante %d - surf=%d ; sumndg=%d ; surfb=%d ; sumndgb=%d ; max=%d\n",
               break;
             case RANDB:
               tmp = (int32_t)Normal(moybd, devb);
-              if (tmp > (int32_t)NDG_MAX) tmp = (int32_t)NDG_MAX;
-              if (tmp < (int32_t)NDG_MIN) tmp = (int32_t)NDG_MIN;
+              if (tmp > (int32_t)NDG_MAX) {
+                tmp = (int32_t)NDG_MAX;
+              }
+              if (tmp < (int32_t)NDG_MIN) {
+                tmp = (int32_t)NDG_MIN;
+              }
               SOURCE[w] = (uint8_t)tmp;
               break;
 	    default:
@@ -348,9 +370,10 @@ printf("composante %d - surf=%d ; sumndg=%d ; surfb=%d ; sumndgb=%d ; max=%d\n",
 	    for (k = 0; k < 8; k += incr_voisb) /* parcourt les voisins dans le complementaire */
 	    {                                   /* pour les demarquer (TRAITE1) */
 	      y = voisin(w, k, rs, N);
-	      if ((y != -1) && (MASK[y] == 0) && (IsSet(y, TRAITE1)))
-		UnSet(y, TRAITE1);
-	    } /* for k ... */
+              if ((y != -1) && (MASK[y] == 0) && (IsSet(y, TRAITE1))) {
+                UnSet(y, TRAITE1);
+              }
+            } /* for k ... */
 	    for (k = 0; k < 8; k += incr_vois) /* parcourt les voisins */
 	    {
 	      y = voisin(w, k, rs, N);
@@ -365,9 +388,10 @@ printf("composante %d - surf=%d ; sumndg=%d ; surfb=%d ; sumndgb=%d ; max=%d\n",
 	    for (k = 0; k <= 10; k += 2) /* parcourt les voisins dans le complementaire */
 	    {                                   /* pour les demarquer (TRAITE1) */
 	      y = voisin6(w, k, rs, ps, N);
-	      if ((y != -1) && (MASK[y] == 0) && (IsSet(y, TRAITE1)))
-		UnSet(y, TRAITE1);
-	    } /* for k ... */
+              if ((y != -1) && (MASK[y] == 0) && (IsSet(y, TRAITE1))) {
+                UnSet(y, TRAITE1);
+              }
+            } /* for k ... */
 	    for (k = 0; k < 26; k += 1) /* parcourt les voisins */
 	    {
 	      y = voisin26(w, k, rs, ps, N);
@@ -382,9 +406,10 @@ printf("composante %d - surf=%d ; sumndg=%d ; surfb=%d ; sumndgb=%d ; max=%d\n",
 	    for (k = 0; k < 26; k += 1) /* parcourt les voisins dans le complementaire */
 	    {                                   /* pour les demarquer (TRAITE1) */
 	      y = voisin26(w, k, rs, ps, N);
-	      if ((y != -1) && (MASK[y] == 0) && (IsSet(y, TRAITE1)))
-		UnSet(y, TRAITE1);
-	    } /* for k ... */
+              if ((y != -1) && (MASK[y] == 0) && (IsSet(y, TRAITE1))) {
+                UnSet(y, TRAITE1);
+              }
+            } /* for k ... */
 	    for (k = 0; k <= 10; k += 2) /* parcourt les voisins */
 	    {
 	      y = voisin6(w, k, rs, ps, N);
@@ -405,7 +430,9 @@ printf("composante %d - surf=%d ; sumndg=%d ; surfb=%d ; sumndgb=%d ; max=%d\n",
   {
     for (x = 0; x < N; x++)       /* recherche dans toute l'image */
     {
-      if (!MASKLONG[x]) SOURCE[x] = NDG_MIN;
+      if (!MASKLONG[x]) {
+        SOURCE[x] = NDG_MIN;
+      }
       if (MASKLONG[x] && (!IsSet(x, TRAITE1)))   /* on est dans une CC non traitee */
       {
         valcomplong = MASKLONG[x];
@@ -425,8 +452,12 @@ printf("Set TRAITE1 %d (%d,%d)\n",x, x%rs, x/rs);
         while (! LifoVide(LIFO))  /* parcourt la CC */
         {
           w = LifoPop(LIFO);
-          if ((SOURCE[w] < min)) min = SOURCE[w];
-          if ((SOURCE[w] > max)) max = SOURCE[w];
+          if ((SOURCE[w] < min)) {
+            min = SOURCE[w];
+          }
+          if ((SOURCE[w] > max)) {
+            max = SOURCE[w];
+          }
           surf += 1;
           sumndg += SOURCE[w];
 	  switch (connex)
@@ -451,9 +482,13 @@ printf("Set TRAITE1 %d (%d,%d)\n",x, x%rs, x/rs);
 	      if ((y != -1) && (MASKLONG[y] == 0) && (!IsSet(y, TRAITE1)))
 #endif
 	      {
-		if ((SOURCE[y] < minb)) minb = SOURCE[y];
-		if ((SOURCE[y] > maxb)) maxb = SOURCE[y];
-		surfb += 1;
+                if ((SOURCE[y] < minb)) {
+                  minb = SOURCE[y];
+                }
+                if ((SOURCE[y] > maxb)) {
+                  maxb = SOURCE[y];
+                }
+                surfb += 1;
 		sumndgb += SOURCE[y];
 		sumndgc += SOURCE[y] * SOURCE[y];
 		Set(y, TRAITE1);
@@ -479,9 +514,13 @@ printf("Set TRAITE1 %d (%d,%d)\n",x, x%rs, x/rs);
 	      if ((y != -1) && (MASKLONG[y] == 0) && (!IsSet(y, TRAITE1)))
 #endif
 	      {
-		if ((SOURCE[y] < minb)) minb = SOURCE[y];
-		if ((SOURCE[y] > maxb)) maxb = SOURCE[y];
-		surfb += 1;
+                if ((SOURCE[y] < minb)) {
+                  minb = SOURCE[y];
+                }
+                if ((SOURCE[y] > maxb)) {
+                  maxb = SOURCE[y];
+                }
+                surfb += 1;
 		sumndgb += SOURCE[y];
 		sumndgc += SOURCE[y] * SOURCE[y];
 		Set(y, TRAITE1);
@@ -507,9 +546,13 @@ printf("Set TRAITE1 %d (%d,%d)\n",x, x%rs, x/rs);
 	      if ((y != -1) && (MASKLONG[y] == 0) && (!IsSet(y, TRAITE1)))
 #endif
 	      {
-		if ((SOURCE[y] < minb)) minb = SOURCE[y];
-		if ((SOURCE[y] > maxb)) maxb = SOURCE[y];
-		surfb += 1;
+                if ((SOURCE[y] < minb)) {
+                  minb = SOURCE[y];
+                }
+                if ((SOURCE[y] > maxb)) {
+                  maxb = SOURCE[y];
+                }
+                surfb += 1;
 		sumndgb += SOURCE[y];
 		sumndgc += SOURCE[y] * SOURCE[y];
 		Set(y, TRAITE1);
@@ -561,8 +604,12 @@ printf("Set TRAITE1 %d (%d,%d)\n",x, x%rs, x/rs);
               break;
             case RANDB:
               tmp = (int32_t)Normal(moybd, devb);
-              if (tmp > (int32_t)NDG_MAX) tmp = (int32_t)NDG_MAX;
-              if (tmp < (int32_t)NDG_MIN) tmp = (int32_t)NDG_MIN;
+              if (tmp > (int32_t)NDG_MAX) {
+                tmp = (int32_t)NDG_MAX;
+              }
+              if (tmp < (int32_t)NDG_MIN) {
+                tmp = (int32_t)NDG_MIN;
+              }
               SOURCE[w] = (uint8_t)tmp;
               break;
 	    default:
@@ -639,30 +686,36 @@ printf("Set TRAITE1 %d (%d,%d)\n",x, x%rs, x/rs);
       return(0);
   }
 
-  if (function == MIN1)
+  if (function == MIN1) {
     for (x = 0; x < N; x++)
 	{
-      if (IsSet(x, MINIMUM))
+      if (IsSet(x, MINIMUM)) {
         SOURCE[x] = NDG_MAX;
-      else
+      } else {
         SOURCE[x] = NDG_MIN;
-	}
-  if (function == MAX1)
+      }
+    }
+  }
+  if (function == MAX1) {
     for (x = 0; x < N; x++)
 	{
-      if (IsSet(x, MAXIMUM))
+      if (IsSet(x, MAXIMUM)) {
         SOURCE[x] = NDG_MAX;
-      else
+      } else {
         SOURCE[x] = NDG_MIN;
-	}
-  if (function == MOY1)
+      }
+    }
+  }
+  if (function == MOY1) {
     for (x = 0; x < N; x++)
 	{
-      if (IsSet(x, MOYEN))
+      if (IsSet(x, MOYEN)) {
         SOURCE[x] = NDG_MAX;
-      else
+      } else {
         SOURCE[x] = NDG_MIN;
-	}
+      }
+    }
+  }
   LifoTermine(LIFO);
   IndicsTermine();
   return(1);
@@ -741,7 +794,9 @@ int32_t lpropgeolong(
   {
     for (x = 0; x < N; x++)       /* recherche dans toute l'image */
     {
-      if (!MASK[x]) SOURCE[x] = 0;
+      if (!MASK[x]) {
+        SOURCE[x] = 0;
+      }
       if (MASK[x] && (!IsSet(x, TRAITE1)))   /* on est dans une CC non traitee */
       {
         valcomp = MASK[x];
@@ -754,8 +809,12 @@ int32_t lpropgeolong(
         while (! LifoVide(LIFO))  /* parcourt la CC */
         {
           w = LifoPop(LIFO);
-          if ((SOURCE[w] < min)) min = SOURCE[w];
-          if ((SOURCE[w] > max)) max = SOURCE[w];
+          if ((SOURCE[w] < min)) {
+            min = SOURCE[w];
+          }
+          if ((SOURCE[w] > max)) {
+            max = SOURCE[w];
+          }
           surf += 1;
           sumndg += SOURCE[w];
 	  switch (connex)
@@ -828,9 +887,10 @@ int32_t lpropgeolong(
 	    for (k = 0; k < 8; k += incr_voisb) /* parcourt les voisins dans le complementaire */
 	    {                                   /* pour les demarquer (TRAITE1) */
 	      y = voisin(w, k, rs, N);
-	      if ((y != -1) && (MASK[y] == 0) && (IsSet(y, TRAITE1)))
-		UnSet(y, TRAITE1);
-	    } /* for k ... */
+              if ((y != -1) && (MASK[y] == 0) && (IsSet(y, TRAITE1))) {
+                UnSet(y, TRAITE1);
+              }
+            } /* for k ... */
 	    for (k = 0; k < 8; k += incr_vois) /* parcourt les voisins */
 	    {
 	      y = voisin(w, k, rs, N);
@@ -845,9 +905,10 @@ int32_t lpropgeolong(
 	    for (k = 0; k <= 10; k += 2) /* parcourt les voisins dans le complementaire */
 	    {                                   /* pour les demarquer (TRAITE1) */
 	      y = voisin6(w, k, rs, ps, N);
-	      if ((y != -1) && (MASK[y] == 0) && (IsSet(y, TRAITE1)))
-		UnSet(y, TRAITE1);
-	    } /* for k ... */
+              if ((y != -1) && (MASK[y] == 0) && (IsSet(y, TRAITE1))) {
+                UnSet(y, TRAITE1);
+              }
+            } /* for k ... */
 	    for (k = 0; k < 26; k += 1) /* parcourt les voisins */
 	    {
 	      y = voisin26(w, k, rs, ps, N);
@@ -862,9 +923,10 @@ int32_t lpropgeolong(
 	    for (k = 0; k < 26; k += 1) /* parcourt les voisins dans le complementaire */
 	    {                                   /* pour les demarquer (TRAITE1) */
 	      y = voisin26(w, k, rs, ps, N);
-	      if ((y != -1) && (MASK[y] == 0) && (IsSet(y, TRAITE1)))
-		UnSet(y, TRAITE1);
-	    } /* for k ... */
+              if ((y != -1) && (MASK[y] == 0) && (IsSet(y, TRAITE1))) {
+                UnSet(y, TRAITE1);
+              }
+            } /* for k ... */
 	    for (k = 0; k <= 10; k += 2) /* parcourt les voisins */
 	    {
 	      y = voisin6(w, k, rs, ps, N);
@@ -886,7 +948,9 @@ int32_t lpropgeolong(
   {
     for (x = 0; x < N; x++)       /* recherche dans toute l'image */
     {
-      if (!MASKLONG[x]) SOURCE[x] = NDG_MIN;
+      if (!MASKLONG[x]) {
+        SOURCE[x] = NDG_MIN;
+      }
       if (MASKLONG[x] && (!IsSet(x, TRAITE1)))   /* on est dans une CC non traitee */
       {
         valcomplong = MASKLONG[x];
@@ -903,8 +967,12 @@ printf("Set TRAITE1 %d (%d,%d)\n",x, x%rs, x/rs);
         while (! LifoVide(LIFO))  /* parcourt la CC */
         {
           w = LifoPop(LIFO);
-          if ((SOURCE[w] < min)) min = SOURCE[w];
-          if ((SOURCE[w] > max)) max = SOURCE[w];
+          if ((SOURCE[w] < min)) {
+            min = SOURCE[w];
+          }
+          if ((SOURCE[w] > max)) {
+            max = SOURCE[w];
+          }
           surf += 1;
           sumndg += SOURCE[w];
 	  switch (connex)

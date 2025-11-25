@@ -92,14 +92,54 @@ int32_t voisin(index_t i, int32_t k, index_t rs, index_t nb)
 {
   switch(k)
   {
-  case EST:        if (i%rs!=rs-1)              return i+1;    else return -1;
-  case NORD_EST:   if ((i%rs!=rs-1)&&(i>=rs))   return i+1-rs; else return -1;
-  case NORD:       if (i>=rs)                   return i-rs;   else return -1;
-  case NORD_OUEST: if ((i>=rs)&&(i%rs!=0))      return i-rs-1; else return -1;
-  case OUEST:      if (i%rs!=0)                 return i-1;    else return -1;
-  case SUD_OUEST:  if ((i%rs!=0)&&(i<nb-rs))    return i-1+rs; else return -1;
-  case SUD:        if (i<nb-rs)                 return i+rs;   else return -1;
-  case SUD_EST:    if ((i<nb-rs)&&(i%rs!=rs-1)) return i+rs+1; else return -1;
+  case EST:
+    if (i % rs != rs - 1) {
+      return i + 1;
+    } else {
+      return -1;
+    }
+  case NORD_EST:
+    if ((i % rs != rs - 1) && (i >= rs)) {
+      return i + 1 - rs;
+    } else {
+      return -1;
+    }
+  case NORD:
+    if (i >= rs) {
+      return i - rs;
+    } else {
+      return -1;
+    }
+  case NORD_OUEST:
+    if ((i >= rs) && (i % rs != 0)) {
+      return i - rs - 1;
+    } else {
+      return -1;
+    }
+  case OUEST:
+    if (i % rs != 0) {
+      return i - 1;
+    } else {
+      return -1;
+    }
+  case SUD_OUEST:
+    if ((i % rs != 0) && (i < nb - rs)) {
+      return i - 1 + rs;
+    } else {
+      return -1;
+    }
+  case SUD:
+    if (i < nb - rs) {
+      return i + rs;
+    } else {
+      return -1;
+    }
+  case SUD_EST:
+    if ((i < nb - rs) && (i % rs != rs - 1)) {
+      return i + rs + 1;
+    } else {
+      return -1;
+    }
   default: 
     fprintf(stderr, "%s: bad index value %d\n", F_NAME, k);
     exit(0);
@@ -119,30 +159,150 @@ int32_t voisin2(index_t i, int32_t k, index_t rs, index_t nb)
 {
   switch(k)
   {
-  case EST:        if (i%rs!=rs-1)              return i+1;    else return -1;
-  case NORD_EST:   if ((i%rs!=rs-1)&&(i>=rs))   return i+1-rs; else return -1;
-  case NORD:       if (i>=rs)                   return i-rs;   else return -1;
-  case NORD_OUEST: if ((i>=rs)&&(i%rs!=0))      return i-rs-1; else return -1;
-  case OUEST:      if (i%rs!=0)                 return i-1;    else return -1;
-  case SUD_OUEST:  if ((i%rs!=0)&&(i<nb-rs))    return i-1+rs; else return -1;
-  case SUD:        if (i<nb-rs)                 return i+rs;   else return -1;
-  case SUD_EST:    if ((i<nb-rs)&&(i%rs!=rs-1)) return i+rs+1; else return -1;
-  case  8: if (i%rs<rs-2)                return i+2;      else return -1;
-  case  9: if ((i%rs<rs-2)&&(i>=rs))     return i+2-rs;   else return -1;
-  case 10: if ((i%rs<rs-2)&&(i>=2*rs))   return i+2-2*rs; else return -1;
-  case 11: if ((i%rs<rs-1)&&(i>=2*rs))   return i+1-2*rs; else return -1;
-  case 12: if (i>=2*rs)                  return i-2*rs;   else return -1;
-  case 13: if ((i%rs>0)&&(i>=2*rs))      return i-1-2*rs; else return -1;
-  case 14: if ((i%rs>1)&&(i>=2*rs))      return i-2-2*rs; else return -1;
-  case 15: if ((i%rs>1)&&(i>=rs))        return i-2-rs;   else return -1;
-  case 16: if (i%rs>1)                   return i-2;      else return -1;
-  case 17: if ((i%rs>1)&&(i<nb-rs))      return i-2+rs;   else return -1;
-  case 18: if ((i%rs>1)&&(i<nb-2*rs))    return i-2+2*rs; else return -1;
-  case 19: if ((i%rs>0)&&(i<nb-2*rs))    return i-1+2*rs; else return -1;
-  case 20: if (i<nb-2*rs)                return i+2*rs;   else return -1;
-  case 21: if ((i%rs<rs-1)&&(i<nb-2*rs)) return i+1+2*rs; else return -1;
-  case 22: if ((i%rs<rs-2)&&(i<nb-2*rs)) return i+2+2*rs; else return -1;
-  case 23: if ((i%rs<rs-2)&&(i<nb-rs))   return i+2+rs;   else return -1;
+  case EST:
+    if (i % rs != rs - 1) {
+      return i + 1;
+    } else {
+      return -1;
+    }
+  case NORD_EST:
+    if ((i % rs != rs - 1) && (i >= rs)) {
+      return i + 1 - rs;
+    } else {
+      return -1;
+    }
+  case NORD:
+    if (i >= rs) {
+      return i - rs;
+    } else {
+      return -1;
+    }
+  case NORD_OUEST:
+    if ((i >= rs) && (i % rs != 0)) {
+      return i - rs - 1;
+    } else {
+      return -1;
+    }
+  case OUEST:
+    if (i % rs != 0) {
+      return i - 1;
+    } else {
+      return -1;
+    }
+  case SUD_OUEST:
+    if ((i % rs != 0) && (i < nb - rs)) {
+      return i - 1 + rs;
+    } else {
+      return -1;
+    }
+  case SUD:
+    if (i < nb - rs) {
+      return i + rs;
+    } else {
+      return -1;
+    }
+  case SUD_EST:
+    if ((i < nb - rs) && (i % rs != rs - 1)) {
+      return i + rs + 1;
+    } else {
+      return -1;
+    }
+  case  8:
+    if (i % rs < rs - 2) {
+      return i + 2;
+    } else {
+      return -1;
+    }
+  case  9:
+    if ((i % rs < rs - 2) && (i >= rs)) {
+      return i + 2 - rs;
+    } else {
+      return -1;
+    }
+  case 10:
+    if ((i % rs < rs - 2) && (i >= 2 * rs)) {
+      return i + 2 - 2 * rs;
+    } else {
+      return -1;
+    }
+  case 11:
+    if ((i % rs < rs - 1) && (i >= 2 * rs)) {
+      return i + 1 - 2 * rs;
+    } else {
+      return -1;
+    }
+  case 12:
+    if (i >= 2 * rs) {
+      return i - 2 * rs;
+    } else {
+      return -1;
+    }
+  case 13:
+    if ((i % rs > 0) && (i >= 2 * rs)) {
+      return i - 1 - 2 * rs;
+    } else {
+      return -1;
+    }
+  case 14:
+    if ((i % rs > 1) && (i >= 2 * rs)) {
+      return i - 2 - 2 * rs;
+    } else {
+      return -1;
+    }
+  case 15:
+    if ((i % rs > 1) && (i >= rs)) {
+      return i - 2 - rs;
+    } else {
+      return -1;
+    }
+  case 16:
+    if (i % rs > 1) {
+      return i - 2;
+    } else {
+      return -1;
+    }
+  case 17:
+    if ((i % rs > 1) && (i < nb - rs)) {
+      return i - 2 + rs;
+    } else {
+      return -1;
+    }
+  case 18:
+    if ((i % rs > 1) && (i < nb - 2 * rs)) {
+      return i - 2 + 2 * rs;
+    } else {
+      return -1;
+    }
+  case 19:
+    if ((i % rs > 0) && (i < nb - 2 * rs)) {
+      return i - 1 + 2 * rs;
+    } else {
+      return -1;
+    }
+  case 20:
+    if (i < nb - 2 * rs) {
+      return i + 2 * rs;
+    } else {
+      return -1;
+    }
+  case 21:
+    if ((i % rs < rs - 1) && (i < nb - 2 * rs)) {
+      return i + 1 + 2 * rs;
+    } else {
+      return -1;
+    }
+  case 22:
+    if ((i % rs < rs - 2) && (i < nb - 2 * rs)) {
+      return i + 2 + 2 * rs;
+    } else {
+      return -1;
+    }
+  case 23:
+    if ((i % rs < rs - 2) && (i < nb - rs)) {
+      return i + 2 + rs;
+    } else {
+      return -1;
+    }
   default: 
     fprintf(stderr, "%s: bad index value %d\n", F_NAME, k);
     exit(0);
@@ -160,15 +320,31 @@ int32_t bord(index_t i, index_t rs, index_t nb)
 		6 7 8
 	*/
 
- 	if (i==0) return (4);
- 	if (i==(nb-rs)) return (6);
- 	if (i==rs-1) return (2);
- 	if (i==nb-1) return (8);
- 	if (i%rs==0) return (5);
-	if (i%rs==rs-1) return (1);
-	if (i<rs) return (3);
-	if (i>nb-rs) return (7);
-	return (0);
+        if (i == 0) {
+          return (4);
+        }
+        if (i == (nb - rs)) {
+          return (6);
+        }
+        if (i == rs - 1) {
+          return (2);
+        }
+        if (i == nb - 1) {
+          return (8);
+        }
+        if (i % rs == 0) {
+          return (5);
+        }
+        if (i % rs == rs - 1) {
+          return (1);
+        }
+        if (i < rs) {
+          return (3);
+        }
+        if (i > nb - rs) {
+          return (7);
+        }
+        return (0);
 }
 
 /*            
@@ -186,12 +362,24 @@ int32_t bord(index_t i, index_t rs, index_t nb)
 int32_t bord3d(index_t i, index_t rs, index_t ps, index_t nb)
 /* ==================================== */
 {
-  if (i%rs == rs-1)     return 1;
-  if (i%rs == 0)        return 1;
-  if ((i%ps) < rs)      return 1;
-  if ((i%ps) >= ps-rs)  return 1;
-  if (i < ps)           return 1;
-  if (i >= nb-ps)        return 1;
+  if (i % rs == rs - 1) {
+    return 1;
+  }
+  if (i % rs == 0) {
+    return 1;
+  }
+  if ((i % ps) < rs) {
+    return 1;
+  }
+  if ((i % ps) >= ps - rs) {
+    return 1;
+  }
+  if (i < ps) {
+    return 1;
+  }
+  if (i >= nb - ps) {
+    return 1;
+  }
   return (0);
 }
 
@@ -209,12 +397,42 @@ int32_t voisin6(index_t i, int32_t k, index_t rs, index_t ps, index_t N)
 {
   switch(k)
   {
-  case EST:        if (i%rs!=rs-1) return i+1; else return -1;
-  case NORD:       if ((i%ps)>=rs) return i-rs; else return -1;
-  case OUEST:      if (i%rs!=0) return i-1; else return -1;
-  case SUD:        if ((i%ps)<ps-rs) return i+rs; else return -1;
-  case DEVANT:     if (i>=ps) return i-ps; else return -1;
-  case DERRIERE:   if (i<N-ps) return i+ps; else return -1;
+  case EST:
+    if (i % rs != rs - 1) {
+      return i + 1;
+    } else {
+      return -1;
+    }
+  case NORD:
+    if ((i % ps) >= rs) {
+      return i - rs;
+    } else {
+      return -1;
+    }
+  case OUEST:
+    if (i % rs != 0) {
+      return i - 1;
+    } else {
+      return -1;
+    }
+  case SUD:
+    if ((i % ps) < ps - rs) {
+      return i + rs;
+    } else {
+      return -1;
+    }
+  case DEVANT:
+    if (i >= ps) {
+      return i - ps;
+    } else {
+      return -1;
+    }
+  case DERRIERE:
+    if (i < N - ps) {
+      return i + ps;
+    } else {
+      return -1;
+    }
   default: 
     fprintf(stderr, "%s: bad index value %d\n", F_NAME, k);
     exit(0);
@@ -236,34 +454,164 @@ int32_t voisin26(index_t i, int32_t k, index_t rs, index_t ps, index_t N)
   switch(k)
   {
   /* les 9 premiers (0 a 8) sont les 9 pixels du plan "ARRIERE" (+ps) */
-  case 0:  if ((i<N-ps)&&(i%rs!=rs-1)) return ps+i+1; else return -1;                 /*  1  0  1 */
-  case 1:  if ((i<N-ps)&&(i%rs!=rs-1)&&(i%ps>=rs)) return ps+i+1-rs; else return -1;  /*  1 -1  1 */
-  case 2:  if ((i<N-ps)&&(i%ps>=rs)) return ps+i-rs; else return -1;                  /*  0 -1  1 */
-  case 3:  if ((i<N-ps)&&(i%ps>=rs)&&(i%rs!=0)) return ps+i-rs-1;  else return -1;    /* -1 -1  1 */
-  case 4:  if ((i<N-ps)&&(i%rs!=0)) return ps+i-1; else return -1;                    /* -1  0  1 */
-  case 5:  if ((i<N-ps)&&(i%rs!=0)&&(i%ps<ps-rs)) return ps+i-1+rs; else return -1;   /* -1  1  1 */
-  case 6:  if ((i<N-ps)&&(i%ps<ps-rs)) return ps+i+rs; else return -1;                /*  0  1  1 */
-  case 7:  if ((i<N-ps)&&(i%ps<ps-rs)&&(i%rs!=rs-1)) return ps+i+rs+1; else return -1;/*  1  1  1 */
-  case 8:  if ((i<N-ps)) return ps+i; else return -1;                                 /*  0  0  1 */
+  case 0:
+    if ((i < N - ps) && (i % rs != rs - 1)) {
+      return ps + i + 1;
+    } else {
+      return -1; /*  1  0  1 */
+    }
+  case 1:
+    if ((i < N - ps) && (i % rs != rs - 1) && (i % ps >= rs)) {
+      return ps + i + 1 - rs;
+    } else {
+      return -1; /*  1 -1  1 */
+    }
+  case 2:
+    if ((i < N - ps) && (i % ps >= rs)) {
+      return ps + i - rs;
+    } else {
+      return -1; /*  0 -1  1 */
+    }
+  case 3:
+    if ((i < N - ps) && (i % ps >= rs) && (i % rs != 0)) {
+      return ps + i - rs - 1;
+    } else {
+      return -1; /* -1 -1  1 */
+    }
+  case 4:
+    if ((i < N - ps) && (i % rs != 0)) {
+      return ps + i - 1;
+    } else {
+      return -1; /* -1  0  1 */
+    }
+  case 5:
+    if ((i < N - ps) && (i % rs != 0) && (i % ps < ps - rs)) {
+      return ps + i - 1 + rs;
+    } else {
+      return -1; /* -1  1  1 */
+    }
+  case 6:
+    if ((i < N - ps) && (i % ps < ps - rs)) {
+      return ps + i + rs;
+    } else {
+      return -1; /*  0  1  1 */
+    }
+  case 7:
+    if ((i < N - ps) && (i % ps < ps - rs) && (i % rs != rs - 1)) {
+      return ps + i + rs + 1;
+    } else {
+      return -1; /*  1  1  1 */
+    }
+  case 8:
+    if ((i < N - ps)) {
+      return ps + i;
+    } else {
+      return -1; /*  0  0  1 */
+    }
   /* les 8 suivants (9 a 16) sont les 8 pixels du plan "COURANT" () */
-  case 9:  if ((i%rs!=rs-1)) return i+1; else return -1;
-  case 10: if ((i%rs!=rs-1)&&(i%ps>=rs)) return i+1-rs; else return -1;
-  case 11: if ((i%ps>=rs)) return i-rs; else return -1;
-  case 12: if ((i%ps>=rs)&&(i%rs!=0)) return i-rs-1;  else return -1;
-  case 13: if ((i%rs!=0)) return i-1; else return -1;
-  case 14: if ((i%rs!=0)&&(i%ps<ps-rs)) return i-1+rs; else return -1;
-  case 15: if ((i%ps<ps-rs)) return i+rs; else return -1;
-  case 16: if ((i%ps<ps-rs)&&(i%rs!=rs-1)) return i+rs+1; else return -1;
+  case 9:
+    if ((i % rs != rs - 1)) {
+      return i + 1;
+    } else {
+      return -1;
+    }
+  case 10:
+    if ((i % rs != rs - 1) && (i % ps >= rs)) {
+      return i + 1 - rs;
+    } else {
+      return -1;
+    }
+  case 11:
+    if ((i % ps >= rs)) {
+      return i - rs;
+    } else {
+      return -1;
+    }
+  case 12:
+    if ((i % ps >= rs) && (i % rs != 0)) {
+      return i - rs - 1;
+    } else {
+      return -1;
+    }
+  case 13:
+    if ((i % rs != 0)) {
+      return i - 1;
+    } else {
+      return -1;
+    }
+  case 14:
+    if ((i % rs != 0) && (i % ps < ps - rs)) {
+      return i - 1 + rs;
+    } else {
+      return -1;
+    }
+  case 15:
+    if ((i % ps < ps - rs)) {
+      return i + rs;
+    } else {
+      return -1;
+    }
+  case 16:
+    if ((i % ps < ps - rs) && (i % rs != rs - 1)) {
+      return i + rs + 1;
+    } else {
+      return -1;
+    }
   /* les 9 derniers (17 a 25) sont les 9 pixels du plan "AVANT" (-ps) */
-  case 17: if ((i>=ps)&&(i%rs!=rs-1)) return -ps+i+1; else return -1;
-  case 18: if ((i>=ps)&&(i%rs!=rs-1)&&(i%ps>=rs)) return -ps+i+1-rs; else return -1;
-  case 19: if ((i>=ps)&&(i%ps>=rs)) return -ps+i-rs; else return -1;
-  case 20: if ((i>=ps)&&(i%ps>=rs)&&(i%rs!=0)) return -ps+i-rs-1;  else return -1;
-  case 21: if ((i>=ps)&&(i%rs!=0)) return -ps+i-1; else return -1;
-  case 22: if ((i>=ps)&&(i%rs!=0)&&(i%ps<ps-rs)) return -ps+i-1+rs; else return -1;
-  case 23: if ((i>=ps)&&(i%ps<ps-rs)) return -ps+i+rs; else return -1;
-  case 24: if ((i>=ps)&&(i%ps<ps-rs)&&(i%rs!=rs-1)) return -ps+i+rs+1; else return -1;
-  case 25: if ((i>=ps)) return -ps+i; else return -1;
+  case 17:
+    if ((i >= ps) && (i % rs != rs - 1)) {
+      return -ps + i + 1;
+    } else {
+      return -1;
+    }
+  case 18:
+    if ((i >= ps) && (i % rs != rs - 1) && (i % ps >= rs)) {
+      return -ps + i + 1 - rs;
+    } else {
+      return -1;
+    }
+  case 19:
+    if ((i >= ps) && (i % ps >= rs)) {
+      return -ps + i - rs;
+    } else {
+      return -1;
+    }
+  case 20:
+    if ((i >= ps) && (i % ps >= rs) && (i % rs != 0)) {
+      return -ps + i - rs - 1;
+    } else {
+      return -1;
+    }
+  case 21:
+    if ((i >= ps) && (i % rs != 0)) {
+      return -ps + i - 1;
+    } else {
+      return -1;
+    }
+  case 22:
+    if ((i >= ps) && (i % rs != 0) && (i % ps < ps - rs)) {
+      return -ps + i - 1 + rs;
+    } else {
+      return -1;
+    }
+  case 23:
+    if ((i >= ps) && (i % ps < ps - rs)) {
+      return -ps + i + rs;
+    } else {
+      return -1;
+    }
+  case 24:
+    if ((i >= ps) && (i % ps < ps - rs) && (i % rs != rs - 1)) {
+      return -ps + i + rs + 1;
+    } else {
+      return -1;
+    }
+  case 25:
+    if ((i >= ps)) {
+      return -ps + i;
+    } else {
+      return -1;
+    }
   default: 
     fprintf(stderr, "%s: bad index value %d\n", F_NAME, k);
     exit(0);
@@ -285,26 +633,116 @@ int32_t voisin18(index_t i, int32_t k, index_t rs, index_t ps, index_t N)
   switch(k)
   {
   /* les 5 premiers (0 a 4) sont les 5 pixels du plan "ARRIERE" (+ps) */
-  case 0:  if ((i<N-ps)&&(i%rs!=rs-1)) return ps+i+1; else return -1;
-  case 1:  if ((i<N-ps)&&(i%ps>=rs)) return ps+i-rs; else return -1;
-  case 2:  if ((i<N-ps)&&(i%rs!=0)) return ps+i-1; else return -1;
-  case 3:  if ((i<N-ps)&&(i%ps<ps-rs)) return ps+i+rs; else return -1;
-  case 4:  if ((i<N-ps)) return ps+i; else return -1;
+  case 0:
+    if ((i < N - ps) && (i % rs != rs - 1)) {
+      return ps + i + 1;
+    } else {
+      return -1;
+    }
+  case 1:
+    if ((i < N - ps) && (i % ps >= rs)) {
+      return ps + i - rs;
+    } else {
+      return -1;
+    }
+  case 2:
+    if ((i < N - ps) && (i % rs != 0)) {
+      return ps + i - 1;
+    } else {
+      return -1;
+    }
+  case 3:
+    if ((i < N - ps) && (i % ps < ps - rs)) {
+      return ps + i + rs;
+    } else {
+      return -1;
+    }
+  case 4:
+    if ((i < N - ps)) {
+      return ps + i;
+    } else {
+      return -1;
+    }
   /* les 8 suivants (5 a 12) sont les 8 pixels du plan "COURANT" () */
-  case 5:  if ((i%rs!=rs-1)) return i+1; else return -1;
-  case 6:  if ((i%rs!=rs-1)&&(i%ps>=rs)) return i+1-rs; else return -1;
-  case 7:  if ((i%ps>=rs)) return i-rs; else return -1;
-  case 8:  if ((i%ps>=rs)&&(i%rs!=0)) return i-rs-1;  else return -1;
-  case 9:  if ((i%rs!=0)) return i-1; else return -1;
-  case 10: if ((i%rs!=0)&&(i%ps<ps-rs)) return i-1+rs; else return -1;
-  case 11: if ((i%ps<ps-rs)) return i+rs; else return -1;
-  case 12: if ((i%ps<ps-rs)&&(i%rs!=rs-1)) return i+rs+1; else return -1;
+  case 5:
+    if ((i % rs != rs - 1)) {
+      return i + 1;
+    } else {
+      return -1;
+    }
+  case 6:
+    if ((i % rs != rs - 1) && (i % ps >= rs)) {
+      return i + 1 - rs;
+    } else {
+      return -1;
+    }
+  case 7:
+    if ((i % ps >= rs)) {
+      return i - rs;
+    } else {
+      return -1;
+    }
+  case 8:
+    if ((i % ps >= rs) && (i % rs != 0)) {
+      return i - rs - 1;
+    } else {
+      return -1;
+    }
+  case 9:
+    if ((i % rs != 0)) {
+      return i - 1;
+    } else {
+      return -1;
+    }
+  case 10:
+    if ((i % rs != 0) && (i % ps < ps - rs)) {
+      return i - 1 + rs;
+    } else {
+      return -1;
+    }
+  case 11:
+    if ((i % ps < ps - rs)) {
+      return i + rs;
+    } else {
+      return -1;
+    }
+  case 12:
+    if ((i % ps < ps - rs) && (i % rs != rs - 1)) {
+      return i + rs + 1;
+    } else {
+      return -1;
+    }
   /* les 5 derniers (13 a 17) sont les 5 pixels du plan "AVANT" (-ps) */
-  case 13: if ((i>=ps)&&(i%rs!=rs-1)) return -ps+i+1; else return -1;
-  case 14: if ((i>=ps)&&(i%ps>=rs)) return -ps+i-rs; else return -1;
-  case 15: if ((i>=ps)&&(i%rs!=0)) return -ps+i-1; else return -1;
-  case 16: if ((i>=ps)&&(i%ps<ps-rs)) return -ps+i+rs; else return -1;
-  case 17: if ((i>=ps)) return -ps+i; else return -1;
+  case 13:
+    if ((i >= ps) && (i % rs != rs - 1)) {
+      return -ps + i + 1;
+    } else {
+      return -1;
+    }
+  case 14:
+    if ((i >= ps) && (i % ps >= rs)) {
+      return -ps + i - rs;
+    } else {
+      return -1;
+    }
+  case 15:
+    if ((i >= ps) && (i % rs != 0)) {
+      return -ps + i - 1;
+    } else {
+      return -1;
+    }
+  case 16:
+    if ((i >= ps) && (i % ps < ps - rs)) {
+      return -ps + i + rs;
+    } else {
+      return -1;
+    }
+  case 17:
+    if ((i >= ps)) {
+      return -ps + i;
+    } else {
+      return -1;
+    }
   default: 
     fprintf(stderr, "%s: bad index value %d\n", F_NAME, k);
     exit(0);
@@ -327,20 +765,80 @@ int32_t voisin12(index_t i, int32_t k, index_t rs, index_t ps, index_t N)
   switch(k)
   {
   /* les 4 premiers (0 a 3) sont les 4 pixels du plan "ARRIERE" (+ps) */
-  case 0:  if ((i<N-ps)&&(i%rs!=rs-1)) return ps+i+1; else return -1;
-  case 1:  if ((i<N-ps)&&(i%ps>=rs)) return ps+i-rs; else return -1;
-  case 2:  if ((i<N-ps)&&(i%rs!=0)) return ps+i-1; else return -1;
-  case 3:  if ((i<N-ps)&&(i%ps<ps-rs)) return ps+i+rs; else return -1;
+  case 0:
+    if ((i < N - ps) && (i % rs != rs - 1)) {
+      return ps + i + 1;
+    } else {
+      return -1;
+    }
+  case 1:
+    if ((i < N - ps) && (i % ps >= rs)) {
+      return ps + i - rs;
+    } else {
+      return -1;
+    }
+  case 2:
+    if ((i < N - ps) && (i % rs != 0)) {
+      return ps + i - 1;
+    } else {
+      return -1;
+    }
+  case 3:
+    if ((i < N - ps) && (i % ps < ps - rs)) {
+      return ps + i + rs;
+    } else {
+      return -1;
+    }
   /* les 4 suivants (4 a 7) sont les 4 pixels du plan "COURANT" () */
-  case 4:  if ((i%rs!=rs-1)&&(i%ps>=rs)) return i+1-rs; else return -1;
-  case 5:  if ((i%ps>=rs)&&(i%rs!=0)) return i-rs-1;  else return -1;
-  case 6: if ((i%rs!=0)&&(i%ps<ps-rs)) return i-1+rs; else return -1;
-  case 7: if ((i%ps<ps-rs)&&(i%rs!=rs-1)) return i+rs+1; else return -1;
+  case 4:
+    if ((i % rs != rs - 1) && (i % ps >= rs)) {
+      return i + 1 - rs;
+    } else {
+      return -1;
+    }
+  case 5:
+    if ((i % ps >= rs) && (i % rs != 0)) {
+      return i - rs - 1;
+    } else {
+      return -1;
+    }
+  case 6:
+    if ((i % rs != 0) && (i % ps < ps - rs)) {
+      return i - 1 + rs;
+    } else {
+      return -1;
+    }
+  case 7:
+    if ((i % ps < ps - rs) && (i % rs != rs - 1)) {
+      return i + rs + 1;
+    } else {
+      return -1;
+    }
   /* les 4 derniers (8 a 11) sont les 4 pixels du plan "AVANT" (-ps) */
-  case 8: if ((i>=ps)&&(i%rs!=rs-1)) return -ps+i+1; else return -1;
-  case 9: if ((i>=ps)&&(i%ps>=rs)) return -ps+i-rs; else return -1;
-  case 10: if ((i>=ps)&&(i%rs!=0)) return -ps+i-1; else return -1;
-  case 11: if ((i>=ps)&&(i%ps<ps-rs)) return -ps+i+rs; else return -1;
+  case 8:
+    if ((i >= ps) && (i % rs != rs - 1)) {
+      return -ps + i + 1;
+    } else {
+      return -1;
+    }
+  case 9:
+    if ((i >= ps) && (i % ps >= rs)) {
+      return -ps + i - rs;
+    } else {
+      return -1;
+    }
+  case 10:
+    if ((i >= ps) && (i % rs != 0)) {
+      return -ps + i - 1;
+    } else {
+      return -1;
+    }
+  case 11:
+    if ((i >= ps) && (i % ps < ps - rs)) {
+      return -ps + i + rs;
+    } else {
+      return -1;
+    }
   default: 
     fprintf(stderr, "%s: bad index value %d\n", F_NAME, k);
     exit(0);
@@ -358,7 +856,9 @@ int32_t voisins4(index_t i, index_t j, index_t rs)
   index_t xj = j % rs;
   index_t yi = i / rs;
   index_t yj = j / rs;
-  if (mcabs(xi-xj) + mcabs(yi-yj) != 1) return 0;
+  if (mcabs(xi - xj) + mcabs(yi - yj) != 1) {
+    return 0;
+  }
   return 1;
 } // voisins4()
 
@@ -373,8 +873,12 @@ int32_t voisins8(index_t i, index_t j, index_t rs)
   index_t xj = j % rs;
   index_t yi = i / rs;
   index_t yj = j / rs;
-  if (mcabs(xi-xj) > 1) return 0;
-  if (mcabs(yi-yj) > 1) return 0;
+  if (mcabs(xi - xj) > 1) {
+    return 0;
+  }
+  if (mcabs(yi - yj) > 1) {
+    return 0;
+  }
   return 1;
 } // voisins8()
 
@@ -392,7 +896,9 @@ int32_t voisins6(index_t i, index_t j, index_t rs, index_t ps)
   index_t yj = (j%ps) / rs;
   index_t zi = i / ps;
   index_t zj = j / ps;
-  if (mcabs(xi-xj) + mcabs(yi-yj) + mcabs(zi-zj) != 1) return 0;
+  if (mcabs(xi - xj) + mcabs(yi - yj) + mcabs(zi - zj) != 1) {
+    return 0;
+  }
   return 1;
 } // voisins6()
 
@@ -410,10 +916,18 @@ int32_t voisins18(index_t i, index_t j, index_t rs, index_t ps)
   index_t yj = (j%ps) / rs;
   index_t zi = i / ps;
   index_t zj = j / ps;
-  if (mcabs(xi-xj) > 1) return 0;
-  if (mcabs(yi-yj) > 1) return 0;
-  if (mcabs(zi-zj) > 1) return 0;
-  if ((mcabs(xi-xj) == 1) && (mcabs(yi-yj) == 1) && (mcabs(zi-zj) == 1)) return 0;
+  if (mcabs(xi - xj) > 1) {
+    return 0;
+  }
+  if (mcabs(yi - yj) > 1) {
+    return 0;
+  }
+  if (mcabs(zi - zj) > 1) {
+    return 0;
+  }
+  if ((mcabs(xi - xj) == 1) && (mcabs(yi - yj) == 1) && (mcabs(zi - zj) == 1)) {
+    return 0;
+  }
   return 1;
 } // voisins18()
 
@@ -431,9 +945,15 @@ int32_t voisins26(index_t i, index_t j, index_t rs, index_t ps)
   index_t yj = (j%ps) / rs;
   index_t zi = i / ps;
   index_t zj = j / ps;
-  if (mcabs(xi-xj) > 1) return 0;
-  if (mcabs(yi-yj) > 1) return 0;
-  if (mcabs(zi-zj) > 1) return 0;
+  if (mcabs(xi - xj) > 1) {
+    return 0;
+  }
+  if (mcabs(yi - yj) > 1) {
+    return 0;
+  }
+  if (mcabs(zi - zj) > 1) {
+    return 0;
+  }
   return 1;
 } // voisins26()
 
@@ -458,14 +978,54 @@ int32_t voisin5(index_t i, int32_t k, index_t rs, index_t nb)
   index_t rs2;
   switch(k)
   {
-  case 0:              if ((i%rs<rs-2)&&(i>=rs))    return i -rs  +2;  else return -1;
-  case 1: rs2 = rs+rs; if ((i%rs<rs-1)&&(i>=rs2))   return i -rs2 +1; else return -1;
-  case 2: rs2 = rs+rs; if ((i%rs>0)&&(i>=rs2))      return i -rs2 -1; else return -1;
-  case 3:              if ((i%rs>1)&&(i>=rs))       return i -rs  -2;  else return -1;
-  case 4:              if ((i%rs>1)&&(i<nb-rs))     return i +rs  -2;  else return -1;
-  case 5: rs2 = rs+rs; if ((i%rs>0)&&(i<nb-rs2))    return i +rs2 -1; else return -1;
-  case 6: rs2 = rs+rs; if ((i%rs<rs-1)&&(i<nb-rs2)) return i +rs2 +1; else return -1;
-  case 7:              if ((i%rs<rs-2)&&(i<nb-rs))  return i +rs  +2;  else return -1;
+  case 0:
+    if ((i % rs < rs - 2) && (i >= rs)) {
+      return i - rs + 2;
+    } else {
+      return -1;
+    }
+  case 1: rs2 = rs+rs;
+    if ((i % rs < rs - 1) && (i >= rs2)) {
+      return i - rs2 + 1;
+    } else {
+      return -1;
+    }
+  case 2: rs2 = rs+rs;
+    if ((i % rs > 0) && (i >= rs2)) {
+      return i - rs2 - 1;
+    } else {
+      return -1;
+    }
+  case 3:
+    if ((i % rs > 1) && (i >= rs)) {
+      return i - rs - 2;
+    } else {
+      return -1;
+    }
+  case 4:
+    if ((i % rs > 1) && (i < nb - rs)) {
+      return i + rs - 2;
+    } else {
+      return -1;
+    }
+  case 5: rs2 = rs+rs;
+    if ((i % rs > 0) && (i < nb - rs2)) {
+      return i + rs2 - 1;
+    } else {
+      return -1;
+    }
+  case 6: rs2 = rs+rs;
+    if ((i % rs < rs - 1) && (i < nb - rs2)) {
+      return i + rs2 + 1;
+    } else {
+      return -1;
+    }
+  case 7:
+    if ((i % rs < rs - 2) && (i < nb - rs)) {
+      return i + rs + 2;
+    } else {
+      return -1;
+    }
   default: 
     fprintf(stderr, "%s: bad index value %d\n", F_NAME, k);
     exit(0);
@@ -485,15 +1045,17 @@ int32_t voisin6b(index_t i, int32_t k, index_t rs, index_t nb, index_t par)
 /* ==================================== */
 {
   if (par==0) {
-    if( ((i%rs)%2) == ((i/rs)%2) )    
+    if (((i % rs) % 2) == ((i / rs) % 2)) {
       return voisinNOSE(i, k, rs, nb);
-    else
+    } else {
       return voisinNESO(i, k, rs, nb);
+    }
   } else {
-    if( ((i%rs)%2) == ((i/rs)%2) )    
+    if (((i % rs) % 2) == ((i / rs) % 2)) {
       return voisinNESO(i, k, rs, nb);
-    else
+    } else {
       return voisinNOSE(i, k, rs, nb);
+    }
   }
 }
 
@@ -505,12 +1067,42 @@ int32_t voisinNOSE(index_t i, int32_t k, index_t rs, index_t nb)
 {
   switch(k)
     {      
-    case 0:       if (i>=rs)                   return i-rs;   else return -1;
-    case 1:       if ((i>=rs)&&(i%rs!=0))      return i-rs-1; else return -1;
-    case 2:       if (i%rs!=0)                 return i-1;    else return -1;   
-    case 5:       if (i%rs!=rs-1)              return i+1;    else return -1;
-    case 3:       if (i<nb-rs)                 return i+rs;   else return -1;
-    case 4:       if ((i<nb-rs)&&(i%rs!=rs-1)) return i+rs+1; else return -1;
+    case 0:
+      if (i >= rs) {
+        return i - rs;
+      } else {
+        return -1;
+      }
+    case 1:
+      if ((i >= rs) && (i % rs != 0)) {
+        return i - rs - 1;
+      } else {
+        return -1;
+      }
+    case 2:
+      if (i % rs != 0) {
+        return i - 1;
+      } else {
+        return -1;
+      }
+    case 5:
+      if (i % rs != rs - 1) {
+        return i + 1;
+      } else {
+        return -1;
+      }
+    case 3:
+      if (i < nb - rs) {
+        return i + rs;
+      } else {
+        return -1;
+      }
+    case 4:
+      if ((i < nb - rs) && (i % rs != rs - 1)) {
+        return i + rs + 1;
+      } else {
+        return -1;
+      }
     default: return -1;
     }
 }   
@@ -522,12 +1114,42 @@ int32_t voisinNESO(index_t i, int32_t k, index_t rs, index_t nb)
 {
   switch(k)
     { 
-    case 4:        if (i%rs!=rs-1)              return i+1;    else return -1;
-    case 5:   if ((i%rs!=rs-1)&&(i>=rs))   return i+1-rs; else return -1;
-    case 0:       if (i>=rs)                   return i-rs;   else return -1;
-    case 1:      if (i%rs!=0)                 return i-1;    else return -1;
-    case 2:  if ((i%rs!=0)&&(i<nb-rs))    return i-1+rs; else return -1;
-    case 3:        if (i<nb-rs)                 return i+rs;   else return -1;   
+    case 4:
+      if (i % rs != rs - 1) {
+        return i + 1;
+      } else {
+        return -1;
+      }
+    case 5:
+      if ((i % rs != rs - 1) && (i >= rs)) {
+        return i + 1 - rs;
+      } else {
+        return -1;
+      }
+    case 0:
+      if (i >= rs) {
+        return i - rs;
+      } else {
+        return -1;
+      }
+    case 1:
+      if (i % rs != 0) {
+        return i - 1;
+      } else {
+        return -1;
+      }
+    case 2:
+      if ((i % rs != 0) && (i < nb - rs)) {
+        return i - 1 + rs;
+      } else {
+        return -1;
+      }
+    case 3:
+      if (i < nb - rs) {
+        return i + rs;
+      } else {
+        return -1;
+      }
     default: return -1;
     }
 }
@@ -547,14 +1169,17 @@ int32_t voisin14b(index_t i, int32_t k, index_t rs, index_t ps, index_t N)
   px = (i%rs)%2;
   py = (i/ps)%2;
   pz = ((i%ps)/rs)%2;
-  if( (px && py && pz) || (!px && !py && !pz))
-    return voisinONAV(i, k, rs, ps, N );
-  if( (px && !py && pz) || (!px && py && !pz))
-    return voisinENAR( i, k, rs, ps, N  );
-  if( (!px && py && pz) || (px && !py && !pz))
+  if ((px && py && pz) || (!px && !py && !pz)) {
+    return voisinONAV(i, k, rs, ps, N);
+  }
+  if ((px && !py && pz) || (!px && py && !pz)) {
+    return voisinENAR(i, k, rs, ps, N);
+  }
+  if ((!px && py && pz) || (px && !py && !pz)) {
     return voisinENAV(i, k, rs, ps, N );
-  else
-    return voisinONAR( i, k, rs, ps, N );
+  } else {
+    return voisinONAR(i, k, rs, ps, N);
+  }
 }
 
 /* Soit l'ordre suivant
@@ -570,21 +1195,91 @@ int32_t voisinONAV(index_t i, int32_t k, index_t rs, index_t ps, index_t N )
   switch(k)
   {
     /* Premiere clique */
-  case 0: if ((i/ps != 0) && (i%rs !=0)  && ((i%ps)/rs != 0)) return (i-ps-rs-1); else return -1;
-  case 1: if ((i/ps != 0) && ((i%ps)/rs != 0)) return i-ps-rs; else return -1;
-  case 2: if ((i/ps != 0) && (i%rs !=0)) return i-ps -1; else return -1;
-  case 3: if ( (i/ps != 0) ) return i-ps; else return -1;
-  case 4: if ((i%rs !=0)  && ((i%ps)/rs != 0)) return i-rs-1; else return -1;
-  case 5: if ((i%ps)/rs != 0) return i-rs; else return -1;
-  case 6: if ((i%rs !=0)) return i-1; else return -1;
+  case 0:
+    if ((i / ps != 0) && (i % rs != 0) && ((i % ps) / rs != 0)) {
+      return (i - ps - rs - 1);
+    } else {
+      return -1;
+    }
+  case 1:
+    if ((i / ps != 0) && ((i % ps) / rs != 0)) {
+      return i - ps - rs;
+    } else {
+      return -1;
+    }
+  case 2:
+    if ((i / ps != 0) && (i % rs != 0)) {
+      return i - ps - 1;
+    } else {
+      return -1;
+    }
+  case 3:
+    if ((i / ps != 0)) {
+      return i - ps;
+    } else {
+      return -1;
+    }
+  case 4:
+    if ((i % rs != 0) && ((i % ps) / rs != 0)) {
+      return i - rs - 1;
+    } else {
+      return -1;
+    }
+  case 5:
+    if ((i % ps) / rs != 0) {
+      return i - rs;
+    } else {
+      return -1;
+    }
+  case 6:
+    if ((i % rs != 0)) {
+      return i - 1;
+    } else {
+      return -1;
+    }
     /* Deuxième clique */
-  case 7: if ((i%rs < rs-1) ) return i+1; else return -1;
-  case 8: if (i%ps < ps-rs) return i+rs; else return -1;
-  case 9: if ( (i%rs < rs-1)  && (i%ps < ps-rs) ) return i+rs+1; else return -1;
-  case 10: if (i < N-ps ) return i+ps; else return-1;
-  case 11: if ( (i < N-ps ) && (i%rs < rs-1)) return i+ps+1; else return -1;
-  case 12: if ( (i < N-ps) &&  (i%ps < ps-rs)) return i+ps+rs; else return -1;
-  case 13: if ((i < N-ps ) && (i%rs < rs-1)  && (i%ps < ps-rs)) return i+ps+rs+1; else return -1;
+  case 7:
+    if ((i % rs < rs - 1)) {
+      return i + 1;
+    } else {
+      return -1;
+    }
+  case 8:
+    if (i % ps < ps - rs) {
+      return i + rs;
+    } else {
+      return -1;
+    }
+  case 9:
+    if ((i % rs < rs - 1) && (i % ps < ps - rs)) {
+      return i + rs + 1;
+    } else {
+      return -1;
+    }
+  case 10:
+    if (i < N - ps) {
+      return i + ps;
+    } else {
+      return -1;
+    }
+  case 11:
+    if ((i < N - ps) && (i % rs < rs - 1)) {
+      return i + ps + 1;
+    } else {
+      return -1;
+    }
+  case 12:
+    if ((i < N - ps) && (i % ps < ps - rs)) {
+      return i + ps + rs;
+    } else {
+      return -1;
+    }
+  case 13:
+    if ((i < N - ps) && (i % rs < rs - 1) && (i % ps < ps - rs)) {
+      return i + ps + rs + 1;
+    } else {
+      return -1;
+    }
   default: 
     fprintf(stderr, "%s: bad index value %d\n", F_NAME, k);
     exit(0);
@@ -598,21 +1293,91 @@ int32_t  voisinENAR(index_t i, int32_t k, index_t rs, index_t ps, index_t N )
   switch(k)
   {
      /* Premiere clique */
-  case 0: if((i%rs !=0) &&  (i/ps != 0)) return i-ps-1; else return -1;
-  case 1: if( (i/ps != 0)) return i-ps; else return -1;
-  case 2: if ((i%rs !=0) && ( i%ps<ps-rs) && (i/ps != 0)) return i-ps+rs-1; else return -1;
-  case 3: if (  ( i%ps<ps-rs) && (i/ps != 0) ) return i-ps+rs; else return -1;
-  case 4: if (i%rs !=0) return i-1; else return -1;
-  case 5: if ( (i%rs !=0) && (i%ps<ps-rs) ) return i+rs-1; else return -1;
-  case 6: if ( (i%ps<ps-rs) ) return i+rs; else return -1;
+  case 0:
+    if ((i % rs != 0) && (i / ps != 0)) {
+      return i - ps - 1;
+    } else {
+      return -1;
+    }
+  case 1:
+    if ((i / ps != 0)) {
+      return i - ps;
+    } else {
+      return -1;
+    }
+  case 2:
+    if ((i % rs != 0) && (i % ps < ps - rs) && (i / ps != 0)) {
+      return i - ps + rs - 1;
+    } else {
+      return -1;
+    }
+  case 3:
+    if ((i % ps < ps - rs) && (i / ps != 0)) {
+      return i - ps + rs;
+    } else {
+      return -1;
+    }
+  case 4:
+    if (i % rs != 0) {
+      return i - 1;
+    } else {
+      return -1;
+    }
+  case 5:
+    if ((i % rs != 0) && (i % ps < ps - rs)) {
+      return i + rs - 1;
+    } else {
+      return -1;
+    }
+  case 6:
+    if ((i % ps < ps - rs)) {
+      return i + rs;
+    } else {
+      return -1;
+    }
     /* Deuxième clique */
-  case 7: if  ((i%ps)/rs != 0) return i-rs; else return -1;
-  case 8: if ( (i%rs < rs-1) && ((i%ps)/rs != 0) ) return i-rs+1; else return -1;
-  case 9: if (i%rs < rs-1) return i+1; else return -1;
-  case 10: if (  ((i%ps)/rs != 0) && (i < N-ps ) ) return i+ps-rs; else return -1;
-  case 11: if ( (i%rs < rs-1) && ((i%ps)/rs != 0) && (i < N-ps ))  return i+ps-rs+1; else return -1;
-  case 12: if (i < N-ps ) return i+ps; else return -1;
-  case 13: if ((i%rs < rs-1) && (i < N-ps )) return i+ps+1; else return -1;
+  case 7:
+    if ((i % ps) / rs != 0) {
+      return i - rs;
+    } else {
+      return -1;
+    }
+  case 8:
+    if ((i % rs < rs - 1) && ((i % ps) / rs != 0)) {
+      return i - rs + 1;
+    } else {
+      return -1;
+    }
+  case 9:
+    if (i % rs < rs - 1) {
+      return i + 1;
+    } else {
+      return -1;
+    }
+  case 10:
+    if (((i % ps) / rs != 0) && (i < N - ps)) {
+      return i + ps - rs;
+    } else {
+      return -1;
+    }
+  case 11:
+    if ((i % rs < rs - 1) && ((i % ps) / rs != 0) && (i < N - ps)) {
+      return i + ps - rs + 1;
+    } else {
+      return -1;
+    }
+  case 12:
+    if (i < N - ps) {
+      return i + ps;
+    } else {
+      return -1;
+    }
+  case 13:
+    if ((i % rs < rs - 1) && (i < N - ps)) {
+      return i + ps + 1;
+    } else {
+      return -1;
+    }
   default: 
     fprintf(stderr, "%s: bad index value %d\n", F_NAME, k);
     exit(0);
@@ -626,21 +1391,91 @@ int32_t voisinENAV(index_t i, int32_t k, index_t rs, index_t ps, index_t N )
   switch(k)
   {
      /* Premiere clique */
-  case 0: if ( (i%rs < rs-1) && (i/ps != 0)) return i-ps-rs; else return -1;
-  case 1: if ( (i%rs < rs-1) &&  ((i%ps)/rs != 0) && (i/ps != 0) ) return i-ps-rs+1; else return -1;
-  case 2: if (i/ps != 0) return i-ps; else return -1;
-  case 3: if ( (i%rs < rs-1) &&  (i/ps != 0) ) return i-ps+1; else return -1;
-  case 4: if  ((i%ps)/rs != 0) return i-rs; else return -1;
-  case 5: if ( (i%rs < rs-1) &&   ((i%ps)/rs != 0)) return i-rs+1; else return -1;
-  case 6: if (i%rs < rs-1) return i+1; else return -1;
+  case 0:
+    if ((i % rs < rs - 1) && (i / ps != 0)) {
+      return i - ps - rs;
+    } else {
+      return -1;
+    }
+  case 1:
+    if ((i % rs < rs - 1) && ((i % ps) / rs != 0) && (i / ps != 0)) {
+      return i - ps - rs + 1;
+    } else {
+      return -1;
+    }
+  case 2:
+    if (i / ps != 0) {
+      return i - ps;
+    } else {
+      return -1;
+    }
+  case 3:
+    if ((i % rs < rs - 1) && (i / ps != 0)) {
+      return i - ps + 1;
+    } else {
+      return -1;
+    }
+  case 4:
+    if ((i % ps) / rs != 0) {
+      return i - rs;
+    } else {
+      return -1;
+    }
+  case 5:
+    if ((i % rs < rs - 1) && ((i % ps) / rs != 0)) {
+      return i - rs + 1;
+    } else {
+      return -1;
+    }
+  case 6:
+    if (i % rs < rs - 1) {
+      return i + 1;
+    } else {
+      return -1;
+    }
     /* Deuxième clique */
-  case 7: if (i%rs !=0) return i-1; else return -1;
-  case 8: if ( (i%rs !=0) && (i%ps<ps-rs) ) return i+rs-1; else return -1;
-  case 9: if ( i%ps<ps-rs ) return i+rs; else return -1;
-  case 10: if ( (i%rs !=0) && (i < N-ps ) ) return i+ps-1; else return -1;
-  case 11: if (i < N-ps) return i+ps; else return -1; 
-  case 12: if ( (i%rs !=0) && (i%ps<ps-rs) && (i < N-ps )) return i+ps+rs-1; else return -1;
-  case 13: if ( (i%ps<ps-rs) && (i < N-ps ) ) return i+ps+rs; else return -1;
+  case 7:
+    if (i % rs != 0) {
+      return i - 1;
+    } else {
+      return -1;
+    }
+  case 8:
+    if ((i % rs != 0) && (i % ps < ps - rs)) {
+      return i + rs - 1;
+    } else {
+      return -1;
+    }
+  case 9:
+    if (i % ps < ps - rs) {
+      return i + rs;
+    } else {
+      return -1;
+    }
+  case 10:
+    if ((i % rs != 0) && (i < N - ps)) {
+      return i + ps - 1;
+    } else {
+      return -1;
+    }
+  case 11:
+    if (i < N - ps) {
+      return i + ps;
+    } else {
+      return -1;
+    }
+  case 12:
+    if ((i % rs != 0) && (i % ps < ps - rs) && (i < N - ps)) {
+      return i + ps + rs - 1;
+    } else {
+      return -1;
+    }
+  case 13:
+    if ((i % ps < ps - rs) && (i < N - ps)) {
+      return i + ps + rs;
+    } else {
+      return -1;
+    }
   default: 
     fprintf(stderr, "%s: bad index value %d\n", F_NAME, k);
     exit(0);
@@ -654,21 +1489,91 @@ int32_t voisinONAR(index_t i, int32_t k, index_t rs, index_t ps, index_t N )
   switch(k)
   {
      /* Premiere clique */
-  case 0: if (i/ps != 0) return i-ps; else return -1;
-  case 1: if ( (i%rs < rs-1) && (i/ps != 0) ) return i-ps+1; else return -1;
-  case 2: if ( (i%ps<ps-rs) && (i/ps != 0) ) return i-ps+rs; else return -1;    
-  case 3: if ( (i%rs < rs-1) && (i%ps<ps-rs) && (i/ps != 0) ) return i-ps+rs+1; else return -1;
-  case 4: if (i%rs < rs-1) return i+1; else return -1;
-  case 5: if (i%ps<ps-rs) return i+rs; else return -1;
-  case 6: if  ( (i%rs < rs-1) && (i%ps<ps-rs)) return i+rs+1; else return -1;
+  case 0:
+    if (i / ps != 0) {
+      return i - ps;
+    } else {
+      return -1;
+    }
+  case 1:
+    if ((i % rs < rs - 1) && (i / ps != 0)) {
+      return i - ps + 1;
+    } else {
+      return -1;
+    }
+  case 2:
+    if ((i % ps < ps - rs) && (i / ps != 0)) {
+      return i - ps + rs;
+    } else {
+      return -1;
+    }
+  case 3:
+    if ((i % rs < rs - 1) && (i % ps < ps - rs) && (i / ps != 0)) {
+      return i - ps + rs + 1;
+    } else {
+      return -1;
+    }
+  case 4:
+    if (i % rs < rs - 1) {
+      return i + 1;
+    } else {
+      return -1;
+    }
+  case 5:
+    if (i % ps < ps - rs) {
+      return i + rs;
+    } else {
+      return -1;
+    }
+  case 6:
+    if ((i % rs < rs - 1) && (i % ps < ps - rs)) {
+      return i + rs + 1;
+    } else {
+      return -1;
+    }
     /* Deuxième clique */
-  case 7: if ((i%rs !=0) &&  ((i%ps)/rs != 0)) return i-rs-1; else return -1;
-  case 8: if ((i%ps)/rs != 0) return i-rs;else return -1;
-  case 9: if (i%rs !=0) return i-1; else return -1;
-  case 10: if ((i%rs !=0) &&  ((i%ps)/rs != 0) &&   (i < N-ps )) return i+ps-rs-1; else return -1;
-  case 11: if (((i%ps)/rs != 0) &&   (i < N-ps )) return i+ps-rs; else return -1;
-  case 12: if ((i%rs !=0) &&  (i < N-ps )) return i+ps-1; else return -1;
-  case 13: if (i < N-ps ) return i+ps; else return -1;
+  case 7:
+    if ((i % rs != 0) && ((i % ps) / rs != 0)) {
+      return i - rs - 1;
+    } else {
+      return -1;
+    }
+  case 8:
+    if ((i % ps) / rs != 0) {
+      return i - rs;
+    } else {
+      return -1;
+    }
+  case 9:
+    if (i % rs != 0) {
+      return i - 1;
+    } else {
+      return -1;
+    }
+  case 10:
+    if ((i % rs != 0) && ((i % ps) / rs != 0) && (i < N - ps)) {
+      return i + ps - rs - 1;
+    } else {
+      return -1;
+    }
+  case 11:
+    if (((i % ps) / rs != 0) && (i < N - ps)) {
+      return i + ps - rs;
+    } else {
+      return -1;
+    }
+  case 12:
+    if ((i % rs != 0) && (i < N - ps)) {
+      return i + ps - 1;
+    } else {
+      return -1;
+    }
+  case 13:
+    if (i < N - ps) {
+      return i + ps;
+    } else {
+      return -1;
+    }
   default: 
     fprintf(stderr, "%s: bad index value %d\n", F_NAME, k);
     exit(0);
@@ -691,8 +1596,9 @@ uint32_t maskvois26(uint8_t *F, uint32_t bitmask, index_t i, index_t rs, index_t
   for (k = 0; k < 26; k++)
   {
     v = voisin26(i, k, rs, ps, N);
-    if ((v != -1) && (F[v] & bitmask))
-      mask = mask | (1<<k);
+    if ((v != -1) && (F[v] & bitmask)) {
+      mask = mask | (1 << k);
+    }
   }
   return mask;
 }
@@ -772,8 +1678,14 @@ int32_t voisin125(index_t i, int32_t k, index_t rs, index_t ps, index_t N)
   x = (i % rs) + dx;
   y = ((i % ps) / rs) + dy;
   z = (i / ps) + dz;
-  if ((x < 0) || (x >= rs)) return -1;
-  if ((y < 0) || (y >= cs)) return -1;
-  if ((z < 0) || (z >= ds)) return -1;
+  if ((x < 0) || (x >= rs)) {
+    return -1;
+  }
+  if ((y < 0) || (y >= cs)) {
+    return -1;
+  }
+  if ((z < 0) || (z >= ds)) {
+    return -1;
+  }
   return z*ps + y*rs + x;
 } // voisin125()

@@ -104,8 +104,11 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (function == 3) writeimage(image1, argv[5]);
-  else               writeimage(image1, argv[4]);
+  if (function == 3) {
+    writeimage(image1, argv[5]);
+  } else {
+    writeimage(image1, argv[4]);
+  }
   freeimage(image1);
 
   return 0;

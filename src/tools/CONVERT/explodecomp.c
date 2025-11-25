@@ -109,10 +109,13 @@ int main(int argc, char **argv)
 
   connex = atoi(argv[2]);
 
-  if (strcmp(argv[3], "min") == 0) function = LABMIN; else
-  if (strcmp(argv[3], "max") == 0) function = LABMAX; else
-  if (strcmp(argv[3], "pla") == 0) function = LABPLA; else
-  {
+  if (strcmp(argv[3], "min") == 0) {
+    function = LABMIN;
+  } else if (strcmp(argv[3], "max") == 0) {
+    function = LABMAX;
+  } else if (strcmp(argv[3], "pla") == 0) {
+    function = LABPLA;
+  } else {
     fprintf(stderr, "usage: %s in.pgm connex {min|max|pla} name_prefix\n", argv[0]);
     exit(1);
   }
@@ -165,9 +168,11 @@ int main(int argc, char **argv)
     bufname[namelen+7] = 'm';
     bufname[namelen+8] = '\0';
     memset(O, 0, N);
-    for (i = 0; i < ps; i++) 
-      if (L[i] == k) 
+    for (i = 0; i < ps; i++) {
+      if (L[i] == k) {
         O[i] = NDG_MAX;
+      }
+    }
     writeimage(image_out, bufname);
   } /* for k */
 

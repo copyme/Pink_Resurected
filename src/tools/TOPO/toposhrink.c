@@ -122,7 +122,9 @@ int main(int argc, char **argv)
       exit(1);
     }
     L = SLONGDATA(prio);
-    for (x = 0; x < N; x++) L[x] = (int32_t)B[x];
+    for (x = 0; x < N; x++) {
+      L[x] = (int32_t)B[x];
+    }
     freeimage(prio2);
   }
   else if (datatype(prio2) == VFF_TYP_4_BYTE)
@@ -171,7 +173,9 @@ int main(int argc, char **argv)
   writeimage(image, argv[argc-1]);
   freeimage(image);
   freeimage(prio);
-  if (inhibimage) freeimage(inhibimage);
+  if (inhibimage) {
+    freeimage(inhibimage);
+  }
 
   return 0;
 } /* main */

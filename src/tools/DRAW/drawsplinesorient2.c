@@ -125,8 +125,12 @@ int main(int argc, char **argv)
 	fprintf(stderr, "%s: not enough points in spline %d\n", argv[0], i);
 	exit(1);
       }
-      for (j = 0; j < npoints; j++) fscanf(fd, "%lf%lf%lf", &x1, &y1, &z1);
-      for (j = 0; j < npoints-1; j++) nvect += NSAMPLES;
+      for (j = 0; j < npoints; j++) {
+        fscanf(fd, "%lf%lf%lf", &x1, &y1, &z1);
+      }
+      for (j = 0; j < npoints - 1; j++) {
+        nvect += NSAMPLES;
+      }
   } // for (i = 0; i < nsplines; i++)
   fclose(fd);
 
@@ -181,7 +185,9 @@ int main(int argc, char **argv)
 
 	ldrawdirtangents3dlist((double *)Vx, (double *)Vy, (double *)Vz, (double *)Px, (double *)Py, (double *)Pz, NSAMPLES-1, t[j], t[j+1]);
 
-	for (k = 0; k < NSAMPLES; k++) fprintf(fdout, "%lf %lf %lf\n", Vx[k], Vy[k], Vz[k]);	
+        for (k = 0; k < NSAMPLES; k++) {
+          fprintf(fdout, "%lf %lf %lf\n", Vx[k], Vy[k], Vz[k]);
+        }
       }
 
       free(x); free(y); free(z); free(t); 

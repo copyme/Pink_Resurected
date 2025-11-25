@@ -131,9 +131,11 @@ int32_t lcrestvol(
     return(0);
   }
   SP = UCHARDATA(sp);
-  for (p = 0; p < N; p++)
-    if (separant4(S, p, rs, N))
+  for (p = 0; p < N; p++) {
+    if (separant4(S, p, rs, N)) {
       SP[p] = alpha8m(S, p, rs, N);
+    }
+  }
 
   t1 = allocimage(NULL, rs_es, cs_es, 1, VFF_TYP_1_BYTE);
   t2 = allocimage(NULL, rs_es, cs_es, 1, VFF_TYP_1_BYTE);
@@ -163,8 +165,8 @@ int32_t lcrestvol(
 
         // recopie le voisinage de p pour F dans T1
 
-        for (xx = 0; xx < rs_es; xx++)
-          for (yy = 0; yy < cs_es; yy++)
+        for (xx = 0; xx < rs_es; xx++) {
+          for (yy = 0; yy < cs_es; yy++) {
             if (E[yy*rs_es + xx])
             {
               xf = xx - es_x + x;
@@ -173,7 +175,9 @@ int32_t lcrestvol(
 	      {
                 T1[yy*rs_es + xx] = F[yf*rs + xf];
 	      }
-	    }
+            }
+          }
+        }
 
         // T2 = pic en p, 0 ailleurs
 
@@ -191,7 +195,7 @@ int32_t lcrestvol(
         // recopie le voisinage de p pour SP dans T1
 
         memset(T1, 0, N_es);
-        for (xx = 0; xx < rs_es; xx++)
+        for (xx = 0; xx < rs_es; xx++) {
           for (yy = 0; yy < cs_es; yy++)
 	  {
             i = yy*rs_es + xx;
@@ -203,16 +207,20 @@ int32_t lcrestvol(
 	      {
                 j = yf*rs+xf;
                 T1[i] = SP[j];
-                if (T2[i] < T1[i])
+                if (T2[i] < T1[i]) {
                   T1[i] = T2[i];
+                }
                 // volume de (T2 - T1) . E
                 vol += (T2[i] - T1[i]);
 	      }
 	    }
-	  }
-        
+          }
+        }
+
         V[p] = vol;
-        if (vol > maxvol) maxvol = vol;
+        if (vol > maxvol) {
+          maxvol = vol;
+        }
       }
     } // for (p = 0; p < N; p++)
   } // if (connex == 4)
@@ -224,8 +232,9 @@ int32_t lcrestvol(
 
   printf("maxvol = %ld\n", (long int)maxvol);
 
-  for (p = 0; p < N; p++)
+  for (p = 0; p < N; p++) {
     S[p] = (uint8_t)((V[p] * 255) / maxvol);
+  }
 
   free(V);  
   freeimage(sp);
@@ -286,12 +295,15 @@ int main(int argc, char **argv)
     exit(1);
   }
   E = UCHARDATA(es);
-  for (x = 0; x < rs_es; x++)
-    for (y = 0; y < cs_es; y++)
-      if (((x-xc)*(x-xc) + (y-yc)*(y-yc)) <= r2)
+  for (x = 0; x < rs_es; x++) {
+    for (y = 0; y < cs_es; y++) {
+      if (((x - xc) * (x - xc) + (y - yc) * (y - yc)) <= r2) {
         E[y*rs_es + x] = 255;
-      else
-        E[y*rs_es + x] = 0;
+      } else {
+        E[y * rs_es + x] = 0;
+      }
+    }
+  }
 
   if (! lhthindelta(skel, NULL, radius, connex))
   {

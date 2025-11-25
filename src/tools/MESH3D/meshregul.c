@@ -107,22 +107,42 @@ int main(int argc, char **argv)
     exit(0);
   }
   formatin = UNKNOWN;
-  if (strcmp(argv[1]+strlen(argv[1])-4, ".MCM") == 0) formatin = T_MCM;
-  if (strcmp(argv[1]+strlen(argv[1])-4, ".mcm") == 0) formatin = T_MCM;
-  if (strcmp(argv[1]+strlen(argv[1])-4, ".VTK") == 0) formatin = T_VTK;
-  if (strcmp(argv[1]+strlen(argv[1])-4, ".vtk") == 0) formatin = T_VTK;
-  if (strcmp(argv[1]+strlen(argv[1])-4, ".IFS") == 0) formatin = T_IFS;
-  if (strcmp(argv[1]+strlen(argv[1])-4, ".ifs") == 0) formatin = T_IFS;
+  if (strcmp(argv[1] + strlen(argv[1]) - 4, ".MCM") == 0) {
+    formatin = T_MCM;
+  }
+  if (strcmp(argv[1] + strlen(argv[1]) - 4, ".mcm") == 0) {
+    formatin = T_MCM;
+  }
+  if (strcmp(argv[1] + strlen(argv[1]) - 4, ".VTK") == 0) {
+    formatin = T_VTK;
+  }
+  if (strcmp(argv[1] + strlen(argv[1]) - 4, ".vtk") == 0) {
+    formatin = T_VTK;
+  }
+  if (strcmp(argv[1] + strlen(argv[1]) - 4, ".IFS") == 0) {
+    formatin = T_IFS;
+  }
+  if (strcmp(argv[1] + strlen(argv[1]) - 4, ".ifs") == 0) {
+    formatin = T_IFS;
+  }
   if (formatin == UNKNOWN)
   {
     fprintf(stderr, "%s: bad input file format\n", argv[0]);
     exit(0);
   }
   formatout = UNKNOWN;
-  if (strcmp(argv[argc-1]+strlen(argv[argc-1])-4, ".MCM") == 0) formatout = T_MCM;
-  if (strcmp(argv[argc-1]+strlen(argv[argc-1])-4, ".mcm") == 0) formatout = T_MCM;
-  if (strcmp(argv[argc-1]+strlen(argv[argc-1])-4, ".VTK") == 0) formatout = T_VTK;
-  if (strcmp(argv[argc-1]+strlen(argv[argc-1])-4, ".vtk") == 0) formatout = T_VTK;
+  if (strcmp(argv[argc - 1] + strlen(argv[argc - 1]) - 4, ".MCM") == 0) {
+    formatout = T_MCM;
+  }
+  if (strcmp(argv[argc - 1] + strlen(argv[argc - 1]) - 4, ".mcm") == 0) {
+    formatout = T_MCM;
+  }
+  if (strcmp(argv[argc - 1] + strlen(argv[argc - 1]) - 4, ".VTK") == 0) {
+    formatout = T_VTK;
+  }
+  if (strcmp(argv[argc - 1] + strlen(argv[argc - 1]) - 4, ".vtk") == 0) {
+    formatout = T_VTK;
+  }
   if (formatout == UNKNOWN)
   {
     fprintf(stderr, "%s: bad output file format\n", argv[0]);
@@ -135,14 +155,26 @@ int main(int argc, char **argv)
     fprintf(stderr, "%s: cannot open file: %s\n", argv[0], argv[1]);
     exit(0);
   }
-  if (formatin == T_MCM) LoadMeshMCM(filein);
-  if (formatin == T_IFS) LoadBuildIFS(filein);
-  if (formatin == T_VTK) LoadBuildVTK(filein);
+  if (formatin == T_MCM) {
+    LoadMeshMCM(filein);
+  }
+  if (formatin == T_IFS) {
+    LoadBuildIFS(filein);
+  }
+  if (formatin == T_VTK) {
+    LoadBuildVTK(filein);
+  }
   fclose(filein);
   mode = atoi(argv[2]);
-  if (argc > 4) p1 = atof(argv[3]);
-  if (argc > 5) p2 = atof(argv[4]);
-  if (argc > 6) p3 = atof(argv[5]);
+  if (argc > 4) {
+    p1 = atof(argv[3]);
+  }
+  if (argc > 5) {
+    p2 = atof(argv[4]);
+  }
+  if (argc > 6) {
+    p3 = atof(argv[5]);
+  }
 
 #ifdef EVALUATION
   AddNoiseMesh(NOISEPARAM);
@@ -159,16 +191,60 @@ int main(int argc, char **argv)
   printf("%g\t", p1);
 #endif
 
-  if (mode == 0) { if (p1 == -1.0) p1 = 5; RegulMeshLaplacian((int32_t)p1); }
-  else if (mode == 1) { if (p1 == -1.0) p1 = 1.0; RegulMeshHamam(p1); } // A^2
-  else if (mode == 2) { if (p1 == -1.0) p1 = 0.1; if (p2 == -1.0) p2 = 0.6; RegulMeshHC(p1, p2); }
-  else if (mode == 3) { if (p1 == -1.0) p1 = 1.0; RegulMeshHamam1(p1); } // A
-  else if (mode == 4) { if (p1 == -1.0) p1 = 5; RegulMeshHamam2((int32_t)p1); } // A^2, theta = infty
-  else if (mode == 5) { if (p1 == -1.0) p1 = 1.0; RegulMeshHamam3(p1); } // gradient conjugue
-  else if (mode == 6) { if (p1 == -1.0) p1 = 0.33; if (p2 == -1.0) p2 = -0.34; if (p3 == -1.0) p3 = 60; RegulMeshTaubin(p1, p2, (int)p3); }
-  else if (mode == 7) { if (p1 == -1.0) p1 = 10; RegulMeshLaplacian2D((int32_t)p1); }
-  else
-  {
+  if (mode == 0) {
+    if (p1 == -1.0) {
+      p1 = 5;
+    }
+    RegulMeshLaplacian((int32_t)p1);
+  } else if (mode == 1) {
+    if (p1 == -1.0) {
+      p1 = 1.0;
+    }
+    RegulMeshHamam(p1);
+  } // A^2
+  else if (mode == 2) {
+    if (p1 == -1.0) {
+      p1 = 0.1;
+    }
+    if (p2 == -1.0) {
+      p2 = 0.6;
+    }
+    RegulMeshHC(p1, p2);
+  } else if (mode == 3) {
+    if (p1 == -1.0) {
+      p1 = 1.0;
+    }
+    RegulMeshHamam1(p1);
+  } // A
+  else if (mode == 4) {
+    if (p1 == -1.0) {
+      p1 = 5;
+    }
+    RegulMeshHamam2((int32_t)p1);
+  } // A^2, theta = infty
+  else if (mode == 5) {
+    if (p1 == -1.0) {
+      p1 = 1.0;
+    }
+    RegulMeshHamam3(p1);
+  } // gradient conjugue
+  else if (mode == 6) {
+    if (p1 == -1.0) {
+      p1 = 0.33;
+    }
+    if (p2 == -1.0) {
+      p2 = -0.34;
+    }
+    if (p3 == -1.0) {
+      p3 = 60;
+    }
+    RegulMeshTaubin(p1, p2, (int)p3);
+  } else if (mode == 7) {
+    if (p1 == -1.0) {
+      p1 = 10;
+    }
+    RegulMeshLaplacian2D((int32_t)p1);
+  } else {
     fprintf(stderr, "%s: bad mode: %d\n", argv[0], mode);
     exit(0);
   }
@@ -191,7 +267,9 @@ int main(int argc, char **argv)
     fprintf(stderr, "%s: cannot open file: %s\n", argv[0], argv[argc-1]);
     exit(0);
   }
-  if (formatout == T_MCM) SaveMeshMCM(fileout);
+  if (formatout == T_MCM) {
+    SaveMeshMCM(fileout);
+  }
   if (formatout == T_VTK) 
   {
     genheaderVTK(fileout, (char *)"mcube output");    

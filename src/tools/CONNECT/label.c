@@ -105,12 +105,17 @@ int main(int argc, char **argv)
 
   connex = atoi(argv[2]);
 
-  if (strcmp(argv[3], "fgd") == 0) function = LABFGD; else
-  if (strcmp(argv[3], "bgd") == 0) function = LABBGD; else
-  if (strcmp(argv[3], "min") == 0) function = LABMIN; else
-  if (strcmp(argv[3], "max") == 0) function = LABMAX; else
-  if (strcmp(argv[3], "pla") == 0) function = LABPLA; else
-  {
+  if (strcmp(argv[3], "fgd") == 0) {
+    function = LABFGD;
+  } else if (strcmp(argv[3], "bgd") == 0) {
+    function = LABBGD;
+  } else if (strcmp(argv[3], "min") == 0) {
+    function = LABMIN;
+  } else if (strcmp(argv[3], "max") == 0) {
+    function = LABMAX;
+  } else if (strcmp(argv[3], "pla") == 0) {
+    function = LABPLA;
+  } else {
     fprintf(stderr, "usage: %s filein.pgm connex {fgd|bgd|min|max|pla} fileout.pgm\n", argv[0]);
     exit(1);
   }

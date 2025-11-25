@@ -201,7 +201,9 @@ int main(int argc, char **argv)
     {
       fprintf(fd, "%g %g %g %d ", S[i].x, S[i].y, V[i], ec[i]);	
       newnv=nv[i];
-      for (k = 0; k < nv[i] ; k++) del[k]=0;
+      for (k = 0; k < nv[i]; k++) {
+        del[k] = 0;
+      }
       for (j = 0; j < nv[i]; j++) 
       {
 	vois = v[i][j];
@@ -223,13 +225,14 @@ int main(int argc, char **argv)
       fprintf(fd, "%d ", newnv);
       for (k = 0; k < nv[i]; k++)
       {
-	if (del[k]==0)
-	  fprintf(fd, "%d ", v[i][k]);
+        if (del[k] == 0) {
+          fprintf(fd, "%d ", v[i][k]);
+        }
       }
       fprintf(fd, "\n");
+    } else {
+      fprintf(fd, "%g %g %g %d %d\n", S[i].x, S[i].y, V[i], ec[i], 0);
     }
-    else
-      fprintf(fd, "%g %g %g %d %d\n", S[i].x, S[i].y, V[i], ec[i], 0);	
   }
   fclose(fd);
   free(lx);

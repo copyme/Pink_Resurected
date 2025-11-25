@@ -91,12 +91,15 @@ int main(int argc, char **argv)
   cs = colsize(field);
   ds = depth(field);
 
-  if (argc == 4) len = atof(argv[2]);
+  if (argc == 4) {
+    len = atof(argv[2]);
+  }
 
-  if (ds == 1) 
+  if (ds == 1) {
     image = ldrawfield2d(field, len);
-  else
+  } else {
     image = ldrawfield3d(field, len);
+  }
 
   writeimage(image, argv[argc-1]);
   freeimage(field);

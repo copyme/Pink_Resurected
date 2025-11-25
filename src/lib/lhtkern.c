@@ -259,42 +259,46 @@ int32_t lhtkern(struct xvimage *image, struct xvimage *imagecond, int32_t connex
   {
     if (imagecond != NULL)
     {
-      for (x = 0; x < N; x++) 
+      for (x = 0; x < N; x++) {
         if ((G[x] < F[x]) && (pdestr4(F,x,rs,N))) 
         {
           Set(x, EN_FAH);
           FahPush(FAH, x, F[x]);
-	}
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) 
+      for (x = 0; x < N; x++) {
         if (pdestr4(F,x,rs,N)) 
         {
           Set(x, EN_FAH);
           FahPush(FAH, x, F[x]);
-	}
+        }
+      }
     }
   }
   else
   {
     if (imagecond != NULL)
     {
-      for (x = 0; x < N; x++) 
+      for (x = 0; x < N; x++) {
         if ((G[x] < F[x]) && (pdestr8(F,x,rs,N))) 
         {
           Set(x, EN_FAH);
           FahPush(FAH, x, F[x]);
-	}
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) 
+      for (x = 0; x < N; x++) {
         if (pdestr8(F,x,rs,N)) 
         {
           Set(x, EN_FAH);
           FahPush(FAH, x, F[x]);
-	}
+        }
+      }
     }
   }
 
@@ -310,7 +314,9 @@ int32_t lhtkern(struct xvimage *image, struct xvimage *imagecond, int32_t connex
       UnSet(x, EN_FAH);
       if (testabaisse4(F, x, rs, N))         /* modifie l'image le cas echeant */
       {
-        if (imagecond != NULL) F[x] = mcmax(F[x],G[x]);
+        if (imagecond != NULL) {
+          F[x] = mcmax(F[x], G[x]);
+        }
         for (k = 0; k < 8; k += 1) /* parcourt les voisins en 8-connexite */
         {                                      /* pour empiler les voisins */
           y = voisin(x, k, rs, N);             /* non deja empiles */
@@ -334,7 +340,9 @@ int32_t lhtkern(struct xvimage *image, struct xvimage *imagecond, int32_t connex
       UnSet(x, EN_FAH);
       if (testabaisse8(F, x, rs, N))         /* modifie l'image le cas echeant */
       {
-        if (imagecond != NULL) F[x] = mcmax(F[x],G[x]);
+        if (imagecond != NULL) {
+          F[x] = mcmax(F[x], G[x]);
+        }
         for (k = 0; k < 8; k += 1) /* parcourt les voisins en 8-connexite */
         {                                      /* pour empiler les voisins */
           y = voisin(x, k, rs, N);             /* non deja empiles */
@@ -412,42 +420,46 @@ int32_t lhtkernu(struct xvimage *image, struct xvimage *imagecond, int32_t conne
   {
     if (imagecond != NULL)
     {
-      for (x = 0; x < N; x++) 
+      for (x = 0; x < N; x++) {
         if ((F[x] < G[x]) && (pconstr4(F,x,rs,N))) 
         {
           Set(x, EN_FAH);
           FahPush(FAH, x, NDG_MAX-F[x]);
-	}
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) 
+      for (x = 0; x < N; x++) {
         if (pconstr4(F,x,rs,N))  
         {
           Set(x, EN_FAH);
           FahPush(FAH, x, NDG_MAX-F[x]);
-	}
+        }
+      }
     }
   }
   else
   {
     if (imagecond != NULL)
     {
-      for (x = 0; x < N; x++) 
+      for (x = 0; x < N; x++) {
         if ((F[x] < G[x]) && (pconstr8(F,x,rs,N))) 
         {
           Set(x, EN_FAH);
           FahPush(FAH, x, NDG_MAX-F[x]);
-	}
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) 
+      for (x = 0; x < N; x++) {
         if (pconstr8(F,x,rs,N)) 
         {
           Set(x, EN_FAH);
           FahPush(FAH, x, NDG_MAX-F[x]);
-	}
+        }
+      }
     }
   }
 
@@ -464,7 +476,9 @@ int32_t lhtkernu(struct xvimage *image, struct xvimage *imagecond, int32_t conne
       UnSet(x, EN_FAH);
       if (testeleve4(F, x, rs, N))         /* modifie l'image le cas echeant */
       {
-        if (imagecond != NULL) F[x] = mcmin(F[x],G[x]);
+        if (imagecond != NULL) {
+          F[x] = mcmin(F[x], G[x]);
+        }
         for (k = 0; k < 8; k += 1) /* parcourt les voisins en 8-connexite */
         {                                      /* pour empiler les voisins */
           y = voisin(x, k, rs, N);             /* non deja empiles */
@@ -488,7 +502,9 @@ int32_t lhtkernu(struct xvimage *image, struct xvimage *imagecond, int32_t conne
       UnSet(x, EN_FAH);
       if (testeleve8(F, x, rs, N))         /* modifie l'image le cas echeant */
       {
-        if (imagecond != NULL) F[x] = mcmin(F[x],G[x]);
+        if (imagecond != NULL) {
+          F[x] = mcmin(F[x], G[x]);
+        }
         for (k = 0; k < 8; k += 1) /* parcourt les voisins en 8-connexite */
         {                                      /* pour empiler les voisins */
           y = voisin(x, k, rs, N);             /* non deja empiles */
@@ -561,9 +577,15 @@ int32_t lhthinalpha(struct xvimage *image, struct xvimage *imagecond, int32_t ni
   fprintf(stderr, "%s: nitermax = %d\n", F_NAME, nitermax);
 #endif
 
-  if (nitermax == -1) nitermax = 2000000000;   
+  if (nitermax == -1) {
+    nitermax = 2000000000;
+  }
 
-  if (connex == 4) incr_vois = 2; else incr_vois = 1;
+  if (connex == 4) {
+    incr_vois = 2;
+  } else {
+    incr_vois = 1;
+  }
 
   if (depth(image) != 1) 
   {
@@ -608,26 +630,38 @@ int32_t lhthinalpha(struct xvimage *image, struct xvimage *imagecond, int32_t ni
   {
     if (imagecond != NULL)
     {
-      for (x = 0; x < N; x++) 
-        if ((G[x] < F[x]) && (pdestr4(F,x,rs,N))) LifoPush(LIFO1, ENCODE(x,alpha8m(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if ((G[x] < F[x]) && (pdestr4(F, x, rs, N))) {
+          LifoPush(LIFO1, ENCODE(x, alpha8m(F, x, rs, N)));
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) 
-        if (pdestr4(F,x,rs,N)) LifoPush(LIFO1, ENCODE(x,alpha8m(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if (pdestr4(F, x, rs, N)) {
+          LifoPush(LIFO1, ENCODE(x, alpha8m(F, x, rs, N)));
+        }
+      }
     }
   }
   else
   {
     if (imagecond != NULL)
     {
-      for (x = 0; x < N; x++) 
-        if ((G[x] < F[x]) && (pdestr8(F,x,rs,N))) LifoPush(LIFO1, ENCODE(x,alpha8m(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if ((G[x] < F[x]) && (pdestr8(F, x, rs, N))) {
+          LifoPush(LIFO1, ENCODE(x, alpha8m(F, x, rs, N)));
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) 
-        if (pdestr8(F,x,rs,N)) LifoPush(LIFO1, ENCODE(x,alpha8m(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if (pdestr8(F, x, rs, N)) {
+          LifoPush(LIFO1, ENCODE(x, alpha8m(F, x, rs, N)));
+        }
+      }
     }
   }
 
@@ -663,7 +697,9 @@ int32_t lhthinalpha(struct xvimage *image, struct xvimage *imagecond, int32_t ni
         if (pdestr4(F, x, rs, N))
 	{
           F[x] = mcmax(alpha8m(F, x, rs, N),a);
-          if (imagecond != NULL) F[x] = mcmax(F[x],G[x]);
+          if (imagecond != NULL) {
+            F[x] = mcmax(F[x], G[x]);
+          }
           LifoPush(LIFO2, x);
         } /* if (pdestr4(F, x, rs, N)) */
       } /* while (!LifoVide(LIFO1)) */
@@ -729,7 +765,9 @@ int32_t lhthinalpha(struct xvimage *image, struct xvimage *imagecond, int32_t ni
         if (pdestr8(F, x, rs, N))
 	{
           F[x] = mcmax(alpha8m(F, x, rs, N),a);
-          if (imagecond != NULL) F[x] = mcmax(F[x],G[x]);
+          if (imagecond != NULL) {
+            F[x] = mcmax(F[x], G[x]);
+          }
           LifoPush(LIFO2, x);
         } /* if (pdestr8(F, x, rs, N)) */
       } /* while (!LifoVide(LIFO1)) */
@@ -804,9 +842,15 @@ int32_t lhthindelta(struct xvimage *image, struct xvimage *imagecond, int32_t ni
   fprintf(stderr, "%s: nitermax = %d\n", F_NAME, nitermax);
 #endif
 
-  if (nitermax == -1) nitermax = 2000000000;   
+  if (nitermax == -1) {
+    nitermax = 2000000000;
+  }
 
-  if (connex == 4) incr_vois = 2; else incr_vois = 1;
+  if (connex == 4) {
+    incr_vois = 2;
+  } else {
+    incr_vois = 1;
+  }
 
   if (depth(image) != 1) 
   {
@@ -851,32 +895,42 @@ int32_t lhthindelta(struct xvimage *image, struct xvimage *imagecond, int32_t ni
   {
     if (imagecond != NULL)
     {
-      for (x = 0; x < N; x++) 
-        if ((G[x] < F[x]) && (pdestr4(F,x,rs,N))) LifoPush(LIFO1, ENCODE(x,delta4m(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if ((G[x] < F[x]) && (pdestr4(F, x, rs, N))) {
+          LifoPush(LIFO1, ENCODE(x, delta4m(F, x, rs, N)));
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) 
-        if (pdestr4(F,x,rs,N)) LifoPush(LIFO1, ENCODE(x,delta4m(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if (pdestr4(F, x, rs, N)) {
+          LifoPush(LIFO1, ENCODE(x, delta4m(F, x, rs, N)));
+        }
+      }
     }
   }
   else
   {
     if (imagecond != NULL)
     {
-      for (x = 0; x < N; x++) 
-        if ((G[x] < F[x]) && (pdestr8(F,x,rs,N))) LifoPush(LIFO1, ENCODE(x,delta8m(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if ((G[x] < F[x]) && (pdestr8(F, x, rs, N))) {
+          LifoPush(LIFO1, ENCODE(x, delta8m(F, x, rs, N)));
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) 
+      for (x = 0; x < N; x++) {
         if (pdestr8(F,x,rs,N)) 
         {
 #ifdef DEBUG
           printf("init : push %d,%d, delta = %d\n", x%rs, x/rs, delta8m(F,x,rs,N));
 #endif
           LifoPush(LIFO1, ENCODE(x,delta8m(F,x,rs,N)));
-	}
+        }
+      }
     }
   }
 
@@ -915,7 +969,9 @@ int32_t lhthindelta(struct xvimage *image, struct xvimage *imagecond, int32_t ni
 #ifdef DEBUG
           printf("Abaisse x a %d\n", F[x]);
 #endif
-          if (imagecond != NULL) F[x] = mcmax(F[x],G[x]);
+          if (imagecond != NULL) {
+            F[x] = mcmax(F[x], G[x]);
+          }
           LifoPush(LIFO2, x);
         } /* if (pdestr4(F, x, rs, N)) */
       } /* while (!LifoVide(LIFO1)) */
@@ -984,7 +1040,9 @@ int32_t lhthindelta(struct xvimage *image, struct xvimage *imagecond, int32_t ni
 #ifdef DEBUG
           printf("Abaisse x a %d\n", F[x]);
 #endif
-          if (imagecond != NULL) F[x] = mcmax(F[x],G[x]);
+          if (imagecond != NULL) {
+            F[x] = mcmax(F[x], G[x]);
+          }
           LifoPush(LIFO2, x);
         } /* if (pdestr8(F, x, rs, N)) */
       } /* while (!LifoVide(LIFO1)) */
@@ -1055,9 +1113,15 @@ int32_t lhthickalpha(struct xvimage *image, struct xvimage *imagecond, int32_t n
   int32_t incr_vois;
   int32_t a;
 
-  if (nitermax == -1) nitermax = 2000000000;   
+  if (nitermax == -1) {
+    nitermax = 2000000000;
+  }
 
-  if (connex == 4) incr_vois = 2; else incr_vois = 1;
+  if (connex == 4) {
+    incr_vois = 2;
+  } else {
+    incr_vois = 1;
+  }
 
   if (depth(image) != 1) 
   {
@@ -1102,26 +1166,38 @@ int32_t lhthickalpha(struct xvimage *image, struct xvimage *imagecond, int32_t n
   {
     if (imagecond != NULL)
     {
-      for (x = 0; x < N; x++) 
-        if ((G[x] > F[x]) && (pconstr4(F,x,rs,N))) LifoPush(LIFO1, ENCODE(x,alpha8p(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if ((G[x] > F[x]) && (pconstr4(F, x, rs, N))) {
+          LifoPush(LIFO1, ENCODE(x, alpha8p(F, x, rs, N)));
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) 
-        if (pconstr4(F,x,rs,N)) LifoPush(LIFO1, ENCODE(x,alpha8p(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if (pconstr4(F, x, rs, N)) {
+          LifoPush(LIFO1, ENCODE(x, alpha8p(F, x, rs, N)));
+        }
+      }
     }
   }
   else
   {
     if (imagecond != NULL)
     {
-      for (x = 0; x < N; x++) 
-        if ((G[x] > F[x]) && (pconstr8(F,x,rs,N))) LifoPush(LIFO1, ENCODE(x,alpha8p(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if ((G[x] > F[x]) && (pconstr8(F, x, rs, N))) {
+          LifoPush(LIFO1, ENCODE(x, alpha8p(F, x, rs, N)));
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) 
-        if (pconstr8(F,x,rs,N)) LifoPush(LIFO1, ENCODE(x,alpha8p(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if (pconstr8(F, x, rs, N)) {
+          LifoPush(LIFO1, ENCODE(x, alpha8p(F, x, rs, N)));
+        }
+      }
     }
   }
 
@@ -1157,7 +1233,9 @@ int32_t lhthickalpha(struct xvimage *image, struct xvimage *imagecond, int32_t n
         if (pconstr4(F, x, rs, N))
 	{
           F[x] = mcmin(alpha8p(F, x, rs, N),a);
-          if (imagecond != NULL) F[x] = mcmin(F[x],G[x]);
+          if (imagecond != NULL) {
+            F[x] = mcmin(F[x], G[x]);
+          }
           LifoPush(LIFO2, x);
         } /* if (pconstr4(F, x, rs, N)) */
       } /* while (!LifoVide(LIFO1)) */
@@ -1223,7 +1301,9 @@ int32_t lhthickalpha(struct xvimage *image, struct xvimage *imagecond, int32_t n
         if (pconstr8(F, x, rs, N))
 	{
           F[x] = mcmin(alpha8p(F, x, rs, N),a);
-          if (imagecond != NULL) F[x] = mcmin(F[x],G[x]);
+          if (imagecond != NULL) {
+            F[x] = mcmin(F[x], G[x]);
+          }
           LifoPush(LIFO2, x);
         } /* if (pconstr8(F, x, rs, N)) */
       } /* while (!LifoVide(LIFO1)) */
@@ -1294,9 +1374,15 @@ int32_t lhthickdelta(struct xvimage *image, struct xvimage *imagecond, int32_t n
   int32_t incr_vois;
   int32_t a;
 
-  if (nitermax == -1) nitermax = 2000000000;   
+  if (nitermax == -1) {
+    nitermax = 2000000000;
+  }
 
-  if (connex == 4) incr_vois = 2; else incr_vois = 1;
+  if (connex == 4) {
+    incr_vois = 2;
+  } else {
+    incr_vois = 1;
+  }
 
   if (depth(image) != 1) 
   {
@@ -1341,26 +1427,38 @@ int32_t lhthickdelta(struct xvimage *image, struct xvimage *imagecond, int32_t n
   {
     if (imagecond != NULL)
     {
-      for (x = 0; x < N; x++) 
-        if ((G[x] > F[x]) && (pconstr4(F,x,rs,N))) LifoPush(LIFO1, ENCODE(x,delta4p(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if ((G[x] > F[x]) && (pconstr4(F, x, rs, N))) {
+          LifoPush(LIFO1, ENCODE(x, delta4p(F, x, rs, N)));
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) 
-        if (pconstr4(F,x,rs,N)) LifoPush(LIFO1, ENCODE(x,delta4p(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if (pconstr4(F, x, rs, N)) {
+          LifoPush(LIFO1, ENCODE(x, delta4p(F, x, rs, N)));
+        }
+      }
     }
   }
   else
   {
     if (imagecond != NULL)
     {
-      for (x = 0; x < N; x++) 
-        if ((G[x] > F[x]) && (pconstr8(F,x,rs,N))) LifoPush(LIFO1, ENCODE(x,delta8p(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if ((G[x] > F[x]) && (pconstr8(F, x, rs, N))) {
+          LifoPush(LIFO1, ENCODE(x, delta8p(F, x, rs, N)));
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) 
-        if (pconstr8(F,x,rs,N)) LifoPush(LIFO1, ENCODE(x,delta8p(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if (pconstr8(F, x, rs, N)) {
+          LifoPush(LIFO1, ENCODE(x, delta8p(F, x, rs, N)));
+        }
+      }
     }
   }
 
@@ -1396,7 +1494,9 @@ int32_t lhthickdelta(struct xvimage *image, struct xvimage *imagecond, int32_t n
         if (pconstr4(F, x, rs, N))
 	{
           F[x] = mcmin(delta4p(F, x, rs, N),a);
-          if (imagecond != NULL) F[x] = mcmin(F[x],G[x]);
+          if (imagecond != NULL) {
+            F[x] = mcmin(F[x], G[x]);
+          }
           LifoPush(LIFO2, x);
         } /* if (pconstr4(F, x, rs, N)) */
       } /* while (!LifoVide(LIFO1)) */
@@ -1462,7 +1562,9 @@ int32_t lhthickdelta(struct xvimage *image, struct xvimage *imagecond, int32_t n
         if (pconstr8(F, x, rs, N))
 	{
           F[x] = mcmin(delta8p(F, x, rs, N),a);
-          if (imagecond != NULL) F[x] = mcmin(F[x],G[x]);
+          if (imagecond != NULL) {
+            F[x] = mcmin(F[x], G[x]);
+          }
           LifoPush(LIFO2, x);
         } /* if (pconstr8(F, x, rs, N)) */
       } /* while (!LifoVide(LIFO1)) */
@@ -1665,42 +1767,46 @@ int32_t llvkern(struct xvimage *image, struct xvimage *imagecond, int32_t connex
   {
     if (imagecond != NULL)
     {
-      for (x = 0; x < N; x++) 
+      for (x = 0; x < N; x++) {
         if ((G[x] < F[x]) && (peakordestr4(F,x,rs,N))) 
         {
           Set(x, EN_FAH);
           FahPush(FAH, x, F[x]);
-	}
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) 
+      for (x = 0; x < N; x++) {
         if (peakordestr4(F,x,rs,N)) 
         {
           Set(x, EN_FAH);
           FahPush(FAH, x, F[x]);
-	}
+        }
+      }
     }
   }
   else
   {
     if (imagecond != NULL)
     {
-      for (x = 0; x < N; x++) 
+      for (x = 0; x < N; x++) {
         if ((G[x] < F[x]) && (peakordestr8(F,x,rs,N))) 
         {
           Set(x, EN_FAH);
           FahPush(FAH, x, F[x]);
-	}
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) 
+      for (x = 0; x < N; x++) {
         if (peakordestr8(F,x,rs,N)) 
         {
           Set(x, EN_FAH);
           FahPush(FAH, x, F[x]);
-	}
+        }
+      }
     }
   }
 
@@ -1716,7 +1822,9 @@ int32_t llvkern(struct xvimage *image, struct xvimage *imagecond, int32_t connex
       UnSet(x, EN_FAH);
       if (testnivabaisse4(F, x, rs, N))         /* modifie l'image le cas echeant */
       {
-        if (imagecond != NULL) F[x] = mcmax(F[x],G[x]);
+        if (imagecond != NULL) {
+          F[x] = mcmax(F[x], G[x]);
+        }
         for (k = 0; k < 8; k += 1) /* parcourt les voisins en 8-connexite */
         {                                      /* pour empiler les voisins */
           y = voisin(x, k, rs, N);             /* non deja empiles */
@@ -1740,7 +1848,9 @@ int32_t llvkern(struct xvimage *image, struct xvimage *imagecond, int32_t connex
       UnSet(x, EN_FAH);
       if (testnivabaisse8(F, x, rs, N))         /* modifie l'image le cas echeant */
       {
-        if (imagecond != NULL) F[x] = mcmax(F[x],G[x]);
+        if (imagecond != NULL) {
+          F[x] = mcmax(F[x], G[x]);
+        }
         for (k = 0; k < 8; k += 1) /* parcourt les voisins en 8-connexite */
         {                                      /* pour empiler les voisins */
           y = voisin(x, k, rs, N);             /* non deja empiles */
@@ -1818,42 +1928,46 @@ int32_t llvkernu(struct xvimage *image, struct xvimage *imagecond, int32_t conne
   {
     if (imagecond != NULL)
     {
-      for (x = 0; x < N; x++) 
+      for (x = 0; x < N; x++) {
         if ((F[x] < G[x]) && (wellorconstr4(F,x,rs,N))) 
         {
           Set(x, EN_FAH);
           FahPush(FAH, x, NDG_MAX-F[x]);
-	}
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) 
+      for (x = 0; x < N; x++) {
         if (wellorconstr4(F,x,rs,N))  
         {
           Set(x, EN_FAH);
           FahPush(FAH, x, NDG_MAX-F[x]);
-	}
+        }
+      }
     }
   }
   else
   {
     if (imagecond != NULL)
     {
-      for (x = 0; x < N; x++) 
+      for (x = 0; x < N; x++) {
         if ((F[x] < G[x]) && (wellorconstr8(F,x,rs,N))) 
         {
           Set(x, EN_FAH);
           FahPush(FAH, x, NDG_MAX-F[x]);
-	}
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) 
+      for (x = 0; x < N; x++) {
         if (wellorconstr8(F,x,rs,N)) 
         {
           Set(x, EN_FAH);
           FahPush(FAH, x, NDG_MAX-F[x]);
-	}
+        }
+      }
     }
   }
 
@@ -1870,7 +1984,9 @@ int32_t llvkernu(struct xvimage *image, struct xvimage *imagecond, int32_t conne
       UnSet(x, EN_FAH);
       if (testniveleve4(F, x, rs, N))         /* modifie l'image le cas echeant */
       {
-        if (imagecond != NULL) F[x] = mcmin(F[x],G[x]);
+        if (imagecond != NULL) {
+          F[x] = mcmin(F[x], G[x]);
+        }
         for (k = 0; k < 8; k += 1) /* parcourt les voisins en 8-connexite */
         {                                      /* pour empiler les voisins */
           y = voisin(x, k, rs, N);             /* non deja empiles */
@@ -1894,7 +2010,9 @@ int32_t llvkernu(struct xvimage *image, struct xvimage *imagecond, int32_t conne
       UnSet(x, EN_FAH);
       if (testniveleve8(F, x, rs, N))         /* modifie l'image le cas echeant */
       {
-        if (imagecond != NULL) F[x] = mcmin(F[x],G[x]);
+        if (imagecond != NULL) {
+          F[x] = mcmin(F[x], G[x]);
+        }
         for (k = 0; k < 8; k += 1) /* parcourt les voisins en 8-connexite */
         {                                      /* pour empiler les voisins */
           y = voisin(x, k, rs, N);             /* non deja empiles */
@@ -1940,9 +2058,15 @@ int32_t llthin(struct xvimage *image, struct xvimage *imagecond, int32_t niterma
   int32_t incr_vois;
   int32_t a;
 
-  if (nitermax == -1) nitermax = 2000000000;   
+  if (nitermax == -1) {
+    nitermax = 2000000000;
+  }
 
-  if (connex == 4) incr_vois = 2; else incr_vois = 1;
+  if (connex == 4) {
+    incr_vois = 2;
+  } else {
+    incr_vois = 1;
+  }
 
   if (depth(image) != 1) 
   {
@@ -1987,28 +2111,38 @@ int32_t llthin(struct xvimage *image, struct xvimage *imagecond, int32_t niterma
   {
     if (imagecond != NULL)
     {
-      for (x = 0; x < N; x++) 
-        if ((G[x] < F[x]) && (peakordestr4(F,x,rs,N))) 
-          LifoPush(LIFO1, ENCODE(x,alpha8m(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if ((G[x] < F[x]) && (peakordestr4(F, x, rs, N))) {
+          LifoPush(LIFO1, ENCODE(x, alpha8m(F, x, rs, N)));
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) 
-        if (peakordestr4(F,x,rs,N)) LifoPush(LIFO1, ENCODE(x,alpha8m(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if (peakordestr4(F, x, rs, N)) {
+          LifoPush(LIFO1, ENCODE(x, alpha8m(F, x, rs, N)));
+        }
+      }
     }
   }
   else
   {
     if (imagecond != NULL)
     {
-      for (x = 0; x < N; x++) 
-        if ((G[x] < F[x]) && (peakordestr8(F,x,rs,N))) 
-          LifoPush(LIFO1, ENCODE(x,alpha8m(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if ((G[x] < F[x]) && (peakordestr8(F, x, rs, N))) {
+          LifoPush(LIFO1, ENCODE(x, alpha8m(F, x, rs, N)));
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) 
-        if (peakordestr8(F,x,rs,N)) LifoPush(LIFO1, ENCODE(x,alpha8m(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if (peakordestr8(F, x, rs, N)) {
+          LifoPush(LIFO1, ENCODE(x, alpha8m(F, x, rs, N)));
+        }
+      }
     }
   }
 
@@ -2044,7 +2178,9 @@ int32_t llthin(struct xvimage *image, struct xvimage *imagecond, int32_t niterma
         if (peakordestr4(F, x, rs, N))
 	{
           F[x] = alpha8m(F, x, rs, N);
-          if (imagecond != NULL) F[x] = mcmax(F[x],G[x]);
+          if (imagecond != NULL) {
+            F[x] = mcmax(F[x], G[x]);
+          }
           LifoPush(LIFO2, x);
         } /* if (peakordestr4(F, x, rs, N)) */
       } /* while (!LifoVide(LIFO1)) */
@@ -2110,7 +2246,9 @@ int32_t llthin(struct xvimage *image, struct xvimage *imagecond, int32_t niterma
         if (peakordestr8(F, x, rs, N))
 	{
           F[x] = alpha8m(F, x, rs, N);
-          if (imagecond != NULL) F[x] = mcmax(F[x],G[x]);
+          if (imagecond != NULL) {
+            F[x] = mcmax(F[x], G[x]);
+          }
           LifoPush(LIFO2, x);
         } /* if (peak8(F, x, rs, N)) */
       } /* while (!LifoVide(LIFO1)) */
@@ -2181,9 +2319,15 @@ int32_t llthindelta(struct xvimage *image, struct xvimage *imagecond, int32_t ni
   int32_t incr_vois;
   int32_t a;
 
-  if (nitermax == -1) nitermax = 2000000000;   
+  if (nitermax == -1) {
+    nitermax = 2000000000;
+  }
 
-  if (connex == 4) incr_vois = 2; else incr_vois = 1;
+  if (connex == 4) {
+    incr_vois = 2;
+  } else {
+    incr_vois = 1;
+  }
 
   if (depth(image) != 1) 
   {
@@ -2228,28 +2372,38 @@ int32_t llthindelta(struct xvimage *image, struct xvimage *imagecond, int32_t ni
   {
     if (imagecond != NULL)
     {
-      for (x = 0; x < N; x++) 
-        if ((G[x] < F[x]) && (peakordestr4(F,x,rs,N))) 
-          LifoPush(LIFO1, ENCODE(x,delta4m(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if ((G[x] < F[x]) && (peakordestr4(F, x, rs, N))) {
+          LifoPush(LIFO1, ENCODE(x, delta4m(F, x, rs, N)));
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) 
-        if (peakordestr4(F,x,rs,N)) LifoPush(LIFO1, ENCODE(x,delta4m(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if (peakordestr4(F, x, rs, N)) {
+          LifoPush(LIFO1, ENCODE(x, delta4m(F, x, rs, N)));
+        }
+      }
     }
   }
   else
   {
     if (imagecond != NULL)
     {
-      for (x = 0; x < N; x++) 
-        if ((G[x] < F[x]) && (peakordestr8(F,x,rs,N))) 
-          LifoPush(LIFO1, ENCODE(x,delta8m(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if ((G[x] < F[x]) && (peakordestr8(F, x, rs, N))) {
+          LifoPush(LIFO1, ENCODE(x, delta8m(F, x, rs, N)));
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) 
-        if (peakordestr8(F,x,rs,N)) LifoPush(LIFO1, ENCODE(x,delta8m(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if (peakordestr8(F, x, rs, N)) {
+          LifoPush(LIFO1, ENCODE(x, delta8m(F, x, rs, N)));
+        }
+      }
     }
   }
 
@@ -2285,13 +2439,17 @@ int32_t llthindelta(struct xvimage *image, struct xvimage *imagecond, int32_t ni
         if (pdestr4(F, x, rs, N))
 	{
           F[x] = mcmax(delta4m(F, x, rs, N),a);
-          if (imagecond != NULL) F[x] = mcmax(F[x],G[x]);
+          if (imagecond != NULL) {
+            F[x] = mcmax(F[x], G[x]);
+          }
           LifoPush(LIFO2, x);
         } /* if (pdestr4(F, x, rs, N)) */
         else if (peak4(F, x, rs, N))
 	{
           F[x] = alpha8m(F, x, rs, N);
-          if (imagecond != NULL) F[x] = mcmax(F[x],G[x]);
+          if (imagecond != NULL) {
+            F[x] = mcmax(F[x], G[x]);
+          }
           LifoPush(LIFO2, x);
         } /* if (peak4(F, x, rs, N)) */
       } /* while (!LifoVide(LIFO1)) */
@@ -2357,13 +2515,17 @@ int32_t llthindelta(struct xvimage *image, struct xvimage *imagecond, int32_t ni
         if (pdestr8(F, x, rs, N))
 	{
           F[x] = mcmax(delta8m(F, x, rs, N),a);
-          if (imagecond != NULL) F[x] = mcmax(F[x],G[x]);
+          if (imagecond != NULL) {
+            F[x] = mcmax(F[x], G[x]);
+          }
           LifoPush(LIFO2, x);
         } /* if (pdestr8(F, x, rs, N)) */
         else if (peak8(F, x, rs, N))
 	{
           F[x] = alpha8m(F, x, rs, N);
-          if (imagecond != NULL) F[x] = mcmax(F[x],G[x]);
+          if (imagecond != NULL) {
+            F[x] = mcmax(F[x], G[x]);
+          }
           LifoPush(LIFO2, x);
         } /* if (peak8(F, x, rs, N)) */
       } /* while (!LifoVide(LIFO1)) */
@@ -2434,9 +2596,15 @@ int32_t llthick(struct xvimage *image, struct xvimage *imagecond, int32_t niterm
   int32_t incr_vois;
   int32_t a;
 
-  if (nitermax == -1) nitermax = 2000000000;   
+  if (nitermax == -1) {
+    nitermax = 2000000000;
+  }
 
-  if (connex == 4) incr_vois = 2; else incr_vois = 1;
+  if (connex == 4) {
+    incr_vois = 2;
+  } else {
+    incr_vois = 1;
+  }
 
   if (depth(image) != 1) 
   {
@@ -2481,28 +2649,38 @@ int32_t llthick(struct xvimage *image, struct xvimage *imagecond, int32_t niterm
   {
     if (imagecond != NULL)
     {
-      for (x = 0; x < N; x++) 
-        if ((G[x] > F[x]) && (wellorconstr4(F,x,rs,N))) 
-          LifoPush(LIFO1, ENCODE(x,alpha8p(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if ((G[x] > F[x]) && (wellorconstr4(F, x, rs, N))) {
+          LifoPush(LIFO1, ENCODE(x, alpha8p(F, x, rs, N)));
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) 
-        if (wellorconstr4(F,x,rs,N)) LifoPush(LIFO1, ENCODE(x,alpha8p(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if (wellorconstr4(F, x, rs, N)) {
+          LifoPush(LIFO1, ENCODE(x, alpha8p(F, x, rs, N)));
+        }
+      }
     }
   }
   else
   {
     if (imagecond != NULL)
     {
-      for (x = 0; x < N; x++) 
-        if ((G[x] > F[x]) && (wellorconstr8(F,x,rs,N))) 
-          LifoPush(LIFO1, ENCODE(x,alpha8p(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if ((G[x] > F[x]) && (wellorconstr8(F, x, rs, N))) {
+          LifoPush(LIFO1, ENCODE(x, alpha8p(F, x, rs, N)));
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) 
-        if (wellorconstr8(F,x,rs,N)) LifoPush(LIFO1, ENCODE(x,alpha8p(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if (wellorconstr8(F, x, rs, N)) {
+          LifoPush(LIFO1, ENCODE(x, alpha8p(F, x, rs, N)));
+        }
+      }
     }
   }
 
@@ -2538,7 +2716,9 @@ int32_t llthick(struct xvimage *image, struct xvimage *imagecond, int32_t niterm
         if (wellorconstr4(F, x, rs, N))
 	{
           F[x] = mcmin(alpha8p(F, x, rs, N),a);
-          if (imagecond != NULL) F[x] = mcmin(F[x],G[x]);
+          if (imagecond != NULL) {
+            F[x] = mcmin(F[x], G[x]);
+          }
           LifoPush(LIFO2, x);
         } /* if (wellorconstr4(F, x, rs, N)) */
       } /* while (!LifoVide(LIFO1)) */
@@ -2604,7 +2784,9 @@ int32_t llthick(struct xvimage *image, struct xvimage *imagecond, int32_t niterm
         if (wellorconstr8(F, x, rs, N))
 	{
           F[x] = mcmin(alpha8p(F, x, rs, N),a);
-          if (imagecond != NULL) F[x] = mcmin(F[x],G[x]);
+          if (imagecond != NULL) {
+            F[x] = mcmin(F[x], G[x]);
+          }
           LifoPush(LIFO2, x);
         } /* if (pconstr8(F, x, rs, N)) */
       } /* while (!LifoVide(LIFO1)) */
@@ -2675,9 +2857,15 @@ int32_t llthickdelta(struct xvimage *image, struct xvimage *imagecond, int32_t n
   int32_t incr_vois;
   int32_t a;
 
-  if (nitermax == -1) nitermax = 2000000000;   
+  if (nitermax == -1) {
+    nitermax = 2000000000;
+  }
 
-  if (connex == 4) incr_vois = 2; else incr_vois = 1;
+  if (connex == 4) {
+    incr_vois = 2;
+  } else {
+    incr_vois = 1;
+  }
 
   if (depth(image) != 1) 
   {
@@ -2722,28 +2910,38 @@ int32_t llthickdelta(struct xvimage *image, struct xvimage *imagecond, int32_t n
   {
     if (imagecond != NULL)
     {
-      for (x = 0; x < N; x++) 
-        if ((G[x] > F[x]) && (wellorconstr4(F,x,rs,N))) 
-          LifoPush(LIFO1, ENCODE(x,delta4p(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if ((G[x] > F[x]) && (wellorconstr4(F, x, rs, N))) {
+          LifoPush(LIFO1, ENCODE(x, delta4p(F, x, rs, N)));
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) 
-        if (wellorconstr4(F,x,rs,N)) LifoPush(LIFO1, ENCODE(x,delta4p(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if (wellorconstr4(F, x, rs, N)) {
+          LifoPush(LIFO1, ENCODE(x, delta4p(F, x, rs, N)));
+        }
+      }
     }
   }
   else
   {
     if (imagecond != NULL)
     {
-      for (x = 0; x < N; x++) 
-        if ((G[x] > F[x]) && (wellorconstr8(F,x,rs,N))) 
-          LifoPush(LIFO1, ENCODE(x,delta8p(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if ((G[x] > F[x]) && (wellorconstr8(F, x, rs, N))) {
+          LifoPush(LIFO1, ENCODE(x, delta8p(F, x, rs, N)));
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) 
-        if (wellorconstr8(F,x,rs,N)) LifoPush(LIFO1, ENCODE(x,delta8p(F,x,rs,N)));
+      for (x = 0; x < N; x++) {
+        if (wellorconstr8(F, x, rs, N)) {
+          LifoPush(LIFO1, ENCODE(x, delta8p(F, x, rs, N)));
+        }
+      }
     }
   }
 
@@ -2779,13 +2977,17 @@ int32_t llthickdelta(struct xvimage *image, struct xvimage *imagecond, int32_t n
         if (pconstr4(F, x, rs, N))
 	{
           F[x] = mcmin(delta4p(F, x, rs, N),a);
-          if (imagecond != NULL) F[x] = mcmin(F[x],G[x]);
+          if (imagecond != NULL) {
+            F[x] = mcmin(F[x], G[x]);
+          }
           LifoPush(LIFO2, x);
         } /* if (pconstr4(F, x, rs, N)) */
         else if (well4(F, x, rs, N))
 	{
           F[x] = alpha8p(F, x, rs, N);
-          if (imagecond != NULL) F[x] = mcmax(F[x],G[x]);
+          if (imagecond != NULL) {
+            F[x] = mcmax(F[x], G[x]);
+          }
           LifoPush(LIFO2, x);
         } /* if (well4(F, x, rs, N)) */
       } /* while (!LifoVide(LIFO1)) */
@@ -2851,13 +3053,17 @@ int32_t llthickdelta(struct xvimage *image, struct xvimage *imagecond, int32_t n
         if (pconstr8(F, x, rs, N))
 	{
           F[x] = mcmin(delta8p(F, x, rs, N),a);
-          if (imagecond != NULL) F[x] = mcmin(F[x],G[x]);
+          if (imagecond != NULL) {
+            F[x] = mcmin(F[x], G[x]);
+          }
           LifoPush(LIFO2, x);
         } /* if (pconstr8(F, x, rs, N)) */
         else if (well8(F, x, rs, N))
 	{
           F[x] = alpha8p(F, x, rs, N);
-          if (imagecond != NULL) F[x] = mcmax(F[x],G[x]);
+          if (imagecond != NULL) {
+            F[x] = mcmax(F[x], G[x]);
+          }
           LifoPush(LIFO2, x);
         } /* if (well8(F, x, rs, N)) */
       } /* while (!LifoVide(LIFO1)) */
@@ -2930,14 +3136,30 @@ int32_t nbvoiss8(
 	register uint8_t * ptr = img+p;
 	register int32_t n = 0;
 
-        if ((p%rs!=rs-1) && (*(ptr+1) >= val)) n++;
-        if (((p%rs!=rs-1)&&(p>=rs)) && (*(ptr+1-rs) >= val)) n++;
-        if ((p>=rs) && (*(ptr-rs) >= val)) n++;
-        if (((p>=rs)&&(p%rs!=0)) && (*(ptr-rs-1) >= val)) n++;
-        if ((p%rs!=0) && (*(ptr-1) >= val)) n++;
-        if (((p%rs!=0)&&(p<N-rs)) && (*(ptr-1+rs) >= val)) n++;
-        if ((p<N-rs) && (*(ptr+rs) >= val)) n++;
-        if (((p<N-rs)&&(p%rs!=rs-1)) && (*(ptr+rs+1) >= val)) n++;
+        if ((p % rs != rs - 1) && (*(ptr + 1) >= val)) {
+          n++;
+        }
+        if (((p % rs != rs - 1) && (p >= rs)) && (*(ptr + 1 - rs) >= val)) {
+          n++;
+        }
+        if ((p >= rs) && (*(ptr - rs) >= val)) {
+          n++;
+        }
+        if (((p >= rs) && (p % rs != 0)) && (*(ptr - rs - 1) >= val)) {
+          n++;
+        }
+        if ((p % rs != 0) && (*(ptr - 1) >= val)) {
+          n++;
+        }
+        if (((p % rs != 0) && (p < N - rs)) && (*(ptr - 1 + rs) >= val)) {
+          n++;
+        }
+        if ((p < N - rs) && (*(ptr + rs) >= val)) {
+          n++;
+        }
+        if (((p < N - rs) && (p % rs != rs - 1)) && (*(ptr + rs + 1) >= val)) {
+          n++;
+        }
         return n;
 } /* nbvoiss8() */
 
@@ -2955,10 +3177,18 @@ int32_t nbvoiss4(
 	register uint8_t * ptr = img+p;
 	register int32_t n = 0;
 
-        if ((p%rs!=rs-1) && (*(ptr+1) >= val)) n++;
-        if ((p>=rs) && (*(ptr-rs) >= val)) n++;
-        if ((p%rs!=0) && (*(ptr-1) >= val)) n++;
-        if ((p<N-rs) && (*(ptr+rs) >= val)) n++;
+        if ((p % rs != rs - 1) && (*(ptr + 1) >= val)) {
+          n++;
+        }
+        if ((p >= rs) && (*(ptr - rs) >= val)) {
+          n++;
+        }
+        if ((p % rs != 0) && (*(ptr - 1) >= val)) {
+          n++;
+        }
+        if ((p < N - rs) && (*(ptr + rs) >= val)) {
+          n++;
+        }
         return n;
 } /* nbvoiss4() */
 
@@ -2984,16 +3214,21 @@ int32_t extensible4(
   int32_t k, y;
   int32_t nivext = 0;
 
-  if (!separant4(F, x, rs, N)) return 0;
+  if (!separant4(F, x, rs, N)) {
+    return 0;
+  }
 
   for (k = 0; k < 8; k += 1)
   {
     y = voisin(x, k, rs, N);
     if ((y != -1) && (IsSet(y,COND_TRUE)))
     {
-      if ((F[y] > F[x]) && 
-          hseparant4(F,y,F[x]-1,rs,N) && !hseparant4(F,y,F[x],rs,N)) 
-        if (F[y] > nivext) nivext = F[y]; 
+      if ((F[y] > F[x]) && hseparant4(F, y, F[x] - 1, rs, N) &&
+          !hseparant4(F, y, F[x], rs, N)) {
+        if (F[y] > nivext) {
+          nivext = F[y];
+        }
+      }
     }
   }
 
@@ -3017,13 +3252,19 @@ int32_t colextensible4(
     if (y != -1)
     {
 #ifdef EXTENSIBLE_TOPO
-      if ((F[y] > F[x]) && !hseparant4(F, y, F[x], rs, N)) nbplus++; 
+      if ((F[y] > F[x]) && !hseparant4(F, y, F[x], rs, N)) {
+        nbplus++;
+      }
 #endif
 #ifdef EXTENSIBLE_GEO
-      if ((F[y] > F[x]) && (nbvoiss8(F, y, F[x]+1, rs, N) <= 1)) nbplus++;
+      if ((F[y] > F[x]) && (nbvoiss8(F, y, F[x] + 1, rs, N) <= 1)) {
+        nbplus++;
+      }
 #endif
 #ifdef EXTENSIBLE_MARK
-      if ((F[y] > F[x]) && IsSet(y,COND_TRUE)) nbplus++;
+      if ((F[y] > F[x]) && IsSet(y, COND_TRUE)) {
+        nbplus++;
+      }
 #endif
     }
   }
@@ -3058,16 +3299,21 @@ int32_t extensible8(
   int32_t k, y;
   int32_t nivext = 0;
 
-  if (!separant8(F, x, rs, N)) return 0;
+  if (!separant8(F, x, rs, N)) {
+    return 0;
+  }
 
   for (k = 0; k < 8; k += 1)
   {
     y = voisin(x, k, rs, N);
     if ((y != -1) && (IsSet(y,COND_TRUE)))
     {
-      if ((F[y] > F[x]) && 
-          hseparant8(F,y,F[x]-1,rs,N) && !hseparant8(F,y,F[x],rs,N)) 
-        if (F[y] > nivext) nivext = F[y]; 
+      if ((F[y] > F[x]) && hseparant8(F, y, F[x] - 1, rs, N) &&
+          !hseparant8(F, y, F[x], rs, N)) {
+        if (F[y] > nivext) {
+          nivext = F[y];
+        }
+      }
     }
   }
 
@@ -3091,13 +3337,19 @@ int32_t colextensible8(
     if (y != -1)
     {
 #ifdef EXTENSIBLE_TOPO
-      if ((F[y] > F[x]) && !hseparant8(F, y, F[x], rs, N)) nbplus++; 
+      if ((F[y] > F[x]) && !hseparant8(F, y, F[x], rs, N)) {
+        nbplus++;
+      }
 #endif
 #ifdef EXTENSIBLE_GEO
-      if ((F[y] > F[x]) && (nbvoiss4(F, y, F[x]+1, rs, N) <= 1)) nbplus++;
+      if ((F[y] > F[x]) && (nbvoiss4(F, y, F[x] + 1, rs, N) <= 1)) {
+        nbplus++;
+      }
 #endif
 #ifdef EXTENSIBLE_MARK
-      if ((F[y] > F[x]) && IsSet(y,COND_TRUE)) nbplus++;
+      if ((F[y] > F[x]) && IsSet(y, COND_TRUE)) {
+        nbplus++;
+      }
 #endif
     }
   }
@@ -3135,7 +3387,9 @@ int32_t lcrestrestoration(struct xvimage *image, struct xvimage *imcond, int32_t
   char animname[64];
 #endif
 
-  if (nitermax == -1) nitermax = 2000000000;   
+  if (nitermax == -1) {
+    nitermax = 2000000000;
+  }
 
   if (depth(image) != 1) 
   {
@@ -3161,13 +3415,18 @@ int32_t lcrestrestoration(struct xvimage *image, struct xvimage *imcond, int32_t
 
   if (imcond == NULL)
   {
-    for (x = 0; x < N; x++) Set(x,COND_TRUE);
+    for (x = 0; x < N; x++) {
+      Set(x, COND_TRUE);
+    }
   }
   else
   {
     G = UCHARDATA(imcond);
-    for (x = 0; x < N; x++) 
-      if (G[x]) Set(x,COND_TRUE);
+    for (x = 0; x < N; x++) {
+      if (G[x]) {
+        Set(x, COND_TRUE);
+      }
+    }
   } // if (imcond != NULL)
 
   /* ================================================ */
@@ -3186,7 +3445,7 @@ do /* repetition de toute la procedure jusqu'a stabilite */
 
   if (connex == 4)
   {
-    for (x = 0; x < N; x++) 
+    for (x = 0; x < N; x++) {
       if ((a = extensible4(F,x,rs,N)))
       {
 #ifdef DEBUG
@@ -3195,10 +3454,11 @@ do /* repetition de toute la procedure jusqu'a stabilite */
 #endif
         LifoPush(LIFO1, ENCODE(x,a));
       }
+    }
   }
   else
   {
-    for (x = 0; x < N; x++) 
+    for (x = 0; x < N; x++) {
       if ((a = extensible8(F,x,rs,N)))
       {
 #ifdef DEBUG
@@ -3207,6 +3467,7 @@ do /* repetition de toute la procedure jusqu'a stabilite */
 #endif
         LifoPush(LIFO1, ENCODE(x,a));
       }
+    }
   }
 
   /* ================================================ */
@@ -3414,7 +3675,10 @@ do /* repetition de toute la procedure jusqu'a stabilite */
 
   if (imcond != NULL)
   {
-    for (x = 0; x < N; x++) if IsSet(x,COND_TRUE) G[x] = NDG_MAX;
+    for (x = 0; x < N; x++) {
+      if IsSet (x, COND_TRUE)
+        G[x] = NDG_MAX;
+    }
   }
 
   /* ================================================ */
@@ -3458,17 +3722,20 @@ int32_t lptextensible(struct xvimage *image, struct xvimage *imcond, int32_t con
 
   if (imcond == NULL)
   {
-    for (x = 0; x < N; x++) Set(x,COND_TRUE);
+    for (x = 0; x < N; x++) {
+      Set(x, COND_TRUE);
+    }
   }
   else
   {
     G = UCHARDATA(imcond);
-    for (x = 0; x < N; x++) 
+    for (x = 0; x < N; x++) {
       if (G[x]) 
       {
         Set(x,COND_TRUE);
         LifoPush(LIFO1, x);
       }
+    }
     while (!LifoVide(LIFO1))
     {
       x = LifoPop(LIFO1);
@@ -3486,8 +3753,11 @@ int32_t lptextensible(struct xvimage *image, struct xvimage *imcond, int32_t con
 
   if (connex == 4)
   {
-    for (x = 0; x < N; x++) 
-      if (extensible4(F, x, rs, N)) Set(x,EXTENSIBLE);
+    for (x = 0; x < N; x++) {
+      if (extensible4(F, x, rs, N)) {
+        Set(x, EXTENSIBLE);
+      }
+    }
   }
   else
   { /* if (connex == 8) */
@@ -3495,8 +3765,10 @@ int32_t lptextensible(struct xvimage *image, struct xvimage *imcond, int32_t con
     return 0;
   } /* if (connex == 8) */
 
-  for (x = 0; x < N; x++) 
-    if IsSet(x,EXTENSIBLE) F[x] = NDG_MAX; else F[x] = 0;
+  for (x = 0; x < N; x++) {
+    if IsSet(x,EXTENSIBLE) F[x] = NDG_MAX; else
+      F[x] = 0;
+  }
 
   /* ================================================ */
   /* UN PEU DE MENAGE                                 */
@@ -3538,7 +3810,9 @@ int32_t testmodifie4(uint8_t *F, uint8_t *G, int32_t x, int32_t rs, int32_t N)
     { 
       modifie = 1; 
       F[x] = alpha8m(F,x,rs,N);
-      if (F[x] < G[x]) F[x] = G[x]; 
+      if (F[x] < G[x]) {
+        F[x] = G[x];
+      }
     }
     return modifie;
   }
@@ -3549,7 +3823,9 @@ int32_t testmodifie4(uint8_t *F, uint8_t *G, int32_t x, int32_t rs, int32_t N)
     { 
       modifie = 1; 
       F[x] = alpha8p(F,x,rs,N); /* alpha8: sic */
-      if (F[x] > G[x]) F[x] = G[x]; 
+      if (F[x] > G[x]) {
+        F[x] = G[x];
+      }
     }
     return modifie;
   }
@@ -3578,7 +3854,9 @@ int32_t testmodifie8(uint8_t *F, uint8_t *G, int32_t x, int32_t rs, int32_t N)
     { 
       modifie = 1; 
       F[x] = alpha8m(F,x,rs,N);
-      if (F[x] < G[x]) F[x] = G[x]; 
+      if (F[x] < G[x]) {
+        F[x] = G[x];
+      }
     }
     return modifie;
   }
@@ -3588,8 +3866,10 @@ int32_t testmodifie8(uint8_t *F, uint8_t *G, int32_t x, int32_t rs, int32_t N)
     while ((F[x] < G[x]) && (wellorconstr8(F,x,rs,N)))
     { 
       modifie = 1; 
-      F[x] = alpha8p(F,x,rs,N); 
-      if (F[x] > G[x]) F[x] = G[x]; 
+      F[x] = alpha8p(F,x,rs,N);
+      if (F[x] > G[x]) {
+        F[x] = G[x];
+      }
     }
     return modifie;
   }
@@ -3644,21 +3924,23 @@ int32_t ldynrecons(struct xvimage *image, struct xvimage *imagecond, int32_t con
 
   if (connex == 4)
   {
-    for (x = 0; x < N; x++) 
+    for (x = 0; x < N; x++) {
       if (modifiable4(F,G,x,rs,N)) 
         {
           Set(x, EN_FAH);
           FahPush(FAH, x, mcabs(F[x]-G[x]));
-	}
+      }
+    }
   }
   else if (connex == 8)
   {
-    for (x = 0; x < N; x++) 
+    for (x = 0; x < N; x++) {
       if (modifiable8(F,G,x,rs,N)) 
         {
           Set(x, EN_FAH);
           FahPush(FAH, x, mcabs(F[x]-G[x]));
-	}
+      }
+    }
   }
   else
   {

@@ -97,8 +97,9 @@ double Erlang(double mean, double variance)
   k = (k > 0) ? k : 1;
   a = k/mean;
   prod = 1.0;
-  for(i=1; i<=k; i++)
+  for (i = 1; i <= k; i++) {
     prod *= Prob();
+  }
 
   y = -log(prod)/a;
 
@@ -171,8 +172,9 @@ double Normal(double mean, double deviation)
   double sum, y;
 
   sum = 0.0;
-  for(i=1; i <= 12; i++)
+  for (i = 1; i <= 12; i++) {
     sum += Prob();
+  }
 
   y = deviation * (sum - 6.0) + mean;
 

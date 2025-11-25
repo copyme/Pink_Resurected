@@ -184,7 +184,11 @@ void drawsquare (FILE *fd, double x, double y, double r, int32_t width, int32_t 
   draw(fd, x+r, y+r);
   draw(fd, x, y+r);
   draw(fd, x, y);
-  if (fill) fprintf(fd,"fill stroke\n"); else fprintf(fd,"stroke\n");
+  if (fill) {
+    fprintf(fd, "fill stroke\n");
+  } else {
+    fprintf(fd, "stroke\n");
+  }
 } /* drawsquare() */
 
 /*========================================*/
@@ -199,7 +203,11 @@ void drawcenteredsquare (FILE *fd, double x, double y, double r, int32_t fill)
   draw(fd, X+R, Y+R);
   draw(fd, X, Y+R);
   draw(fd, X, Y);
-  if (fill) fprintf(fd,"fill stroke\n"); else fprintf(fd,"stroke\n");
+  if (fill) {
+    fprintf(fd, "fill stroke\n");
+  } else {
+    fprintf(fd, "stroke\n");
+  }
 } /* drawcenteredsquare() */
 
 /*========================================*/
@@ -212,7 +220,11 @@ void drawtriangle (FILE *fd, double x1, double y1, double x2, double y2, double 
   draw(fd, x2, y2);
   draw(fd, x3, y3);
   draw(fd, x1, y1);
-  if (fill) fprintf(fd,"fill stroke\n"); else fprintf(fd,"stroke\n");
+  if (fill) {
+    fprintf(fd, "fill stroke\n");
+  } else {
+    fprintf(fd, "stroke\n");
+  }
 } /* drawtriangle() */
  
 /*========================================*/
@@ -234,10 +246,11 @@ void fillsquare (FILE *fd, double x, double y, double r, double dcol)
   draw(fd, x+r, y+r);
   draw(fd, x, y+r);
   draw(fd, x, y);
-  if (dcol > 0.5)
+  if (dcol > 0.5) {
     fprintf(fd,"0 setgray\nstroke\n");
-  else
-    fprintf(fd,"1 setgray\nstroke\n");
+  } else {
+    fprintf(fd, "1 setgray\nstroke\n");
+  }
 } /* fillsquare() */
  
 /*========================================*/
@@ -273,7 +286,11 @@ void drawvrect (FILE *fd, double x, double y, double r, double R, int32_t fill)
   draw(fd, x+r, y+R);
   draw(fd, x-r, y+R);
   draw(fd, x-r, y-R);
-  if (fill) fprintf(fd,"fill stroke\n"); else fprintf(fd,"stroke\n");
+  if (fill) {
+    fprintf(fd, "fill stroke\n");
+  } else {
+    fprintf(fd, "stroke\n");
+  }
 } /* drawvrect() */
 
 /*========================================*/
@@ -309,7 +326,11 @@ void drawhrect (FILE *fd, double x, double y, double r, double R, int32_t fill)
   draw(fd, x+R, y+r);
   draw(fd, x-R, y+r);
   draw(fd, x-R, y-r);
-  if (fill) fprintf(fd,"fill stroke\n"); else fprintf(fd,"stroke\n");
+  if (fill) {
+    fprintf(fd, "fill stroke\n");
+  } else {
+    fprintf(fd, "stroke\n");
+  }
 } /* drawhrect() */
 
 /*========================================*/
@@ -343,8 +364,12 @@ void drawcircle (FILE *fd, double x, double y, double r, int32_t fill, int32_t w
   yy = (int32_t)y;
   rr = (int32_t)r;
   fprintf(fd,"newpath %d slw ", width);
-  fprintf(fd,"%d %d %d 0 360 arc %g setgray", xx, yy, rr, col); 
-  if (fill) fprintf(fd," fill stroke\n"); else fprintf(fd," stroke\n");
+  fprintf(fd,"%d %d %d 0 360 arc %g setgray", xx, yy, rr, col);
+  if (fill) {
+    fprintf(fd, " fill stroke\n");
+  } else {
+    fprintf(fd, " stroke\n");
+  }
 } /* drawcircle() */
 
 /*========================================*/
@@ -561,10 +586,11 @@ int main(int argc, char **argv)
 
   if (type == 'b') /* binary image */
   {
-    if (printcoords)
+    if (printcoords) {
       psheader(fd, (rs+2) * GS, (cs+2) * GS, GLOBALSCALE);
-    else
-      psheader(fd, (rs+1) * GS, (cs+1) * GS, GLOBALSCALE);
+    } else {
+      psheader(fd, (rs + 1) * GS, (cs + 1) * GS, GLOBALSCALE);
+    }
 
     for (y = 0; y < cs; y++)
     {
@@ -597,11 +623,14 @@ int main(int argc, char **argv)
   { /* grayscale image (levels printed as numbers on color) */
     if (datatype(image) == VFF_TYP_1_BYTE)
     {
-      if (printcoords)
-	psheader(fd, (rs+1) * GS, (cs+1) * GS, GLOBALSCALE);
-      else
-	psheader(fd, rs * GS, cs * GS, GLOBALSCALE);
-      if (type == 'd') maxval = (int32_t)sqrt(maxval);
+      if (printcoords) {
+        psheader(fd, (rs+1) * GS, (cs+1) * GS, GLOBALSCALE);
+      } else {
+        psheader(fd, rs * GS, cs * GS, GLOBALSCALE);
+      }
+      if (type == 'd') {
+        maxval = (int32_t)sqrt(maxval);
+      }
       for (y = 0; y < cs; y++)
       {
 	for (x = 0; x < rs; x++)
@@ -611,23 +640,26 @@ int main(int argc, char **argv)
 	  if ((type == 'n') || (type == 'c') || (type == 'm'))
 	  {
 	    fillsquare(fd, X, Y, GS, (double)(F[y * rs + x])/(double)maxval);
-	    if ((G != NULL) && (G[y * rs +x]>0)) 
-	      drawcircle(fd, X+(GS/2), Y+(GS/2), GS*0.25, 1, 4, 0);
-	  }
-	  else if (type == 'd')
-	    fillsquare(fd, X, Y, GS, sqrt(F[y * rs + x])/(double)maxval);
-	  else
-	    fillsquare(fd, X, Y, GS, (double)1.0 - (double)(F[y * rs + x])/(double)maxval);
-	  if ((type == 'n') && (H != NULL) && (H[y * rs +x] > 0)) 
+            if ((G != NULL) && (G[y * rs + x] > 0)) {
+              drawcircle(fd, X + (GS / 2), Y + (GS / 2), GS * 0.25, 1, 4, 0);
+            }
+          } else if (type == 'd') {
+            fillsquare(fd, X, Y, GS, sqrt(F[y * rs + x])/(double)maxval);
+          } else {
+            fillsquare(fd, X, Y, GS,
+                       (double)1.0 - (double)(F[y * rs + x]) / (double)maxval);
+          }
+          if ((type == 'n') && (H != NULL) && (H[y * rs +x] > 0)) 
 	  {
 	    sprintf(buf, "%c", (char)(H[y * rs + x]-1+'A'));
 	  } else 	if (type == 'm') 
 	  {
-		if(datatype(label)==VFF_TYP_FLOAT)
-			sprintf(buf, "%1.1f", FLOATDATA(label)[y * rs + x]);
-		else
-	    		sprintf(buf, "%d", H[y * rs + x]);
-	  } else 
+            if (datatype(label) == VFF_TYP_FLOAT) {
+              sprintf(buf, "%1.1f", FLOATDATA(label)[y * rs + x]);
+            } else {
+              sprintf(buf, "%d", H[y * rs + x]);
+            }
+          } else 
 	  {
 	    sprintf(buf, "%d", F[y * rs + x]);
 	    //sprintf(buf, "%c.%c", F[y * rs + x]/10+'0', F[y * rs + x]%10+'0');
@@ -710,24 +742,29 @@ int main(int argc, char **argv)
     else if (datatype(image) == VFF_TYP_4_BYTE)
     {
       int32_t *F = SLONGDATA(image);
-      if (printcoords)
-	psheader(fd, (rs+1) * GS, (cs+1) * GS, GLOBALSCALE);
-      else
-	psheader(fd, rs * GS, cs * GS, GLOBALSCALE);
-      if (type == 'd') maxval = (int32_t)sqrt(maxval);
+      if (printcoords) {
+        psheader(fd, (rs+1) * GS, (cs+1) * GS, GLOBALSCALE);
+      } else {
+        psheader(fd, rs * GS, cs * GS, GLOBALSCALE);
+      }
+      if (type == 'd') {
+        maxval = (int32_t)sqrt(maxval);
+      }
       for (y = 0; y < cs; y++)
       {
 	for (x = 0; x < rs; x++)
 	{
 	  X = x * (double)GS;
 	  Y = (cs-1-y) * (double)GS;
-	  if ((type == 'n') || (type == 'm'))
-	    fillsquare(fd, X, Y, GS, (double)(F[y * rs + x])/(double)maxval);
-	  else if (type == 'd')
-	    fillsquare(fd, X, Y, GS, sqrt(F[y * rs + x])/(double)maxval);
-	  else
-	    fillsquare(fd, X, Y, GS, (double)1.0 - (double)(F[y * rs + x])/(double)maxval);
-	  if ((type == 'n') && (H != NULL) && (H[y * rs +x] > 0)) 
+          if ((type == 'n') || (type == 'm')) {
+            fillsquare(fd, X, Y, GS, (double)(F[y * rs + x])/(double)maxval);
+          } else if (type == 'd') {
+            fillsquare(fd, X, Y, GS, sqrt(F[y * rs + x])/(double)maxval);
+          } else {
+            fillsquare(fd, X, Y, GS,
+                       (double)1.0 - (double)(F[y * rs + x]) / (double)maxval);
+          }
+          if ((type == 'n') && (H != NULL) && (H[y * rs +x] > 0)) 
 	  {
 	    sprintf(buf, "%c", (char)(H[y * rs + x]-1+'A'));
 	  } else 	if (type == 'm') 
@@ -740,11 +777,12 @@ int main(int argc, char **argv)
 	  if (((type == 'd') && (sqrt(F[y * rs + x]) > maxval/2)) || 
 	      ((type != 'd') && (F[y * rs + x] > maxval/2)))
 	  {
-	    if ((type == 'n') || (type == 'm') || (type == 'd'))
-	      coldrawtext(fd, X+(GS/2), Y+(GS/2), buf, FONTSCALE, 0.0);
-	    else
-	      coldrawtext(fd, X+(GS/2), Y+(GS/2), buf, FONTSCALE, 1.0);
-	    if ((G != NULL) && (G[y * rs +x]>0)) 
+            if ((type == 'n') || (type == 'm') || (type == 'd')) {
+              coldrawtext(fd, X+(GS/2), Y+(GS/2), buf, FONTSCALE, 0.0);
+            } else {
+              coldrawtext(fd, X + (GS / 2), Y + (GS / 2), buf, FONTSCALE, 1.0);
+            }
+            if ((G != NULL) && (G[y * rs +x]>0)) 
 	    {
 #ifdef BOLDCIRCLES
 	      drawcircle(fd, X+(GS/2), Y+(GS/2), GS*0.45, 0, 4, 0);
@@ -755,11 +793,12 @@ int main(int argc, char **argv)
 	  }
 	  else
 	  {
-	    if ((type == 'n') || (type == 'm') || (type == 'd'))
-	      coldrawtext(fd, X+(GS/2), Y+(GS/2), buf, FONTSCALE, 1.0);
-	    else
-	      coldrawtext(fd, X+(GS/2), Y+(GS/2), buf, FONTSCALE, 0.0);
-	    if ((G != NULL) && (G[y * rs +x]>0)) 
+            if ((type == 'n') || (type == 'm') || (type == 'd')) {
+              coldrawtext(fd, X+(GS/2), Y+(GS/2), buf, FONTSCALE, 1.0);
+            } else {
+              coldrawtext(fd, X + (GS / 2), Y + (GS / 2), buf, FONTSCALE, 0.0);
+            }
+            if ((G != NULL) && (G[y * rs +x]>0)) 
 	    {
 #ifdef BOLDCIRCLES
 	      drawcircle(fd, X+(GS/2), Y+(GS/2), GS*0.45, 0, 4, 1);
@@ -797,7 +836,7 @@ int main(int argc, char **argv)
   else if (type == 'p') /* grayscale image (levels printed as numbers) */
   {
     psheader(fd, rs * GS, cs * GS, GLOBALSCALE);
-    for (y = 0; y < cs; y++)
+    for (y = 0; y < cs; y++) {
       for (x = 0; x < rs; x++)
       {
         X = x * (double)GS;
@@ -814,11 +853,12 @@ int main(int argc, char **argv)
 #endif
 	}
       }
+    }
   } 
   else if (type == 'a') /* grayscale image (levels printed as letters) */
   {
     psheader(fd, rs * GS, cs * GS, GLOBALSCALE);
-    for (y = 0; y < cs; y++)
+    for (y = 0; y < cs; y++) {
       for (x = 0; x < rs; x++)
       {
         X = x * (double)GS;
@@ -835,22 +875,24 @@ int main(int argc, char **argv)
 #endif
 	}
       }
+    }
   } 
   else if (type == 'g') /* grayscale image (levels showed as colors) */
   {
     psheader(fd, rs * GS, cs * GS, GLOBALSCALE);
-    for (y = 0; y < cs; y++)
+    for (y = 0; y < cs; y++) {
       for (x = 0; x < rs; x++)
       {
         X = x * (double)GS;
         Y = (cs-1-y) * (double)GS;
         fillsquare(fd, X, Y, GS, (double)(F[y * rs + x])/(double)maxval);
       }
+    }
   } 
   else if (type == 'B') /* binary khalimsky grid */
   {
     psheader(fd, (rs + 1) * GS, (cs + 1) * GS, GLOBALSCALE);
-    for (y = 0; y < cs; y++)
+    for (y = 0; y < cs; y++) {
       for (x = 0; x < rs; x++)
       {
         X = (x + 1) * (double)GS;
@@ -858,18 +900,28 @@ int main(int argc, char **argv)
 #ifdef KHALIMSKY1
 	if ((G != NULL) && (G[y * rs +x]>0)) 
 	{
-	  if (CARRE(x,y)) colsquare(fd, X, Y, R2, GRAYMARK, 1);
-	  else if (INTERV(x,y)) colvrect(fd, X, Y, R1, R2, GRAYMARK, 1);
-	  else if (INTERH(x,y)) colhrect(fd, X, Y, R1, R2, GRAYMARK, 1);
-	  else colcircle(fd, X, Y, R1, GRAYMARK, 1);
-	} 
+          if (CARRE(x, y)) {
+            colsquare(fd, X, Y, R2, GRAYMARK, 1);
+          } else if (INTERV(x, y)) {
+            colvrect(fd, X, Y, R1, R2, GRAYMARK, 1);
+          } else if (INTERH(x, y)) {
+            colhrect(fd, X, Y, R1, R2, GRAYMARK, 1);
+          } else {
+            colcircle(fd, X, Y, R1, GRAYMARK, 1);
+          }
+        } 
 	else 
 	{
-	  if (CARRE(x,y)) drawcenteredsquare(fd, X, Y, R2, F[y * rs + x]);
-	  else if (INTERV(x,y)) drawvrect(fd, X, Y, R1, R2, F[y * rs + x]);
-	  else if (INTERH(x,y)) drawhrect(fd, X, Y, R1, R2, F[y * rs + x]);
-	  else drawcircle(fd, X, Y, R1, F[y * rs + x], 1, 0);
-	}
+          if (CARRE(x, y)) {
+            drawcenteredsquare(fd, X, Y, R2, F[y * rs + x]);
+          } else if (INTERV(x, y)) {
+            drawvrect(fd, X, Y, R1, R2, F[y * rs + x]);
+          } else if (INTERH(x, y)) {
+            drawhrect(fd, X, Y, R1, R2, F[y * rs + x]);
+          } else {
+            drawcircle(fd, X, Y, R1, F[y * rs + x], 1, 0);
+          }
+        }
 #endif
 #ifdef KHALIMSKY2
 	if ((G != NULL) && (G[y * rs +x]>0)) 
@@ -885,11 +937,12 @@ int main(int argc, char **argv)
 	}
 #endif
       }
+    }
   }
   else if (type == 'T') /* binary triangular grid */
   {
     psheader(fd, 2*TRG_M + ((rs/2)+1) * TRG_GS, 2*TRG_M + ((cs/3)+1) * TRG_GS, GLOBALSCALE);
-    for (y = 0; y < cs; y++)
+    for (y = 0; y < cs; y++) {
       for (x = 0; x < rs; x++)
       {
 	if (TRIANG_SINGL(x,y)) 
@@ -903,27 +956,39 @@ int main(int argc, char **argv)
 	       double X1 = (x/2)*(double)TRG_GS, X2 = X1;
 	       double Y1 = (y/3)*(double)TRG_GS + (double)TRG_L;
 	       double Y2 = ((y/3)+1)*(double)TRG_GS - (double)TRG_L;
-	       X1 += TRG_M; X2 += TRG_M; Y1 += TRG_M; Y2 += TRG_M; 
-	       if (F[y * rs + x]) drawline(fd, X1, Y1, X2, Y2, TRG_T); else drawline(fd, X1, Y1, X2, Y2, 1); 
-	     }
+	       X1 += TRG_M; X2 += TRG_M; Y1 += TRG_M; Y2 += TRG_M;
+               if (F[y * rs + x]) {
+                 drawline(fd, X1, Y1, X2, Y2, TRG_T);
+               } else {
+                 drawline(fd, X1, Y1, X2, Y2, 1);
+               }
+             }
 	else if (TRIANG_EDGE_DN(x,y)) 
 	     { 
 	       double X1 = ((x/2)+1)*(double)TRG_GS - (double)TRG_L;
 	       double X2 = (x/2)*(double)TRG_GS + (double)TRG_L;
 	       double Y1 = (y/3)*(double)TRG_GS + (double)TRG_L;
 	       double Y2 = ((y/3)+1)*(double)TRG_GS - (double)TRG_L;
-	       X1 += TRG_M; X2 += TRG_M; Y1 += TRG_M; Y2 += TRG_M; 
-	       if (F[y * rs + x]) drawline(fd, X1, Y1, X2, Y2, TRG_T); else drawline(fd, X1, Y1, X2, Y2, 1); 
-	     }
+	       X1 += TRG_M; X2 += TRG_M; Y1 += TRG_M; Y2 += TRG_M;
+               if (F[y * rs + x]) {
+                 drawline(fd, X1, Y1, X2, Y2, TRG_T);
+               } else {
+                 drawline(fd, X1, Y1, X2, Y2, 1);
+               }
+             }
 	else if (TRIANG_EDGE_HZ(x,y)) 
 	     { 
 	       double X1 = (x/2)*(double)TRG_GS + (double)TRG_L;
 	       double X2 = ((x/2)+1)*(double)TRG_GS - (double)TRG_L;
 	       double Y1 = (y/3)*(double)TRG_GS;
 	       double Y2 = Y1;
-	       X1 += TRG_M; X2 += TRG_M; Y1 += TRG_M; Y2 += TRG_M; 
-	       if (F[y * rs + x]) drawline(fd, X1, Y1, X2, Y2, TRG_T); else drawline(fd, X1, Y1, X2, Y2, 1); 
-	     }
+	       X1 += TRG_M; X2 += TRG_M; Y1 += TRG_M; Y2 += TRG_M;
+               if (F[y * rs + x]) {
+                 drawline(fd, X1, Y1, X2, Y2, TRG_T);
+               } else {
+                 drawline(fd, X1, Y1, X2, Y2, 1);
+               }
+             }
 	else if (TRIANG_UP(x,y) && (x<(rs-1))) 
 	     { 
 	       double X1 = (x/2)*(double)TRG_GS + (double)TRG_L;
@@ -946,22 +1011,28 @@ int main(int argc, char **argv)
 	       X1 += TRG_M; Y1 += TRG_M; X2 += TRG_M; Y2 += TRG_M; X3 += TRG_M; Y3 += TRG_M; 
 	       drawtriangle(fd, X1, Y1, X2, Y2, X3, Y3, F[y * rs + x]);
 	     }
-	
       }
+    }
   }
   else if (type == 'C') /* binary khalimsky grid (dual of B) */
   {
     psheader(fd, (rs + 1) * GS, (cs + 1) * GS, GLOBALSCALE);
-    for (y = 0; y < cs; y++)
+    for (y = 0; y < cs; y++) {
       for (x = 0; x < rs; x++)
       {
         X = (x + 1) * (double)GS;
         Y = (cs - y) * (double)GS;
-        if (CARRE(x,y)) drawcircle(fd, X, Y, R1, F[y * rs + x], 1, 0);
-        else if (INTERV(x,y)) drawhrect(fd, X, Y, R1, R2, F[y * rs + x]);
-        else if (INTERH(x,y)) drawvrect(fd, X, Y, R1, R2, F[y * rs + x]);
-        else drawcenteredsquare(fd, X, Y, R2, F[y * rs + x]);
+        if (CARRE(x, y)) {
+          drawcircle(fd, X, Y, R1, F[y * rs + x], 1, 0);
+        } else if (INTERV(x, y)) {
+          drawhrect(fd, X, Y, R1, R2, F[y * rs + x]);
+        } else if (INTERH(x, y)) {
+          drawvrect(fd, X, Y, R1, R2, F[y * rs + x]);
+        } else {
+          drawcenteredsquare(fd, X, Y, R2, F[y * rs + x]);
+        }
       }
+    }
   }
 
   else if (type == 'N') /* grayscale khalimsky grid (levels printed as numbers) */
@@ -969,34 +1040,46 @@ int main(int argc, char **argv)
     psheader(fd, (rs + 1) * GS, (cs + 1) * GS, GLOBALSCALE);
     if (datatype(image) == VFF_TYP_1_BYTE)
     {
-      for (y = 0; y < cs; y++)
-	for (x = 0; x < rs; x++)
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++)
 	{
 	  X = (x + 1) * (double)GS;
 	  Y = (cs - y) * (double)GS;
-	  if (CARRE(x,y)) drawcenteredsquare(fd, X, Y, R2, 0);
-	  else if (INTERV(x,y)) drawvrect(fd, X, Y, R1, R2, 0);
-	  else if (INTERH(x,y)) drawhrect(fd, X, Y, R1, R2, 0);
-	  else drawcircle(fd, X, Y, R1, 0, 1, 0);
-	  sprintf(buf, "%d", F[y * rs + x]);
+          if (CARRE(x, y)) {
+            drawcenteredsquare(fd, X, Y, R2, 0);
+          } else if (INTERV(x, y)) {
+            drawvrect(fd, X, Y, R1, R2, 0);
+          } else if (INTERH(x, y)) {
+            drawhrect(fd, X, Y, R1, R2, 0);
+          } else {
+            drawcircle(fd, X, Y, R1, 0, 1, 0);
+          }
+          sprintf(buf, "%d", F[y * rs + x]);
 	  drawtext(fd, X, Y, buf, FONTSCALE);
-	}
+        }
+      }
     }
     else if (datatype(image) == VFF_TYP_DOUBLE)
     {
       double *F = DOUBLEDATA(image);
-      for (y = 0; y < cs; y++)
-	for (x = 0; x < rs; x++)
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++)
 	{
 	  X = (x + 1) * (double)GS;
 	  Y = (cs - y) * (double)GS;
-	  if (CARRE(x,y)) drawcenteredsquare(fd, X, Y, R2, 0);
-	  else if (INTERV(x,y)) drawvrect(fd, X, Y, R1, R2, 0);
-	  else if (INTERH(x,y)) drawhrect(fd, X, Y, R1, R2, 0);
-	  else drawcircle(fd, X, Y, R1, 0, 1, 0);
-	  sprintf(buf, "%1.1f", F[y * rs + x]);
+          if (CARRE(x, y)) {
+            drawcenteredsquare(fd, X, Y, R2, 0);
+          } else if (INTERV(x, y)) {
+            drawvrect(fd, X, Y, R1, R2, 0);
+          } else if (INTERH(x, y)) {
+            drawhrect(fd, X, Y, R1, R2, 0);
+          } else {
+            drawcircle(fd, X, Y, R1, 0, 1, 0);
+          }
+          sprintf(buf, "%1.1f", F[y * rs + x]);
 	  drawtext(fd, X, Y, buf, FONTSCALE);
-	}
+        }
+      }
     }
     else
     {
@@ -1007,54 +1090,80 @@ int main(int argc, char **argv)
   else if (type == 'M') /* grayscale khalimsky grid (levels printed as numbers, dual of N)) */
   {
     psheader(fd, (rs + 1) * GS, (cs + 1) * GS, GLOBALSCALE);
-    for (y = 0; y < cs; y++)
+    for (y = 0; y < cs; y++) {
       for (x = 0; x < rs; x++)
       {
         X = (x + 1) * (double)GS;
         Y = (cs - y) * (double)GS;
-        if (SINGL(x,y)) drawcenteredsquare(fd, X, Y, R2, 0);
-        else if (INTERH(x,y)) drawvrect(fd, X, Y, R1, R2, 0);
-        else if (INTERV(x,y)) drawhrect(fd, X, Y, R1, R2, 0);
-        else drawcircle(fd, X, Y, R1, 0, 1, 0);
+        if (SINGL(x, y)) {
+          drawcenteredsquare(fd, X, Y, R2, 0);
+        } else if (INTERH(x, y)) {
+          drawvrect(fd, X, Y, R1, R2, 0);
+        } else if (INTERV(x, y)) {
+          drawhrect(fd, X, Y, R1, R2, 0);
+        } else {
+          drawcircle(fd, X, Y, R1, 0, 1, 0);
+        }
         sprintf(buf, "%d", F[y * rs + x]);
         drawtext(fd, X, Y, buf, FONTSCALE);
       }
+    }
   }
   else if (type == 'G') /* grayscale khalimsky grid (levels showed as colored items, only 4 colors) */
   {
     int32_t w;
     psheader(fd, (rs + 1) * GS, (cs + 1) * GS, GLOBALSCALE);
-    for (y = 0; y < cs; y++)
+    for (y = 0; y < cs; y++) {
       for (x = 0; x < rs; x++)
       {
         X = (x + 1) * (double)GS;
         Y = (cs - y) * (double)GS;
-	if (G && G[y*rs + x]) w = 6; else w = 1;
-        if (CARRE(x,y)) colsquare(fd, X, Y, R2, (double)F[y * rs + x]/(double)maxval, w);
-        else if (INTERV(x,y)) colvrect(fd, X, Y, R1, R2, (double)F[y * rs + x]/(double)maxval, w);
-        else if (INTERH(x,y)) colhrect(fd, X, Y, R1, R2, (double)F[y * rs + x]/(double)maxval, w);
-        else colcircle(fd, X, Y, R1, (double)F[y * rs + x]/(double)maxval, w);
-	/*
+        if (G && G[y * rs + x]) {
+          w = 6;
+        } else {
+          w = 1;
+        }
+        if (CARRE(x, y)) {
+          colsquare(fd, X, Y, R2, (double)F[y * rs + x] / (double)maxval, w);
+        } else if (INTERV(x, y)) {
+          colvrect(fd, X, Y, R1, R2, (double)F[y * rs + x] / (double)maxval, w);
+        } else if (INTERH(x, y)) {
+          colhrect(fd, X, Y, R1, R2, (double)F[y * rs + x] / (double)maxval, w);
+        } else {
+          colcircle(fd, X, Y, R1, (double)F[y * rs + x] / (double)maxval, w);
+        }
+        /*
         if (INTERV(x,y)) colvrect(fd, X, Y, R1, R2, (double)F[y * rs + x]/(double)maxval, w);
         else if (INTERH(x,y)) colhrect(fd, X, Y, R1, R2, (double)F[y * rs + x]/(double)maxval, w);
 	*/
       }
+    }
   }
   else if (type == 'H') /* grayscale khalimsky grid (dual of H) */
   {
     int32_t w;
     psheader(fd, (rs + 1) * GS, (cs + 1) * GS, GLOBALSCALE);
-    for (y = 0; y < cs; y++)
+    for (y = 0; y < cs; y++) {
       for (x = 0; x < rs; x++)
       {
         X = (x + 1) * (double)GS;
         Y = (cs - y) * (double)GS;
-	if (G && G[y*rs + x]) w = 6; else w = 1;
-        if (CARRE(x,y)) colcircle(fd, X, Y, R1, (double)F[y * rs + x]/(double)maxval, w);
-        else if (INTERV(x,y)) colhrect(fd, X, Y, R1, R2, (double)F[y * rs + x]/(double)maxval, w);
-        else if (INTERH(x,y)) colvrect(fd, X, Y, R1, R2, (double)F[y * rs + x]/(double)maxval, w);
-        else colsquare(fd, X, Y, R2, (double)F[y * rs + x]/(double)maxval, w);
+        if (G && G[y * rs + x]) {
+          w = 6;
+        } else {
+          w = 1;
+        }
+        if (CARRE(x, y)) {
+          colcircle(fd, X, Y, R1, (double)F[y * rs + x] / (double)maxval, w);
+        } else if (INTERV(x, y)) {
+          colhrect(fd, X, Y, R1, R2, (double)F[y * rs + x] / (double)maxval, w);
+        } else if (INTERH(x, y)) {
+          colvrect(fd, X, Y, R1, R2, (double)F[y * rs + x] / (double)maxval, w);
+        } else {
+          colsquare(fd, X, Y, R2, (double)F[y * rs + x] / (double)maxval, w);
+        }
       }
+    }
   }
   else if (type == 'v') /* vector image */
   {
@@ -1064,7 +1173,7 @@ int main(int argc, char **argv)
     double dx, dy; // offsets for the vector
     float *F = FLOATDATA(image);
     psheader(fd, rs * xr, cs * yr, GLOBALSCALE);
-    for (y = 0; y < cs; y++)
+    for (y = 0; y < cs; y++) {
       for (x = 0; x < rs; x++)
       {
 	xb = (x * xr) + (xr / 2); 
@@ -1073,7 +1182,8 @@ int main(int argc, char **argv)
 	dy = (double)F[N + y*rs + x] * yr / 2;
 	xe = xb + dx; ye = yb + dy;
 	arrow(fd, xb, yb, xe, ye);
-      }    
+      }
+    }
   }
 
   fclose(fd);

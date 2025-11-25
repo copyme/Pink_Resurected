@@ -109,7 +109,9 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (argc > 3) mode = atoi(argv[2]);
+  if (argc > 3) {
+    mode = atoi(argv[2]);
+  }
 
   rs = rowsize(imagedouble);
   cs = colsize(imagedouble);
@@ -146,8 +148,13 @@ int main(int argc, char **argv)
       break;
     case 2:
       Min = Max = L[0];
-      for (x = 0; x < N; x++) 
-        if (L[x] > Max) Max = L[x]; else if (L[x] < Min) Min = L[x];
+      for (x = 0; x < N; x++) {
+        if (L[x] > Max) {
+          Max = L[x];
+        } else if (L[x] < Min) {
+          Min = L[x];
+        }
+      }
       for (x = 0; x < N; x++) 
       {
         t = ((L[x]-Min) * 255.0) / (double)(Max-Min);

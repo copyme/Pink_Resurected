@@ -79,8 +79,9 @@ IMAGE *imloadtiff(const char *path)
 		       &ncolours,
 		       &inbuf);
 
-    if (result != 0)
-	return NULL;
+    if (result != 0) {
+      return NULL;
+    }
 
     outimage = (IMAGE *)calloc(1,sizeof(IMAGE));
 

@@ -127,10 +127,11 @@ int setTifftype(int pixeltype,     /* pixel type */
 
     /* the photometric interpretation */
     if (*spp == 1 ) {
-        if (pixeltype == IM_BINARY)
-            *pi = 0; /* min is white */
-        else
-            *pi = 1; /* min is black */
+      if (pixeltype == IM_BINARY) {
+        *pi = 0; /* min is white */
+      } else {
+        *pi = 1; /* min is black */
+      }
     }
     /* number of component if not explicitely known */
     if (imagetype == IM_RGB) {
@@ -139,8 +140,9 @@ int setTifftype(int pixeltype,     /* pixel type */
     }
     /* *pi == 3 means CLUT */
     /* *pi == 4 means Masked something ?? */
-    if ((*spp > 1) && (*pi != 2))
-        *pi = 5; /* basically, this means multispectral image */
+    if ((*spp > 1) && (*pi != 2)) {
+      *pi = 5; /* basically, this means multispectral image */
+    }
 
     /* 6 is CCIR */
     /* 7 is not supported */
@@ -214,10 +216,11 @@ int save_tiff(void **outbuffp,	   /* output buffer  */
 	}
 	// we only output the sample format if bps > 8
 	// many tiff readers are put off by sf.
-	if (bps > 8)
-	    TIFFSetField(tif, TIFFTAG_SAMPLEFORMAT, (uint16_t)sf);
+        if (bps > 8) {
+          TIFFSetField(tif, TIFFTAG_SAMPLEFORMAT, (uint16_t)sf);
+        }
 
-	/* compression scheme */
+        /* compression scheme */
 	switch (compression) {
 	  case TIFF_CMP_NONE:
 	    TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_NONE);
@@ -229,21 +232,23 @@ int save_tiff(void **outbuffp,	   /* output buffer  */
 	    TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_PACKBITS);
 	    break;
 	  case TIFF_CMP_CCITTG3:
-	    if (bps == 1)
-		TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_CCITTFAX3);
-	    else {
-		errprintf("CCITT FAX Group 3 compression scheme applies only to BINARY images");
-		return(1);
-	    }
-	    break;
+            if (bps == 1) {
+              TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_CCITTFAX3);
+            } else {
+              errprintf("CCITT FAX Group 3 compression scheme applies only to "
+                        "BINARY images");
+              return (1);
+            }
+            break;
 	  case TIFF_CMP_CCITTG4:
-	    if (bps == 1)
-		TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_CCITTFAX4);
-	    else {
-		errprintf("CCITT FAX Group 4 compression scheme applies only to BINARY images");
-		return(1);
-	    }
-	    break;
+            if (bps == 1) {
+              TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_CCITTFAX4);
+            } else {
+              errprintf("CCITT FAX Group 4 compression scheme applies only to "
+                        "BINARY images");
+              return (1);
+            }
+            break;
 	  case TIFF_CMP_RLE:
 	    TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_CCITTRLE);
 	    break;
@@ -261,11 +266,12 @@ int save_tiff(void **outbuffp,	   /* output buffer  */
 	}
 	/* a little bit of black magic from ras2tiff.c */
 	linebytes = ((bps * nbcols + 15)>> 3) &~ 1;
-	if (TIFFScanlineSize(tif) > linebytes)
-	    theBufc = (uint8_t *)_TIFFmalloc(linebytes*sizeof(uint8_t));
-	else
-	    theBufc = (uint8_t *)_TIFFmalloc(TIFFScanlineSize(tif));
-	rowsperstrip = (uint32_t) (8196/linebytes);
+        if (TIFFScanlineSize(tif) > linebytes) {
+          theBufc = (uint8_t *)_TIFFmalloc(linebytes * sizeof(uint8_t));
+        } else {
+          theBufc = (uint8_t *)_TIFFmalloc(TIFFScanlineSize(tif));
+        }
+        rowsperstrip = (uint32_t) (8196/linebytes);
 	TIFFSetField(tif, TIFFTAG_ROWSPERSTRIP, rowsperstrip == 0 ? (uint32_t)1 :
 		     rowsperstrip);
 	if (compression != 0) {
@@ -308,10 +314,14 @@ int save_tiff(void **outbuffp,	   /* output buffer  */
 		    switch (bps) {
 		      case 1:
 			for (j = 0 ; j < nbcols ; j++) {
-			    if (j%8 == 0) theBufc[j>>3] =0;
-			    if (!*pc++) // subtle change here: binary are displayed miniswhite
-				theBufc[j>>3] |= 1 <<(7-j%8);
-			}
+                          if (j % 8 == 0) {
+                            theBufc[j >> 3] = 0;
+                          }
+                          if (!*pc++) { // subtle change here: binary are
+                                        // displayed miniswhite
+                            theBufc[j >> 3] |= 1 << (7 - j % 8);
+                          }
+                        }
 			break;
 		      case 8:
 			for (j = 0 ; j < nbcols ; j++) {

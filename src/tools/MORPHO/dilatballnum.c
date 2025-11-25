@@ -79,14 +79,15 @@ void ldrawdisk(struct xvimage * image1, double r, double xc, double yc)
   
   r2 = r * r;
 
-  for (j = 0; j < cs; j++)
-  for (i = 0; i < rs; i++)
-  {
-    x = xc - i; 
-    y = yc - j; 
+  for (j = 0; j < cs; j++) {
+    for (i = 0; i < rs; i++) {
+      x = xc - i;
+      y = yc - j;
 
-    if (x * x + y * y <= r2)
-      F[j * rs + i] = NDG_MAX;
+      if (x * x + y * y <= r2) {
+        F[j * rs + i] = NDG_MAX;
+      }
+    }
   }
 } // ldrawdisk()
 
@@ -108,15 +109,17 @@ void ldrawball(struct xvimage * image1, double r, double xc, double yc, double z
   F = UCHARDATA(image1);
   
   r2 = r * r;
-  for (k = 0; k < ds; k++)
-  for (j = 0; j < cs; j++)
-  for (i = 0; i < rs; i++)
-  {
-    x = xc - i; 
-    y = yc - j; 
-    z = zc - k; 
-    if (x * x + y * y + z * z <= r2)
-      F[k * ps + j * rs + i] = NDG_MAX;
+  for (k = 0; k < ds; k++) {
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        x = xc - i;
+        y = yc - j;
+        z = zc - k;
+        if (x * x + y * y + z * z <= r2) {
+          F[k * ps + j * rs + i] = NDG_MAX;
+        }
+      }
+    }
   }
 } // ldrawball()
 
@@ -145,7 +148,11 @@ int32_t image2coords(
   }
 
   nbpts = 0;
-  for (i = 0; i < N; i++) if (F[i]) nbpts ++;
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      nbpts++;
+    }
+  }
 
   tab_x = (int32_t *)calloc(1, nbpts * sizeof(int32_t));
   tab_y = (int32_t *)calloc(1, nbpts * sizeof(int32_t));
@@ -156,14 +163,16 @@ int32_t image2coords(
   }
 
   nbpts = 0;
-  for (j = 0; j < cs; j++)
-    for (i = 0; i < rs; i++)
+  for (j = 0; j < cs; j++) {
+    for (i = 0; i < rs; i++) {
       if (F[j * rs + i])
       {
         tab_x[nbpts] = i;
         tab_y[nbpts] = j;
         nbpts++;
       }
+    }
+  }
 
   *tabx = tab_x;
   *taby = tab_y;
@@ -194,7 +203,11 @@ int32_t image2coords3(
   int32_t *tab_z;               /* liste des coord. z des points */
 
   nbpts = 0;
-  for (i = 0; i < N; i++) if (F[i]) nbpts++;
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      nbpts++;
+    }
+  }
 
   tab_x = (int32_t *)calloc(1, nbpts * sizeof(int32_t));
   tab_y = (int32_t *)calloc(1, nbpts * sizeof(int32_t));
@@ -206,16 +219,19 @@ int32_t image2coords3(
   }
 
   nbpts = 0;
-  for (k = 0; k < ds; k++)
-    for (j = 0; j < cs; j++)
-      for (i = 0; i < rs; i++)
-	if (F[k*ps + j*rs + i])
+  for (k = 0; k < ds; k++) {
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        if (F[k*ps + j*rs + i])
 	{
 	  tab_x[nbpts] = i;
 	  tab_y[nbpts] = j;
 	  tab_z[nbpts] = k;
 	  nbpts++;
-	}
+        }
+      }
+    }
+  }
 
   *tabx = tab_x;
   *taby = tab_y;

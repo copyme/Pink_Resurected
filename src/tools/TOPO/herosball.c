@@ -134,9 +134,14 @@ int main(int argc, char **argv)
   F = UCHARDATA(image);
   P = SLONGDATA(prio);
   I = UCHARDATA(inhibimage);
-  for (i = 0; i < N; i++) // inverse l'image
-    if (F[i]) F[i] = 0; else F[i] = NDG_MAX;
-  
+  for (i = 0; i < N; i++) { // inverse l'image
+    if (F[i]) {
+      F[i] = 0;
+    } else {
+      F[i] = NDG_MAX;
+    }
+  }
+
   if (dist == 0)
   {
     if (depth(image) == 1)
@@ -202,11 +207,21 @@ int main(int argc, char **argv)
       exit(1);
     }
   }
-  for (i = 0; i < N; i++) // re-inverse l'image
-    if (F[i]) F[i] = 0; else F[i] = NDG_MAX;
-  
-  for (i = 0; i < N; i++) // calcule l'erosion
-    if (P[i] > radius) I[i] =  NDG_MAX; else I[i] = 0;
+  for (i = 0; i < N; i++) { // re-inverse l'image
+    if (F[i]) {
+      F[i] = 0;
+    } else {
+      F[i] = NDG_MAX;
+    }
+  }
+
+  for (i = 0; i < N; i++) { // calcule l'erosion
+    if (P[i] > radius) {
+      I[i] = NDG_MAX;
+    } else {
+      I[i] = 0;
+    }
+  }
 
   if (depth(image) == 1)
   {

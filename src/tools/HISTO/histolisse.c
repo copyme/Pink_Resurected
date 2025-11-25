@@ -120,7 +120,9 @@ int main(int argc, char **argv)
     for (y=-lissage/2; y<=lissage/2; y++)
     {
       z++;
-      if ((x-y)>=0) somme = somme + histo[x-y];
+      if ((x - y) >= 0) {
+        somme = somme + histo[x - y];
+      }
     }
     histo [x]=(index_t)(somme/z);
   }
@@ -137,6 +139,8 @@ int main(int argc, char **argv)
   free(histo);
   freeimage(image);
   freeimage(imhist);
-  if (mask) freeimage(mask);
+  if (mask) {
+    freeimage(mask);
+  }
   return 0;
 } /* main */

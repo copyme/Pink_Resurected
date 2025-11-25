@@ -82,8 +82,10 @@ void subimage(
   d = depth(image1);
   N = rs * cs * d;
 
-  for (pt1 = UCHARDATA(image1), pt2 = UCHARDATA(image2), i = 0; i < N; i++, pt1++, pt2++)
+  for (pt1 = UCHARDATA(image1), pt2 = UCHARDATA(image2), i = 0; i < N;
+       i++, pt1++, pt2++) {
     *pt1 = *pt1 - *pt2;
+  }
 } /* subimage() */
 
 /* ==================================== */
@@ -119,30 +121,38 @@ int32_t ldespics(struct xvimage * image, struct xvimage * mask, int32_t connexmi
     M = UCHARDATA(mask);
     if (connexmin == 8)
     {
-      for (i = 0; i < N; i++)
-        if (M[i] && (typetopo8(F, i, rs, N) == PEAK))
+      for (i = 0; i < N; i++) {
+        if (M[i] && (typetopo8(F, i, rs, N) == PEAK)) {
           F[i] = alpha4m(F, i, rs, N);
+        }
+      }
     }
     else
     {
-      for (i = 0; i < N; i++)
-        if (M[i] && (typetopo(F, i, rs, N) == PEAK))
+      for (i = 0; i < N; i++) {
+        if (M[i] && (typetopo(F, i, rs, N) == PEAK)) {
           F[i] = alpha8m(F, i, rs, N);
+        }
+      }
     }
   }
   else
   {
     if (connexmin == 8)
     {
-      for (i = 0; i < N; i++)
-        if (typetopo8(F, i, rs, N) == PEAK)
+      for (i = 0; i < N; i++) {
+        if (typetopo8(F, i, rs, N) == PEAK) {
           F[i] = alpha4m(F, i, rs, N);
+        }
+      }
     }
     else
     {
-      for (i = 0; i < N; i++)
-        if (typetopo(F, i, rs, N) == PEAK)
+      for (i = 0; i < N; i++) {
+        if (typetopo(F, i, rs, N) == PEAK) {
           F[i] = alpha8m(F, i, rs, N);
+        }
+      }
     }
   }
   return 1;
@@ -181,30 +191,38 @@ int32_t ldespuits(struct xvimage * image, struct xvimage * mask, int32_t connexm
     M = UCHARDATA(mask);
     if (connexmin == 8)
     {
-      for (i = 0; i < N; i++)
-        if (M[i] && (typetopo8(F, i, rs, N) == WELL))
+      for (i = 0; i < N; i++) {
+        if (M[i] && (typetopo8(F, i, rs, N) == WELL)) {
           F[i] = alpha8p(F, i, rs, N);
+        }
+      }
     }
     else
     {
-      for (i = 0; i < N; i++)
-        if (M[i] && (typetopo(F, i, rs, N) == WELL))
+      for (i = 0; i < N; i++) {
+        if (M[i] && (typetopo(F, i, rs, N) == WELL)) {
           F[i] = alpha4p(F, i, rs, N);
+        }
+      }
     }
   }
   else
   {
     if (connexmin == 8)
     {
-      for (i = 0; i < N; i++)
-        if (typetopo8(F, i, rs, N) == WELL)
+      for (i = 0; i < N; i++) {
+        if (typetopo8(F, i, rs, N) == WELL) {
           F[i] = alpha8p(F, i, rs, N);
+        }
+      }
     }
     else
     {
-      for (i = 0; i < N; i++)
-        if (typetopo(F, i, rs, N) == WELL)
+      for (i = 0; i < N; i++) {
+        if (typetopo(F, i, rs, N) == WELL) {
           F[i] = alpha4p(F, i, rs, N);
+        }
+      }
     }
   }
   return 1;
@@ -241,30 +259,38 @@ int32_t ldespics3d(struct xvimage * image, struct xvimage * mask, int32_t connex
     M = UCHARDATA(mask);
     if (connexmin == 6)
     {
-      for (i = 0; i < N; i++)
-        if (M[i] && (mctopo3d_peak6(F, i, rs, ps, N)))
+      for (i = 0; i < N; i++) {
+        if (M[i] && (mctopo3d_peak6(F, i, rs, ps, N))) {
           F[i] = mctopo3d_alpha26m(F, i, rs, ps, N);
+        }
+      }
     }
     else
     {
-      for (i = 0; i < N; i++)
-        if (M[i] && (mctopo3d_peak26(F, i, rs, ps, N)))
+      for (i = 0; i < N; i++) {
+        if (M[i] && (mctopo3d_peak26(F, i, rs, ps, N))) {
           F[i] = mctopo3d_alpha6m(F, i, rs, ps, N);
+        }
+      }
     }
   }
   else
   {
     if (connexmin == 6)
     {
-      for (i = 0; i < N; i++)
-        if (mctopo3d_peak6(F, i, rs, ps, N))
-          F[i] = mctopo3d_alpha26m(F, i, rs, ps, N);      
+      for (i = 0; i < N; i++) {
+        if (mctopo3d_peak6(F, i, rs, ps, N)) {
+          F[i] = mctopo3d_alpha26m(F, i, rs, ps, N);
+        }
+      }
     }
     else
     {
-      for (i = 0; i < N; i++)
-        if (mctopo3d_peak26(F, i, rs, ps, N))
-          F[i] = mctopo3d_alpha6m(F, i, rs, ps, N);      
+      for (i = 0; i < N; i++) {
+        if (mctopo3d_peak26(F, i, rs, ps, N)) {
+          F[i] = mctopo3d_alpha6m(F, i, rs, ps, N);
+        }
+      }
     }
   }
 
@@ -303,30 +329,38 @@ int32_t ldespuits3d(struct xvimage * image, struct xvimage * mask, int32_t conne
     M = UCHARDATA(mask);
     if (connexmin == 6)
     {
-      for (i = 0; i < N; i++)
-        if (M[i] && (mctopo3d_well6(F, i, rs, ps, N)))
+      for (i = 0; i < N; i++) {
+        if (M[i] && (mctopo3d_well6(F, i, rs, ps, N))) {
           F[i] = mctopo3d_alpha6p(F, i, rs, ps, N);
+        }
+      }
     }
     else
     {
-      for (i = 0; i < N; i++)
-        if (M[i] && (mctopo3d_well26(F, i, rs, ps, N)))
+      for (i = 0; i < N; i++) {
+        if (M[i] && (mctopo3d_well26(F, i, rs, ps, N))) {
           F[i] = mctopo3d_alpha26p(F, i, rs, ps, N);
+        }
+      }
     }
   }
   else
   {
     if (connexmin == 6)
     {
-      for (i = 0; i < N; i++)
-        if (mctopo3d_well6(F, i, rs, ps, N))
-          F[i] = mctopo3d_alpha6p(F, i, rs, ps, N);      
+      for (i = 0; i < N; i++) {
+        if (mctopo3d_well6(F, i, rs, ps, N)) {
+          F[i] = mctopo3d_alpha6p(F, i, rs, ps, N);
+        }
+      }
     }
     else
     {
-      for (i = 0; i < N; i++)
-        if (mctopo3d_well26(F, i, rs, ps, N))
-          F[i] = mctopo3d_alpha26p(F, i, rs, ps, N);      
+      for (i = 0; i < N; i++) {
+        if (mctopo3d_well26(F, i, rs, ps, N)) {
+          F[i] = mctopo3d_alpha26p(F, i, rs, ps, N);
+        }
+      }
     }
   }
 
@@ -365,30 +399,38 @@ int32_t ldesfilssombres3d(struct xvimage * image, struct xvimage * mask, int32_t
     M = UCHARDATA(mask);
     if (connexmin == 6)
     {
-      for (x = 0; x < N; x++) /* init : empile les points candidats */
-        if (M[x] && (mctopo3d_filsombre6(F, x, rs, ps, N)))
+      for (x = 0; x < N; x++) { /* init : empile les points candidats */
+        if (M[x] && (mctopo3d_filsombre6(F, x, rs, ps, N))) {
           F[x] = mctopo3d_alpha6p(F, x, rs, ps, N);
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) /* init : empile les points candidats */
-        if (M[x] && (mctopo3d_filsombre26(F, x, rs, ps, N)))
+      for (x = 0; x < N; x++) { /* init : empile les points candidats */
+        if (M[x] && (mctopo3d_filsombre26(F, x, rs, ps, N))) {
           F[x] = mctopo3d_alpha26p(F, x, rs, ps, N);
+        }
+      }
     }
   }
   else
   {
     if (connexmin == 6)
     {
-      for (x = 0; x < N; x++) /* init : empile les points candidats */
-        if (mctopo3d_filsombre6(F, x, rs, ps, N))
+      for (x = 0; x < N; x++) { /* init : empile les points candidats */
+        if (mctopo3d_filsombre6(F, x, rs, ps, N)) {
           F[x] = mctopo3d_alpha6p(F, x, rs, ps, N);
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) /* init : empile les points candidats */
-        if (mctopo3d_filsombre26(F, x, rs, ps, N))
+      for (x = 0; x < N; x++) { /* init : empile les points candidats */
+        if (mctopo3d_filsombre26(F, x, rs, ps, N)) {
           F[x] = mctopo3d_alpha26p(F, x, rs, ps, N);
+        }
+      }
     }
   }
 
@@ -427,30 +469,38 @@ int32_t ldesfilsclairs3d(struct xvimage * image, struct xvimage * mask, int32_t 
     M = UCHARDATA(mask);
     if (connexmin == 6)
     {
-      for (x = 0; x < N; x++) /* init : empile les points candidats */
-        if (M[x] && (mctopo3d_filclair6(F, x, rs, ps, N)))
+      for (x = 0; x < N; x++) { /* init : empile les points candidats */
+        if (M[x] && (mctopo3d_filclair6(F, x, rs, ps, N))) {
           F[x] = mctopo3d_alpha26m(F, x, rs, ps, N);
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) /* init : empile les points candidats */
-        if (M[x] && (mctopo3d_filclair26(F, x, rs, ps, N)))
+      for (x = 0; x < N; x++) { /* init : empile les points candidats */
+        if (M[x] && (mctopo3d_filclair26(F, x, rs, ps, N))) {
           F[x] = mctopo3d_alpha6m(F, x, rs, ps, N);
+        }
+      }
     }
   }
   else
   {
     if (connexmin == 6)
     {
-      for (x = 0; x < N; x++) /* init : empile les points candidats */
-        if (mctopo3d_filclair6(F, x, rs, ps, N))
+      for (x = 0; x < N; x++) { /* init : empile les points candidats */
+        if (mctopo3d_filclair6(F, x, rs, ps, N)) {
           F[x] = mctopo3d_alpha26m(F, x, rs, ps, N);
+        }
+      }
     }
     else
     {
-      for (x = 0; x < N; x++) /* init : empile les points candidats */
-        if (mctopo3d_filclair26(F, x, rs, ps, N))
+      for (x = 0; x < N; x++) { /* init : empile les points candidats */
+        if (mctopo3d_filclair26(F, x, rs, ps, N)) {
           F[x] = mctopo3d_alpha6m(F, x, rs, ps, N);
+        }
+      }
     }
   }
 
@@ -473,15 +523,19 @@ int32_t p_despics(struct xvimage * image, int32_t connexmin)
 
   if (connexmin == 8)
   {
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (typetopo8(F, i, rs, N) == PEAK)
-        { F[i] = alpha4m(F, i, rs, N); ndes++; }
+        { F[i] = alpha4m(F, i, rs, N); ndes++;
+      }
+    }
   }
   else
   {
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (typetopo(F, i, rs, N) == PEAK)
-        { F[i] = alpha8m(F, i, rs, N); ndes++; }
+        { F[i] = alpha8m(F, i, rs, N); ndes++;
+      }
+    }
   }
 
 #ifdef VERBOSE
@@ -506,15 +560,19 @@ int32_t p_despuits(struct xvimage * image, int32_t connexmin)
 
   if (connexmin == 8)
   {
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (typetopo8(F, i, rs, N) == WELL)
-        { F[i] = alpha8p(F, i, rs, N); ndes++; }
+        { F[i] = alpha8p(F, i, rs, N); ndes++;
+      }
+    }
   }
   else
   {
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (typetopo(F, i, rs, N) == WELL)
-        { F[i] = alpha4p(F, i, rs, N); ndes++; }
+        { F[i] = alpha4p(F, i, rs, N); ndes++;
+      }
+    }
   }
 
 #ifdef VERBOSE
@@ -539,21 +597,23 @@ int32_t p_deslambdapics(struct xvimage * image, int32_t connexmin, int32_t lambd
 
   if (connexmin == 8)
   {
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (typetopo8(F, i, rs, N) == PEAK)
       {
         int32_t a =  alpha4m(F, i, rs, N);
         if ((F[i] - a) <= lambda) { F[i] = a;  ndes++; }
       }
+    }
   }
   else
   {
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (typetopo(F, i, rs, N) == PEAK)
       {
         int32_t a =  alpha8m(F, i, rs, N);
         if ((F[i] - a) <= lambda) { F[i] = a;  ndes++; }
       }
+    }
   }
 
 #ifdef VERBOSE
@@ -578,21 +638,23 @@ int32_t p_deslambdapuits(struct xvimage * image, int32_t connexmin, int32_t lamb
 
   if (connexmin == 8)
   {
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (typetopo8(F, i, rs, N) == WELL)
       {
         int32_t a =  alpha8p(F, i, rs, N);
         if ((a - F[i]) <= lambda) { F[i] = a;  ndes++; }
       }
+    }
   }
   else
   {
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (typetopo(F, i, rs, N) == WELL)
       {
         int32_t a =  alpha4p(F, i, rs, N);
         if ((a - F[i]) <= lambda) { F[i] = a;  ndes++; }
       }
+    }
   }
 
 #ifdef VERBOSE
@@ -667,7 +729,9 @@ int32_t latf_old(struct xvimage * image, int32_t connexmin, int32_t rayonmin, in
          return 0;
         }
       } while (ndes);
-      if (rayon < rayonmax) memcpy(UCHARDATA(copy), UCHARDATA(image), N);
+      if (rayon < rayonmax) {
+        memcpy(UCHARDATA(copy), UCHARDATA(image), N);
+      }
     } /* for (rayon = 1; rayon <= rayonmax; rayon++) */
   }
   else /* ============================== 3D ================================*/
@@ -775,7 +839,9 @@ int32_t ltaflambda(struct xvimage * image, int32_t connexmin, int32_t rayon, int
   ds = depth(image);       /* nombre plans */
   N = ds * ps;             /* taille image */
 
-  if (rayon == -1) rayon = 2000000000;   
+  if (rayon == -1) {
+    rayon = 2000000000;
+  }
 
   if (ds == 1) /* ======================= 2D ========================*/
   {
@@ -812,7 +878,9 @@ int32_t ltaflambda(struct xvimage * image, int32_t connexmin, int32_t rayon, int
         fprintf(stderr, "%s: lhtkern failed\n", F_NAME);
         return 0;
       }
-      if (ndes) memcpy(UCHARDATA(copy), UCHARDATA(image), N);
+      if (ndes) {
+        memcpy(UCHARDATA(copy), UCHARDATA(image), N);
+      }
     } while (ndes);
   }
   else /* ============================== 3D ================================*/
@@ -843,7 +911,9 @@ int32_t ltaf(struct xvimage * image, int32_t connexmin, int32_t rayon)
   ds = depth(image);       /* nombre plans */
   N = ds * ps;             /* taille image */
 
-  if (rayon == -1) rayon = 2000000000;   
+  if (rayon == -1) {
+    rayon = 2000000000;
+  }
 
   if (ds == 1) /* ======================= 2D ========================*/
   {
@@ -880,7 +950,9 @@ int32_t ltaf(struct xvimage * image, int32_t connexmin, int32_t rayon)
         fprintf(stderr, "%s: lhtkern failed\n", F_NAME);
         return 0;
       }
-      if (ndes) memcpy(UCHARDATA(copy), UCHARDATA(image), N);
+      if (ndes) {
+        memcpy(UCHARDATA(copy), UCHARDATA(image), N);
+      }
     } while (ndes);
   }
   else /* ============================== 3D ================================*/
@@ -931,7 +1003,9 @@ int32_t ltlf(struct xvimage * image, int32_t connexmin, int32_t rayon)
         fprintf(stderr, "%s: lhtkern failed\n", F_NAME);
         return 0;
       }
-      if (ndes) memcpy(UCHARDATA(copy), UCHARDATA(image), N);
+      if (ndes) {
+        memcpy(UCHARDATA(copy), UCHARDATA(image), N);
+      }
     } while (ndes);
   }
   else /* ============================== 3D ================================*/
@@ -982,7 +1056,9 @@ int32_t ltuf(struct xvimage * image, int32_t connexmin, int32_t rayon)
         fprintf(stderr, "%s: lhtkernu failed\n", F_NAME);
         return 0;
       }
-      if (ndes) memcpy(UCHARDATA(copy), UCHARDATA(image), N);
+      if (ndes) {
+        memcpy(UCHARDATA(copy), UCHARDATA(image), N);
+      }
     } while (ndes);
   }
   else /* ============================== 3D ================================*/

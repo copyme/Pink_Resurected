@@ -67,7 +67,11 @@ int32_t lsurfels(struct xvimage * f, uint8_t v,
   double h = 0.45;
 
   /* v est la valeur de seuil. si v == 0 alors il s'agit d'une image binaire */
-  if (v == 0) s = 1; else s = v;
+  if (v == 0) {
+    s = 1;
+  } else {
+    s = v;
+  }
 
   rs = rowsize(f);
   cs = colsize(f);
@@ -76,28 +80,39 @@ int32_t lsurfels(struct xvimage * f, uint8_t v,
   N = ps * ds;
   F = UCHARDATA(f);
 
-  for (k = 0; k < ds-1; k++)
-  for (j = 0; j < cs-1; j++)
-  for (i = 0; i < rs-1; i++)
-  {
-    v = F[k*ps + j*rs + i];
-    if (v < s)
-    {
-      if (F[k*ps + j*rs + i+1] >= s) 
-        gencarrePOV(fileout, i+g, j-h, k-h, i+g, j+h, k-h, i+g, j+h, k+h, i+g, j-h, k+h);
-      if (F[k*ps + (j+1)*rs + i] >= s)
-        gencarrePOV(fileout, i-h, j+g, k-h, i-h, j+g, k+h, i+h, j+g, k+h, i+h, j+g, k-h);
-      if (F[(k+1)*ps + j*rs + i] >= s)
-        gencarrePOV(fileout, i-h, j-h, k+g, i+h, j-h, k+g, i+h, j+h, k+g, i-h, j+h, k+g);
-    }
-    else /* v >= s */
-    {
-      if (F[k*ps + j*rs + i+1] < s) 
-        gencarrePOV(fileout, i+g, j-h, k+h, i+g, j+h, k+h, i+g, j+h, k-h, i+g, j-h, k-h);
-      if (F[k*ps + (j+1)*rs + i] < s)
-        gencarrePOV(fileout, i+h, j+g, k-h, i+h, j+g, k+h, i-h, j+g, k+h, i-h, j+g, k-h);
-      if (F[(k+1)*ps + j*rs + i] < s)
-        gencarrePOV(fileout, i-h, j+h, k+g, i+h, j+h, k+g, i+h, j-h, k+g, i-h, j-h, k+g);
+  for (k = 0; k < ds - 1; k++) {
+    for (j = 0; j < cs - 1; j++) {
+      for (i = 0; i < rs - 1; i++) {
+        v = F[k * ps + j * rs + i];
+        if (v < s) {
+          if (F[k * ps + j * rs + i + 1] >= s) {
+            gencarrePOV(fileout, i + g, j - h, k - h, i + g, j + h, k - h,
+                        i + g, j + h, k + h, i + g, j - h, k + h);
+          }
+          if (F[k * ps + (j + 1) * rs + i] >= s) {
+            gencarrePOV(fileout, i - h, j + g, k - h, i - h, j + g, k + h,
+                        i + h, j + g, k + h, i + h, j + g, k - h);
+          }
+          if (F[(k + 1) * ps + j * rs + i] >= s) {
+            gencarrePOV(fileout, i - h, j - h, k + g, i + h, j - h, k + g,
+                        i + h, j + h, k + g, i - h, j + h, k + g);
+          }
+        } else /* v >= s */
+        {
+          if (F[k * ps + j * rs + i + 1] < s) {
+            gencarrePOV(fileout, i + g, j - h, k + h, i + g, j + h, k + h,
+                        i + g, j + h, k - h, i + g, j - h, k - h);
+          }
+          if (F[k * ps + (j + 1) * rs + i] < s) {
+            gencarrePOV(fileout, i + h, j + g, k - h, i + h, j + g, k + h,
+                        i - h, j + g, k + h, i - h, j + g, k - h);
+          }
+          if (F[(k + 1) * ps + j * rs + i] < s) {
+            gencarrePOV(fileout, i - h, j + h, k + g, i + h, j + h, k + g,
+                        i + h, j - h, k + g, i - h, j - h, k + g);
+          }
+        }
+      }
     }
   }
 

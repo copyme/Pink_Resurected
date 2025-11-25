@@ -117,10 +117,9 @@ int32_t l3dcollapse(struct xvimage * k, struct xvimage * prio, struct xvimage * 
     fprintf(stderr, "%s : bad size for prio\n", F_NAME);
     return(0);
   }
-  if (datatype(prio) == VFF_TYP_4_BYTE) 
-    P = SLONGDATA(prio); 
-  else 
-  {
+  if (datatype(prio) == VFF_TYP_4_BYTE) {
+    P = SLONGDATA(prio);
+  } else {
     fprintf(stderr, "%s : datatype(prio) must be int32_t\n", F_NAME);
     return(0);
   }
@@ -132,10 +131,9 @@ int32_t l3dcollapse(struct xvimage * k, struct xvimage * prio, struct xvimage * 
       fprintf(stderr, "%s : bad size for inhibit\n", F_NAME);
       return(0);
     }
-    if (datatype(inhibit) == VFF_TYP_1_BYTE) 
-      I = UCHARDATA(inhibit); 
-    else 
-    {
+    if (datatype(inhibit) == VFF_TYP_1_BYTE) {
+      I = UCHARDATA(inhibit);
+    } else {
       fprintf(stderr, "%s : datatype(inhibit) must be uint8_t\n", F_NAME);
       return(0);
     }
@@ -162,15 +160,15 @@ int32_t l3dcollapse(struct xvimage * k, struct xvimage * prio, struct xvimage * 
   /*   INITIALISATION DU RBT */
   /* ========================================================= */
 
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    i = z*ps + y*rs + x;
-    if (K[i] && ((I == NULL) || (!I[i])) && FaceLibre3d(k, x, y, z))
-    {
-      mcrbt_RbtInsert(&RBT, P[i], i);
-      Set(i, EN_RBT);
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        i = z * ps + y * rs + x;
+        if (K[i] && ((I == NULL) || (!I[i])) && FaceLibre3d(k, x, y, z)) {
+          mcrbt_RbtInsert(&RBT, P[i], i);
+          Set(i, EN_RBT);
+        }
+      }
     }
   }
 
@@ -256,10 +254,9 @@ int32_t l3dpardircollapse_l(struct xvimage * k, struct xvimage * prio, struct xv
     fprintf(stderr, "%s : bad size for prio\n", F_NAME);
     return(0);
   }
-  if (datatype(prio) == VFF_TYP_4_BYTE) 
-    P = SLONGDATA(prio); 
-  else 
-  {
+  if (datatype(prio) == VFF_TYP_4_BYTE) {
+    P = SLONGDATA(prio);
+  } else {
     fprintf(stderr, "%s : datatype(prio) must be int32_t\n", F_NAME);
     return(0);
   }
@@ -271,10 +268,9 @@ int32_t l3dpardircollapse_l(struct xvimage * k, struct xvimage * prio, struct xv
       fprintf(stderr, "%s : bad size for inhibit\n", F_NAME);
       return(0);
     }
-    if (datatype(inhibit) == VFF_TYP_1_BYTE) 
-      I = UCHARDATA(inhibit); 
-    else 
-    {
+    if (datatype(inhibit) == VFF_TYP_1_BYTE) {
+      I = UCHARDATA(inhibit);
+    } else {
       fprintf(stderr, "%s : datatype(inhibit) must be uint8_t\n", F_NAME);
       return(0);
     }
@@ -309,21 +305,20 @@ int32_t l3dpardircollapse_l(struct xvimage * k, struct xvimage * prio, struct xv
   /*   INITIALISATION DU RBT */
   /* ========================================================= */
 
-  for (zg = 0; zg < ds; zg++)
-  for (yg = 0; yg < cs; yg++)
-  for (xg = 0; xg < rs; xg++)
-  {
-    g = zg*ps + yg*rs + xg;
-    if (K[g])
-    {
-      f = PaireLibre3d(k, xg, yg, zg);
-      if ((f != -1) && 
-	  (((I != NULL) && (!I[g] && !I[f])) || 
-	   ((I == NULL) && (P[g] < priomax) && (P[f] < priomax)) ) )
-      {
-	pp = (TypRbtKey)(mcmax(P[g],P[f]));
-	mcrbt_RbtInsert(&RBT, pp, g);
-	Set(g, EN_RBT);
+  for (zg = 0; zg < ds; zg++) {
+    for (yg = 0; yg < cs; yg++) {
+      for (xg = 0; xg < rs; xg++) {
+        g = zg * ps + yg * rs + xg;
+        if (K[g]) {
+          f = PaireLibre3d(k, xg, yg, zg);
+          if ((f != -1) &&
+              (((I != NULL) && (!I[g] && !I[f])) ||
+               ((I == NULL) && (P[g] < priomax) && (P[f] < priomax)))) {
+            pp = (TypRbtKey)(mcmax(P[g], P[f]));
+            mcrbt_RbtInsert(&RBT, pp, g);
+            Set(g, EN_RBT);
+          }
+        }
       }
     }
   }
@@ -350,7 +345,7 @@ int32_t l3dpardircollapse_l(struct xvimage * k, struct xvimage * prio, struct xv
       }
     } // while (!mcrbt_RbtVide(RBT) && (RbtMinLevel(RBT) == p))
 
-    for (dir = 0; dir <= 2; dir++) // For all face directions
+    for (dir = 0; dir <= 2; dir++) { // For all face directions
       for (ori = 0; ori <= 1; ori++) // For both orientations
       {
 	for (dim = 3; dim >= 1; dim--) // For dimensions in decreasing order
@@ -365,10 +360,28 @@ int32_t l3dpardircollapse_l(struct xvimage * k, struct xvimage * prio, struct xv
 		 ((I == NULL) && (P[g] < priomax) && (P[f] < priomax)) ) )
 	    {
 	      xg = g % rs; yg = (g % ps) / rs; zg = g / ps;  
-	      if (xf - xg)      { direc = 0; if (xf > xg) orien = 0; else orien = 1; }
-	      else if (yf - yg) { direc = 1; if (yf > yg) orien = 0; else orien = 1; }
-	      else              { direc = 2; if (zf > zg) orien = 0; else orien = 1; }
-	      if ((DIM3D(xf,yf,zf) == dim) && (direc == dir) && (orien == ori))
+	      if (xf - xg)      { direc = 0;
+                if (xf > xg) {
+                  orien = 0;
+                } else {
+                  orien = 1;
+                }
+              } else if (yf - yg) {
+                direc = 1;
+                if (yf > yg) {
+                  orien = 0;
+                } else {
+                  orien = 1;
+                }
+              } else {
+                direc = 2;
+                if (zf > zg) {
+                  orien = 0;
+                } else {
+                  orien = 1;
+                }
+              }
+              if ((DIM3D(xf,yf,zf) == dim) && (direc == dir) && (orien == ori))
 	      {
 		K[g] = K[f] = VAL_NULLE; // COLLAPSE
 
@@ -409,7 +422,8 @@ int32_t l3dpardircollapse_l(struct xvimage * k, struct xvimage * prio, struct xv
 	    RlifoPush(&RLIFO, g); 
 	  }
       } // for (dim = 3; dim >= 1; dim--)
-    } // for for
+      } // for for
+    }
 
     RlifoFlush(RLIFO);
   } /* while (!mcrbt_RbtVide(RBT)) */
@@ -471,10 +485,9 @@ int32_t l3dpardircollapse_f(struct xvimage * k, struct xvimage * prio, struct xv
     fprintf(stderr, "%s : bad size for prio\n", F_NAME);
     return(0);
   }
-  if (datatype(prio) == VFF_TYP_FLOAT) 
-    P = FLOATDATA(prio); 
-  else 
-  {
+  if (datatype(prio) == VFF_TYP_FLOAT) {
+    P = FLOATDATA(prio);
+  } else {
     fprintf(stderr, "%s : datatype(prio) must be float\n", F_NAME);
     return(0);
   }
@@ -486,10 +499,9 @@ int32_t l3dpardircollapse_f(struct xvimage * k, struct xvimage * prio, struct xv
       fprintf(stderr, "%s : bad size for inhibit\n", F_NAME);
       return(0);
     }
-    if (datatype(inhibit) == VFF_TYP_1_BYTE) 
-      I = UCHARDATA(inhibit); 
-    else 
-    {
+    if (datatype(inhibit) == VFF_TYP_1_BYTE) {
+      I = UCHARDATA(inhibit);
+    } else {
       fprintf(stderr, "%s : datatype(inhibit) must be uint8_t\n", F_NAME);
       return(0);
     }
@@ -524,21 +536,20 @@ int32_t l3dpardircollapse_f(struct xvimage * k, struct xvimage * prio, struct xv
   /*   INITIALISATION DU RBT */
   /* ========================================================= */
 
-  for (zg = 0; zg < ds; zg++)
-  for (yg = 0; yg < cs; yg++)
-  for (xg = 0; xg < rs; xg++)
-  {
-    g = zg*ps + yg*rs + xg;
-    if (K[g])
-    {
-      f = PaireLibre3d(k, xg, yg, zg);
-      if ((f != -1) && 
-	  (((I != NULL) && (!I[g] && !I[f])) || 
-	   ((I == NULL) && (P[g] < priomax) && (P[f] < priomax)) ) )
-      {
-	pp = (TypRbtKey)(mcmax(P[g],P[f]));
-	mcrbt_RbtInsert(&RBT, pp, g);
-	Set(g, EN_RBT);
+  for (zg = 0; zg < ds; zg++) {
+    for (yg = 0; yg < cs; yg++) {
+      for (xg = 0; xg < rs; xg++) {
+        g = zg * ps + yg * rs + xg;
+        if (K[g]) {
+          f = PaireLibre3d(k, xg, yg, zg);
+          if ((f != -1) &&
+              (((I != NULL) && (!I[g] && !I[f])) ||
+               ((I == NULL) && (P[g] < priomax) && (P[f] < priomax)))) {
+            pp = (TypRbtKey)(mcmax(P[g], P[f]));
+            mcrbt_RbtInsert(&RBT, pp, g);
+            Set(g, EN_RBT);
+          }
+        }
       }
     }
   }
@@ -565,7 +576,7 @@ int32_t l3dpardircollapse_f(struct xvimage * k, struct xvimage * prio, struct xv
       }
     } // while (!mcrbt_RbtVide(RBT) && (RbtMinLevel(RBT) == p))
 
-    for (dir = 0; dir <= 2; dir++) // For all face directions
+    for (dir = 0; dir <= 2; dir++) { // For all face directions
       for (ori = 0; ori <= 1; ori++) // For both orientations
       {
 	for (dim = 3; dim >= 1; dim--) // For dimensions in decreasing order
@@ -580,10 +591,28 @@ int32_t l3dpardircollapse_f(struct xvimage * k, struct xvimage * prio, struct xv
 		 ((I == NULL) && (P[g] < priomax) && (P[f] < priomax)) ) )
 	    {
 	      xg = g % rs; yg = (g % ps) / rs; zg = g / ps;  
-	      if (xf - xg)      { direc = 0; if (xf > xg) orien = 0; else orien = 1; }
-	      else if (yf - yg) { direc = 1; if (yf > yg) orien = 0; else orien = 1; }
-	      else              { direc = 2; if (zf > zg) orien = 0; else orien = 1; }
-	      if ((DIM3D(xf,yf,zf) == dim) && (direc == dir) && (orien == ori))
+	      if (xf - xg)      { direc = 0;
+                if (xf > xg) {
+                  orien = 0;
+                } else {
+                  orien = 1;
+                }
+              } else if (yf - yg) {
+                direc = 1;
+                if (yf > yg) {
+                  orien = 0;
+                } else {
+                  orien = 1;
+                }
+              } else {
+                direc = 2;
+                if (zf > zg) {
+                  orien = 0;
+                } else {
+                  orien = 1;
+                }
+              }
+              if ((DIM3D(xf,yf,zf) == dim) && (direc == dir) && (orien == ori))
 	      {
 		K[g] = K[f] = VAL_NULLE; // COLLAPSE
 
@@ -624,7 +653,8 @@ int32_t l3dpardircollapse_f(struct xvimage * k, struct xvimage * prio, struct xv
 	    RlifoPush(&RLIFO, g); 
 	  }
       } // for (dim = 3; dim >= 1; dim--)
-    } // for for
+      } // for for
+    }
 
     RlifoFlush(RLIFO);
   } /* while (!mcrbt_RbtVide(RBT)) */
@@ -695,10 +725,9 @@ int32_t l3dpardircollapse(struct xvimage * k, int32_t nsteps, struct xvimage * i
       fprintf(stderr, "%s : bad size for inhibit\n", F_NAME);
       return(0);
     }
-    if (datatype(inhibit) == VFF_TYP_1_BYTE) 
-      I = UCHARDATA(inhibit); 
-    else 
-    {
+    if (datatype(inhibit) == VFF_TYP_1_BYTE) {
+      I = UCHARDATA(inhibit);
+    } else {
       fprintf(stderr, "%s : datatype(inhibit) must be uint8_t\n", F_NAME);
       return(0);
     }
@@ -713,7 +742,9 @@ int32_t l3dpardircollapse(struct xvimage * k, int32_t nsteps, struct xvimage * i
     return(0);
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -727,26 +758,26 @@ int32_t l3dpardircollapse(struct xvimage * k, int32_t nsteps, struct xvimage * i
   /* INITIALISATION DE LA RLIFO ET DE LA "BORDER" */
   /* ========================================================= */
 
-  for (zg = 0; zg < ds; zg++)
-  for (yg = 0; yg < cs; yg++)
-  for (xg = 0; xg < rs; xg++)
-  {
-    g = zg*ps + yg*rs + xg;
-    if (K[g] && ((I == NULL) || (!I[g])))
-    {
-      f = PaireLibre3d(k, xg, yg, zg);
-      if (f != -1) 
-      { 
-	RlifoPush(&RLIFO, f); 
-	RlifoPush(&RLIFO, g);
-	Set(g, EN_RLIFO);
-	xf = f % rs; yf = (f % ps) / rs; zf = f / ps;
-	Alphacarre3d(rs, cs, ds, xf, yf, zf, tab, &n);
-	for (u = 0; u < n; u += 1)
-	{
-	  g = tab[u];
-	  Set(g, BORDER);
-	} // for u
+  for (zg = 0; zg < ds; zg++) {
+    for (yg = 0; yg < cs; yg++) {
+      for (xg = 0; xg < rs; xg++) {
+        g = zg * ps + yg * rs + xg;
+        if (K[g] && ((I == NULL) || (!I[g]))) {
+          f = PaireLibre3d(k, xg, yg, zg);
+          if (f != -1) {
+            RlifoPush(&RLIFO, f);
+            RlifoPush(&RLIFO, g);
+            Set(g, EN_RLIFO);
+            xf = f % rs;
+            yf = (f % ps) / rs;
+            zf = f / ps;
+            Alphacarre3d(rs, cs, ds, xf, yf, zf, tab, &n);
+            for (u = 0; u < n; u += 1) {
+              g = tab[u];
+              Set(g, BORDER);
+            } // for u
+          }
+        }
       }
     }
   }
@@ -765,7 +796,7 @@ int32_t l3dpardircollapse(struct xvimage * k, int32_t nsteps, struct xvimage * i
 
     nsteps --;
     ncol = 0;
-    for (dir = 0; dir <= 2; dir++) // For all face directions
+    for (dir = 0; dir <= 2; dir++) { // For all face directions
       for (ori = 0; ori <= 1; ori++) // For both orientations
       {
 	for (dim = 3; dim >= 1; dim--) // For dimensions in decreasing order
@@ -778,10 +809,28 @@ int32_t l3dpardircollapse(struct xvimage * k, int32_t nsteps, struct xvimage * i
 	    if (K[f] && K[g] && ((I == NULL) || (!I[g] && !I[f])))
 	    {
 	      xg = g % rs; yg = (g % ps) / rs; zg = g / ps;  
-	      if (xf - xg)      { direc = 0; if (xf > xg) orien = 0; else orien = 1; }
-	      else if (yf - yg) { direc = 1; if (yf > yg) orien = 0; else orien = 1; }
-	      else              { direc = 2; if (zf > zg) orien = 0; else orien = 1; }
-	      if ((DIM3D(xf,yf,zf) == dim) && (direc == dir) && (orien == ori))
+	      if (xf - xg)      { direc = 0;
+                if (xf > xg) {
+                  orien = 0;
+                } else {
+                  orien = 1;
+                }
+              } else if (yf - yg) {
+                direc = 1;
+                if (yf > yg) {
+                  orien = 0;
+                } else {
+                  orien = 1;
+                }
+              } else {
+                direc = 2;
+                if (zf > zg) {
+                  orien = 0;
+                } else {
+                  orien = 1;
+                }
+              }
+              if ((DIM3D(xf,yf,zf) == dim) && (direc == dir) && (orien == ori))
 	      {
 		K[g] = K[f] = VAL_NULLE;
 		ncol += 1;
@@ -812,10 +861,13 @@ int32_t l3dpardircollapse(struct xvimage * k, int32_t nsteps, struct xvimage * i
 	    RlifoPush(&RLIFO, g); 
 	  }
       } // for (dim = 3; dim >= 1; dim--)
-    } // for for
+      } // for for
+    }
 
     // PREPARATION ETAPE SUIVANTE
-    for (i = 0; i < RLIFO->Sp; i++) UnSet(RLIFO->Pts[i], EN_RLIFO);
+    for (i = 0; i < RLIFO->Sp; i++) {
+      UnSet(RLIFO->Pts[i], EN_RLIFO);
+    }
     for (i = 0; i < RLIFO->Sp; i += 2)
     {
       f = RLIFO->Pts[i];
@@ -917,10 +969,9 @@ int32_t l3ddetectdyncollapse(struct xvimage * k, int32_t nsteps, struct xvimage 
       fprintf(stderr, "%s : bad size for inhibit\n", F_NAME);
       return(0);
     }
-    if (datatype(inhibit) == VFF_TYP_1_BYTE) 
-      I = UCHARDATA(inhibit); 
-    else 
-    {
+    if (datatype(inhibit) == VFF_TYP_1_BYTE) {
+      I = UCHARDATA(inhibit);
+    } else {
       fprintf(stderr, "%s : datatype(inhibit) must be uint8_t\n", F_NAME);
       return(0);
     }
@@ -940,7 +991,9 @@ int32_t l3ddetectdyncollapse(struct xvimage * k, int32_t nsteps, struct xvimage 
     return(0);
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -954,26 +1007,26 @@ int32_t l3ddetectdyncollapse(struct xvimage * k, int32_t nsteps, struct xvimage 
   /* INITIALISATION DE LA RLIFO ET DE LA "BORDER" */
   /* ========================================================= */
 
-  for (zg = 0; zg < ds; zg++)
-  for (yg = 0; yg < cs; yg++)
-  for (xg = 0; xg < rs; xg++)
-  {
-    g = zg*ps + yg*rs + xg;
-    if (K[g] && ((I == NULL) || (!I[g])))
-    {
-      f = PaireLibre3d(k, xg, yg, zg);
-      if (f != -1) 
-      { 
-	RlifoPush(&RLIFO, f); 
-	RlifoPush(&RLIFO, g);
-	Set(g, EN_RLIFO);
-	xf = f % rs; yf = (f % ps) / rs; zf = f / ps;
-	Alphacarre3d(rs, cs, ds, xf, yf, zf, tab, &n);
-	for (u = 0; u < n; u += 1)
-	{
-	  g = tab[u];
-	  Set(g, BORDER);
-	} // for u
+  for (zg = 0; zg < ds; zg++) {
+    for (yg = 0; yg < cs; yg++) {
+      for (xg = 0; xg < rs; xg++) {
+        g = zg * ps + yg * rs + xg;
+        if (K[g] && ((I == NULL) || (!I[g]))) {
+          f = PaireLibre3d(k, xg, yg, zg);
+          if (f != -1) {
+            RlifoPush(&RLIFO, f);
+            RlifoPush(&RLIFO, g);
+            Set(g, EN_RLIFO);
+            xf = f % rs;
+            yf = (f % ps) / rs;
+            zf = f / ps;
+            Alphacarre3d(rs, cs, ds, xf, yf, zf, tab, &n);
+            for (u = 0; u < n; u += 1) {
+              g = tab[u];
+              Set(g, BORDER);
+            } // for u
+          }
+        }
       }
     }
   }
@@ -988,7 +1041,7 @@ int32_t l3ddetectdyncollapse(struct xvimage * k, int32_t nsteps, struct xvimage 
     nsteps --;
     nbcol = 0;
 
-    for (dir = 0; dir <= 2; dir++) // For all face directions
+    for (dir = 0; dir <= 2; dir++) { // For all face directions
       for (ori = 0; ori <= 1; ori++) // For both orientations
       {
 	for (dim = 3; dim >= 1; dim--) // For dimensions in decreasing order
@@ -1001,10 +1054,28 @@ int32_t l3ddetectdyncollapse(struct xvimage * k, int32_t nsteps, struct xvimage 
 	    if (K[f] && K[g] && ((I == NULL) || (!I[g] && !I[f])))
 	    {
 	      xg = g % rs; yg = (g % ps) / rs; zg = g / ps;  
-	      if (xf - xg)      { direc = 0; if (xf > xg) orien = 0; else orien = 1; }
-	      else if (yf - yg) { direc = 1; if (yf > yg) orien = 0; else orien = 1; }
-	      else              { direc = 2; if (zf > zg) orien = 0; else orien = 1; }
-	      if ((DIM3D(xf,yf,zf) == dim) && (direc == dir) && (orien == ori))
+	      if (xf - xg)      { direc = 0;
+                if (xf > xg) {
+                  orien = 0;
+                } else {
+                  orien = 1;
+                }
+              } else if (yf - yg) {
+                direc = 1;
+                if (yf > yg) {
+                  orien = 0;
+                } else {
+                  orien = 1;
+                }
+              } else {
+                direc = 2;
+                if (zf > zg) {
+                  orien = 0;
+                } else {
+                  orien = 1;
+                }
+              }
+              if ((DIM3D(xf,yf,zf) == dim) && (direc == dir) && (orien == ori))
 	      {
 		K[g] = K[f] = VAL_NULLE;
 		nbcol++;
@@ -1035,63 +1106,68 @@ int32_t l3ddetectdyncollapse(struct xvimage * k, int32_t nsteps, struct xvimage 
 	    RlifoPush(&RLIFO, g); 
 	  }
       } // for (dim = 3; dim >= 1; dim--)
-    } // for for
+      } // for for
+    }
 
     // PREPARATION ETAPE SUIVANTE
-    for (i = 0; i < RLIFO->Sp; i++) UnSet(RLIFO->Pts[i], EN_RLIFO);
-    if (dddim < 3)
-    for (i = 0; i < RLIFO->Sp; i += 2)
-    {
-      f = RLIFO->Pts[i];
-      UnSet(f, BORDER);
-      xf = f % rs; yf = (f % ps) / rs; zf = f / ps;
-      Alphacarre3d(rs, cs, ds, xf, yf, zf, tab, &n);
-      for (u = 0; u < n; u += 1)
-      {
-	g = tab[u];
-	UnSet(g, BORDER);
-	xg = g % rs; yg = (g % ps) / rs; zg = g / ps;
-	if (K[g] && (DIM3D(xg,yg,zg) == dddim) && BetaTerminal3d(K, rs, cs, ds, xg, yg, zg))
-	  I[g] = 1;
-	else if (K[g] && !IsSet(g, EN_RLIFO) && !I[g])
-	{
-	  f = PaireLibre3d(k, xg, yg, zg);
-	  if (f != -1) 
-	  { 
-	    RlifoPush(&RLIFOb, f); 
-	    RlifoPush(&RLIFOb, g);
-	    Set(g, EN_RLIFO);
-	  }
-	}
-      } // for u
-    } // for i
-    else // dddim==3
-    for (i = 0; i < RLIFO->Sp; i += 2)
-    {
-      f = RLIFO->Pts[i];
-      UnSet(f, BORDER);
-      xf = f % rs; yf = (f % ps) / rs; zf = f / ps;
-      Alphacarre3d(rs, cs, ds, xf, yf, zf, tab, &n);
-      for (u = 0; u < n; u += 1)
-      {
-	g = tab[u];
-	UnSet(g, BORDER);
-	xg = g % rs; yg = (g % ps) / rs; zg = g / ps;
-	if (K[g] && ((DIM3D(xg,yg,zg) == 1)||(DIM3D(xg,yg,zg) == 2)) && 
-	            BetaTerminal3d(K, rs, cs, ds, xg, yg, zg))
-	  I[g] = 1;
-	else if (K[g] && !IsSet(g, EN_RLIFO) && !I[g])
-	{
-	  f = PaireLibre3d(k, xg, yg, zg);
-	  if (f != -1) 
-	  { 
-	    RlifoPush(&RLIFOb, f); 
-	    RlifoPush(&RLIFOb, g);
-	    Set(g, EN_RLIFO);
-	  }
-	}
-      } // for u
-    } // for i
+    for (i = 0; i < RLIFO->Sp; i++) {
+      UnSet(RLIFO->Pts[i], EN_RLIFO);
+    }
+    if (dddim < 3) {
+      for (i = 0; i < RLIFO->Sp; i += 2) {
+        f = RLIFO->Pts[i];
+        UnSet(f, BORDER);
+        xf = f % rs;
+        yf = (f % ps) / rs;
+        zf = f / ps;
+        Alphacarre3d(rs, cs, ds, xf, yf, zf, tab, &n);
+        for (u = 0; u < n; u += 1) {
+          g = tab[u];
+          UnSet(g, BORDER);
+          xg = g % rs;
+          yg = (g % ps) / rs;
+          zg = g / ps;
+          if (K[g] && (DIM3D(xg, yg, zg) == dddim) &&
+              BetaTerminal3d(K, rs, cs, ds, xg, yg, zg)) {
+            I[g] = 1;
+          } else if (K[g] && !IsSet(g, EN_RLIFO) && !I[g]) {
+            f = PaireLibre3d(k, xg, yg, zg);
+            if (f != -1) {
+              RlifoPush(&RLIFOb, f);
+              RlifoPush(&RLIFOb, g);
+              Set(g, EN_RLIFO);
+            }
+          }
+        }    // for u
+      }      // for i
+    } else { // dddim==3
+      for (i = 0; i < RLIFO->Sp; i += 2) {
+        f = RLIFO->Pts[i];
+        UnSet(f, BORDER);
+        xf = f % rs;
+        yf = (f % ps) / rs;
+        zf = f / ps;
+        Alphacarre3d(rs, cs, ds, xf, yf, zf, tab, &n);
+        for (u = 0; u < n; u += 1) {
+          g = tab[u];
+          UnSet(g, BORDER);
+          xg = g % rs;
+          yg = (g % ps) / rs;
+          zg = g / ps;
+          if (K[g] && ((DIM3D(xg, yg, zg) == 1) || (DIM3D(xg, yg, zg) == 2)) &&
+              BetaTerminal3d(K, rs, cs, ds, xg, yg, zg)) {
+            I[g] = 1;
+          } else if (K[g] && !IsSet(g, EN_RLIFO) && !I[g]) {
+            f = PaireLibre3d(k, xg, yg, zg);
+            if (f != -1) {
+              RlifoPush(&RLIFOb, f);
+              RlifoPush(&RLIFOb, g);
+              Set(g, EN_RLIFO);
+            }
+          }
+        } // for u
+      }   // for i
+    }
 
     for (i = 0; i < RLIFOb->Sp; i += 2)
     {
@@ -1198,10 +1274,9 @@ graphe * l3dtopoflow_f(struct xvimage * k, struct xvimage * prio, struct xvimage
     fprintf(stderr, "%s : bad size for prio\n", F_NAME);
     return(NULL);
   }
-  if (datatype(prio) == VFF_TYP_FLOAT) 
-    P = FLOATDATA(prio); 
-  else 
-  {
+  if (datatype(prio) == VFF_TYP_FLOAT) {
+    P = FLOATDATA(prio);
+  } else {
     fprintf(stderr, "%s : datatype(prio) must be float\n", F_NAME);
     return(NULL);
   }
@@ -1213,10 +1288,9 @@ graphe * l3dtopoflow_f(struct xvimage * k, struct xvimage * prio, struct xvimage
       fprintf(stderr, "%s : bad size for inhibit\n", F_NAME);
       return(NULL);
     }
-    if (datatype(inhibit) == VFF_TYP_1_BYTE) 
-      I = UCHARDATA(inhibit); 
-    else 
-    {
+    if (datatype(inhibit) == VFF_TYP_1_BYTE) {
+      I = UCHARDATA(inhibit);
+    } else {
       fprintf(stderr, "%s : datatype(inhibit) must be uint8_t\n", F_NAME);
       return(NULL);
     }
@@ -1244,15 +1318,19 @@ graphe * l3dtopoflow_f(struct xvimage * k, struct xvimage * prio, struct xvimage
   /* ================================================ */
 
   narcs = 0; // evalue la taille max du graphe
-  for (zg = 0; zg < ds; zg++)
-  for (yg = 0; yg < cs; yg++)
-  for (xg = 0; xg < rs; xg++)
-  {
-    if (K[zg*ps + yg*rs + xg]) 
-    { 
-      if (CUBE3D(xg,yg,zg)) narcs += 26;
-      else if (CARRE3D(xg,yg,zg)) narcs += 8;
-      else if (INTER3D(xg,yg,zg)) narcs += 2;
+  for (zg = 0; zg < ds; zg++) {
+    for (yg = 0; yg < cs; yg++) {
+      for (xg = 0; xg < rs; xg++) {
+        if (K[zg * ps + yg * rs + xg]) {
+          if (CUBE3D(xg, yg, zg)) {
+            narcs += 26;
+          } else if (CARRE3D(xg, yg, zg)) {
+            narcs += 8;
+          } else if (INTER3D(xg, yg, zg)) {
+            narcs += 2;
+          }
+        }
+      }
     }
   }
   flow = InitGraphe(N, narcs); // toutes les faces (dans K ou non) sont des sommets
@@ -1261,15 +1339,18 @@ graphe * l3dtopoflow_f(struct xvimage * k, struct xvimage * prio, struct xvimage
     fprintf(stderr, "%s : InitGraphe failed\n", F_NAME);
     return(NULL);
   }
-  for (zg = 0; zg < ds; zg++)
-  for (yg = 0; yg < cs; yg++)
-  for (xg = 0; xg < rs; xg++)
-  {
-    g = zg*ps + yg*rs + xg;
-    flow->x[g] = xg; // coordonnées des sommets
-    flow->y[g] = yg;
-    flow->z[g] = zg;
-    if (!K[g]) flow->v_sommets[g] = TF_NOT_IN_I;
+  for (zg = 0; zg < ds; zg++) {
+    for (yg = 0; yg < cs; yg++) {
+      for (xg = 0; xg < rs; xg++) {
+        g = zg * ps + yg * rs + xg;
+        flow->x[g] = xg; // coordonnées des sommets
+        flow->y[g] = yg;
+        flow->z[g] = zg;
+        if (!K[g]) {
+          flow->v_sommets[g] = TF_NOT_IN_I;
+        }
+      }
+    }
   }
 
   /* ================================================ */
@@ -1284,21 +1365,20 @@ graphe * l3dtopoflow_f(struct xvimage * k, struct xvimage * prio, struct xvimage
   /*   INITIALISATION DU RBT */
   /* ========================================================= */
 
-  for (zg = 0; zg < ds; zg++)
-  for (yg = 0; yg < cs; yg++)
-  for (xg = 0; xg < rs; xg++)
-  {
-    g = zg*ps + yg*rs + xg;
-    if (K[g])
-    {
-      f = PaireLibre3d(k, xg, yg, zg);
-      if ((f != -1) && 
-	  (((I != NULL) && (!I[g] && !I[f])) || 
-	   ((I == NULL) && (P[g] < priomax) && (P[f] < priomax)) ) )
-      {
-	pp = (TypRbtKey)(mcmax(P[g],P[f]));
-	mcrbt_RbtInsert(&RBT, pp, g);
-	Set(g, EN_RBT);
+  for (zg = 0; zg < ds; zg++) {
+    for (yg = 0; yg < cs; yg++) {
+      for (xg = 0; xg < rs; xg++) {
+        g = zg * ps + yg * rs + xg;
+        if (K[g]) {
+          f = PaireLibre3d(k, xg, yg, zg);
+          if ((f != -1) &&
+              (((I != NULL) && (!I[g] && !I[f])) ||
+               ((I == NULL) && (P[g] < priomax) && (P[f] < priomax)))) {
+            pp = (TypRbtKey)(mcmax(P[g], P[f]));
+            mcrbt_RbtInsert(&RBT, pp, g);
+            Set(g, EN_RBT);
+          }
+        }
       }
     }
   }
@@ -1325,7 +1405,7 @@ graphe * l3dtopoflow_f(struct xvimage * k, struct xvimage * prio, struct xvimage
       }
     } // while (!mcrbt_RbtVide(RBT) && (RbtMinLevel(RBT) == p))
 
-    for (dir = 0; dir <= 2; dir++) // For all face directions
+    for (dir = 0; dir <= 2; dir++) { // For all face directions
       for (ori = 0; ori <= 1; ori++) // For both orientations
       {
 #define OLDVERSION
@@ -1345,10 +1425,28 @@ graphe * l3dtopoflow_f(struct xvimage * k, struct xvimage * prio, struct xvimage
 		 ((I == NULL) && (P[g] < priomax) && (P[f] < priomax)) ) )
 	    {
 	      xg = g % rs; yg = (g % ps) / rs; zg = g / ps;
-	      if (xf - xg)      { direc = 0; if (xf > xg) orien = 0; else orien = 1; }
-	      else if (yf - yg) { direc = 1; if (yf > yg) orien = 0; else orien = 1; }
-	      else              { direc = 2; if (zf > zg) orien = 0; else orien = 1; }
-	      if ((DIM3D(xf,yf,zf) == dim) && (direc == dir) && (orien == ori))
+	      if (xf - xg)      { direc = 0;
+                if (xf > xg) {
+                  orien = 0;
+                } else {
+                  orien = 1;
+                }
+              } else if (yf - yg) {
+                direc = 1;
+                if (yf > yg) {
+                  orien = 0;
+                } else {
+                  orien = 1;
+                }
+              } else {
+                direc = 2;
+                if (zf > zg) {
+                  orien = 0;
+                } else {
+                  orien = 1;
+                }
+              }
+              if ((DIM3D(xf,yf,zf) == dim) && (direc == dir) && (orien == ori))
 	      {
 		K[g] = K[f] = VAL_NULLE; // COLLAPSE
 		ncoll ++;
@@ -1416,14 +1514,18 @@ graphe * l3dtopoflow_f(struct xvimage * k, struct xvimage * prio, struct xvimage
 	    RlifoPush(&RLIFO, g); 
 	  }
       } // for (dim = 3; dim >= 1; dim--)
-    } // for for
+      } // for for
+    }
 
     RlifoFlush(RLIFO);
 
   } /* while (!mcrbt_RbtVide(RBT)) */
 
-  for (g = 0; g < N; g++)
-    if (K[g]) flow->v_sommets[g] = TF_PERMANENT;
+  for (g = 0; g < N; g++) {
+    if (K[g]) {
+      flow->v_sommets[g] = TF_PERMANENT;
+    }
+  }
 
 #ifdef VERBOSE
   fprintf(stderr, "%s: Fin traitement\n", F_NAME);
@@ -1504,12 +1606,14 @@ int32_t l3dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
 
   perm = (boolean *)calloc(N, sizeof(boolean)); assert(perm != NULL);
   head = (boolean *)calloc(N, sizeof(boolean)); assert(head != NULL);
-  for (i = 0; i < N; i++)
-    if (flow->v_sommets[i] == TF_PERMANENT)
+  for (i = 0; i < N; i++) {
+    if (flow->v_sommets[i] == TF_PERMANENT) {
       perm[i] = TRUE;
-    else if (flow->v_sommets[i] == TF_HEAD)
+    } else if (flow->v_sommets[i] == TF_HEAD) {
       head[i] = TRUE;
-  
+    }
+  }
+
   // -------------------------------------------------------------------
   // 2EME ETAPE : CALCULE LA FONCTION DE POIDS INITIALE POUR LES SOMMETS
   // -------------------------------------------------------------------
@@ -1522,11 +1626,13 @@ int32_t l3dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
   }
   else if (mode == 1)
   { // fonction uniforme (unité)
-    for (i = 0; i < N; i++) 
-      if (K[i])
-	FUNC[i] = (float)1;
-      else
-	FUNC[i] = (float)0;
+    for (i = 0; i < N; i++) {
+      if (K[i]) {
+        FUNC[i] = (float)1;
+      } else {
+        FUNC[i] = (float)0;
+      }
+    }
   }
   else if ((mode == 2) || (mode == 3))
   { // fonction uniforme sur la frontière, nulle à l'intérieur 
@@ -1539,11 +1645,13 @@ int32_t l3dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
       return 0;
     }
     B = UCHARDATA(border);
-    for (i = 0; i < N; i++) 
-      if (B[i]) 
-	FUNC[i] = (float)1;
-      else
-	FUNC[i] = (float)0;
+    for (i = 0; i < N; i++) {
+      if (B[i]) {
+        FUNC[i] = (float)1;
+      } else {
+        FUNC[i] = (float)0;
+      }
+    }
     freeimage(border);
   }
   else if (mode == 4)
@@ -1555,8 +1663,14 @@ int32_t l3dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
     ret = lopeningfunction(k, of, 0); assert(ret == 1);
     OF = ULONGDATA(of);
     maxof = OF[0];
-    for (i = 0; i < N; i++) if (OF[i] > maxof) maxof = OF[i];
-    for (i = 0; i < N; i++) FUNC[i] = (float)(maxof - OF[i]) + 0.1;
+    for (i = 0; i < N; i++) {
+      if (OF[i] > maxof) {
+        maxof = OF[i];
+      }
+    }
+    for (i = 0; i < N; i++) {
+      FUNC[i] = (float)(maxof - OF[i]) + 0.1;
+    }
     freeimage(of);
   }
   else if (mode == 5)
@@ -1571,7 +1685,9 @@ int32_t l3dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
   else if (mode == 6)
   { // distance map
     uint32_t *D = ULONGDATA(dist);
-    for (i = 0; i < N; i++) FUNC[i] = (float)(1.0/sqrt(D[i]));
+    for (i = 0; i < N; i++) {
+      FUNC[i] = (float)(1.0 / sqrt(D[i]));
+    }
   }
   else if (mode == 7)
   { // lambda function
@@ -1580,15 +1696,17 @@ int32_t l3dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
   }
   else if (mode == 8)
   { // fonction uniforme (unité) sur les facettes
-    for (z = 0; z < ds; z++) 
-    for (y = 0; y < cs; y++) 
-    for (x = 0; x < rs; x++)
-    {
-      i = z*ps + y*rs + x;
-      if (K[i] && CUBE3D(x,y,z))
-	FUNC[i] = (float)1;
-      else
-	FUNC[i] = (float)0;
+    for (z = 0; z < ds; z++) {
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++) {
+          i = z * ps + y * rs + x;
+          if (K[i] && CUBE3D(x, y, z)) {
+            FUNC[i] = (float)1;
+          } else {
+            FUNC[i] = (float)0;
+          }
+        }
+      }
     }
   }
   else if (mode == 9)
@@ -1602,15 +1720,17 @@ int32_t l3dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
       return 0;
     }
     B = UCHARDATA(border);
-    for (z = 0; z < ds; z++) 
-    for (y = 0; y < cs; y++) 
-    for (x = 0; x < rs; x++)
-    {
-      i = z*ps + y*rs + x;
-      if (B[i] && CARRE3D(x,y,z)) 
-	FUNC[i] = (float)1;
-      else
-	FUNC[i] = (float)0;
+    for (z = 0; z < ds; z++) {
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++) {
+          i = z * ps + y * rs + x;
+          if (B[i] && CARRE3D(x, y, z)) {
+            FUNC[i] = (float)1;
+          } else {
+            FUNC[i] = (float)0;
+          }
+        }
+      }
     }
     freeimage(border);
   }
@@ -1620,8 +1740,9 @@ int32_t l3dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
     return 0;
   }
 
-  for (i = 0; i < N; i++)
+  for (i = 0; i < N; i++) {
     flow->v_sommets[i] = (TYP_VSOM)FUNC[i];
+  }
 
   // -----------------------------------------------------------
   // 3EME ETAPE : INTEGRE LA FONCTION DE POIDS 
@@ -1647,9 +1768,11 @@ int32_t l3dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
     assert(of != NULL);
     ret = lopeningfunction(k, of, 0); assert(ret == 1);
     OF = ULONGDATA(of);
-    for (i = 0; i < N; i++)
-      if (OF[i]) 
-	flow->v_sommets[i] = flow->v_sommets[i] / (TYP_VSOM)OF[i];
+    for (i = 0; i < N; i++) {
+      if (OF[i]) {
+        flow->v_sommets[i] = flow->v_sommets[i] / (TYP_VSOM)OF[i];
+      }
+    }
     freeimage(of);
   }
 
@@ -1661,20 +1784,26 @@ int32_t l3dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
 
   // met à vmax (infini) les sommets "permanents" (non collapsés)
   vmax = flow->v_sommets[0];
-  for (i = 0; i < N; i++)
-    if (flow->v_sommets[i] > vmax) vmax = flow->v_sommets[i];
-  for (i = 0; i < N; i++)
-    if (perm[i])
+  for (i = 0; i < N; i++) {
+    if (flow->v_sommets[i] > vmax) {
+      vmax = flow->v_sommets[i];
+    }
+  }
+  for (i = 0; i < N; i++) {
+    if (perm[i]) {
       flow->v_sommets[i] = vmax;
-  
+    }
+  }
+
   if (level >= 0)
   {
     uint8_t *KK;
     graphe * flow_s;
     uint32_t j;
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       K[i] = (flow->v_sommets[i] >= level ? 255 : 0);
+    }
     writeimage(k, "_seuil_level");
 
     // detects end points
@@ -1693,35 +1822,48 @@ int32_t l3dflowskeleton(struct xvimage * k, int32_t mode, double level, struct x
     KK     = UCHARDATA(kk);
     flow_s = Symetrique(flow);
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (K[i])
       {
 	boolean *D = Descendants(flow_s, i);
-	for (j = 0; j < N; j++) if (D[j]) KK[j] = 255;
-	free(D);
+        for (j = 0; j < N; j++) {
+          if (D[j]) {
+            KK[j] = 255;
+          }
+        }
+        free(D);
       }
+    }
     writeimage(kk, "_upstreams");    
     TermineGraphe(flow_s);
 
     // computes a new weighting function:
     // identical to the previous one on upstreams,
     // null elsewhere
-    for (i = 0; i < N; i++)
-      if (!KK[i])
-	flow->v_sommets[i] = (TYP_VSOM)0;
-    
+    for (i = 0; i < N; i++) {
+      if (!KK[i]) {
+        flow->v_sommets[i] = (TYP_VSOM)0;
+      }
+    }
+
     // "morsifies" this function
     AlphaTopologicalMap(flow, head, alpha);
     vmax = flow->v_sommets[0];
-    for (i = 0; i < N; i++)
-      if (flow->v_sommets[i] > vmax) vmax = flow->v_sommets[i];
-    for (i = 0; i < N; i++)
-      if (perm[i])
-	flow->v_sommets[i] = vmax;
+    for (i = 0; i < N; i++) {
+      if (flow->v_sommets[i] > vmax) {
+        vmax = flow->v_sommets[i];
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (perm[i]) {
+        flow->v_sommets[i] = vmax;
+      }
+    }
   }
-   
-  for (i = 0; i < N; i++)
+
+  for (i = 0; i < N; i++) {
     FUNC[i] = (float)flow->v_sommets[i];
+  }
 
   freeimage(dist);
   freeimage(lambda);

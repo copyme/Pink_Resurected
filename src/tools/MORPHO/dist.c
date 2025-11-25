@@ -117,10 +117,12 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (mode < 40)
+  if (mode < 40) {
     result = allocimage(NULL, rowsize(image), colsize(image), depth(image), VFF_TYP_4_BYTE);
-  else
-    result = allocimage(NULL, rowsize(image), colsize(image), depth(image), VFF_TYP_1_BYTE);
+  } else {
+    result = allocimage(NULL, rowsize(image), colsize(image), depth(image),
+                        VFF_TYP_1_BYTE);
+  }
   if (result == NULL)
   {   
     fprintf(stderr, "%s: allocimage failed\n", argv[0]);
@@ -159,8 +161,13 @@ int main(int argc, char **argv)
   }
   else if ((mode == 0) || (mode == 3) || (mode == 5))
   {
-    for (i = 0; i < N; i++) // inverse l'image
-      if (F[i]) F[i] = 0; else F[i] = NDG_MAX;
+    for (i = 0; i < N; i++) { // inverse l'image
+      if (F[i]) {
+        F[i] = 0;
+      } else {
+        F[i] = NDG_MAX;
+      }
+    }
     if (! lsedt_meijster(image, result))
     {
       fprintf(stderr, "%s: lsedt_meijster failed\n", argv[0]);
@@ -182,7 +189,9 @@ int main(int argc, char **argv)
       float * D = NULL;
       convertfloat(&result);
       D = FLOATDATA(result);
-      for (i = 0; i < N; i++) D[i] = (float)sqrtf(D[i]);
+      for (i = 0; i < N; i++) {
+        D[i] = (float)sqrtf(D[i]);
+      }
     }
   }
   else if (mode < 40)

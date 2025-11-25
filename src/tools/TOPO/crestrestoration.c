@@ -127,15 +127,16 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (argc == 6) 
+  if (argc == 6) {
     writeimage(image, argv[argc - 1]);
-  else
-  {
+  } else {
     writeimage(imagecond, argv[argc - 1]);
     writeimage(image, argv[argc - 2]);
   }
   freeimage(image);
-  if (imagecond != NULL) freeimage(imagecond);
+  if (imagecond != NULL) {
+    freeimage(imagecond);
+  }
 
   return 0;
 } /* main */

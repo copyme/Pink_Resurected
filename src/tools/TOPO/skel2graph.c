@@ -91,11 +91,13 @@ int main(int argc, char **argv)
   s = readskel(argv[1]);
   assert(s != NULL);
 
-  if (argc >= 4)
+  if (argc >= 4) {
     mode = atoi(argv[2]);
+  }
 
-  if (argc == 5)
+  if (argc == 5) {
     param = atof(argv[3]);
+  }
 
   g = lskel2graph(s, mode, param);
     

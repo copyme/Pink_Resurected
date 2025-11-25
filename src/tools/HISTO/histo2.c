@@ -112,7 +112,9 @@ int main(int argc, char **argv)
   freeimage(histo);
   freeimage(image1);
   freeimage(image2);
-  if (mask) freeimage(mask);
+  if (mask) {
+    freeimage(mask);
+  }
 
   return 0;
 } /* main */

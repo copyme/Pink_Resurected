@@ -115,7 +115,9 @@ Rbt * lhthiniso_CreeRbtVide(
   T->maxutil = 0;
 
   /* chaine les elements libres a l'aide du pointeur right */
-  for (i = 0; i < taillemax - 1; i++) T->elts[i].right = &(T->elts[i+1]);
+  for (i = 0; i < taillemax - 1; i++) {
+    T->elts[i].right = &(T->elts[i + 1]);
+  }
 
   T->elts[taillemax - 1].right = NULL;
   T->libre = &(T->elts[0]);
@@ -150,7 +152,9 @@ RbtElt * lhthiniso_RbtMinimum(
   Rbt * T, RbtElt * x)
 /* ==================================== */
 {
-  while (x->left != T->nil) x = x->left;
+  while (x->left != T->nil) {
+    x = x->left;
+  }
   return x;
 } /* lhthiniso_RbtMinimum() */
 
@@ -160,7 +164,9 @@ RbtElt * lhthiniso_RbtSuccessor(
 /* ==================================== */
 {
   RbtElt * y = NULL;
-  if (x->right != T->nil) return lhthiniso_RbtMinimum(T, x->right);
+  if (x->right != T->nil) {
+    return lhthiniso_RbtMinimum(T, x->right);
+  }
   y = x->parent;
   while ((y != T->nil) && (x == y->right))
   {
@@ -183,16 +189,21 @@ void lhthiniso_RbtInsertSimple(
   while (x != T->nil)
   {
     y = x;
-    if ((z->key < x->key) || ((z->key == x->key) && (z->key2 < x->key2)))
-      x = x->left; else x = x->right;
+    if ((z->key < x->key) || ((z->key == x->key) && (z->key2 < x->key2))) {
+      x = x->left;
+    } else {
+      x = x->right;
+    }
   }
   z->parent = y;
-  if (y == T->nil)
+  if (y == T->nil) {
     T->root = z;
-  else
-  {
-    if ((z->key < y->key) || ((z->key == y->key) && (z->key2 < y->key2))) 
-      y->left = z; else y->right = z;
+  } else {
+    if ((z->key < y->key) || ((z->key == y->key) && (z->key2 < y->key2))) {
+      y->left = z;
+    } else {
+      y->right = z;
+    }
   }
 } /* lhthiniso_RbtInsertSimple() */
 
@@ -210,7 +221,9 @@ RbtElt * lhthiniso_RbtInsertAux(  /* allocation et insertion simple */
   }
 
   T->util++;
-  if (T->util > T->maxutil) T->maxutil = T->util;
+  if (T->util > T->maxutil) {
+    T->maxutil = T->util;
+  }
   z = T->libre;
   T->libre = T->libre->right;
   z->key = k;
@@ -231,16 +244,18 @@ void LeftRotate(
 
   y = x->right;                    /* assume right(x) != NIL */
   x->right = y->left;              /* move y's child over */
-  if (y->left != T->nil)
+  if (y->left != T->nil) {
     y->left->parent = x;
+  }
   y->parent = x->parent;           /* move y up to x's position */
-  if (x->parent == T->nil)
+  if (x->parent == T->nil) {
     T->root = y;
-  else 
-  {
-    if (x == x->parent->left)
+  } else {
+    if (x == x->parent->left) {
       x->parent->left = y;
-    else x->parent->right = y;
+    } else {
+      x->parent->right = y;
+    }
   }
   y->left = x;                     /* move x down */
   x->parent = y;
@@ -255,16 +270,18 @@ void RightRotate(
 
   y = x->left;              /* assume left(x) != NIL */
   x->left = y->right;
-  if (y->right != T->nil)
+  if (y->right != T->nil) {
     y->right->parent = x;
+  }
   y->parent = x->parent;
-  if (x->parent == T->nil)
+  if (x->parent == T->nil) {
     T->root = y;
-  else 
-  {
-    if (x == x->parent->right)
-       x->parent->right = y;
-    else x->parent->left = y;
+  } else {
+    if (x == x->parent->right) {
+      x->parent->right = y;
+    } else {
+      x->parent->left = y;
+    }
   }
   y->right = x;
   x->parent = y;
@@ -417,23 +434,25 @@ RbtElt * lhthiniso_RbtDeleteAux(         /* return deleted node */
   RbtElt * c = NULL;
   RbtElt * d = NULL;
 
-  if ((z->left == T->nil) || (z->right == T->nil))
+  if ((z->left == T->nil) || (z->right == T->nil)) {
     d = z;
-  else 
+  } else {
     d = lhthiniso_RbtSuccessor(T, z);
-  if (d->left != T->nil)
+  }
+  if (d->left != T->nil) {
     c = d->left;
-  else 
+  } else {
     c = d->right;
+  }
   c->parent = d->parent;      /* no test for NIL with sentinel */
-  if (d->parent == T->nil)
+  if (d->parent == T->nil) {
     T->root = c;
-  else 
-  {
-    if (d == d->parent->left)
+  } else {
+    if (d == d->parent->left) {
       d->parent->left = c;
-    else 
+    } else {
       d->parent->right = c;
+    }
   }
   if (d != z)
   {
@@ -445,8 +464,9 @@ RbtElt * lhthiniso_RbtDeleteAux(         /* return deleted node */
     x = DECODEPIX(x);
     R[x] = z;
   }
-  if (d->color == Black)
-    lhthiniso_RbtDeleteFixup(T, c);     /* c is now "Double-Black" */
+  if (d->color == Black) {
+    lhthiniso_RbtDeleteFixup(T, c); /* c is now "Double-Black" */
+  }
   return d;
 } /* lhthiniso_RbtDeleteAux() */
 
@@ -604,7 +624,11 @@ int32_t lhthiniso(struct xvimage *image, double dmax, int32_t connex, double pix
   RbtElt ** R;                 /* pointeurs sur les noeuds de l'arbre rouge et noir */
   RbtElt * r;                  /* pointeur sur un noeud de l'arbre rouge et noir */
 
-  if (connex == 4) incr_vois = 2; else incr_vois = 1;
+  if (connex == 4) {
+    incr_vois = 2;
+  } else {
+    incr_vois = 1;
+  }
 
   if (depth(image) != 1) 
   {
@@ -636,12 +660,16 @@ int32_t lhthiniso(struct xvimage *image, double dmax, int32_t connex, double pix
   /*                  DEBUT ALGO                      */
   /* ================================================ */
 
-  for (x = 0; x < N; x++) T[x] = x; 
+  for (x = 0; x < N; x++) {
+    T[x] = x;
+  }
 
   /* empile tous les points destructibles */
   if (connex == 4)
   {
-      for (x = 0; x < N; x++) UpdateRbt4(x, F, T, rs, N, R, RBT, dmax);
+    for (x = 0; x < N; x++) {
+      UpdateRbt4(x, F, T, rs, N, R, RBT, dmax);
+    }
   }
 
   /* ================================================ */
@@ -691,7 +719,9 @@ int32_t lhthiniso(struct xvimage *image, double dmax, int32_t connex, double pix
       for (k = 0; k < 8; k += 1)
       {
         y = voisin(x, k, rs, N);
-        if (y != -1) UpdateRbt4(y, F, T, rs, N, R, RBT, dmax);
+        if (y != -1) {
+          UpdateRbt4(y, F, T, rs, N, R, RBT, dmax);
+        }
       } /* for k */
     } /* while (!lhthiniso_RbtVide(RBT)) */
   } /* if (connex == 4) */

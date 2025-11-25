@@ -98,10 +98,11 @@ int main(int argc, char **argv)
       exit(1);
     }
     n = fscanf(fd, "%ld %ld %ld %ld %ld %ld\n", &x, &y, &z, &w, &h, &d);
-    if (n == 4)
+    if (n == 4) {
       out = lcrop(in, x, y, z, w);
-    else
+    } else {
       out = lcrop3d(in, x, y, z, w, h, d);
+    }
 
     fclose(fd);
   }

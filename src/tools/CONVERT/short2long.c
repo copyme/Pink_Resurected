@@ -107,7 +107,9 @@ int main(int argc, char **argv)
   imagelong->ydim = imageshort->ydim;
   imagelong->zdim = imageshort->zdim;
 
-  for (x = 0; x < N; x++) L[x] = (int32_t)S[x];
+  for (x = 0; x < N; x++) {
+    L[x] = (int32_t)S[x];
+  }
 
   writeimage(imagelong, argv[argc-1]);
   freeimage(imagelong);

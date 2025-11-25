@@ -150,8 +150,10 @@ int main(int argc, char **argv)
   {
     fprintf(stderr, "%s: malloc failed\n", argv[0]);
     exit(1);
-  }  
-  for (s = 0; s < nbsamples; s++) tabscene_out[s] = copyscene(tabscene_in[0]);
+  }
+  for (s = 0; s < nbsamples; s++) {
+    tabscene_out[s] = copyscene(tabscene_in[0]);
+  }
 
   for (o = 0; o < nobj; o++)
   {

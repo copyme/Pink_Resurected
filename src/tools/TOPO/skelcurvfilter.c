@@ -110,17 +110,35 @@ int main(int argc, char **argv)
   if (datatype(image) == VFF_TYP_4_BYTE)
   {
     int32_t *FL = SLONGDATA(image);
-    for (x = 0; x < N; x++) if (FL[x] == 0) F[x] = NDG_MIN; else F[x] = NDG_MAX;
+    for (x = 0; x < N; x++) {
+      if (FL[x] == 0) {
+        F[x] = NDG_MIN;
+      } else {
+        F[x] = NDG_MAX;
+      }
+    }
   }
   else if (datatype(image) == VFF_TYP_2_BYTE)
   {
     int16_t *FL = SSHORTDATA(image);
-    for (x = 0; x < N; x++) if (FL[x] == 0) F[x] = NDG_MIN; else F[x] = NDG_MAX;
+    for (x = 0; x < N; x++) {
+      if (FL[x] == 0) {
+        F[x] = NDG_MIN;
+      } else {
+        F[x] = NDG_MAX;
+      }
+    }
   }
   else if (datatype(image) == VFF_TYP_FLOAT)
   {
     float *FL = FLOATDATA(image);
-    for (x = 0; x < N; x++) if (FL[x] == 0.0) F[x] = NDG_MIN; else F[x] = NDG_MAX;
+    for (x = 0; x < N; x++) {
+      if (FL[x] == 0.0) {
+        F[x] = NDG_MIN;
+      } else {
+        F[x] = NDG_MAX;
+      }
+    }
   }
 
   writeimage(imagebin, argv[argc-1]);

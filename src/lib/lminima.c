@@ -64,8 +64,9 @@ int32_t lminima(
 
   if (str_connexity[0] == 'b') {
     connex = atoi(str_connexity+1);
-  } else 
+  } else {
     connex = atoi(str_connexity);
+  }
 
   result = allocimage(NULL, rowsize(image), colsize(image), depth(image), VFF_TYP_4_BYTE);
   if (result == NULL)
@@ -82,17 +83,36 @@ int32_t lminima(
       uint8_t absmin;
       I = UCHARDATA(image);
       absmin = I[0];
-      for (i = 1; i < N; i++) if (I[i] < absmin) absmin = I[i];
-      for (i = 0; i < N; i++) if (I[i] == absmin) I[i] = NDG_MAX; else I[i] = NDG_MIN;
+      for (i = 1; i < N; i++) {
+        if (I[i] < absmin) {
+          absmin = I[i];
+        }
+      }
+      for (i = 0; i < N; i++) {
+        if (I[i] == absmin) {
+          I[i] = NDG_MAX;
+        } else {
+          I[i] = NDG_MIN;
+        }
+      }
     }
     else if (datatype(image) == VFF_TYP_4_BYTE) 
     {   
       int32_t absmin;
       IL = SLONGDATA(image);
       absmin = IL[0];
-      for (i = 1; i < N; i++) if (IL[i] < absmin) absmin = IL[i];
-      for (i = 0; i < N; i++) if (IL[i] == absmin) IL[i] = (int32_t)NDG_MAX; 
-                                             else IL[i] = (int32_t)NDG_MIN;
+      for (i = 1; i < N; i++) {
+        if (IL[i] < absmin) {
+          absmin = IL[i];
+        }
+      }
+      for (i = 0; i < N; i++) {
+        if (IL[i] == absmin) {
+          IL[i] = (int32_t)NDG_MAX;
+        } else {
+          IL[i] = (int32_t)NDG_MIN;
+        }
+      }
     }
     else
     {
@@ -115,14 +135,24 @@ int32_t lminima(
     if (datatype(image) == VFF_TYP_1_BYTE)
     {   
       I = UCHARDATA(image);
-      for (i = 0; i < N; i++)
-        if (R[i]) I[i] = NDG_MAX; else I[i] = NDG_MIN;
+      for (i = 0; i < N; i++) {
+        if (R[i]) {
+          I[i] = NDG_MAX;
+        } else {
+          I[i] = NDG_MIN;
+        }
+      }
     }
     else if (datatype(image) == VFF_TYP_4_BYTE) 
     {   
       IL = SLONGDATA(image);
-      for (i = 0; i < N; i++)
-        if (R[i]) IL[i] = (int32_t)NDG_MAX; else IL[i] = (int32_t)NDG_MIN;
+      for (i = 0; i < N; i++) {
+        if (R[i]) {
+          IL[i] = (int32_t)NDG_MAX;
+        } else {
+          IL[i] = (int32_t)NDG_MIN;
+        }
+      }
     }
   }
   freeimage(result);

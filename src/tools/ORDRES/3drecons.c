@@ -121,10 +121,9 @@ int main(int argc, char **argv)
     x = arrondi(xx);
     y = arrondi(yy);
     z = arrondi(zz);
-    if ((x >= 0) && (x < rs) && (y >= 0) && (y < cs) && (z >= 0) && (z < ds))
+    if ((x >= 0) && (x < rs) && (y >= 0) && (y < cs) && (z >= 0) && (z < ds)) {
       tab[i] = x + y * rs + z * ps;
-    else
-    {      
+    } else {
 #ifdef MC_64_BITS
       fprintf(stderr, "%s: point outside image: %ld %ld %ld\n", argv[0], x, y, z);
 #else

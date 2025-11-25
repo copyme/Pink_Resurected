@@ -119,7 +119,11 @@ int main(int argc, char **argv)
     y[i] = atof(argv[2*i + 3]);
   }
 
-  if (argc == 12) filled = atoi(argv[10]); else filled = 0;
+  if (argc == 12) {
+    filled = atoi(argv[10]);
+  } else {
+    filled = 0;
+  }
 
   if (!lellipseincl(x, y, 4, &R, &S, &T, &U, &V, &Z))
   {
@@ -143,7 +147,9 @@ int main(int argc, char **argv)
       exit(1);
     }
   }
-  for (i = 0; i < N; i++) Im[i] = mcmax(Im[i],El[i]);
+  for (i = 0; i < N; i++) {
+    Im[i] = mcmax(Im[i], El[i]);
+  }
   writeimage(image, argv[argc-1]);
   freeimage(image);
   freeimage(ellipse);

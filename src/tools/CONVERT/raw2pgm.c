@@ -174,17 +174,22 @@ int main(int argc, char **argv)
       S[i] = tmp; 
     }
     Smin = S[0];
-    for (i = 0; i < N; i++) 
-      if (S[i] < Smin) Smin = S[i];
+    for (i = 0; i < N; i++) {
+      if (S[i] < Smin) {
+        Smin = S[i];
+      }
+    }
     if (Smin < 0)
     {
-      for (i = 0; i < N; i++) 
-	I[i] = S[i] - Smin;
+      for (i = 0; i < N; i++) {
+        I[i] = S[i] - Smin;
+      }
     }
     else
     {
-      for (i = 0; i < N; i++) 
-	I[i] = S[i];
+      for (i = 0; i < N; i++) {
+        I[i] = S[i];
+      }
     }
     freeimage(image_S);
   }
@@ -246,8 +251,9 @@ int main(int argc, char **argv)
     }
   }
 
-  if (image == NULL)
+  if (image == NULL) {
     exit(1);
+  }
 
   if (argc == 12)
   {

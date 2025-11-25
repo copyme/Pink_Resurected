@@ -84,7 +84,11 @@ void hpclosing(struct xvimage * image, int32_t nptb, int32_t * tab_es_x, int32_t
   uint8_t *I, *S, *C;
   int32_t rs, cs, N, i;
 
-  if (connex == 4) connex = 8; else connex = 4; 
+  if (connex == 4) {
+    connex = 8;
+  } else {
+    connex = 4;
+  }
   // (pour hthi* la connexite est celle des minima)
 
   image_sav = copyimage(image);
@@ -112,7 +116,9 @@ void hpclosing(struct xvimage * image, int32_t nptb, int32_t * tab_es_x, int32_t
     exit(0);
   }
   // max image_cpy image_sav image_cpy
-  for (i = 0; i < N; i++) C[i] = mcmax(C[i],S[i]);
+  for (i = 0; i < N; i++) {
+    C[i] = mcmax(C[i], S[i]);
+  }
   if (!lhthindelta(image, image_cpy, -1, connex))
   {
     fprintf(stderr, "%s: function lhthindelta failed\n", F_NAME);
@@ -143,7 +149,11 @@ void hpclosingdisc(struct xvimage * image, struct xvimage * dist, int32_t r, int
   S = UCHARDATA(image_sav);
   T = UCHARDATA(image_tmp);
 
-  if (connex == 4) connex = 8; else connex = 4; 
+  if (connex == 4) {
+    connex = 8;
+  } else {
+    connex = 4;
+  }
   // (pour hthi* la connexite est celle des minima)
 
   // dilatation
@@ -152,7 +162,13 @@ void hpclosingdisc(struct xvimage * image, struct xvimage * dist, int32_t r, int
     fprintf(stderr, "%s: function ldistquad failed\n", F_NAME);
     exit(0);
   }
-  for(i=0; i<N; i++) if (D[i] > r2) T[i] = NDG_MIN; else T[i] = NDG_MAX;
+  for (i = 0; i < N; i++) {
+    if (D[i] > r2) {
+      T[i] = NDG_MIN;
+    } else {
+      T[i] = NDG_MAX;
+    }
+  }
 
   // controle topologique pour la dilatation
   if (!lhthickdelta(image, image_tmp, -1, connex))
@@ -164,16 +180,30 @@ void hpclosingdisc(struct xvimage * image, struct xvimage * dist, int32_t r, int
   memcpy(T, I, N); // copie image dans image_tmp
 
   // erosion
-  for(i=0; i<N; i++) if (T[i]) T[i] = NDG_MIN; else T[i] = NDG_MAX;
+  for (i = 0; i < N; i++) {
+    if (T[i]) {
+      T[i] = NDG_MIN;
+    } else {
+      T[i] = NDG_MAX;
+    }
+  }
   if (!ldistquad(image_tmp, dist)) // Danielsson's algorithm
   {
     fprintf(stderr, "%s: function ldistquad failed\n", F_NAME);
     exit(0);
   }
-  for(i=0; i<N; i++) if (D[i] > r2) T[i] = NDG_MAX; else T[i] = NDG_MIN;
+  for (i = 0; i < N; i++) {
+    if (D[i] > r2) {
+      T[i] = NDG_MAX;
+    } else {
+      T[i] = NDG_MIN;
+    }
+  }
 
   // max image_tmp image_sav image_tmp
-  for (i = 0; i < N; i++) T[i] = mcmax(T[i],S[i]);
+  for (i = 0; i < N; i++) {
+    T[i] = mcmax(T[i], S[i]);
+  }
 
   // controle topologique pour l'erosion
   if (!lhthindelta(image, image_tmp, -1, connex))
@@ -197,7 +227,11 @@ void hpopening(struct xvimage * image, int32_t nptb, int32_t * tab_es_x, int32_t
   uint8_t *I, *S, *C;
   int32_t rs, cs, N, i;
 
-  if (connex == 4) connex = 8; else connex = 4; 
+  if (connex == 4) {
+    connex = 8;
+  } else {
+    connex = 4;
+  }
   // (pour hthi* la connexite est celle des minima)
 
   image_sav = copyimage(image);
@@ -225,7 +259,9 @@ void hpopening(struct xvimage * image, int32_t nptb, int32_t * tab_es_x, int32_t
     exit(0);
   }
   // min image_cpy image_sav image_cpy
-  for (i = 0; i < N; i++) C[i] = mcmin(C[i],S[i]);
+  for (i = 0; i < N; i++) {
+    C[i] = mcmin(C[i], S[i]);
+  }
   if (!lhthickdelta(image, image_cpy, -1, connex))
   {
     fprintf(stderr, "%s: function lhthickdelta failed\n", "hpopening");
@@ -256,17 +292,33 @@ void hpopeningdisc(struct xvimage * image, struct xvimage * dist, int32_t r, int
   S = UCHARDATA(image_sav);
   T = UCHARDATA(image_tmp);
 
-  if (connex == 4) connex = 8; else connex = 4; 
+  if (connex == 4) {
+    connex = 8;
+  } else {
+    connex = 4;
+  }
   // (pour hthi* la connexite est celle des minima)
 
   // erosion
-  for(i=0; i<N; i++) if (T[i]) T[i] = NDG_MIN; else T[i] = NDG_MAX;
+  for (i = 0; i < N; i++) {
+    if (T[i]) {
+      T[i] = NDG_MIN;
+    } else {
+      T[i] = NDG_MAX;
+    }
+  }
   if (!ldistquad(image_tmp, dist)) // Danielsson's algorithm
   {
     fprintf(stderr, "%s: function ldistquad failed\n", F_NAME);
     exit(0);
   }
-  for(i=0; i<N; i++) if (D[i] > r2) T[i] = NDG_MAX; else T[i] = NDG_MIN;
+  for (i = 0; i < N; i++) {
+    if (D[i] > r2) {
+      T[i] = NDG_MAX;
+    } else {
+      T[i] = NDG_MIN;
+    }
+  }
 
 writeimage(image_tmp,"_eros");
 
@@ -286,11 +338,19 @@ writeimage(image_tmp,"_erostopo");
     fprintf(stderr, "%s: function ldistquad failed\n", F_NAME);
     exit(0);
   }
-  for(i=0; i<N; i++) if (D[i] > r2) T[i] = NDG_MIN; else T[i] = NDG_MAX;
+  for (i = 0; i < N; i++) {
+    if (D[i] > r2) {
+      T[i] = NDG_MIN;
+    } else {
+      T[i] = NDG_MAX;
+    }
+  }
 writeimage(image_tmp,"_erostopodil");
 
   // min image_tmp image_sav image_tmp
-  for (i = 0; i < N; i++) T[i] = mcmin(T[i],S[i]);
+for (i = 0; i < N; i++) {
+  T[i] = mcmin(T[i], S[i]);
+}
 writeimage(image_tmp,"_erostopodilinter");
 
   // controle topologique pour la dilatation
@@ -318,7 +378,11 @@ void condhpclosing(
   uint8_t *I, *S, *T, *C;
   int32_t rs, cs, N, i;
 
-  if (connex == 4) connex = 8; else connex = 4; 
+  if (connex == 4) {
+    connex = 8;
+  } else {
+    connex = 4;
+  }
   // (pour hthi* la connexite est celle des minima)
 
   image_sav = copyimage(image);
@@ -331,7 +395,11 @@ void condhpclosing(
   S = UCHARDATA(image_sav);
   T = UCHARDATA(image_tmp);
 
-  if (connex == 4) connex = 8; else connex = 4; 
+  if (connex == 4) {
+    connex = 8;
+  } else {
+    connex = 4;
+  }
   // (pour hthi* la connexite est celle des minima)
 
   if (! ldilat2(image_tmp, nptb, tab_es_x, tab_es_y, xc, yc))
@@ -341,7 +409,9 @@ void condhpclosing(
   }
 
   // min image_tmp cond image_tmp
-  for (i = 0; i < N; i++) T[i] = mcmin(T[i],C[i]);
+  for (i = 0; i < N; i++) {
+    T[i] = mcmin(T[i], C[i]);
+  }
 
   // controle topologique pour la dilatation
   if (!lhthickdelta(image, image_tmp, -1, connex))
@@ -359,7 +429,9 @@ void condhpclosing(
   }
 
   // max image_tmp image_sav image_tmp
-  for (i = 0; i < N; i++) T[i] = mcmax(T[i],S[i]);
+  for (i = 0; i < N; i++) {
+    T[i] = mcmax(T[i], S[i]);
+  }
 
   // controle topologique pour l'erosion
   if (!lhthindelta(image, image_tmp, -1, connex))
@@ -396,7 +468,11 @@ void condhpclosingdisc(
   S = UCHARDATA(image_sav);
   T = UCHARDATA(image_tmp);
 
-  if (connex == 4) connex = 8; else connex = 4; 
+  if (connex == 4) {
+    connex = 8;
+  } else {
+    connex = 4;
+  }
   // (pour hthi* la connexite est celle des minima)
 
   // dilatation
@@ -405,10 +481,20 @@ void condhpclosingdisc(
     fprintf(stderr, "%s: function ldistquad failed\n", F_NAME);
     exit(0);
   }
-  for(i=0; i<N; i++) if (D[i] > r2) T[i] = NDG_MIN; else T[i] = NDG_MAX;
+  for (i = 0; i < N; i++) {
+    if (D[i] > r2) {
+      T[i] = NDG_MIN;
+    } else {
+      T[i] = NDG_MAX;
+    }
+  }
 
   // sub image_tmp cond image_tmp
-  for (i = 0; i < N; i++) if (C[i]) T[i] = 0;
+  for (i = 0; i < N; i++) {
+    if (C[i]) {
+      T[i] = 0;
+    }
+  }
 
   // controle topologique pour la dilatation
   if (!lhthickdelta(image, image_tmp, -1, connex))
@@ -420,16 +506,30 @@ void condhpclosingdisc(
   memcpy(T, I, N); // copie image dans image_tmp
 
   // erosion
-  for(i=0; i<N; i++) if (T[i]) T[i] = NDG_MIN; else T[i] = NDG_MAX;
+  for (i = 0; i < N; i++) {
+    if (T[i]) {
+      T[i] = NDG_MIN;
+    } else {
+      T[i] = NDG_MAX;
+    }
+  }
   if (!ldistquad(image_tmp, dist)) // Danielsson's algorithm
   {
     fprintf(stderr, "%s: function ldistquad failed\n", F_NAME);
     exit(0);
   }
-  for(i=0; i<N; i++) if (D[i] > r2) T[i] = NDG_MAX; else T[i] = NDG_MIN;
+  for (i = 0; i < N; i++) {
+    if (D[i] > r2) {
+      T[i] = NDG_MAX;
+    } else {
+      T[i] = NDG_MIN;
+    }
+  }
 
   // max image_tmp image_sav image_tmp
-  for (i = 0; i < N; i++) T[i] = mcmax(T[i],S[i]);
+  for (i = 0; i < N; i++) {
+    T[i] = mcmax(T[i], S[i]);
+  }
 
   // controle topologique pour l'erosion
   if (!lhthindelta(image, image_tmp, -1, connex))
@@ -467,7 +567,11 @@ void condhpclosingdisc2(
   S = UCHARDATA(image_sav);
   T = UCHARDATA(image_tmp);
 
-  if (connex == 4) connex = 8; else connex = 4; 
+  if (connex == 4) {
+    connex = 8;
+  } else {
+    connex = 4;
+  }
   // (pour hthi* la connexite est celle des minima)
 
   // dilatation
@@ -476,10 +580,20 @@ void condhpclosingdisc2(
     fprintf(stderr, "%s: function ldistquad failed\n", F_NAME);
     exit(0);
   }
-  for(i=0; i<N; i++) if (D[i] > r2) T[i] = NDG_MIN; else T[i] = NDG_MAX;
+  for (i = 0; i < N; i++) {
+    if (D[i] > r2) {
+      T[i] = NDG_MIN;
+    } else {
+      T[i] = NDG_MAX;
+    }
+  }
 
   // sub image_tmp cond image_tmp
-  for (i = 0; i < N; i++) if (C[i]) T[i] = 0;
+  for (i = 0; i < N; i++) {
+    if (C[i]) {
+      T[i] = 0;
+    }
+  }
 
   // controle topologique pour la dilatation
   if (!lhthickdelta(image, image_tmp, -1, connex))
@@ -491,16 +605,30 @@ void condhpclosingdisc2(
   memcpy(T, I, N); // copie image dans image_tmp
 
   // erosion
-  for(i=0; i<N; i++) if (T[i]) T[i] = NDG_MIN; else T[i] = NDG_MAX;
+  for (i = 0; i < N; i++) {
+    if (T[i]) {
+      T[i] = NDG_MIN;
+    } else {
+      T[i] = NDG_MAX;
+    }
+  }
   if (!ldistquad(image_tmp, dist)) // Danielsson's algorithm
   {
     fprintf(stderr, "%s: function ldistquad failed\n", F_NAME);
     exit(0);
   }
-  for(i=0; i<N; i++) if (D[i] > r2) T[i] = NDG_MAX; else T[i] = NDG_MIN;
+  for (i = 0; i < N; i++) {
+    if (D[i] > r2) {
+      T[i] = NDG_MAX;
+    } else {
+      T[i] = NDG_MIN;
+    }
+  }
 
   // max image_tmp image_sav image_tmp
-  for (i = 0; i < N; i++) T[i] = mcmax(T[i],S[i]);
+  for (i = 0; i < N; i++) {
+    T[i] = mcmax(T[i], S[i]);
+  }
 
   // controle topologique pour l'erosion
   if (!lhthindelta(image, image_tmp, -1, connex))
@@ -537,7 +665,11 @@ void condhpopening(
   S = UCHARDATA(image_sav);
   T = UCHARDATA(image_tmp);
 
-  if (connex == 4) connex = 8; else connex = 4; 
+  if (connex == 4) {
+    connex = 8;
+  } else {
+    connex = 4;
+  }
   // (pour hthi* la connexite est celle des minima)
 
   if (! leros2(image_tmp, nptb, tab_es_x, tab_es_y, xc, yc))
@@ -547,7 +679,9 @@ void condhpopening(
   }
 
   // max image_tmp cond image_tmp
-  for (i = 0; i < N; i++) T[i] = mcmax(T[i],C[i]);    
+  for (i = 0; i < N; i++) {
+    T[i] = mcmax(T[i], C[i]);
+  }
 
   // controle topologique pour l'erosion
   if (!lhthindelta(image, image_tmp, -1, connex))
@@ -565,7 +699,9 @@ void condhpopening(
   }
 
   // min image_tmp image_sav image_tmp
-  for (i = 0; i < N; i++) T[i] = mcmin(T[i],S[i]);
+  for (i = 0; i < N; i++) {
+    T[i] = mcmin(T[i], S[i]);
+  }
 
   // controle topologique pour la dilatation
   if (!lhthickdelta(image, image_tmp, -1, connex))
@@ -602,20 +738,38 @@ void condhpopeningdisc(
   S = UCHARDATA(image_sav);
   T = UCHARDATA(image_tmp);
 
-  if (connex == 4) connex = 8; else connex = 4; 
+  if (connex == 4) {
+    connex = 8;
+  } else {
+    connex = 4;
+  }
   // (pour hthi* la connexite est celle des minima)
 
   // erosion
-  for(i=0; i<N; i++) if (T[i]) T[i] = NDG_MIN; else T[i] = NDG_MAX;
+  for (i = 0; i < N; i++) {
+    if (T[i]) {
+      T[i] = NDG_MIN;
+    } else {
+      T[i] = NDG_MAX;
+    }
+  }
   if (!ldistquad(image_tmp, dist)) // Danielsson's algorithm
   {
     fprintf(stderr, "%s: function ldistquad failed\n", F_NAME);
     exit(0);
   }
-  for(i=0; i<N; i++) if (D[i] > r2) T[i] = NDG_MAX; else T[i] = NDG_MIN;
+  for (i = 0; i < N; i++) {
+    if (D[i] > r2) {
+      T[i] = NDG_MAX;
+    } else {
+      T[i] = NDG_MIN;
+    }
+  }
 
   // max image_tmp cond image_tmp
-  for (i = 0; i < N; i++) T[i] = mcmax(T[i],C[i]);    
+  for (i = 0; i < N; i++) {
+    T[i] = mcmax(T[i], C[i]);
+  }
 
   // controle topologique pour l'erosion
   if (!lhthindelta(image, image_tmp, -1, connex))
@@ -632,10 +786,18 @@ void condhpopeningdisc(
     fprintf(stderr, "%s: function ldistquad failed\n", F_NAME);
     exit(0);
   }
-  for(i=0; i<N; i++) if (D[i] > r2) T[i] = NDG_MIN; else T[i] = NDG_MAX;
+  for (i = 0; i < N; i++) {
+    if (D[i] > r2) {
+      T[i] = NDG_MIN;
+    } else {
+      T[i] = NDG_MAX;
+    }
+  }
 
   // min image_tmp image_sav image_tmp
-  for (i = 0; i < N; i++) T[i] = mcmin(T[i],S[i]);
+  for (i = 0; i < N; i++) {
+    T[i] = mcmin(T[i], S[i]);
+  }
 
   // controle topologique pour la dilatation
   if (!lhthickdelta(image, image_tmp, -1, connex))
@@ -673,20 +835,38 @@ void condhpopeningdisc2(
   S = UCHARDATA(image_sav);
   T = UCHARDATA(image_tmp);
 
-  if (connex == 4) connex = 8; else connex = 4; 
+  if (connex == 4) {
+    connex = 8;
+  } else {
+    connex = 4;
+  }
   // (pour hthi* la connexite est celle des minima)
 
   // erosion
-  for(i=0; i<N; i++) if (T[i]) T[i] = NDG_MIN; else T[i] = NDG_MAX;
+  for (i = 0; i < N; i++) {
+    if (T[i]) {
+      T[i] = NDG_MIN;
+    } else {
+      T[i] = NDG_MAX;
+    }
+  }
   if (!ldistquad(image_tmp, dist)) // Danielsson's algorithm
   {
     fprintf(stderr, "%s: function ldistquad failed\n", F_NAME);
     exit(0);
   }
-  for(i=0; i<N; i++) if (D[i] > r2) T[i] = NDG_MAX; else T[i] = NDG_MIN;
+  for (i = 0; i < N; i++) {
+    if (D[i] > r2) {
+      T[i] = NDG_MAX;
+    } else {
+      T[i] = NDG_MIN;
+    }
+  }
 
   // max image_tmp cond image_tmp
-  for (i = 0; i < N; i++) T[i] = mcmax(T[i],C[i]);    
+  for (i = 0; i < N; i++) {
+    T[i] = mcmax(T[i], C[i]);
+  }
 
   // controle topologique pour l'erosion
   if (!lhthindelta(image, image_tmp, -1, connex))
@@ -703,10 +883,18 @@ void condhpopeningdisc2(
     fprintf(stderr, "%s: function ldistquad failed\n", F_NAME);
     exit(0);
   }
-  for(i=0; i<N; i++) if (D[i] > r2) T[i] = NDG_MIN; else T[i] = NDG_MAX;
+  for (i = 0; i < N; i++) {
+    if (D[i] > r2) {
+      T[i] = NDG_MIN;
+    } else {
+      T[i] = NDG_MAX;
+    }
+  }
 
   // min image_tmp image_sav image_tmp
-  for (i = 0; i < N; i++) T[i] = mcmin(T[i],S[i]);
+  for (i = 0; i < N; i++) {
+    T[i] = mcmin(T[i], S[i]);
+  }
 
   // controle topologique pour la dilatation
   if (!lhthickdelta(image, image_tmp, -1, connex))
@@ -874,14 +1062,16 @@ int32_t lasft_ndg(struct xvimage * image, struct xvimage * imagec, struct xvimag
       yc = xc = rayon; 
       d = 2 * rayon + 1;
       nptb = 0;
-      for (x = 0; x < d; x++)
-        for (y = 0; y < d; y++)
+      for (x = 0; x < d; x++) {
+        for (y = 0; y < d; y++) {
           if (((x - xc) * (x - xc) + (y - yc) * (y - yc)) <= (rayon * rayon))
  	  {
             tab_es_x[nptb] = x;
             tab_es_y[nptb] = y;
             nptb++;
- 	  }
+          }
+        }
+      }
 #ifdef VERBOSE
       fprintf(stderr, "asft_ndg: rayon = %d\n", rayon);      
 #endif
@@ -1012,7 +1202,9 @@ int32_t lasftmed(struct xvimage * image, int32_t connex, int32_t rayonmax)
   }
   medaxis_i = copyimage(image);
   M = UCHARDATA(medaxis_i);
-  for (x = 0; x < N; x++) M[x] = NDG_MAX - M[x]; // inverse M
+  for (x = 0; x < N; x++) {
+    M[x] = NDG_MAX - M[x]; // inverse M
+  }
   if (! lmedialaxis_lmedialaxisbin(medaxis_i, 8))
   {
     fprintf(stderr, "lasft: lmedialaxis_lmedialaxisbin failed\n");
@@ -1045,7 +1237,11 @@ void hpclosing3d(struct xvimage *image, int32_t nptb, int32_t *tab_es_x, int32_t
   uint8_t *I, *S, *C;
   int32_t rs, cs, ds, ps, N, i;
 
-  if (connex == 6) connex = 26; else connex = 6; 
+  if (connex == 6) {
+    connex = 26;
+  } else {
+    connex = 6;
+  }
   // (pour hthi* la connexite est celle des minima)
 
   image_sav = copyimage(image);
@@ -1075,7 +1271,9 @@ void hpclosing3d(struct xvimage *image, int32_t nptb, int32_t *tab_es_x, int32_t
     exit(0);
   }
   // max image_cpy image_sav image_cpy
-  for (i = 0; i < N; i++) C[i] = mcmax(C[i],S[i]);
+  for (i = 0; i < N; i++) {
+    C[i] = mcmax(C[i], S[i]);
+  }
   if (!lhthindelta3d(image, image_cpy, -1, connex))
   {
     fprintf(stderr, "%s: function lhthindelta3d failed\n", F_NAME);
@@ -1097,7 +1295,11 @@ void hpclosing3dball(struct xvimage *image, struct xvimage * dist, int32_t r, in
   int32_t rs, cs, ds, ps, N, i, r2 = r * r;
   uint32_t *D = ULONGDATA(dist);
 
-  if (connex == 6) connex = 26; else connex = 6; 
+  if (connex == 6) {
+    connex = 26;
+  } else {
+    connex = 6;
+  }
   // (pour hthi* la connexite est celle des minima)
 
   image_sav = copyimage(image);
@@ -1116,7 +1318,13 @@ void hpclosing3dball(struct xvimage *image, struct xvimage * dist, int32_t r, in
     fprintf(stderr, "%s: function ldistquad3d failed\n", F_NAME);
     exit(0);
   }
-  for(i=0; i<N; i++) if (D[i] > r2) T[i] = NDG_MIN; else T[i] = NDG_MAX;
+  for (i = 0; i < N; i++) {
+    if (D[i] > r2) {
+      T[i] = NDG_MIN;
+    } else {
+      T[i] = NDG_MAX;
+    }
+  }
 
   // controle topologique pour la dilatation
   if (!lhthickdelta3d(image, image_tmp, -1, connex))
@@ -1128,16 +1336,30 @@ void hpclosing3dball(struct xvimage *image, struct xvimage * dist, int32_t r, in
   memcpy(T, I, N); // copie image dans image_tmp
 
   // erosion
-  for(i=0; i<N; i++) if (T[i]) T[i] = NDG_MIN; else T[i] = NDG_MAX;
+  for (i = 0; i < N; i++) {
+    if (T[i]) {
+      T[i] = NDG_MIN;
+    } else {
+      T[i] = NDG_MAX;
+    }
+  }
   if (!ldistquad3d(image_tmp, dist))
   {
     fprintf(stderr, "%s: function ldistquad3d failed\n", F_NAME);
     exit(0);
   }
-  for(i=0; i<N; i++) if (D[i] > r2) T[i] = NDG_MAX; else T[i] = NDG_MIN;
+  for (i = 0; i < N; i++) {
+    if (D[i] > r2) {
+      T[i] = NDG_MAX;
+    } else {
+      T[i] = NDG_MIN;
+    }
+  }
 
   // max image_tmp image_sav image_tmp
-  for (i = 0; i < N; i++) T[i] = mcmax(T[i],S[i]);
+  for (i = 0; i < N; i++) {
+    T[i] = mcmax(T[i], S[i]);
+  }
 
   // controle topologique pour l'erosion
   if (!lhthindelta3d(image, image_tmp, -1, connex))
@@ -1185,7 +1407,11 @@ void hpopening3d(struct xvimage *image, int32_t nptb, int32_t *tab_es_x, int32_t
   uint8_t *I, *S, *T;
   int32_t rs, cs, ds, ps, N, i;
 
-  if (connex == 6) connex = 26; else connex = 6; 
+  if (connex == 6) {
+    connex = 26;
+  } else {
+    connex = 6;
+  }
   // (pour hthi* la connexite est celle des minima)
 
   image_sav = copyimage(image);
@@ -1215,7 +1441,9 @@ void hpopening3d(struct xvimage *image, int32_t nptb, int32_t *tab_es_x, int32_t
     exit(0);
   }
   // min image_tmp image_sav image_tmp
-  for (i = 0; i < N; i++) T[i] = mcmin(T[i],S[i]);
+  for (i = 0; i < N; i++) {
+    T[i] = mcmin(T[i], S[i]);
+  }
   if (!lhthickdelta3d(image, image_tmp, -1, connex))
   {
     fprintf(stderr, "%s: function lhthickdelta3d failed\n", F_NAME);
@@ -1237,7 +1465,11 @@ void hpopening3dball(struct xvimage *image, struct xvimage * dist, int32_t r, in
   int32_t rs, cs, ds, ps, N, i, r2 = r * r;
   uint32_t *D = ULONGDATA(dist);
 
-  if (connex == 6) connex = 26; else connex = 6; 
+  if (connex == 6) {
+    connex = 26;
+  } else {
+    connex = 6;
+  }
   // (pour hthi* la connexite est celle des minima)
 
   image_sav = copyimage(image);
@@ -1252,13 +1484,25 @@ void hpopening3dball(struct xvimage *image, struct xvimage * dist, int32_t r, in
   T = UCHARDATA(image_tmp);
 
   // erosion
-  for(i=0; i<N; i++) if (T[i]) T[i] = NDG_MIN; else T[i] = NDG_MAX;
+  for (i = 0; i < N; i++) {
+    if (T[i]) {
+      T[i] = NDG_MIN;
+    } else {
+      T[i] = NDG_MAX;
+    }
+  }
   if (!ldistquad3d(image_tmp, dist))
   {
     fprintf(stderr, "%s: function ldistquad3d failed\n", F_NAME);
     exit(0);
   }
-  for(i=0; i<N; i++) if (D[i] > r2) T[i] = NDG_MAX; else T[i] = NDG_MIN;
+  for (i = 0; i < N; i++) {
+    if (D[i] > r2) {
+      T[i] = NDG_MAX;
+    } else {
+      T[i] = NDG_MIN;
+    }
+  }
 
   // controle topologique pour l'erosion
   if (!lhthindelta3d(image, image_tmp, -1, connex))
@@ -1274,10 +1518,18 @@ void hpopening3dball(struct xvimage *image, struct xvimage * dist, int32_t r, in
     fprintf(stderr, "%s: function ldistquad3d failed\n", F_NAME);
     exit(0);
   }
-  for(i=0; i<N; i++) if (D[i] > r2) T[i] = NDG_MIN; else T[i] = NDG_MAX;
+  for (i = 0; i < N; i++) {
+    if (D[i] > r2) {
+      T[i] = NDG_MIN;
+    } else {
+      T[i] = NDG_MAX;
+    }
+  }
 
   // min image_tmp image_sav image_tmp
-  for (i = 0; i < N; i++) T[i] = mcmin(T[i],S[i]);
+  for (i = 0; i < N; i++) {
+    T[i] = mcmin(T[i], S[i]);
+  }
 
   // controle topologique pour la dilatation
   if (!lhthickdelta3d(image, image_tmp, -1, connex))
@@ -1329,7 +1581,11 @@ void condhpclosing3d(
   uint8_t *I, *S, *T, *C;
   int32_t rs, cs, ds, ps, N, i;
 
-  if (connex == 6) connex = 26; else connex = 6; 
+  if (connex == 6) {
+    connex = 26;
+  } else {
+    connex = 6;
+  }
   // (pour hthi* la connexite est celle des minima)
 
   image_sav = copyimage(image);
@@ -1351,7 +1607,9 @@ void condhpclosing3d(
   }
 
   // min image_tmp cond image_tmp
-  for (i = 0; i < N; i++) T[i] = mcmin(T[i],C[i]);
+  for (i = 0; i < N; i++) {
+    T[i] = mcmin(T[i], C[i]);
+  }
 
   if (!lhthickdelta3d(image, image_tmp, -1, connex))
   {
@@ -1368,7 +1626,9 @@ void condhpclosing3d(
   }
 
   // max image_tmp image_sav image_tmp
-  for (i = 0; i < N; i++) T[i] = mcmax(T[i],S[i]);
+  for (i = 0; i < N; i++) {
+    T[i] = mcmax(T[i], S[i]);
+  }
 
   if (!lhthindelta3d(image, image_tmp, -1, connex))
   {
@@ -1394,7 +1654,11 @@ void condhpclosing3dball(
   int32_t rs, cs, ds, ps, N, i, r2 = r * r;
   uint32_t *D = ULONGDATA(dist);
 
-  if (connex == 6) connex = 26; else connex = 6; 
+  if (connex == 6) {
+    connex = 26;
+  } else {
+    connex = 6;
+  }
   // (pour hthi* la connexite est celle des minima)
 
   image_sav = copyimage(image);
@@ -1415,10 +1679,20 @@ void condhpclosing3dball(
     fprintf(stderr, "%s: function ldistquad3d failed\n", F_NAME);
     exit(0);
   }
-  for(i=0; i<N; i++) if (D[i] > r2) T[i] = NDG_MIN; else T[i] = NDG_MAX;
+  for (i = 0; i < N; i++) {
+    if (D[i] > r2) {
+      T[i] = NDG_MIN;
+    } else {
+      T[i] = NDG_MAX;
+    }
+  }
 
   // sub image_tmp cond image_tmp
-  for (i = 0; i < N; i++) if (C[i]) T[i] = 0;
+  for (i = 0; i < N; i++) {
+    if (C[i]) {
+      T[i] = 0;
+    }
+  }
 
   // controle topologique pour la dilatation
   if (!lhthickdelta3d(image, image_tmp, -1, connex))
@@ -1430,16 +1704,30 @@ void condhpclosing3dball(
   memcpy(T, I, N); // copie image dans image_tmp
 
   // erosion
-  for(i=0; i<N; i++) if (T[i]) T[i] = NDG_MIN; else T[i] = NDG_MAX;
+  for (i = 0; i < N; i++) {
+    if (T[i]) {
+      T[i] = NDG_MIN;
+    } else {
+      T[i] = NDG_MAX;
+    }
+  }
   if (!ldistquad3d(image_tmp, dist))
   {
     fprintf(stderr, "%s: function ldistquad3d failed\n", F_NAME);
     exit(0);
   }
-  for(i=0; i<N; i++) if (D[i] > r2) T[i] = NDG_MAX; else T[i] = NDG_MIN;
+  for (i = 0; i < N; i++) {
+    if (D[i] > r2) {
+      T[i] = NDG_MAX;
+    } else {
+      T[i] = NDG_MIN;
+    }
+  }
 
   // max image_tmp image_sav image_tmp
-  for (i = 0; i < N; i++) T[i] = mcmax(T[i],S[i]);
+  for (i = 0; i < N; i++) {
+    T[i] = mcmax(T[i], S[i]);
+  }
 
   // controle topologique pour l'erosion
   if (!lhthindelta3d(image, image_tmp, -1, connex))
@@ -1466,7 +1754,11 @@ void condhpopening3d(
   uint8_t *I, *S, *T, *C;
   int32_t rs, cs, ds, ps, N, i;
 
-  if (connex == 6) connex = 26; else connex = 6; 
+  if (connex == 6) {
+    connex = 26;
+  } else {
+    connex = 6;
+  }
   // (pour hthi* la connexite est celle des minima)
 
   image_sav = copyimage(image);
@@ -1488,7 +1780,9 @@ void condhpopening3d(
   }
 
   // max image_tmp cond image_tmp
-  for (i = 0; i < N; i++) T[i] = mcmax(T[i],C[i]);    
+  for (i = 0; i < N; i++) {
+    T[i] = mcmax(T[i], C[i]);
+  }
 
   if (!lhthindelta3d(image, image_tmp, -1, connex))
   {
@@ -1505,7 +1799,9 @@ void condhpopening3d(
   }
 
   // min image_tmp image_sav image_tmp
-  for (i = 0; i < N; i++) T[i] = mcmin(T[i],S[i]);
+  for (i = 0; i < N; i++) {
+    T[i] = mcmin(T[i], S[i]);
+  }
 
   if (!lhthickdelta3d(image, image_tmp, -1, connex))
   {
@@ -1531,7 +1827,11 @@ void condhpopening3dball(
   int32_t rs, cs, ds, ps, N, i, r2 = r * r;
   uint32_t *D = ULONGDATA(dist);
 
-  if (connex == 6) connex = 26; else connex = 6; 
+  if (connex == 6) {
+    connex = 26;
+  } else {
+    connex = 6;
+  }
   // (pour hthi* la connexite est celle des minima)
 
   image_sav = copyimage(image);
@@ -1547,16 +1847,30 @@ void condhpopening3dball(
   T = UCHARDATA(image_tmp);
 
   // erosion
-  for(i=0; i<N; i++) if (T[i]) T[i] = NDG_MIN; else T[i] = NDG_MAX;
+  for (i = 0; i < N; i++) {
+    if (T[i]) {
+      T[i] = NDG_MIN;
+    } else {
+      T[i] = NDG_MAX;
+    }
+  }
   if (!ldistquad3d(image_tmp, dist))
   {
     fprintf(stderr, "%s: function ldistquad3d failed\n", F_NAME);
     exit(0);
   }
-  for(i=0; i<N; i++) if (D[i] > r2) T[i] = NDG_MAX; else T[i] = NDG_MIN;
+  for (i = 0; i < N; i++) {
+    if (D[i] > r2) {
+      T[i] = NDG_MAX;
+    } else {
+      T[i] = NDG_MIN;
+    }
+  }
 
   // max image_tmp cond image_tmp
-  for (i = 0; i < N; i++) T[i] = mcmax(T[i],C[i]);    
+  for (i = 0; i < N; i++) {
+    T[i] = mcmax(T[i], C[i]);
+  }
 
   // controle topologique pour l'erosion
   if (!lhthindelta3d(image, image_tmp, -1, connex))
@@ -1573,10 +1887,18 @@ void condhpopening3dball(
     fprintf(stderr, "%s: function ldistquad3d failed\n", F_NAME);
     exit(0);
   }
-  for(i=0; i<N; i++) if (D[i] > r2) T[i] = NDG_MIN; else T[i] = NDG_MAX;
+  for (i = 0; i < N; i++) {
+    if (D[i] > r2) {
+      T[i] = NDG_MIN;
+    } else {
+      T[i] = NDG_MAX;
+    }
+  }
 
   // min image_tmp image_sav image_tmp
-  for (i = 0; i < N; i++) T[i] = mcmin(T[i],S[i]);
+  for (i = 0; i < N; i++) {
+    T[i] = mcmin(T[i], S[i]);
+  }
 
   // controle topologique pour la dilatation
   if (!lhthickdelta3d(image, image_tmp, -1, connex))
@@ -1701,16 +2023,19 @@ int32_t lasft_ndg3d(struct xvimage * image, struct xvimage * imagec, struct xvim
       zc = yc = xc = rayon; 
       d = 2 * rayon + 1;
       nptb = 0;
-      for (x = 0; x < d; x++)
-        for (y = 0; y < d; y++)
-          for (z = 0; z < d; z++)
+      for (x = 0; x < d; x++) {
+        for (y = 0; y < d; y++) {
+          for (z = 0; z < d; z++) {
             if (((x-xc)*(x-xc)+(y-yc)*(y-yc)+(z-zc)*(z-zc)) <= (rayon*rayon))
  	    {
               tab_es_x[nptb] = x;
               tab_es_y[nptb] = y;
               tab_es_z[nptb] = z;
               nptb++;
- 	    }
+            }
+          }
+        }
+      }
 #ifdef VERBOSE
       fprintf(stderr, "lasft_ndg3d: rayon = %d\n", rayon);      
 #endif
@@ -1767,7 +2092,9 @@ int32_t lasftmed3d(struct xvimage * image, int32_t connex, int32_t rayonmax)
   }
   medaxis_i = copyimage(image);
   M = UCHARDATA(medaxis_i);
-  for (x = 0; x < N; x++) M[x] = NDG_MAX - M[x]; // inverse M
+  for (x = 0; x < N; x++) {
+    M[x] = NDG_MAX - M[x]; // inverse M
+  }
   if (! lmedialaxis_lmedialaxisbin(medaxis_i, 26))
   {
     fprintf(stderr, "%s: lmedialaxis_lmedialaxisbin failed\n", F_NAME);

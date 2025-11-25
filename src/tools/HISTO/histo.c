@@ -116,9 +116,10 @@ int main(int argc, char **argv)
       exit(1);
     }
     fprintf(fd, "s %d\n", NDG_MAX-NDG_MIN+1);
-    for (i = NDG_MIN; i <= NDG_MAX; i++) 
+    for (i = NDG_MIN; i <= NDG_MAX; i++) {
 #ifdef MC_64_BITS
       fprintf(fd, "%4d %ld\n", i, histo[i]);
+    }
 #else
       fprintf(fd, "%4d %d\n", i, histo[i]);
 #endif
@@ -132,9 +133,10 @@ int main(int argc, char **argv)
       exit(1);
     }
     fprintf(fd, "s %d\n", s);
-    for (i = 0; i < s; i++) 
+    for (i = 0; i < s; i++) {
 #ifdef MC_64_BITS
       fprintf(fd, "%4d %ld\n", i, histo[i]);
+    }
 #else
       fprintf(fd, "%4d %d\n", i, histo[i]);
 #endif
@@ -149,9 +151,10 @@ int main(int argc, char **argv)
       exit(1);
     }
     fprintf(fd, "s %d\n", s);
-    for (i = 0; i < s; i++) 
+    for (i = 0; i < s; i++) {
 #ifdef MC_64_BITS
       fprintf(fd, "%4d %ld\n", i, histo[i]);
+    }
 #else
       fprintf(fd, "%4d %d\n", i, histo[i]);
 #endif
@@ -159,7 +162,9 @@ int main(int argc, char **argv)
   }
 
   freeimage(image);
-  if (mask) freeimage(mask);
+  if (mask) {
+    freeimage(mask);
+  }
 
   return 0;
 } /* main */

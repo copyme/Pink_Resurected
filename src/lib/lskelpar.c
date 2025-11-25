@@ -389,10 +389,18 @@ static int32_t pav_match1(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if (v[0] != 0) goto fail;
-    if ((v[1] == 0) && (v[2] == 0) && (v[3] == 0)) goto fail;
-    if (v[4] != 0) goto fail;
-    if ((v[5] == 0) && (v[6] == 0) && (v[7] == 0)) goto fail;
+    if (v[0] != 0) {
+      goto fail;
+    }
+    if ((v[1] == 0) && (v[2] == 0) && (v[3] == 0)) {
+      goto fail;
+    }
+    if (v[4] != 0) {
+      goto fail;
+    }
+    if ((v[5] == 0) && (v[6] == 0) && (v[7] == 0)) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -414,10 +422,16 @@ static int32_t pav_match2(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if (v[0] != 0) goto fail;
+    if (v[0] != 0) {
+      goto fail;
+    }
     //    if ((v[1] == 0) && (v[2] == 0) && (v[3] == 0) && (v[4] == 0) && (v[5] == 0)) goto fail;
-    if (v[6] != 0) goto fail;
-    if (v[7] != 2) goto fail;
+    if (v[6] != 0) {
+      goto fail;
+    }
+    if (v[7] != 2) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -438,16 +452,30 @@ static int32_t pav_match3(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   int32_t i;
   uint8_t v[8];
   extract_vois(F, x, rs, N, v);
-  if ((v[0] != 1) && (v[1] != 1) && (v[2] != 1) && (v[3] != 1) &&
-      (v[4] != 1) && (v[5] != 1) && (v[6] != 1) && (v[7] != 1)) return 1;
+  if ((v[0] != 1) && (v[1] != 1) && (v[2] != 1) && (v[3] != 1) && (v[4] != 1) &&
+      (v[5] != 1) && (v[6] != 1) && (v[7] != 1)) {
+    return 1;
+  }
   for (i = 0; i < 4; i++)
   {
-    if (v[0] != 2) goto fail;
-    if (v[4] != 0) goto fail;
-    if ((v[1] == 0) && (v[7] == 0)) goto fail;
-    if ((v[1] != 0) && (v[7] != 0)) return 1;
-    if ((v[2] == 0) && (v[3] == 0)) goto fail;
-    if ((v[5] == 0) && (v[6] == 0)) goto fail;
+    if (v[0] != 2) {
+      goto fail;
+    }
+    if (v[4] != 0) {
+      goto fail;
+    }
+    if ((v[1] == 0) && (v[7] == 0)) {
+      goto fail;
+    }
+    if ((v[1] != 0) && (v[7] != 0)) {
+      return 1;
+    }
+    if ((v[2] == 0) && (v[3] == 0)) {
+      goto fail;
+    }
+    if ((v[5] == 0) && (v[6] == 0)) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -465,11 +493,19 @@ static int32_t pav_match4(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if (v[0] != 2) goto fail;
-    if ((v[1] != 0) || (v[2] != 0) || (v[3] != 0) ||
-	(v[4] != 0) || (v[5] != 0)) goto fail;
-    if (v[6] != 2) goto fail;
-    if (v[7] == 0) goto fail;
+    if (v[0] != 2) {
+      goto fail;
+    }
+    if ((v[1] != 0) || (v[2] != 0) || (v[3] != 0) || (v[4] != 0) ||
+        (v[5] != 0)) {
+      goto fail;
+    }
+    if (v[6] != 2) {
+      goto fail;
+    }
+    if (v[7] == 0) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -518,9 +554,15 @@ int32_t lskelpavlidis(struct xvimage *image,
     return 0;
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -534,8 +576,16 @@ int32_t lskelpavlidis(struct xvimage *image,
     printf("step %d\n", step);
 #endif
     memset(T, 0, N);
-    for (i = 0; i < N; i++) if (F[i] && bordext4(F, i, rs, N)) F[i] = 2;
-    for (i = 0; i < N; i++) if ((F[i] == 2) && pav_multiple(F, i, rs, N)) T[i] = 1;
+    for (i = 0; i < N; i++) {
+      if (F[i] && bordext4(F, i, rs, N)) {
+        F[i] = 2;
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if ((F[i] == 2) && pav_multiple(F, i, rs, N)) {
+        T[i] = 1;
+      }
+    }
 #ifdef DEBUG_PAV
     printf("\n");
     for (j = 0; j < cs; j++)
@@ -547,16 +597,32 @@ int32_t lskelpavlidis(struct xvimage *image,
     }
     printf("\n");
 #endif
-    for (i = 0; i < N; i++) if ((F[i] == 2) && !T[i]) break;
-    if (i == N) break;
-    for (i = 0; i < N; i++) if ((F[i] == 1) || T[i]) F[i] = 1; else F[i] = 0;
+    for (i = 0; i < N; i++) {
+      if ((F[i] == 2) && !T[i]) {
+        break;
+      }
+    }
+    if (i == N) {
+      break;
+    }
+    for (i = 0; i < N; i++) {
+      if ((F[i] == 1) || T[i]) {
+        F[i] = 1;
+      } else {
+        F[i] = 0;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 255; // normalize values
+      }
+    }
 
   freeimage(tmp);
   return(1);
@@ -580,18 +646,36 @@ int32_t lskelpavlidis1(struct xvimage *image,
   struct xvimage *tmp = copyimage(image);
   uint8_t *T = UCHARDATA(tmp);
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
   /* ================================================ */
 
   memset(T, 0, N);
-  for (i = 0; i < N; i++) if (F[i] && bordext4(F, i, rs, N)) F[i] = 2;
-  for (i = 0; i < N; i++) if ((F[i] == 2) && pav_multiple(F, i, rs, N)) T[i] = 1;
-  if ((F[pixel] == 2) && !T[pixel]) F[pixel] = 0;
+  for (i = 0; i < N; i++) {
+    if (F[i] && bordext4(F, i, rs, N)) {
+      F[i] = 2;
+    }
+  }
+  for (i = 0; i < N; i++) {
+    if ((F[i] == 2) && pav_multiple(F, i, rs, N)) {
+      T[i] = 1;
+    }
+  }
+  if ((F[pixel] == 2) && !T[pixel]) {
+    F[pixel] = 0;
+  }
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 255; // normalize values
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 255; // normalize values
+    }
+  }
 
   freeimage(tmp);
   return(1);
@@ -603,10 +687,18 @@ static int32_t eck_perfect(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   int32_t i = x % rs;
   int32_t j = x / rs;
-  if ((F[j*rs + i-1] == 2) && (F[j*rs + i+1] == 0)) return 1;
-  if ((F[j*rs + i+1] == 2) && (F[j*rs + i-1] == 0)) return 1;
-  if ((F[(j-1)*rs + i] == 2) && (F[(j+1)*rs + i] == 0)) return 1;
-  if ((F[(j+1)*rs + i] == 2) && (F[(j-1)*rs + i] == 0)) return 1;
+  if ((F[j * rs + i - 1] == 2) && (F[j * rs + i + 1] == 0)) {
+    return 1;
+  }
+  if ((F[j * rs + i + 1] == 2) && (F[j * rs + i - 1] == 0)) {
+    return 1;
+  }
+  if ((F[(j - 1) * rs + i] == 2) && (F[(j + 1) * rs + i] == 0)) {
+    return 1;
+  }
+  if ((F[(j + 1) * rs + i] == 2) && (F[(j - 1) * rs + i] == 0)) {
+    return 1;
+  }
   return 0;
 } /* eck_perfect() */
 
@@ -634,9 +726,15 @@ int32_t lskeleckhardt(struct xvimage *image,
     return 0;
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -652,13 +750,18 @@ int32_t lskeleckhardt(struct xvimage *image,
     printf("step %d\n", step);
 #endif
     memset(T, 0, N);
-    for (i = 0; i < N; i++) if (F[i] && nbvois4(F, i, rs, N) == 4) F[i] = 2;
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
+      if (F[i] && nbvois4(F, i, rs, N) == 4) {
+        F[i] = 2;
+      }
+    }
+    for (i = 0; i < N; i++) {
       if ((F[i] == 1) && simple8(F, i, rs, N) && eck_perfect(F, i, rs, N))
       {
 	nonstab = 1;
 	T[i] = 1;
       }
+    }
 #ifdef DEBUG_ECK
     printf("\n");
     for (j = 0; j < cs; j++)
@@ -670,16 +773,24 @@ int32_t lskeleckhardt(struct xvimage *image,
     }
     printf("\n");
 #endif
-    for (i = 0; i < N; i++)
-      if (T[i] == 1) F[i] = 0;
-      else if (F[i]) F[i] = 1;
+    for (i = 0; i < N; i++) {
+      if (T[i] == 1) {
+        F[i] = 0;
+      } else if (F[i]) {
+        F[i] = 1;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 255; // normalize values
+      }
+    }
 
   freeimage(tmp);
   return(1);
@@ -693,7 +804,11 @@ static int32_t crossing_nb(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   int32_t i, n = 0;
   uint8_t v[8];
   extract_vois(F, x, rs, N, v);
-  for (i = 0; i < 8; i++) if (v[i] && !v[(i+1)%8]) n++;
+  for (i = 0; i < 8; i++) {
+    if (v[i] && !v[(i + 1) % 8]) {
+      n++;
+    }
+  }
   return n;
 } /* crossing_nb() */
 
@@ -705,11 +820,17 @@ static int32_t rutovitz_match(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 #define F_NAME "rutovitz_match"
   int32_t n;
   uint8_t v[8];
-  if (!F[x]) return 0;
+  if (!F[x]) {
+    return 0;
+  }
   n = nbvois8(F, x, rs, N);
   //  if ((n < 2) || (n > 6)) return 0; // cond. donnée par Zhang et Wang
-  if (n < 2) return 0;
-  if (crossing_nb(F, x, rs, N) != 1) return 0;
+  if (n < 2) {
+    return 0;
+  }
+  if (crossing_nb(F, x, rs, N) != 1) {
+    return 0;
+  }
   extract_vois(F, x, rs, N, v);
   if ((x < rs) || (x%rs == rs-1))
   {
@@ -717,9 +838,13 @@ static int32_t rutovitz_match(uint8_t *F, int32_t x, int32_t rs, int32_t N)
     exit(0);
   }
   n = crossing_nb(F, x-rs, rs, N);
-  if ((n == 1) && v[2] && v[0] && v[4]) return 0;
+  if ((n == 1) && v[2] && v[0] && v[4]) {
+    return 0;
+  }
   n = crossing_nb(F, x+1, rs, N);
-  if ((n == 1) && v[2] && v[0] && v[6]) return 0;
+  if ((n == 1) && v[2] && v[0] && v[6]) {
+    return 0;
+  }
   return 1;
 } /* rutovitz_match() */
 
@@ -747,9 +872,15 @@ int32_t lskelrutovitz(struct xvimage *image,
     return 0;
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -765,23 +896,32 @@ int32_t lskelrutovitz(struct xvimage *image,
     printf("step %d\n", step);
 #endif
     memset(T, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (rutovitz_match(F, i, rs, N))
 	//if (rutovitz_match(F, i, rs, N) && !jangrec_match23(F, i, rs, N)) // correction mc
       {
 	nonstab = 1;
 	T[i] = 1;
       }
-    for (i = 0; i < N; i++)
-      if (T[i] == 1) F[i] = 0;
-      else if (F[i]) F[i] = 1;
+    }
+    for (i = 0; i < N; i++) {
+      if (T[i] == 1) {
+        F[i] = 0;
+      } else if (F[i]) {
+        F[i] = 1;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 255; // normalize values
+      }
+    }
 
   freeimage(tmp);
   return(1);
@@ -795,13 +935,23 @@ static int32_t zhangsuen_match1(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 #define F_NAME "zhangsuen_match1"
   int32_t n;
   uint8_t v[8];
-  if (!F[x]) return 0;
+  if (!F[x]) {
+    return 0;
+  }
   n = nbvois8(F, x, rs, N);
-  if ((n < 2) || (n > 6)) return 0;
-  if (crossing_nb(F, x, rs, N) != 1) return 0;
+  if ((n < 2) || (n > 6)) {
+    return 0;
+  }
+  if (crossing_nb(F, x, rs, N) != 1) {
+    return 0;
+  }
   extract_vois(F, x, rs, N, v);
-  if (v[2] && v[0] && v[6]) return 0;
-  if (v[6] && v[0] && v[4]) return 0;
+  if (v[2] && v[0] && v[6]) {
+    return 0;
+  }
+  if (v[6] && v[0] && v[4]) {
+    return 0;
+  }
   return 1;
 } /* zhangsuen_match1() */
 
@@ -813,13 +963,23 @@ static int32_t zhangsuen_match2(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 #define F_NAME "zhangsuen_match2"
   int32_t n;
   uint8_t v[8];
-  if (!F[x]) return 0;
+  if (!F[x]) {
+    return 0;
+  }
   n = nbvois8(F, x, rs, N);
-  if ((n < 2) || (n > 6)) return 0;
-  if (crossing_nb(F, x, rs, N) != 1) return 0;
+  if ((n < 2) || (n > 6)) {
+    return 0;
+  }
+  if (crossing_nb(F, x, rs, N) != 1) {
+    return 0;
+  }
   extract_vois(F, x, rs, N, v);
-  if (v[2] && v[4] && v[6]) return 0;
-  if (v[2] && v[0] && v[4]) return 0;
+  if (v[2] && v[4] && v[6]) {
+    return 0;
+  }
+  if (v[2] && v[0] && v[4]) {
+    return 0;
+  }
   return 1;
 } /* zhangsuen_match2() */
 
@@ -847,9 +1007,15 @@ int32_t lskelzhangsuen(struct xvimage *image,
     return 0;
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -867,32 +1033,42 @@ int32_t lskelzhangsuen(struct xvimage *image,
     memset(T, 0, N);
     if ((step%2) == 0)
     {
-      for (i = 0; i < N; i++)
-	if (zhangsuen_match1(F, i, rs, N))
+      for (i = 0; i < N; i++) {
+        if (zhangsuen_match1(F, i, rs, N))
 	{
 	  nonstab = 1;
 	  T[i] = 1;
-	}
+        }
+      }
     }
     else
     {
-      for (i = 0; i < N; i++)
-	if (zhangsuen_match2(F, i, rs, N))
+      for (i = 0; i < N; i++) {
+        if (zhangsuen_match2(F, i, rs, N))
 	{
 	  nonstab = 1;
 	  T[i] = 1;
-	}
+        }
+      }
     }
-    for (i = 0; i < N; i++)
-      if (T[i] == 1) F[i] = 0;
-      else if (F[i]) F[i] = 1;
+    for (i = 0; i < N; i++) {
+      if (T[i] == 1) {
+        F[i] = 0;
+      } else if (F[i]) {
+        F[i] = 1;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 255; // normalize values
+      }
+    }
 
   freeimage(tmp);
   return(1);
@@ -906,13 +1082,23 @@ static int32_t KwonGiKang_match1(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 #define F_NAME "KwonGiKang_match1"
   int32_t n;
   uint8_t v[8];
-  if (!F[x]) return 0;
+  if (!F[x]) {
+    return 0;
+  }
   n = nbvois8(F, x, rs, N);
-  if ((n < 2) || (n > 6)) return 0;
-  if (crossing_nb(F, x, rs, N) != 1) return 0;
+  if ((n < 2) || (n > 6)) {
+    return 0;
+  }
+  if (crossing_nb(F, x, rs, N) != 1) {
+    return 0;
+  }
   extract_vois(F, x, rs, N, v);
-  if (v[2] && v[0] && v[6]) return 0;
-  if (v[6] && v[0] && v[4]) return 0;
+  if (v[2] && v[0] && v[6]) {
+    return 0;
+  }
+  if (v[6] && v[0] && v[4]) {
+    return 0;
+  }
   return 1;
 } /* KwonGiKang_match1() */
 
@@ -924,13 +1110,23 @@ static int32_t KwonGiKang_match2(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 #define F_NAME "KwonGiKang_match2"
   int32_t n;
   uint8_t v[8];
-  if (!F[x]) return 0;
+  if (!F[x]) {
+    return 0;
+  }
   n = nbvois8(F, x, rs, N);
-  if ((n < 3) || (n > 6)) return 0;
-  if (crossing_nb(F, x, rs, N) != 1) return 0;
+  if ((n < 3) || (n > 6)) {
+    return 0;
+  }
+  if (crossing_nb(F, x, rs, N) != 1) {
+    return 0;
+  }
   extract_vois(F, x, rs, N, v);
-  if (v[2] && v[4] && v[6]) return 0;
-  if (v[2] && v[0] && v[4]) return 0;
+  if (v[2] && v[4] && v[6]) {
+    return 0;
+  }
+  if (v[2] && v[0] && v[4]) {
+    return 0;
+  }
   return 1;
 } /* KwonGiKang_match2() */
 
@@ -941,12 +1137,22 @@ static int32_t KwonGiKang_match3(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 #undef F_NAME
 #define F_NAME "KwonGiKang_match3"
   uint8_t v[8];
-  if (!F[x]) return 0;
+  if (!F[x]) {
+    return 0;
+  }
   extract_vois(F, x, rs, N, v);
-  if (!v[3] || !v[4] || !v[6] || v[1]) return 0;
-  if (!v[1] || !v[0] || !v[6] || v[3]) return 0;
-  if (!v[7] || !v[4] || !v[6] || v[1]) return 0;
-  if (!v[5] || !v[0] || !v[6] || v[3]) return 0;
+  if (!v[3] || !v[4] || !v[6] || v[1]) {
+    return 0;
+  }
+  if (!v[1] || !v[0] || !v[6] || v[3]) {
+    return 0;
+  }
+  if (!v[7] || !v[4] || !v[6] || v[1]) {
+    return 0;
+  }
+  if (!v[5] || !v[0] || !v[6] || v[3]) {
+    return 0;
+  }
   return 1;
 } /* KwonGiKang_match3() */
 
@@ -974,9 +1180,15 @@ int32_t lskelKwonGiKang(struct xvimage *image,
     return 0;
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -996,25 +1208,31 @@ int32_t lskelKwonGiKang(struct xvimage *image,
     memset(T, 0, N);
     if ((step%2) == 0)
     {
-      for (i = 0; i < N; i++)
-	if (KwonGiKang_match1(F, i, rs, N))
+      for (i = 0; i < N; i++) {
+        if (KwonGiKang_match1(F, i, rs, N))
 	{
 	  nonstab = 1;
 	  T[i] = 1;
-	}
+        }
+      }
     }
     else
     {
-      for (i = 0; i < N; i++)
-	if (KwonGiKang_match2(F, i, rs, N))
+      for (i = 0; i < N; i++) {
+        if (KwonGiKang_match2(F, i, rs, N))
 	{
 	  nonstab = 1;
 	  T[i] = 1;
-	}
+        }
+      }
     }
-    for (i = 0; i < N; i++)
-      if (T[i] == 1) F[i] = 0;
-      else if (F[i]) F[i] = 1;
+    for (i = 0; i < N; i++) {
+      if (T[i] == 1) {
+        F[i] = 0;
+      } else if (F[i]) {
+        F[i] = 1;
+      }
+    }
   } // while
 
 #ifdef VERBOSE1
@@ -1031,22 +1249,31 @@ int32_t lskelKwonGiKang(struct xvimage *image,
     printf("step %d\n", step);
 #endif
     memset(T, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (KwonGiKang_match3(F, i, rs, N))
       {
 	nonstab = 1;
 	T[i] = 1;
       }
-    for (i = 0; i < N; i++)
-      if (T[i] == 1) F[i] = 0;
-      else if (F[i]) F[i] = 1;
+    }
+    for (i = 0; i < N; i++) {
+      if (T[i] == 1) {
+        F[i] = 0;
+      } else if (F[i]) {
+        F[i] = 1;
+      }
+    }
   } // while
 
 #ifdef VERBOSE1
     printf("PASS2 ended, number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 255; // normalize values
+      }
+    }
 
   freeimage(tmp);
   return(1);
@@ -1060,18 +1287,28 @@ static int32_t zhangwang_match(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 #define F_NAME "zhangwang_match"
   int32_t n;
   uint8_t v[8];
-  if (!F[x]) return 0;
+  if (!F[x]) {
+    return 0;
+  }
   n = nbvois8(F, x, rs, N);
-  if ((n < 2) || (n > 6)) return 0;
-  if (crossing_nb(F, x, rs, N) != 1) return 0;
+  if ((n < 2) || (n > 6)) {
+    return 0;
+  }
+  if (crossing_nb(F, x, rs, N) != 1) {
+    return 0;
+  }
   extract_vois(F, x, rs, N, v);
   if ((x < rs+rs) || (x%rs >= rs-2))
   {
     fprintf(stderr, "%s: object must not hit the 2 pixel-thick frame\n", F_NAME);
     exit(0);
   }
-  if ((F[x-(rs+rs)] == 0) && v[2] && v[0] && v[4]) return 0;
-  if ((F[x+2]       == 0) && v[2] && v[0] && v[6]) return 0;
+  if ((F[x - (rs + rs)] == 0) && v[2] && v[0] && v[4]) {
+    return 0;
+  }
+  if ((F[x + 2] == 0) && v[2] && v[0] && v[6]) {
+    return 0;
+  }
   return 1;
 } /* zhangwang_match() */
 
@@ -1099,9 +1336,15 @@ int32_t lskelzhangwang(struct xvimage *image,
     return 0;
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -1117,23 +1360,32 @@ int32_t lskelzhangwang(struct xvimage *image,
     printf("step %d\n", step);
 #endif
     memset(T, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (zhangwang_match(F, i, rs, N))
 	//if (zhangwang_match(F, i, rs, N) && !jangrec_match23(F, i, rs, N)) // correction mc
       {
 	nonstab = 1;
 	T[i] = 1;
       }
-    for (i = 0; i < N; i++)
-      if (T[i] == 1) F[i] = 0;
-      else if (F[i]) F[i] = 1;
+    }
+    for (i = 0; i < N; i++) {
+      if (T[i] == 1) {
+        F[i] = 0;
+      } else if (F[i]) {
+        F[i] = 1;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 255; // normalize values
+      }
+    }
 
   freeimage(tmp);
   return(1);
@@ -1148,24 +1400,39 @@ static int32_t hanlarhee_match2(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
 
   // at least one neighbor must be greater than or equal to 3
-  for (i = 0; i < 8; i++) if (v[i] >= 3) break;
-  if (i == 8) return 0;
+  for (i = 0; i < 8; i++) {
+    if (v[i] >= 3) {
+      break;
+    }
+  }
+  if (i == 8) {
+    return 0;
+  }
 
   for (i = 0; i < 4; i++)
   {
-    if ((v[0])&&(v[1])&&(!v[2])&&(!v[3])&&(!v[4])&&(!v[5])&&(!v[6])&&(!v[7])) return 1;
+    if ((v[0]) && (v[1]) && (!v[2]) && (!v[3]) && (!v[4]) && (!v[5]) &&
+        (!v[6]) && (!v[7])) {
+      return 1;
+    }
     rotate90_vois(v);
   }
 
   for (i = 0; i < 4; i++)
   {
-    if ((!v[0])&&(v[1])&&(v[2])&&(!v[3])&&(!v[4])&&(!v[5])&&(!v[6])&&(!v[7])) return 1;
+    if ((!v[0]) && (v[1]) && (v[2]) && (!v[3]) && (!v[4]) && (!v[5]) &&
+        (!v[6]) && (!v[7])) {
+      return 1;
+    }
     rotate90_vois(v);
   }
 
   for (i = 0; i < 4; i++)
   {
-    if ((v[0])&&(!v[1])&&(v[2])&&(!v[3])&&(!v[4])&&(!v[5])&&(!v[6])&&(!v[7])) return 1;
+    if ((v[0]) && (!v[1]) && (v[2]) && (!v[3]) && (!v[4]) && (!v[5]) &&
+        (!v[6]) && (!v[7])) {
+      return 1;
+    }
     rotate90_vois(v);
   }
 
@@ -1181,25 +1448,49 @@ static int32_t hanlarhee_match3(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
 
   // at least one neighbor must be greater than or equal to 7
-  for (i = 0; i < 8; i++) if (v[i] >= 7) break;
-  if (i == 8) return 0;
+  for (i = 0; i < 8; i++) {
+    if (v[i] >= 7) {
+      break;
+    }
+  }
+  if (i == 8) {
+    return 0;
+  }
 
   for (i = 0; i < 4; i++)
   {
-    if ((v[0])&&(v[1])&&(v[2])&&(!v[3])&&(!v[4])&&(!v[5])&&(!v[6])&&(!v[7])) return 1;
+    if ((v[0]) && (v[1]) && (v[2]) && (!v[3]) && (!v[4]) && (!v[5]) &&
+        (!v[6]) && (!v[7])) {
+      return 1;
+    }
     rotate90_vois(v);
   }
 
   for (i = 0; i < 4; i++)
   {
-    if ((!v[0])&&(v[1])&&(v[2])&&(v[3])&&(!v[4])&&(!v[5])&&(!v[6])&&(!v[7])) return 1;
+    if ((!v[0]) && (v[1]) && (v[2]) && (v[3]) && (!v[4]) && (!v[5]) &&
+        (!v[6]) && (!v[7])) {
+      return 1;
+    }
     rotate90_vois(v);
   }
 
-  if ((v[0])&&(!v[1])&&(!v[2])&&(!v[3])&&(!v[4])&&(v[5])&&(v[6])&&(!v[7])) return 1;
-  if ((!v[0])&&(!v[1])&&(!v[2])&&(v[3])&&(v[4])&&(!v[5])&&(v[6])&&(!v[7])) return 1;
-  if ((v[0])&&(v[1])&&(!v[2])&&(!v[3])&&(!v[4])&&(!v[5])&&(v[6])&&(!v[7])) return 1;
-  if ((!v[0])&&(!v[1])&&(!v[2])&&(!v[3])&&(v[4])&&(!v[5])&&(v[6])&&(v[7])) return 1;
+  if ((v[0]) && (!v[1]) && (!v[2]) && (!v[3]) && (!v[4]) && (v[5]) && (v[6]) &&
+      (!v[7])) {
+    return 1;
+  }
+  if ((!v[0]) && (!v[1]) && (!v[2]) && (v[3]) && (v[4]) && (!v[5]) && (v[6]) &&
+      (!v[7])) {
+    return 1;
+  }
+  if ((v[0]) && (v[1]) && (!v[2]) && (!v[3]) && (!v[4]) && (!v[5]) && (v[6]) &&
+      (!v[7])) {
+    return 1;
+  }
+  if ((!v[0]) && (!v[1]) && (!v[2]) && (!v[3]) && (v[4]) && (!v[5]) && (v[6]) &&
+      (v[7])) {
+    return 1;
+  }
 
   return 0;
 } /* hanlarhee_match3() */
@@ -1214,18 +1505,30 @@ static int32_t hanlarhee_match4(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 
   for (i = 0; i < 4; i++)
   {
-    if ((v[0])&&(v[1])&&(v[2])&&(v[3])&&(!v[4])&&(!v[5])&&(!v[6])&&(!v[7])) return 1;
+    if ((v[0]) && (v[1]) && (v[2]) && (v[3]) && (!v[4]) && (!v[5]) && (!v[6]) &&
+        (!v[7])) {
+      return 1;
+    }
     rotate90_vois(v);
   }
 
   for (i = 0; i < 4; i++)
   {
-    if ((!v[0])&&(v[1])&&(v[2])&&(v[3])&&(v[4])&&(!v[5])&&(!v[6])&&(!v[7])) return 1;
+    if ((!v[0]) && (v[1]) && (v[2]) && (v[3]) && (v[4]) && (!v[5]) && (!v[6]) &&
+        (!v[7])) {
+      return 1;
+    }
     rotate90_vois(v);
   }
 
-  if ((v[0])&&(v[1])&&(!v[2])&&(!v[3])&&(!v[4])&&(v[5])&&(v[6])&&(!v[7])) return 1;
-  if ((!v[0])&&(!v[1])&&(!v[2])&&(v[3])&&(v[4])&&(!v[5])&&(v[6])&&(v[7])) return 1;
+  if ((v[0]) && (v[1]) && (!v[2]) && (!v[3]) && (!v[4]) && (v[5]) && (v[6]) &&
+      (!v[7])) {
+    return 1;
+  }
+  if ((!v[0]) && (!v[1]) && (!v[2]) && (v[3]) && (v[4]) && (!v[5]) && (v[6]) &&
+      (v[7])) {
+    return 1;
+  }
 
   return 0;
 } /* hanlarhee_match4() */
@@ -1239,18 +1542,30 @@ static int32_t hanlarhee_match5(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
 
   // at least one neighbor must be equal to 8
-  for (i = 0; i < 8; i++) if (v[i] == 8) break;
-  if (i == 8) return 0;
+  for (i = 0; i < 8; i++) {
+    if (v[i] == 8) {
+      break;
+    }
+  }
+  if (i == 8) {
+    return 0;
+  }
 
   for (i = 0; i < 4; i++)
   {
-    if ((v[0])&&(v[1])&&(v[2])&&(v[3])&&(v[4])&&(!v[5])&&(!v[6])&&(!v[7])) return 1;
+    if ((v[0]) && (v[1]) && (v[2]) && (v[3]) && (v[4]) && (!v[5]) && (!v[6]) &&
+        (!v[7])) {
+      return 1;
+    }
     rotate90_vois(v);
   }
 
   for (i = 0; i < 4; i++)
   {
-    if ((!v[0])&&(v[1])&&(v[2])&&(v[3])&&(v[4])&&(v[5])&&(!v[6])&&(!v[7])) return 1;
+    if ((!v[0]) && (v[1]) && (v[2]) && (v[3]) && (v[4]) && (v[5]) && (!v[6]) &&
+        (!v[7])) {
+      return 1;
+    }
     rotate90_vois(v);
   }
 
@@ -1266,18 +1581,30 @@ static int32_t hanlarhee_match6(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
 
   // at least one neighbor must be equal to 8
-  for (i = 0; i < 8; i++) if (v[i] == 8) break;
-  if (i == 8) return 0;
+  for (i = 0; i < 8; i++) {
+    if (v[i] == 8) {
+      break;
+    }
+  }
+  if (i == 8) {
+    return 0;
+  }
 
   for (i = 0; i < 4; i++)
   {
-    if ((v[0])&&(v[1])&&(v[2])&&(v[3])&&(v[4])&&(v[5])&&(!v[6])&&(!v[7])) return 1;
+    if ((v[0]) && (v[1]) && (v[2]) && (v[3]) && (v[4]) && (v[5]) && (!v[6]) &&
+        (!v[7])) {
+      return 1;
+    }
     rotate90_vois(v);
   }
 
   for (i = 0; i < 4; i++)
   {
-    if ((!v[0])&&(v[1])&&(v[2])&&(v[3])&&(v[4])&&(v[5])&&(v[6])&&(!v[7])) return 1;
+    if ((!v[0]) && (v[1]) && (v[2]) && (v[3]) && (v[4]) && (v[5]) && (v[6]) &&
+        (!v[7])) {
+      return 1;
+    }
     rotate90_vois(v);
   }
 
@@ -1294,12 +1621,21 @@ static int32_t hanlarhee_match7(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 
   // at least two neighbors must be equal to 8
   n = 0;
-  for (i = 0; i < 8; i++) if (v[i] == 8) n++;
-  if (n < 2) return 0;
+  for (i = 0; i < 8; i++) {
+    if (v[i] == 8) {
+      n++;
+    }
+  }
+  if (n < 2) {
+    return 0;
+  }
 
   for (i = 0; i < 4; i++)
   {
-    if ((!v[0])&&(v[1])&&(v[2])&&(v[3])&&(v[4])&&(v[5])&&(v[6])&&(v[7])) return 1;
+    if ((!v[0]) && (v[1]) && (v[2]) && (v[3]) && (v[4]) && (v[5]) && (v[6]) &&
+        (v[7])) {
+      return 1;
+    }
     rotate90_vois(v);
   }
 
@@ -1317,8 +1653,11 @@ static int32_t hanlarhee_match(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   case 0: return 0;
   case 1:
     extract_vois(F, x, rs, N, v);
-    for (i = 0; i < 8; i++)
-      if (v[i] >= 3) return 1;
+    for (i = 0; i < 8; i++) {
+      if (v[i] >= 3) {
+        return 1;
+      }
+    }
     return 0;
   case 2: return hanlarhee_match2(F, x, rs, N);
   case 3: return hanlarhee_match3(F, x, rs, N);
@@ -1357,9 +1696,15 @@ int32_t lskelhanlarhee(struct xvimage *image,
     return 0;
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -1375,23 +1720,36 @@ int32_t lskelhanlarhee(struct xvimage *image,
     printf("step %d\n", step);
 #endif
     memset(T, 0, N);
-    for (i = 0; i < N; i++) if (F[i]) B[i] = nbvois8(F, i, rs, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        B[i] = nbvois8(F, i, rs, N);
+      }
+    }
+    for (i = 0; i < N; i++) {
       if (F[i] && hanlarhee_match(B, i, rs, N))
       {
 	nonstab = 1;
 	T[i] = 1;
       }
-    for (i = 0; i < N; i++)
-      if (T[i] == 1) F[i] = 0;
-      else if (F[i]) F[i] = 1;
+    }
+    for (i = 0; i < N; i++) {
+      if (T[i] == 1) {
+        F[i] = 0;
+      } else if (F[i]) {
+        F[i] = 1;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 255; // normalize values
+      }
+    }
 
   freeimage(tmp);
   freeimage(nbn);
@@ -1511,9 +1869,15 @@ int32_t lskelguohall(struct xvimage *image,
     return 0;
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -1533,33 +1897,43 @@ int32_t lskelguohall(struct xvimage *image,
     switch (variante)
     {
     case 1:
-      for (i = 0; i < N; i++)
-	if (F[i] && bordext4(F, i, rs, N) && (nbvois8(F, i, rs, N) > 2)
+      for (i = 0; i < N; i++) {
+        if (F[i] && bordext4(F, i, rs, N) && (nbvois8(F, i, rs, N) > 2)
 	    && (crossing_nb(F, i, rs, N) == 1) && !guohall_L(F, i, rs, N))
 	{
 	  nonstab = 1;
 	  T[i] = 1;
-	}
-      for (i = 0; i < N; i++)
-	if (T[i] == 1) F[i] = 0;
-	else if (F[i]) F[i] = 1;
+        }
+      }
+      for (i = 0; i < N; i++) {
+        if (T[i] == 1) {
+          F[i] = 0;
+        } else if (F[i]) {
+          F[i] = 1;
+        }
+      }
       break;
     case 2:
-      for (i = 0; i < N; i++)
-	if (F[i] && bordext4(F, i, rs, N) && (nbvois8(F, i, rs, N) > 2)
+      for (i = 0; i < N; i++) {
+        if (F[i] && bordext4(F, i, rs, N) && (nbvois8(F, i, rs, N) > 2)
 	    && (crossing_nb(F, i, rs, N) == 1) && !guohall_d1(F, i, rs, N)
 	    && !guohall_d2(F, i, rs, N) && !guohall_d3(F, i, rs, N))
 	{
 	  nonstab = 1;
 	  T[i] = 1;
-	}
-      for (i = 0; i < N; i++)
-	if (T[i] == 1) F[i] = 0;
-	else if (F[i]) F[i] = 1;
+        }
+      }
+      for (i = 0; i < N; i++) {
+        if (T[i] == 1) {
+          F[i] = 0;
+        } else if (F[i]) {
+          F[i] = 1;
+        }
+      }
       break;
     case 3:
-      for (i = 0; i < N; i++)
-	if (F[i] &&
+      for (i = 0; i < N; i++) {
+        if (F[i] &&
 	    ((bordext4(F, i, rs, N) && (nbvois8(F, i, rs, N) > 2)
 	     && (crossing_nb(F, i, rs, N) == 1) && !guohall_d1(F, i, rs, N)
 	     && !guohall_d2(F, i, rs, N) && !guohall_d3(F, i, rs, N)) ||
@@ -1567,10 +1941,15 @@ int32_t lskelguohall(struct xvimage *image,
 	{
 	  nonstab = 1;
 	  T[i] = 1;
-	}
-      for (i = 0; i < N; i++)
-	if (T[i] == 1) F[i] = 0;
-	else if (F[i]) F[i] = 1;
+        }
+      }
+      for (i = 0; i < N; i++) {
+        if (T[i] == 1) {
+          F[i] = 0;
+        } else if (F[i]) {
+          F[i] = 1;
+        }
+      }
       break;
     default:
       fprintf(stderr, "%s: variant not implemented\n", F_NAME);
@@ -1583,7 +1962,11 @@ int32_t lskelguohall(struct xvimage *image,
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 255; // normalize values
+      }
+    }
 
   freeimage(tmp);
   return(1);
@@ -1603,8 +1986,12 @@ static int32_t chinwan_match1(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if (!v[0] || !v[4] || !v[6]) goto fail;
-    if (v[1] || v[2] || v[3]) goto fail;
+    if (!v[0] || !v[4] || !v[6]) {
+      goto fail;
+    }
+    if (v[1] || v[2] || v[3]) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -1626,8 +2013,12 @@ static int32_t chinwan_match2(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if (!v[4] || !v[6]) goto fail;
-    if (v[0] || v[1] || v[2]) goto fail;
+    if (!v[4] || !v[6]) {
+      goto fail;
+    }
+    if (v[0] || v[1] || v[2]) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -1675,9 +2066,15 @@ int32_t lskelchinwan(struct xvimage *image,
     return 0;
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -1694,16 +2091,21 @@ int32_t lskelchinwan(struct xvimage *image,
 #endif
     memset(T, 0, N);
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (F[i] && (chinwan_match1(F, i, rs, N) || chinwan_match2(F, i, rs, N)) &&
 	  !chinwan_match3(F, i, rs, N))
       {
 	nonstab = 1;
 	T[i] = 1;
       }
-    for (i = 0; i < N; i++)
-      if (T[i] == 1) F[i] = 0;
-      else if (F[i]) F[i] = 1;
+    }
+    for (i = 0; i < N; i++) {
+      if (T[i] == 1) {
+        F[i] = 0;
+      } else if (F[i]) {
+        F[i] = 1;
+      }
+    }
 
   } // while (nonstab && (step < nsteps))
 
@@ -1711,7 +2113,11 @@ int32_t lskelchinwan(struct xvimage *image,
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 255; // normalize values
+      }
+    }
 
   freeimage(tmp);
   return(1);
@@ -1731,7 +2137,9 @@ static int32_t jang_match1(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if (!v[0] || v[2] || v[3] || v[4] || !v[6]) goto fail;
+    if (!v[0] || v[2] || v[3] || v[4] || !v[6]) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -1753,7 +2161,9 @@ static int32_t jang_match5(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if (!v[0] || v[2] || !v[4] || !v[5] || !v[6] || !v[7]) goto fail;
+    if (!v[0] || v[2] || !v[4] || !v[5] || !v[6] || !v[7]) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -1775,8 +2185,12 @@ static int32_t jang_match9(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if (!v[5] && !v[7]) goto fail;
-    if (v[0] || v[1] || v[2] || v[3] || v[4] || !v[6]) goto fail;
+    if (!v[5] && !v[7]) {
+      goto fail;
+    }
+    if (v[0] || v[1] || v[2] || v[3] || v[4] || !v[6]) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -1791,11 +2205,17 @@ static int32_t jang_match13(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   int32_t i;
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
   for (i = 0; i < 4; i++)
   {
-    if (v[0] || v[1] || v[2] || v[3] || v[4] || v[5] || v[6] || !v[7]) goto fail;
-    if (!v2[15] || !v2[14] || !v2[13]) goto fail;
+    if (v[0] || v[1] || v[2] || v[3] || v[4] || v[5] || v[6] || !v[7]) {
+      goto fail;
+    }
+    if (!v2[15] || !v2[14] || !v2[13]) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -1811,12 +2231,18 @@ static int32_t jang_match17(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   int32_t i;
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
   for (i = 0; i < 4; i++)
   {
-    if (!v[0] || !v[1] || !v[2] || v[3] || !v[4] || !v[5] || !v[6] || !v[7]) goto fail;
-    if (!v2[0] || !v2[1] || !v2[3] || !v2[4] || !v2[8] || !v2[9] ||
-	!v2[11] || !v2[12] || !v2[13] || !v2[14] || !v2[15]) goto fail;
+    if (!v[0] || !v[1] || !v[2] || v[3] || !v[4] || !v[5] || !v[6] || !v[7]) {
+      goto fail;
+    }
+    if (!v2[0] || !v2[1] || !v2[3] || !v2[4] || !v2[8] || !v2[9] || !v2[11] ||
+        !v2[12] || !v2[13] || !v2[14] || !v2[15]) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -1831,9 +2257,15 @@ static int32_t jang_match21(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
-  if (v[0] || !v[1] || !v[2] || v[3] || !v[4] || v[6] || v[7]) return 0;
-  if (v2[4] || v2[5]) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
+  if (v[0] || !v[1] || !v[2] || v[3] || !v[4] || v[6] || v[7]) {
+    return 0;
+  }
+  if (v2[4] || v2[5]) {
+    return 0;
+  }
   return 1;
 } /* jang_match21() */
 
@@ -1843,9 +2275,15 @@ static int32_t jang_match22(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
-  if (v[0] || v[1] || v[2] || !v[4] || v[5] || !v[6] || !v[7]) return 0;
-  if (v2[11] || v2[12]) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
+  if (v[0] || v[1] || v[2] || !v[4] || v[5] || !v[6] || !v[7]) {
+    return 0;
+  }
+  if (v2[11] || v2[12]) {
+    return 0;
+  }
   return 1;
 } /* jang_match22() */
 
@@ -1855,9 +2293,15 @@ static int32_t jang_match23(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
-  if (v[0] || v[1] || v[2] || !v[3] || !v[4] || v[5] || !v[6]) return 0;
-  if (v2[9] || v2[8]) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
+  if (v[0] || v[1] || v[2] || !v[3] || !v[4] || v[5] || !v[6]) {
+    return 0;
+  }
+  if (v2[9] || v2[8]) {
+    return 0;
+  }
   return 1;
 } /* jang_match23() */
 
@@ -1867,9 +2311,15 @@ static int32_t jang_match24(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
-  if (v[0] || !v[2] || v[3] || !v[4] || !v[5] || v[6] || v[7]) return 0;
-  if (v2[7] || v2[8]) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
+  if (v[0] || !v[2] || v[3] || !v[4] || !v[5] || v[6] || v[7]) {
+    return 0;
+  }
+  if (v2[7] || v2[8]) {
+    return 0;
+  }
   return 1;
 } /* jang_match24() */
 
@@ -1879,9 +2329,15 @@ static int32_t jang_match25(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
-  if (!v[0] || v[2] || !v[4] || !v[5] || !v[6] || !v[7]) return 0;
-  if (v2[12]) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
+  if (!v[0] || v[2] || !v[4] || !v[5] || !v[6] || !v[7]) {
+    return 0;
+  }
+  if (v2[12]) {
+    return 0;
+  }
   return 1;
 } /* jang_match25() */
 
@@ -1891,9 +2347,15 @@ static int32_t jang_match26(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
-  if (!v[0] || !v[1] || !v[2] || v[4] || !v[6] || !v[7]) return 0;
-  if (v2[0]) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
+  if (!v[0] || !v[1] || !v[2] || v[4] || !v[6] || !v[7]) {
+    return 0;
+  }
+  if (v2[0]) {
+    return 0;
+  }
   return 1;
 } /* jang_match26() */
 
@@ -1904,11 +2366,17 @@ static int32_t jang_match27(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   int32_t i;
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
   for (i = 0; i < 4; i++)
   {
-    if (!v[0] || v[1] || v[2] || v[3] || v[4] || v[5] || !v[6]) goto fail;
-    if (v2[0] || v2[1] || v2[11] || v2[12] || v2[13] || v2[14] || v2[15]) goto fail;
+    if (!v[0] || v[1] || v[2] || v[3] || v[4] || v[5] || !v[6]) {
+      goto fail;
+    }
+    if (v2[0] || v2[1] || v2[11] || v2[12] || v2[13] || v2[14] || v2[15]) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -1924,11 +2392,17 @@ static int32_t jang_match27b(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   int32_t i;
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
   for (i = 0; i < 4; i++)
   {
-    if (!v[0] || v[1] || v[2] || v[3] || v[4] || v[5] || !v[6] || v[7]) goto fail;
-    if (v2[0] || v2[1] || v2[11] || v2[12] || v2[13] || v2[15]) goto fail;
+    if (!v[0] || v[1] || v[2] || v[3] || v[4] || v[5] || !v[6] || v[7]) {
+      goto fail;
+    }
+    if (v2[0] || v2[1] || v2[11] || v2[12] || v2[13] || v2[15]) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -1944,11 +2418,17 @@ static int32_t jang_match28b(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   int32_t i;
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
   for (i = 0; i < 4; i++)
   {
-    if (!v[0] || v[1] || v[2] || v[3] || v[4] || v[5] || !v[6] || !v[7]) goto fail;
-    if (v2[0] || v2[1] || v2[11] || v2[12] || v2[13] || v2[14] || v2[15]) goto fail;
+    if (!v[0] || v[1] || v[2] || v[3] || v[4] || v[5] || !v[6] || !v[7]) {
+      goto fail;
+    }
+    if (v2[0] || v2[1] || v2[11] || v2[12] || v2[13] || v2[14] || v2[15]) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -1982,9 +2462,15 @@ int32_t lskeljang(struct xvimage *image,
     return 0;
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -2000,7 +2486,7 @@ int32_t lskeljang(struct xvimage *image,
     printf("step %d\n", step);
 #endif
     memset(T, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (F[i])
       {
 	m1 = jang_match1(F, i, rs, N);
@@ -2026,16 +2512,23 @@ int32_t lskeljang(struct xvimage *image,
 
 	}
       }
+    }
 
-    for (i = 0; i < N; i++)
-      if (T[i]) { F[i] = 0; nonstab = 1; }
+    for (i = 0; i < N; i++) {
+      if (T[i]) { F[i] = 0; nonstab = 1;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 255; // normalize values
+      }
+    }
 
   freeimage(tmp);
   return(1);
@@ -2067,9 +2560,15 @@ int32_t lskeljangcor(struct xvimage *image,
     return 0;
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -2085,7 +2584,7 @@ int32_t lskeljangcor(struct xvimage *image,
     printf("step %d\n", step);
 #endif
     memset(T, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (F[i])
       {
 	m1 = jang_match1(F, i, rs, N);
@@ -2111,16 +2610,23 @@ int32_t lskeljangcor(struct xvimage *image,
 
 	}
       }
+    }
 
-    for (i = 0; i < N; i++)
-      if (T[i]) { F[i] = 0; nonstab = 1; }
+    for (i = 0; i < N; i++) {
+      if (T[i]) { F[i] = 0; nonstab = 1;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 255; // normalize values
+      }
+    }
 
   freeimage(tmp);
   return(1);
@@ -2135,10 +2641,18 @@ int32_t mns_match1(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if (v[0] != 2) goto fail;
-    if ((v[1] == 0) && (v[2] == 0) && (v[6] == 0) && (v[7] == 0)) return 1;
-    if ((v[1] == 0) && (v[2] == 0)) goto fail;
-    if ((v[6] == 0) && (v[7] == 0)) goto fail;
+    if (v[0] != 2) {
+      goto fail;
+    }
+    if ((v[1] == 0) && (v[2] == 0) && (v[6] == 0) && (v[7] == 0)) {
+      return 1;
+    }
+    if ((v[1] == 0) && (v[2] == 0)) {
+      goto fail;
+    }
+    if ((v[6] == 0) && (v[7] == 0)) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -2153,13 +2667,19 @@ int32_t mns_match2(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   int32_t i;
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
   for (i = 0; i < 4; i++)
   {
-    if ((v[0] != 2) || (v[1] != 2) || (v[2] != 2)) goto fail;
-    if ((v2[0] != 0) || (v2[1] != 0) || (v2[2] != 0) ||
-	(v2[3] != 0) || (v2[4] != 0) || (v2[5] != 0) || (v2[15] != 0) ||
-	(v[3] != 0) || (v[4] != 0) || (v[5] != 0) || (v[6] != 0) || (v[7] != 0)) goto fail;
+    if ((v[0] != 2) || (v[1] != 2) || (v[2] != 2)) {
+      goto fail;
+    }
+    if ((v2[0] != 0) || (v2[1] != 0) || (v2[2] != 0) || (v2[3] != 0) ||
+        (v2[4] != 0) || (v2[5] != 0) || (v2[15] != 0) || (v[3] != 0) ||
+        (v[4] != 0) || (v[5] != 0) || (v[6] != 0) || (v[7] != 0)) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -2175,13 +2695,19 @@ int32_t mns_match3(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   int32_t i;
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
   for (i = 0; i < 4; i++)
   {
-    if ((v[0] != 0) || (v[1] != 2) || (v[2] != 2)) goto fail;
-    if ((v2[0] != 0) || (v2[1] != 0) || (v2[2] != 0) ||
-	(v2[3] != 0) || (v2[4] != 0) || (v2[5] != 0) ||
-	(v[3] != 0) || (v[4] != 0) || (v[5] != 0) || (v[6] != 0) || (v[7] != 0)) goto fail;
+    if ((v[0] != 0) || (v[1] != 2) || (v[2] != 2)) {
+      goto fail;
+    }
+    if ((v2[0] != 0) || (v2[1] != 0) || (v2[2] != 0) || (v2[3] != 0) ||
+        (v2[4] != 0) || (v2[5] != 0) || (v[3] != 0) || (v[4] != 0) ||
+        (v[5] != 0) || (v[6] != 0) || (v[7] != 0)) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -2197,13 +2723,19 @@ int32_t mns_match4(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   int32_t i;
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
   for (i = 0; i < 4; i++)
   {
-    if ((v[0] != 2) || (v[1] != 2) || (v[2] != 0)) goto fail;
-    if ((v2[0] != 0) || (v2[1] != 0) || (v2[2] != 0) ||
-	(v2[3] != 0) || (v2[4] != 0) || (v2[15] != 0) ||
-	(v[3] != 0) || (v[4] != 0) || (v[5] != 0) || (v[6] != 0) || (v[7] != 0)) goto fail;
+    if ((v[0] != 2) || (v[1] != 2) || (v[2] != 0)) {
+      goto fail;
+    }
+    if ((v2[0] != 0) || (v2[1] != 0) || (v2[2] != 0) || (v2[3] != 0) ||
+        (v2[4] != 0) || (v2[15] != 0) || (v[3] != 0) || (v[4] != 0) ||
+        (v[5] != 0) || (v[6] != 0) || (v[7] != 0)) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -2219,13 +2751,19 @@ int32_t mns_match5(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   int32_t i;
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
   for (i = 0; i < 4; i++)
   {
-    if ((v[0] != 2) || (v[1] != 0) || (v[2] != 2)) goto fail;
-    if ((v2[0] != 0) || (v2[1] != 0) || (v2[3] != 0) ||
-	(v2[4] != 0) || (v2[5] != 0) || (v2[15] != 0) ||
-	(v[3] != 0) || (v[4] != 0) || (v[5] != 0) || (v[6] != 0) || (v[7] != 0)) goto fail;
+    if ((v[0] != 2) || (v[1] != 0) || (v[2] != 2)) {
+      goto fail;
+    }
+    if ((v2[0] != 0) || (v2[1] != 0) || (v2[3] != 0) || (v2[4] != 0) ||
+        (v2[5] != 0) || (v2[15] != 0) || (v[3] != 0) || (v[4] != 0) ||
+        (v[5] != 0) || (v[6] != 0) || (v[7] != 0)) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -2241,12 +2779,19 @@ int32_t mns_match6(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   int32_t i;
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
   for (i = 0; i < 4; i++)
   {
-    if ((v[0] != 0) || (v[1] != 2) || (v[2] != 0)) goto fail;
-    if ((v2[0] != 0) || (v2[1] != 0) || (v2[2] != 0) || (v2[3] != 0) || (v2[4] != 0) ||
-	(v[3] != 0) || (v[4] != 0) || (v[5] != 0) || (v[6] != 0) || (v[7] != 0)) goto fail;
+    if ((v[0] != 0) || (v[1] != 2) || (v[2] != 0)) {
+      goto fail;
+    }
+    if ((v2[0] != 0) || (v2[1] != 0) || (v2[2] != 0) || (v2[3] != 0) ||
+        (v2[4] != 0) || (v[3] != 0) || (v[4] != 0) || (v[5] != 0) ||
+        (v[6] != 0) || (v[7] != 0)) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -2279,9 +2824,15 @@ int32_t lskelmns(struct xvimage *image,
     return 0;
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -2297,10 +2848,12 @@ int32_t lskelmns(struct xvimage *image,
     printf("step %d\n", step);
 #endif
     memset(T, 0, N);
-    for (i = 0; i < N; i++)
-      if ((F[i] == 1) && simple8(F, i, rs, N))
-	F[i] = 2;
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
+      if ((F[i] == 1) && simple8(F, i, rs, N)) {
+        F[i] = 2;
+      }
+    }
+    for (i = 0; i < N; i++) {
       if (F[i] == 2)
       {
 	m1 = mns_match1(F, i, rs, N);
@@ -2318,6 +2871,7 @@ int32_t lskelmns(struct xvimage *image,
 	  T[i] = 1; // preserve point
 	}
       }
+    }
 
 #ifdef DEBUG_MNS
     printf("\n");
@@ -2331,16 +2885,26 @@ int32_t lskelmns(struct xvimage *image,
     printf("\n");
 #endif
 
-    for (i = 0; i < N; i++)
-      if ((F[i] == 2) && !T[i]) { F[i] = 0; nonstab = 1; }
-    for (i = 0; i < N; i++) if (F[i]) F[i] = 1;
+    for (i = 0; i < N; i++) {
+      if ((F[i] == 2) && !T[i]) { F[i] = 0; nonstab = 1;
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 1;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 255; // normalize values
+      }
+    }
 
   freeimage(tmp);
   return(1);
@@ -2360,8 +2924,12 @@ static int32_t jangrec_match1(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if (!v[1] && !v[5]) goto fail;
-    if (!v[0] || v[2] || v[3] || v[4] || !v[6]) goto fail;
+    if (!v[1] && !v[5]) {
+      goto fail;
+    }
+    if (!v[0] || v[2] || v[3] || v[4] || !v[6]) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -2383,7 +2951,9 @@ static int32_t jangrec_match5(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if (!v[0] || v[2] || v[3] || v[4] || !v[6] || !v[7]) goto fail;
+    if (!v[0] || v[2] || v[3] || v[4] || !v[6] || !v[7]) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -2405,7 +2975,9 @@ static int32_t jangrec_match9(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if (!v[0] || v[2] || !v[4] || !v[5] || !v[6] || !v[7]) goto fail;
+    if (!v[0] || v[2] || !v[4] || !v[5] || !v[6] || !v[7]) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -2427,7 +2999,9 @@ static int32_t jangrec_match13(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if (v[0] || v[1] || v[2] || v[3] || v[4] || !v[5] || !v[6] || !v[7]) goto fail;
+    if (v[0] || v[1] || v[2] || v[3] || v[4] || !v[5] || !v[6] || !v[7]) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -2441,9 +3015,15 @@ static int32_t jangrec_match17(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
-  if (!v[0] || v[2] || !v[4] || !v[5] || !v[6] || !v[7]) return 0;
-  if (v2[12]) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
+  if (!v[0] || v[2] || !v[4] || !v[5] || !v[6] || !v[7]) {
+    return 0;
+  }
+  if (v2[12]) {
+    return 0;
+  }
   return 1;
 } /* jangrec_match17() */
 
@@ -2453,9 +3033,15 @@ static int32_t jangrec_match18(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
-  if (!v[0] || !v[1] || !v[2] || v[4] || !v[6] || !v[7]) return 0;
-  if (v2[0]) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
+  if (!v[0] || !v[1] || !v[2] || v[4] || !v[6] || !v[7]) {
+    return 0;
+  }
+  if (v2[0]) {
+    return 0;
+  }
   return 1;
 } /* jangrec_match18() */
 
@@ -2465,9 +3051,15 @@ static int32_t jangrec_match19(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
-  if (v[0] || !v[1] || !v[2] || v[3] || !v[4] || v[6] || v[7]) return 0;
-  if (v2[4] || v2[5]) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
+  if (v[0] || !v[1] || !v[2] || v[3] || !v[4] || v[6] || v[7]) {
+    return 0;
+  }
+  if (v2[4] || v2[5]) {
+    return 0;
+  }
   return 1;
 } /* jangrec_match19() */
 
@@ -2477,9 +3069,15 @@ static int32_t jangrec_match20(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
-  if (v[0] || v[1] || v[2] || !v[4] || v[5] || !v[6] || !v[7]) return 0;
-  if (v2[11] || v2[12]) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
+  if (v[0] || v[1] || v[2] || !v[4] || v[5] || !v[6] || !v[7]) {
+    return 0;
+  }
+  if (v2[11] || v2[12]) {
+    return 0;
+  }
   return 1;
 } /* jangrec_match20() */
 
@@ -2489,9 +3087,15 @@ static int32_t jangrec_match21(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
-  if (v[0] || v[1] || v[2] || !v[3] || !v[4] || v[5] || !v[6]) return 0;
-  if (v2[9] || v2[8]) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
+  if (v[0] || v[1] || v[2] || !v[3] || !v[4] || v[5] || !v[6]) {
+    return 0;
+  }
+  if (v2[9] || v2[8]) {
+    return 0;
+  }
   return 1;
 } /* jangrec_match21() */
 
@@ -2501,9 +3105,15 @@ static int32_t jangrec_match22(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
-  if (v[0] || !v[2] || v[3] || !v[4] || !v[5] || v[6] || v[7]) return 0;
-  if (v2[7] || v2[8]) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
+  if (v[0] || !v[2] || v[3] || !v[4] || !v[5] || v[6] || v[7]) {
+    return 0;
+  }
+  if (v2[7] || v2[8]) {
+    return 0;
+  }
   return 1;
 } /* jangrec_match22() */
 
@@ -2519,9 +3129,15 @@ static int32_t jangrec_match23(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
-  if (!v[0] || v[1] || v[2] || v[3] || v[4] || v[5] || !v[6] || !v[7]) return 0;
-  if (v2[0] || v2[1] || v2[11] || v2[12] || v2[13] || v2[14] || v2[15]) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
+  if (!v[0] || v[1] || v[2] || v[3] || v[4] || v[5] || !v[6] || !v[7]) {
+    return 0;
+  }
+  if (v2[0] || v2[1] || v2[11] || v2[12] || v2[13] || v2[14] || v2[15]) {
+    return 0;
+  }
   return 1;
 } /* jangrec_match23() */
 
@@ -2552,9 +3168,15 @@ int32_t lskeljangrec(struct xvimage *image,
   }
   I = UCHARDATA(inhibit);
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -2570,7 +3192,7 @@ int32_t lskeljangrec(struct xvimage *image,
     printf("step %d\n", step);
 #endif
     memset(T, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (F[i])
       {
 	m1 = jangrec_match1(F, i, rs, N);
@@ -2595,16 +3217,23 @@ int32_t lskeljangrec(struct xvimage *image,
 
 	}
       }
+    }
 
-    for (i = 0; i < N; i++)
-      if (T[i] && !I[i]) { F[i] = 0; nonstab = 1; }
+    for (i = 0; i < N; i++) {
+      if (T[i] && !I[i]) { F[i] = 0; nonstab = 1;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 255; // normalize values
+      }
+    }
 
   freeimage(tmp);
   return(1);
@@ -2624,7 +3253,9 @@ static int32_t choy_match1(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if (!v[0] || v[2] || v[3] || v[4] || !v[6]) goto fail;
+    if (!v[0] || v[2] || v[3] || v[4] || !v[6]) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -2646,7 +3277,9 @@ static int32_t choy_match5(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if (!v[0] || v[2] || !v[4] || !v[5] || !v[6] || !v[7]) goto fail;
+    if (!v[0] || v[2] || !v[4] || !v[5] || !v[6] || !v[7]) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -2668,8 +3301,12 @@ static int32_t choy_match9(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if (!v[5] && !v[7]) goto fail;
-    if (v[0] || v[1] || v[2] || v[3] || v[4] || !v[6]) goto fail;
+    if (!v[5] && !v[7]) {
+      goto fail;
+    }
+    if (v[0] || v[1] || v[2] || v[3] || v[4] || !v[6]) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -2689,7 +3326,9 @@ static int32_t choy_matchb1(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
   return v[0] && !v[2] && v[4] && v[5] && v[6] && v[7] && !v2[12];
 } /* choy_matchb1() */
 
@@ -2705,7 +3344,9 @@ static int32_t choy_matchb2(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
   return v[0] && !v[1] && !v[2] && v[4] && !v[5] && v[6] && v[7] && !v2[12];
 } /* choy_matchb2() */
 
@@ -2721,7 +3362,9 @@ static int32_t choy_matchb3(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
   return v[0] && !v[2] && !v[3] && !v[4] && v[5] && v[6] && !v[7] && !v2[12];
 } /* choy_matchb3() */
 
@@ -2736,7 +3379,9 @@ static int32_t choy_matchb7(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
   return v[0] && v[1] && v[2] && !v[4] && v[6] && v[7] && !v2[0];
 } /* choy_matchb7() */
 
@@ -2751,7 +3396,9 @@ static int32_t choy_matchb8(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
   return v[0] && v[1] && !v[2] && !v[3] && !v[4] && v[6] && !v[7] && !v2[0];
 } /* choy_matchb8() */
 
@@ -2766,7 +3413,9 @@ static int32_t choy_matchb11(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
   return !v[0] && !v[1] && !v[2] && v[3] && v[4] && !v[5] && v[6] && !v2[8];
 } /* choy_match11() */
 
@@ -2781,7 +3430,9 @@ static int32_t choy_matchb21(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
   return v[0] && !v[1] && !v[2] && !v[3] && !v[4] && !v[5] && v[6] && v[7] && !v2[0];
 } /* choy_match21() */
 
@@ -2797,7 +3448,9 @@ static int32_t choy_matchb22(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
   return v[0] && !v[1] && !v[2] && !v[3] && !v[4] && !v[5] && v[6] && v[7] && !v2[12];
 } /* choy_match22() */
 
@@ -2813,7 +3466,9 @@ static int32_t choy_matchb23(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
   return !v[0] && !v[1] && !v[2] && !v[3] && v[4] && v[5] && v[6] && !v[7] && !v2[12];
 } /* choy_match23() */
 
@@ -2828,7 +3483,9 @@ static int32_t choy_matchb24(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
   return !v[0] && !v[1] && !v[2] && !v[3] && v[4] && v[5] && v[6] && !v[7] && !v2[8];
 } /* choy_match24() */
 
@@ -2857,9 +3514,15 @@ int32_t lskelchoy(struct xvimage *image,
     return 0;
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -2875,7 +3538,7 @@ int32_t lskelchoy(struct xvimage *image,
     printf("step %d\n", step);
 #endif
     memset(T, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (F[i])
       {
 	m1 = choy_match1(F, i, rs, N);
@@ -2904,16 +3567,23 @@ int32_t lskelchoy(struct xvimage *image,
 
 	}
       }
+    }
 
-    for (i = 0; i < N; i++)
-      if (T[i]) { F[i] = 0; nonstab = 1; }
+    for (i = 0; i < N; i++) {
+      if (T[i]) { F[i] = 0; nonstab = 1;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 255; // normalize values
+      }
+    }
 
   freeimage(tmp);
   return(1);
@@ -2931,11 +3601,17 @@ int32_t mb_match1(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   int32_t i;
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
   for (i = 0; i < 4; i++)
   {
-    if (!v[0] || !v[1] || !v[7] || v[4]) goto fail;
-    if (!v2[0]) goto fail;
+    if (!v[0] || !v[1] || !v[7] || v[4]) {
+      goto fail;
+    }
+    if (!v2[0]) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -2957,11 +3633,17 @@ int32_t mb_match2(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   int32_t i;
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
   for (i = 0; i < 4; i++)
   {
-    if (!v[0] || v[2] || v[3] || v[4] || !v[6] || !v[7]) goto fail;
-    if (!v2[13] || !v2[15]) goto fail;
+    if (!v[0] || v[2] || v[3] || v[4] || !v[6] || !v[7]) {
+      goto fail;
+    }
+    if (!v2[13] || !v2[15]) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -2984,7 +3666,9 @@ int32_t mb_match3(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if (!v[0] && !v[6] && v[7])  return 1;
+    if (!v[0] && !v[6] && v[7]) {
+      return 1;
+    }
     rotate90_vois(v);
   }
   return 0;
@@ -3025,9 +3709,15 @@ int32_t lskelmanz(struct xvimage *image,
     return 0;
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -3043,15 +3733,16 @@ int32_t lskelmanz(struct xvimage *image,
     printf("step %d\n", step);
 #endif
     memset(T, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (F[i])
       {
 	m1 = mb_match1(F, i, rs, N);
-	if (variante == 1)
-	  m2 = mb_match2(F, i, rs, N);
-	else
-	  m2 = 0;
-	m3 = mb_match3(F, i, rs, N);
+        if (variante == 1) {
+          m2 = mb_match2(F, i, rs, N);
+        } else {
+          m2 = 0;
+        }
+        m3 = mb_match3(F, i, rs, N);
 	if ((m1 || m2) && !m3)
 	{
 //#define DEBUG_MANZ
@@ -3063,16 +3754,23 @@ int32_t lskelmanz(struct xvimage *image,
 
 	}
       }
+    }
 
-    for (i = 0; i < N; i++)
-      if (T[i]) { F[i] = 0; nonstab = 1; }
+    for (i = 0; i < N; i++) {
+      if (T[i]) { F[i] = 0; nonstab = 1;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 255; // normalize values
+      }
+    }
 
   freeimage(tmp);
   return(1);
@@ -3136,9 +3834,15 @@ int32_t lskelhall(struct xvimage *image,
   printf("nstep=%d, variante=%d\n", nsteps, variante);
 #endif
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -3158,31 +3862,41 @@ int32_t lskelhall(struct xvimage *image,
     switch (variante)
     {
     case 1:
-      for (i = 0; i < N; i++)
-	if (F[i] && (nbvois8(F, i, rs, N) > 1)  && (nbvois8(F, i, rs, N) < 7)
-	    && (crossing_nb(F, i, rs, N) == 1))
-	  F[i] = 2;
-      for (i = 0; i < N; i++)
-	if ((F[i] == 2) && !hall_match1(F, i, rs, N) && !hall_match2(F, i, rs, N) && !hall_match3(F, i, rs, N))
+      for (i = 0; i < N; i++) {
+        if (F[i] && (nbvois8(F, i, rs, N) > 1) && (nbvois8(F, i, rs, N) < 7) &&
+            (crossing_nb(F, i, rs, N) == 1)) {
+          F[i] = 2;
+        }
+      }
+      for (i = 0; i < N; i++) {
+        if ((F[i] == 2) && !hall_match1(F, i, rs, N) && !hall_match2(F, i, rs, N) && !hall_match3(F, i, rs, N))
 	{
 	  nonstab = 1;
 	  T[i] = 1;
-	}
-      for (i = 0; i < N; i++)
-	if (T[i] == 1) F[i] = 0;
-	else if (F[i]) F[i] = 1;
+        }
+      }
+      for (i = 0; i < N; i++) {
+        if (T[i] == 1) {
+          F[i] = 0;
+        } else if (F[i]) {
+          F[i] = 1;
+        }
+      }
       break;
     case 2:
-      for (i = 0; i < N; i++)
-	if (F[i] && (nbvois8(F, i, rs, N) > 2)  && (nbvois8(F, i, rs, N) < 7)
-	    && (crossing_nb(F, i, rs, N) == 1))
-	  F[i] = 2;
-      for (i = 0; i < N; i++)
-	if ((F[i] == 2) && !hall_match1(F, i, rs, N) && !hall_match2(F, i, rs, N) && !hall_match3(F, i, rs, N))
+      for (i = 0; i < N; i++) {
+        if (F[i] && (nbvois8(F, i, rs, N) > 2) && (nbvois8(F, i, rs, N) < 7) &&
+            (crossing_nb(F, i, rs, N) == 1)) {
+          F[i] = 2;
+        }
+      }
+      for (i = 0; i < N; i++) {
+        if ((F[i] == 2) && !hall_match1(F, i, rs, N) && !hall_match2(F, i, rs, N) && !hall_match3(F, i, rs, N))
 	{
 	  nonstab = 1;
 	  T[i] = 1;
-	}
+        }
+      }
 
 //#define DEBUG_HALL2
 #ifdef DEBUG_HALL2
@@ -3197,9 +3911,13 @@ int32_t lskelhall(struct xvimage *image,
     printf("\n");
 #endif
 
-      for (i = 0; i < N; i++)
-	if (T[i] == 1) F[i] = 0;
-	else if (F[i]) F[i] = 1;
+    for (i = 0; i < N; i++) {
+      if (T[i] == 1) {
+        F[i] = 0;
+      } else if (F[i]) {
+        F[i] = 1;
+      }
+    }
       break;
     default:
       fprintf(stderr, "%s: variant not implemented\n", F_NAME);
@@ -3212,7 +3930,11 @@ int32_t lskelhall(struct xvimage *image,
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 255; // normalize values
+      }
+    }
 
   freeimage(tmp);
   return(1);
@@ -3229,8 +3951,12 @@ static int32_t wutsai_match1(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8];
   extract_vois(F, x, rs, N, v);
-  if (v[1] && v[7]) return 0;
-  if (v[0] || !v[2] || !v[3] || !v[4] || !v[5] || !v[6]) return 0;
+  if (v[1] && v[7]) {
+    return 0;
+  }
+  if (v[0] || !v[2] || !v[3] || !v[4] || !v[5] || !v[6]) {
+    return 0;
+  }
   return 1;
 } /* wutsai_match1() */
 
@@ -3245,8 +3971,12 @@ static int32_t wutsai_match2(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8];
   extract_vois(F, x, rs, N, v);
-  if (v[5] && v[7]) return 0;
-  if (v[6] || !v[0] || !v[1] || !v[2] || !v[3] || !v[4]) return 0;
+  if (v[5] && v[7]) {
+    return 0;
+  }
+  if (v[6] || !v[0] || !v[1] || !v[2] || !v[3] || !v[4]) {
+    return 0;
+  }
   return 1;
 } /* wutsai_match2() */
 
@@ -3261,10 +3991,18 @@ static int32_t wutsai_match3(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
-  if (v[3] && v[5]) return 0;
-  if (v[4] || !v[0] || !v[1] || !v[2] || !v[6] || !v[7]) return 0;
-  if (!v2[0]) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
+  if (v[3] && v[5]) {
+    return 0;
+  }
+  if (v[4] || !v[0] || !v[1] || !v[2] || !v[6] || !v[7]) {
+    return 0;
+  }
+  if (!v2[0]) {
+    return 0;
+  }
   return 1;
 } /* wutsai_match3() */
 
@@ -3280,10 +4018,18 @@ static int32_t wutsai_match4(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
-  if (v[1] && v[3]) return 0;
-  if (v[2] || !v[0] || !v[4] || !v[5] || !v[6] || !v[7]) return 0;
-  if (!v2[12]) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
+  if (v[1] && v[3]) {
+    return 0;
+  }
+  if (v[2] || !v[0] || !v[4] || !v[5] || !v[6] || !v[7]) {
+    return 0;
+  }
+  if (!v2[12]) {
+    return 0;
+  }
   return 1;
 } /* wutsai_match4() */
 
@@ -3385,7 +4131,9 @@ static int32_t wutsai_match11(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if (v[0] || v[1] || v[2] || v[3] || v[4] || !v[5] || !v[6] || !v[7]) goto fail;
+    if (v[0] || v[1] || v[2] || v[3] || v[4] || !v[5] || !v[6] || !v[7]) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -3418,9 +4166,15 @@ int32_t lskelwutsai(struct xvimage *image,
     return 0;
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -3436,7 +4190,7 @@ int32_t lskelwutsai(struct xvimage *image,
     printf("step %d\n", step);
 #endif
     memset(T, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (F[i])
       {
 	m1 = wutsai_match1(F, i, rs, N);
@@ -3461,16 +4215,23 @@ int32_t lskelwutsai(struct xvimage *image,
 	  T[i] = 1; // delete point
 	}
       }
+    }
 
-    for (i = 0; i < N; i++)
-      if (T[i]) { F[i] = 0; nonstab = 1; }
+    for (i = 0; i < N; i++) {
+      if (T[i]) { F[i] = 0; nonstab = 1;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 255; // normalize values
+      }
+    }
 
   freeimage(tmp);
   return(1);
@@ -3487,10 +4248,18 @@ static int32_t mc_match1(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if (!IS_SIMPLE(v[0])) goto fail;
-    if ((v[1] == 0) && (v[2] == 0) && (v[6] == 0) && (v[7] == 0)) return 1;
-    if ((v[1] == 0) && (v[2] == 0)) goto fail;
-    if ((v[6] == 0) && (v[7] == 0)) goto fail;
+    if (!IS_SIMPLE(v[0])) {
+      goto fail;
+    }
+    if ((v[1] == 0) && (v[2] == 0) && (v[6] == 0) && (v[7] == 0)) {
+      return 1;
+    }
+    if ((v[1] == 0) && (v[2] == 0)) {
+      goto fail;
+    }
+    if ((v[6] == 0) && (v[7] == 0)) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -3509,8 +4278,12 @@ static int32_t mc_match1b(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if (!IS_SIMPLE(v[0])) goto fail;
-    if ((v[1] == 0) && (v[2] == 0) && (v[6] == 0) && (v[7] == 0)) return 1;
+    if (!IS_SIMPLE(v[0])) {
+      goto fail;
+    }
+    if ((v[1] == 0) && (v[2] == 0) && (v[6] == 0) && (v[7] == 0)) {
+      return 1;
+    }
   fail:
     rotate90_vois(v);
   }
@@ -3524,12 +4297,18 @@ static int32_t mc_match2(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   int32_t i;
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
   for (i = 0; i < 4; i++)
   {
-    if ((!IS_SIMPLE(v[0])) || (!IS_SIMPLE(v[1])) || (!IS_SIMPLE(v[2]))) goto fail;
+    if ((!IS_SIMPLE(v[0])) || (!IS_SIMPLE(v[1])) || (!IS_SIMPLE(v[2]))) {
+      goto fail;
+    }
     if ((v2[0] != 0) || (v2[1] != 0) || (v2[3] != 0) || (v2[4] != 0) ||
-	(v[3] != 0) || (v[4] != 0) || (v[6] != 0) || (v[7] != 0)) goto fail;
+        (v[3] != 0) || (v[4] != 0) || (v[6] != 0) || (v[7] != 0)) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -3545,12 +4324,17 @@ static int32_t mc_match3(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   int32_t i;
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
   for (i = 0; i < 4; i++)
   {
-    if ((v[0] != 0) || (!IS_SIMPLE(v[1])) || (!IS_SIMPLE(v[2]))) goto fail;
-    if ((v2[3] != 0) || (v2[4] != 0) ||
-	(v[3] != 0) || (v[4] != 0)) goto fail;
+    if ((v[0] != 0) || (!IS_SIMPLE(v[1])) || (!IS_SIMPLE(v[2]))) {
+      goto fail;
+    }
+    if ((v2[3] != 0) || (v2[4] != 0) || (v[3] != 0) || (v[4] != 0)) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -3566,12 +4350,17 @@ static int32_t mc_match4(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   int32_t i;
   uint8_t v[8], v2[16];
   extract_vois(F, x, rs, N, v);
-  if (!extract_vois2(F, x, rs, N, v2)) return 0;
+  if (!extract_vois2(F, x, rs, N, v2)) {
+    return 0;
+  }
   for (i = 0; i < 4; i++)
   {
-    if ((!IS_SIMPLE(v[0])) || (!IS_SIMPLE(v[1])) || (v[2] != 0)) goto fail;
-    if ((v2[0] != 0) || (v2[1] != 0) ||
-	(v[6] != 0) || (v[7] != 0)) goto fail;
+    if ((!IS_SIMPLE(v[0])) || (!IS_SIMPLE(v[1])) || (v[2] != 0)) {
+      goto fail;
+    }
+    if ((v2[0] != 0) || (v2[1] != 0) || (v[6] != 0) || (v[7] != 0)) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -3589,8 +4378,12 @@ static int32_t mc_match5(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if ((!IS_SIMPLE(v[0])) || (v[1] != 0) || (!IS_SIMPLE(v[2]))) goto fail;
-    if ((v[3] != 0) || (v[4] != 0) || (v[6] != 0) || (v[7] != 0)) goto fail;
+    if ((!IS_SIMPLE(v[0])) || (v[1] != 0) || (!IS_SIMPLE(v[2]))) {
+      goto fail;
+    }
+    if ((v[3] != 0) || (v[4] != 0) || (v[6] != 0) || (v[7] != 0)) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -3607,7 +4400,9 @@ static int32_t mc_match6(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if ((!IS_SIMPLE(v[3])) || (v[2] != 0) || (v[4] != 0)) goto fail;
+    if ((!IS_SIMPLE(v[3])) || (v[2] != 0) || (v[4] != 0)) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -3625,9 +4420,13 @@ static int32_t mc_maskend1(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if (v[0] == 0) goto fail;
-    if ((v[1] != 0) || (v[2] != 0) || (v[3] != 0) || (v[4] != 0) || (v[5] != 0) ||
-	(v[6] != 0) || (v[7] != 0)) goto fail;
+    if (v[0] == 0) {
+      goto fail;
+    }
+    if ((v[1] != 0) || (v[2] != 0) || (v[3] != 0) || (v[4] != 0) ||
+        (v[5] != 0) || (v[6] != 0) || (v[7] != 0)) {
+      goto fail;
+    }
 //printf("mc_maskend1 : %d %d end\n", x % rs, x / rs);
     return 1;
   fail:
@@ -3645,8 +4444,13 @@ static int32_t mc_maskend2(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if (v[1] == 0) goto fail;
-    if ((v[3] != 0) || (v[4] != 0) || (v[5] != 0) || (v[6] != 0) || (v[7] != 0)) goto fail;
+    if (v[1] == 0) {
+      goto fail;
+    }
+    if ((v[3] != 0) || (v[4] != 0) || (v[5] != 0) || (v[6] != 0) ||
+        (v[7] != 0)) {
+      goto fail;
+    }
 //printf("mc_maskend2 : i = %d ; %d %d end\n", i, x % rs, x / rs);
     return 1;
   fail:
@@ -3664,8 +4468,13 @@ static int32_t mc_maskend3(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if ((v[0] == 0) || (v[2] == 0)) goto fail;
-    if ((v[3] != 0) || (v[4] != 0) || (v[5] != 0) || (v[6] != 0) || (v[7] != 0)) goto fail;
+    if ((v[0] == 0) || (v[2] == 0)) {
+      goto fail;
+    }
+    if ((v[3] != 0) || (v[4] != 0) || (v[5] != 0) || (v[6] != 0) ||
+        (v[7] != 0)) {
+      goto fail;
+    }
 //printf("mc_maskend3 : %d %d end\n", x % rs, x / rs);
     return 1;
   fail:
@@ -3705,9 +4514,15 @@ int32_t lskelmcultime(struct xvimage *image,
     return 0;
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -3723,10 +4538,12 @@ int32_t lskelmcultime(struct xvimage *image,
     printf("step %d\n", step);
 #endif
     memset(T, 0, N);
-    for (i = 0; i < N; i++)
-      if ((F[i] == 1) && simple8(F, i, rs, N))
-	F[i] = 2;
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
+      if ((F[i] == 1) && simple8(F, i, rs, N)) {
+        F[i] = 2;
+      }
+    }
+    for (i = 0; i < N; i++) {
       if (F[i] == 2)
       {
 	m1 = mc_match1(F, i, rs, N);
@@ -3744,6 +4561,7 @@ int32_t lskelmcultime(struct xvimage *image,
 	  T[i] = 1; // preserve point
 	}
       }
+    }
 
 #ifdef DEBUG_MC
     printf("\n");
@@ -3757,16 +4575,26 @@ int32_t lskelmcultime(struct xvimage *image,
     printf("\n");
 #endif
 
-    for (i = 0; i < N; i++)
-      if ((F[i] == 2) && !T[i]) { F[i] = 0; nonstab = 1; }
-    for (i = 0; i < N; i++) if (F[i]) F[i] = 1;
+    for (i = 0; i < N; i++) {
+      if ((F[i] == 2) && !T[i]) { F[i] = 0; nonstab = 1;
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 1;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 255; // normalize values
+      }
+    }
 
   freeimage(tmp);
   return(1);
@@ -3796,9 +4624,15 @@ int32_t lskelmccurv(struct xvimage *image,
     return 0;
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -3814,10 +4648,12 @@ int32_t lskelmccurv(struct xvimage *image,
     printf("step %d\n", step);
 #endif
     memset(T, 0, N);
-    for (i = 0; i < N; i++)
-      if ((F[i] == 1) && simple8(F, i, rs, N)  && !mc_end2(F, i, rs, N))
-	F[i] = 2;
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
+      if ((F[i] == 1) && simple8(F, i, rs, N) && !mc_end2(F, i, rs, N)) {
+        F[i] = 2;
+      }
+    }
+    for (i = 0; i < N; i++) {
       if (F[i] == 2)
       {
 	m1 = mc_match1(F, i, rs, N);
@@ -3835,6 +4671,7 @@ int32_t lskelmccurv(struct xvimage *image,
 	  T[i] = 1; // preserve point
 	}
       }
+    }
 
 #ifdef DEBUG_MC
     printf("\n");
@@ -3848,16 +4685,26 @@ int32_t lskelmccurv(struct xvimage *image,
     printf("\n");
 #endif
 
-    for (i = 0; i < N; i++)
-      if ((F[i] == 2) && !T[i]) { F[i] = 0; nonstab = 1; }
-    for (i = 0; i < N; i++) if (F[i]) F[i] = 1;
+    for (i = 0; i < N; i++) {
+      if ((F[i] == 2) && !T[i]) { F[i] = 0; nonstab = 1;
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 1;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 255; // normalize values
+      }
+    }
 
   freeimage(tmp);
   return(1);
@@ -3890,9 +4737,15 @@ int32_t lskelmccurvrec(struct xvimage *image,
     return 0;
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (X[i]) X[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (X[i]) {
+      X[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -3909,15 +4762,32 @@ int32_t lskelmccurvrec(struct xvimage *image,
     printf("step %d\n", step);
 #endif
     memset(E, 0, N);
-    for (i = 0; i < N; i++)
-      if (T[i] && (nbvois4(T, i, rs, N) == 4)) E[i] = 1; // calcule E = eros (T)
+    for (i = 0; i < N; i++) {
+      if (T[i] && (nbvois4(T, i, rs, N) == 4)) {
+        E[i] = 1; // calcule E = eros (T)
+      }
+    }
     memset(R, 0, N);
-    for (i = 0; i < N; i++)
-      if (nbvois4(E, i, rs, N) >= 1) R[i] = 1;           // calcule D = Dilat(E)
-    for (i = 0; i < N; i++)
-      if (T[i] && !R[i]) R[i] = 1; else R[i] = 0;        // calcule D = T \ Dilat(E)
-    for (i = 0; i < N; i++) T[i] = E[i];                 // T = E
-    for (i = 0; i < N; i++) if (R[i]) M[i] = 1;          // M  = M union D
+    for (i = 0; i < N; i++) {
+      if (nbvois4(E, i, rs, N) >= 1) {
+        R[i] = 1; // calcule D = Dilat(E)
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (T[i] && !R[i]) {
+        R[i] = 1;
+      } else {
+        R[i] = 0; // calcule D = T \ Dilat(E)
+      }
+    }
+    for (i = 0; i < N; i++) {
+      T[i] = E[i]; // T = E
+    }
+    for (i = 0; i < N; i++) {
+      if (R[i]) {
+        M[i] = 1; // M  = M union D
+      }
+    }
 
 //#define DEBUG_MC
 
@@ -3933,9 +4803,11 @@ int32_t lskelmccurvrec(struct xvimage *image,
     printf("\n");
 #endif
 
-    for (i = 0; i < N; i++)
-      if ((X[i] == 1) && simple8(X, i, rs, N) && !M[i])
-	X[i] = 2;
+    for (i = 0; i < N; i++) {
+      if ((X[i] == 1) && simple8(X, i, rs, N) && !M[i]) {
+        X[i] = 2;
+      }
+    }
 
 #ifdef DEBUG_MC
     printf("M, X\n");
@@ -3950,7 +4822,7 @@ int32_t lskelmccurvrec(struct xvimage *image,
 #endif
 
     memset(R, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (X[i] == 2)
       {
 	m1 = mc_match1(X, i, rs, N);
@@ -3968,6 +4840,7 @@ int32_t lskelmccurvrec(struct xvimage *image,
 	  R[i] = 1; // preserve point
 	}
       }
+    }
 
 #ifdef DEBUG_MC
     printf("X, R\n");
@@ -3981,16 +4854,26 @@ int32_t lskelmccurvrec(struct xvimage *image,
     printf("\n");
 #endif
 
-    for (i = 0; i < N; i++)
-      if ((X[i] == 2) && !R[i] && !M[i]) { X[i] = 0; nonstab = 1; }
-    for (i = 0; i < N; i++) if (X[i]) X[i] = 1;
+    for (i = 0; i < N; i++) {
+      if ((X[i] == 2) && !R[i] && !M[i]) { X[i] = 0; nonstab = 1;
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (X[i]) {
+        X[i] = 1;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (X[i]) X[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (X[i]) {
+        X[i] = 255; // normalize values
+      }
+    }
 
   freeimage(tmp);
   free(M);
@@ -4026,9 +4909,15 @@ int32_t lskelmccurvrecold(struct xvimage *image,
     return 0;
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (X[i]) X[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (X[i]) {
+      X[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -4047,14 +4936,22 @@ int32_t lskelmccurvrecold(struct xvimage *image,
     memset(T, 0, N);
     memset(I, 0, N);
     memset(D, 0, N);
-    for (i = 0; i < N; i++) if (X[i] && !Y[i]) T[i] = 1; // calcule T = X \ Y
-    for (i = 0; i < N; i++)
-      if (T[i] && (nbvois4(T, i, rs, N) == 4))
-	I[i] = 1; // calcule I = interior (X \ Y)
-    for (i = 0; i < N; i++)
-//      if (T[i] && (nbvois4(I, i, rs, N) >= 1)) // test T
-      if (nbvois4(I, i, rs, N) >= 1)
-	D[i] = 1; // calcule D = Dilat(I) Inter [X \ Y]
+    for (i = 0; i < N; i++) {
+      if (X[i] && !Y[i]) {
+        T[i] = 1; // calcule T = X \ Y
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (T[i] && (nbvois4(T, i, rs, N) == 4)) {
+        I[i] = 1; // calcule I = interior (X \ Y)
+      }
+    }
+    for (i = 0; i < N; i++) {
+      //      if (T[i] && (nbvois4(I, i, rs, N) >= 1)) // test T
+      if (nbvois4(I, i, rs, N) >= 1) {
+        D[i] = 1; // calcule D = Dilat(I) Inter [X \ Y]
+      }
+    }
 
 //#define DEBUG_MC
 
@@ -4071,12 +4968,16 @@ int32_t lskelmccurvrecold(struct xvimage *image,
 #endif
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++)
-      if (Y[i] || (X[i] && !D[i]))
-	T[i] = 1; // calcule E = Y Union [X \ D]
-    for (i = 0; i < N; i++)
-      if ((X[i] == 1) && simple8(X, i, rs, N) && !T[i])
-	X[i] = 2;
+    for (i = 0; i < N; i++) {
+      if (Y[i] || (X[i] && !D[i])) {
+        T[i] = 1; // calcule E = Y Union [X \ D]
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if ((X[i] == 1) && simple8(X, i, rs, N) && !T[i]) {
+        X[i] = 2;
+      }
+    }
 
 #ifdef DEBUG_MC
     printf("E, X\n");
@@ -4091,7 +4992,7 @@ int32_t lskelmccurvrecold(struct xvimage *image,
 #endif
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (X[i] == 2)
       {
 	m1 = mc_match1(X, i, rs, N);
@@ -4109,6 +5010,7 @@ int32_t lskelmccurvrecold(struct xvimage *image,
 	  T[i] = 1; // preserve point
 	}
       }
+    }
 
 #ifdef DEBUG_MC
     printf("X, T\n");
@@ -4122,10 +5024,20 @@ int32_t lskelmccurvrecold(struct xvimage *image,
     printf("\n");
 #endif
 
-    for (i = 0; i < N; i++)
-      if ((X[i] == 2) && !T[i]) { X[i] = 0; nonstab = 1; }
-    for (i = 0; i < N; i++) if (X[i]) X[i] = 1;
-    for (i = 0; i < N; i++) if (X[i] && !I[i]) Y[i] = 1;
+    for (i = 0; i < N; i++) {
+      if ((X[i] == 2) && !T[i]) { X[i] = 0; nonstab = 1;
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (X[i]) {
+        X[i] = 1;
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (X[i] && !I[i]) {
+        Y[i] = 1;
+      }
+    }
 
 #ifdef DEBUG_MC
     printf("X, Y\n");
@@ -4144,7 +5056,11 @@ int32_t lskelmccurvrecold(struct xvimage *image,
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (X[i]) X[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (X[i]) {
+        X[i] = 255; // normalize values
+      }
+    }
 
   freeimage(tmp);
   free(Y);
@@ -4164,9 +5080,15 @@ B     B
 {
   uint8_t v[8];
   extract_vois(F, x, rs, N, v);
-  if (!IS_SIMPLE(v[0])) return 0;
-  if ((v[1] == 0) && (v[2] == 0)) return 0;
-  if ((v[6] == 0) && (v[7] == 0)) return 0;
+  if (!IS_SIMPLE(v[0])) {
+    return 0;
+  }
+  if ((v[1] == 0) && (v[2] == 0)) {
+    return 0;
+  }
+  if ((v[6] == 0) && (v[7] == 0)) {
+    return 0;
+  }
   return 1;
 } /* bertrand_match1() */
 
@@ -4180,9 +5102,15 @@ A   2*  B
 {
   uint8_t v[8];
   extract_vois(F, x, rs, N, v);
-  if (!IS_SIMPLE(v[2])) return 0;
-  if ((v[0] == 0) && (v[1] == 0)) return 0;
-  if ((v[3] == 0) && (v[4] == 0)) return 0;
+  if (!IS_SIMPLE(v[2])) {
+    return 0;
+  }
+  if ((v[0] == 0) && (v[1] == 0)) {
+    return 0;
+  }
+  if ((v[3] == 0) && (v[4] == 0)) {
+    return 0;
+  }
   return 1;
 } /* bertrand_match2() */
 
@@ -4224,9 +5152,15 @@ int32_t lskelNK2(struct xvimage *image,
 
   I = UCHARDATA(inhibit);
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -4243,10 +5177,12 @@ int32_t lskelNK2(struct xvimage *image,
 #endif
     memset(T, 0, N);
 
-    for (i = 0; i < N; i++)
-      if ((F[i] == 1) && simple8(F, i, rs, N) && !I[i])
-	F[i] = 2;
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
+      if ((F[i] == 1) && simple8(F, i, rs, N) && !I[i]) {
+        F[i] = 2;
+      }
+    }
+    for (i = 0; i < N; i++) {
       if (F[i] == 2)
       {
 	m1 = bertrand_match1(F, i, rs, N);
@@ -4260,6 +5196,7 @@ int32_t lskelNK2(struct xvimage *image,
 	  T[i] = 1; // preserve point
 	}
       }
+    }
 
 #ifdef DEBUG_BERTRAND
     { int j;
@@ -4275,7 +5212,7 @@ int32_t lskelNK2(struct xvimage *image,
     }
 #endif
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if ((F[i] == 2) && !T[i])
       {
 	F[i] = 0;
@@ -4284,7 +5221,12 @@ int32_t lskelNK2(struct xvimage *image,
         T2[i] = step;
 #endif
       }
-    for (i = 0; i < N; i++) if (F[i]) F[i] = 1;
+    }
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 1;
+      }
+    }
 
 #ifdef ANIMATE
   sprintf(imname, "anim%03d.pgm", nimage); nimage++;
@@ -4297,7 +5239,11 @@ int32_t lskelNK2(struct xvimage *image,
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 255; // normalize values
+      }
+    }
 
 #ifdef ETUDE
   writeimage(tmp2,"_etude");
@@ -4325,9 +5271,17 @@ int32_t lskelNK2b(struct xvimage *image,
   int32_t step, nonstab;
   int32_t m1, m2, mc1, mc2, mc3, mc4, mc5, mc6;
 
-  if (inhibit != NULL) I = UCHARDATA(inhibit);
-  if (nsteps == -1) nsteps = 1000000000;
-  for (i = 0; i < N; i++) if (F[i]) F[i] = S_OBJECT; // normalize values
+  if (inhibit != NULL) {
+    I = UCHARDATA(inhibit);
+  }
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = S_OBJECT; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -4343,10 +5297,12 @@ int32_t lskelNK2b(struct xvimage *image,
     printf("step %d\n", step);
 #endif
 
-    for (i = 0; i < N; i++)
-      if ((F[i] == 1) && simple8(F, i, rs, N) && ((I == NULL) || !I[i]))
-	SET_SIMPLE(F[i]);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
+      if ((F[i] == 1) && simple8(F, i, rs, N) && ((I == NULL) || !I[i])) {
+        SET_SIMPLE(F[i]);
+      }
+    }
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(F[i]))
       {
 	m1 = bertrand_match1(F, i, rs, N);
@@ -4367,21 +5323,31 @@ int32_t lskelNK2b(struct xvimage *image,
 	  UNSET_SIMPLE(F[i]); // preserve point and unmark as simple
 	}
       }
+    }
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(F[i]) && !IS_CRUCIAL(F[i]))
       {
 	F[i] = 0;
 	nonstab = 1;
       }
-    for (i = 0; i < N; i++) if (F[i]) F[i] = S_OBJECT;
+    }
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = S_OBJECT;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 255; // normalize values
+      }
+    }
 
   return(1);
 } /* lskelNK2b() */
@@ -4420,13 +5386,25 @@ int32_t lskelNK2p(struct xvimage *image,
   else
   {
     I = UCHARDATA(inhibit);
-    for (i = 0; i < N; i++) if (I[i]) I[i] = I_INHIBIT;
+    for (i = 0; i < N; i++) {
+      if (I[i]) {
+        I[i] = I_INHIBIT;
+      }
+    }
   }
   assert(nsteps <= INT16_MAX);
-  if (nsteps == -1) nsteps = INT16_MAX;
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 1; // normalize values
+  if (nsteps == -1) {
+    nsteps = INT16_MAX;
+  }
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 1; // normalize values
+    }
+  }
   T = (int16_t *)malloc(N * sizeof(int16_t)); assert(T != NULL);
-  for (i = 0; i < N; i++) T[i] = PERS_INIT_VAL;
+  for (i = 0; i < N; i++) {
+    T[i] = PERS_INIT_VAL;
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -4448,15 +5426,18 @@ int32_t lskelNK2p(struct xvimage *image,
       if (IS_OBJECT(F[i]))
       {    
 	top8(F, i, rs, N, &top, &topb);
-	if ((top > 1) && (T[i] == PERS_INIT_VAL))
-	  T[i] = (int16_t)step;
+        if ((top > 1) && (T[i] == PERS_INIT_VAL)) {
+          T[i] = (int16_t)step;
+        }
       }
     }
 
     // MARQUE LES POINTS SIMPLES NON DANS I
-    for (i = 0; i < N; i++)
-      if ((F[i] == 1) && simple8(F, i, rs, N) && !I[i])
-	SET_SIMPLE(F[i]);
+    for (i = 0; i < N; i++) {
+      if ((F[i] == 1) && simple8(F, i, rs, N) && !I[i]) {
+        SET_SIMPLE(F[i]);
+      }
+    }
 
     // MEMORISE DANS I LES ISTHMES PERSISTANTS
     for (i = 0; i < N; i++)
@@ -4468,7 +5449,7 @@ int32_t lskelNK2p(struct xvimage *image,
       }
     }
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(F[i]))
       {
 	m1 = bertrand_match1(F, i, rs, N);
@@ -4489,21 +5470,31 @@ int32_t lskelNK2p(struct xvimage *image,
 	  UNSET_SIMPLE(F[i]); // preserve point and unmark as simple
 	}
       }
+    }
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(F[i]) && !IS_CRUCIAL(F[i]))
       {
 	F[i] = 0;
 	nonstab = 1;
       }
-    for (i = 0; i < N; i++) if (F[i]) F[i] = S_OBJECT;
+    }
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = S_OBJECT;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 255; // normalize values
+      }
+    }
 
   return(1);
 } /* lskelNK2p() */
@@ -4534,8 +5525,14 @@ int32_t lskelNK2_pers(struct xvimage *image,
   razimage(inhibit);
   I = UCHARDATA(inhibit);
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 1; // normalize values
-  for (i = 0; i < N; i++) P[i] = PERS_INIT_VAL;
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 1; // normalize values
+    }
+  }
+  for (i = 0; i < N; i++) {
+    P[i] = PERS_INIT_VAL;
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -4552,24 +5549,28 @@ int32_t lskelNK2_pers(struct xvimage *image,
 #endif
     memset(T, 0, N);
 
+    for (i = 0; i < N; i++) {
+      if (F[i] && simple8(F, i, rs, N)) {
+        SET_SIMPLE(F[i]);
+      }
+    }
 
-    for (i = 0; i < N; i++)
-      if (F[i] && simple8(F, i, rs, N))
-	SET_SIMPLE(F[i]);
-
-    for (i = 0; i < N; i++) // detecte les isthmes
+    for (i = 0; i < N; i++) { // detecte les isthmes
       if (F[i] && (t8(mask(F, i, rs, N)) > 1))
       {
 	  I[i] = I_INHIBIT;
       }
+    }
 
     // ENREGISTRE LA DATE DE NAISSANCE DES ISTHMES
     for (i = 0; i < N; i++)
     {
-      if ((P[i] == PERS_INIT_VAL) && (I[i] == I_INHIBIT)) P[i] = (float)step;
+      if ((P[i] == PERS_INIT_VAL) && (I[i] == I_INHIBIT)) {
+        P[i] = (float)step;
+      }
     }
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(F[i]))
       {
 	m1 = bertrand_match1(F, i, rs, N);
@@ -4590,26 +5591,36 @@ int32_t lskelNK2_pers(struct xvimage *image,
 	  UNSET_SIMPLE(F[i]); // preserve point and unmark as simple
 	}
       }
+    }
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(F[i]) && !IS_CRUCIAL(F[i]))
       { 
 	F[i] = 0; 
-	nonstab = 1; 
-	if (P[i] != PERS_INIT_VAL) P[i] = (float)step - P[i]; else P[i] = 0;
+	nonstab = 1;
+        if (P[i] != PERS_INIT_VAL) {
+          P[i] = (float)step - P[i];
+        } else {
+          P[i] = 0;
+        }
       }
-    for (i = 0; i < N; i++) if (F[i]) F[i] = S_OBJECT;
+    }
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = S_OBJECT;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) 
-    if (F[i]) 
-    {
-      F[i] = NDG_MAX; // normalize values
-      P[i] = PERS_INFTY_VAL;
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = NDG_MAX; // normalize values
+        P[i] = PERS_INFTY_VAL;
+      }
     }
 
   freeimage(tmp);
@@ -4627,9 +5638,15 @@ int32_t bertrand_match3(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if (!IS_SIMPLE(v[0])) goto fail;
-    if ((v[1] == 0) && (v[2] == 0)) goto fail;
-    if ((v[6] == 0) && (v[7] == 0)) goto fail;
+    if (!IS_SIMPLE(v[0])) {
+      goto fail;
+    }
+    if ((v[1] == 0) && (v[2] == 0)) {
+      goto fail;
+    }
+    if ((v[6] == 0) && (v[7] == 0)) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -4648,10 +5665,18 @@ int32_t bertrand_match3b(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if (!IS_SIMPLE(v[0])) goto fail;
-    if ((v[1] == 0) && (v[2] == 0) && (v[6] == 0) && (v[7] == 0)) return 1;
-    if ((v[1] == 0) && (v[2] == 0)) goto fail;
-    if ((v[6] == 0) && (v[7] == 0)) goto fail;
+    if (!IS_SIMPLE(v[0])) {
+      goto fail;
+    }
+    if ((v[1] == 0) && (v[2] == 0) && (v[6] == 0) && (v[7] == 0)) {
+      return 1;
+    }
+    if ((v[1] == 0) && (v[2] == 0)) {
+      goto fail;
+    }
+    if ((v[6] == 0) && (v[7] == 0)) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -4673,10 +5698,18 @@ int32_t bertrand_match4(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if ((!IS_SIMPLE(v[7])) && ((!IS_SIMPLE(v[0])) || (!IS_SIMPLE(v[6])))) goto fail;
-    if ((v[0] > 0) && (!IS_SIMPLE(v[0]))) goto fail;
-    if ((v[6] > 0) && (!IS_SIMPLE(v[6]))) goto fail;
-    if ((v[7] > 0) && (!IS_SIMPLE(v[7]))) goto fail;
+    if ((!IS_SIMPLE(v[7])) && ((!IS_SIMPLE(v[0])) || (!IS_SIMPLE(v[6])))) {
+      goto fail;
+    }
+    if ((v[0] > 0) && (!IS_SIMPLE(v[0]))) {
+      goto fail;
+    }
+    if ((v[6] > 0) && (!IS_SIMPLE(v[6]))) {
+      goto fail;
+    }
+    if ((v[7] > 0) && (!IS_SIMPLE(v[7]))) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -4724,9 +5757,15 @@ Répéter jusqu'à stabilité
     return 0;
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -4743,14 +5782,21 @@ Répéter jusqu'à stabilité
 #endif
 
     memset(R, 0, N);
-    for (i = 0; i < N; i++)
-      if (T[i] && (nbvois4(T, i, rs, N) == 4)) R[i] = 1; // calcule R = eros (T)
-    for (i = 0; i < N; i++) T[i] = R[i];                 // T = eros (T)
-    for (i = 0; i < N; i++)
-      if ((F[i] == 1) && simple8(F, i, rs, N)  && (nbvois4(T, i, rs, N) > 0))
-	F[i] = 2; //  pixels simples pour F et 4-voisins d'un point de T
+    for (i = 0; i < N; i++) {
+      if (T[i] && (nbvois4(T, i, rs, N) == 4)) {
+        R[i] = 1; // calcule R = eros (T)
+      }
+    }
+    for (i = 0; i < N; i++) {
+      T[i] = R[i]; // T = eros (T)
+    }
+    for (i = 0; i < N; i++) {
+      if ((F[i] == 1) && simple8(F, i, rs, N) && (nbvois4(T, i, rs, N) > 0)) {
+        F[i] = 2; //  pixels simples pour F et 4-voisins d'un point de T
+      }
+    }
     memset(R, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (F[i] == 2)
       {
 	m1 = bertrand_match3(F, i, rs, N);
@@ -4759,8 +5805,9 @@ Répéter jusqu'à stabilité
 	  R[i] = 1; // preserve point
 	}
       }
+    }
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if ((F[i] == 2) && !R[i])
       {
 	F[i] = 0;
@@ -4769,14 +5816,23 @@ Répéter jusqu'à stabilité
         T2[i] = step;
 #endif
       }
-    for (i = 0; i < N; i++) if (F[i]) F[i] = 1;
+    }
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 1;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 255; // normalize values
+      }
+    }
 
 #ifdef ETUDE
   writeimage(tmp2,"_etude");
@@ -4816,9 +5872,15 @@ int32_t lskelbertrand_asym_s(struct xvimage *image,
     return 0;
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (X[i]) X[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (X[i]) {
+      X[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -4835,19 +5897,27 @@ int32_t lskelbertrand_asym_s(struct xvimage *image,
 #endif
 
     memset(E, 0, N);   // T = eros (T)
-    for (i = 0; i < N; i++)
-      if (T[i] && (nbvois4(T, i, rs, N) == 4)) E[i] = 1;
+    for (i = 0; i < N; i++) {
+      if (T[i] && (nbvois4(T, i, rs, N) == 4)) {
+        E[i] = 1;
+      }
+    }
     memcpy(T, E, N);
 
     memset(M, 0, N);
-    for (i = 0; i < N; i++)
-      if (nbvois4(T, i, rs, N) >= 1) M[i] = 1;           // calcule M = Dilat(T)
-    for (i = 0; i < N; i++)
-      if ((X[i] == 1) && simple8(X, i, rs, N) && M[i])
-	X[i] = 2;
+    for (i = 0; i < N; i++) {
+      if (nbvois4(T, i, rs, N) >= 1) {
+        M[i] = 1; // calcule M = Dilat(T)
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if ((X[i] == 1) && simple8(X, i, rs, N) && M[i]) {
+        X[i] = 2;
+      }
+    }
 
     memset(R, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (X[i] == 2)
       {
 	m1 = bertrand_match1(X, i, rs, N);
@@ -4857,17 +5927,28 @@ int32_t lskelbertrand_asym_s(struct xvimage *image,
 	  R[i] = 1; // preserve point
 	}
       }
+    }
 
-    for (i = 0; i < N; i++)
-      if ((X[i] == 2) && !R[i]) { X[i] = 0; nonstab = 1; }
-    for (i = 0; i < N; i++) if (X[i]) X[i] = 1;
+    for (i = 0; i < N; i++) {
+      if ((X[i] == 2) && !R[i]) { X[i] = 0; nonstab = 1;
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (X[i]) {
+        X[i] = 1;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (X[i]) X[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (X[i]) {
+        X[i] = 255; // normalize values
+      }
+    }
 
   freeimage(tmp);
   free(M);
@@ -4920,9 +6001,15 @@ Répéter jusqu'à stabilité
     I = UCHARDATA(inhibit);
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -4938,49 +6025,75 @@ Répéter jusqu'à stabilité
     printf("step %d\n", step);
 #endif
 
-    for (i = 0; i < N; i++)
-      if ((S[i] == 1) && simple8(S, i, rs, N))
-	S[i] = 2; //  pixels simples pour S
+    for (i = 0; i < N; i++) {
+      if ((S[i] == 1) && simple8(S, i, rs, N)) {
+        S[i] = 2; //  pixels simples pour S
+      }
+    }
     memset(R, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (S[i] == 2)
       {
 	m1 = bertrand_match3(S, i, rs, N);
-	if (m1) R[i] = 1; // preserve point
+        if (m1) {
+          R[i] = 1; // preserve point
+        }
       }
+    }
     memset(T, 0, N);
     if (inhibit != NULL)
     {
-      for (i = 0; i < N; i++) // T := [S \ P] \cup  R \cup I
-	if ((S[i] == 1) || R[i] || I[i])
-	  T[i] = 1;
+      for (i = 0; i < N; i++) { // T := [S \ P] \cup  R \cup I
+        if ((S[i] == 1) || R[i] || I[i]) {
+          T[i] = 1;
+        }
+      }
     }
     else
     {
-      for (i = 0; i < N; i++) // T := [S \ P] \cup  R
-	if ((S[i] == 1) || R[i])
-	  T[i] = 1;
+      for (i = 0; i < N; i++) { // T := [S \ P] \cup  R
+        if ((S[i] == 1) || R[i]) {
+          T[i] = 1;
+        }
+      }
     }
     memset(R, 0, N);
-    for (i = 0; i < N; i++)
-      if (nbvois8(T, i, rs, N) >= 1) R[i] = 1; // calcule R = Dilat(T)
-    for (i = 0; i < N; i++)
-      if (T[i] || (S[i] && !R[i])) T[i] = 1; else T[i] = 0; // T := T \cup [S \ R]
+    for (i = 0; i < N; i++) {
+      if (nbvois8(T, i, rs, N) >= 1) {
+        R[i] = 1; // calcule R = Dilat(T)
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (T[i] || (S[i] && !R[i])) {
+        T[i] = 1;
+      } else {
+        T[i] = 0; // T := T \cup [S \ R]
+      }
+    }
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (S[i] && !T[i])
       {
 	S[i] = 0;
 	nonstab = 1;
       }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = 1;
+    }
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = 1;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = 255; // normalize values
+      }
+    }
 
   freeimage(t);
   freeimage(r);
@@ -5031,9 +6144,15 @@ Répéter jusqu'à stabilité
     I = UCHARDATA(inhibit);
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -5049,42 +6168,58 @@ Répéter jusqu'à stabilité
     printf("step %d\n", step);
 #endif
 
-    for (i = 0; i < N; i++)
-      if ((S[i] == 1) && simple8(S, i, rs, N) && 
-	  ((inhibit == NULL) || (I[i] == 0)))
-	S[i] = 2; //  pixels simples pour S et pas de contrainte
+    for (i = 0; i < N; i++) {
+      if ((S[i] == 1) && simple8(S, i, rs, N) &&
+          ((inhibit == NULL) || (I[i] == 0))) {
+        S[i] = 2; //  pixels simples pour S et pas de contrainte
+      }
+    }
 
     memset(R, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (S[i] == 2)
       {
 	m1 = bertrand_match3b(S, i, rs, N);
-	if (m1) R[i] = 1; // preserve point
+        if (m1) {
+          R[i] = 1; // preserve point
+        }
       }
-    for (i = 0; i < N; i++) if (R[i]) S[i] = 1;
-
+    }
+    for (i = 0; i < N; i++) {
+      if (R[i]) {
+        S[i] = 1;
+      }
+    }
 
     memset(R, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (S[i] == 2)
       {
 	m1 = bertrand_match4(S, i, rs, N);
-	if (m1) R[i] = 1; // preserve point
+        if (m1) {
+          R[i] = 1; // preserve point
+        }
       }
+    }
 
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if ((S[i] == 2) && (R[i] == 0))
       {
 	S[i] = 0;
 	nonstab = 1;
       }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = 255; // normalize values
+      }
+    }
 
   freeimage(r);
   return(1);
@@ -5136,9 +6271,15 @@ Répéter jusqu'à stabilité
     return 0;
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (S[i]) {
+      S[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -5159,58 +6300,88 @@ Répéter jusqu'à stabilité
 
     //  E := T \ominus \Gamma_4
     memset(E, 0, N);
-    for (i = 0; i < N; i++)
-      if (T[i] && (nbvois4(T, i, rs, N) == 4)) E[i] = 1;
+    for (i = 0; i < N; i++) {
+      if (T[i] && (nbvois4(T, i, rs, N) == 4)) {
+        E[i] = 1;
+      }
+    }
 
     //  D := E \oplus \Gamma_4
     memset(D, 0, N);
-    for (i = 0; i < N; i++)
-      if (E[i] || nbvois4(E, i, rs, N) >= 1) D[i] = 1;
+    for (i = 0; i < N; i++) {
+      if (E[i] || nbvois4(E, i, rs, N) >= 1) {
+        D[i] = 1;
+      }
+    }
 
     //  D := T \ D
-    for (i = 0; i < N; i++)
-      if (T[i] && !D[i]) D[i] = 1; else D[i] = 0;
+    for (i = 0; i < N; i++) {
+      if (T[i] && !D[i]) {
+        D[i] = 1;
+      } else {
+        D[i] = 0;
+      }
+    }
 
     //  T := E
     memcpy(T, E, N);
 
     //  K := K \cup D
-    for (i = 0; i < N; i++)
-      if (D[i]) K[i] = 1;
+    for (i = 0; i < N; i++) {
+      if (D[i]) {
+        K[i] = 1;
+      }
+    }
 
     //  P := pixels de S \ K simples pour S (P est représenté par les points à 2 dans S)
-    for (i = 0; i < N; i++)
-      if (S[i] && !K[i] && simple8(S, i, rs, N))
-	S[i] = 2;
+    for (i = 0; i < N; i++) {
+      if (S[i] && !K[i] && simple8(S, i, rs, N)) {
+        S[i] = 2;
+      }
+    }
 
     //  R := pixels de P qui s'apparient avec le masque C (bertrand_match3)
     memset(R, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (S[i] == 2)
       {
 	m1 = bertrand_match3(S, i, rs, N);
-	if (m1) R[i] = 1; // preserve point
+        if (m1) {
+          R[i] = 1; // preserve point
+        }
       }
+    }
 
     //  D := [S  \  P]  \cup  R
-    for (i = 0; i < N; i++)
-      if ((S[i] == 1) || R[i])
-	D[i] = 1;
+    for (i = 0; i < N; i++) {
+      if ((S[i] == 1) || R[i]) {
+        D[i] = 1;
+      }
+    }
 
-    for (i = 0; i < N; i++) // pour  tester la stabilité
+    for (i = 0; i < N; i++) { // pour  tester la stabilité
       if (S[i] && !D[i])
       {
 	S[i] = 0;
 	nonstab = 1;
       }
-    for (i = 0; i < N; i++) if (S[i]) S[i] = 1;
+    }
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = 1;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (S[i]) S[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (S[i]) {
+        S[i] = 255; // normalize values
+      }
+    }
 
   freeimage(t);
   freeimage(r);
@@ -5234,9 +6405,15 @@ static int32_t ros_match1(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if (v[0] != 0) goto fail;
-    if (v[6] != 0) goto fail;
-    if (!v[7]) goto fail;
+    if (v[0] != 0) {
+      goto fail;
+    }
+    if (v[6] != 0) {
+      goto fail;
+    }
+    if (!v[7]) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -5258,11 +6435,21 @@ static int32_t ros_match2(uint8_t *F, int32_t x, int32_t rs, int32_t N)
   extract_vois(F, x, rs, N, v);
   for (i = 0; i < 4; i++)
   {
-    if (v[1] != 0) goto fail;
-    if (v[2] != 0) goto fail;
-    if (v[6] != 0) goto fail;
-    if (v[7] != 0) goto fail;
-    if (!v[0]) goto fail;
+    if (v[1] != 0) {
+      goto fail;
+    }
+    if (v[2] != 0) {
+      goto fail;
+    }
+    if (v[6] != 0) {
+      goto fail;
+    }
+    if (v[7] != 0) {
+      goto fail;
+    }
+    if (!v[0]) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(v);
@@ -5281,7 +6468,9 @@ static int32_t ros_north(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8];
   extract_vois(F, x, rs, N, v);
-  if (v[2] != 0) return 0;
+  if (v[2] != 0) {
+    return 0;
+  }
   return 1;
 
 } /* ros_north() */
@@ -5297,7 +6486,9 @@ static int32_t ros_south(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8];
   extract_vois(F, x, rs, N, v);
-  if (v[6] != 0) return 0;
+  if (v[6] != 0) {
+    return 0;
+  }
   return 1;
 
 } /* ros_south() */
@@ -5313,7 +6504,9 @@ static int32_t ros_east(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8];
   extract_vois(F, x, rs, N, v);
-  if (v[0] != 0) return 0;
+  if (v[0] != 0) {
+    return 0;
+  }
   return 1;
 
 } /* ros_east() */
@@ -5329,7 +6522,9 @@ static int32_t ros_west(uint8_t *F, int32_t x, int32_t rs, int32_t N)
 {
   uint8_t v[8];
   extract_vois(F, x, rs, N, v);
-  if (v[4] != 0) return 0;
+  if (v[4] != 0) {
+    return 0;
+  }
   return 1;
 
 } /* ros_west() */
@@ -5358,9 +6553,15 @@ int32_t lskelrosenfeld(struct xvimage *image,
     return 0;
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -5377,36 +6578,63 @@ int32_t lskelrosenfeld(struct xvimage *image,
 #endif
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if ((F[i] == 1) && simple8(F, i, rs, N) && ros_north(F, i, rs, N) && !ros_match1(F, i, rs, N) && !ros_match2(F, i, rs, N))
-      { nonstab = 1; T[i] = 1; }
-    for (i = 0; i < N; i++) if (T[i] == 1) F[i] = 0;
+      { nonstab = 1; T[i] = 1;
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (T[i] == 1) {
+        F[i] = 0;
+      }
+    }
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if ((F[i] == 1) && simple8(F, i, rs, N) && ros_south(F, i, rs, N) && !ros_match1(F, i, rs, N) && !ros_match2(F, i, rs, N))
-      { nonstab = 1; T[i] = 1; }
-    for (i = 0; i < N; i++) if (T[i] == 1) F[i] = 0;
+      { nonstab = 1; T[i] = 1;
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (T[i] == 1) {
+        F[i] = 0;
+      }
+    }
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if ((F[i] == 1) && simple8(F, i, rs, N) && ros_east(F, i, rs, N) && !ros_match1(F, i, rs, N) && !ros_match2(F, i, rs, N))
-      { nonstab = 1; T[i] = 1; }
-    for (i = 0; i < N; i++) if (T[i] == 1) F[i] = 0;
+      { nonstab = 1; T[i] = 1;
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (T[i] == 1) {
+        F[i] = 0;
+      }
+    }
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if ((F[i] == 1) && simple8(F, i, rs, N) && ros_west(F, i, rs, N) && !ros_match1(F, i, rs, N) && !ros_match2(F, i, rs, N))
-      { nonstab = 1; T[i] = 1; }
-    for (i = 0; i < N; i++) if (T[i] == 1) F[i] = 0;
-
+      { nonstab = 1; T[i] = 1;
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (T[i] == 1) {
+        F[i] = 0;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 255; // normalize values
+      }
+    }
 
   freeimage(tmp);
   return(1);
@@ -5436,9 +6664,15 @@ int32_t lskelrosenfeld_var1(struct xvimage *image,
     return 0;
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -5455,36 +6689,63 @@ int32_t lskelrosenfeld_var1(struct xvimage *image,
 #endif
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if ((F[i] == 1) && simple8(F, i, rs, N) && ros_west(F, i, rs, N) && !ros_match1(F, i, rs, N) && !ros_match2(F, i, rs, N))
-      { nonstab = 1; T[i] = 1; }
-    for (i = 0; i < N; i++) if (T[i] == 1) F[i] = 0;
+      { nonstab = 1; T[i] = 1;
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (T[i] == 1) {
+        F[i] = 0;
+      }
+    }
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if ((F[i] == 1) && simple8(F, i, rs, N) && ros_east(F, i, rs, N) && !ros_match1(F, i, rs, N) && !ros_match2(F, i, rs, N))
-      { nonstab = 1; T[i] = 1; }
-    for (i = 0; i < N; i++) if (T[i] == 1) F[i] = 0;
+      { nonstab = 1; T[i] = 1;
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (T[i] == 1) {
+        F[i] = 0;
+      }
+    }
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if ((F[i] == 1) && simple8(F, i, rs, N) && ros_south(F, i, rs, N) && !ros_match1(F, i, rs, N) && !ros_match2(F, i, rs, N))
-      { nonstab = 1; T[i] = 1; }
-    for (i = 0; i < N; i++) if (T[i] == 1) F[i] = 0;
+      { nonstab = 1; T[i] = 1;
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (T[i] == 1) {
+        F[i] = 0;
+      }
+    }
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if ((F[i] == 1) && simple8(F, i, rs, N) && ros_north(F, i, rs, N) && !ros_match1(F, i, rs, N) && !ros_match2(F, i, rs, N))
-      { nonstab = 1; T[i] = 1; }
-    for (i = 0; i < N; i++) if (T[i] == 1) F[i] = 0;
-
+      { nonstab = 1; T[i] = 1;
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (T[i] == 1) {
+        F[i] = 0;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 255; // normalize values
+      }
+    }
 
   freeimage(tmp);
   return(1);
@@ -5514,9 +6775,15 @@ int32_t lskelrosenfeld_var2(struct xvimage *image,
     return 0;
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 1; // normalize values
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 1; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -5533,36 +6800,63 @@ int32_t lskelrosenfeld_var2(struct xvimage *image,
 #endif
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if ((F[i] == 1) && simple8(F, i, rs, N) && ros_east(F, i, rs, N) && !ros_match1(F, i, rs, N) && !ros_match2(F, i, rs, N))
-      { nonstab = 1; T[i] = 1; }
-    for (i = 0; i < N; i++) if (T[i] == 1) F[i] = 0;
+      { nonstab = 1; T[i] = 1;
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (T[i] == 1) {
+        F[i] = 0;
+      }
+    }
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if ((F[i] == 1) && simple8(F, i, rs, N) && ros_north(F, i, rs, N) && !ros_match1(F, i, rs, N) && !ros_match2(F, i, rs, N))
-      { nonstab = 1; T[i] = 1; }
-    for (i = 0; i < N; i++) if (T[i] == 1) F[i] = 0;
+      { nonstab = 1; T[i] = 1;
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (T[i] == 1) {
+        F[i] = 0;
+      }
+    }
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if ((F[i] == 1) && simple8(F, i, rs, N) && ros_west(F, i, rs, N) && !ros_match1(F, i, rs, N) && !ros_match2(F, i, rs, N))
-      { nonstab = 1; T[i] = 1; }
-    for (i = 0; i < N; i++) if (T[i] == 1) F[i] = 0;
+      { nonstab = 1; T[i] = 1;
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (T[i] == 1) {
+        F[i] = 0;
+      }
+    }
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if ((F[i] == 1) && simple8(F, i, rs, N) && ros_south(F, i, rs, N) && !ros_match1(F, i, rs, N) && !ros_match2(F, i, rs, N))
-      { nonstab = 1; T[i] = 1; }
-    for (i = 0; i < N; i++) if (T[i] == 1) F[i] = 0;
-
+      { nonstab = 1; T[i] = 1;
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (T[i] == 1) {
+        F[i] = 0;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 255; // normalize values
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = 255; // normalize values
+      }
+    }
 
   freeimage(tmp);
   return(1);
@@ -5580,9 +6874,11 @@ int32_t is_hall_2dendpoint(struct xvimage* img, uint32_t x, uint32_t rs, uint32_
 		return(0);
 	}
 
-	if(UCHARDATA(img)[x]==0) return 0;
+        if (UCHARDATA(img)[x] == 0) {
+          return 0;
+        }
 
-	v = nbvois8((uint8_t*)(img->image_data), x, rs, N);
+        v = nbvois8((uint8_t*)(img->image_data), x, rs, N);
 
 	if(v == 1)
 	{
@@ -5591,48 +6887,45 @@ int32_t is_hall_2dendpoint(struct xvimage* img, uint32_t x, uint32_t rs, uint32_
 
 	else if(v == 2)
 	{
-		if(type==1)
-			return 0;
+          if (type == 1) {
+            return 0;
 
-		else
-		{
-			for(i=0; i<8; i++)
-			{
-				v1 = voisin(x, i, rs, N);
-				if((v1!=-1) && (UCHARDATA(img)[v1]!=0))
-				{
-					break;
-				}
-			}
+          } else {
+            for (i = 0; i < 8; i++) {
+              v1 = voisin(x, i, rs, N);
+              if ((v1 != -1) && (UCHARDATA(img)[v1] != 0)) {
+                break;
+              }
+            }
 
-			for(i=0; i<8; i++)
-			{
-				v2 = voisin(x, 7-i, rs, N);
-				if((v2!=-1) && (UCHARDATA(img)[v2]!=0))
-				{
-					break;
-				}
-			}
+            for (i = 0; i < 8; i++) {
+              v2 = voisin(x, 7 - i, rs, N);
+              if ((v2 != -1) && (UCHARDATA(img)[v2] != 0)) {
+                break;
+              }
+            }
 
-			if(v1==v2) fprintf(stderr, "Bouh\n");
+            if (v1 == v2) {
+              fprintf(stderr, "Bouh\n");
+            }
 
-			if(type==2)
-			{
-				if(voisins8(v1, v2, rs))
-					return 1;
-				else
-					return 0;
-			}
+            if (type == 2) {
+              if (voisins8(v1, v2, rs)) {
+                return 1;
+              } else {
+                return 0;
+              }
+            }
 
-			else
-			{
-				if(voisins4(v1, v2, rs))
-					return 1;
-				else
-					return 0;
-			}
-		}
-	}
+            else {
+              if (voisins4(v1, v2, rs)) {
+                return 1;
+              } else {
+                return 0;
+              }
+            }
+          }
+        }
 
 	return 0;
 }
@@ -5648,9 +6941,11 @@ int32_t is_self_deletable(struct xvimage *img, uint32_t x, uint32_t rs, uint32_t
 		return(0);
 	}
 
-	if(UCHARDATA(img)[x]==0) return 0;
+        if (UCHARDATA(img)[x] == 0) {
+          return 0;
+        }
 
-	return (simple8((uint8_t*)(img->image_data), x, rs, N) && (!is_hall_2dendpoint(img, x, rs, N, type)));
+        return (simple8((uint8_t*)(img->image_data), x, rs, N) && (!is_hall_2dendpoint(img, x, rs, N, type)));
 }
 
 
@@ -5665,9 +6960,11 @@ int32_t is_double_deletable(struct xvimage *img, uint32_t x, uint32_t rs, uint32
 		return(0);
 	}
 
-	if(UCHARDATA(img)[x]==0) return 0;
+        if (UCHARDATA(img)[x] == 0) {
+          return 0;
+        }
 
-	if(is_self_deletable(img, x, rs, N, type))
+        if(is_self_deletable(img, x, rs, N, type))
 	{
 		for(i=0; i<8; i=i+2)
 		{
@@ -5686,8 +6983,10 @@ int32_t is_double_deletable(struct xvimage *img, uint32_t x, uint32_t rs, uint32
 						ok2=simple8((uint8_t*)(img->image_data), v, rs, N);
 						UCHARDATA(img)[x]=255;
 
-						if(!ok2) return 0;
-					}
+                                                if (!ok2) {
+                                                  return 0;
+                                                }
+                                        }
 				}
 			}
 		}
@@ -5737,9 +7036,11 @@ int32_t is_square_deletable(struct xvimage *img, uint32_t x, uint32_t rs, uint32
 		return(0);
 	}
 
-	if(UCHARDATA(img)[x]==0) return 0;
+        if (UCHARDATA(img)[x] == 0) {
+          return 0;
+        }
 
-	if(nonbord(x, rs, N))
+        if(nonbord(x, rs, N))
 	{
 		if( is_surrounded_by_radius2_ring(img, x, rs, N) )
 		{
@@ -5834,10 +7135,16 @@ Voir "Parallel thinning algorithms based on Ronse's sufficient conditions for to
 #endif
 
     memset(T, 0, N);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if ((F[i] == 255) && (is_double_deletable(image, i, rs, N, type)==1) && (is_square_deletable(image, i, rs, N, type)==1))
-      { nonstab = 1; T[i] = 1; }
-    for (i = 0; i < N; i++) if (T[i] == 1) F[i] = 0;
+      { nonstab = 1; T[i] = 1;
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (T[i] == 1) {
+        F[i] = 0;
+      }
+    }
   }
 
 #ifdef VERBOSE1
@@ -6093,10 +7400,12 @@ int32_t lhthinpar(struct xvimage *image, int32_t nsteps)
     fprintf(stderr, "%s: copyimage failed\n", F_NAME);
     return 0;
   }
-  G = UCHARDATA(tempimage);       
+  G = UCHARDATA(tempimage);
 
-  if (nsteps == -1) nsteps = 1000000000;
-  
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
+
   step = 0;
   
   do {
@@ -6105,10 +7414,11 @@ int32_t lhthinpar(struct xvimage *image, int32_t nsteps)
     // compute D and A
      for (p=0; p<N; p++) {
       A[p] =  alpha8m(F, p, rs, N);
-      if ( pdestr4(F, p, rs, N)) 
-	D[p] = DESTRUCTIBLE;
-      else 
-	D[p] = NON_DESTRUCTIBLE;
+      if (pdestr4(F, p, rs, N)) {
+        D[p] = DESTRUCTIBLE;
+      } else {
+        D[p] = NON_DESTRUCTIBLE;
+      }
     }
 
 #ifdef DEBUG
@@ -6128,14 +7438,15 @@ int32_t lhthinpar(struct xvimage *image, int32_t nsteps)
      writeimage(destructible, "CRUCIAL.pgm");
 #endif
 
-    for (p=0; p<N; p++)
-      if (D[p]==DESTRUCTIBLE) {
-	G[p] = A[p];
-	nonstab = 1;
-      }
-      else
-	G[p] = F[p];
-    
+     for (p = 0; p < N; p++) {
+       if (D[p] == DESTRUCTIBLE) {
+         G[p] = A[p];
+         nonstab = 1;
+       } else {
+         G[p] = F[p];
+       }
+     }
+
     step++;
     memcpy(F, G, N);
      
@@ -6184,9 +7495,11 @@ int32_t lhthinpar_asymmetric(struct xvimage *image, int32_t nsteps)
     fprintf(stderr, "%s: copyimage failed\n", F_NAME);
     return 0;
   }
-  G = UCHARDATA(tempimage);       
+  G = UCHARDATA(tempimage);
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
   step = 0;
   
@@ -6196,10 +7509,11 @@ int32_t lhthinpar_asymmetric(struct xvimage *image, int32_t nsteps)
     // compute D and A
      for (p=0; p<N; p++) {
       A[p] =  alpha8m(F, p, rs, N);
-      if ( pdestr4(F, p, rs, N)) 
-	D[p] = DESTRUCTIBLE;
-      else 
-	D[p] = NON_DESTRUCTIBLE;
+      if (pdestr4(F, p, rs, N)) {
+        D[p] = DESTRUCTIBLE;
+      } else {
+        D[p] = NON_DESTRUCTIBLE;
+      }
     }
 
 #ifdef DEBUG
@@ -6219,14 +7533,15 @@ int32_t lhthinpar_asymmetric(struct xvimage *image, int32_t nsteps)
      writeimage(destructible, "CRUCIAL.pgm");
 #endif
 
-    for (p=0; p<N; p++)
-      if (D[p]==DESTRUCTIBLE) {
-	G[p] = A[p];
-	nonstab = 1;
-      }
-      else
-	G[p] = F[p];
-    
+     for (p = 0; p < N; p++) {
+       if (D[p] == DESTRUCTIBLE) {
+         G[p] = A[p];
+         nonstab = 1;
+       } else {
+         G[p] = F[p];
+       }
+     }
+
     step++;
     memcpy(F, G, N);
      
@@ -6636,12 +7951,22 @@ Attention : l'objet ne doit pas toucher le bord de l'image
   else
   {
     I = UCHARDATA(inhibit);
-    for (i = 0; i < N; i++) if (I[i]) I[i] = I_INHIBIT;
+    for (i = 0; i < N; i++) {
+      if (I[i]) {
+        I[i] = I_INHIBIT;
+      }
+    }
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = S_OBJECT; // normalize values
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = S_OBJECT; // normalize values
+    }
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -6658,24 +7983,30 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 #endif
     memset(T, 0, N);
 
-    for (i = 0; i < N; i++)
-      if (F[i] && simple8(F, i, rs, N))
-	SET_SIMPLE(F[i]);
+    for (i = 0; i < N; i++) {
+      if (F[i] && simple8(F, i, rs, N)) {
+        SET_SIMPLE(F[i]);
+      }
+    }
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (F[i])
       {
-	if (IS_SIMPLE(F[i]) && mc_match1(F, i, rs, N))
-	  I[i] = I_INHIBIT;
-	else if (t8(mask(F, i, rs, N)) > 1)
-	  I[i] = I_INHIBIT;
+        if (IS_SIMPLE(F[i]) && mc_match1(F, i, rs, N)) {
+          I[i] = I_INHIBIT;
+        } else if (t8(mask(F, i, rs, N)) > 1) {
+          I[i] = I_INHIBIT;
+        }
       }
+    }
 
-    for (i = 0; i < N; i++)
-      if (I[i] == I_INHIBIT)
-	UNSET_SIMPLE(F[i]);
+    for (i = 0; i < N; i++) {
+      if (I[i] == I_INHIBIT) {
+        UNSET_SIMPLE(F[i]);
+      }
+    }
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(F[i]))
       {
 	m1 = mc_match1(F, i, rs, N);
@@ -6693,6 +8024,7 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 	  T[i] = 1; // preserve point
 	}
       }
+    }
 
 #ifdef DEBUG_MC
     printf("\n");
@@ -6706,16 +8038,26 @@ Attention : l'objet ne doit pas toucher le bord de l'image
     printf("\n");
 #endif
 
-    for (i = 0; i < N; i++)
-      if (IS_SIMPLE(F[i]) && !T[i]) { F[i] = 0; nonstab = 1; }
-    for (i = 0; i < N; i++) if (F[i]) F[i] = S_OBJECT;
+    for (i = 0; i < N; i++) {
+      if (IS_SIMPLE(F[i]) && !T[i]) { F[i] = 0; nonstab = 1;
+      }
+    }
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = S_OBJECT;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = NDG_MAX; // normalize values
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = NDG_MAX; // normalize values
+      }
+    }
 
   freeimage(tmp);
   return(1);
@@ -6747,8 +8089,14 @@ int32_t lskelCK2_pers(struct xvimage *image,
   razimage(inhibit);
   I = UCHARDATA(inhibit);
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = S_OBJECT; // normalize values
-  for (i = 0; i < N; i++) P[i] = PERS_INIT_VAL;
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = S_OBJECT; // normalize values
+    }
+  }
+  for (i = 0; i < N; i++) {
+    P[i] = PERS_INIT_VAL;
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -6765,26 +8113,32 @@ int32_t lskelCK2_pers(struct xvimage *image,
 #endif
     memset(T, 0, N);
 
-    for (i = 0; i < N; i++)
-      if (F[i] && simple8(F, i, rs, N))
-	SET_SIMPLE(F[i]);
+    for (i = 0; i < N; i++) {
+      if (F[i] && simple8(F, i, rs, N)) {
+        SET_SIMPLE(F[i]);
+      }
+    }
 
-    for (i = 0; i < N; i++) // detecte les isthmes
+    for (i = 0; i < N; i++) { // detecte les isthmes
       if (F[i])
       {
-	if (IS_SIMPLE(F[i]) && mc_match1(F, i, rs, N))
-	  I[i] = I_INHIBIT;
-	else if (t8(mask(F, i, rs, N)) > 1)
-	  I[i] = I_INHIBIT;
+        if (IS_SIMPLE(F[i]) && mc_match1(F, i, rs, N)) {
+          I[i] = I_INHIBIT;
+        } else if (t8(mask(F, i, rs, N)) > 1) {
+          I[i] = I_INHIBIT;
+        }
       }
+    }
 
     // ENREGISTRE LA DATE DE NAISSANCE DES ISTHMES
     for (i = 0; i < N; i++)
     {
-      if ((P[i] == PERS_INIT_VAL) && (I[i] == I_INHIBIT)) P[i] = (float)step;
+      if ((P[i] == PERS_INIT_VAL) && (I[i] == I_INHIBIT)) {
+        P[i] = (float)step;
+      }
     }
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(F[i]))
       {
 	m1 = mc_match1(F, i, rs, N);
@@ -6798,26 +8152,36 @@ int32_t lskelCK2_pers(struct xvimage *image,
 	  T[i] = 1; // preserve point
 	}
       }
+    }
 
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       if (IS_SIMPLE(F[i]) && !T[i]) 
       { 
 	F[i] = 0; 
-	nonstab = 1; 
-	if (P[i] != PERS_INIT_VAL) P[i] = (float)step - P[i]; else P[i] = 0;
+	nonstab = 1;
+        if (P[i] != PERS_INIT_VAL) {
+          P[i] = (float)step - P[i];
+        } else {
+          P[i] = 0;
+        }
       }
-    for (i = 0; i < N; i++) if (F[i]) F[i] = S_OBJECT;
+    }
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = S_OBJECT;
+      }
+    }
   }
 
 #ifdef VERBOSE1
     printf("number of steps: %d\n", step);
 #endif
 
-  for (i = 0; i < N; i++) 
-    if (F[i]) 
-    {
-      F[i] = NDG_MAX; // normalize values
-      P[i] = PERS_INFTY_VAL;
+    for (i = 0; i < N; i++) {
+      if (F[i]) {
+        F[i] = NDG_MAX; // normalize values
+        P[i] = PERS_INFTY_VAL;
+      }
     }
 
   freeimage(tmp);
@@ -6845,10 +8209,18 @@ C D   au moins AD ou BC dans F
   extract_vois(Y, x, rs, N, y);
   for (i = 0; i < 4; i++)
   {
-    if (f[0] && y[0]) goto fail;
-    if (f[1] && y[1]) goto fail;
-    if (f[2] && y[2]) goto fail;
-    if (!f[1] && (!f[0] || !f[2])) goto fail;
+    if (f[0] && y[0]) {
+      goto fail;
+    }
+    if (f[1] && y[1]) {
+      goto fail;
+    }
+    if (f[2] && y[2]) {
+      goto fail;
+    }
+    if (!f[1] && (!f[0] || !f[2])) {
+      goto fail;
+    }
     return 1;
   fail:
     rotate90_vois(f);
@@ -6884,10 +8256,18 @@ B B   (+ rotation 90)
   extract_vois(Y, x, rs, N, y);
   for (i = 0; i < 4; i++)
   {
-    if (!f[0] || y[0]) goto fail;
-    if ((f[1] == 0) && (f[2] == 0) && (f[6] == 0) && (f[7] == 0)) return 1;
-    if ((f[1] == 0) && (f[2] == 0)) goto fail;
-    if ((f[6] == 0) && (f[7] == 0)) goto fail;
+    if (!f[0] || y[0]) {
+      goto fail;
+    }
+    if ((f[1] == 0) && (f[2] == 0) && (f[6] == 0) && (f[7] == 0)) {
+      return 1;
+    }
+    if ((f[1] == 0) && (f[2] == 0)) {
+      goto fail;
+    }
+    if ((f[6] == 0) && (f[7] == 0)) {
+      goto fail;
+    }
     return 2;
   fail:
     rotate90_vois(f);
@@ -6908,7 +8288,7 @@ static void D_Crucial_Isthmes(uint8_t *F, uint8_t *K, int32_t rs, int32_t N, uin
   memset(A, 0, N);
   memset(B, 0, N);
   // dim = 2
-  for (i = 0; i < N; i++)
+  for (i = 0; i < N; i++) {
     if (F[i] && (K[i] || !simple8(F, i, rs, N)))
     {
 #ifdef DEBUG_D_Crucial_Isthmes
@@ -6923,10 +8303,18 @@ printf("isthme mince %d %d\n", i % rs, i / rs);
         B[i] = 1;
       }
     }
-  for (i = 0; i < N; i++) { if (A[i]) Y[i] = 1; if (B[i]) Z[i] = 1; }
-    
+  }
+  for (i = 0; i < N; i++) {
+    if (A[i]) {
+      Y[i] = 1;
+    }
+    if (B[i]) {
+      Z[i] = 1;
+    }
+  }
+
   // dim = 1
-  for (i = 0; i < N; i++)
+  for (i = 0; i < N; i++) {
     if (F[i] && !Y[i])
     {
       r = clique1_match(F, Y, i, rs, N);
@@ -6945,10 +8333,18 @@ printf("isthme epais %d %d\n", i % rs, i / rs);
 	}
       }
     }
-  for (i = 0; i < N; i++) { if (A[i]) Y[i] = 1; if (B[i]) Z[i] = 1; }
+  }
+  for (i = 0; i < N; i++) {
+    if (A[i]) {
+      Y[i] = 1;
+    }
+    if (B[i]) {
+      Z[i] = 1;
+    }
+  }
 
   // dim = 0
-  for (i = 0; i < N; i++)
+  for (i = 0; i < N; i++) {
     if (F[i] && !Y[i] && clique0_match(F, Y, i, rs, N))
     {
 #ifdef DEBUG_D_Crucial_Isthmes
@@ -6956,7 +8352,15 @@ printf("0-crucial %d %d\n", i % rs, i / rs);
 #endif
       Y[i] = 1;
     }
-  for (i = 0; i < N; i++) { if (A[i]) Y[i] = 1; if (B[i]) Z[i] = 1; }
+  }
+  for (i = 0; i < N; i++) {
+    if (A[i]) {
+      Y[i] = 1;
+    }
+    if (B[i]) {
+      Z[i] = 1;
+    }
+  }
 } // D_Crucial_Isthmes()
 
 /* ==================================== */
@@ -7032,13 +8436,19 @@ int32_t lskelCK2_pers_topo(struct xvimage *image,
     return(0);
   }
 
-  for (x = 0; x < N; x++) if (X[x]) X[x] = S_OBJECT; // normalize values
+  for (x = 0; x < N; x++) {
+    if (X[x]) {
+      X[x] = S_OBJECT; // normalize values
+    }
+  }
 
   //   step = 0; K = empty; 
   step = 0;
   razimage(Kimage);
   // foreach x in X do P(x) = 0;
-  for (x = 0; x < N; x++) P[x] = PERS_INIT_VAL;
+  for (x = 0; x < N; x++) {
+    P[x] = PERS_INIT_VAL;
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -7057,32 +8467,34 @@ int32_t lskelCK2_pers_topo(struct xvimage *image,
     D_Crucial_Isthmes(X, K, rs, N, Y, Z, A, B);
 
     // foreach x in Z such that P(x) = 0 do P(x) = step;
-    for (x = 0; x < N; x++)
+    for (x = 0; x < N; x++) {
       if (Z[x] && (P[x] == PERS_INIT_VAL)) 
       {
 	P[x] = (float)step;
       }
+    }
 
     // foreach x in X \ Y such that P(x) > 0 do
-    for (x = 0; x < N; x++)
+    for (x = 0; x < N; x++) {
       if (X[x] && !Y[x] && (P[x] != PERS_INIT_VAL)) 
       { 
 	// P(x) = step - P(x);
 	P[x] = (float)step - P[x];
       }
+    }
 
     // X = Y
-    for (x = 0; x < N; x++) 
+    for (x = 0; x < N; x++) {
       if (X[x])
-      { 
-	if (Y[x])
-	  X[x] = S_OBJECT;
-	else
-	{
-	  X[x] = 0;
-	  ndel++; 
-	}
+      {
+        if (Y[x]) {
+          X[x] = S_OBJECT;
+        } else {
+          X[x] = 0;
+	  ndel++;
+        }
       }
+    }
 
 #ifdef VERBOSE
     printf("ndel = %d\n", ndel);
@@ -7096,18 +8508,23 @@ stop:;
     printf("number of steps: %d\n", step);
 #endif
 
-    for (x = 0; x < N; x++) if (X[x]) P[x] = PERS_INFTY_VAL;
-
-    for (x = 0; x < N; x++) if (P[x] > 0) X[x] = S_OBJECT;
-
-  for (x = 0; x < N; x++) 
-    if (X[x]) 
-    {
-      X[x] = NDG_MAX; // normalize values
+    for (x = 0; x < N; x++) {
+      if (X[x]) {
+        P[x] = PERS_INFTY_VAL;
+      }
     }
 
+    for (x = 0; x < N; x++) {
+      if (P[x] > 0) {
+        X[x] = S_OBJECT;
+      }
+    }
 
-
+    for (x = 0; x < N; x++) {
+      if (X[x]) {
+        X[x] = NDG_MAX; // normalize values
+      }
+    }
 
   mcrbt_RbtTermine(Q);
   freeimage(Aimage);

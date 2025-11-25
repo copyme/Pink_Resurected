@@ -99,9 +99,9 @@ int main(int argc, char **argv)
     x = atof(argv[3]);
     y = atof(argv[4]);
     image2 = lrotationInter(image, theta, x, y, 0);
-  }
-  else
+  } else {
     image2 = lrotationInter(image, theta, 0.0, 0.0, 1);
+  }
 
   if (! image2)
   {

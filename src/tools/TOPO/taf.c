@@ -94,8 +94,12 @@ int main(int argc, char **argv)
   connexmin = atoi(argv[2]);
   rayon = atoi(argv[3]);
 
-  if (argc >= 6) lambdapics = lambdapuits = atoi(argv[4]);
-  if (argc == 7) lambdapuits = atoi(argv[5]);
+  if (argc >= 6) {
+    lambdapics = lambdapuits = atoi(argv[4]);
+  }
+  if (argc == 7) {
+    lambdapuits = atoi(argv[5]);
+  }
 
   if (! ltaflambda(image, connexmin, rayon, lambdapics, lambdapuits))
   {

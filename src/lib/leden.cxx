@@ -67,18 +67,24 @@ static int nb1vois(uint8_t *image, index_t p, int dimx, int dimy, int dimz, int 
 
     /* take care of border effects */
     nbvois = 0;
-    if (x < (dimx-1))
-        nbvois += (image[z*ps + y*dimx + x+1] == val);
-    if (x > 0)
-        nbvois += (image[z*ps + y*dimx + x-1] == val);
-    if (y < (dimy -1))
-        nbvois += (image[z*ps + (y+1)*dimx + x] == val);
-    if (y > 0)
-        nbvois += (image[z*ps + (y-1)*dimx + x] == val);
-    if (z < (dimz -1))
-        nbvois += (image[(z+1)*ps + y*dimx + x] == val);
-    if (z > 0)
-        nbvois += (image[(z-1)*ps + y*dimx + x] == val);
+    if (x < (dimx - 1)) {
+      nbvois += (image[z * ps + y * dimx + x + 1] == val);
+    }
+    if (x > 0) {
+      nbvois += (image[z * ps + y * dimx + x - 1] == val);
+    }
+    if (y < (dimy - 1)) {
+      nbvois += (image[z * ps + (y + 1) * dimx + x] == val);
+    }
+    if (y > 0) {
+      nbvois += (image[z * ps + (y - 1) * dimx + x] == val);
+    }
+    if (z < (dimz - 1)) {
+      nbvois += (image[(z + 1) * ps + y * dimx + x] == val);
+    }
+    if (z > 0) {
+      nbvois += (image[(z - 1) * ps + y * dimx + x] == val);
+    }
 
     return(nbvois);
 }
@@ -124,7 +130,9 @@ int32_t ledengrowth(uint8_t *in,
 #endif /* NOT UNIXIO */
 
   // Init topo 3d
-  if (dimz>1) mctopo3d_init_topo3d();
+  if (dimz > 1) {
+    mctopo3d_init_topo3d();
+  }
 
   parcouru=CreateEmptySet((nbpix/32)+1);
   if(parcouru == NULL)
@@ -346,7 +354,9 @@ int32_t ledengrowth(uint8_t *in,
   }
 
   // Clear topo 3d
-  if (dimz>1) mctopo3d_termine_topo3d();
+  if (dimz > 1) {
+    mctopo3d_termine_topo3d();
+  }
   free(parcouru);
 
     return 1;

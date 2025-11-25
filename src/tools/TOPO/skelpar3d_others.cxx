@@ -219,36 +219,55 @@ int main(int32_t argc, char **argv)
     switch (mode)
     {
     case 0:
-      if (argc == 6)
-		fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
-	  else if (nsteps!=-1)
-		fprintf(stderr, "%s: warning: step mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      } else if (nsteps != -1) {
+        fprintf(stderr, "%s: warning: step mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       (void)palagyi_skelpar_curv_98(image);
       break;
     case 1:
-      if (argc == 6)
-		fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
-	  else if (nsteps!=-1)
-		fprintf(stderr, "%s: warning: step mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      } else if (nsteps != -1) {
+        fprintf(stderr, "%s: warning: step mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       (void)palagyi_skelpar_curv_06(image);
       break;
     case 2:
-      if (argc == 6)
-		fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
-	  else if (nsteps!=-1)
-		fprintf(stderr, "%s: warning: step mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      } else if (nsteps != -1) {
+        fprintf(stderr, "%s: warning: step mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       (void)palagyi_skelpar_surf_02(image);
       break;
     case 3:
-      if (argc == 6)
-		fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
-	  else if (nsteps!=-1)
-		fprintf(stderr, "%s: warning: step mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      } else if (nsteps != -1) {
+        fprintf(stderr, "%s: warning: step mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       (void)palagyi_skelpar_surf_08(image);
       break;
     case 4:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lraynalcouprie6dir2010(image, nsteps))
       {
 	fprintf(stderr, "%s: lraynalcouprie6dir2010 failed\n", argv[0]);
@@ -264,11 +283,15 @@ int main(int32_t argc, char **argv)
       break;
 #endif
     case 5:
-      if (nsteps==-1) nsteps=0;
-      if(inhibit!=NULL)
-      dskel1.skeletonize((unsigned char*)(image->image_data), false, nsteps, (unsigned char*)(inhibit->image_data));
-      else
-      dskel1.skeletonize((unsigned char*)(image->image_data), false, nsteps);
+      if (nsteps == -1) {
+        nsteps = 0;
+      }
+      if (inhibit != NULL) {
+        dskel1.skeletonize((unsigned char *)(image->image_data), false, nsteps,
+                           (unsigned char *)(inhibit->image_data));
+      } else {
+        dskel1.skeletonize((unsigned char *)(image->image_data), false, nsteps);
+      }
       break;
     case 6:
       if (!llohoubertrandsymcurv2007(image, inhibit, nsteps))
@@ -278,8 +301,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 7:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lmawanchangcurv2subfields2002(image, nsteps))
       {
 	fprintf(stderr, "%s: lmawanchangcurv2subfields2002 failed\n", argv[0]);
@@ -294,8 +320,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 9:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lmasonka1996(image, nsteps))
       {
 	fprintf(stderr, "%s: lmasonka1996 failed\n", argv[0]);
@@ -303,8 +332,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 10:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lmawan2000(image, nsteps))
       {
 	fprintf(stderr, "%s: lmawan2000 failed\n", argv[0]);
@@ -312,8 +344,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 11:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!llohoubertrand6dir2005(image, nsteps))
       {
 	fprintf(stderr, "%s: llohoubertrand6dir2005 failed\n", argv[0]);
@@ -321,8 +356,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 12:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!llohoubertrand12dir2004(image, nsteps))
       {
 	fprintf(stderr, "%s: llohoubertrand12dir2004 failed\n", argv[0]);
@@ -344,16 +382,22 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 15:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lmawanleecurv4subfields2002(image, nsteps))
       {
 	fprintf(stderr, "%s: lmawanleecurv4subfields2002 failed\n", argv[0]);
 	exit(1);
       } 
     case 16:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lnemethetalcurv2subfields2010(image, nsteps, ENDS))
       {
 	fprintf(stderr, "%s: lnemethetalcurv2subfields2010 failed\n", argv[0]);
@@ -361,8 +405,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 17:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lnemethetalcurv2subfields2010(image, nsteps, 2))
       {
 	fprintf(stderr, "%s: lnemethetalcurv2subfields2010 failed\n", argv[0]);
@@ -370,8 +417,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 18:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lnemethetalcurv2subfields2010(image, nsteps, 3))
       {
 	fprintf(stderr, "%s: lnemethetalcurv2subfields2010 failed\n", argv[0]);
@@ -379,8 +429,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 19:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lnemethetalcurv4subfields2010(image, nsteps, ENDS))
       {
 	fprintf(stderr, "%s: lnemethetalcurv4subfields2010 failed\n", argv[0]);
@@ -388,8 +441,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 20:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lnemethetalcurv4subfields2010(image, nsteps, 2))
       {
 	fprintf(stderr, "%s: lnemethetalcurv4subfields2010 failed\n", argv[0]);
@@ -397,8 +453,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 21:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lnemethetalcurv4subfields2010(image, nsteps, 3))
       {
 	fprintf(stderr, "%s: lnemethetalcurv4subfields2010 failed\n", argv[0]);
@@ -406,8 +465,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 22:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lnemethetalcurv8subfields2010(image, nsteps, ENDS))
       {
 	fprintf(stderr, "%s: lnemethetalcurv8subfields2010 failed\n", argv[0]);
@@ -415,8 +477,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 23:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lnemethetalcurv8subfields2010(image, nsteps, 2))
       {
 	fprintf(stderr, "%s: lnemethetalcurv8subfields2010 failed\n", argv[0]);
@@ -424,8 +489,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 24:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lnemethetalcurv8subfields2010(image, nsteps, 3))
       {
 	fprintf(stderr, "%s: lnemethetalcurv8subfields2010 failed\n", argv[0]);
@@ -433,8 +501,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 25:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lsheetalcurvsym2009(image, nsteps))
       {
 	fprintf(stderr, "%s: lsheetalcurvsym2009 failed\n", argv[0]);
@@ -442,8 +513,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 26:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!ltsaofu6dirsurf1981(image, nsteps))
       {
 	fprintf(stderr, "%s: ltsaofu6dirsurf1981 failed\n", argv[0]);
@@ -451,8 +525,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 27:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!ltsaofu6dirsurf1981(image, nsteps)) // 1st pass: surface thinning
       {
 	fprintf(stderr, "%s: ltsaofu6dirsurf1981 failed\n", argv[0]);
@@ -465,8 +542,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 28:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lnemethetalcurv2subfields2010(image, nsteps, ISTHMUS))
       {
 	fprintf(stderr, "%s: lnemethetalcurv2subfields2010 failed\n", argv[0]);
@@ -474,8 +554,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 29:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lnemethetalcurv4subfields2010(image, nsteps, ISTHMUS))
       {
 	fprintf(stderr, "%s: lnemethetalcurv4subfields2010 failed\n", argv[0]);
@@ -483,8 +566,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 30:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lnemethetalcurv8subfields2010(image, nsteps, ISTHMUS))
       {
 	fprintf(stderr, "%s: lnemethetalcurv8subfields2010 failed\n", argv[0]);
@@ -506,8 +592,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 33:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lgongbertrand6dir1990(image, nsteps))
       {
 	fprintf(stderr, "%s: lgongbertrand6dir1990 failed\n", argv[0]);
@@ -515,8 +604,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 34:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lpalagyikuba12dir1999(image, nsteps))
       {
 	fprintf(stderr, "%s: lpalagyikuba12dir1999 failed\n", argv[0]);
@@ -524,8 +616,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 35:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lbertrandaktouf8subfields1994(image, nsteps))
       {
 	fprintf(stderr, "%s: lbertrandaktouf8subfields1994 failed\n", argv[0]);
@@ -533,8 +628,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 36:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lpalagyikubahybrid1998(image, nsteps))
       {
 	fprintf(stderr, "%s: lpalagyikubahybrid1998 failed\n", argv[0]);
@@ -542,8 +640,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 37:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lpalagyikuba8dir1999(image, nsteps))
       {
 	fprintf(stderr, "%s: lpalagyikuba8dir1999 failed\n", argv[0]);
@@ -551,8 +652,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 38:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lsahaetal8subfieldssurf1997(image, nsteps))
       {
 	fprintf(stderr, "%s: lsahaetal8subfieldssurf1997 failed\n", argv[0]);
@@ -560,8 +664,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 39:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lsahaetal8subfieldscurv1997(image, nsteps))
       {
 	fprintf(stderr, "%s: lsahaetal8subfieldscurv1997 failed\n", argv[0]);
@@ -569,8 +676,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 40:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lnemethetal6dir2011(image, nsteps, ENDS))
       {
 	fprintf(stderr, "%s: lnemethetal6dir2011 failed\n", argv[0]);
@@ -578,8 +688,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 41:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lnemethetal6dir2012(image, nsteps, ISTHMUS))
       {
 	fprintf(stderr, "%s: lnemethetal6dir2012 failed\n", argv[0]);
@@ -594,8 +707,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 43:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lpalagyi12dir2013(image, nsteps))
       {
 	fprintf(stderr, "%s: lpalagyi12dir2013 failed\n", argv[0]);
@@ -603,8 +719,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 44:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lnemethetalfullyparallel2012(image, nsteps, ENDS))
       {
 	fprintf(stderr, "%s: lnemethetalfullyparallel2012 failed\n", argv[0]);
@@ -612,8 +731,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 45:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lnemethetal6dir2012(image, nsteps, ENDS))
       {
 	fprintf(stderr, "%s: lnemethetal6dir2012 failed\n", argv[0]);
@@ -624,8 +746,11 @@ int main(int32_t argc, char **argv)
       fprintf(stderr, "%s: lnemethetal4subfields2012 not implemented\n", argv[0]);
       exit(1);
     case 47:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lnemethetalfullyparallel2012(image, nsteps, ISTHMUS))
       {
 	fprintf(stderr, "%s: lnemethetalfullyparallel2012 failed\n", argv[0]);
@@ -636,8 +761,11 @@ int main(int32_t argc, char **argv)
       fprintf(stderr, "%s: lnemethetal4subfields2012 not implemented\n", argv[0]);
       exit(1);
     case 49:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lmasonka_psimple2010(image, nsteps))
       {
 	fprintf(stderr, "%s: lmasonka_psimple2010 failed\n", argv[0]);
@@ -645,8 +773,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 50:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lnemethetal8subfields2012(image, nsteps, ISTHMUS))
       {
 	fprintf(stderr, "%s: lnemethetal8subfields2012 failed\n", argv[0]);
@@ -654,8 +785,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 51:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lnemethetal8subfields2012(image, nsteps, ENDS))
       {
 	fprintf(stderr, "%s: lnemethetal8subfields2012 failed\n", argv[0]);
@@ -663,8 +797,11 @@ int main(int32_t argc, char **argv)
       } 
       break;
     case 52:
-      if (argc == 6)
-	fprintf(stderr, "%s: warning: inhibit mode not implemented for algo %d\n", argv[0], mode);
+      if (argc == 6) {
+        fprintf(stderr,
+                "%s: warning: inhibit mode not implemented for algo %d\n",
+                argv[0], mode);
+      }
       if (!lpalagyi2015(image, nsteps))
       {
 	fprintf(stderr, "%s: lpalagyi2015 failed\n", argv[0]);
@@ -682,7 +819,9 @@ int main(int32_t argc, char **argv)
     exit(1);
   }
 
-  if (inhibit!=NULL) freeimage(inhibit);
+  if (inhibit != NULL) {
+    freeimage(inhibit);
+  }
   writeimage(image, argv[argc-1]);
   freeimage(image);
 

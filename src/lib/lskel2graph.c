@@ -77,16 +77,15 @@ lskel2graph( skel * S, int32_t mode, double param )
 
     graphe * g = NULL;
 
-    if (mode == 0)
+    if (mode == 0) {
       g = lskel2graph0(S);
-    else if (mode == 1)
+    } else if (mode == 1) {
       g = lskel2graph1(S);
-    else if (mode == 2)
+    } else if (mode == 2) {
       g = lskel2graph2(S, param);
-    else if (mode == 3)
+    } else if (mode == 3) {
       g = lskel2graph3(S, param);
-    else
-    {
+    } else {
       printf("bad mode");
       return NULL;
     }
@@ -255,12 +254,16 @@ graphe * lskel2graph1(skel * S)
     if (a != NULL)
     {
       v = a->val;
-      if (IS_JUNC(v)) v = v - ncurv;
+      if (IS_JUNC(v)) {
+        v = v - ncurv;
+      }
 
       a = a->next;
       assert(a != NULL);
       v2 = a->val;
-      if (IS_JUNC(v2)) v2 = v2 - ncurv;
+      if (IS_JUNC(v2)) {
+        v2 = v2 - ncurv;
+      }
       AjouteArc(G, v, v2);
       AjouteArc(G, v2, v);
 
@@ -317,7 +320,9 @@ graphe * lskel2graph2(skel * S, double param)
   for (i = S->e_end; i < S->e_curv; i++) // pour toutes les courbes
   {
     a = S->tskel[i].adj; // si arc fermé rajoute un sommet
-    if (a == NULL) nextrasom += 1;
+    if (a == NULL) {
+      nextrasom += 1;
+    }
   } // for (i = S->e_end; i < S->e_curv; i++)
 
   G = InitGraphe(nsom + nextrasom + ((Nd-1)*ncurv), ncurv * Nd * 2);
@@ -369,14 +374,24 @@ graphe * lskel2graph2(skel * S, double param)
       }      
 
       // trouve la longueur de la courbe
-      for (len = 0, p = S->tskel[i].pts; p != NULL; p = p->next) len++;
-      if (IS_END(E1)) len--; // les points extrémités sont dans la courbe,
-      if (IS_END(E2)) len--; // les points de jonction non
+      for (len = 0, p = S->tskel[i].pts; p != NULL; p = p->next) {
+        len++;
+      }
+      if (IS_END(E1)) {
+        len--; // les points extrémités sont dans la courbe,
+      }
+      if (IS_END(E2)) {
+        len--; // les points de jonction non
+      }
       // trouve le nombre de points moyen entre 2 sommets
       inter = ((double)len) / Nd;
 
-      if (IS_JUNC(E1)) E1 = E1 - ncurv;
-      if (IS_JUNC(E2)) E2 = E2 - ncurv;
+      if (IS_JUNC(E1)) {
+        E1 = E1 - ncurv;
+      }
+      if (IS_JUNC(E2)) {
+        E2 = E2 - ncurv;
+      }
       if (Nd == 1)
       {
 	AjouteArc(G, E1, E2);
@@ -443,7 +458,9 @@ graphe * lskel2graph2(skel * S, double param)
       G->y[newsom] = y;
       G->z[newsom] = z;
       // trouve la longueur de la courbe
-      for (len = 0, p = S->tskel[i].pts; p != NULL; p = p->next) len++;
+      for (len = 0, p = S->tskel[i].pts; p != NULL; p = p->next) {
+        len++;
+      }
       // trouve le nombre de points moyen entre 2 sommets
       inter = ((double)len) / Nd;
       E1 = newsom;
@@ -548,10 +565,14 @@ graphe * lskel2graph3(skel * S, double param)
   for (i = S->e_end; i < S->e_curv; i++)
   {
     // trouve la longueur de la courbe
-    for (len = 0, p = S->tskel[i].pts; p != NULL; p = p->next) len++;
+    for (len = 0, p = S->tskel[i].pts; p != NULL; p = p->next) {
+      len++;
+    }
     nextrasom += mcmax(1, (int32_t)pink_trunc((double)len / param)) - 1;
     a = S->tskel[i].adj; // si arc fermé rajoute un sommet
-    if (a == NULL) nextrasom += 1;
+    if (a == NULL) {
+      nextrasom += 1;
+    }
   } // for (i = S->e_end; i < S->e_curv; i++)
   
   G = InitGraphe(nsom+nextrasom, (ncurv+nextrasom) * 2);
@@ -603,17 +624,27 @@ graphe * lskel2graph3(skel * S, double param)
       }      
 
       // trouve la longueur de la courbe
-      for (len = 0, p = S->tskel[i].pts; p != NULL; p = p->next) len++;
-      if (IS_END(E1)) len--; // les points extrémités sont dans la courbe,
-      if (IS_END(E2)) len--; // les points de jonction non
+      for (len = 0, p = S->tskel[i].pts; p != NULL; p = p->next) {
+        len++;
+      }
+      if (IS_END(E1)) {
+        len--; // les points extrémités sont dans la courbe,
+      }
+      if (IS_END(E2)) {
+        len--; // les points de jonction non
+      }
       // trouve le nombre de sommets intermédiaires
       nextrasom = mcmax(1, (int32_t)pink_trunc((double)len / param)) - 1;
       // trouve le nombre de points moyen entre 2 sommets
       inter = ((double)len) / (nextrasom+1);
 //printf("len = %d nextrasom = %d inter = %g\n", len, nextrasom, inter);
 
-      if (IS_JUNC(E1)) E1 = E1 - ncurv;
-      if (IS_JUNC(E2)) E2 = E2 - ncurv;
+      if (IS_JUNC(E1)) {
+        E1 = E1 - ncurv;
+      }
+      if (IS_JUNC(E2)) {
+        E2 = E2 - ncurv;
+      }
       if (nextrasom == 0)
       {
 	AjouteArc(G, E1, E2);
@@ -678,7 +709,9 @@ graphe * lskel2graph3(skel * S, double param)
       G->y[newsom] = y;
       G->z[newsom] = z;
       // trouve la longueur de la courbe
-      for (len = 0, p = S->tskel[i].pts; p != NULL; p = p->next) len++;
+      for (len = 0, p = S->tskel[i].pts; p != NULL; p = p->next) {
+        len++;
+      }
       // trouve le nombre de sommets intermédiaires
       nextrasom = mcmax(1, (int32_t)pink_trunc((double)len / param)) - 1;
       // trouve le nombre de points moyen entre 2 sommets

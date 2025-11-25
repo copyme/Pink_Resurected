@@ -89,8 +89,12 @@ int main(int argc, char **argv)
   for (i = 0; i < N; i++)
   {
     tmp = (int32_t)Im[i] + p - (rand() % ((2*p)+1));
-    if (tmp < 0) tmp = 0;
-    if (tmp > 255) tmp = 255;
+    if (tmp < 0) {
+      tmp = 0;
+    }
+    if (tmp > 255) {
+      tmp = 255;
+    }
     Im[i] = (uint8_t)tmp;
   }
 

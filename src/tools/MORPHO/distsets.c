@@ -101,7 +101,11 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (argc != 3) mode = atoi(argv[3]); else mode = 3;
+  if (argc != 3) {
+    mode = atoi(argv[3]);
+  } else {
+    mode = 3;
+  }
 
   if ((mode != 0) && (mode != 1) && (mode != 2) && (mode != 3))
   {
@@ -113,10 +117,9 @@ int main(int argc, char **argv)
 
   if ((mode == 1) || (mode == 2))
   {
-    if (argc == 6)
+    if (argc == 6) {
       cut = (float)atof(argv[4]);
-    else
-    {
+    } else {
       fprintf(stderr, "%s: cut parameter needed for Baddeley distances\n", argv[0]);
       exit(1);
     }

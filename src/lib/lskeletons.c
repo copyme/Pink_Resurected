@@ -133,25 +133,46 @@ static int32_t typedir2d(uint8_t *F, index_t x, index_t rs, index_t N)
   index_t y;
   int32_t n, s, e, o, sum;
   n = s = e = o = 0;
-  y = voisin(x, NORD, rs, N); if ((y!=-1) && (F[y]==0)) n = 1;
-  y = voisin(x, SUD, rs, N); if ((y!=-1) && (F[y]==0)) s = 1;
-  y = voisin(x, EST, rs, N); if ((y!=-1) && (F[y]==0)) e = 1;
-  y = voisin(x, OUEST, rs, N); if ((y!=-1) && (F[y]==0)) o = 1;
-  sum = n + s + e + o;
-  if (sum == 0) return 9 - 0;
-  else if (sum == 1) 
-  {
-    if (n)      return 9 - 1;
-    else if (s) return 9 - 2;
-    else if (e) return 9 - 3;
-    else /* if (o) */ return 9 - 4;
+  y = voisin(x, NORD, rs, N);
+  if ((y != -1) && (F[y] == 0)) {
+    n = 1;
   }
-  else // if (sum >= 2) 
+  y = voisin(x, SUD, rs, N);
+  if ((y != -1) && (F[y] == 0)) {
+    s = 1;
+  }
+  y = voisin(x, EST, rs, N);
+  if ((y != -1) && (F[y] == 0)) {
+    e = 1;
+  }
+  y = voisin(x, OUEST, rs, N);
+  if ((y != -1) && (F[y] == 0)) {
+    o = 1;
+  }
+  sum = n + s + e + o;
+  if (sum == 0) {
+    return 9 - 0;
+  } else if (sum == 1) {
+    if (n) {
+      return 9 - 1;
+    } else if (s) {
+      return 9 - 2;
+    } else if (e) {
+      return 9 - 3;
+    } else { /* if (o) */
+      return 9 - 4;
+    }
+  } else // if (sum >= 2)
   {
-    if (n && e)      return 9 - 5;
-    else if (s && o) return 9 - 6;
-    else if (n && o) return 9 - 7;
-    else /* if (s && e) */ return 9 - 8;
+    if (n && e) {
+      return 9 - 5;
+    } else if (s && o) {
+      return 9 - 6;
+    } else if (n && o) {
+      return 9 - 7;
+    } else { /* if (s && e) */
+      return 9 - 8;
+    }
   }
 } /* typedir2d() */
 
@@ -245,49 +266,94 @@ static int32_t typedir3d(uint8_t *F, index_t x, index_t rs, index_t ps, index_t 
   index_t y;
   int32_t n, s, e, o, a, d, sum;
   n = s = e = o = a = d = 0;
-  y = voisin6(x, NORD, rs, ps, N); if ((y!=-1) && (F[y]==0)) n = 1;
-  y = voisin6(x, SUD, rs, ps, N); if ((y!=-1) && (F[y]==0)) s = 1;
-  y = voisin6(x, EST, rs, ps, N); if ((y!=-1) && (F[y]==0)) e = 1;
-  y = voisin6(x, OUEST, rs, ps, N); if ((y!=-1) && (F[y]==0)) o = 1;
-  y = voisin6(x, DEVANT, rs, ps, N); if ((y!=-1) && (F[y]==0)) a = 1;
-  y = voisin6(x, DERRIERE, rs, ps, N); if ((y!=-1) && (F[y]==0)) d = 1;
+  y = voisin6(x, NORD, rs, ps, N);
+  if ((y != -1) && (F[y] == 0)) {
+    n = 1;
+  }
+  y = voisin6(x, SUD, rs, ps, N);
+  if ((y != -1) && (F[y] == 0)) {
+    s = 1;
+  }
+  y = voisin6(x, EST, rs, ps, N);
+  if ((y != -1) && (F[y] == 0)) {
+    e = 1;
+  }
+  y = voisin6(x, OUEST, rs, ps, N);
+  if ((y != -1) && (F[y] == 0)) {
+    o = 1;
+  }
+  y = voisin6(x, DEVANT, rs, ps, N);
+  if ((y != -1) && (F[y] == 0)) {
+    a = 1;
+  }
+  y = voisin6(x, DERRIERE, rs, ps, N);
+  if ((y != -1) && (F[y] == 0)) {
+    d = 1;
+  }
   sum = n + s + e + o + a + d;
-  if (sum == 0) return 0;
-  else if (sum == 1) 
+  if (sum == 0) {
+    return 0;
+  } else if (sum == 1) {
+    if (n) {
+      return 27 - 1;
+    } else if (s) {
+      return 27 - 2;
+    } else if (e) {
+      return 27 - 3;
+    } else if (o) {
+      return 27 - 4;
+    } else if (a) {
+      return 27 - 5;
+    } else { /* if (d) */
+      return 27 - 6;
+    }
+  } else if (sum == 2) {
+    if (n && e) {
+      return 27 - 7;
+    } else if (s && o) {
+      return 27 - 8;
+    } else if (e && a) {
+      return 27 - 9;
+    } else if (o && d) {
+      return 27 - 10;
+    } else if (a && n) {
+      return 27 - 11;
+    } else if (d && s) {
+      return 27 - 12;
+    } else if (n && o) {
+      return 27 - 13;
+    } else if (s && e) {
+      return 27 - 14;
+    } else if (e && d) {
+      return 27 - 15;
+    } else if (o && a) {
+      return 27 - 16;
+    } else if (a && s) {
+      return 27 - 17;
+    } else { /* if (d && n) */
+      return 27 - 18;
+    }
+  } else // if (sum >= 3)
   {
-    if (n)      return 27 - 1;
-    else if (s) return 27 - 2;
-    else if (e) return 27 - 3;
-    else if (o) return 27 - 4;
-    else if (a) return 27 - 5;
-    else /* if (d) */ return 27 - 6;
-  }
-  else if (sum == 2) 
-  {
-    if (n && e)      return 27 - 7;
-    else if (s && o) return 27 - 8;
-    else if (e && a) return 27 - 9;
-    else if (o && d) return 27 - 10;
-    else if (a && n) return 27 - 11;
-    else if (d && s) return 27 - 12;
-    else if (n && o) return 27 - 13;
-    else if (s && e) return 27 - 14;
-    else if (e && d) return 27 - 15;
-    else if (o && a) return 27 - 16;
-    else if (a && s) return 27 - 17;
-    else /* if (d && n) */ return 27 - 18;
-  }
-  else //if (sum >= 3) 
-  {
-    if (n && e && a) return 27 - 19;
-    else if (s && o && d) return 27 - 20;
-    else if (n && e && d) return 27 - 21;
-    else if (s && o && a) return 27 - 22;
-    else if (n && o && a) return 27 - 23;
-    else if (s && e && d) return 27 - 24;
-    else if (n && o && d) return 27 - 25;
-    else if (s && e && a) return 27 - 26;
-    else return 27; // all other cases : n-s-e, n-s-e-o, etc.
+    if (n && e && a) {
+      return 27 - 19;
+    } else if (s && o && d) {
+      return 27 - 20;
+    } else if (n && e && d) {
+      return 27 - 21;
+    } else if (s && o && a) {
+      return 27 - 22;
+    } else if (n && o && a) {
+      return 27 - 23;
+    } else if (s && e && d) {
+      return 27 - 24;
+    } else if (n && o && d) {
+      return 27 - 25;
+    } else if (s && e && a) {
+      return 27 - 26;
+    } else {
+      return 27; // all other cases : n-s-e, n-s-e-o, etc.
+    }
   }
 } /* typedir3d() */
 #endif
@@ -299,48 +365,92 @@ static int32_t typedir3dlab(int32_t *F, index_t x, index_t rs, index_t ps, index
   index_t y;
   int32_t n, s, e, o, a, d, sum;
   n = s = e = o = a = d = 0;
-  y = voisin6(x, NORD, rs, ps, N); if ((y!=-1) && (F[y]!=F[x])) n = 1;
-  y = voisin6(x, SUD, rs, ps, N); if ((y!=-1) && (F[y]!=F[x])) s = 1;
-  y = voisin6(x, EST, rs, ps, N); if ((y!=-1) && (F[y]!=F[x])) e = 1;
-  y = voisin6(x, OUEST, rs, ps, N); if ((y!=-1) && (F[y]!=F[x])) o = 1;
-  y = voisin6(x, DEVANT, rs, ps, N); if ((y!=-1) && (F[y]!=F[x])) a = 1;
-  y = voisin6(x, DERRIERE, rs, ps, N); if ((y!=-1) && (F[y]!=F[x])) d = 1;
+  y = voisin6(x, NORD, rs, ps, N);
+  if ((y != -1) && (F[y] != F[x])) {
+    n = 1;
+  }
+  y = voisin6(x, SUD, rs, ps, N);
+  if ((y != -1) && (F[y] != F[x])) {
+    s = 1;
+  }
+  y = voisin6(x, EST, rs, ps, N);
+  if ((y != -1) && (F[y] != F[x])) {
+    e = 1;
+  }
+  y = voisin6(x, OUEST, rs, ps, N);
+  if ((y != -1) && (F[y] != F[x])) {
+    o = 1;
+  }
+  y = voisin6(x, DEVANT, rs, ps, N);
+  if ((y != -1) && (F[y] != F[x])) {
+    a = 1;
+  }
+  y = voisin6(x, DERRIERE, rs, ps, N);
+  if ((y != -1) && (F[y] != F[x])) {
+    d = 1;
+  }
   sum = n + s + e + o + a + d;
-  if (sum == 0) return 27 - 0;
-  else if (sum == 1) 
+  if (sum == 0) {
+    return 27 - 0;
+  } else if (sum == 1) {
+    if (n) {
+      return 27 - 1;
+    } else if (s) {
+      return 27 - 2;
+    } else if (e) {
+      return 27 - 3;
+    } else if (o) {
+      return 27 - 4;
+    } else if (a) {
+      return 27 - 5;
+    } else { /* if (d) */
+      return 27 - 6;
+    }
+  } else if (sum == 2) {
+    if (n && e) {
+      return 27 - 7;
+    } else if (s && o) {
+      return 27 - 8;
+    } else if (e && a) {
+      return 27 - 9;
+    } else if (o && d) {
+      return 27 - 10;
+    } else if (a && n) {
+      return 27 - 11;
+    } else if (d && s) {
+      return 27 - 12;
+    } else if (n && o) {
+      return 27 - 13;
+    } else if (s && e) {
+      return 27 - 14;
+    } else if (e && d) {
+      return 27 - 15;
+    } else if (o && a) {
+      return 27 - 16;
+    } else if (a && s) {
+      return 27 - 17;
+    } else { /* if (d && n) */
+      return 27 - 18;
+    }
+  } else // if (sum == 3)
   {
-    if (n)      return 27 - 1;
-    else if (s) return 27 - 2;
-    else if (e) return 27 - 3;
-    else if (o) return 27 - 4;
-    else if (a) return 27 - 5;
-    else /* if (d) */ return 27 - 6;
-  }
-  else if (sum == 2) 
-  {
-    if (n && e)      return 27 - 7;
-    else if (s && o) return 27 - 8;
-    else if (e && a) return 27 - 9;
-    else if (o && d) return 27 - 10;
-    else if (a && n) return 27 - 11;
-    else if (d && s) return 27 - 12;
-    else if (n && o) return 27 - 13;
-    else if (s && e) return 27 - 14;
-    else if (e && d) return 27 - 15;
-    else if (o && a) return 27 - 16;
-    else if (a && s) return 27 - 17;
-    else /* if (d && n) */ return 27 - 18;
-  }
-  else //if (sum == 3) 
-  {
-    if (n && e && a) return 27 - 19;
-    else if (s && o && d) return 27 - 20;
-    else if (n && e && d) return 27 - 21;
-    else if (s && o && a) return 27 - 22;
-    else if (n && o && a) return 27 - 23;
-    else if (s && e && d) return 27 - 24;
-    else if (n && o && d) return 27 - 25;
-    else /* if (s && e && a) */ return 27 - 26;
+    if (n && e && a) {
+      return 27 - 19;
+    } else if (s && o && d) {
+      return 27 - 20;
+    } else if (n && e && d) {
+      return 27 - 21;
+    } else if (s && o && a) {
+      return 27 - 22;
+    } else if (n && o && a) {
+      return 27 - 23;
+    } else if (s && e && d) {
+      return 27 - 24;
+    } else if (n && o && d) {
+      return 27 - 25;
+    } else { /* if (s && e && a) */
+      return 27 - 26;
+    }
   }
 } /* typedir3dlab() */
 
@@ -476,10 +586,9 @@ resultat: F
     fprintf(stderr, "%s: bad size for imageprio\n", F_NAME);
     return(0);
   }
-  if (datatype(imageprio) == VFF_TYP_4_BYTE) 
-    P = SLONGDATA(imageprio); 
-  else 
-  {
+  if (datatype(imageprio) == VFF_TYP_4_BYTE) {
+    P = SLONGDATA(imageprio);
+  } else {
     fprintf(stderr, "%s: datatype(imageprio) must be int32_t\n", F_NAME);
     fprintf(stderr, "    otherwise, use inhibit map\n");
     return(0);
@@ -608,16 +717,15 @@ int32_t lskelubp2(struct xvimage *image,
     fprintf(stderr, "%s: bad size for imageprio\n", F_NAME);
     return(0);
   }
-  if (datatype(imageprio) == VFF_TYP_4_BYTE) 
-    P = SLONGDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_1_BYTE) 
-    PB = UCHARDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_FLOAT) 
-    PF = FLOATDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_DOUBLE) 
-    PD = DOUBLEDATA(imageprio); 
-  else 
-  {
+  if (datatype(imageprio) == VFF_TYP_4_BYTE) {
+    P = SLONGDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_1_BYTE) {
+    PB = UCHARDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_FLOAT) {
+    PF = FLOATDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_DOUBLE) {
+    PD = DOUBLEDATA(imageprio);
+  } else {
     fprintf(stderr, "%s: datatype(imageprio) must be uint8_t, int32_t, float or double\n", F_NAME);
     return(0);
   }
@@ -629,7 +737,9 @@ int32_t lskelubp2(struct xvimage *image,
     fprintf(stderr, "%s: mcrbt_CreeRbtVide failed\n", F_NAME);
     return(0);
   }
-  if (imageinhib != NULL) I = UCHARDATA(imageinhib);
+  if (imageinhib != NULL) {
+    I = UCHARDATA(imageinhib);
+  }
 
   /* ================================================ */
   /*               DEBUT ALGO                         */
@@ -785,10 +895,9 @@ resultat: F
     fprintf(stderr, "%s: bad size for imageprio\n", F_NAME);
     return(0);
   }
-  if (datatype(imageprio) == VFF_TYP_4_BYTE) 
-    P = SLONGDATA(imageprio); 
-  else 
-  {
+  if (datatype(imageprio) == VFF_TYP_4_BYTE) {
+    P = SLONGDATA(imageprio);
+  } else {
     fprintf(stderr, "%s: datatype(imageprio) must be int32_t\n", F_NAME);
     fprintf(stderr, "    otherwise, use inhibit map\n");
     return(0);
@@ -924,14 +1033,15 @@ int32_t lskelubp3d2(struct xvimage *image,
   COMPARE_SIZE(image, imageprio);
   ACCEPTED_TYPES4(imageprio, VFF_TYP_1_BYTE, VFF_TYP_4_BYTE, VFF_TYP_FLOAT, VFF_TYP_DOUBLE);
   ACCEPTED_TYPES1(image, VFF_TYP_1_BYTE);
-  if (datatype(imageprio) == VFF_TYP_4_BYTE) 
-    P = SLONGDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_1_BYTE) 
-    PB = UCHARDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_FLOAT) 
-    PF = FLOATDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_DOUBLE) 
-    PD = DOUBLEDATA(imageprio); 
+  if (datatype(imageprio) == VFF_TYP_4_BYTE) {
+    P = SLONGDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_1_BYTE) {
+    PB = UCHARDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_FLOAT) {
+    PF = FLOATDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_DOUBLE) {
+    PD = DOUBLEDATA(imageprio);
+  }
 
   taillemaxrbt = 2 * rs * cs +  2 * rs * ds +  2 * ds * cs;
   /* cette taille est indicative, le RBT est realloue en cas de depassement */
@@ -1082,14 +1192,15 @@ int32_t lskelubp3d2lab(struct xvimage *image,
   COMPARE_SIZE(image, imageprio);
   ACCEPTED_TYPES4(imageprio, VFF_TYP_1_BYTE, VFF_TYP_4_BYTE, VFF_TYP_FLOAT, VFF_TYP_DOUBLE);
   ACCEPTED_TYPES1(image, VFF_TYP_4_BYTE);
-  if (datatype(imageprio) == VFF_TYP_4_BYTE) 
-    P = SLONGDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_1_BYTE) 
-    PB = UCHARDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_FLOAT) 
-    PF = FLOATDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_DOUBLE) 
-    PD = DOUBLEDATA(imageprio); 
+  if (datatype(imageprio) == VFF_TYP_4_BYTE) {
+    P = SLONGDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_1_BYTE) {
+    PB = UCHARDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_FLOAT) {
+    PF = FLOATDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_DOUBLE) {
+    PD = DOUBLEDATA(imageprio);
+  }
 
   taillemaxrbt = 2 * rs * cs +  2 * rs * ds +  2 * ds * cs;
   /* cette taille est indicative, le RBT est realloue en cas de depassement */
@@ -1281,16 +1392,15 @@ resultat: F
     fprintf(stderr, "%s: bad size for imageprio\n", F_NAME);
     return(0);
   }
-  if (datatype(imageprio) == VFF_TYP_4_BYTE) 
-    P = SLONGDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_1_BYTE) 
-    PB = UCHARDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_FLOAT) 
-    PF = FLOATDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_DOUBLE) 
-    PD = DOUBLEDATA(imageprio); 
-  else 
-  {
+  if (datatype(imageprio) == VFF_TYP_4_BYTE) {
+    P = SLONGDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_1_BYTE) {
+    PB = UCHARDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_FLOAT) {
+    PF = FLOATDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_DOUBLE) {
+    PD = DOUBLEDATA(imageprio);
+  } else {
     fprintf(stderr, "%s: datatype(imageprio) must be uint8_t, int32_t, float or double\n", F_NAME);
     return(0);
   }
@@ -1303,15 +1413,17 @@ resultat: F
       fprintf(stderr, "%s: bad size for inhibit\n", F_NAME);
       return(0);
     }
-    if (datatype(inhibit) == VFF_TYP_1_BYTE) 
+    if (datatype(inhibit) == VFF_TYP_1_BYTE) {
       I = UCHARDATA(inhibit);
-    else 
-    {
+    } else {
       fprintf(stderr, "%s: datatype(inhibit) must be uint8_t\n", F_NAME);
       return(0);
     }
-    for (x = 0; x < N; x++)
-      if (I[x]) Set(x,CONTRAINTE);
+    for (x = 0; x < N; x++) {
+      if (I[x]) {
+        Set(x, CONTRAINTE);
+      }
+    }
   }
 
   taillemaxrbt = 2 * rs +  2 * cs;
@@ -1349,11 +1461,27 @@ resultat: F
 	top4(F, x, rs, N, &t, &tb);
 	switch(datatype(imageprio))
 	{
-        case VFF_TYP_4_BYTE: if ((t > 1) && ((float)(P[x]) >= param)) Set(x,CONTRAINTE); break;
-        case VFF_TYP_1_BYTE: if ((t > 1) && ((float)(PB[x]) >= param)) Set(x,CONTRAINTE); break;
-        case VFF_TYP_FLOAT : if ((t > 1) && ((float)(PF[x]) >= param)) Set(x,CONTRAINTE); break;
-        case VFF_TYP_DOUBLE: if ((t > 1) && ((float)(PD[x]) >= param)) Set(x,CONTRAINTE); break;
-	}	
+        case VFF_TYP_4_BYTE:
+          if ((t > 1) && ((float)(P[x]) >= param)) {
+            Set(x, CONTRAINTE);
+          }
+          break;
+        case VFF_TYP_1_BYTE:
+          if ((t > 1) && ((float)(PB[x]) >= param)) {
+            Set(x, CONTRAINTE);
+          }
+          break;
+        case VFF_TYP_FLOAT :
+          if ((t > 1) && ((float)(PF[x]) >= param)) {
+            Set(x, CONTRAINTE);
+          }
+          break;
+        case VFF_TYP_DOUBLE:
+          if ((t > 1) && ((float)(PD[x]) >= param)) {
+            Set(x, CONTRAINTE);
+          }
+          break;
+        }	
       }
     }
   }
@@ -1367,11 +1495,27 @@ resultat: F
 	top8(F, x, rs, N, &t, &tb);
 	switch(datatype(imageprio))
 	{
-        case VFF_TYP_4_BYTE: if ((t > 1) && ((float)(P[x]) >= param)) Set(x,CONTRAINTE); break;
-        case VFF_TYP_1_BYTE: if ((t > 1) && ((float)(PB[x]) >= param)) Set(x,CONTRAINTE); break;
-        case VFF_TYP_FLOAT : if ((t > 1) && ((float)(PF[x]) >= param)) Set(x,CONTRAINTE); break;
-        case VFF_TYP_DOUBLE: if ((t > 1) && ((float)(PD[x]) >= param)) Set(x,CONTRAINTE); break;
-	}	
+        case VFF_TYP_4_BYTE:
+          if ((t > 1) && ((float)(P[x]) >= param)) {
+            Set(x, CONTRAINTE);
+          }
+          break;
+        case VFF_TYP_1_BYTE:
+          if ((t > 1) && ((float)(PB[x]) >= param)) {
+            Set(x, CONTRAINTE);
+          }
+          break;
+        case VFF_TYP_FLOAT :
+          if ((t > 1) && ((float)(PF[x]) >= param)) {
+            Set(x, CONTRAINTE);
+          }
+          break;
+        case VFF_TYP_DOUBLE:
+          if ((t > 1) && ((float)(PD[x]) >= param)) {
+            Set(x, CONTRAINTE);
+          }
+          break;
+        }	
       }
     }
   }
@@ -1461,7 +1605,9 @@ printf("init: push %d,%d (%d)\n", x%rs, x/rs, P[x]*10 + typedir2d(F, x, rs, N));
       {
         x = RbtPopMin(RBT);
         FifoPush(FIFO1, x);
-        if (!mcrbt_RbtVide(RBT)) prio = (int32_t)RbtMinLevel(RBT) / 10;
+        if (!mcrbt_RbtVide(RBT)) {
+          prio = (int32_t)RbtMinLevel(RBT) / 10;
+        }
       } 
 
       while (!FifoVide(FIFO1))
@@ -1516,11 +1662,27 @@ printf("init: push %d,%d (%d)\n", x%rs, x/rs, P[x]*10 + typedir2d(F, x, rs, N));
           top4(F, x, rs, N, &t, &tb);
 	  switch(datatype(imageprio))
 	  {
-	  case VFF_TYP_4_BYTE: if ((t > 1) && ((float)(P[x]) >= param)) Set(x,CONTRAINTE); break;
-	  case VFF_TYP_1_BYTE: if ((t > 1) && ((float)(PB[x]) >= param)) Set(x,CONTRAINTE); break;
-	  case VFF_TYP_FLOAT : if ((t > 1) && ((float)(PF[x]) >= param)) Set(x,CONTRAINTE); break;
-	  case VFF_TYP_DOUBLE: if ((t > 1) && ((float)(PD[x]) >= param)) Set(x,CONTRAINTE); break;
-	  }	
+	  case VFF_TYP_4_BYTE:
+            if ((t > 1) && ((float)(P[x]) >= param)) {
+              Set(x, CONTRAINTE);
+            }
+            break;
+          case VFF_TYP_1_BYTE:
+            if ((t > 1) && ((float)(PB[x]) >= param)) {
+              Set(x, CONTRAINTE);
+            }
+            break;
+          case VFF_TYP_FLOAT :
+            if ((t > 1) && ((float)(PF[x]) >= param)) {
+              Set(x, CONTRAINTE);
+            }
+            break;
+          case VFF_TYP_DOUBLE:
+            if ((t > 1) && ((float)(PD[x]) >= param)) {
+              Set(x, CONTRAINTE);
+            }
+            break;
+          }	
         }
       } // while (!FifoVide(FIFO2))
     } /* while (!mcrbt_RbtVide(RBT)) */
@@ -1536,7 +1698,9 @@ printf("init: push %d,%d (%d)\n", x%rs, x/rs, P[x]*10 + typedir2d(F, x, rs, N));
       {
         x = RbtPopMin(RBT);
         FifoPush(FIFO1, x);
-        if (!mcrbt_RbtVide(RBT)) prio = (int32_t)RbtMinLevel(RBT) / 10;
+        if (!mcrbt_RbtVide(RBT)) {
+          prio = (int32_t)RbtMinLevel(RBT) / 10;
+        }
       } 
 
       while (!FifoVide(FIFO1))
@@ -1591,11 +1755,27 @@ printf("init: push %d,%d (%d)\n", x%rs, x/rs, P[x]*10 + typedir2d(F, x, rs, N));
           top8(F, x, rs, N, &t, &tb);
 	  switch(datatype(imageprio))
 	  {
-	  case VFF_TYP_4_BYTE: if ((t > 1) && ((float)(P[x]) >= param)) Set(x,CONTRAINTE); break;
-	  case VFF_TYP_1_BYTE: if ((t > 1) && ((float)(PB[x]) >= param)) Set(x,CONTRAINTE); break;
-	  case VFF_TYP_FLOAT : if ((t > 1) && ((float)(PF[x]) >= param)) Set(x,CONTRAINTE); break;
-	  case VFF_TYP_DOUBLE: if ((t > 1) && ((float)(PD[x]) >= param)) Set(x,CONTRAINTE); break;
-	  }	
+	  case VFF_TYP_4_BYTE:
+            if ((t > 1) && ((float)(P[x]) >= param)) {
+              Set(x, CONTRAINTE);
+            }
+            break;
+          case VFF_TYP_1_BYTE:
+            if ((t > 1) && ((float)(PB[x]) >= param)) {
+              Set(x, CONTRAINTE);
+            }
+            break;
+          case VFF_TYP_FLOAT :
+            if ((t > 1) && ((float)(PF[x]) >= param)) {
+              Set(x, CONTRAINTE);
+            }
+            break;
+          case VFF_TYP_DOUBLE:
+            if ((t > 1) && ((float)(PD[x]) >= param)) {
+              Set(x, CONTRAINTE);
+            }
+            break;
+          }	
         }
       } // while (!FifoVide(FIFO2))
     } /* while (!mcrbt_RbtVide(RBT)) */
@@ -1666,16 +1846,15 @@ resultat: F
     fprintf(stderr, "%s: bad size for imageprio\n", F_NAME);
     return(0);
   }
-  if (datatype(imageprio) == VFF_TYP_4_BYTE) 
-    P = SLONGDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_1_BYTE) 
-    PB = UCHARDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_FLOAT) 
-    PF = FLOATDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_DOUBLE) 
-    PD = DOUBLEDATA(imageprio); 
-  else 
-  {
+  if (datatype(imageprio) == VFF_TYP_4_BYTE) {
+    P = SLONGDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_1_BYTE) {
+    PB = UCHARDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_FLOAT) {
+    PF = FLOATDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_DOUBLE) {
+    PD = DOUBLEDATA(imageprio);
+  } else {
     fprintf(stderr, "%s: datatype(imageprio) must be uint8_t, int32_t, float or double\n", F_NAME);
     return(0);
   }
@@ -1688,15 +1867,17 @@ resultat: F
       fprintf(stderr, "%s: bad size for inhibit\n", F_NAME);
       return(0);
     }
-    if (datatype(inhibit) == VFF_TYP_1_BYTE) 
+    if (datatype(inhibit) == VFF_TYP_1_BYTE) {
       I = UCHARDATA(inhibit);
-    else 
-    {
+    } else {
       fprintf(stderr, "%s: datatype(inhibit) must be uint8_t\n", F_NAME);
       return(0);
     }
-    for (x = 0; x < N; x++)
-      if (I[x]) Set(x,CONTRAINTE);
+    for (x = 0; x < N; x++) {
+      if (I[x]) {
+        Set(x, CONTRAINTE);
+      }
+    }
   }
 
   taillemaxrbt = 2 * rs +  2 * cs;
@@ -1734,11 +1915,27 @@ resultat: F
 	t = nbvois4(F, x, rs, N);
 	switch(datatype(imageprio))
 	{
-        case VFF_TYP_4_BYTE: if (t == 1) Set(x,CONTRAINTE); break;
-        case VFF_TYP_1_BYTE: if (t == 1) Set(x,CONTRAINTE); break;
-        case VFF_TYP_FLOAT : if (t == 1) Set(x,CONTRAINTE); break;
-        case VFF_TYP_DOUBLE: if (t == 1) Set(x,CONTRAINTE); break;
-	}	
+        case VFF_TYP_4_BYTE:
+          if (t == 1) {
+            Set(x, CONTRAINTE);
+          }
+          break;
+        case VFF_TYP_1_BYTE:
+          if (t == 1) {
+            Set(x, CONTRAINTE);
+          }
+          break;
+        case VFF_TYP_FLOAT :
+          if (t == 1) {
+            Set(x, CONTRAINTE);
+          }
+          break;
+        case VFF_TYP_DOUBLE:
+          if (t == 1) {
+            Set(x, CONTRAINTE);
+          }
+          break;
+        }	
       }
     }
   }
@@ -1752,11 +1949,27 @@ resultat: F
 	t = nbvois8(F, x, rs, N);
 	switch(datatype(imageprio))
 	{
-        case VFF_TYP_4_BYTE: if (t == 1) Set(x,CONTRAINTE); break;
-        case VFF_TYP_1_BYTE: if (t == 1) Set(x,CONTRAINTE); break;
-        case VFF_TYP_FLOAT : if (t == 1) Set(x,CONTRAINTE); break;
-        case VFF_TYP_DOUBLE: if (t == 1) Set(x,CONTRAINTE); break;
-	}	
+        case VFF_TYP_4_BYTE:
+          if (t == 1) {
+            Set(x, CONTRAINTE);
+          }
+          break;
+        case VFF_TYP_1_BYTE:
+          if (t == 1) {
+            Set(x, CONTRAINTE);
+          }
+          break;
+        case VFF_TYP_FLOAT :
+          if (t == 1) {
+            Set(x, CONTRAINTE);
+          }
+          break;
+        case VFF_TYP_DOUBLE:
+          if (t == 1) {
+            Set(x, CONTRAINTE);
+          }
+          break;
+        }	
       }
     }
   }
@@ -1846,7 +2059,9 @@ printf("init: push %d,%d (%d)\n", x%rs, x/rs, P[x]*10 + typedir2d(F, x, rs, N));
       {
         x = RbtPopMin(RBT);
         FifoPush(FIFO1, x);
-        if (!mcrbt_RbtVide(RBT)) prio = (int32_t)RbtMinLevel(RBT) / 10;
+        if (!mcrbt_RbtVide(RBT)) {
+          prio = (int32_t)RbtMinLevel(RBT) / 10;
+        }
       } 
 
       while (!FifoVide(FIFO1))
@@ -1901,11 +2116,27 @@ printf("init: push %d,%d (%d)\n", x%rs, x/rs, P[x]*10 + typedir2d(F, x, rs, N));
           t = nbvois4(F, x, rs, N);
 	  switch(datatype(imageprio))
 	  {
-	  case VFF_TYP_4_BYTE: if (t == 1) Set(x,CONTRAINTE); break;
-	  case VFF_TYP_1_BYTE: if (t == 1) Set(x,CONTRAINTE); break;
-	  case VFF_TYP_FLOAT : if (t == 1) Set(x,CONTRAINTE); break;
-	  case VFF_TYP_DOUBLE: if (t == 1) Set(x,CONTRAINTE); break;
-	  }	
+	  case VFF_TYP_4_BYTE:
+            if (t == 1) {
+              Set(x, CONTRAINTE);
+            }
+            break;
+          case VFF_TYP_1_BYTE:
+            if (t == 1) {
+              Set(x, CONTRAINTE);
+            }
+            break;
+          case VFF_TYP_FLOAT :
+            if (t == 1) {
+              Set(x, CONTRAINTE);
+            }
+            break;
+          case VFF_TYP_DOUBLE:
+            if (t == 1) {
+              Set(x, CONTRAINTE);
+            }
+            break;
+          }	
         }
       } // while (!FifoVide(FIFO2))
     } /* while (!mcrbt_RbtVide(RBT)) */
@@ -1921,7 +2152,9 @@ printf("init: push %d,%d (%d)\n", x%rs, x/rs, P[x]*10 + typedir2d(F, x, rs, N));
       {
         x = RbtPopMin(RBT);
         FifoPush(FIFO1, x);
-        if (!mcrbt_RbtVide(RBT)) prio = (int32_t)RbtMinLevel(RBT) / 10;
+        if (!mcrbt_RbtVide(RBT)) {
+          prio = (int32_t)RbtMinLevel(RBT) / 10;
+        }
       } 
 
       while (!FifoVide(FIFO1))
@@ -1976,11 +2209,27 @@ printf("init: push %d,%d (%d)\n", x%rs, x/rs, P[x]*10 + typedir2d(F, x, rs, N));
           t = nbvois8(F, x, rs, N);
 	  switch(datatype(imageprio))
 	  {
-	  case VFF_TYP_4_BYTE: if (t == 1) Set(x,CONTRAINTE); break;
-	  case VFF_TYP_1_BYTE: if (t == 1) Set(x,CONTRAINTE); break;
-	  case VFF_TYP_FLOAT : if (t == 1) Set(x,CONTRAINTE); break;
-	  case VFF_TYP_DOUBLE: if (t == 1) Set(x,CONTRAINTE); break;
-	  }	
+	  case VFF_TYP_4_BYTE:
+            if (t == 1) {
+              Set(x, CONTRAINTE);
+            }
+            break;
+          case VFF_TYP_1_BYTE:
+            if (t == 1) {
+              Set(x, CONTRAINTE);
+            }
+            break;
+          case VFF_TYP_FLOAT :
+            if (t == 1) {
+              Set(x, CONTRAINTE);
+            }
+            break;
+          case VFF_TYP_DOUBLE:
+            if (t == 1) {
+              Set(x, CONTRAINTE);
+            }
+            break;
+          }	
         }
       } // while (!FifoVide(FIFO2))
     } /* while (!mcrbt_RbtVide(RBT)) */
@@ -2069,16 +2318,15 @@ resultat: F
     return(0);
   }
 
-  if (datatype(imageprio) == VFF_TYP_4_BYTE) 
-    P = SLONGDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_1_BYTE) 
-    PB = UCHARDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_FLOAT) 
-    PF = FLOATDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_DOUBLE) 
-    PD = DOUBLEDATA(imageprio); 
-  else 
-  {
+  if (datatype(imageprio) == VFF_TYP_4_BYTE) {
+    P = SLONGDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_1_BYTE) {
+    PB = UCHARDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_FLOAT) {
+    PF = FLOATDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_DOUBLE) {
+    PD = DOUBLEDATA(imageprio);
+  } else {
     fprintf(stderr, "%s: datatype(imageprio) must be uint8_t, int32_t, float or double\n", F_NAME);
     return(0);
   }
@@ -2091,15 +2339,17 @@ resultat: F
       fprintf(stderr, "%s: bad size for inhibit\n", F_NAME);
       return(0);
     }
-    if (datatype(inhibit) == VFF_TYP_1_BYTE) 
+    if (datatype(inhibit) == VFF_TYP_1_BYTE) {
       I = UCHARDATA(inhibit);
-    else 
-    {
+    } else {
       fprintf(stderr, "%s: datatype(inhibit) must be uint8_t\n", F_NAME);
       return(0);
     }
-    for (x = 0; x < N; x++)
-      if (I[x]) Set(x,CONTRAINTE);
+    for (x = 0; x < N; x++) {
+      if (I[x]) {
+        Set(x, CONTRAINTE);
+      }
+    }
   }
 
   taillemaxrbt = 2 * rs +  2 * cs + 2 * ds;
@@ -2165,10 +2415,26 @@ resultat: F
       mctopo3d_top26(F, x, rs, ps, N, &t, &tb);
       switch(datatype(imageprio))
       {
-      case VFF_TYP_4_BYTE: if ((t > 1) && ((float)(P[x]) >= param)) Set(x,CONTRAINTE); break;
-      case VFF_TYP_1_BYTE: if ((t > 1) && ((float)(PB[x]) >= param)) Set(x,CONTRAINTE); break;
-      case VFF_TYP_FLOAT : if ((t > 1) && ((float)(PF[x]) >= param)) Set(x,CONTRAINTE); break;
-      case VFF_TYP_DOUBLE: if ((t > 1) && ((float)(PD[x]) >= param)) Set(x,CONTRAINTE); break;
+      case VFF_TYP_4_BYTE:
+        if ((t > 1) && ((float)(P[x]) >= param)) {
+          Set(x, CONTRAINTE);
+        }
+        break;
+      case VFF_TYP_1_BYTE:
+        if ((t > 1) && ((float)(PB[x]) >= param)) {
+          Set(x, CONTRAINTE);
+        }
+        break;
+      case VFF_TYP_FLOAT :
+        if ((t > 1) && ((float)(PF[x]) >= param)) {
+          Set(x, CONTRAINTE);
+        }
+        break;
+      case VFF_TYP_DOUBLE:
+        if ((t > 1) && ((float)(PD[x]) >= param)) {
+          Set(x, CONTRAINTE);
+        }
+        break;
       }	
 #endif
 
@@ -2277,16 +2543,15 @@ resultat: F
     return(0);
   }
 
-  if (datatype(imageprio) == VFF_TYP_4_BYTE) 
-    P = SLONGDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_1_BYTE) 
-    PB = UCHARDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_FLOAT) 
-    PF = FLOATDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_DOUBLE) 
-    PD = DOUBLEDATA(imageprio); 
-  else 
-  {
+  if (datatype(imageprio) == VFF_TYP_4_BYTE) {
+    P = SLONGDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_1_BYTE) {
+    PB = UCHARDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_FLOAT) {
+    PF = FLOATDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_DOUBLE) {
+    PD = DOUBLEDATA(imageprio);
+  } else {
     fprintf(stderr, "%s: datatype(imageprio) must be uint8_t, int32_t, float or double\n", F_NAME);
     return(0);
   }
@@ -2299,15 +2564,17 @@ resultat: F
       fprintf(stderr, "%s: bad size for inhibit\n", F_NAME);
       return(0);
     }
-    if (datatype(inhibit) == VFF_TYP_1_BYTE) 
+    if (datatype(inhibit) == VFF_TYP_1_BYTE) {
       I = UCHARDATA(inhibit);
-    else 
-    {
+    } else {
       fprintf(stderr, "%s: datatype(inhibit) must be uint8_t\n", F_NAME);
       return(0);
     }
-    for (x = 0; x < N; x++)
-      if (I[x]) Set(x,CONTRAINTE);
+    for (x = 0; x < N; x++) {
+      if (I[x]) {
+        Set(x, CONTRAINTE);
+      }
+    }
   }
 
   taillemaxrbt = 2 * rs +  2 * cs + 2 * ds;
@@ -2363,10 +2630,26 @@ resultat: F
 
       switch(datatype(imageprio))
       {
-      case VFF_TYP_4_BYTE: if (mctopo3d_nbvoiso26(F, x, rs, ps, N) == 1) Set(x,CONTRAINTE); break;
-      case VFF_TYP_1_BYTE: if (mctopo3d_nbvoiso26(F, x, rs, ps, N) == 1) Set(x,CONTRAINTE); break;
-      case VFF_TYP_FLOAT : if (mctopo3d_nbvoiso26(F, x, rs, ps, N) == 1) Set(x,CONTRAINTE); break;
-      case VFF_TYP_DOUBLE: if (mctopo3d_nbvoiso26(F, x, rs, ps, N) == 1) Set(x,CONTRAINTE); break;
+      case VFF_TYP_4_BYTE:
+        if (mctopo3d_nbvoiso26(F, x, rs, ps, N) == 1) {
+          Set(x, CONTRAINTE);
+        }
+        break;
+      case VFF_TYP_1_BYTE:
+        if (mctopo3d_nbvoiso26(F, x, rs, ps, N) == 1) {
+          Set(x, CONTRAINTE);
+        }
+        break;
+      case VFF_TYP_FLOAT :
+        if (mctopo3d_nbvoiso26(F, x, rs, ps, N) == 1) {
+          Set(x, CONTRAINTE);
+        }
+        break;
+      case VFF_TYP_DOUBLE:
+        if (mctopo3d_nbvoiso26(F, x, rs, ps, N) == 1) {
+          Set(x, CONTRAINTE);
+        }
+        break;
       }	
 
       if ((! IsSet(x,CONTRAINTE)) && testabaisse26bin(F, x, rs, ps, N))
@@ -2468,16 +2751,15 @@ resultat: F
     return(0);
   }
 
-  if (datatype(imageprio) == VFF_TYP_4_BYTE) 
-    P = SLONGDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_1_BYTE) 
-    PB = UCHARDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_FLOAT) 
-    PF = FLOATDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_DOUBLE) 
-    PD = DOUBLEDATA(imageprio); 
-  else 
-  {
+  if (datatype(imageprio) == VFF_TYP_4_BYTE) {
+    P = SLONGDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_1_BYTE) {
+    PB = UCHARDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_FLOAT) {
+    PF = FLOATDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_DOUBLE) {
+    PD = DOUBLEDATA(imageprio);
+  } else {
     fprintf(stderr, "%s: datatype(imageprio) must be uint8_t, int32_t, float or double\n", F_NAME);
     return(0);
   }
@@ -2490,15 +2772,17 @@ resultat: F
       fprintf(stderr, "%s: bad size for inhibit\n", F_NAME);
       return(0);
     }
-    if (datatype(inhibit) == VFF_TYP_1_BYTE) 
+    if (datatype(inhibit) == VFF_TYP_1_BYTE) {
       I = UCHARDATA(inhibit);
-    else 
-    {
+    } else {
       fprintf(stderr, "%s: datatype(inhibit) must be uint8_t\n", F_NAME);
       return(0);
     }
-    for (x = 0; x < N; x++)
-      if (I[x]) Set(x,CONTRAINTE);
+    for (x = 0; x < N; x++) {
+      if (I[x]) {
+        Set(x, CONTRAINTE);
+      }
+    }
   }
 
   taillemaxrbt = 2 * rs +  2 * cs + 2 * ds;
@@ -2521,7 +2805,9 @@ resultat: F
       if (F[x] && (nonbord3d(x,rs,ps,N)))
       {
 	mctopo3d_top6(F, x, rs, ps, N, &t, &tb);
-	if (t > 1) Set(x,CONTRAINTE);
+        if (t > 1) {
+          Set(x, CONTRAINTE);
+        }
       }
     }
   }
@@ -2536,7 +2822,9 @@ resultat: F
         if (mctopo3d_nbvoiso26(F, x, rs, ps, N) == 1) Set(x,CONTRAINTE);
 #else
 	mctopo3d_top26(F, x, rs, ps, N, &t, &tb);
-	if (t > 1) Set(x,CONTRAINTE);
+        if (t > 1) {
+          Set(x, CONTRAINTE);
+        }
 #endif
       }
     }
@@ -2636,7 +2924,9 @@ resultat: F
       {
         x = RbtPopMin(RBT);
         FifoPush(FIFO1, x);
-        if (!mcrbt_RbtVide(RBT)) prio = (int32_t)RbtMinLevel(RBT) / 10;
+        if (!mcrbt_RbtVide(RBT)) {
+          prio = (int32_t)RbtMinLevel(RBT) / 10;
+        }
       } 
 
       while (!FifoVide(FIFO1))
@@ -2689,7 +2979,9 @@ resultat: F
         if ((! IsSet(x,CONTRAINTE)) && (nonbord3d(x,rs,ps,N)))
         {
           mctopo3d_top6(F, x, rs, ps, N, &t, &tb);
-          if (t > 1) Set(x,CONTRAINTE);
+          if (t > 1) {
+            Set(x, CONTRAINTE);
+          }
         }
       } // while (!FifoVide(FIFO2))
     } /* while (!mcrbt_RbtVide(RBT)) */
@@ -2715,7 +3007,9 @@ resultat: F
 	      if (mctopo3d_nbvoiso26(F, x, rs, ps, N) == 1) Set(x,CONTRAINTE);
 #else
 	      mctopo3d_top26(F, x, rs, ps, N, &t, &tb);
-	      if (t > 1) Set(x,CONTRAINTE);
+              if (t > 1) {
+                Set(x, CONTRAINTE);
+              }
 #endif
 	    }
             if ((! IsSet(y,CONTRAINTE)) && (! IsSet(y, EN_RBT)))
@@ -2812,16 +3106,15 @@ resultat: F
     return(0);
   }
 
-  if (datatype(imageprio) == VFF_TYP_4_BYTE) 
-    P = SLONGDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_1_BYTE) 
-    PB = UCHARDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_FLOAT) 
-    PF = FLOATDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_DOUBLE) 
-    PD = DOUBLEDATA(imageprio); 
-  else 
-  {
+  if (datatype(imageprio) == VFF_TYP_4_BYTE) {
+    P = SLONGDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_1_BYTE) {
+    PB = UCHARDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_FLOAT) {
+    PF = FLOATDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_DOUBLE) {
+    PD = DOUBLEDATA(imageprio);
+  } else {
     fprintf(stderr, "%s: datatype(imageprio) must be uint8_t, int32_t, float or double\n", F_NAME);
     return(0);
   }
@@ -2834,15 +3127,17 @@ resultat: F
       fprintf(stderr, "%s: bad size for inhibit\n", F_NAME);
       return(0);
     }
-    if (datatype(inhibit) == VFF_TYP_1_BYTE) 
+    if (datatype(inhibit) == VFF_TYP_1_BYTE) {
       I = UCHARDATA(inhibit);
-    else 
-    {
+    } else {
       fprintf(stderr, "%s: datatype(inhibit) must be uint8_t\n", F_NAME);
       return(0);
     }
-    for (x = 0; x < N; x++)
-      if (I[x]) Set(x,CONTRAINTE);
+    for (x = 0; x < N; x++) {
+      if (I[x]) {
+        Set(x, CONTRAINTE);
+      }
+    }
   }
 
   taillemaxrbt = 2 * rs +  2 * cs + 2 * ds;
@@ -2865,7 +3160,9 @@ resultat: F
       if (F[x] && (nonbord3d(x,rs,ps,N)))
       {
 	mctopo3d_top6(F, x, rs, ps, N, &t, &tb);
-	if (tb > 1) Set(x,CONTRAINTE);
+        if (tb > 1) {
+          Set(x, CONTRAINTE);
+        }
       }
     }
   }
@@ -2877,7 +3174,9 @@ resultat: F
       if (F[x] && (nonbord3d(x,rs,ps,N)))
       {
 	mctopo3d_top26(F, x, rs, ps, N, &t, &tb);
-	if (tb > 1) Set(x,CONTRAINTE);
+        if (tb > 1) {
+          Set(x, CONTRAINTE);
+        }
       }
     }
   }
@@ -2977,7 +3276,9 @@ resultat: F
       {
         x = RbtPopMin(RBT);
         FifoPush(FIFO1, x);
-        if (!mcrbt_RbtVide(RBT)) prio = (int32_t)RbtMinLevel(RBT) / 10;
+        if (!mcrbt_RbtVide(RBT)) {
+          prio = (int32_t)RbtMinLevel(RBT) / 10;
+        }
       } 
 
       while (!FifoVide(FIFO1))
@@ -3030,7 +3331,9 @@ resultat: F
         if ((! IsSet(x,CONTRAINTE)) && (nonbord3d(x,rs,ps,N)))
         {
           mctopo3d_top6(F, x, rs, ps, N, &t, &tb);
-          if (tb > 1) Set(x,CONTRAINTE);
+          if (tb > 1) {
+            Set(x, CONTRAINTE);
+          }
         }
       } // while (!FifoVide(FIFO2))
     } /* while (!mcrbt_RbtVide(RBT)) */
@@ -3154,16 +3457,15 @@ resultat: F
     return(0);
   }
 
-  if (datatype(imageprio) == VFF_TYP_4_BYTE) 
-    P = SLONGDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_1_BYTE) 
-    PB = UCHARDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_FLOAT) 
-    PF = FLOATDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_DOUBLE) 
-    PD = DOUBLEDATA(imageprio); 
-  else 
-  {
+  if (datatype(imageprio) == VFF_TYP_4_BYTE) {
+    P = SLONGDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_1_BYTE) {
+    PB = UCHARDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_FLOAT) {
+    PF = FLOATDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_DOUBLE) {
+    PD = DOUBLEDATA(imageprio);
+  } else {
     fprintf(stderr, "%s: datatype(imageprio) must be uint8_t, int32_t, float or double\n", F_NAME);
     return(0);
   }
@@ -3191,7 +3493,11 @@ resultat: F
       return(0);
     }
     I = UCHARDATA(imageinhibit);
-    for (x = 0; x < N; x++) if (I[x]) Set(x,CONTRAINTE);
+    for (x = 0; x < N; x++) {
+      if (I[x]) {
+        Set(x, CONTRAINTE);
+      }
+    }
   }
 
   /* ================================================ */
@@ -3357,16 +3663,15 @@ resultat: F
     return(0);
   }
 
-  if (datatype(imageprio) == VFF_TYP_4_BYTE) 
-    P = SLONGDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_1_BYTE) 
-    PB = UCHARDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_FLOAT) 
-    PF = FLOATDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_DOUBLE) 
-    PD = DOUBLEDATA(imageprio); 
-  else 
-  {
+  if (datatype(imageprio) == VFF_TYP_4_BYTE) {
+    P = SLONGDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_1_BYTE) {
+    PB = UCHARDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_FLOAT) {
+    PF = FLOATDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_DOUBLE) {
+    PD = DOUBLEDATA(imageprio);
+  } else {
     fprintf(stderr, "%s: datatype(imageprio) must be uint8_t, int32_t, float or double\n", F_NAME);
     return(0);
   }
@@ -3394,7 +3699,11 @@ resultat: F
       return(0);
     }
     I = UCHARDATA(imageinhibit);
-    for (x = 0; x < N; x++) if (I[x]) Set(x,CONTRAINTE);
+    for (x = 0; x < N; x++) {
+      if (I[x]) {
+        Set(x, CONTRAINTE);
+      }
+    }
   }
 
   /* ================================================ */
@@ -3670,8 +3979,12 @@ int32_t lskeleucl(struct xvimage *image,
     {
       prio = RbtMinLevel(RBT); 
       x = RbtPopMin(RBT);
-      if (I[x]) goto finwhile;
-      if (prio < P[x]) goto finwhile;
+      if (I[x]) {
+        goto finwhile;
+      }
+      if (prio < P[x]) {
+        goto finwhile;
+      }
       if (testabaisse8bin(F, x, rs, N))          /* modifie l'image le cas echeant */
       {
         for (k = 0; k < 8; k += 1)          /* parcourt les voisins en 8-connexite */
@@ -3712,8 +4025,12 @@ int32_t lskeleucl(struct xvimage *image,
     {
       prio = RbtMinLevel(RBT); 
       x = RbtPopMin(RBT);
-      if (I[x]) goto finwhile26;
-      if (prio < P[x]) goto finwhile26;
+      if (I[x]) {
+        goto finwhile26;
+      }
+      if (prio < P[x]) {
+        goto finwhile26;
+      }
       if (testabaisse26bin(F, x, rs, ps, N))          /* modifie l'image le cas echeant */
       {
         for (k = 0; k < 26; k += 1)        /* parcourt les voisins en 26-connexite */
@@ -3790,35 +4107,116 @@ uint32_t encodevois(index_t p, uint8_t *F, index_t rs, index_t ps, index_t N)
     exit(0);
   }
 
-  if (F[p-ps-rs-1]) i = i | (1<<n); n++;
-  if (F[p-ps-rs  ]) i = i | (1<<n); n++;
-  if (F[p-ps-rs+1]) i = i | (1<<n); n++;
-  if (F[p-ps   -1]) i = i | (1<<n); n++;
-  if (F[p-ps     ]) i = i | (1<<n); n++;
-  if (F[p-ps   +1]) i = i | (1<<n); n++;
-  if (F[p-ps+rs-1]) i = i | (1<<n); n++;
-  if (F[p-ps+rs  ]) i = i | (1<<n); n++;
-  if (F[p-ps+rs+1]) i = i | (1<<n); n++;
+  if (F[p - ps - rs - 1]) {
+    i = i | (1 << n);
+  }
+  n++;
+  if (F[p - ps - rs]) {
+    i = i | (1 << n);
+  }
+  n++;
+  if (F[p - ps - rs + 1]) {
+    i = i | (1 << n);
+  }
+  n++;
+  if (F[p - ps - 1]) {
+    i = i | (1 << n);
+  }
+  n++;
+  if (F[p - ps]) {
+    i = i | (1 << n);
+  }
+  n++;
+  if (F[p - ps + 1]) {
+    i = i | (1 << n);
+  }
+  n++;
+  if (F[p - ps + rs - 1]) {
+    i = i | (1 << n);
+  }
+  n++;
+  if (F[p - ps + rs]) {
+    i = i | (1 << n);
+  }
+  n++;
+  if (F[p - ps + rs + 1]) {
+    i = i | (1 << n);
+  }
+  n++;
 
-  if (F[p   -rs-1]) i = i | (1<<n); n++;
-  if (F[p   -rs  ]) i = i | (1<<n); n++;
-  if (F[p   -rs+1]) i = i | (1<<n); n++;
-  if (F[p      -1]) i = i | (1<<n); n++;
-  if (F[p        ]) i = i | (1<<n); n++;
-  if (F[p      +1]) i = i | (1<<n); n++;
-  if (F[p   +rs-1]) i = i | (1<<n); n++;
-  if (F[p   +rs  ]) i = i | (1<<n); n++;
-  if (F[p   +rs+1]) i = i | (1<<n); n++;
+  if (F[p - rs - 1]) {
+    i = i | (1 << n);
+  }
+  n++;
+  if (F[p - rs]) {
+    i = i | (1 << n);
+  }
+  n++;
+  if (F[p - rs + 1]) {
+    i = i | (1 << n);
+  }
+  n++;
+  if (F[p - 1]) {
+    i = i | (1 << n);
+  }
+  n++;
+  if (F[p]) {
+    i = i | (1 << n);
+  }
+  n++;
+  if (F[p + 1]) {
+    i = i | (1 << n);
+  }
+  n++;
+  if (F[p + rs - 1]) {
+    i = i | (1 << n);
+  }
+  n++;
+  if (F[p + rs]) {
+    i = i | (1 << n);
+  }
+  n++;
+  if (F[p + rs + 1]) {
+    i = i | (1 << n);
+  }
+  n++;
 
-  if (F[p+ps-rs-1]) i = i | (1<<n); n++;
-  if (F[p+ps-rs  ]) i = i | (1<<n); n++;
-  if (F[p+ps-rs+1]) i = i | (1<<n); n++;
-  if (F[p+ps   -1]) i = i | (1<<n); n++;
-  if (F[p+ps     ]) i = i | (1<<n); n++;
-  if (F[p+ps   +1]) i = i | (1<<n); n++;
-  if (F[p+ps+rs-1]) i = i | (1<<n); n++;
-  if (F[p+ps+rs  ]) i = i | (1<<n); n++;
-  if (F[p+ps+rs+1]) i = i | (1<<n); n++;
+  if (F[p + ps - rs - 1]) {
+    i = i | (1 << n);
+  }
+  n++;
+  if (F[p + ps - rs]) {
+    i = i | (1 << n);
+  }
+  n++;
+  if (F[p + ps - rs + 1]) {
+    i = i | (1 << n);
+  }
+  n++;
+  if (F[p + ps - 1]) {
+    i = i | (1 << n);
+  }
+  n++;
+  if (F[p + ps]) {
+    i = i | (1 << n);
+  }
+  n++;
+  if (F[p + ps + 1]) {
+    i = i | (1 << n);
+  }
+  n++;
+  if (F[p + ps + rs - 1]) {
+    i = i | (1 << n);
+  }
+  n++;
+  if (F[p + ps + rs]) {
+    i = i | (1 << n);
+  }
+  n++;
+  if (F[p + ps + rs + 1]) {
+    i = i | (1 << n);
+  }
+  n++;
 
   return i;
 } /* encodevois() */
@@ -3883,10 +4281,9 @@ resultat: F
     fprintf(stderr, "%s: bad size for imageprio\n", F_NAME);
     return(0);
   }
-  if (datatype(imageprio) == VFF_TYP_4_BYTE) 
-    P = SLONGDATA(imageprio); 
-  else 
-  {
+  if (datatype(imageprio) == VFF_TYP_4_BYTE) {
+    P = SLONGDATA(imageprio);
+  } else {
     fprintf(stderr, "%s: datatype(imageprio) must be int32_t\n", F_NAME);
     return(0);
   }
@@ -4086,21 +4483,27 @@ Le prédicat "endpoint" est défini par un tableau de 2^27 booléens
 
   if (connex == 6)
   {
-    for (x = 0; x < N; x++)
-      if (F[x] && mctopo3d_simple6(F, x, rs, ps, N))
+    for (x = 0; x < N; x++) {
+      if (F[x] && mctopo3d_simple6(F, x, rs, ps, N)) {
         mcrbt_RbtInsert(&RBT, typedir3d(F, x, rs, ps, N), x);
+      }
+    }
   }
   else if (connex == 18)
   {
-    for (x = 0; x < N; x++)
-      if (F[x] && mctopo3d_simple18(F, x, rs, ps, N))
+    for (x = 0; x < N; x++) {
+      if (F[x] && mctopo3d_simple18(F, x, rs, ps, N)) {
         mcrbt_RbtInsert(&RBT, typedir3d(F, x, rs, ps, N), x);
+      }
+    }
   }
   else if (connex == 26)
   {
-    for (x = 0; x < N; x++)
-      if (F[x] && mctopo3d_simple26(F, x, rs, ps, N))
+    for (x = 0; x < N; x++) {
+      if (F[x] && mctopo3d_simple26(F, x, rs, ps, N)) {
         mcrbt_RbtInsert(&RBT, typedir3d(F, x, rs, ps, N), x);
+      }
+    }
   }
   else
   {
@@ -4124,11 +4527,16 @@ Le prédicat "endpoint" est défini par un tableau de 2^27 booléens
       {
 	x = RbtPopMin(RBT);
 	config = encodevois(x, F, rs, ps, N);
-	if (((nbiter < niseuil) || (!IsEnd(config))) && testabaisse6bin(F, x, rs, ps, N)) nbdel++;
+        if (((nbiter < niseuil) || (!IsEnd(config))) &&
+            testabaisse6bin(F, x, rs, ps, N)) {
+          nbdel++;
+        }
       } /* while (!mcrbt_RbtVide(RBT)) */
-      for (x = 0; x < N; x++)
-        if (F[x] && mctopo3d_simple6(F, x, rs, ps, N))
+      for (x = 0; x < N; x++) {
+        if (F[x] && mctopo3d_simple6(F, x, rs, ps, N)) {
           mcrbt_RbtInsert(&RBT, typedir3d(F, x, rs, ps, N), x);
+        }
+      }
 #ifdef VERBOSE
       printf("nbiter : %d ; nbdel : %d\n", nbiter, nbdel);
 #endif
@@ -4146,11 +4554,16 @@ Le prédicat "endpoint" est défini par un tableau de 2^27 booléens
       {
 	x = RbtPopMin(RBT);
 	config = encodevois(x, F, rs, ps, N);
-	if (((nbiter < niseuil) || (!IsEnd(config))) && testabaisse18bin(F, x, rs, ps, N)) nbdel++;
+        if (((nbiter < niseuil) || (!IsEnd(config))) &&
+            testabaisse18bin(F, x, rs, ps, N)) {
+          nbdel++;
+        }
       } /* while (!mcrbt_RbtVide(RBT)) */
-      for (x = 0; x < N; x++)
-        if (F[x] && mctopo3d_simple18(F, x, rs, ps, N))
+      for (x = 0; x < N; x++) {
+        if (F[x] && mctopo3d_simple18(F, x, rs, ps, N)) {
           mcrbt_RbtInsert(&RBT, typedir3d(F, x, rs, ps, N), x);
+        }
+      }
 #ifdef VERBOSE
       printf("nbiter : %d ; nbdel : %d\n", nbiter, nbdel);
 #endif
@@ -4175,11 +4588,16 @@ Le prédicat "endpoint" est défini par un tableau de 2^27 booléens
 	printf("; point %d (%d,%d,%d)\n", x, x % rs, (x % ps) / rs, x / ps);
 #endif
 	config = encodevois(x, F, rs, ps, N);
-	if (((nbiter < niseuil) || (!IsEnd(config))) && testabaisse26bin(F, x, rs, ps, N)) nbdel++;
+        if (((nbiter < niseuil) || (!IsEnd(config))) &&
+            testabaisse26bin(F, x, rs, ps, N)) {
+          nbdel++;
+        }
       } /* while (!mcrbt_RbtVide(RBT)) */
-      for (x = 0; x < N; x++)
-        if (F[x] && mctopo3d_simple26(F, x, rs, ps, N))
+      for (x = 0; x < N; x++) {
+        if (F[x] && mctopo3d_simple26(F, x, rs, ps, N)) {
           mcrbt_RbtInsert(&RBT, typedir3d(F, x, rs, ps, N), x);
+        }
+      }
 #ifdef VERBOSE
       printf("nbiter : %d ; nbdel : %d\n", nbiter, nbdel);
 #endif
@@ -4244,15 +4662,19 @@ Algo par passes directionnelles.
 
   if (connex == 4)
   {
-    for (x = 0; x < N; x++)
-      if (F[x] && simple4(F, x, rs, N))
+    for (x = 0; x < N; x++) {
+      if (F[x] && simple4(F, x, rs, N)) {
         mcrbt_RbtInsert(&RBT, typedir2d(F, x, rs, N), x);
+      }
+    }
   }
   else if (connex == 8)
   {
-    for (x = 0; x < N; x++)
-      if (F[x] && simple8(F, x, rs, N))
+    for (x = 0; x < N; x++) {
+      if (F[x] && simple8(F, x, rs, N)) {
         mcrbt_RbtInsert(&RBT, typedir2d(F, x, rs, N), x);
+      }
+    }
   }
   else
   {
@@ -4275,11 +4697,16 @@ Algo par passes directionnelles.
       while (!mcrbt_RbtVide(RBT))
       {
 	x = RbtPopMin(RBT);
-	if (((nbiter < niseuil) || (nbvois4(F, x, rs, N) != 1)) && testabaisse4bin(F, x, rs, N)) nbdel++;
+        if (((nbiter < niseuil) || (nbvois4(F, x, rs, N) != 1)) &&
+            testabaisse4bin(F, x, rs, N)) {
+          nbdel++;
+        }
       } /* while (!mcrbt_RbtVide(RBT)) */
-      for (x = 0; x < N; x++)
-        if (F[x] && simple4(F, x, rs, N))
+      for (x = 0; x < N; x++) {
+        if (F[x] && simple4(F, x, rs, N)) {
           mcrbt_RbtInsert(&RBT, typedir2d(F, x, rs, N), x);
+        }
+      }
 #ifdef VERBOSE
       printf("nbiter : %d ; nbdel : %d\n", nbiter, nbdel);
 #endif
@@ -4296,11 +4723,16 @@ Algo par passes directionnelles.
       while (!mcrbt_RbtVide(RBT))
       {
 	x = RbtPopMin(RBT);
-	if (((nbiter < niseuil) || (nbvois8(F, x, rs, N) != 1)) && testabaisse8bin(F, x, rs, N)) nbdel++;
+        if (((nbiter < niseuil) || (nbvois8(F, x, rs, N) != 1)) &&
+            testabaisse8bin(F, x, rs, N)) {
+          nbdel++;
+        }
       } /* while (!mcrbt_RbtVide(RBT)) */
-      for (x = 0; x < N; x++)
-        if (F[x] && simple8(F, x, rs, N))
+      for (x = 0; x < N; x++) {
+        if (F[x] && simple8(F, x, rs, N)) {
           mcrbt_RbtInsert(&RBT, typedir2d(F, x, rs, N), x);
+        }
+      }
 #ifdef VERBOSE
       printf("nbiter : %d ; nbdel : %d\n", nbiter, nbdel);
 #endif
@@ -4362,21 +4794,27 @@ Algo par passes directionnelles.
 
   if (connex == 6)
   {
-    for (x = 0; x < N; x++)
-      if (F[x] && mctopo3d_simple6lab(F, x, rs, ps, N))
+    for (x = 0; x < N; x++) {
+      if (F[x] && mctopo3d_simple6lab(F, x, rs, ps, N)) {
         mcrbt_RbtInsert(&RBT, typedir3dlab(F, x, rs, ps, N), x);
+      }
+    }
   }
   else if (connex == 18)
   {
-    for (x = 0; x < N; x++)
-      if (F[x] && mctopo3d_simple18lab(F, x, rs, ps, N))
+    for (x = 0; x < N; x++) {
+      if (F[x] && mctopo3d_simple18lab(F, x, rs, ps, N)) {
         mcrbt_RbtInsert(&RBT, typedir3dlab(F, x, rs, ps, N), x);
+      }
+    }
   }
   else if (connex == 26)
   {
-    for (x = 0; x < N; x++)
-      if (F[x] && mctopo3d_simple26lab(F, x, rs, ps, N))
+    for (x = 0; x < N; x++) {
+      if (F[x] && mctopo3d_simple26lab(F, x, rs, ps, N)) {
         mcrbt_RbtInsert(&RBT, typedir3dlab(F, x, rs, ps, N), x);
+      }
+    }
   }
   else
   {
@@ -4399,11 +4837,17 @@ Algo par passes directionnelles.
       while (!mcrbt_RbtVide(RBT))
       {
 	x = RbtPopMin(RBT);
-	if (((nbiter < niseuil) || (mctopo3d_nbvoislab6(F, x, rs, ps, N) > 1)) && testabaisse6lab(F, x, rs, ps, N)) nbdel++;
+        if (((nbiter < niseuil) ||
+             (mctopo3d_nbvoislab6(F, x, rs, ps, N) > 1)) &&
+            testabaisse6lab(F, x, rs, ps, N)) {
+          nbdel++;
+        }
       } /* while (!mcrbt_RbtVide(RBT)) */
-      for (x = 0; x < N; x++)
-        if (F[x] && mctopo3d_simple6lab(F, x, rs, ps, N))
+      for (x = 0; x < N; x++) {
+        if (F[x] && mctopo3d_simple6lab(F, x, rs, ps, N)) {
           mcrbt_RbtInsert(&RBT, typedir3dlab(F, x, rs, ps, N), x);
+        }
+      }
 #ifdef VERBOSE
       printf("nbiter : %d ; nbdel : %d\n", nbiter, nbdel);
 #endif
@@ -4420,11 +4864,17 @@ Algo par passes directionnelles.
       while (!mcrbt_RbtVide(RBT))
       {
 	x = RbtPopMin(RBT);
-	if (((nbiter < niseuil) || (mctopo3d_nbvoislab18(F, x, rs, ps, N) > 1)) && testabaisse18lab(F, x, rs, ps, N)) nbdel++;
+        if (((nbiter < niseuil) ||
+             (mctopo3d_nbvoislab18(F, x, rs, ps, N) > 1)) &&
+            testabaisse18lab(F, x, rs, ps, N)) {
+          nbdel++;
+        }
       } /* while (!mcrbt_RbtVide(RBT)) */
-      for (x = 0; x < N; x++)
-        if (F[x] && mctopo3d_simple18lab(F, x, rs, ps, N))
+      for (x = 0; x < N; x++) {
+        if (F[x] && mctopo3d_simple18lab(F, x, rs, ps, N)) {
           mcrbt_RbtInsert(&RBT, typedir3dlab(F, x, rs, ps, N), x);
+        }
+      }
 #ifdef VERBOSE
       printf("nbiter : %d ; nbdel : %d\n", nbiter, nbdel);
 #endif
@@ -4441,11 +4891,17 @@ Algo par passes directionnelles.
       while (!mcrbt_RbtVide(RBT))
       {
 	x = RbtPopMin(RBT);
-	if (((nbiter < niseuil) || (mctopo3d_nbvoislab26(F, x, rs, ps, N) > 1)) && testabaisse26lab(F, x, rs, ps, N)) nbdel++;
+        if (((nbiter < niseuil) ||
+             (mctopo3d_nbvoislab26(F, x, rs, ps, N) > 1)) &&
+            testabaisse26lab(F, x, rs, ps, N)) {
+          nbdel++;
+        }
       } /* while (!mcrbt_RbtVide(RBT)) */
-      for (x = 0; x < N; x++)
-        if (F[x] && mctopo3d_simple26lab(F, x, rs, ps, N))
+      for (x = 0; x < N; x++) {
+        if (F[x] && mctopo3d_simple26lab(F, x, rs, ps, N)) {
           mcrbt_RbtInsert(&RBT, typedir3dlab(F, x, rs, ps, N), x);
+        }
+      }
 #ifdef VERBOSE
       printf("nbiter : %d ; nbdel : %d\n", nbiter, nbdel);
 #endif
@@ -4522,7 +4978,9 @@ Implémentation non optimisée (NBDIR scans de la liste des points de bord)
     return(0);
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
   D = (uint8_t *)calloc(N, sizeof(uint8_t)); assert(D != NULL);
   LISTE1 = CreeListeVide(N);
@@ -4540,7 +4998,11 @@ Implémentation non optimisée (NBDIR scans de la liste des points de bord)
     COMPARE_SIZE(image, inhibit);
     ACCEPTED_TYPES1(inhibit, VFF_TYP_1_BYTE);
     I = UCHARDATA(inhibit);
-    for (x = 0; x < N; x++) if (I[x]) Set(x,CONTRAINTE);
+    for (x = 0; x < N; x++) {
+      if (I[x]) {
+        Set(x, CONTRAINTE);
+      }
+    }
   }
 
   /* ================================================ */
@@ -4563,7 +5025,9 @@ Implémentation non optimisée (NBDIR scans de la liste des points de bord)
 #ifdef lskeldir3d_USE_END
 	if (mctopo3d_nbvoiso26(F, x, rs, ps, N) == 1) Set(x,CONTRAINTE);
 #else
-	if (t > 1) Set(x,CONTRAINTE);
+        if (t > 1) {
+          Set(x, CONTRAINTE);
+        }
 #endif
 	if ((tb == 1) && (t == 1) && !IsSet(x,CONTRAINTE))
 	{ 
@@ -4589,9 +5053,10 @@ Implémentation non optimisée (NBDIR scans de la liste des points de bord)
 	for (i = 0; i < n; i++)
 	{
 	  x = ListeElt(LISTE1, i);
-	  if (F[x] && (D[x] == dir) && !IsSet(x,CONTRAINTE))
-	    (void)testabaisse26bin(F, x, rs, ps, N);
-	} // for (i = 0; i < n; i++)
+          if (F[x] && (D[x] == dir) && !IsSet(x, CONTRAINTE)) {
+            (void)testabaisse26bin(F, x, rs, ps, N);
+          }
+        } // for (i = 0; i < n; i++)
 #ifdef DEBUG_lskeldir3d
 sprintf(DBGBUF, "_dir%d", dir);
 writeimage(image, DBGBUF);
@@ -4608,7 +5073,9 @@ writeimage(image, DBGBUF);
 #ifdef lskeldir3d_USE_END
 	  if (mctopo3d_nbvoiso26(F, x, rs, ps, N) == 1) Set(x,CONTRAINTE);
 #else
-	  if (t > 1) Set(x,CONTRAINTE);
+          if (t > 1) {
+            Set(x, CONTRAINTE);
+          }
 #endif
 	  if ((tb == 1) && (t == 1) && !IsSet(x,CONTRAINTE))
 	  { 
@@ -4685,7 +5152,9 @@ Implémentation non optimisée (NBDIR scans de la liste des points de bord)
     return(0);
   }
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
   D = (uint8_t *)calloc(N, sizeof(uint8_t)); assert(D != NULL);
   LISTE1 = CreeListeVide(N);
@@ -4703,7 +5172,11 @@ Implémentation non optimisée (NBDIR scans de la liste des points de bord)
     COMPARE_SIZE(image, inhibit);
     ACCEPTED_TYPES1(inhibit, VFF_TYP_1_BYTE);
     I = UCHARDATA(inhibit);
-    for (x = 0; x < N; x++) if (I[x]) Set(x,CONTRAINTE);
+    for (x = 0; x < N; x++) {
+      if (I[x]) {
+        Set(x, CONTRAINTE);
+      }
+    }
   }
 
   /* ================================================ */
@@ -4723,8 +5196,10 @@ Implémentation non optimisée (NBDIR scans de la liste des points de bord)
       if (F[x] && (nonbord3d(x,rs,ps,N)))
       {
 	mctopo3d_top26(F, x, rs, ps, N, &t, &tb);
-	if (t > 1) Set(x,CONTRAINTE);
-	if ((tb == 1) && (t == 1) && !IsSet(x,CONTRAINTE))
+        if (t > 1) {
+          Set(x, CONTRAINTE);
+        }
+        if ((tb == 1) && (t == 1) && !IsSet(x,CONTRAINTE))
 	{ 
 	  ListePush(LISTE1, x); 
 	  n++;
@@ -4751,15 +5226,18 @@ Implémentation non optimisée (NBDIR scans de la liste des points de bord)
 	  if (F[x] && (D[x] == dir) && !IsSet(x,CONTRAINTE))
 	  {
 	    mctopo3d_top26(F, x, rs, ps, N, &t, &tb);
-	    if (t > 1) Set(x,CONTRAINTE);
-	  }
+            if (t > 1) {
+              Set(x, CONTRAINTE);
+            }
+          }
 	} // for (i = 0; i < n; i++)
 	for (i = 0; i < n; i++)
 	{
 	  x = ListeElt(LISTE1, i);
-	  if (F[x] && (D[x] == dir) && !IsSet(x,CONTRAINTE))
-	    (void)testabaisse26bin(F, x, rs, ps, N);
-	} // for (i = 0; i < n; i++)
+          if (F[x] && (D[x] == dir) && !IsSet(x, CONTRAINTE)) {
+            (void)testabaisse26bin(F, x, rs, ps, N);
+          }
+        } // for (i = 0; i < n; i++)
 
 #ifdef DEBUG_lskeldir3d
 sprintf(DBGBUF, "_dir%d", dir);
@@ -4774,8 +5252,10 @@ writeimage(image, DBGBUF);
 	if (F[x] && (nonbord3d(x,rs,ps,N)))
 	{
 	  mctopo3d_top26(F, x, rs, ps, N, &t, &tb);
-	  if (t > 1) Set(x,CONTRAINTE);
-	  if ((tb == 1) && (t == 1) && !IsSet(x,CONTRAINTE))
+          if (t > 1) {
+            Set(x, CONTRAINTE);
+          }
+          if ((tb == 1) && (t == 1) && !IsSet(x,CONTRAINTE))
 	  { 
 	    ListePush(LISTE1, x); 
 	    n++;
@@ -4815,11 +5295,12 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 
 EXPERIMENTAL - Ne pas utiliser dans des applications
 */
-{ 
-  if (depth(image) == 1)
+{
+  if (depth(image) == 1) {
     return lskelPSG2(image, imageprio, val);
-  else
+  } else {
     return lskelPSG3(image, imageprio, val);
+  }
 } // lskelPSG()
 
 /* ==================================== */
@@ -4854,7 +5335,9 @@ int32_t lskelPSG2(struct xvimage *image,
   ACCEPTED_TYPES4(imageprio, VFF_TYP_1_BYTE, VFF_TYP_4_BYTE, VFF_TYP_FLOAT, VFF_TYP_DOUBLE);
   COMPARE_SIZE(image, imageprio);
 
-  if (val == -1) val = LARGE_VAL;
+  if (val == -1) {
+    val = LARGE_VAL;
+  }
 
   IndicsInit(N);
 
@@ -4867,16 +5350,15 @@ int32_t lskelPSG2(struct xvimage *image,
   C = UCHARDATA(candidats);
   razimage(candidats);
 
-  if (datatype(imageprio) == VFF_TYP_4_BYTE) 
-    P = SLONGDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_1_BYTE) 
-    PB = UCHARDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_FLOAT) 
-    PF = FLOATDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_DOUBLE) 
-    PD = DOUBLEDATA(imageprio); 
-  else 
-  {
+  if (datatype(imageprio) == VFF_TYP_4_BYTE) {
+    P = SLONGDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_1_BYTE) {
+    PB = UCHARDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_FLOAT) {
+    PF = FLOATDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_DOUBLE) {
+    PD = DOUBLEDATA(imageprio);
+  } else {
     fprintf(stderr, "%s: datatype(imageprio) must be uint8_t, int32_t, float or double\n", F_NAME);
     return(0);
   }
@@ -4930,7 +5412,9 @@ int32_t lskelPSG2(struct xvimage *image,
 #ifdef DEBUG_lskelPSG2
       printf("entering loop, curprio: %g\n", curprio);
 #endif
-    if (curprio >= val) break;
+      if (curprio >= val) {
+        break;
+      }
     do
     {
       x = RbtPopMin(RBT);
@@ -4978,7 +5462,9 @@ int32_t lskelPSG2(struct xvimage *image,
     for (i = 0; i < RLIFO->Sp; i++)
     {
       x = RLIFO->Pts[i];
-      if (IsSet(x, PSIMPLE)) F[x] = 0;
+      if (IsSet(x, PSIMPLE)) {
+        F[x] = 0;
+      }
       C[x] = 0;
     }
 
@@ -5025,7 +5511,9 @@ int32_t lskelPSG3(struct xvimage *image,
   Rlifo * RLIFO;
   double curprio;
 
-  if (val == -1) val = LARGE_VAL;
+  if (val == -1) {
+    val = LARGE_VAL;
+  }
 
 #define DEBUG_lskelPSG3
 #ifdef DEBUG_lskelPSG3
@@ -5047,20 +5535,23 @@ int32_t lskelPSG3(struct xvimage *image,
   }
   C = UCHARDATA(candidats);
   razimage(candidats);
-  for (x = 0; x < N; x++)
+  for (x = 0; x < N; x++) {
 
-  if (datatype(imageprio) == VFF_TYP_4_BYTE) 
-    P = SLONGDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_1_BYTE) 
-    PB = UCHARDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_FLOAT) 
-    PF = FLOATDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_DOUBLE) 
-    PD = DOUBLEDATA(imageprio); 
-  else 
-  {
-    fprintf(stderr, "%s: datatype(imageprio) must be uint8_t, int32_t, float or double\n", F_NAME);
-    return(0);
+    if (datatype(imageprio) == VFF_TYP_4_BYTE) {
+      P = SLONGDATA(imageprio);
+    } else if (datatype(imageprio) == VFF_TYP_1_BYTE) {
+      PB = UCHARDATA(imageprio);
+    } else if (datatype(imageprio) == VFF_TYP_FLOAT) {
+      PF = FLOATDATA(imageprio);
+    } else if (datatype(imageprio) == VFF_TYP_DOUBLE) {
+      PD = DOUBLEDATA(imageprio);
+    } else {
+      fprintf(
+          stderr,
+          "%s: datatype(imageprio) must be uint8_t, int32_t, float or double\n",
+          F_NAME);
+      return (0);
+    }
   }
 
   mctopo3d_init_topo3d();
@@ -5113,7 +5604,9 @@ int32_t lskelPSG3(struct xvimage *image,
 #ifdef DEBUG_lskelPSG3
   printf("%s: curprio = %g\n", F_NAME, curprio);
 #endif
-    if (curprio >= val) break;
+  if (curprio >= val) {
+    break;
+  }
     do
     {
       x = RbtPopMin(RBT);
@@ -5155,7 +5648,9 @@ int32_t lskelPSG3(struct xvimage *image,
     for (i = 0; i < RLIFO->Sp; i++)
     {
       x = RLIFO->Pts[i];
-      if (IsSet(x, PSIMPLE)) F[x] = 0;
+      if (IsSet(x, PSIMPLE)) {
+        F[x] = 0;
+      }
       C[x] = 0;
     }
 
@@ -5193,11 +5688,12 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 
 EXPERIMENTAL - Ne pas utiliser dans des applications
 */
-{ 
-  if (depth(image) == 1)
+{
+  if (depth(image) == 1) {
     return lskelCKG2(image, imageprio, val);
-  else
+  } else {
     return lskelCKG3(image, imageprio, val);
+  }
 } // lskelCKG()
 
 /* ==================================== */
@@ -5211,11 +5707,12 @@ Attention : l'objet ne doit pas toucher le bord de l'image
 
 EXPERIMENTAL - Ne pas utiliser dans des applications
 */
-{ 
-  if (depth(image) == 1)
+{
+  if (depth(image) == 1) {
     return lskelCKG2map(imageprio, image);
-  else
+  } else {
     return lskelCKG3map(imageprio, image);
+  }
 } // lskelCKGmap()
 
 /* ==================================== */
@@ -5413,15 +5910,23 @@ x b b  ou : tous les a et tous les b nuls
 */
   for (i = 0; i < 4; i++)
   {
-    if (v[0] < CAN) goto fail1;
+    if (v[0] < CAN) {
+      goto fail1;
+    }
     if ((v[1] == 0) && (v[2] == 0) && (v[6] == 0) && (v[7] == 0)) 
     { X[p] = CR1; return; }
-    if ((v[1] == 0) && (v[2] == 0)) goto fail1;
-    if ((v[6] == 0) && (v[7] == 0)) goto fail1;
+    if ((v[1] == 0) && (v[2] == 0)) {
+      goto fail1;
+    }
+    if ((v[6] == 0) && (v[7] == 0)) {
+      goto fail1;
+    }
     X[p] = CR1; 
     return;
   fail1:
-    if (i < 3) rotate90_vois(v);
+    if (i < 3) {
+      rotate90_vois(v);
+    }
   }
 } // CrucialPass1()
 
@@ -5451,14 +5956,24 @@ x x x  pour que le point central soit étiqueté CR0
 */
   for (i = 0; i < 4; i++)
   {
-    if ((v[1] == 0) && ((v[0] == 0) || (v[2] == 0))) goto fail1;
-    if (v[0] && (v[0] < CAN)) goto fail1;
-    if (v[1] && (v[1] < CAN)) goto fail1;
-    if (v[2] && (v[2] < CAN)) goto fail1;
+    if ((v[1] == 0) && ((v[0] == 0) || (v[2] == 0))) {
+      goto fail1;
+    }
+    if (v[0] && (v[0] < CAN)) {
+      goto fail1;
+    }
+    if (v[1] && (v[1] < CAN)) {
+      goto fail1;
+    }
+    if (v[2] && (v[2] < CAN)) {
+      goto fail1;
+    }
     X[p] = CR0;
     return;
   fail1:
-    if (i < 3) rotate90_vois(v);
+    if (i < 3) {
+      rotate90_vois(v);
+    }
   }
 } // CrucialPass0()
 
@@ -5477,7 +5992,9 @@ static void isometrieXZ_vois(uint8_t *vois)
   v[16] = vois[23];  v[17] = vois[ 0];  v[18] = vois[18];  v[19] = vois[19];
   v[20] = vois[ 1];  v[21] = vois[10];  v[22] = vois[ 9];  v[23] = vois[16];
   v[24] = vois[ 7];  v[25] = vois[25];
-  for (i = 0; i < 26; i++) vois[i] = v[i];
+  for (i = 0; i < 26; i++) {
+    vois[i] = v[i];
+  }
 } /* isometrieXZ_vois() */
 
 /* ==================================== */
@@ -5495,7 +6012,9 @@ static void isometrieYZ_vois(uint8_t *vois)
   v[16] = vois[16];  v[17] = vois[ 2];  v[18] = vois[ 1];  v[19] = vois[19];
   v[20] = vois[20];  v[21] = vois[21];  v[22] = vois[ 3];  v[23] = vois[12];
   v[24] = vois[11];  v[25] = vois[10];
-  for (i = 0; i < 26; i++) vois[i] = v[i];
+  for (i = 0; i < 26; i++) {
+    vois[i] = v[i];
+  }
 } /* isometrieYZ_vois() */
 
 #ifdef DEBUG
@@ -5527,16 +6046,38 @@ Si le test réussit, les points 8, 26 sont marqués CR2
     //    print_vois(v);
   }
 #endif
-  if ((v[8] < CAN) || (v[26] < CAN)) return 0;
-  if (v[0] || v[9]) t = 1; else t = 0;
-  if (v[1] || v[10]) t |= 2;
-  if (v[2] || v[11]) t |= 4;
-  if (v[3] || v[12]) t |= 8;
-  if (v[4] || v[13]) t |= 16;
-  if (v[5] || v[14]) t |= 32;
-  if (v[6] || v[15]) t |= 64;
-  if (v[7] || v[16]) t |= 128;
-  if ((t4b(t) == 1) && (t8(t) == 1)) return 0; // simple 2D
+  if ((v[8] < CAN) || (v[26] < CAN)) {
+    return 0;
+  }
+  if (v[0] || v[9]) {
+    t = 1;
+  } else {
+    t = 0;
+  }
+  if (v[1] || v[10]) {
+    t |= 2;
+  }
+  if (v[2] || v[11]) {
+    t |= 4;
+  }
+  if (v[3] || v[12]) {
+    t |= 8;
+  }
+  if (v[4] || v[13]) {
+    t |= 16;
+  }
+  if (v[5] || v[14]) {
+    t |= 32;
+  }
+  if (v[6] || v[15]) {
+    t |= 64;
+  }
+  if (v[7] || v[16]) {
+    t |= 128;
+  }
+  if ((t4b(t) == 1) && (t8(t) == 1)) {
+    return 0; // simple 2D
+  }
   v[8] = v[26] = CR2;
 #ifdef DEBUG
   if (trace)
@@ -5571,32 +6112,58 @@ static int32_t match_vois1(uint8_t *v)
     //    print_vois(v);
   }
 #endif
-  if (!((v[2] && v[4]) || (v[3] && v[26]))) goto next1;
-  if ((v[2]  && (v[2] != CAN)) ||
-      (v[3]  && (v[3] != CAN)) ||
-      (v[4]  && (v[4] != CAN)) ||
-      (v[26] && (v[26] != CAN))) goto next1;
+  if (!((v[2] && v[4]) || (v[3] && v[26]))) {
+    goto next1;
+  }
+  if ((v[2] && (v[2] != CAN)) || (v[3] && (v[3] != CAN)) ||
+      (v[4] && (v[4] != CAN)) || (v[26] && (v[26] != CAN))) {
+    goto next1;
+  }
   if ((v[12] || v[11] || v[13] || v[8] || v[21] || v[20] || v[22] || v[17]) &&
-      ((!v[12] && !v[11] && !v[13] && !v[8]) || 
-       (!v[21] && !v[20] && !v[22] && !v[17]))) goto next1;
-  if (v[2])  v[2] = CR1;
-  if (v[3])  v[3] = CR1;
-  if (v[4])  v[4] = CR1;
-  if (v[26]) v[26] = CR1;
+      ((!v[12] && !v[11] && !v[13] && !v[8]) ||
+       (!v[21] && !v[20] && !v[22] && !v[17]))) {
+    goto next1;
+  }
+  if (v[2]) {
+    v[2] = CR1;
+  }
+  if (v[3]) {
+    v[3] = CR1;
+  }
+  if (v[4]) {
+    v[4] = CR1;
+  }
+  if (v[26]) {
+    v[26] = CR1;
+  }
   ret = 1;
  next1:
-  if (!((v[2] && v[0]) || (v[1] && v[26]))) goto next2;
-  if ((v[2]  && ((v[2] < CAN) || (v[2] == CR2))) ||
-      (v[1]  && ((v[1] < CAN) || (v[1] == CR2))) ||
-      (v[0]  && ((v[0] < CAN) || (v[0] == CR2))) ||
-      (v[26]  && ((v[26] < CAN) || (v[26] == CR2)))) goto next2;
-  if ((v[10] || v[11] || v[9] || v[8] || v[19] || v[20] || v[18] || v[17]) &&
-      ((!v[10] && !v[11] && !v[9] && !v[8]) || 
-       (!v[19] && !v[20] && !v[18] && !v[17]))) goto next2;
-  if (v[2])  v[2] = CR1;
-  if (v[1])  v[1] = CR1;
-  if (v[0])  v[0] = CR1;
-  if (v[26]) v[26] = CR1;
+   if (!((v[2] && v[0]) || (v[1] && v[26]))) {
+     goto next2;
+   }
+   if ((v[2] && ((v[2] < CAN) || (v[2] == CR2))) ||
+       (v[1] && ((v[1] < CAN) || (v[1] == CR2))) ||
+       (v[0] && ((v[0] < CAN) || (v[0] == CR2))) ||
+       (v[26] && ((v[26] < CAN) || (v[26] == CR2)))) {
+     goto next2;
+   }
+   if ((v[10] || v[11] || v[9] || v[8] || v[19] || v[20] || v[18] || v[17]) &&
+       ((!v[10] && !v[11] && !v[9] && !v[8]) ||
+        (!v[19] && !v[20] && !v[18] && !v[17]))) {
+     goto next2;
+   }
+   if (v[2]) {
+     v[2] = CR1;
+   }
+   if (v[1]) {
+     v[1] = CR1;
+   }
+   if (v[0]) {
+     v[0] = CR1;
+   }
+   if (v[26]) {
+     v[26] = CR1;
+   }
   ret = 1;
  next2:
 #ifdef DEBUG
@@ -5629,25 +6196,60 @@ Si le test réussit, les points non nuls sont marqués 0M_CRUCIAL
     //    print_vois(v);
   }
 #endif
-  if (!((v[12]&&v[26]) || (v[11]&&v[4]) || (v[13]&&v[2]) || (v[8]&&v[3]) )) return 0;
+  if (!((v[12] && v[26]) || (v[11] && v[4]) || (v[13] && v[2]) ||
+        (v[8] && v[3]))) {
+    return 0;
+  }
 
-  if (v[12] && (v[12] != CAN)) return 0;
-  if (v[26] && (v[26] != CAN)) return 0;
-  if (v[11] && (v[11] != CAN)) return 0;
-  if (v[ 4] && (v[ 4] != CAN)) return 0;
-  if (v[13] && (v[13] != CAN)) return 0;
-  if (v[ 2] && (v[ 2] != CAN)) return 0;
-  if (v[ 8] && (v[ 8] != CAN)) return 0;
-  if (v[ 3] && (v[ 3] != CAN)) return 0;
+  if (v[12] && (v[12] != CAN)) {
+    return 0;
+  }
+  if (v[26] && (v[26] != CAN)) {
+    return 0;
+  }
+  if (v[11] && (v[11] != CAN)) {
+    return 0;
+  }
+  if (v[4] && (v[4] != CAN)) {
+    return 0;
+  }
+  if (v[13] && (v[13] != CAN)) {
+    return 0;
+  }
+  if (v[2] && (v[2] != CAN)) {
+    return 0;
+  }
+  if (v[8] && (v[8] != CAN)) {
+    return 0;
+  }
+  if (v[3] && (v[3] != CAN)) {
+    return 0;
+  }
 
-  if (v[12]) v[12] = CR0;
-  if (v[26]) v[26] = CR0;
-  if (v[11]) v[11] = CR0;
-  if (v[ 4]) v[ 4] = CR0;
-  if (v[13]) v[13] = CR0;
-  if (v[ 2]) v[ 2] = CR0;
-  if (v[ 8]) v[ 8] = CR0;
-  if (v[ 3]) v[ 3] = CR0;
+  if (v[12]) {
+    v[12] = CR0;
+  }
+  if (v[26]) {
+    v[26] = CR0;
+  }
+  if (v[11]) {
+    v[11] = CR0;
+  }
+  if (v[4]) {
+    v[4] = CR0;
+  }
+  if (v[13]) {
+    v[13] = CR0;
+  }
+  if (v[2]) {
+    v[2] = CR0;
+  }
+  if (v[8]) {
+    v[8] = CR0;
+  }
+  if (v[3]) {
+    v[3] = CR0;
+  }
 #ifdef DEBUG
   if (trace)
     printf("match !\n");
@@ -5761,16 +6363,15 @@ int32_t lskelCKG2(struct xvimage *image,
 
   IndicsInit(N);
 
-  if (datatype(imageprio) == VFF_TYP_4_BYTE) 
-    P = SLONGDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_1_BYTE) 
-    PB = UCHARDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_FLOAT) 
-    PF = FLOATDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_DOUBLE) 
-    PD = DOUBLEDATA(imageprio); 
-  else 
-  {
+  if (datatype(imageprio) == VFF_TYP_4_BYTE) {
+    P = SLONGDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_1_BYTE) {
+    PB = UCHARDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_FLOAT) {
+    PF = FLOATDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_DOUBLE) {
+    PD = DOUBLEDATA(imageprio);
+  } else {
     fprintf(stderr, "%s: datatype(imageprio) must be uint8_t, int32_t, float or double\n", F_NAME);
     return(0);
   }
@@ -5800,7 +6401,9 @@ int32_t lskelCKG2(struct xvimage *image,
 
   for (x = 0; x < N; x++)
   {
-    if (F[x]) F[x] = OBJ;
+    if (F[x]) {
+      F[x] = OBJ;
+    }
     if (F[x] && bordext8(F, x, rs, N))
     {
       switch(datatype(imageprio))
@@ -5825,7 +6428,9 @@ int32_t lskelCKG2(struct xvimage *image,
 #ifdef DEBUG_lskelCKG2
       printf("entering loop, curprio: %g\n", curprio);
 #endif
-    if (curprio >= val) break;
+      if (curprio >= val) {
+        break;
+      }
     do
     {
       x = RbtPopMin(RBT);
@@ -5841,9 +6446,17 @@ int32_t lskelCKG2(struct xvimage *image,
     } while (!mcrbt_RbtVide(RBT) && (RbtMinLevel(RBT) == curprio));
 
     for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i]; CrucialPass1(F, x, rs, N); }
-    for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i]; if (F[x] != CAN) F[x] = OBJ; }    
+    for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i];
+      if (F[x] != CAN) {
+        F[x] = OBJ;
+      }
+    }
     for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i]; CrucialPass0(F, x, rs, N); }
-    for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i]; if (F[x] != CAN) F[x] = OBJ; }    
+    for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i];
+      if (F[x] != CAN) {
+        F[x] = OBJ;
+      }
+    }
 
     for (i = 0; i < RLIFO->Sp; i++)
     {
@@ -5878,14 +6491,20 @@ int32_t lskelCKG2(struct xvimage *image,
     for (i = 0; i < RLIFO->Sp; i++)
     {
       x = RLIFO->Pts[i];
-      if (IsSet(x, NONCRUCIAL)) F[x] = 0;
+      if (IsSet(x, NONCRUCIAL)) {
+        F[x] = 0;
+      }
     }
 
     RlifoFlush(RLIFO);
 
   } // while (!mcrbt_RbtVide(RBT))
 
-  for (x = 0; x < N; x++) if (F[x]) F[x] = NDG_MAX;
+  for (x = 0; x < N; x++) {
+    if (F[x]) {
+      F[x] = NDG_MAX;
+    }
+  }
 
   /* ================================================ */
   /* UN PEU DE MENAGE                                 */
@@ -5950,7 +6569,9 @@ int32_t lskelCKG2map(struct xvimage *imageprio,
 
   for (x = 0; x < N; x++)
   {
-    if (F[x]) F[x] = OBJ;
+    if (F[x]) {
+      F[x] = OBJ;
+    }
     if (F[x] && bordext8(F, x, rs, N))
     {
       mcrbt_RbtInsert(&RBT, PF[x], x);
@@ -5966,7 +6587,9 @@ int32_t lskelCKG2map(struct xvimage *imageprio,
   while (!mcrbt_RbtVide(RBT))
   {
     curprio = RbtMinLevel(RBT);
-    if (curprio > incrprio) incrprio = curprio;
+    if (curprio > incrprio) {
+      incrprio = curprio;
+    }
 #ifdef DEBUG_lskelCKG2
     printf("entering loop, curprio = %g, incrprio = %g\n", curprio, incrprio);
 #endif
@@ -5985,9 +6608,17 @@ int32_t lskelCKG2map(struct xvimage *imageprio,
     } while (!mcrbt_RbtVide(RBT) && (RbtMinLevel(RBT) == curprio));
 
     for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i]; CrucialPass1(F, x, rs, N); }
-    for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i]; if (F[x] != CAN) F[x] = OBJ; }    
+    for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i];
+      if (F[x] != CAN) {
+        F[x] = OBJ;
+      }
+    }
     for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i]; CrucialPass0(F, x, rs, N); }
-    for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i]; if (F[x] != CAN) F[x] = OBJ; }    
+    for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i];
+      if (F[x] != CAN) {
+        F[x] = OBJ;
+      }
+    }
 
     for (i = 0; i < RLIFO->Sp; i++)
     {
@@ -6020,16 +6651,20 @@ int32_t lskelCKG2map(struct xvimage *imageprio,
       {
 	F[x] = 0;
 	PF[x] = (float)incrprio;
+      } else {
+        PF[x] = -1;
       }
-      else
-	PF[x] = -1;
     }
 
     RlifoFlush(RLIFO);
 
   } // while (!mcrbt_RbtVide(RBT))
 
-  for (x = 0; x < N; x++) if (PF[x] == -1) PF[x] = (float)incrprio + 1;
+  for (x = 0; x < N; x++) {
+    if (PF[x] == -1) {
+      PF[x] = (float)incrprio + 1;
+    }
+  }
 
   /* ================================================ */
   /* UN PEU DE MENAGE                                 */
@@ -6076,16 +6711,15 @@ int32_t lskelCKG3map(struct xvimage *imageprio,
   mctopo3d_init_topo3d();  
   IndicsInit(N);
 
-  if (datatype(imageprio) == VFF_TYP_4_BYTE) 
-    P = SLONGDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_1_BYTE) 
-    PB = UCHARDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_FLOAT) 
-    PF = FLOATDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_DOUBLE) 
-    PD = DOUBLEDATA(imageprio); 
-  else 
-  {
+  if (datatype(imageprio) == VFF_TYP_4_BYTE) {
+    P = SLONGDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_1_BYTE) {
+    PB = UCHARDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_FLOAT) {
+    PF = FLOATDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_DOUBLE) {
+    PD = DOUBLEDATA(imageprio);
+  } else {
     fprintf(stderr, "%s: datatype(imageprio) must be uint8_t, int32_t, float or double\n", F_NAME);
     return(0);
   }
@@ -6115,7 +6749,9 @@ int32_t lskelCKG3map(struct xvimage *imageprio,
 
   for (x = 0; x < N; x++)
   {
-    if (F[x]) F[x] = OBJ;
+    if (F[x]) {
+      F[x] = OBJ;
+    }
     if (F[x] && mctopo3d_bordext26(F, x, rs, ps, N))
     {
       switch(datatype(imageprio))
@@ -6137,7 +6773,9 @@ int32_t lskelCKG3map(struct xvimage *imageprio,
   while (!mcrbt_RbtVide(RBT))
   {
     curprio = RbtMinLevel(RBT);
-    if (curprio > incrprio) incrprio = curprio;
+    if (curprio > incrprio) {
+      incrprio = curprio;
+    }
 //#define DEBUG_lskelCKG2
 #ifdef DEBUG_lskelCKG2
     printf("entering loop, curprio = %g, incrprio = %g\n", curprio, incrprio);
@@ -6157,11 +6795,23 @@ int32_t lskelCKG3map(struct xvimage *imageprio,
     } while (!mcrbt_RbtVide(RBT) && (RbtMinLevel(RBT) == curprio));
 
     for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i]; CrucialPass3d2(F, x, rs, ps, N); }
-    for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i]; if (F[x] != CAN) F[x] = OBJ; }    
+    for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i];
+      if (F[x] != CAN) {
+        F[x] = OBJ;
+      }
+    }
     for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i]; CrucialPass3d1(F, x, rs, ps, N); }
-    for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i]; if (F[x] != CAN) F[x] = OBJ; }    
+    for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i];
+      if (F[x] != CAN) {
+        F[x] = OBJ;
+      }
+    }
     for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i]; CrucialPass3d0(F, x, rs, ps, N); }
-    for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i]; if (F[x] != CAN) F[x] = OBJ; }    
+    for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i];
+      if (F[x] != CAN) {
+        F[x] = OBJ;
+      }
+    }
 
     for (i = 0; i < RLIFO->Sp; i++)
     {
@@ -6259,16 +6909,15 @@ int32_t lskelCKG3(struct xvimage *image,
   mctopo3d_init_topo3d();  
   IndicsInit(N);
 
-  if (datatype(imageprio) == VFF_TYP_4_BYTE) 
-    P = SLONGDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_1_BYTE) 
-    PB = UCHARDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_FLOAT) 
-    PF = FLOATDATA(imageprio); 
-  else if (datatype(imageprio) == VFF_TYP_DOUBLE) 
-    PD = DOUBLEDATA(imageprio); 
-  else 
-  {
+  if (datatype(imageprio) == VFF_TYP_4_BYTE) {
+    P = SLONGDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_1_BYTE) {
+    PB = UCHARDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_FLOAT) {
+    PF = FLOATDATA(imageprio);
+  } else if (datatype(imageprio) == VFF_TYP_DOUBLE) {
+    PD = DOUBLEDATA(imageprio);
+  } else {
     fprintf(stderr, "%s: datatype(imageprio) must be uint8_t, int32_t, float or double\n", F_NAME);
     return(0);
   }
@@ -6298,7 +6947,9 @@ int32_t lskelCKG3(struct xvimage *image,
 
   for (x = 0; x < N; x++)
   {
-    if (F[x]) F[x] = OBJ;
+    if (F[x]) {
+      F[x] = OBJ;
+    }
     if (F[x] && mctopo3d_bordext26(F, x, rs, ps, N))
     {
       switch(datatype(imageprio))
@@ -6323,7 +6974,9 @@ int32_t lskelCKG3(struct xvimage *image,
 #ifdef DEBUG_lskelCKG3
       printf("entering loop, curprio: %g\n", curprio);
 #endif
-    if (curprio >= val) break;
+      if (curprio >= val) {
+        break;
+      }
     do
     {
       x = RbtPopMin(RBT);
@@ -6339,11 +6992,23 @@ int32_t lskelCKG3(struct xvimage *image,
     } while (!mcrbt_RbtVide(RBT) && (RbtMinLevel(RBT) == curprio));
 
     for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i]; CrucialPass3d2(F, x, rs, ps, N); }
-    for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i]; if (F[x] != CAN) F[x] = OBJ; }    
+    for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i];
+      if (F[x] != CAN) {
+        F[x] = OBJ;
+      }
+    }
     for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i]; CrucialPass3d1(F, x, rs, ps, N); }
-    for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i]; if (F[x] != CAN) F[x] = OBJ; }    
+    for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i];
+      if (F[x] != CAN) {
+        F[x] = OBJ;
+      }
+    }
     for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i]; CrucialPass3d0(F, x, rs, ps, N); }
-    for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i]; if (F[x] != CAN) F[x] = OBJ; }    
+    for (i = 0; i < RLIFO->Sp; i++) { x = RLIFO->Pts[i];
+      if (F[x] != CAN) {
+        F[x] = OBJ;
+      }
+    }
 
     for (i = 0; i < RLIFO->Sp; i++)
     {
@@ -6379,14 +7044,20 @@ int32_t lskelCKG3(struct xvimage *image,
     for (i = 0; i < RLIFO->Sp; i++)
     {
       x = RLIFO->Pts[i];
-      if (IsSet(x, NONCRUCIAL)) F[x] = 0;
+      if (IsSet(x, NONCRUCIAL)) {
+        F[x] = 0;
+      }
     }
 
     RlifoFlush(RLIFO);
 
   } // while (!mcrbt_RbtVide(RBT))
 
-  for (x = 0; x < N; x++) if (F[x]) F[x] = NDG_MAX;
+  for (x = 0; x < N; x++) {
+    if (F[x]) {
+      F[x] = NDG_MAX;
+    }
+  }
 
   /* ================================================ */
   /* UN PEU DE MENAGE                                 */
@@ -6429,16 +7100,38 @@ C = {x, x-ps}
 */
 {
   uint8_t t;
-  if ((v[8] < CAN) || (v[26] < CAN)) return 0;
-  if (v[0] || v[9]) t = 1; else t = 0;
-  if (v[1] || v[10]) t |= 2;
-  if (v[2] || v[11]) t |= 4;
-  if (v[3] || v[12]) t |= 8;
-  if (v[4] || v[13]) t |= 16;
-  if (v[5] || v[14]) t |= 32;
-  if (v[6] || v[15]) t |= 64;
-  if (v[7] || v[16]) t |= 128;
-  if ((t4b(t) == 1) && (t8(t) == 1)) return 0; // simple 2D
+  if ((v[8] < CAN) || (v[26] < CAN)) {
+    return 0;
+  }
+  if (v[0] || v[9]) {
+    t = 1;
+  } else {
+    t = 0;
+  }
+  if (v[1] || v[10]) {
+    t |= 2;
+  }
+  if (v[2] || v[11]) {
+    t |= 4;
+  }
+  if (v[3] || v[12]) {
+    t |= 8;
+  }
+  if (v[4] || v[13]) {
+    t |= 16;
+  }
+  if (v[5] || v[14]) {
+    t |= 32;
+  }
+  if (v[6] || v[15]) {
+    t |= 64;
+  }
+  if (v[7] || v[16]) {
+    t |= 128;
+  }
+  if ((t4b(t) == 1) && (t8(t) == 1)) {
+    return 0; // simple 2D
+  }
 #ifdef DCRUCIAL_MARK
   v[8] = v[26] = CR2;
 #endif
@@ -6468,16 +7161,38 @@ C = {x, x-rs}
 */
 {
   uint8_t t;
-  if ((v[2] < CAN) || (v[26] < CAN)) return 0;
-  if (v[ 0] || v[ 1]) t = 1; else t = 0;
-  if (v[ 9] || v[10]) t |= 2;
-  if (v[ 8] || v[11]) t |= 4;
-  if (v[13] || v[12]) t |= 8;
-  if (v[ 4] || v[ 3]) t |= 16;
-  if (v[22] || v[21]) t |= 32;
-  if (v[17] || v[20]) t |= 64;
-  if (v[18] || v[19]) t |= 128;
-  if ((t4b(t) == 1) && (t8(t) == 1)) return 0; // simple 2D
+  if ((v[2] < CAN) || (v[26] < CAN)) {
+    return 0;
+  }
+  if (v[0] || v[1]) {
+    t = 1;
+  } else {
+    t = 0;
+  }
+  if (v[9] || v[10]) {
+    t |= 2;
+  }
+  if (v[8] || v[11]) {
+    t |= 4;
+  }
+  if (v[13] || v[12]) {
+    t |= 8;
+  }
+  if (v[4] || v[3]) {
+    t |= 16;
+  }
+  if (v[22] || v[21]) {
+    t |= 32;
+  }
+  if (v[17] || v[20]) {
+    t |= 64;
+  }
+  if (v[18] || v[19]) {
+    t |= 128;
+  }
+  if ((t4b(t) == 1) && (t8(t) == 1)) {
+    return 0; // simple 2D
+  }
 #ifdef DCRUCIAL_MARK
   v[2] = v[26] = CR2;
 #endif
@@ -6511,16 +7226,38 @@ C = {x, x-1}
 */
 {
   uint8_t t;
-  if ((v[4] < CAN) || (v[26] < CAN)) return 0;
-  if (v[ 3] || v[ 2]) t = 1; else t = 0;
-  if (v[12] || v[11]) t |= 2;
-  if (v[13] || v[ 8]) t |= 4;
-  if (v[14] || v[15]) t |= 8;
-  if (v[ 5] || v[ 6]) t |= 16;
-  if (v[23] || v[24]) t |= 32;
-  if (v[22] || v[17]) t |= 64;
-  if (v[21] || v[20]) t |= 128;
-  if ((t4b(t) == 1) && (t8(t) == 1)) return 0; // simple 2D
+  if ((v[4] < CAN) || (v[26] < CAN)) {
+    return 0;
+  }
+  if (v[3] || v[2]) {
+    t = 1;
+  } else {
+    t = 0;
+  }
+  if (v[12] || v[11]) {
+    t |= 2;
+  }
+  if (v[13] || v[8]) {
+    t |= 4;
+  }
+  if (v[14] || v[15]) {
+    t |= 8;
+  }
+  if (v[5] || v[6]) {
+    t |= 16;
+  }
+  if (v[23] || v[24]) {
+    t |= 32;
+  }
+  if (v[22] || v[17]) {
+    t |= 64;
+  }
+  if (v[21] || v[20]) {
+    t |= 128;
+  }
+  if ((t4b(t) == 1) && (t8(t) == 1)) {
+    return 0; // simple 2D
+  }
 #ifdef DCRUCIAL_MARK
   v[4] = v[26] = CR2;
 #endif
@@ -6577,14 +7314,20 @@ static int32_t match_seq_vois1_a_1(uint8_t *v)
 // 3: A et B sont tous nuls ou [au moins un A non nul et au moins un B non nul]
 // Si le test réussit, les points Pi non nuls sont marqués CR1
 {
-  if (!((v[2] && v[4]) || (v[3] && v[26]))) return 0;
-  if ((v[2]  && ((v[2] < CAN) || (v[2] == CR2))) ||
-      (v[3]  && ((v[3] < CAN) || (v[3] == CR2))) ||
-      (v[4]  && ((v[4] < CAN) || (v[4] == CR2))) ||
-      (v[26] && ((v[26] < CAN) || (v[26] == CR2)))) return 0;
+  if (!((v[2] && v[4]) || (v[3] && v[26]))) {
+    return 0;
+  }
+  if ((v[2] && ((v[2] < CAN) || (v[2] == CR2))) ||
+      (v[3] && ((v[3] < CAN) || (v[3] == CR2))) ||
+      (v[4] && ((v[4] < CAN) || (v[4] == CR2))) ||
+      (v[26] && ((v[26] < CAN) || (v[26] == CR2)))) {
+    return 0;
+  }
   if ((v[12] || v[11] || v[13] || v[8] || v[21] || v[20] || v[22] || v[17]) &&
-      ((!v[12] && !v[11] && !v[13] && !v[8]) || 
-       (!v[21] && !v[20] && !v[22] && !v[17]))) return 0;
+      ((!v[12] && !v[11] && !v[13] && !v[8]) ||
+       (!v[21] && !v[20] && !v[22] && !v[17]))) {
+    return 0;
+  }
 #ifdef DCRUCIAL_MARK
   if (v[2])  v[2] = CR1;
   if (v[3])  v[3] = CR1;
@@ -6618,14 +7361,20 @@ static int32_t match_seq_vois1_a_2(uint8_t *v)
 // 3: A et B sont tous nuls ou [au moins un A non nul et au moins un B non nul]
 // Si le test réussit, les points Pi non nuls sont marqués CR1
 {
-  if (!((v[2] && v[0]) || (v[1] && v[26]))) return 0;
-  if ((v[2]  && ((v[2] < CAN) || (v[2] == CR2))) ||
-      (v[1]  && ((v[1] < CAN) || (v[1] == CR2))) ||
-      (v[0]  && ((v[0] < CAN) || (v[0] == CR2))) ||
-      (v[26] && ((v[26] < CAN) || (v[26] == CR2)))) return 0;
+  if (!((v[2] && v[0]) || (v[1] && v[26]))) {
+    return 0;
+  }
+  if ((v[2] && ((v[2] < CAN) || (v[2] == CR2))) ||
+      (v[1] && ((v[1] < CAN) || (v[1] == CR2))) ||
+      (v[0] && ((v[0] < CAN) || (v[0] == CR2))) ||
+      (v[26] && ((v[26] < CAN) || (v[26] == CR2)))) {
+    return 0;
+  }
   if ((v[10] || v[11] || v[9] || v[8] || v[19] || v[20] || v[18] || v[17]) &&
-      ((!v[10] && !v[11] && !v[9] && !v[8]) || 
-       (!v[19] && !v[20] && !v[18] && !v[17]))) return 0;
+      ((!v[10] && !v[11] && !v[9] && !v[8]) ||
+       (!v[19] && !v[20] && !v[18] && !v[17]))) {
+    return 0;
+  }
 #ifdef DCRUCIAL_MARK
   if (v[2])  v[2] = CR1;
   if (v[1])  v[1] = CR1;
@@ -6656,14 +7405,20 @@ static int32_t match_seq_vois1_b_1(uint8_t *v)
 // 3: A et B sont tous nuls ou [au moins un A non nul et au moins un B non nul]
 // Si le test réussit, les points Pi non nuls sont marqués CR1
 {
-  if (!((v[6] && v[8]) || (v[15] && v[26]))) return 0;
-  if ((v[6]  && ((v[6] < CAN) || (v[6] == CR2))) ||
-      (v[8]  && ((v[8] < CAN) || (v[8] == CR2))) ||
-      (v[15]  && ((v[15] < CAN) || (v[15] == CR2))) ||
-      (v[26] && ((v[26] < CAN) || (v[26] == CR2)))) return 0;
+  if (!((v[6] && v[8]) || (v[15] && v[26]))) {
+    return 0;
+  }
+  if ((v[6] && ((v[6] < CAN) || (v[6] == CR2))) ||
+      (v[8] && ((v[8] < CAN) || (v[8] == CR2))) ||
+      (v[15] && ((v[15] < CAN) || (v[15] == CR2))) ||
+      (v[26] && ((v[26] < CAN) || (v[26] == CR2)))) {
+    return 0;
+  }
   if ((v[14] || v[13] || v[5] || v[4] || v[7] || v[0] || v[9] || v[16]) &&
-      ((!v[14] && !v[13] && !v[5] && !v[4]) || 
-       (!v[7] && !v[0] && !v[9] && !v[16]))) return 0;
+      ((!v[14] && !v[13] && !v[5] && !v[4]) ||
+       (!v[7] && !v[0] && !v[9] && !v[16]))) {
+    return 0;
+  }
 #ifdef DCRUCIAL_MARK
   if (v[6])  v[6] = CR1;
   if (v[8])  v[8] = CR1;
@@ -6694,14 +7449,20 @@ static int32_t match_seq_vois1_b_2(uint8_t *v)
 // 3: A et B sont tous nuls ou [au moins un A non nul et au moins un B non nul]
 // Si le test réussit, les points Pi non nuls sont marqués CR1
 {
-  if (!((v[2] && v[8]) || (v[11] && v[26]))) return 0;
-  if ((v[2]  && ((v[2] < CAN) || (v[2] == CR2))) ||
-      (v[8]  && ((v[8] < CAN) || (v[8] == CR2))) ||
-      (v[11]  && ((v[11] < CAN) || (v[11] == CR2))) ||
-      (v[26] && ((v[26] < CAN) || (v[26] == CR2)))) return 0;
+  if (!((v[2] && v[8]) || (v[11] && v[26]))) {
+    return 0;
+  }
+  if ((v[2] && ((v[2] < CAN) || (v[2] == CR2))) ||
+      (v[8] && ((v[8] < CAN) || (v[8] == CR2))) ||
+      (v[11] && ((v[11] < CAN) || (v[11] == CR2))) ||
+      (v[26] && ((v[26] < CAN) || (v[26] == CR2)))) {
+    return 0;
+  }
   if ((v[12] || v[13] || v[3] || v[4] || v[1] || v[0] || v[9] || v[10]) &&
-      ((!v[12] && !v[13] && !v[3] && !v[4]) || 
-       (!v[1] && !v[0] && !v[9] && !v[10]))) return 0;
+      ((!v[12] && !v[13] && !v[3] && !v[4]) ||
+       (!v[1] && !v[0] && !v[9] && !v[10]))) {
+    return 0;
+  }
 #ifdef DCRUCIAL_MARK
   if (v[2])  v[2] = CR1;
   if (v[8])  v[8] = CR1;
@@ -6733,14 +7494,20 @@ static int32_t match_seq_vois1_c_1(uint8_t *v)
 // 3: A et B sont tous nuls ou [au moins un A non nul et au moins un B non nul]
 // Si le test réussit, les points Pi non nuls sont marqués CR1
 {
-  if (!((v[8] && v[0]) || (v[9] && v[26]))) return 0;
-  if ((v[8]  && ((v[8] < CAN) || (v[8] == CR2))) ||
-      (v[9]  && ((v[9] < CAN) || (v[9] == CR2))) ||
-      (v[0]  && ((v[0] < CAN) || (v[0] == CR2))) ||
-      (v[26] && ((v[26] < CAN) || (v[26] == CR2)))) return 0;
+  if (!((v[8] && v[0]) || (v[9] && v[26]))) {
+    return 0;
+  }
+  if ((v[8] && ((v[8] < CAN) || (v[8] == CR2))) ||
+      (v[9] && ((v[9] < CAN) || (v[9] == CR2))) ||
+      (v[0] && ((v[0] < CAN) || (v[0] == CR2))) ||
+      (v[26] && ((v[26] < CAN) || (v[26] == CR2)))) {
+    return 0;
+  }
   if ((v[11] || v[10] || v[2] || v[1] || v[16] || v[15] || v[7] || v[6]) &&
-      ((!v[11] && !v[10] && !v[2] && !v[1]) || 
-       (!v[16] && !v[15] && !v[7] && !v[6]))) return 0;
+      ((!v[11] && !v[10] && !v[2] && !v[1]) ||
+       (!v[16] && !v[15] && !v[7] && !v[6]))) {
+    return 0;
+  }
 #ifdef DCRUCIAL_MARK
   if (v[8])  v[8] = CR1;
   if (v[9])  v[9] = CR1;
@@ -6772,14 +7539,20 @@ static int32_t match_seq_vois1_c_2(uint8_t *v)
 // 3: A et B sont tous nuls ou [au moins un A non nul et au moins un B non nul]
 // Si le test réussit, les points Pi non nuls sont marqués CR1
 {
-  if (!((v[8] && v[4]) || (v[13] && v[26]))) return 0;
-  if ((v[8]  && ((v[8] < CAN) || (v[8] == CR2))) ||
+  if (!((v[8] && v[4]) || (v[13] && v[26]))) {
+    return 0;
+  }
+  if ((v[8] && ((v[8] < CAN) || (v[8] == CR2))) ||
       (v[13] && ((v[13] < CAN) || (v[13] == CR2))) ||
-      (v[4]  && ((v[4] < CAN) || (v[4] == CR2))) ||
-      (v[26] && ((v[26] < CAN) || (v[26] == CR2)))) return 0;
+      (v[4] && ((v[4] < CAN) || (v[4] == CR2))) ||
+      (v[26] && ((v[26] < CAN) || (v[26] == CR2)))) {
+    return 0;
+  }
   if ((v[12] || v[11] || v[3] || v[2] || v[14] || v[15] || v[5] || v[6]) &&
-      ((!v[12] && !v[11] && !v[3] && !v[2]) || 
-       (!v[14] && !v[15] && !v[5] && !v[6]))) return 0;
+      ((!v[12] && !v[11] && !v[3] && !v[2]) ||
+       (!v[14] && !v[15] && !v[5] && !v[6]))) {
+    return 0;
+  }
 #ifdef DCRUCIAL_MARK
   if (v[8])  v[8] = CR1;
   if (v[13]) v[13] = CR1;
@@ -6810,15 +7583,34 @@ Si le test réussit, les points non nuls sont marqués 0M_CRUCIAL
 {
   //printf("match 01:\n");
   //print_vois(v);
-  if (!((v[12]&&v[26]) || (v[11]&&v[4]) || (v[13]&&v[2]) || (v[8]&&v[3]) )) return 0;
-  if (v[12] && (v[12] != CAN)) return 0;
-  if (v[26] && (v[26] != CAN)) return 0;
-  if (v[11] && (v[11] != CAN)) return 0;
-  if (v[ 4] && (v[ 4] != CAN)) return 0;
-  if (v[13] && (v[13] != CAN)) return 0;
-  if (v[ 2] && (v[ 2] != CAN)) return 0;
-  if (v[ 8] && (v[ 8] != CAN)) return 0;
-  if (v[ 3] && (v[ 3] != CAN)) return 0;
+  if (!((v[12] && v[26]) || (v[11] && v[4]) || (v[13] && v[2]) ||
+        (v[8] && v[3]))) {
+    return 0;
+  }
+  if (v[12] && (v[12] != CAN)) {
+    return 0;
+  }
+  if (v[26] && (v[26] != CAN)) {
+    return 0;
+  }
+  if (v[11] && (v[11] != CAN)) {
+    return 0;
+  }
+  if (v[4] && (v[4] != CAN)) {
+    return 0;
+  }
+  if (v[13] && (v[13] != CAN)) {
+    return 0;
+  }
+  if (v[2] && (v[2] != CAN)) {
+    return 0;
+  }
+  if (v[8] && (v[8] != CAN)) {
+    return 0;
+  }
+  if (v[3] && (v[3] != CAN)) {
+    return 0;
+  }
 #ifdef DEBUGmatch
 printf("match 0 - 1\n");
 #endif
@@ -6843,15 +7635,34 @@ Si le test réussit, les points non nuls sont marqués 0M_CRUCIAL
 {
   //printf("match 02:\n");
   //print_vois(v);
-  if (!((v[10]&&v[26]) || (v[11]&&v[0]) || (v[9]&&v[2]) || (v[8]&&v[1]) )) return 0;
-  if (v[10] && (v[10] != CAN)) return 0;
-  if (v[26] && (v[26] != CAN)) return 0;
-  if (v[11] && (v[11] != CAN)) return 0;
-  if (v[ 1] && (v[ 1] != CAN)) return 0;
-  if (v[ 9] && (v[ 9] != CAN)) return 0;
-  if (v[ 2] && (v[ 2] != CAN)) return 0;
-  if (v[ 8] && (v[ 8] != CAN)) return 0;
-  if (v[ 0] && (v[ 0] != CAN)) return 0;
+  if (!((v[10] && v[26]) || (v[11] && v[0]) || (v[9] && v[2]) ||
+        (v[8] && v[1]))) {
+    return 0;
+  }
+  if (v[10] && (v[10] != CAN)) {
+    return 0;
+  }
+  if (v[26] && (v[26] != CAN)) {
+    return 0;
+  }
+  if (v[11] && (v[11] != CAN)) {
+    return 0;
+  }
+  if (v[1] && (v[1] != CAN)) {
+    return 0;
+  }
+  if (v[9] && (v[9] != CAN)) {
+    return 0;
+  }
+  if (v[2] && (v[2] != CAN)) {
+    return 0;
+  }
+  if (v[8] && (v[8] != CAN)) {
+    return 0;
+  }
+  if (v[0] && (v[0] != CAN)) {
+    return 0;
+  }
 #ifdef DEBUGmatch
 printf("match 0 - 2\n");
 #endif
@@ -6877,15 +7688,34 @@ Si le test réussit, les points non nuls sont marqués 0M_CRUCIAL
 {
   //printf("match 03:\n");
   //print_vois(v);
-  if (!((v[16]&&v[26]) || (v[15]&&v[0]) || (v[6]&&v[9]) || (v[8]&&v[7]) )) return 0;
-  if (v[16] && (v[16] != CAN)) return 0;
-  if (v[26] && (v[26] != CAN)) return 0;
-  if (v[15] && (v[15] != CAN)) return 0;
-  if (v[ 0] && (v[ 0] != CAN)) return 0;
-  if (v[ 6] && (v[ 6] != CAN)) return 0;
-  if (v[ 9] && (v[ 9] != CAN)) return 0;
-  if (v[ 8] && (v[ 8] != CAN)) return 0;
-  if (v[ 7] && (v[ 7] != CAN)) return 0;
+  if (!((v[16] && v[26]) || (v[15] && v[0]) || (v[6] && v[9]) ||
+        (v[8] && v[7]))) {
+    return 0;
+  }
+  if (v[16] && (v[16] != CAN)) {
+    return 0;
+  }
+  if (v[26] && (v[26] != CAN)) {
+    return 0;
+  }
+  if (v[15] && (v[15] != CAN)) {
+    return 0;
+  }
+  if (v[0] && (v[0] != CAN)) {
+    return 0;
+  }
+  if (v[6] && (v[6] != CAN)) {
+    return 0;
+  }
+  if (v[9] && (v[9] != CAN)) {
+    return 0;
+  }
+  if (v[8] && (v[8] != CAN)) {
+    return 0;
+  }
+  if (v[7] && (v[7] != CAN)) {
+    return 0;
+  }
 #ifdef DEBUGmatch
 printf("match 0 - 3\n");
 #endif
@@ -6910,15 +7740,34 @@ Si le test réussit, les points non nuls sont marqués 0M_CRUCIAL
 {
   //printf("match 04:\n");
   //print_vois(v);
-  if (!((v[14]&&v[26]) || (v[15]&&v[4]) || (v[13]&&v[6]) || (v[8]&&v[5]) )) return 0;
-  if (v[14] && (v[14] != CAN)) return 0;
-  if (v[26] && (v[26] != CAN)) return 0;
-  if (v[15] && (v[15] != CAN)) return 0;
-  if (v[ 4] && (v[ 4] != CAN)) return 0;
-  if (v[13] && (v[13] != CAN)) return 0;
-  if (v[ 6] && (v[ 6] != CAN)) return 0;
-  if (v[ 8] && (v[ 8] != CAN)) return 0;
-  if (v[ 5] && (v[ 5] != CAN)) return 0;
+  if (!((v[14] && v[26]) || (v[15] && v[4]) || (v[13] && v[6]) ||
+        (v[8] && v[5]))) {
+    return 0;
+  }
+  if (v[14] && (v[14] != CAN)) {
+    return 0;
+  }
+  if (v[26] && (v[26] != CAN)) {
+    return 0;
+  }
+  if (v[15] && (v[15] != CAN)) {
+    return 0;
+  }
+  if (v[4] && (v[4] != CAN)) {
+    return 0;
+  }
+  if (v[13] && (v[13] != CAN)) {
+    return 0;
+  }
+  if (v[6] && (v[6] != CAN)) {
+    return 0;
+  }
+  if (v[8] && (v[8] != CAN)) {
+    return 0;
+  }
+  if (v[5] && (v[5] != CAN)) {
+    return 0;
+  }
 #ifdef DEBUGmatch
 printf("match 0 - 4\n");
 #endif
@@ -6944,14 +7793,12 @@ static void lskelCKSC3_process_cliques(struct xvimage *image, struct xvimage *im
 
     // DIM = 2
     // =============================
-    for (k = 1; k < ds-1; k++) // dim = 2, C = {x, x-ps}
-    for (j = 1; j < cs-1; j++) 
-    for (i = 1; i < rs-1; i++) 
-    {
-      x = k*ps + j*rs + i;
-      if (F[x])
-      { 
-	extract_vois3d(F, x, rs, ps, N, v);
+  for (k = 1; k < ds - 1; k++) { // dim = 2, C = {x, x-ps}
+    for (j = 1; j < cs - 1; j++) {
+      for (i = 1; i < rs - 1; i++) {
+        x = k * ps + j * rs + i;
+        if (F[x]) {
+          extract_vois3d(F, x, rs, ps, N, v);
 #ifdef DEBUG_callmatch
 printf("call match 2a: %d %d %d\n", i, j, k);
 #endif
@@ -6964,16 +7811,16 @@ printf("call match 2a: %d %d %d\n", i, j, k);
 	  lskelCKSC3_aux2(Y, x, x1, rs, ps, N);
 	}
       }
+      }
     }
+  }
 
-    for (k = 1; k < ds-1; k++) // dim = 2, C = {x, x-rs}
-    for (j = 1; j < cs-1; j++) 
-    for (i = 1; i < rs-1; i++) 
-    {
-      x = k*ps + j*rs + i;
-      if (F[x])
-      { 
-	extract_vois3d(F, x, rs, ps, N, v);
+  for (k = 1; k < ds - 1; k++) { // dim = 2, C = {x, x-rs}
+    for (j = 1; j < cs - 1; j++) {
+      for (i = 1; i < rs - 1; i++) {
+        x = k * ps + j * rs + i;
+        if (F[x]) {
+          extract_vois3d(F, x, rs, ps, N, v);
 #ifdef DEBUG_callmatch
 printf("call match 2b: %d %d %d\n", i, j, k);
 #endif
@@ -6986,16 +7833,16 @@ printf("call match 2b: %d %d %d\n", i, j, k);
 	  lskelCKSC3_aux2(Y, x, x1, rs, ps, N);
 	}
       }
+      }
     }
+  }
 
-    for (k = 1; k < ds-1; k++) // dim = 2, C = {x, x-1}
-    for (j = 1; j < cs-1; j++) 
-    for (i = 1; i < rs-1; i++) 
-    {
-      x = k*ps + j*rs + i;
-      if (F[x])
-      { 
-	extract_vois3d(F, x, rs, ps, N, v);
+  for (k = 1; k < ds - 1; k++) { // dim = 2, C = {x, x-1}
+    for (j = 1; j < cs - 1; j++) {
+      for (i = 1; i < rs - 1; i++) {
+        x = k * ps + j * rs + i;
+        if (F[x]) {
+          extract_vois3d(F, x, rs, ps, N, v);
 #ifdef DEBUG_callmatch
 printf("call match 2c: %d %d %d\n", i, j, k);
 #endif
@@ -7008,7 +7855,9 @@ printf("call match 2c: %d %d %d\n", i, j, k);
 	  lskelCKSC3_aux2(Y, x, x1, rs, ps, N);
 	}
       }
+      }
     }
+  }
 
 #ifdef DEBUGlskelCKSC3_process_cliques
 writeimage(imageY, "_Y2");
@@ -7016,8 +7865,8 @@ writeimage(imageY, "_Y2");
 
     // DIM = 1
     // =============================
-    for (k = 1; k < ds-1; k++)
-    for (j = 1; j < cs-1; j++) 
+for (k = 1; k < ds - 1; k++) {
+  for (j = 1; j < cs - 1; j++) {
     for (i = 1; i < rs-1; i++) 
     {
       x = k*ps + j*rs + i;
@@ -7048,9 +7897,11 @@ printf("call match 1a2: %d %d %d\n", i, j, k);
 	}
       }
     }
+  }
+}
 
-    for (k = 1; k < ds-1; k++)
-    for (j = 1; j < cs-1; j++) 
+for (k = 1; k < ds - 1; k++) {
+  for (j = 1; j < cs - 1; j++) {
     for (i = 1; i < rs-1; i++) 
     {
       x = k*ps + j*rs + i;
@@ -7081,9 +7932,11 @@ printf("call match 1b2: %d %d %d\n", i, j, k);
 	}
       }
     }
+  }
+}
 
-    for (k = 1; k < ds-1; k++)
-    for (j = 1; j < cs-1; j++) 
+for (k = 1; k < ds - 1; k++) {
+  for (j = 1; j < cs - 1; j++) {
     for (i = 1; i < rs-1; i++) 
     {
       x = k*ps + j*rs + i;
@@ -7114,6 +7967,8 @@ printf("call match 1c2: %d %d %d\n", i, j, k);
 	}
       }
     }
+  }
+}
 
 #ifdef DEBUGlskelCKSC3_process_cliques
 writeimage(imageY, "_Y1");
@@ -7121,8 +7976,8 @@ writeimage(imageY, "_Y1");
 
     // DIM = 0
     // =============================
-    for (k = 1; k < ds-1; k++)
-    for (j = 1; j < cs-1; j++) 
+for (k = 1; k < ds - 1; k++) {
+  for (j = 1; j < cs - 1; j++) {
     for (i = 1; i < rs-1; i++) 
     {
       x = k*ps + j*rs + i;
@@ -7179,6 +8034,8 @@ printf("call match 0_4: %d %d %d\n", i, j, k);
 	}
       }
     }
+  }
+}
 } // lskelCKSC3_process_cliques
 
 #ifdef lskelCKSC3_VARIANTE_B0
@@ -9022,16 +9879,38 @@ C = {x, x-ps}
 */
 {
   uint8_t t;
-  if ((v[8] != OBJ) || (v[26] != OBJ)) return 0;
-  if (v[0] || v[9]) t = 1; else t = 0;
-  if (v[1] || v[10]) t |= 2;
-  if (v[2] || v[11]) t |= 4;
-  if (v[3] || v[12]) t |= 8;
-  if (v[4] || v[13]) t |= 16;
-  if (v[5] || v[14]) t |= 32;
-  if (v[6] || v[15]) t |= 64;
-  if (v[7] || v[16]) t |= 128;
-  if ((t4b(t) == 1) && (t8(t) == 1)) return 0; // simple 2D
+  if ((v[8] != OBJ) || (v[26] != OBJ)) {
+    return 0;
+  }
+  if (v[0] || v[9]) {
+    t = 1;
+  } else {
+    t = 0;
+  }
+  if (v[1] || v[10]) {
+    t |= 2;
+  }
+  if (v[2] || v[11]) {
+    t |= 4;
+  }
+  if (v[3] || v[12]) {
+    t |= 8;
+  }
+  if (v[4] || v[13]) {
+    t |= 16;
+  }
+  if (v[5] || v[14]) {
+    t |= 32;
+  }
+  if (v[6] || v[15]) {
+    t |= 64;
+  }
+  if (v[7] || v[16]) {
+    t |= 128;
+  }
+  if ((t4b(t) == 1) && (t8(t) == 1)) {
+    return 0; // simple 2D
+  }
 #ifdef DEBUGmatchD
 printf("matchD 2a\n");
 #endif
@@ -9057,16 +9936,38 @@ C = {x, x-rs}
 */
 {
   uint8_t t;
-  if ((v[2] != OBJ) || (v[26] != OBJ)) return 0;
-  if (v[ 0] || v[ 1]) t = 1; else t = 0;
-  if (v[ 9] || v[10]) t |= 2;
-  if (v[ 8] || v[11]) t |= 4;
-  if (v[13] || v[12]) t |= 8;
-  if (v[ 4] || v[ 3]) t |= 16;
-  if (v[22] || v[21]) t |= 32;
-  if (v[17] || v[20]) t |= 64;
-  if (v[18] || v[19]) t |= 128;
-  if ((t4b(t) == 1) && (t8(t) == 1)) return 0; // simple 2D
+  if ((v[2] != OBJ) || (v[26] != OBJ)) {
+    return 0;
+  }
+  if (v[0] || v[1]) {
+    t = 1;
+  } else {
+    t = 0;
+  }
+  if (v[9] || v[10]) {
+    t |= 2;
+  }
+  if (v[8] || v[11]) {
+    t |= 4;
+  }
+  if (v[13] || v[12]) {
+    t |= 8;
+  }
+  if (v[4] || v[3]) {
+    t |= 16;
+  }
+  if (v[22] || v[21]) {
+    t |= 32;
+  }
+  if (v[17] || v[20]) {
+    t |= 64;
+  }
+  if (v[18] || v[19]) {
+    t |= 128;
+  }
+  if ((t4b(t) == 1) && (t8(t) == 1)) {
+    return 0; // simple 2D
+  }
 #ifdef DEBUGmatchD
 printf("matchD 2b\n");
 #endif
@@ -9096,16 +9997,38 @@ C = {x, x-1}
 */
 {
   uint8_t t;
-  if ((v[4] != OBJ) || (v[26] != OBJ)) return 0;
-  if (v[ 3] || v[ 2]) t = 1; else t = 0;
-  if (v[12] || v[11]) t |= 2;
-  if (v[13] || v[ 8]) t |= 4;
-  if (v[14] || v[15]) t |= 8;
-  if (v[ 5] || v[ 6]) t |= 16;
-  if (v[23] || v[24]) t |= 32;
-  if (v[22] || v[17]) t |= 64;
-  if (v[21] || v[20]) t |= 128;
-  if ((t4b(t) == 1) && (t8(t) == 1)) return 0; // simple 2D
+  if ((v[4] != OBJ) || (v[26] != OBJ)) {
+    return 0;
+  }
+  if (v[3] || v[2]) {
+    t = 1;
+  } else {
+    t = 0;
+  }
+  if (v[12] || v[11]) {
+    t |= 2;
+  }
+  if (v[13] || v[8]) {
+    t |= 4;
+  }
+  if (v[14] || v[15]) {
+    t |= 8;
+  }
+  if (v[5] || v[6]) {
+    t |= 16;
+  }
+  if (v[23] || v[24]) {
+    t |= 32;
+  }
+  if (v[22] || v[17]) {
+    t |= 64;
+  }
+  if (v[21] || v[20]) {
+    t |= 128;
+  }
+  if ((t4b(t) == 1) && (t8(t) == 1)) {
+    return 0; // simple 2D
+  }
 #ifdef DEBUGmatchD
 printf("matchD 2c\n");
 #endif
@@ -9131,10 +10054,14 @@ static int32_t matchD_seq_vois1_a_1(uint8_t *v)
 // 1: (P1 et P4) ou (P2 et P3)
 // 2: A et B sont tous nuls ou [au moins un A non nul et au moins un B non nul]
 {
-  if (!((v[2] && v[4]) || (v[3] && v[26]))) return 0;
+  if (!((v[2] && v[4]) || (v[3] && v[26]))) {
+    return 0;
+  }
   if ((v[12] || v[11] || v[13] || v[8] || v[21] || v[20] || v[22] || v[17]) &&
-      ((!v[12] && !v[11] && !v[13] && !v[8]) || 
-       (!v[21] && !v[20] && !v[22] && !v[17]))) return 0;
+      ((!v[12] && !v[11] && !v[13] && !v[8]) ||
+       (!v[21] && !v[20] && !v[22] && !v[17]))) {
+    return 0;
+  }
 #ifdef DEBUGmatchD
 printf("matchD 1a - 1\n");
 #endif
@@ -9160,10 +10087,14 @@ static int32_t matchD_seq_vois1_a_2(uint8_t *v)
 // 1: (P1 et P4) ou (P2 et P3)
 // 2: A et B sont tous nuls ou [au moins un A non nul et au moins un B non nul]
 {
-  if (!((v[2] && v[0]) || (v[1] && v[26]))) return 0;
+  if (!((v[2] && v[0]) || (v[1] && v[26]))) {
+    return 0;
+  }
   if ((v[10] || v[11] || v[9] || v[8] || v[19] || v[20] || v[18] || v[17]) &&
-      ((!v[10] && !v[11] && !v[9] && !v[8]) || 
-       (!v[19] && !v[20] && !v[18] && !v[17]))) return 0;
+      ((!v[10] && !v[11] && !v[9] && !v[8]) ||
+       (!v[19] && !v[20] && !v[18] && !v[17]))) {
+    return 0;
+  }
 #ifdef DEBUGmatchD
 printf("matchD 1a - 2\n");
 #endif
@@ -9186,10 +10117,14 @@ static int32_t matchD_seq_vois1_b_1(uint8_t *v)
 // 1: (P1 et P4) ou (P2 et P3)
 // 2: A et B sont tous nuls ou [au moins un A non nul et au moins un B non nul]
 {
-  if (!((v[6] && v[8]) || (v[15] && v[26]))) return 0;
+  if (!((v[6] && v[8]) || (v[15] && v[26]))) {
+    return 0;
+  }
   if ((v[14] || v[13] || v[5] || v[4] || v[7] || v[0] || v[9] || v[16]) &&
-      ((!v[14] && !v[13] && !v[5] && !v[4]) || 
-       (!v[7] && !v[0] && !v[9] && !v[16]))) return 0;
+      ((!v[14] && !v[13] && !v[5] && !v[4]) ||
+       (!v[7] && !v[0] && !v[9] && !v[16]))) {
+    return 0;
+  }
 #ifdef DEBUGmatchD
 printf("matchD 1b - 1\n");
 #endif
@@ -9212,10 +10147,14 @@ static int32_t matchD_seq_vois1_b_2(uint8_t *v)
 // 1: (P1 et P4) ou (P2 et P3)
 // 2: A et B sont tous nuls ou [au moins un A non nul et au moins un B non nul]
 {
-  if (!((v[2] && v[8]) || (v[11] && v[26]))) return 0;
+  if (!((v[2] && v[8]) || (v[11] && v[26]))) {
+    return 0;
+  }
   if ((v[12] || v[13] || v[3] || v[4] || v[1] || v[0] || v[9] || v[10]) &&
-      ((!v[12] && !v[13] && !v[3] && !v[4]) || 
-       (!v[1] && !v[0] && !v[9] && !v[10]))) return 0;
+      ((!v[12] && !v[13] && !v[3] && !v[4]) ||
+       (!v[1] && !v[0] && !v[9] && !v[10]))) {
+    return 0;
+  }
 #ifdef DEBUGmatchD
 printf("matchD 1b - 2\n");
 #endif
@@ -9239,10 +10178,14 @@ static int32_t matchD_seq_vois1_c_1(uint8_t *v)
 // 1: (P1 et P4) ou (P2 et P3)
 // 2: A et B sont tous nuls ou [au moins un A non nul et au moins un B non nul]
 {
-  if (!((v[8] && v[0]) || (v[9] && v[26]))) return 0;
+  if (!((v[8] && v[0]) || (v[9] && v[26]))) {
+    return 0;
+  }
   if ((v[11] || v[10] || v[2] || v[1] || v[16] || v[15] || v[7] || v[6]) &&
-      ((!v[11] && !v[10] && !v[2] && !v[1]) || 
-       (!v[16] && !v[15] && !v[7] && !v[6]))) return 0;
+      ((!v[11] && !v[10] && !v[2] && !v[1]) ||
+       (!v[16] && !v[15] && !v[7] && !v[6]))) {
+    return 0;
+  }
 #ifdef DEBUGmatchD
 printf("matchD 1c - 1\n");
 #endif
@@ -9266,10 +10209,14 @@ static int32_t matchD_seq_vois1_c_2(uint8_t *v)
 // 1: (P1 et P4) ou (P2 et P3)
 // 2: A et B sont tous nuls ou [au moins un A non nul et au moins un B non nul]
 {
-  if (!((v[8] && v[4]) || (v[13] && v[26]))) return 0;
+  if (!((v[8] && v[4]) || (v[13] && v[26]))) {
+    return 0;
+  }
   if ((v[12] || v[11] || v[3] || v[2] || v[14] || v[15] || v[5] || v[6]) &&
-      ((!v[12] && !v[11] && !v[3] && !v[2]) || 
-       (!v[14] && !v[15] && !v[5] && !v[6]))) return 0;
+      ((!v[12] && !v[11] && !v[3] && !v[2]) ||
+       (!v[14] && !v[15] && !v[5] && !v[6]))) {
+    return 0;
+  }
 #ifdef DEBUGmatchD
 printf("matchD 1c - 2\n");
 #endif
@@ -9294,7 +10241,10 @@ A COMPLETER
 {
   //printf("matchD 01:\n");
   //print_vois(v);
-  if (!((v[12]&&v[26]) || (v[11]&&v[4]) || (v[13]&&v[2]) || (v[8]&&v[3]) )) return 0;
+  if (!((v[12] && v[26]) || (v[11] && v[4]) || (v[13] && v[2]) ||
+        (v[8] && v[3]))) {
+    return 0;
+  }
 #ifdef DEBUGmatchD
 printf("matchD 0 - 1\n");
 #endif
@@ -9318,7 +10268,10 @@ A COMPLETER
 {
   //printf("matchD 02:\n");
   //print_vois(v);
-  if (!((v[10]&&v[26]) || (v[11]&&v[0]) || (v[9]&&v[2]) || (v[8]&&v[1]) )) return 0;
+  if (!((v[10] && v[26]) || (v[11] && v[0]) || (v[9] && v[2]) ||
+        (v[8] && v[1]))) {
+    return 0;
+  }
 #ifdef DEBUGmatchD
 printf("matchD 0 - 2\n");
 #endif
@@ -9343,7 +10296,10 @@ A COMPLETER
 {
   //printf("matchD 03:\n");
   //print_vois(v);
-  if (!((v[16]&&v[26]) || (v[15]&&v[0]) || (v[6]&&v[9]) || (v[8]&&v[7]) )) return 0;
+  if (!((v[16] && v[26]) || (v[15] && v[0]) || (v[6] && v[9]) ||
+        (v[8] && v[7]))) {
+    return 0;
+  }
 #ifdef DEBUGmatchD
 printf("matchD 0 - 3\n");
 #endif
@@ -9367,7 +10323,10 @@ A COMPLETER
 {
   //printf("matchD 04:\n");
   //print_vois(v);
-  if (!((v[14]&&v[26]) || (v[15]&&v[4]) || (v[13]&&v[6]) || (v[8]&&v[5]) )) return 0;
+  if (!((v[14] && v[26]) || (v[15] && v[4]) || (v[13] && v[6]) ||
+        (v[8] && v[5]))) {
+    return 0;
+  }
 #ifdef DEBUGmatchD
 printf("matchD 0 - 4\n");
 #endif
@@ -9849,111 +10808,130 @@ static void lskelCKSC3_process_cliques_D(struct xvimage *image)
 
     // DIM = 2
     // =============================
-    for (k = 1; k < ds-1; k++) // dim = 2, C = {x, x-ps}
-    for (j = 1; j < cs-1; j++) 
-    for (i = 1; i < rs-1; i++) 
-    {
-      x = k*ps + j*rs + i;
-      if (F[x])
-      { 
-	extract_vois3d(F, x, rs, ps, N, v);
-	if (matchD_seq_vois2_a(v))
-	{
-	  x1 = x-ps;
-	  lskelCKSC3_aux2(F, x, x1, rs, ps, N);
-	}
-	if (matchD_seq_vois2_b(v))
-	{
-	  x1 = x-rs;
-	  lskelCKSC3_aux2(F, x, x1, rs, ps, N);
-	}
-	if (matchD_seq_vois2_c(v))
-	{
-	  x1 = x-1;
-	  lskelCKSC3_aux2(F, x, x1, rs, ps, N);
-	}
+  for (k = 1; k < ds - 1; k++) { // dim = 2, C = {x, x-ps}
+    for (j = 1; j < cs - 1; j++) {
+      for (i = 1; i < rs - 1; i++) {
+        x = k * ps + j * rs + i;
+        if (F[x]) {
+          extract_vois3d(F, x, rs, ps, N, v);
+          if (matchD_seq_vois2_a(v)) {
+            x1 = x - ps;
+            lskelCKSC3_aux2(F, x, x1, rs, ps, N);
+          }
+          if (matchD_seq_vois2_b(v)) {
+            x1 = x - rs;
+            lskelCKSC3_aux2(F, x, x1, rs, ps, N);
+          }
+          if (matchD_seq_vois2_c(v)) {
+            x1 = x - 1;
+            lskelCKSC3_aux2(F, x, x1, rs, ps, N);
+          }
+        }
       }
     }
+  }
 
     // DIM = 1
     // =============================
-    for (k = 1; k < ds-1; k++)
-    for (j = 1; j < cs-1; j++) 
-    for (i = 1; i < rs-1; i++) 
-    {
-      x = k*ps + j*rs + i;
-      if (F[x])
-      { 
-	extract_vois3d(F, x, rs, ps, N, v);
-	if (matchD_seq_vois1_a_1(v))
-	{
-	  x1 = x-rs; x2 = x-1; x3 = (x-rs)-1;
-	  lskelCKSC3_aux1(F, x, x1, x2, x3, rs, ps, N);
-	}
-	if (matchD_seq_vois1_a_2(v))
-	{
-	  x1 = x-rs; x2 = x+1; x3 = (x-rs)+1;
-	  lskelCKSC3_aux1(F, x, x1, x2, x3, rs, ps, N);
-	}
-	if (matchD_seq_vois1_b_1(v))
-	{
-	  x1 = x+rs; x2 = x-ps; x3 = x-ps+rs;
-	  lskelCKSC3_aux1(F, x, x1, x2, x3, rs, ps, N);
-	}
-	if (matchD_seq_vois1_b_2(v))
-	{
-	  x1 = x-rs; x2 = x-ps; x3 = x-ps-rs;
-	  lskelCKSC3_aux1(F, x, x1, x2, x3, rs, ps, N);
-	}
-	if (matchD_seq_vois1_c_1(v))
-	{
-	  x1 = x-ps; x2 = x+1; x3 = x-ps+1;
-	  lskelCKSC3_aux1(F, x, x1, x2, x3, rs, ps, N);
-	}
-	if (matchD_seq_vois1_c_2(v))
-	{
-	  x1 = x-ps; x2 = x-1; x3 = x-ps-1;
-	  lskelCKSC3_aux1(F, x, x1, x2, x3, rs, ps, N);
-	}
+  for (k = 1; k < ds - 1; k++) {
+    for (j = 1; j < cs - 1; j++) {
+      for (i = 1; i < rs - 1; i++) {
+        x = k * ps + j * rs + i;
+        if (F[x]) {
+          extract_vois3d(F, x, rs, ps, N, v);
+          if (matchD_seq_vois1_a_1(v)) {
+            x1 = x - rs;
+            x2 = x - 1;
+            x3 = (x - rs) - 1;
+            lskelCKSC3_aux1(F, x, x1, x2, x3, rs, ps, N);
+          }
+          if (matchD_seq_vois1_a_2(v)) {
+            x1 = x - rs;
+            x2 = x + 1;
+            x3 = (x - rs) + 1;
+            lskelCKSC3_aux1(F, x, x1, x2, x3, rs, ps, N);
+          }
+          if (matchD_seq_vois1_b_1(v)) {
+            x1 = x + rs;
+            x2 = x - ps;
+            x3 = x - ps + rs;
+            lskelCKSC3_aux1(F, x, x1, x2, x3, rs, ps, N);
+          }
+          if (matchD_seq_vois1_b_2(v)) {
+            x1 = x - rs;
+            x2 = x - ps;
+            x3 = x - ps - rs;
+            lskelCKSC3_aux1(F, x, x1, x2, x3, rs, ps, N);
+          }
+          if (matchD_seq_vois1_c_1(v)) {
+            x1 = x - ps;
+            x2 = x + 1;
+            x3 = x - ps + 1;
+            lskelCKSC3_aux1(F, x, x1, x2, x3, rs, ps, N);
+          }
+          if (matchD_seq_vois1_c_2(v)) {
+            x1 = x - ps;
+            x2 = x - 1;
+            x3 = x - ps - 1;
+            lskelCKSC3_aux1(F, x, x1, x2, x3, rs, ps, N);
+          }
+        }
       }
     }
+  }
 
     // DIM = 0
     // =============================
-    for (k = 1; k < ds-1; k++)
-    for (j = 1; j < cs-1; j++) 
-    for (i = 1; i < rs-1; i++) 
-    {
-      x = k*ps + j*rs + i;
-      if (F[x])
-      { 
-	extract_vois3d(F, x, rs, ps, N, v);
-	if (matchD_seq_vois0_1(v))
-	{
-	  x1 = x-ps; x2 = x-1; x3 = x-ps-1; 
-	  x4 = x-rs; x5 = x-ps-rs; x6 = x-rs-1; x7 = x-ps-rs-1;
-	  lskelCKSC3_aux0(F, x, x1, x2, x3, x4, x5, x6, x7, rs, ps, N);
-	}
-	if (matchD_seq_vois0_2(v))
-	{
-	  x1 = x-ps; x2 = x+1; x3 = x-ps+1; 
-	  x4 = x-rs; x5 = x-ps-rs; x6 = x-rs+1; x7 = x-ps-rs+1;
-	  lskelCKSC3_aux0(F, x, x1, x2, x3, x4, x5, x6, x7, rs, ps, N);
-	}
-	if (matchD_seq_vois0_3(v))
-	{
-	  x1 = x-ps; x2 = x+1; x3 = x-ps+1; 
-	  x4 = x+rs; x5 = x-ps+rs; x6 = x+rs+1; x7 = x-ps+rs+1;
-	  lskelCKSC3_aux0(F, x, x1, x2, x3, x4, x5, x6, x7, rs, ps, N);
-	}
-	if (matchD_seq_vois0_4(v))
-	{
-	  x1 = x-ps; x2 = x-1; x3 = x-ps-1; 
-	  x4 = x+rs; x5 = x-ps+rs; x6 = x+rs-1; x7 = x-ps+rs-1;
-	  lskelCKSC3_aux0(F, x, x1, x2, x3, x4, x5, x6, x7, rs, ps, N);
-	}
+  for (k = 1; k < ds - 1; k++) {
+    for (j = 1; j < cs - 1; j++) {
+      for (i = 1; i < rs - 1; i++) {
+        x = k * ps + j * rs + i;
+        if (F[x]) {
+          extract_vois3d(F, x, rs, ps, N, v);
+          if (matchD_seq_vois0_1(v)) {
+            x1 = x - ps;
+            x2 = x - 1;
+            x3 = x - ps - 1;
+            x4 = x - rs;
+            x5 = x - ps - rs;
+            x6 = x - rs - 1;
+            x7 = x - ps - rs - 1;
+            lskelCKSC3_aux0(F, x, x1, x2, x3, x4, x5, x6, x7, rs, ps, N);
+          }
+          if (matchD_seq_vois0_2(v)) {
+            x1 = x - ps;
+            x2 = x + 1;
+            x3 = x - ps + 1;
+            x4 = x - rs;
+            x5 = x - ps - rs;
+            x6 = x - rs + 1;
+            x7 = x - ps - rs + 1;
+            lskelCKSC3_aux0(F, x, x1, x2, x3, x4, x5, x6, x7, rs, ps, N);
+          }
+          if (matchD_seq_vois0_3(v)) {
+            x1 = x - ps;
+            x2 = x + 1;
+            x3 = x - ps + 1;
+            x4 = x + rs;
+            x5 = x - ps + rs;
+            x6 = x + rs + 1;
+            x7 = x - ps + rs + 1;
+            lskelCKSC3_aux0(F, x, x1, x2, x3, x4, x5, x6, x7, rs, ps, N);
+          }
+          if (matchD_seq_vois0_4(v)) {
+            x1 = x - ps;
+            x2 = x - 1;
+            x3 = x - ps - 1;
+            x4 = x + rs;
+            x5 = x - ps + rs;
+            x6 = x + rs - 1;
+            x7 = x - ps + rs - 1;
+            lskelCKSC3_aux0(F, x, x1, x2, x3, x4, x5, x6, x7, rs, ps, N);
+          }
+        }
       }
     }
+  }
 } // lskelCKSC3_process_cliquesD
 #endif
 
@@ -10030,21 +11008,31 @@ repeter jusqu'a stabilite
     COMPARE_SIZE(image, inhibit);
     ACCEPTED_TYPES1(inhibit, VFF_TYP_1_BYTE);
     I = UCHARDATA(inhibit);
-    for (x = 0; x < N; x++) if (I[x]) Set(x,CONTRAINTE);
+    for (x = 0; x < N; x++) {
+      if (I[x]) {
+        Set(x, CONTRAINTE);
+      }
+    }
   }
 
   mctopo3d_init_topo3d();  
   IndicsInit(N);
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (k = 1; k < ds-1; k++) 
-  for (j = 1; j < cs-1; j++) 
-  for (i = 1; i < rs-1; i++) 
-  {
-    x = k*ps + j*rs + i;
-    if (F[x] && ((k<2)||(j<2)||(i<2)||(k>ds-3)||(j>cs-3)||(i>rs-3))) 
-      printf("%s: WARNING - points on extended border may not be treated\n", F_NAME);
+  for (k = 1; k < ds - 1; k++) {
+    for (j = 1; j < cs - 1; j++) {
+      for (i = 1; i < rs - 1; i++) {
+        x = k * ps + j * rs + i;
+        if (F[x] && ((k < 2) || (j < 2) || (i < 2) || (k > ds - 3) ||
+                     (j > cs - 3) || (i > rs - 3))) {
+          printf("%s: WARNING - points on extended border may not be treated\n",
+                 F_NAME);
+        }
+      }
+    }
   }
 
   /* ================================================ */
@@ -10061,29 +11049,34 @@ repeter jusqu'a stabilite
 #endif
     stab = 1;
 
-    for (x = 0; x < N; x++) if (F[x]) F[x] = OBJ;
+    for (x = 0; x < N; x++) {
+      if (F[x]) {
+        F[x] = OBJ;
+      }
+    }
 
 #ifndef skelCKSC3_ULTIMATE
     // détection des isthmes 1D
-    for (x = 0; x < N; x++) 
+    for (x = 0; x < N; x++) {
       if (F[x])
       { 
 #ifdef skelCKSC3_USE_END
         if (mctopo3d_nbvoiso26(F, x, rs, ps, N) == 1) Set(x,CONTRAINTE);
 #else
 	mctopo3d_top26(F, x, rs, ps, N, &t, &tb);
-	if (t > 1) Set(x,CONTRAINTE);
+        if (t > 1) {
+          Set(x, CONTRAINTE);
+        }
 #endif
       }
+    }
 #endif
 
-    for (k = 1; k < ds-1; k++) 
-    for (j = 1; j < cs-1; j++) 
-    for (i = 1; i < rs-1; i++) 
-    {
-      x = k*ps + j*rs + i;
-      if (F[x])
-      { 
+    for (k = 1; k < ds - 1; k++) {
+      for (j = 1; j < cs - 1; j++) {
+        for (i = 1; i < rs - 1; i++) {
+          x = k * ps + j * rs + i;
+          if (F[x]) { 
 #ifdef VARIANTE_DPRIM
 	Set(x, IN_SET_Y);
 	if (!mctopo3d_simple26(F, x, rs, ps, N) || IsSet(x,CONTRAINTE))
@@ -10096,6 +11089,8 @@ repeter jusqu'a stabilite
 	else
 	{ UnSet(x, IN_SET_W); Set(x, IN_SET_Y); }
 #endif
+      }
+        }
       }
     }
 
@@ -10111,7 +11106,11 @@ repeter jusqu'a stabilite
     }
   } // while (!stab && (nbiter < nsteps))
 
-  for (x = 0; x < N; x++) if (F[x]) F[x] = NDG_MAX;
+  for (x = 0; x < N; x++) {
+    if (F[x]) {
+      F[x] = NDG_MAX;
+    }
+  }
 
   /* ================================================ */
   /* UN PEU DE MENAGE                                 */
@@ -10196,21 +11195,31 @@ repeter jusqu'a stabilite
     COMPARE_SIZE(image, inhibit);
     ACCEPTED_TYPES1(inhibit, VFF_TYP_1_BYTE);
     I = UCHARDATA(inhibit);
-    for (x = 0; x < N; x++) if (I[x]) Set(x,CONTRAINTE);
+    for (x = 0; x < N; x++) {
+      if (I[x]) {
+        Set(x, CONTRAINTE);
+      }
+    }
   }
 
   mctopo3d_init_topo3d();  
   IndicsInit(N);
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (k = 1; k < ds-1; k++) 
-  for (j = 1; j < cs-1; j++) 
-  for (i = 1; i < rs-1; i++) 
-  {
-    x = k*ps + j*rs + i;
-    if (F[x] && ((k<2)||(j<2)||(i<2)||(k>ds-3)||(j>cs-3)||(i>rs-3))) 
-      printf("%s: WARNING - points on extended border may not be treated\n", F_NAME);
+  for (k = 1; k < ds - 1; k++) {
+    for (j = 1; j < cs - 1; j++) {
+      for (i = 1; i < rs - 1; i++) {
+        x = k * ps + j * rs + i;
+        if (F[x] && ((k < 2) || (j < 2) || (i < 2) || (k > ds - 3) ||
+                     (j > cs - 3) || (i > rs - 3))) {
+          printf("%s: WARNING - points on extended border may not be treated\n",
+                 F_NAME);
+        }
+      }
+    }
   }
 
   /* ================================================ */
@@ -10227,25 +11236,30 @@ repeter jusqu'a stabilite
 #endif
     stab = 1;
 
-    for (x = 0; x < N; x++) if (F[x]) F[x] = OBJ;
+    for (x = 0; x < N; x++) {
+      if (F[x]) {
+        F[x] = OBJ;
+      }
+    }
 
 #ifndef skelCKSC3_ULTIMATE
     // détection des isthmes 2D
-    for (x = 0; x < N; x++) 
+    for (x = 0; x < N; x++) {
       if (F[x])
       { 
 	mctopo3d_top26(F, x, rs, ps, N, &t, &tb);
-	if (tb > 1) Set(x,CONTRAINTE);
+        if (tb > 1) {
+          Set(x, CONTRAINTE);
+        }
       }
+    }
 #endif
 
-    for (k = 1; k < ds-1; k++) 
-    for (j = 1; j < cs-1; j++) 
-    for (i = 1; i < rs-1; i++) 
-    {
-      x = k*ps + j*rs + i;
-      if (F[x])
-      { 
+    for (k = 1; k < ds - 1; k++) {
+      for (j = 1; j < cs - 1; j++) {
+        for (i = 1; i < rs - 1; i++) {
+          x = k * ps + j * rs + i;
+          if (F[x]) { 
 #ifdef VARIANTE_DPRIM
 	Set(x, IN_SET_Y);
 	if (!mctopo3d_simple26(F, x, rs, ps, N) || IsSet(x,CONTRAINTE))
@@ -10258,6 +11272,8 @@ repeter jusqu'a stabilite
 	else
 	{ UnSet(x, IN_SET_W); Set(x, IN_SET_Y); }
 #endif
+      }
+        }
       }
     }
 
@@ -10273,7 +11289,11 @@ repeter jusqu'a stabilite
     }
   } // while (!stab && (nbiter < nsteps))
 
-  for (x = 0; x < N; x++) if (F[x]) F[x] = NDG_MAX;
+  for (x = 0; x < N; x++) {
+    if (F[x]) {
+      F[x] = NDG_MAX;
+    }
+  }
 
   /* ================================================ */
   /* UN PEU DE MENAGE                                 */
@@ -10337,22 +11357,32 @@ repeter
     COMPARE_SIZE(image, inhibit);
     ACCEPTED_TYPES1(inhibit, VFF_TYP_1_BYTE);
     I = UCHARDATA(inhibit);
-    for (x = 0; x < N; x++) if (I[x]) Set(x,CONTRAINTE);
+    for (x = 0; x < N; x++) {
+      if (I[x]) {
+        Set(x, CONTRAINTE);
+      }
+    }
   }
 
   mctopo3d_init_topo3d();  
   IndicsInit(N);
   //  Y = (uint8_t *)calloc(N, sizeof(uint8_t)); assert(Y != NULL);
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (k = 1; k < ds-1; k++) 
-  for (j = 1; j < cs-1; j++) 
-  for (i = 1; i < rs-1; i++) 
-  {
-    x = k*ps + j*rs + i;
-    if (F[x] && ((k<2)||(j<2)||(i<2)||(k>ds-3)||(j>cs-3)||(i>rs-3))) 
-      printf("%s: WARNING - points on extended border may not be treated\n", F_NAME);
+  for (k = 1; k < ds - 1; k++) {
+    for (j = 1; j < cs - 1; j++) {
+      for (i = 1; i < rs - 1; i++) {
+        x = k * ps + j * rs + i;
+        if (F[x] && ((k < 2) || (j < 2) || (i < 2) || (k > ds - 3) ||
+                     (j > cs - 3) || (i > rs - 3))) {
+          printf("%s: WARNING - points on extended border may not be treated\n",
+                 F_NAME);
+        }
+      }
+    }
   }
 
   /* ================================================ */
@@ -10369,50 +11399,70 @@ repeter
 #endif
     stab = 1;
 
-    for (x = 0; x < N; x++) if (F[x]) F[x] = OBJ;
+    for (x = 0; x < N; x++) {
+      if (F[x]) {
+        F[x] = OBJ;
+      }
+    }
     memset(Y, 0, N * sizeof(uint8_t));
 
     // détection des isthmes 2D
-    for (x = 0; x < N; x++) 
+    for (x = 0; x < N; x++) {
       if (F[x])
       { 
 	mctopo3d_top26(F, x, rs, ps, N, &t, &tb);
-	if (tb > 1) Set(x,CONTRAINTE);
-	if ((t == 1) && (tb == 1)) F[x] = CAN;
+        if (tb > 1) {
+          Set(x, CONTRAINTE);
+        }
+        if ((t == 1) && (tb == 1)) {
+          F[x] = CAN;
+        }
       }
+    }
 
-    for (x = 0; x < N; x++) 
+    for (x = 0; x < N; x++) {
       if (F[x])
       { 
 	Y[x] = OBJ;
 	UnSet(x, IN_SET_K);
 	UnSet(x, IN_SET_W);
-	if (IsSet(x,CONTRAINTE)) F[x] = OBJ;
+        if (IsSet(x, CONTRAINTE)) {
+          F[x] = OBJ;
+        }
       }
+    }
 
     lskelCKSC3_process_cliques(image, imageY);
 
     //  pour chaque point de Y \ K simple pour X faire Y = Y \ {x}
-    for (x = 0; x < N; x++)
+    for (x = 0; x < N; x++) {
       if (Y[x] && !IsSet(x,IN_SET_K) && 
 	  !IsSet(x,CONTRAINTE) && mctopo3d_simple26(F, x, rs, ps, N))
       {
         Y[x] = 0;
       }
+    }
 
     //  X = Y
-    for (x = 0; x < N; x++)
+    for (x = 0; x < N; x++) {
       if (F[x] && !Y[x])
       {
-	if (IsSet(x,CONTRAINTE))	
-	  printf("BUG deleting constraint point %ld %ld %ld\n", x%rs, (x%ps)/rs, x/ps);
-	F[x] = 0;
+        if (IsSet(x, CONTRAINTE)) {
+          printf("BUG deleting constraint point %ld %ld %ld\n", x % rs,
+                 (x % ps) / rs, x / ps);
+        }
+        F[x] = 0;
 	stab = 0;
       }
+    }
 
   } // while (!stab && (nbiter < nsteps))
 
-  for (x = 0; x < N; x++) if (F[x]) F[x] = NDG_MAX;
+  for (x = 0; x < N; x++) {
+    if (F[x]) {
+      F[x] = NDG_MAX;
+    }
+  }
 
   /* ================================================ */
   /* UN PEU DE MENAGE                                 */
@@ -10475,14 +11525,17 @@ resultat: X
       fprintf(stderr, "%s: bad size for inhibit\n", F_NAME);
       return(0);
     }
-    if (datatype(inhibit) == VFF_TYP_1_BYTE) 
+    if (datatype(inhibit) == VFF_TYP_1_BYTE) {
       I = UCHARDATA(inhibit);
-    else 
-    {
+    } else {
       fprintf(stderr, "%s: datatype(inhibit) must be uint8_t\n", F_NAME);
       return(0);
     }
-    for (x = 0; x < N; x++) if (I[x]) Set(x,CONTRAINTE);
+    for (x = 0; x < N; x++) {
+      if (I[x]) {
+        Set(x, CONTRAINTE);
+      }
+    }
   }
 
   /* ================================================ */
@@ -10492,12 +11545,16 @@ resultat: X
   do 
   {
     stability = 1;
-    for (x = 0; x < N; x += 1)
+    for (x = 0; x < N; x += 1) {
       if (F[x] && !IsSet(x,CONTRAINTE))
       {
-	if (mctopo3d_nbvoiso26(F, x, rs, ps, N) == 1) Set(x,CONTRAINTE);
-	else if (mctopo3d_simple26(F, x, rs, ps, N)) Set(x,EN_LISTE);
+        if (mctopo3d_nbvoiso26(F, x, rs, ps, N) == 1) {
+          Set(x, CONTRAINTE);
+        } else if (mctopo3d_simple26(F, x, rs, ps, N)) {
+          Set(x, EN_LISTE);
+        }
       }
+    }
 
     for (x = 0; x < N; x += 1)
     {
@@ -10558,70 +11615,108 @@ X = { x in E | F[x] > LMAX)
 
   if (ds == 1)
   {
-    for (p = 0; p < N; p++) if (F[p] > 0)
-    {
-      float * ptr = F+p;
-      f[0] = *ptr;
-      f[1] = (p%rs!=rs-1)             ? *(ptr+1)    : -1;
-      f[2] = ((p%rs!=rs-1)&&(p>=rs))  ? *(ptr+1-rs) : -1;
-      f[3] = (p>=rs)                  ? *(ptr-rs)   : -1;
-      f[4] = ((p>=rs)&&(p%rs!=0))     ? *(ptr-rs-1) : -1;
-      f[5] = (p%rs!=0)                ? *(ptr-1)    : -1;
-      f[6] = ((p%rs!=0)&&(p<N-rs))    ? *(ptr-1+rs) : -1;
-      f[7] = (p<N-rs)                 ? *(ptr+rs)   : -1;
-      f[8] = ((p<N-rs)&&(p%rs!=rs-1)) ? *(ptr+rs+1) : -1;
-      for (j = 1; j <= 4; j++) // to obtain the fourth highest value
-      {
-	for (imax = 0, i = 1; i < 9; i++) if (f[i] > f[imax]) imax = i; // jth highest value
-	f_j = f[imax]; f[imax] = -1;
-      }
-      if (f_j > LMAX) LMAX = f_j;
-    } // for (p = 0; p < N; p++) 
+    for (p = 0; p < N; p++) {
+      if (F[p] > 0) {
+        float *ptr = F + p;
+        f[0] = *ptr;
+        f[1] = (p % rs != rs - 1) ? *(ptr + 1) : -1;
+        f[2] = ((p % rs != rs - 1) && (p >= rs)) ? *(ptr + 1 - rs) : -1;
+        f[3] = (p >= rs) ? *(ptr - rs) : -1;
+        f[4] = ((p >= rs) && (p % rs != 0)) ? *(ptr - rs - 1) : -1;
+        f[5] = (p % rs != 0) ? *(ptr - 1) : -1;
+        f[6] = ((p % rs != 0) && (p < N - rs)) ? *(ptr - 1 + rs) : -1;
+        f[7] = (p < N - rs) ? *(ptr + rs) : -1;
+        f[8] = ((p < N - rs) && (p % rs != rs - 1)) ? *(ptr + rs + 1) : -1;
+        for (j = 1; j <= 4; j++) // to obtain the fourth highest value
+        {
+          for (imax = 0, i = 1; i < 9; i++) {
+            if (f[i] > f[imax]) {
+              imax = i; // jth highest value
+            }
+          }
+          f_j = f[imax];
+          f[imax] = -1;
+        }
+        if (f_j > LMAX) {
+          LMAX = f_j;
+        }
+      } // for (p = 0; p < N; p++)
+    }
   }
   else
   {
-    for (p = 0; p < N; p++) if (F[p] > 0)
-    {
-      f[0] = ((p<N-ps)&&(p%rs!=rs-1)) ? F[ps+p+1] : -1;
-      f[1] = ((p<N-ps)&&(p%rs!=rs-1)&&(p%ps>=rs)) ? F[ps+p+1-rs] : -1;
-      f[2] = ((p<N-ps)&&(p%ps>=rs)) ? F[ps+p-rs] : -1; 
-      f[3] = ((p<N-ps)&&(p%ps>=rs)&&(p%rs!=0)) ? F[ps+p-rs-1] : -1;
-      f[4] = ((p<N-ps)&&(p%rs!=0)) ? F[ps+p-1] : -1;
-      f[5] = ((p<N-ps)&&(p%rs!=0)&&(p%ps<ps-rs)) ? F[ps+p-1+rs] : -1;
-      f[6] = ((p<N-ps)&&(p%ps<ps-rs)) ? F[ps+p+rs] : -1;
-      f[7] = ((p<N-ps)&&(p%ps<ps-rs)&&(p%rs!=rs-1)) ? F[ps+p+rs+1] : -1;
-      f[8] = ((p<N-ps)) ? F[ps+p] : -1;
-      f[9] = ((p%rs!=rs-1)) ? F[p+1] : -1;
-      f[10] = ((p%rs!=rs-1)&&(p%ps>=rs)) ? F[p+1-rs] : -1;
-      f[11] = ((p%ps>=rs)) ? F[p-rs] : -1;
-      f[12] = ((p%ps>=rs)&&(p%rs!=0)) ? F[p-rs-1] : -1; 
-      f[13] = ((p%rs!=0)) ? F[p-1] : -1;
-      f[14] = ((p%rs!=0)&&(p%ps<ps-rs)) ? F[p-1+rs] : -1;
-      f[15] = ((p%ps<ps-rs)) ? F[p+rs] : -1;
-      f[16] = ((p%ps<ps-rs)&&(p%rs!=rs-1)) ? F[p+rs+1] : -1;
-      f[17] = ((p>=ps)&&(p%rs!=rs-1)) ? F[-ps+p+1] : -1;
-      f[18] = ((p>=ps)&&(p%rs!=rs-1)&&(p%ps>=rs)) ? F[-ps+p+1-rs] : -1;
-      f[19] = ((p>=ps)&&(p%ps>=rs)) ? F[-ps+p-rs] : -1;
-      f[20] = ((p>=ps)&&(p%ps>=rs)&&(p%rs!=0)) ? F[-ps+p-rs-1] : -1; 
-      f[21] = ((p>=ps)&&(p%rs!=0)) ? F[-ps+p-1] : -1;
-      f[22] = ((p>=ps)&&(p%rs!=0)&&(p%ps<ps-rs)) ? F[-ps+p-1+rs] : -1;
-      f[23] = ((p>=ps)&&(p%ps<ps-rs)) ? F[-ps+p+rs] : -1;
-      f[24] = ((p>=ps)&&(p%ps<ps-rs)&&(p%rs!=rs-1)) ? F[-ps+p+rs+1] : -1;
-      f[25] = ((p>=ps)) ? F[-ps+p] : -1;
-      f[26] = F[p];
-      for (j = 1; j <= 4; j++) // to obtain the fourth highest value
-      {
-	for (imax = 26, i = 0; i < 26; i++) if (f[i] > f[imax]) imax = i; // jth highest value
-	f_j = f[imax]; f[imax] = -1;
-      }
-      //printf("point %d f_j=%g\n", p, f_j);
-      if (f_j > LMAX) LMAX = f_j;
-    } // for (p = 0; p < N; p++) 
+    for (p = 0; p < N; p++) {
+      if (F[p] > 0) {
+        f[0] = ((p < N - ps) && (p % rs != rs - 1)) ? F[ps + p + 1] : -1;
+        f[1] = ((p < N - ps) && (p % rs != rs - 1) && (p % ps >= rs))
+                   ? F[ps + p + 1 - rs]
+                   : -1;
+        f[2] = ((p < N - ps) && (p % ps >= rs)) ? F[ps + p - rs] : -1;
+        f[3] = ((p < N - ps) && (p % ps >= rs) && (p % rs != 0))
+                   ? F[ps + p - rs - 1]
+                   : -1;
+        f[4] = ((p < N - ps) && (p % rs != 0)) ? F[ps + p - 1] : -1;
+        f[5] = ((p < N - ps) && (p % rs != 0) && (p % ps < ps - rs))
+                   ? F[ps + p - 1 + rs]
+                   : -1;
+        f[6] = ((p < N - ps) && (p % ps < ps - rs)) ? F[ps + p + rs] : -1;
+        f[7] = ((p < N - ps) && (p % ps < ps - rs) && (p % rs != rs - 1))
+                   ? F[ps + p + rs + 1]
+                   : -1;
+        f[8] = ((p < N - ps)) ? F[ps + p] : -1;
+        f[9] = ((p % rs != rs - 1)) ? F[p + 1] : -1;
+        f[10] = ((p % rs != rs - 1) && (p % ps >= rs)) ? F[p + 1 - rs] : -1;
+        f[11] = ((p % ps >= rs)) ? F[p - rs] : -1;
+        f[12] = ((p % ps >= rs) && (p % rs != 0)) ? F[p - rs - 1] : -1;
+        f[13] = ((p % rs != 0)) ? F[p - 1] : -1;
+        f[14] = ((p % rs != 0) && (p % ps < ps - rs)) ? F[p - 1 + rs] : -1;
+        f[15] = ((p % ps < ps - rs)) ? F[p + rs] : -1;
+        f[16] = ((p % ps < ps - rs) && (p % rs != rs - 1)) ? F[p + rs + 1] : -1;
+        f[17] = ((p >= ps) && (p % rs != rs - 1)) ? F[-ps + p + 1] : -1;
+        f[18] = ((p >= ps) && (p % rs != rs - 1) && (p % ps >= rs))
+                    ? F[-ps + p + 1 - rs]
+                    : -1;
+        f[19] = ((p >= ps) && (p % ps >= rs)) ? F[-ps + p - rs] : -1;
+        f[20] = ((p >= ps) && (p % ps >= rs) && (p % rs != 0))
+                    ? F[-ps + p - rs - 1]
+                    : -1;
+        f[21] = ((p >= ps) && (p % rs != 0)) ? F[-ps + p - 1] : -1;
+        f[22] = ((p >= ps) && (p % rs != 0) && (p % ps < ps - rs))
+                    ? F[-ps + p - 1 + rs]
+                    : -1;
+        f[23] = ((p >= ps) && (p % ps < ps - rs)) ? F[-ps + p + rs] : -1;
+        f[24] = ((p >= ps) && (p % ps < ps - rs) && (p % rs != rs - 1))
+                    ? F[-ps + p + rs + 1]
+                    : -1;
+        f[25] = ((p >= ps)) ? F[-ps + p] : -1;
+        f[26] = F[p];
+        for (j = 1; j <= 4; j++) // to obtain the fourth highest value
+        {
+          for (imax = 26, i = 0; i < 26; i++) {
+            if (f[i] > f[imax]) {
+              imax = i; // jth highest value
+            }
+          }
+          f_j = f[imax];
+          f[imax] = -1;
+        }
+        // printf("point %d f_j=%g\n", p, f_j);
+        if (f_j > LMAX) {
+          LMAX = f_j;
+        }
+      } // for (p = 0; p < N; p++)
+    }
   }
 
   //  printf("LMAX=%g\n", LMAX);
 
-  for (p = 0; p < N; p++) if (F[p] <= LMAX) F[p] = 0; else F[p] = 1; 
+  for (p = 0; p < N; p++) {
+    if (F[p] <= LMAX) {
+      F[p] = 0;
+    } else {
+      F[p] = 1;
+    }
+  }
 
   return(1);
 } /* lskelcurvfilter() */
@@ -10640,7 +11735,7 @@ static void lskelCKSC2_process_cliques(struct xvimage *image)
 
     // DIM = 1
     // =============================
-    for (j = 1; j < cs-1; j++) // dim = 1, C = {x, x-rs}
+  for (j = 1; j < cs - 1; j++) { // dim = 1, C = {x, x-rs}
     for (i = 1; i < rs-1; i++) 
     {
       x = j*rs + i;
@@ -10661,9 +11756,10 @@ static void lskelCKSC2_process_cliques(struct xvimage *image)
 
 	Set(x,IN_SET_W);
       }
-    }  
+    }
+  }
 
-    for (j = 1; j < cs-1; j++) // dim = 1, C = {x, x+rs}
+  for (j = 1; j < cs - 1; j++) { // dim = 1, C = {x, x+rs}
     for (i = 1; i < rs-1; i++) 
     {
       x = j*rs + i;
@@ -10683,9 +11779,10 @@ static void lskelCKSC2_process_cliques(struct xvimage *image)
 #endif
 	Set(x,IN_SET_W);
       }
-    }  
+    }
+  }
 
-    for (j = 1; j < cs-1; j++) // dim = 1, C = {x, x-1}
+  for (j = 1; j < cs - 1; j++) { // dim = 1, C = {x, x-1}
     for (i = 1; i < rs-1; i++) 
     {
       x = j*rs + i;
@@ -10706,8 +11803,9 @@ static void lskelCKSC2_process_cliques(struct xvimage *image)
 	Set(x,IN_SET_W);
       }
     }
+  }
 
-    for (j = 1; j < cs-1; j++) // dim = 1, C = {x, x+1}
+  for (j = 1; j < cs - 1; j++) { // dim = 1, C = {x, x+1}
     for (i = 1; i < rs-1; i++) 
     {
       x = j*rs + i;
@@ -10728,10 +11826,11 @@ static void lskelCKSC2_process_cliques(struct xvimage *image)
 	Set(x,IN_SET_W);
       }
     }
+  }
 
     // DIM = 0
     // =============================
-    for (j = 1; j < cs-1; j++) 
+  for (j = 1; j < cs - 1; j++) {
     for (i = 1; i < rs-1; i++) 
     {
       x = j*rs + i;
@@ -10754,8 +11853,9 @@ static void lskelCKSC2_process_cliques(struct xvimage *image)
 	}
       }
     }
+  }
 
-    for (j = 1; j < cs-1; j++) 
+  for (j = 1; j < cs - 1; j++) {
     for (i = 1; i < rs-1; i++) 
     {
       x = j*rs + i;
@@ -10779,6 +11879,7 @@ static void lskelCKSC2_process_cliques(struct xvimage *image)
 	}
       }
     }
+  }
 } // lskelCKSC2_process_cliques
 
 
@@ -10829,19 +11930,27 @@ repeter jusqu'a stabilite
     COMPARE_SIZE(image, inhibit);
     ACCEPTED_TYPES1(inhibit, VFF_TYP_1_BYTE);
     I = UCHARDATA(inhibit);
-    for (x = 0; x < N; x++) if (I[x]) Set(x,CONTRAINTE);
+    for (x = 0; x < N; x++) {
+      if (I[x]) {
+        Set(x, CONTRAINTE);
+      }
+    }
   }
 
   IndicsInit(N);
 
-  if (nsteps == -1) nsteps = 1000000000;
+  if (nsteps == -1) {
+    nsteps = 1000000000;
+  }
 
-  for (j = 1; j < cs-1; j++) 
-  for (i = 1; i < rs-1; i++) 
-  {
-    x = j*rs + i;
-    if (F[x] && ((j<2)||(i<2)||(j>cs-3)||(i>rs-3))) 
-      printf("%s: WARNING - points on extended border may not be treated\n", F_NAME);
+  for (j = 1; j < cs - 1; j++) {
+    for (i = 1; i < rs - 1; i++) {
+      x = j * rs + i;
+      if (F[x] && ((j < 2) || (i < 2) || (j > cs - 3) || (i > rs - 3))) {
+        printf("%s: WARNING - points on extended border may not be treated\n",
+               F_NAME);
+      }
+    }
   }
 
   /* ================================================ */
@@ -10858,32 +11967,39 @@ repeter jusqu'a stabilite
 #endif
     stab = 1;
 
-    for (x = 0; x < N; x++) if (F[x]) F[x] = OBJ;
+    for (x = 0; x < N; x++) {
+      if (F[x]) {
+        F[x] = OBJ;
+      }
+    }
 
 #ifndef skelCKSC2_ULTIMATE
     // détection des points squeletaux
-    for (x = 0; x < N; x++) 
+    for (x = 0; x < N; x++) {
       if (F[x])
       { 
 #ifdef skelCKSC2_USE_END
-	if (nbvois8(F, x, rs, N) == 1) Set(x,CONTRAINTE);	
+        if (nbvois8(F, x, rs, N) == 1) {
+          Set(x, CONTRAINTE);
+        }
 #else
 	top8(F, x, rs, N, &t, &tb);
 	if (tb > 1) Set(x,CONTRAINTE);
 #endif
       }
+    }
 #endif
 
-    for (j = 1; j < cs-1; j++)  
-    for (i = 1; i < rs-1; i++) 
-    {
-      x = j*rs + i;
-      if (F[x])
-      { 
-	if (!simple8(F, x, rs, N) || IsSet(x,CONTRAINTE))
-	  Set(x, IN_SET_W);
-	else
-	  UnSet(x, IN_SET_W);
+    for (j = 1; j < cs - 1; j++) {
+      for (i = 1; i < rs - 1; i++) {
+        x = j * rs + i;
+        if (F[x]) {
+          if (!simple8(F, x, rs, N) || IsSet(x, CONTRAINTE)) {
+            Set(x, IN_SET_W);
+          } else {
+            UnSet(x, IN_SET_W);
+          }
+        }
       }
     }
 
@@ -10925,7 +12041,11 @@ repeter jusqu'a stabilite
     }
   } // while (!stab && (nbiter < nsteps))
 
-  for (x = 0; x < N; x++) if (F[x]) F[x] = NDG_MAX;
+  for (x = 0; x < N; x++) {
+    if (F[x]) {
+      F[x] = NDG_MAX;
+    }
+  }
 
   /* ================================================ */
   /* UN PEU DE MENAGE                                 */

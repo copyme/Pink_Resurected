@@ -45,18 +45,17 @@ int main(int argc, char* argv[])
 		exit(1);
 	}
 
-	if(strcmp(argv[2],"pgm")==0)
-		mode=1; //pgm
-	else if(strcmp(argv[2],"raw")==0)
-		mode=0; //raw
-	else
-	{
-		fprintf(stderr, "%s: Chosen mode not recognised (pgm or raw)\n", argv[0]);
-		exit(1);
-	}
+        if (strcmp(argv[2], "pgm") == 0) {
+          mode = 1; // pgm
+        } else if (strcmp(argv[2], "raw") == 0) {
+          mode = 0; // raw
+        } else {
+          fprintf(stderr, "%s: Chosen mode not recognised (pgm or raw)\n",
+                  argv[0]);
+          exit(1);
+        }
 
-
-	//Read info from input file
+        //Read info from input file
 
 	if(mode==0)
 	{
@@ -200,86 +199,123 @@ int main(int argc, char* argv[])
 		j_a_arrivee = (((((j_d+sid-1)/factor_cs)-1) < (ncs - 1)) ? (((j_d+sid-1)/factor_cs)-1) : (ncs - 1));
 		k_a_arrivee = (((((k_d+sid-1)/factor_d)-1) < (nd - 1)) ? (((k_d+sid-1)/factor_d)-1) : (nd - 1));
 
-		for(k_a=ceil(((double)k_d/factor_d)); k_a<=k_a_arrivee; k_a++)
-			for(j_a=ceil(((double)j_d/factor_cs)); j_a<=j_a_arrivee; j_a++)
-				for(i_a=ceil(((double)i_d/factor_rs)); i_a<=i_a_arrivee; i_a++)
-				{
-					v=0.0;
-					somme_facteur=0.0;
+                for (k_a = ceil(((double)k_d / factor_d)); k_a <= k_a_arrivee;
+                     k_a++) {
+                  for (j_a = ceil(((double)j_d / factor_cs));
+                       j_a <= j_a_arrivee; j_a++) {
+                    for (i_a = ceil(((double)i_d / factor_rs));
+                         i_a <= i_a_arrivee; i_a++) {
+                      v = 0.0;
+                      somme_facteur = 0.0;
 
-					for(k=(k_a*factor_d); k<=ceil((double)(k_a+1)*factor_d)-1; k++)
-					{
-						fz1=fabs((double)k+1.0 - (double)k_a*factor_d);
-						fz2=fabs((double)k - (double)(k_a+1)*factor_d);
-						factor_z = ((fz1 < fz2) ? fz1 : fz2);
-						if(factor_z > 1.0) factor_z=1.0;
-						for(j=(j_a*factor_cs); j<=ceil((double)(j_a+1)*factor_cs)-1; j++)
-						{
-							fy1=fabs((double)j+1.0 - (double)j_a*factor_cs);
-							fy2=fabs((double)j - (double)(j_a+1)*factor_cs);
-							factor_y = ((fy1 < fy2) ? fy1 : fy2);
-							if(factor_y > 1.0) factor_y=1.0;
-							for(i=(i_a*factor_rs); i<=ceil((double)(i_a+1)*factor_rs)-1; i++)
-							{
-								fx1=fabs((double)i+1.0 - (double)i_a*factor_rs);
-								fx2=fabs((double)i - (double)(i_a+1)*factor_rs);
-								factor_x = ((fx1 < fx2) ? fx1 : fx2);
-								if(factor_x > 1.0) factor_x=1.0;
+                      for (k = (k_a * factor_d);
+                           k <= ceil((double)(k_a + 1) * factor_d) - 1; k++) {
+                        fz1 = fabs((double)k + 1.0 - (double)k_a * factor_d);
+                        fz2 = fabs((double)k - (double)(k_a + 1) * factor_d);
+                        factor_z = ((fz1 < fz2) ? fz1 : fz2);
+                        if (factor_z > 1.0) {
+                          factor_z = 1.0;
+                        }
+                        for (j = (j_a * factor_cs);
+                             j <= ceil((double)(j_a + 1) * factor_cs) - 1;
+                             j++) {
+                          fy1 = fabs((double)j + 1.0 - (double)j_a * factor_cs);
+                          fy2 = fabs((double)j - (double)(j_a + 1) * factor_cs);
+                          factor_y = ((fy1 < fy2) ? fy1 : fy2);
+                          if (factor_y > 1.0) {
+                            factor_y = 1.0;
+                          }
+                          for (i = (i_a * factor_rs);
+                               i <= ceil((double)(i_a + 1) * factor_rs) - 1;
+                               i++) {
+                            fx1 =
+                                fabs((double)i + 1.0 - (double)i_a * factor_rs);
+                            fx2 =
+                                fabs((double)i - (double)(i_a + 1) * factor_rs);
+                            factor_x = ((fx1 < fx2) ? fx1 : fx2);
+                            if (factor_x > 1.0) {
+                              factor_x = 1.0;
+                            }
 
-								switch(type)
-								{
-									case(VFF_TYP_1_BYTE):
-										v+=(double)UCHARDATA(crop)[(k-k_d)*sidsquare+(j-j_d)*sid+(i-i_d)]*factor_x*factor_y*factor_z;
-										break;
+                            switch (type) {
+                            case (VFF_TYP_1_BYTE):
+                              v += (double)UCHARDATA(
+                                       crop)[(k - k_d) * sidsquare +
+                                             (j - j_d) * sid + (i - i_d)] *
+                                   factor_x * factor_y * factor_z;
+                              break;
 
-									case(VFF_TYP_2_BYTE):
-										v+=(double)USHORTDATA(crop)[(k-k_d)*sidsquare+(j-j_d)*sid+(i-i_d)]*factor_x*factor_y*factor_z;
-										break;
+                            case (VFF_TYP_2_BYTE):
+                              v += (double)USHORTDATA(
+                                       crop)[(k - k_d) * sidsquare +
+                                             (j - j_d) * sid + (i - i_d)] *
+                                   factor_x * factor_y * factor_z;
+                              break;
 
-									case(VFF_TYP_4_BYTE):
-										v+=(double)ULONGDATA(crop)[(k-k_d)*sidsquare+(j-j_d)*sid+(i-i_d)]*factor_x*factor_y*factor_z;
-										break;
+                            case (VFF_TYP_4_BYTE):
+                              v += (double)ULONGDATA(
+                                       crop)[(k - k_d) * sidsquare +
+                                             (j - j_d) * sid + (i - i_d)] *
+                                   factor_x * factor_y * factor_z;
+                              break;
 
-									case(VFF_TYP_FLOAT):
-										v+=(double)FLOATDATA(crop)[(k-k_d)*sidsquare+(j-j_d)*sid+(i-i_d)]*factor_x*factor_y*factor_z;
-										break;
+                            case (VFF_TYP_FLOAT):
+                              v += (double)FLOATDATA(
+                                       crop)[(k - k_d) * sidsquare +
+                                             (j - j_d) * sid + (i - i_d)] *
+                                   factor_x * factor_y * factor_z;
+                              break;
 
-									case(VFF_TYP_DOUBLE):
-										v+=(double)DOUBLEDATA(crop)[(k-k_d)*sidsquare+(j-j_d)*sid+(i-i_d)]*factor_x*factor_y*factor_z;
-										break;
-								}
+                            case (VFF_TYP_DOUBLE):
+                              v += (double)DOUBLEDATA(
+                                       crop)[(k - k_d) * sidsquare +
+                                             (j - j_d) * sid + (i - i_d)] *
+                                   factor_x * factor_y * factor_z;
+                              break;
+                            }
 
-								somme_facteur+=factor_x*factor_y*factor_z;
-							}
-						}
-					}
+                            somme_facteur += factor_x * factor_y * factor_z;
+                          }
+                        }
+                      }
 
-					switch(type)
-					{
-						case(VFF_TYP_1_BYTE):
-							UCHARDATA(output)[k_a*ncs*nrs+j_a*nrs+i_a]=(uint8_t)(v/somme_facteur +0.5);
-							break;
+                      switch (type) {
+                      case (VFF_TYP_1_BYTE):
+                        UCHARDATA(output)
+                        [k_a * ncs * nrs + j_a * nrs + i_a] =
+                            (uint8_t)(v / somme_facteur + 0.5);
+                        break;
 
-						case(VFF_TYP_2_BYTE):
-							USHORTDATA(output)[k_a*ncs*nrs+j_a*nrs+i_a]=(uint16_t)(v/somme_facteur +0.5);
-							break;
+                      case (VFF_TYP_2_BYTE):
+                        USHORTDATA(output)
+                        [k_a * ncs * nrs + j_a * nrs + i_a] =
+                            (uint16_t)(v / somme_facteur + 0.5);
+                        break;
 
-						case(VFF_TYP_4_BYTE):
-							ULONGDATA(output)[k_a*ncs*nrs+j_a*nrs+i_a]=(uint32_t)(v/somme_facteur +0.5);
-							break;
+                      case (VFF_TYP_4_BYTE):
+                        ULONGDATA(output)
+                        [k_a * ncs * nrs + j_a * nrs + i_a] =
+                            (uint32_t)(v / somme_facteur + 0.5);
+                        break;
 
-						case(VFF_TYP_FLOAT):
-							FLOATDATA(output)[k_a*ncs*nrs+j_a*nrs+i_a]=(float)(v/somme_facteur);
-							break;
+                      case (VFF_TYP_FLOAT):
+                        FLOATDATA(output)
+                        [k_a * ncs * nrs + j_a * nrs + i_a] =
+                            (float)(v / somme_facteur);
+                        break;
 
-						case(VFF_TYP_DOUBLE):
-							DOUBLEDATA(output)[k_a*ncs*nrs+j_a*nrs+i_a]=(v/somme_facteur);
-							break;
-					}
-					pixel++;
-				}
+                      case (VFF_TYP_DOUBLE):
+                        DOUBLEDATA(output)
+                        [k_a * ncs * nrs + j_a * nrs + i_a] =
+                            (v / somme_facteur);
+                        break;
+                      }
+                      pixel++;
+                    }
+                  }
+                }
 
-		if(i_a_arrivee < (nrs -1))
+                if(i_a_arrivee < (nrs -1))
 		{
 			i_d= (i_a_arrivee +1)*factor_rs;
 		}
@@ -296,10 +332,10 @@ int main(int argc, char* argv[])
 				if(k_a_arrivee < (nd -1))
 				{
 					k_d= (k_a_arrivee +1)*factor_d;
-				}
-				else
-					break;
-			}
+                                } else {
+                                  break;
+                                }
+                        }
 		}
 	}
 

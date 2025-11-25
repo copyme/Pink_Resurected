@@ -70,8 +70,10 @@ int32_t jcfindextrema(struct xvimage *in,         /* GA de depart */
     return(0);
   }
 
-  for (x = 0; x < 2*N; x++) LABEL[x] = -1;
-  
+  for (x = 0; x < 2 * N; x++) {
+    LABEL[x] = -1;
+  }
+
   LIFO = CreeLifoVide(2*N);
   if (LIFO == NULL)
   {   
@@ -83,7 +85,7 @@ int32_t jcfindextrema(struct xvimage *in,         /* GA de depart */
   //printf("taille du GA : %d\n",N);
   /* on explore d'abord les aretes horizontales */
 
-  for(j = 0; j < cs; j++)
+  for (j = 0; j < cs; j++) {
     for(i = 0; i < rs -1; i++)
     {
       x = j * rs + i;
@@ -130,10 +132,11 @@ int32_t jcfindextrema(struct xvimage *in,         /* GA de depart */
 	  
 	} /* while  (! LifoVide(LIFO)) */
       } /* if (LABEL[x] == 0) */
-    } /* for (x = 0; x < N; x++) */
-  
+    }   /* for (x = 0; x < N; x++) */
+  }
+
   /* Puis on explore les aretes verticales */
-  for(j = 0; j < cs -1; j++)
+  for (j = 0; j < cs - 1; j++) {
     for(i = 0; i < rs; i++)
     {
       x = N + j * rs + i;
@@ -180,15 +183,24 @@ int32_t jcfindextrema(struct xvimage *in,         /* GA de depart */
 	  
 	} /* while  (! LifoVide(LIFO)) */
       } /* if (LABEL[x] == 0) */
-    } /* for (x = 0; x < N; x++) */
-  
+    }   /* for (x = 0; x < N; x++) */
+  }
+
   /* on prepare l'image de sortie */
-  
-  for(x = 0; x < 2*N; x++) if(LABEL[x] > 0) G[x] = 255; else G[x] = 0;
-  
+
+  for (x = 0; x < 2 * N; x++) {
+    if (LABEL[x] > 0) {
+      G[x] = 255;
+    } else {
+      G[x] = 0;
+    }
+  }
+
   LifoTermine(LIFO);
   free(LABEL);
-  if (tailleplateau != 2 * N) *nlabels += 1; /* pour le niveau 0 */
+  if (tailleplateau != 2 * N) {
+    *nlabels += 1; /* pour le niveau 0 */
+  }
   return 1;
 }
 
@@ -215,8 +227,10 @@ int32_t jclabelextrema(struct xvimage *in,         /* GA de depart */
     return(0);
   }
 
-  for (x = 0; x < 2*N; x++) (*label)[x] = -1;
-  
+  for (x = 0; x < 2 * N; x++) {
+    (*label)[x] = -1;
+  }
+
   LIFO = CreeLifoVide(2*N);
   if (LIFO == NULL)
   {   
@@ -227,7 +241,7 @@ int32_t jclabelextrema(struct xvimage *in,         /* GA de depart */
   *nlabels = 0;
   /* on explore d'abord les aretes horizontales */
 
-  for(j = 0; j < cs; j++)
+  for (j = 0; j < cs; j++) {
     for(i = 0; i < rs -1; i++)
     {
       x = j * rs + i;
@@ -273,10 +287,11 @@ int32_t jclabelextrema(struct xvimage *in,         /* GA de depart */
 	  
 	} /* while  (! LifoVide(LIFO)) */
       } /* if (LABEL[x] == 0) */
-    } /* for (x = 0; x < N; x++) */
-  
+    }   /* for (x = 0; x < N; x++) */
+  }
+
   /* Puis on explore les aretes verticales */
-  for(j = 0; j < cs -1; j++)
+  for (j = 0; j < cs - 1; j++) {
     for(i = 0; i < rs; i++)
     {
       x = N + j * rs + i;
@@ -323,8 +338,9 @@ int32_t jclabelextrema(struct xvimage *in,         /* GA de depart */
 	  
 	} /* while  (! LifoVide(LIFO)) */
       } /* if (LABEL[x] == 0) */
-    } /* for (x = 0; x < N; x++) */
-  
+    }   /* for (x = 0; x < N; x++) */
+  }
+
   /* on prepare l'image de sortie */
     
   LifoTermine(LIFO);

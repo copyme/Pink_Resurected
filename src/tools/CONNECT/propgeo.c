@@ -102,19 +102,31 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  connex = atoi(argv[3]);  
+  connex = atoi(argv[3]);
 
-  if (strcmp(argv[4], "min1") == 0) function = MIN1; else
-  if (strcmp(argv[4], "min") == 0) function = MIN; else
-  if (strcmp(argv[4], "minb") == 0) function = MINB; else
-  if (strcmp(argv[4], "max1") == 0) function = MAX1; else
-  if (strcmp(argv[4], "max") == 0) function = MAX; else
-  if (strcmp(argv[4], "maxb") == 0) function = MAXB; else
-  if (strcmp(argv[4], "moy1") == 0) function = MOY1; else
-  if (strcmp(argv[4], "moy") == 0) function = MOY; else
-  if (strcmp(argv[4], "moyb") == 0) function = MOYB; else
-  if (strcmp(argv[4], "randb") == 0) function = RANDB; else
+  if (strcmp(argv[4], "min1") == 0) {
+    function = MIN1;
+  } else if (strcmp(argv[4], "min") == 0) {
+    function = MIN;
+  } else if (strcmp(argv[4], "minb") == 0) {
+    function = MINB;
+  } else if (strcmp(argv[4], "max1") == 0) {
+    function = MAX1;
+  } else if (strcmp(argv[4], "max") == 0) {
+    function = MAX;
+  } else if (strcmp(argv[4], "maxb") == 0) {
+    function = MAXB;
+  } else if (strcmp(argv[4], "moy1") == 0) {
+    function = MOY1;
+  } else if (strcmp(argv[4], "moy") == 0) {
+    function = MOY;
+  } else if (strcmp(argv[4], "moyb") == 0) {
+    function = MOYB;
+  } else if (strcmp(argv[4], "randb") == 0) {
+    function = RANDB;
+  } else {
     function = atoi(argv[4]);
+  }
 
   if (datatype(image) == VFF_TYP_1_BYTE)
   {

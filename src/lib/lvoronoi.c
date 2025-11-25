@@ -59,7 +59,11 @@ int32_t LePlusProcheVoisin(mcgeo_point *S, int32_t n, int32_t i)
   int32_t j, k;
   double d, dk;
 
-  if (i == 0) j = 1; else j = 0; 
+  if (i == 0) {
+    j = 1;
+  } else {
+    j = 0;
+  }
   d = carredistance(S[i], S[j]);
   for (k = 0; k < n; k++)
   {
@@ -78,8 +82,11 @@ int32_t EstVoisin(int32_t **voisins, int32_t *nbvois, int32_t i, int32_t k)
 /* test si k est dans la liste des voisins de i */
 {
   int32_t j;
-  for (j = 0; j < nbvois[i]; j++)
-    if (voisins[i][j] == k) return 1;
+  for (j = 0; j < nbvois[i]; j++) {
+    if (voisins[i][j] == k) {
+      return 1;
+    }
+  }
   return 0;
 } /* EstVoisin() */
 
@@ -112,10 +119,12 @@ int32_t VoisinSuivant(mcgeo_point *S, int32_t n, int32_t **v, int32_t *nv, int32
     if ((k != i) && (k != j) && (estsitue(S[k], S[i], S[j]) == cote))
     {
       cosinus = cosangle(S[k], S[i], S[j]);
-      if (cosinus < cosmin) { cosmin = cosinus; a = k; } 
-      else if ((cosinus == cosmin) && 
-               ( EstVoisin(v, nv, i, k) || EstVoisin(v, nv, j, k) ||
-                 EstVoisin(v, nv, k, i) || EstVoisin(v, nv, k, j))) a = k;
+      if (cosinus < cosmin) { cosmin = cosinus; a = k;
+      } else if ((cosinus == cosmin) &&
+                 (EstVoisin(v, nv, i, k) || EstVoisin(v, nv, j, k) ||
+                  EstVoisin(v, nv, k, i) || EstVoisin(v, nv, k, j))) {
+        a = k;
+      }
     }
   }
 
@@ -150,8 +159,10 @@ void InsererAGauche(int32_t **voisins, int32_t *nbvois, int32_t k, int32_t i)
 /* ==================================== */
 /* insertion de k au debut de la liste de voisins de i */
 {
-  int32_t j; 
-  for (j = nbvois[i]; j > 0; j--) voisins[i][j] = voisins[i][j - 1];
+  int32_t j;
+  for (j = nbvois[i]; j > 0; j--) {
+    voisins[i][j] = voisins[i][j - 1];
+  }
 
   voisins[i][0] = k;
   nbvois[i]++;
@@ -162,11 +173,19 @@ void Retirer1(int32_t **voisins, int32_t *nbvois, int32_t k, int32_t i)
 /* ==================================== */
 /* retirer k de la liste de voisins de i */
 {
-  int32_t j, h, n = nbvois[i]; 
+  int32_t j, h, n = nbvois[i];
 
-  for (j = 0; j < n; j++) if (voisins[i][j] == k) break;
-  if (j == n) return;
-  for (h = j; h < n-1; h++) voisins[i][h] = voisins[i][h+1];
+  for (j = 0; j < n; j++) {
+    if (voisins[i][j] == k) {
+      break;
+    }
+  }
+  if (j == n) {
+    return;
+  }
+  for (h = j; h < n - 1; h++) {
+    voisins[i][h] = voisins[i][h + 1];
+  }
   nbvois[i]--;
 } /* Retirer1() */
 
@@ -315,9 +334,9 @@ printf("vprec = %d ; vcour = %d ; vsuiv = %d\n", vprec, vcour, vsuiv);
 	// retirer le sommet vcour de la liste des voisins de i (et inversement)
 	Retirer2(v, nv, i, vcour);
 	k--;
+      } else {
+        j++;
       }
-      else
-	j++;
     } // while (j < k) 
   }
 

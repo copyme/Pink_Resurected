@@ -90,34 +90,54 @@ int main(int argc, char **argv)
 
   if (ds > 1)
   {
-    for (x = 0; x < rs; x++)
-    for (y = 0; y < cs; y++) 
-      Im[0 * ps + y * rs + x] = NDG_MAX;          /* plan z = 0 */
-    for (x = 0; x < rs; x++)
-    for (y = 0; y < cs; y++) 
-      Im[(ds-1) * ps + y * rs + x] = NDG_MAX;     /* plan z = ds-1 */
+    for (x = 0; x < rs; x++) {
+      for (y = 0; y < cs; y++) {
+        Im[0 * ps + y * rs + x] = NDG_MAX; /* plan z = 0 */
+      }
+    }
+    for (x = 0; x < rs; x++) {
+      for (y = 0; y < cs; y++) {
+        Im[(ds - 1) * ps + y * rs + x] = NDG_MAX; /* plan z = ds-1 */
+      }
+    }
 
-    for (x = 0; x < rs; x++)
-    for (z = 0; z < ds; z++) 
-      Im[z * ps + 0 * rs + x] = NDG_MAX;          /* plan y = 0 */
-    for (x = 0; x < rs; x++)
-    for (z = 0; z < ds; z++) 
-      Im[z * ps + (cs-1) * rs + x] = NDG_MAX;     /* plan y = cs-1 */
+    for (x = 0; x < rs; x++) {
+      for (z = 0; z < ds; z++) {
+        Im[z * ps + 0 * rs + x] = NDG_MAX; /* plan y = 0 */
+      }
+    }
+    for (x = 0; x < rs; x++) {
+      for (z = 0; z < ds; z++) {
+        Im[z * ps + (cs - 1) * rs + x] = NDG_MAX; /* plan y = cs-1 */
+      }
+    }
 
-    for (y = 0; y < cs; y++)
-    for (z = 0; z < ds; z++) 
-      Im[z * ps + y * rs + 0] = NDG_MAX;          /* plan x = 0 */
-    for (y = 0; y < cs; y++)
-    for (z = 0; z < ds; z++) 
-      Im[z * ps + y * rs + (rs-1)] = NDG_MAX;     /* plan x = rs-1 */
+    for (y = 0; y < cs; y++) {
+      for (z = 0; z < ds; z++) {
+        Im[z * ps + y * rs + 0] = NDG_MAX; /* plan x = 0 */
+      }
+    }
+    for (y = 0; y < cs; y++) {
+      for (z = 0; z < ds; z++) {
+        Im[z * ps + y * rs + (rs - 1)] = NDG_MAX; /* plan x = rs-1 */
+      }
+    }
   }
   else
   {
-    for (x = 0; x < rs; x++) Im[x] = NDG_MAX;
-    for (x = 0; x < rs; x++) Im[(cs - 1) * rs + x] = NDG_MAX;
+    for (x = 0; x < rs; x++) {
+      Im[x] = NDG_MAX;
+    }
+    for (x = 0; x < rs; x++) {
+      Im[(cs - 1) * rs + x] = NDG_MAX;
+    }
 
-    for (y = 1; y < cs - 1; y++) Im[y * rs] = NDG_MAX;
-    for (y = 1; y < cs - 1; y++) Im[y * rs + rs - 1] = NDG_MAX;
+    for (y = 1; y < cs - 1; y++) {
+      Im[y * rs] = NDG_MAX;
+    }
+    for (y = 1; y < cs - 1; y++) {
+      Im[y * rs + rs - 1] = NDG_MAX;
+    }
   }
 
   /* ---------------------------------------------------------- */

@@ -70,9 +70,12 @@ int32_t lselrect(
   /* calcul du resultat */
   /* ---------------------------------------------------------- */
 
-  for (yy = 0; yy < cs; yy++)
-    for (xx = 0; xx < rs; xx++)
-      if ((yy < y) || (yy > y + h) || (xx < x) || (xx > x + w))
+  for (yy = 0; yy < cs; yy++) {
+    for (xx = 0; xx < rs; xx++) {
+      if ((yy < y) || (yy > y + h) || (xx < x) || (xx > x + w)) {
         pt[yy * rs + xx] = NDG_MIN;
+      }
+    }
+  }
   return 1;
 }

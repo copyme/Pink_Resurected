@@ -338,18 +338,18 @@ int32_t llpetopo_llpetopo(
     {
       fprintf(stderr,"lpetopo() : construction cbt : PAS DE cc DANS LE VOISINAGE !!!\n"); 
       
-      return(0);  
+      return(0);
     } else
 #endif
-    if (ncc == 1)
+        if (ncc == 1) {
       M[x] = etiqcc[0];
-    else
-    {
+    } else {
       newcell = CreateCell(CBT, &nbcell, nbmaxcell);
       M[x] = newcell;
       SetData(CBT, newcell, SOURCE[x]);    /* conceptuellement : SOURCE[x] + 1 */
-      for (i = 0; i < ncc; i++)
+      for (i = 0; i < ncc; i++) {
         SetFather(CBT, etiqcc[i], newcell);
+      }
     }
 
     for (k = 0; k < 8; k += 2)     /* parcourt les voisins en 4-connexite */
@@ -378,8 +378,9 @@ int32_t llpetopo_llpetopo(
 
   for (x = 0; x < N; x++)
   {
-    if ((M[x] >= nminima) && (T[M[x] - nminima]))
+    if ((M[x] >= nminima) && (T[M[x] - nminima])) {
       M[x] = T[M[x] - nminima];
+    }
   } /* for x */
 
   free(T);
@@ -411,16 +412,19 @@ int32_t llpetopo_llpetopo(
   /* il faut les nettoyer.  */
   for (x = nminima; x < nbcell - 1; x++) /* pas les feuilles, pas la racine */
   {
-    if ((FirstSon(CBT, x + 1) - FirstSon(CBT, x)) == 0)
+    if ((FirstSon(CBT, x + 1) - FirstSon(CBT, x)) == 0) {
       Label(CBT, x) = DISPARU;
+    }
   }
 
   FahFlush(FAH);
 
   /* marque VALIDE les composantes ayant des points marques dans leur zone d'influence */
-  for (i = 0; i < N; i++)
-    if (B[i])
+  for (i = 0; i < N; i++) {
+    if (B[i]) {
       Label(CBT, M[i]) = VALIDE;
+    }
+  }
 
   /* marque INVALIDE les feuilles non marquees et les empile. */
   for (x = 1; x < nminima; x++)
@@ -450,9 +454,12 @@ int32_t llpetopo_llpetopo(
       toutes_invalides = 1;
       y = FirstSon(CBT, x);
       n = FirstSon(CBT, x + 1) - FirstSon(CBT, x);
-      for (j = 0; j < n; j++)
-        if ((Label(CBT, I[y+j]) != INVALIDE) && (Label(CBT, I[y+j]) != DISPARU))
+      for (j = 0; j < n; j++) {
+        if ((Label(CBT, I[y + j]) != INVALIDE) &&
+            (Label(CBT, I[y + j]) != DISPARU)) {
           toutes_invalides = 0;
+        }
+      }
       if (toutes_invalides)
       {
         Label(CBT, x) = INVALIDE;
@@ -476,14 +483,18 @@ int32_t llpetopo_llpetopo(
     if (T[x] != 0)
     {
       k = x;
-      while (T[k] != 0) k = T[k];
+      while (T[k] != 0) {
+        k = T[k];
+      }
       T[x] = k;
     }
   }
 
-  for (x = 0; x < N; x++)      /* actualise les etiquettes image */
-    if (T[M[x]] != 0) M[x] = T[M[x]];
-
+  for (x = 0; x < N; x++) { /* actualise les etiquettes image */
+    if (T[M[x]] != 0) {
+      M[x] = T[M[x]];
+    }
+  }
 
 #ifdef VERBOSE
   fprintf(stderr,"FIN DE L'ELIMINATION DES MINIMA NON PERTINENTS\n");
@@ -494,7 +505,9 @@ int32_t llpetopo_llpetopo(
   /* ================================================ */
 
   /* remet les labels a 0 car ils sont utilises par LowComAnc */
-  for (x = 1; x < nbcell; x++) Label(CBT, x) = 0;
+  for (x = 1; x < nbcell; x++) {
+    Label(CBT, x) = 0;
+  }
 
   FahFlush(FAH);
 

@@ -128,8 +128,16 @@ void ShowGraphe(graphe * g, char *filename, double s, double r, double t, double
   ymin = ymax = s*g->y[0];
   for (i = 1; i < n; i++) 
   {
-    if (s*g->x[i] < xmin) xmin = s*g->x[i]; else if (s*g->x[i] > xmax) xmax = s*g->x[i];
-    if (s*g->y[i] < ymin) ymin = s*g->y[i]; else if (s*g->y[i] > ymax) ymax = s*g->y[i];
+    if (s * g->x[i] < xmin) {
+      xmin = s * g->x[i];
+    } else if (s * g->x[i] > xmax) {
+      xmax = s * g->x[i];
+    }
+    if (s * g->y[i] < ymin) {
+      ymin = s * g->y[i];
+    } else if (s * g->y[i] > ymax) {
+      ymax = s * g->y[i];
+    }
   }
   EPSHeader(fd, xmax - xmin + 2.0 * marge, ymax - ymin + 2.0 * marge, 1.0, 14);
   
@@ -140,8 +148,8 @@ void ShowGraphe(graphe * g, char *filename, double s, double r, double t, double
 
   /* dessine le complexe */
   PSSetColor (fd, 0.75);
-  PSSetLineWidth (fd, 5);    
-  for (i = 0; i < n; i++) 
+  PSSetLineWidth (fd, 5);
+  for (i = 0; i < n; i++) {
     if (K[i])
     {
       xx = i%rs;
@@ -149,31 +157,45 @@ void ShowGraphe(graphe * g, char *filename, double s, double r, double t, double
       if ((xx%2 == 0) && (yy%2 == 0))
       {
 	PSDrawdisc(fd, s*g->x[i]-xmin+marge, s*g->y[i]-ymin+marge, 5);
-	if ((xx < rs-2) && K[i+2])
-	  PSLine(fd, s*g->x[i]-xmin+marge, s*g->y[i]-ymin+marge, s*g->x[i+2]-xmin+marge, s*g->y[i+2]-ymin+marge);
-	if ((i < n-(rs+rs)) && K[i+rs+rs])
-	  PSLine(fd, s*g->x[i]-xmin+marge, s*g->y[i]-ymin+marge, s*g->x[i+rs+rs]-xmin+marge, s*g->y[i+rs+rs]-ymin+marge);
+        if ((xx < rs - 2) && K[i + 2]) {
+          PSLine(fd, s * g->x[i] - xmin + marge, s * g->y[i] - ymin + marge,
+                 s * g->x[i + 2] - xmin + marge,
+                 s * g->y[i + 2] - ymin + marge);
+        }
+        if ((i < n - (rs + rs)) && K[i + rs + rs]) {
+          PSLine(fd, s * g->x[i] - xmin + marge, s * g->y[i] - ymin + marge,
+                 s * g->x[i + rs + rs] - xmin + marge,
+                 s * g->y[i + rs + rs] - ymin + marge);
+        }
       }
     }
+  }
   PSSetColor (fd, 0.0);
   PSSetLineWidth (fd, 1);
 
   /* dessine les sommets */
-  for (i = 0; i < n; i++) 
+  for (i = 0; i < n; i++) {
     if (K[i])
     {
-      if (col_sommets && (g->v_sommets[i] != 0)) 
-	PSDrawdisc(fd, s*g->x[i]-xmin+marge, s*g->y[i]-ymin+marge, r);
-      else
-	PSDrawcircle(fd, s*g->x[i]-xmin+marge, s*g->y[i]-ymin+marge, r);
+      if (col_sommets && (g->v_sommets[i] != 0)) {
+        PSDrawdisc(fd, s*g->x[i]-xmin+marge, s*g->y[i]-ymin+marge, r);
+      } else {
+        PSDrawcircle(fd, s * g->x[i] - xmin + marge, s * g->y[i] - ymin + marge,
+                     r);
+      }
     }
+  }
 
-  if (noms_sommets && g->nomsommet)
-    for (i = 0; i < n; i++) 
-      if (K[i])
-	PSString(fd, s*g->x[i]-xmin+marge+2*r, s*g->y[i]-ymin+marge-2*r, g->nomsommet[i]);
-  if (v_sommets)
-    for (i = 0; i < n; i++) 
+  if (noms_sommets && g->nomsommet) {
+    for (i = 0; i < n; i++) {
+      if (K[i]) {
+        PSString(fd, s * g->x[i] - xmin + marge + 2 * r,
+                 s * g->y[i] - ymin + marge - 2 * r, g->nomsommet[i]);
+      }
+    }
+  }
+  if (v_sommets) {
+    for (i = 0; i < n; i++) {
 #ifdef DESSINECOLSEQ
       if (K[i] && !head[i] && (g->v_sommets[i] < 0))
       { //pour dessiner une col. seq.
@@ -186,55 +208,61 @@ void ShowGraphe(graphe * g, char *filename, double s, double r, double t, double
 	sprintf(buf, "%.1f", (double)(g->v_sommets[i]));
 	PSString(fd, s*g->x[i]-xmin+marge+2*r, s*g->y[i]-ymin+marge+2*r, buf);
       }
+    }
+  }
 #endif
 
   /* dessine les arcs */
-  for (i = 0; i < n; i++)
-    if (all_arcs || head[i])
-      for (p = g->gamma[i]; p != NULL; p = p->next)
-      {
-	j = p->som;
-	PSLine(fd, s*g->x[i]-xmin+marge, s*g->y[i]-ymin+marge, s*g->x[j]-xmin+marge, s*g->y[j]-ymin+marge);
+      for (i = 0; i < n; i++) {
+        if (all_arcs || head[i]) {
+          for (p = g->gamma[i]; p != NULL; p = p->next) {
+            j = p->som;
+            PSLine(fd, s * g->x[i] - xmin + marge, s * g->y[i] - ymin + marge,
+                   s * g->x[j] - xmin + marge, s * g->y[j] - ymin + marge);
+          }
+        }
       }
 
   /* dessine les fleches sur les arcs */
   if (t > 0.0)
   {
-    for (i = 0; i < n; i++) 
-    if (all_arcs || head[i])
-    for (p = g->gamma[i]; p != NULL; p = p->next)
-    {
-      j = p->som;
-      x1 = s*g->x[i]-xmin+marge;
-      y1 = s*g->y[i]-ymin+marge;
-      x2 = s*g->x[j]-xmin+marge;
-      y2 = s*g->y[j]-ymin+marge;
-      x = (x2 + x1) / 2; // milieu de l'arc
-      y = (y2 + y1) / 2;
-      a = x2 - x1;
-      b = y2 - y1;             /* (a,b) est un vecteur directeur de l'arc */
-      d = sqrt(a * a + b * b); /* longueur de l'arc */
-      if (d > 1) // sinon on ne dessine pas la fleche
-      { 
-        a /= d; b /= d;          /* norme le vecteur */
-        x1 = x + 2 * t * a;
-        y1 = y + 2 * t * b;      /* pointe de la fleche */
-        x2 = x - 2 * t * a;
-        y2 = y - 2 * t * b;      /* base de la fleche */
-        x3 = x2 + t * -b;        /* (-b,a) est normal a (a,b) */
-        y3 = y2 + t * a;
-        x2 = x2 - t * -b;
-        y2 = y2 - t * a;
-        PSLine(fd, x1, y1, x2, y2);
-        PSLine(fd, x2, y2, x3, y3);
-        PSLine(fd, x3, y3, x1, y1);
+    for (i = 0; i < n; i++) {
+      if (all_arcs || head[i]) {
+        for (p = g->gamma[i]; p != NULL; p = p->next) {
+          j = p->som;
+          x1 = s * g->x[i] - xmin + marge;
+          y1 = s * g->y[i] - ymin + marge;
+          x2 = s * g->x[j] - xmin + marge;
+          y2 = s * g->y[j] - ymin + marge;
+          x = (x2 + x1) / 2; // milieu de l'arc
+          y = (y2 + y1) / 2;
+          a = x2 - x1;
+          b = y2 - y1;             /* (a,b) est un vecteur directeur de l'arc */
+          d = sqrt(a * a + b * b); /* longueur de l'arc */
+          if (d > 1)               // sinon on ne dessine pas la fleche
+          {
+            a /= d;
+            b /= d; /* norme le vecteur */
+            x1 = x + 2 * t * a;
+            y1 = y + 2 * t * b; /* pointe de la fleche */
+            x2 = x - 2 * t * a;
+            y2 = y - 2 * t * b; /* base de la fleche */
+            x3 = x2 + t * -b;   /* (-b,a) est normal a (a,b) */
+            y3 = y2 + t * a;
+            x2 = x2 - t * -b;
+            y2 = y2 - t * a;
+            PSLine(fd, x1, y1, x2, y2);
+            PSLine(fd, x2, y2, x3, y3);
+            PSLine(fd, x3, y3, x1, y1);
+          }
+        }
       }
     }
   }
   
   PSFooter(fd);
   fclose(fd);
-} // ShowGraphe()
+    } // ShowGraphe()
 #endif
 
 /* =============================================================== */
@@ -303,7 +331,9 @@ int main(int32_t argc, char **argv)
         exit(1);
       }
       L = SLONGDATA(prio);
-      for (x = 0; x < N; x++) L[x] = (int32_t)B[x];
+      for (x = 0; x < N; x++) {
+        L[x] = (int32_t)B[x];
+      }
       freeimage(prio2);
     }
     else if (datatype(prio2) == VFF_TYP_4_BYTE)
@@ -329,9 +359,14 @@ int main(int32_t argc, char **argv)
       fprintf(stderr, "%s: allocimage failed\n", argv[0]);
       exit(1);
     }
-    for (i = 0; i < N; i++) // inverse l'image
-      if (K[i]) K[i] = 0; else K[i] = NDG_MAX;
-  
+    for (i = 0; i < N; i++) { // inverse l'image
+      if (K[i]) {
+        K[i] = 0;
+      } else {
+        K[i] = NDG_MAX;
+      }
+    }
+
     if (priocode == 0)
     {
       if (! ldisteuc(k, prio))
@@ -375,8 +410,13 @@ int main(int32_t argc, char **argv)
         exit(1);
       }
     }
-    for (i = 0; i < N; i++) // re-inverse l'image
-      if (K[i]) K[i] = 0; else K[i] = NDG_MAX;
+    for (i = 0; i < N; i++) { // re-inverse l'image
+      if (K[i]) {
+        K[i] = 0;
+      } else {
+        K[i] = NDG_MAX;
+      }
+    }
   }
 
   if (argc == 6) 
@@ -419,11 +459,13 @@ int main(int32_t argc, char **argv)
 
     perm = (boolean *)calloc(N, sizeof(boolean)); assert(perm != NULL);
     head = (boolean *)calloc(N, sizeof(boolean)); assert(head != NULL);
-    for (i = 0; i < N; i++)
-      if (flow->v_sommets[i] == TF_PERMANENT)
-	perm[i] = TRUE;
-      else if (flow->v_sommets[i] == TF_HEAD)
-	head[i] = TRUE;
+    for (i = 0; i < N; i++) {
+      if (flow->v_sommets[i] == TF_PERMANENT) {
+        perm[i] = TRUE;
+      } else if (flow->v_sommets[i] == TF_HEAD) {
+        head[i] = TRUE;
+      }
+    }
 
 #ifdef SHOWGRAPHS
     ShowGraphe(flow, "_flow1", 30, 1, 3, 20, 0, 0, 0, 1, K, rs, head);
@@ -446,9 +488,10 @@ int main(int32_t argc, char **argv)
     ShowGraphe(forest, "_forest", 30, 1, 3, 20, 0, 0, 0, 1, K, rs, head);
 #endif
   }
-  
-  if (flow != NULL)
-    SaveGraphe(flow, argv[argc-1]);
+
+  if (flow != NULL) {
+    SaveGraphe(flow, argv[argc - 1]);
+  }
 
   freeimage(k);
   free(perm);

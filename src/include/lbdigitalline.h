@@ -18,16 +18,18 @@ typedef int32_t Z;
 
 // int abs(int u)        { if ( u >= 0 ) return u; else  return -u; }
 static int max(int a, int b) {
-  if (a > b)
+  if (a > b) {
     return a;
-  else
+  } else {
     return b;
+  }
 }
 static int min(int a, int b) {
-  if (a < b)
+  if (a < b) {
     return a;
-  else
+  } else {
     return b;
+  }
 }
 
 class Q {
@@ -89,11 +91,12 @@ public:
   void prime() {
     int n =
         (abs(x) < abs(y) ? abs(x) : abs(y)); // reduction gcd=1  // to replace
-    for (int d = 2; d <= n; d++)
+    for (int d = 2; d <= n; d++) {
       while ((x % d == 0) && (y % d == 0)) {
         x /= d;
         y /= d;
       }
+    }
   }
 };
 

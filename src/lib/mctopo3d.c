@@ -74,12 +74,13 @@ static voxel cubep_topo3d[27];
 
 static int32_t is_on_frame(index_t p, index_t rs, index_t ps, index_t N)
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 1;
-  else
+  } else {
     return 0;
+  }
 }
   
 /* ========================================== */
@@ -122,8 +123,8 @@ void mctopo3d_construitcube(voxel * cube)
 {
   uint8_t x,y,z,u,v,w;
   pvoxel p;
-  for (z = 0; z < 3; z++)
-    for (y = 0; y < 3; y++)
+  for (z = 0; z < 3; z++) {
+    for (y = 0; y < 3; y++) {
       for (x = 0; x < 3; x++)
       {
       	p = &(cube[encode(x,y,z)]);
@@ -140,17 +141,19 @@ void mctopo3d_construitcube(voxel * cube)
       	p->n18v = 0;
       	p->n26v = 0;
 
-        if ((x == 1) && (y == 1) && (z == 1))  p->type = centre;
-        else
-          if (mcabs(1-x)+mcabs(1-y)+mcabs(1-z) == 1) p->type = face;
-          else
-            if (mcabs(1-x)+mcabs(1-y)+mcabs(1-z) <= 2) p->type = arete;
-            else
-              p->type = coin;
+        if ((x == 1) && (y == 1) && (z == 1)) {
+          p->type = centre;
+        } else if (mcabs(1 - x) + mcabs(1 - y) + mcabs(1 - z) == 1) {
+          p->type = face;
+        } else if (mcabs(1 - x) + mcabs(1 - y) + mcabs(1 - z) <= 2) {
+          p->type = arete;
+        } else {
+          p->type = coin;
+        }
 
-      	for (w = 0; w < 3; w++)
-       	  for (v = 0; v < 3; v++)
-      	    for (u = 0; u < 3; u++)
+        for (w = 0; w < 3; w++) {
+          for (v = 0; v < 3; v++) {
+            for (u = 0; u < 3; u++)
       	    {
               if (mcabs(u-x)+mcabs(v-y)+mcabs(w-z) == 1)
 	      {
@@ -173,8 +176,12 @@ void mctopo3d_construitcube(voxel * cube)
                   p->v26[p->n26v++] = &(cube[encode(u,v,w)]);
 		}
               }
-      	    }  /* for w v u */
+            } /* for w v u */
+          }
+        }
       } /* for z y x */
+    }
+  }
 } /* mctopo3d_construitcube() */
 
 #ifdef DEBUG
@@ -211,7 +218,9 @@ uint32_t mctopo3d_encodecube()
   for (n = 0; n < 27; n++)
   {
     p = &(cube_topo3d[n]);
-    if (p->val) i = i | (1<<n);        
+    if (p->val) {
+      i = i | (1 << n);
+    }
   } /* for n */
   return i;
 } /* mctopo3d_encodecube() */
@@ -243,7 +252,9 @@ void mctopo3d_geodesic_neighborhood(voxel * cube, uint8_t connex, uint8_t s)
   }
   
   /* met a 0 le champ lab des points du cube */
-  for (n = 0; n < 27; n++) cube[n].lab = 0;
+  for (n = 0; n < 27; n++) {
+    cube[n].lab = 0;
+  }
 
   /* met a 1 le champ lab des voisins de valeur 1 du point central pc */
   pc = &(cube[13]);
@@ -253,20 +264,22 @@ void mctopo3d_geodesic_neighborhood(voxel * cube, uint8_t connex, uint8_t s)
     if (p->val == 1)
     { p->lab = 1; LifoPush(LIFO_topo3d1, (int32_t)(p-pc)); }
   }
-  if (connex > 6)
+  if (connex > 6) {
     for (n = 0; n < pc->n12v; n++)
     {
       p = pc->v12[n];
       if (p->val == 1)
       { p->lab = 1; LifoPush(LIFO_topo3d1, (int32_t)(p-pc)); }
     }
-  if (connex > 18)
+  }
+  if (connex > 18) {
     for (n = 0; n < pc->n8v; n++)
     {
       p = pc->v8[n];
       if (p->val == 1)
       { p->lab = 1; LifoPush(LIFO_topo3d1, (int32_t)(p-pc)); }
     }
+  }
   s--;
 
   while (s > 0)
@@ -281,20 +294,22 @@ void mctopo3d_geodesic_neighborhood(voxel * cube, uint8_t connex, uint8_t s)
         if ((pp != pc) && (pp->val == 1) && (pp->lab == 0))
         { pp->lab = 1; LifoPush(LIFO_topo3d2, (int32_t)(pp-pc)); }
       }
-      if (connex > 6)
+      if (connex > 6) {
         for (n = 0; n < p->n12v; n++)
         {
           pp = p->v12[n];
           if ((pp != pc) && (pp->val == 1) && (pp->lab == 0))
           { pp->lab = 1; LifoPush(LIFO_topo3d2, (int32_t)(pp-pc)); }
         }
-      if (connex > 18)
+      }
+      if (connex > 18) {
         for (n = 0; n < p->n8v; n++)
         {
           pp = p->v8[n];
           if ((pp != pc) && (pp->val == 1) && (pp->lab == 0))
           { pp->lab = 1; LifoPush(LIFO_topo3d2, (int32_t)(pp-pc)); }
         }
+      }
     } /* while (!LifoVide(LIFO_topo3d1)) */
     s--;
     LIFOtmp = LIFO_topo3d1;
@@ -346,7 +361,9 @@ uint8_t mctopo3d_nbcomp(voxel * cube, uint8_t connex)
   pvoxel p,pp;
 
   ncc = 0;
-  for (n = 0; n < 27; n++) cube[n].lab2 = 0;
+  for (n = 0; n < 27; n++) {
+    cube[n].lab2 = 0;
+  }
   for (n = 0; n < 27; n++)
   {
     p = &(cube[n]);
@@ -368,7 +385,7 @@ uint8_t mctopo3d_nbcomp(voxel * cube, uint8_t connex)
             LifoPush(LIFO_topo3d1, pp->n);
 	  }
         } /* for v */
-        if (connex > 6)
+        if (connex > 6) {
           for (v = 0; v < p->n12v; v++)
           {
             pp = p->v12[v];
@@ -378,7 +395,8 @@ uint8_t mctopo3d_nbcomp(voxel * cube, uint8_t connex)
               LifoPush(LIFO_topo3d1, pp->n);
 	    }
           } /* for v */
-        if (connex > 18)
+        }
+        if (connex > 18) {
           for (v = 0; v < p->n8v; v++)
           {
             pp = p->v8[v];
@@ -388,6 +406,7 @@ uint8_t mctopo3d_nbcomp(voxel * cube, uint8_t connex)
               LifoPush(LIFO_topo3d1, pp->n);
 	    }
           } /* for v */
+        }
       } /* while (!LifoVide(LIFO_topo3d1)) */
     } /* if */
   } /* for n */
@@ -410,7 +429,9 @@ uint8_t mctopo3d_nbvois6(voxel * cube)
   for (v = 0; v < p->n6v; v++)
   {
     pp = p->v6[v];
-    if (pp->val) mctopo3d_nbvois++;
+    if (pp->val) {
+      mctopo3d_nbvois++;
+    }
   }
 
   return mctopo3d_nbvois;
@@ -431,7 +452,9 @@ uint8_t mctopo3d_nbvois26(voxel * cube)
   for (v = 0; v < p->n26v; v++)
   {
     pp = p->v26[v];
-    if (pp->val) mctopo3d_nbvois++;
+    if (pp->val) {
+      mctopo3d_nbvois++;
+    }
   }
 
   return mctopo3d_nbvois;
@@ -450,12 +473,24 @@ int32_t mctopo3d_nbvoisc6(
 */
 {
   int32_t mctopo3d_nbvois = 0;
-  if ((i%rs!=rs-1) && !B[i+1])    mctopo3d_nbvois++;
-  if (((i%ps)>=rs) && !B[i-rs])   mctopo3d_nbvois++;
-  if ((i%rs!=0) && !B[i-1])       mctopo3d_nbvois++;
-  if (((i%ps)<ps-rs) && !B[i+rs]) mctopo3d_nbvois++;
-  if ((i>=ps) && !B[i-ps])        mctopo3d_nbvois++;
-  if ((i<N-ps) && !B[i+ps])      mctopo3d_nbvois++;
+  if ((i % rs != rs - 1) && !B[i + 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps) >= rs) && !B[i - rs]) {
+    mctopo3d_nbvois++;
+  }
+  if ((i % rs != 0) && !B[i - 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps) < ps - rs) && !B[i + rs]) {
+    mctopo3d_nbvois++;
+  }
+  if ((i >= ps) && !B[i - ps]) {
+    mctopo3d_nbvois++;
+  }
+  if ((i < N - ps) && !B[i + ps]) {
+    mctopo3d_nbvois++;
+  }
   return mctopo3d_nbvois;
 } /* mctopo3d_nbvoisc6() */
 
@@ -472,24 +507,60 @@ int32_t mctopo3d_nbvoisc18(
 */
 {
   int32_t mctopo3d_nbvois = 0;
-  if (((i<N-ps)&&(i%rs!=rs-1)) && !B[ps+i+1]) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%ps>=rs)) && !B[ps+i-rs]) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%rs!=0)) && !B[ps+i-1]) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%ps<ps-rs)) && !B[ps+i+rs]) mctopo3d_nbvois++;
-  if (((i<N-ps)) && !B[ps+i]) mctopo3d_nbvois++;
-  if (((i%rs!=rs-1)) && !B[i+1]) mctopo3d_nbvois++;
-  if (((i%rs!=rs-1)&&(i%ps>=rs)) && !B[i+1-rs]) mctopo3d_nbvois++;
-  if (((i%ps>=rs)) && !B[i-rs]) mctopo3d_nbvois++;
-  if (((i%ps>=rs)&&(i%rs!=0)) && !B[i-rs-1]) mctopo3d_nbvois++;
-  if (((i%rs!=0)) && !B[i-1]) mctopo3d_nbvois++;
-  if (((i%rs!=0)&&(i%ps<ps-rs)) && !B[i-1+rs]) mctopo3d_nbvois++;
-  if (((i%ps<ps-rs)) && !B[i+rs]) mctopo3d_nbvois++;
-  if (((i%ps<ps-rs)&&(i%rs!=rs-1)) && !B[i+rs+1]) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%rs!=rs-1)) && !B[-ps+i+1]) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%ps>=rs)) && !B[-ps+i-rs]) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%rs!=0)) && !B[-ps+i-1]) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%ps<ps-rs)) && !B[-ps+i+rs]) mctopo3d_nbvois++;
-  if (((i>=ps)) && !B[-ps+i]) mctopo3d_nbvois++;
+  if (((i < N - ps) && (i % rs != rs - 1)) && !B[ps + i + 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps >= rs)) && !B[ps + i - rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % rs != 0)) && !B[ps + i - 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps < ps - rs)) && !B[ps + i + rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps)) && !B[ps + i]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != rs - 1)) && !B[i + 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != rs - 1) && (i % ps >= rs)) && !B[i + 1 - rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps >= rs)) && !B[i - rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps >= rs) && (i % rs != 0)) && !B[i - rs - 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != 0)) && !B[i - 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != 0) && (i % ps < ps - rs)) && !B[i - 1 + rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps < ps - rs)) && !B[i + rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps < ps - rs) && (i % rs != rs - 1)) && !B[i + rs + 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != rs - 1)) && !B[-ps + i + 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % ps >= rs)) && !B[-ps + i - rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != 0)) && !B[-ps + i - 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % ps < ps - rs)) && !B[-ps + i + rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps)) && !B[-ps + i]) {
+    mctopo3d_nbvois++;
+  }
   return mctopo3d_nbvois;
 } /* mctopo3d_nbvoisc18() */
 
@@ -506,32 +577,91 @@ int32_t mctopo3d_nbvoisc26(
 */
 {
   int32_t mctopo3d_nbvois = 0;
-  if (((i<N-ps)&&(i%rs!=rs-1)) && !B[ps+i+1]) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%rs!=rs-1)&&(i%ps>=rs)) && !B[ps+i+1-rs]) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%ps>=rs)) && !B[ps+i-rs]) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%ps>=rs)&&(i%rs!=0)) && !B[ps+i-rs-1]) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%rs!=0)) && !B[ps+i-1]) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%rs!=0)&&(i%ps<ps-rs)) && !B[ps+i-1+rs]) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%ps<ps-rs)) && !B[ps+i+rs]) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%ps<ps-rs)&&(i%rs!=rs-1)) && !B[ps+i+rs+1]) mctopo3d_nbvois++;
-  if (((i<N-ps)) && !B[ps+i]) mctopo3d_nbvois++;
-  if (((i%rs!=rs-1)) && !B[i+1]) mctopo3d_nbvois++;
-  if (((i%rs!=rs-1)&&(i%ps>=rs)) && !B[i+1-rs]) mctopo3d_nbvois++;
-  if (((i%ps>=rs)) && !B[i-rs]) mctopo3d_nbvois++;
-  if (((i%ps>=rs)&&(i%rs!=0)) && !B[i-rs-1]) mctopo3d_nbvois++;
-  if (((i%rs!=0)) && !B[i-1]) mctopo3d_nbvois++;
-  if (((i%rs!=0)&&(i%ps<ps-rs)) && !B[i-1+rs]) mctopo3d_nbvois++;
-  if (((i%ps<ps-rs)) && !B[i+rs]) mctopo3d_nbvois++;
-  if (((i%ps<ps-rs)&&(i%rs!=rs-1)) && !B[i+rs+1]) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%rs!=rs-1)) && !B[-ps+i+1]) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%rs!=rs-1)&&(i%ps>=rs)) && !B[-ps+i+1-rs]) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%ps>=rs)) && !B[-ps+i-rs]) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%ps>=rs)&&(i%rs!=0)) && !B[-ps+i-rs-1]) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%rs!=0)) && !B[-ps+i-1]) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%rs!=0)&&(i%ps<ps-rs)) && !B[-ps+i-1+rs]) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%ps<ps-rs)) && !B[-ps+i+rs]) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%ps<ps-rs)&&(i%rs!=rs-1)) && !B[-ps+i+rs+1]) mctopo3d_nbvois++;
-  if (((i>=ps)) && !B[-ps+i]) mctopo3d_nbvois++;
+  if (((i < N - ps) && (i % rs != rs - 1)) && !B[ps + i + 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % rs != rs - 1) && (i % ps >= rs)) &&
+      !B[ps + i + 1 - rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps >= rs)) && !B[ps + i - rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps >= rs) && (i % rs != 0)) &&
+      !B[ps + i - rs - 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % rs != 0)) && !B[ps + i - 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % rs != 0) && (i % ps < ps - rs)) &&
+      !B[ps + i - 1 + rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps < ps - rs)) && !B[ps + i + rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps < ps - rs) && (i % rs != rs - 1)) &&
+      !B[ps + i + rs + 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps)) && !B[ps + i]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != rs - 1)) && !B[i + 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != rs - 1) && (i % ps >= rs)) && !B[i + 1 - rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps >= rs)) && !B[i - rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps >= rs) && (i % rs != 0)) && !B[i - rs - 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != 0)) && !B[i - 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != 0) && (i % ps < ps - rs)) && !B[i - 1 + rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps < ps - rs)) && !B[i + rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps < ps - rs) && (i % rs != rs - 1)) && !B[i + rs + 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != rs - 1)) && !B[-ps + i + 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != rs - 1) && (i % ps >= rs)) &&
+      !B[-ps + i + 1 - rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % ps >= rs)) && !B[-ps + i - rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % ps >= rs) && (i % rs != 0)) && !B[-ps + i - rs - 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != 0)) && !B[-ps + i - 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != 0) && (i % ps < ps - rs)) &&
+      !B[-ps + i - 1 + rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % ps < ps - rs)) && !B[-ps + i + rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % ps < ps - rs) && (i % rs != rs - 1)) &&
+      !B[-ps + i + rs + 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps)) && !B[-ps + i]) {
+    mctopo3d_nbvois++;
+  }
   return mctopo3d_nbvois;
 } /* mctopo3d_nbvoisc26() */
 
@@ -548,12 +678,24 @@ int32_t mctopo3d_nbvoiso6(
 */
 {
   int32_t mctopo3d_nbvois = 0;
-  if ((i%rs!=rs-1) && B[i+1])    mctopo3d_nbvois++;
-  if (((i%ps)>=rs) && B[i-rs])   mctopo3d_nbvois++;
-  if ((i%rs!=0) && B[i-1])       mctopo3d_nbvois++;
-  if (((i%ps)<ps-rs) && B[i+rs]) mctopo3d_nbvois++;
-  if ((i>=ps) && B[i-ps])        mctopo3d_nbvois++;
-  if ((i<N-ps) && B[i+ps])      mctopo3d_nbvois++;
+  if ((i % rs != rs - 1) && B[i + 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps) >= rs) && B[i - rs]) {
+    mctopo3d_nbvois++;
+  }
+  if ((i % rs != 0) && B[i - 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps) < ps - rs) && B[i + rs]) {
+    mctopo3d_nbvois++;
+  }
+  if ((i >= ps) && B[i - ps]) {
+    mctopo3d_nbvois++;
+  }
+  if ((i < N - ps) && B[i + ps]) {
+    mctopo3d_nbvois++;
+  }
   return mctopo3d_nbvois;
 } /* mctopo3d_nbvoiso6() */
 
@@ -570,24 +712,60 @@ int32_t mctopo3d_nbvoiso18(
 */
 {
   int32_t mctopo3d_nbvois = 0;
-  if (((i<N-ps)&&(i%rs!=rs-1)) && B[ps+i+1]) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%ps>=rs)) && B[ps+i-rs]) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%rs!=0)) && B[ps+i-1]) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%ps<ps-rs)) && B[ps+i+rs]) mctopo3d_nbvois++;
-  if (((i<N-ps)) && B[ps+i]) mctopo3d_nbvois++;
-  if (((i%rs!=rs-1)) && B[i+1]) mctopo3d_nbvois++;
-  if (((i%rs!=rs-1)&&(i%ps>=rs)) && B[i+1-rs]) mctopo3d_nbvois++;
-  if (((i%ps>=rs)) && B[i-rs]) mctopo3d_nbvois++;
-  if (((i%ps>=rs)&&(i%rs!=0)) && B[i-rs-1]) mctopo3d_nbvois++;
-  if (((i%rs!=0)) && B[i-1]) mctopo3d_nbvois++;
-  if (((i%rs!=0)&&(i%ps<ps-rs)) && B[i-1+rs]) mctopo3d_nbvois++;
-  if (((i%ps<ps-rs)) && B[i+rs]) mctopo3d_nbvois++;
-  if (((i%ps<ps-rs)&&(i%rs!=rs-1)) && B[i+rs+1]) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%rs!=rs-1)) && B[-ps+i+1]) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%ps>=rs)) && B[-ps+i-rs]) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%rs!=0)) && B[-ps+i-1]) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%ps<ps-rs)) && B[-ps+i+rs]) mctopo3d_nbvois++;
-  if (((i>=ps)) && B[-ps+i]) mctopo3d_nbvois++;
+  if (((i < N - ps) && (i % rs != rs - 1)) && B[ps + i + 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps >= rs)) && B[ps + i - rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % rs != 0)) && B[ps + i - 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps < ps - rs)) && B[ps + i + rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps)) && B[ps + i]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != rs - 1)) && B[i + 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != rs - 1) && (i % ps >= rs)) && B[i + 1 - rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps >= rs)) && B[i - rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps >= rs) && (i % rs != 0)) && B[i - rs - 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != 0)) && B[i - 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != 0) && (i % ps < ps - rs)) && B[i - 1 + rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps < ps - rs)) && B[i + rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps < ps - rs) && (i % rs != rs - 1)) && B[i + rs + 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != rs - 1)) && B[-ps + i + 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % ps >= rs)) && B[-ps + i - rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != 0)) && B[-ps + i - 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % ps < ps - rs)) && B[-ps + i + rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps)) && B[-ps + i]) {
+    mctopo3d_nbvois++;
+  }
   return mctopo3d_nbvois;
 } /* mctopo3d_nbvoiso18() */
 
@@ -604,32 +782,90 @@ int32_t mctopo3d_nbvoiso26(
 */
 {
   int32_t mctopo3d_nbvois = 0;
-  if (((i<N-ps)&&(i%rs!=rs-1)) && B[ps+i+1]) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%rs!=rs-1)&&(i%ps>=rs)) && B[ps+i+1-rs]) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%ps>=rs)) && B[ps+i-rs]) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%ps>=rs)&&(i%rs!=0)) && B[ps+i-rs-1]) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%rs!=0)) && B[ps+i-1]) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%rs!=0)&&(i%ps<ps-rs)) && B[ps+i-1+rs]) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%ps<ps-rs)) && B[ps+i+rs]) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%ps<ps-rs)&&(i%rs!=rs-1)) && B[ps+i+rs+1]) mctopo3d_nbvois++;
-  if (((i<N-ps)) && B[ps+i]) mctopo3d_nbvois++;
-  if (((i%rs!=rs-1)) && B[i+1]) mctopo3d_nbvois++;
-  if (((i%rs!=rs-1)&&(i%ps>=rs)) && B[i+1-rs]) mctopo3d_nbvois++;
-  if (((i%ps>=rs)) && B[i-rs]) mctopo3d_nbvois++;
-  if (((i%ps>=rs)&&(i%rs!=0)) && B[i-rs-1]) mctopo3d_nbvois++;
-  if (((i%rs!=0)) && B[i-1]) mctopo3d_nbvois++;
-  if (((i%rs!=0)&&(i%ps<ps-rs)) && B[i-1+rs]) mctopo3d_nbvois++;
-  if (((i%ps<ps-rs)) && B[i+rs]) mctopo3d_nbvois++;
-  if (((i%ps<ps-rs)&&(i%rs!=rs-1)) && B[i+rs+1]) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%rs!=rs-1)) && B[-ps+i+1]) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%rs!=rs-1)&&(i%ps>=rs)) && B[-ps+i+1-rs]) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%ps>=rs)) && B[-ps+i-rs]) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%ps>=rs)&&(i%rs!=0)) && B[-ps+i-rs-1]) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%rs!=0)) && B[-ps+i-1]) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%rs!=0)&&(i%ps<ps-rs)) && B[-ps+i-1+rs]) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%ps<ps-rs)) && B[-ps+i+rs]) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%ps<ps-rs)&&(i%rs!=rs-1)) && B[-ps+i+rs+1]) mctopo3d_nbvois++;
-  if (((i>=ps)) && B[-ps+i]) mctopo3d_nbvois++;
+  if (((i < N - ps) && (i % rs != rs - 1)) && B[ps + i + 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % rs != rs - 1) && (i % ps >= rs)) &&
+      B[ps + i + 1 - rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps >= rs)) && B[ps + i - rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps >= rs) && (i % rs != 0)) && B[ps + i - rs - 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % rs != 0)) && B[ps + i - 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % rs != 0) && (i % ps < ps - rs)) &&
+      B[ps + i - 1 + rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps < ps - rs)) && B[ps + i + rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps < ps - rs) && (i % rs != rs - 1)) &&
+      B[ps + i + rs + 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps)) && B[ps + i]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != rs - 1)) && B[i + 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != rs - 1) && (i % ps >= rs)) && B[i + 1 - rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps >= rs)) && B[i - rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps >= rs) && (i % rs != 0)) && B[i - rs - 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != 0)) && B[i - 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != 0) && (i % ps < ps - rs)) && B[i - 1 + rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps < ps - rs)) && B[i + rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps < ps - rs) && (i % rs != rs - 1)) && B[i + rs + 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != rs - 1)) && B[-ps + i + 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != rs - 1) && (i % ps >= rs)) &&
+      B[-ps + i + 1 - rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % ps >= rs)) && B[-ps + i - rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % ps >= rs) && (i % rs != 0)) && B[-ps + i - rs - 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != 0)) && B[-ps + i - 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != 0) && (i % ps < ps - rs)) &&
+      B[-ps + i - 1 + rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % ps < ps - rs)) && B[-ps + i + rs]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % ps < ps - rs) && (i % rs != rs - 1)) &&
+      B[-ps + i + rs + 1]) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps)) && B[-ps + i]) {
+    mctopo3d_nbvois++;
+  }
   return mctopo3d_nbvois;
 } /* mctopo3d_nbvoiso26() */
 
@@ -647,12 +883,24 @@ int32_t mctopo3d_nbvoislab6(
 {
   int32_t lab = B[i];
   int32_t mctopo3d_nbvois = 0;
-  if ((i%rs!=rs-1) && (B[i+1]==lab))    mctopo3d_nbvois++;
-  if (((i%ps)>=rs) && (B[i-rs]==lab))   mctopo3d_nbvois++;
-  if ((i%rs!=0) && (B[i-1]==lab))       mctopo3d_nbvois++;
-  if (((i%ps)<ps-rs) && (B[i+rs]==lab)) mctopo3d_nbvois++;
-  if ((i>=ps) && (B[i-ps]==lab))        mctopo3d_nbvois++;
-  if ((i<N-ps) && (B[i+ps]==lab))      mctopo3d_nbvois++;
+  if ((i % rs != rs - 1) && (B[i + 1] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps) >= rs) && (B[i - rs] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if ((i % rs != 0) && (B[i - 1] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps) < ps - rs) && (B[i + rs] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if ((i >= ps) && (B[i - ps] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if ((i < N - ps) && (B[i + ps] == lab)) {
+    mctopo3d_nbvois++;
+  }
   return mctopo3d_nbvois;
 } /* mctopo3d_nbvoislab6() */
 
@@ -670,24 +918,60 @@ int32_t mctopo3d_nbvoislab18(
 {
   int32_t lab = B[i];
   int32_t mctopo3d_nbvois = 0;
-  if (((i<N-ps)&&(i%rs!=rs-1)) && (B[ps+i+1]==lab)) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%ps>=rs)) && (B[ps+i-rs]==lab)) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%rs!=0)) && (B[ps+i-1]==lab)) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%ps<ps-rs)) && (B[ps+i+rs]==lab)) mctopo3d_nbvois++;
-  if (((i<N-ps)) && (B[ps+i]==lab)) mctopo3d_nbvois++;
-  if (((i%rs!=rs-1)) && (B[i+1]==lab)) mctopo3d_nbvois++;
-  if (((i%rs!=rs-1)&&(i%ps>=rs)) && (B[i+1-rs]==lab)) mctopo3d_nbvois++;
-  if (((i%ps>=rs)) && (B[i-rs]==lab)) mctopo3d_nbvois++;
-  if (((i%ps>=rs)&&(i%rs!=0)) && (B[i-rs-1]==lab)) mctopo3d_nbvois++;
-  if (((i%rs!=0)) && (B[i-1]==lab)) mctopo3d_nbvois++;
-  if (((i%rs!=0)&&(i%ps<ps-rs)) && (B[i-1+rs]==lab)) mctopo3d_nbvois++;
-  if (((i%ps<ps-rs)) && (B[i+rs]==lab)) mctopo3d_nbvois++;
-  if (((i%ps<ps-rs)&&(i%rs!=rs-1)) && (B[i+rs+1]==lab)) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%rs!=rs-1)) && (B[-ps+i+1]==lab)) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%ps>=rs)) && (B[-ps+i-rs]==lab)) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%rs!=0)) && (B[-ps+i-1]==lab)) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%ps<ps-rs)) && (B[-ps+i+rs]==lab)) mctopo3d_nbvois++;
-  if (((i>=ps)) && (B[-ps+i]==lab)) mctopo3d_nbvois++;
+  if (((i < N - ps) && (i % rs != rs - 1)) && (B[ps + i + 1] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps >= rs)) && (B[ps + i - rs] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % rs != 0)) && (B[ps + i - 1] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps < ps - rs)) && (B[ps + i + rs] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps)) && (B[ps + i] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != rs - 1)) && (B[i + 1] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != rs - 1) && (i % ps >= rs)) && (B[i + 1 - rs] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps >= rs)) && (B[i - rs] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps >= rs) && (i % rs != 0)) && (B[i - rs - 1] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != 0)) && (B[i - 1] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != 0) && (i % ps < ps - rs)) && (B[i - 1 + rs] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps < ps - rs)) && (B[i + rs] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps < ps - rs) && (i % rs != rs - 1)) && (B[i + rs + 1] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != rs - 1)) && (B[-ps + i + 1] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % ps >= rs)) && (B[-ps + i - rs] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != 0)) && (B[-ps + i - 1] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % ps < ps - rs)) && (B[-ps + i + rs] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps)) && (B[-ps + i] == lab)) {
+    mctopo3d_nbvois++;
+  }
   return mctopo3d_nbvois;
 } /* mctopo3d_nbvoislab18() */
 
@@ -705,32 +989,92 @@ int32_t mctopo3d_nbvoislab26(
 {
   int32_t lab = B[i];
   int32_t mctopo3d_nbvois = 0;
-  if (((i<N-ps)&&(i%rs!=rs-1)) && (B[ps+i+1]==lab)) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%rs!=rs-1)&&(i%ps>=rs)) && (B[ps+i+1-rs]==lab)) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%ps>=rs)) && (B[ps+i-rs]==lab)) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%ps>=rs)&&(i%rs!=0)) && (B[ps+i-rs-1]==lab)) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%rs!=0)) && (B[ps+i-1]==lab)) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%rs!=0)&&(i%ps<ps-rs)) && (B[ps+i-1+rs]==lab)) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%ps<ps-rs)) && (B[ps+i+rs]==lab)) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%ps<ps-rs)&&(i%rs!=rs-1)) && (B[ps+i+rs+1]==lab)) mctopo3d_nbvois++;
-  if (((i<N-ps)) && (B[ps+i]==lab)) mctopo3d_nbvois++;
-  if (((i%rs!=rs-1)) && (B[i+1]==lab)) mctopo3d_nbvois++;
-  if (((i%rs!=rs-1)&&(i%ps>=rs)) && (B[i+1-rs]==lab)) mctopo3d_nbvois++;
-  if (((i%ps>=rs)) && (B[i-rs]==lab)) mctopo3d_nbvois++;
-  if (((i%ps>=rs)&&(i%rs!=0)) && (B[i-rs-1]==lab)) mctopo3d_nbvois++;
-  if (((i%rs!=0)) && (B[i-1]==lab)) mctopo3d_nbvois++;
-  if (((i%rs!=0)&&(i%ps<ps-rs)) && (B[i-1+rs]==lab)) mctopo3d_nbvois++;
-  if (((i%ps<ps-rs)) && (B[i+rs]==lab)) mctopo3d_nbvois++;
-  if (((i%ps<ps-rs)&&(i%rs!=rs-1)) && (B[i+rs+1]==lab)) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%rs!=rs-1)) && (B[-ps+i+1]==lab)) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%rs!=rs-1)&&(i%ps>=rs)) && (B[-ps+i+1-rs]==lab)) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%ps>=rs)) && (B[-ps+i-rs]==lab)) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%ps>=rs)&&(i%rs!=0)) && (B[-ps+i-rs-1]==lab)) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%rs!=0)) && (B[-ps+i-1]==lab)) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%rs!=0)&&(i%ps<ps-rs)) && (B[-ps+i-1+rs]==lab)) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%ps<ps-rs)) && (B[-ps+i+rs]==lab)) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%ps<ps-rs)&&(i%rs!=rs-1)) && (B[-ps+i+rs+1]==lab)) mctopo3d_nbvois++;
-  if (((i>=ps)) && (B[-ps+i]==lab)) mctopo3d_nbvois++;
+  if (((i < N - ps) && (i % rs != rs - 1)) && (B[ps + i + 1] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % rs != rs - 1) && (i % ps >= rs)) &&
+      (B[ps + i + 1 - rs] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps >= rs)) && (B[ps + i - rs] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps >= rs) && (i % rs != 0)) &&
+      (B[ps + i - rs - 1] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % rs != 0)) && (B[ps + i - 1] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % rs != 0) && (i % ps < ps - rs)) &&
+      (B[ps + i - 1 + rs] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps < ps - rs)) && (B[ps + i + rs] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps < ps - rs) && (i % rs != rs - 1)) &&
+      (B[ps + i + rs + 1] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps)) && (B[ps + i] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != rs - 1)) && (B[i + 1] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != rs - 1) && (i % ps >= rs)) && (B[i + 1 - rs] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps >= rs)) && (B[i - rs] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps >= rs) && (i % rs != 0)) && (B[i - rs - 1] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != 0)) && (B[i - 1] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != 0) && (i % ps < ps - rs)) && (B[i - 1 + rs] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps < ps - rs)) && (B[i + rs] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps < ps - rs) && (i % rs != rs - 1)) && (B[i + rs + 1] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != rs - 1)) && (B[-ps + i + 1] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != rs - 1) && (i % ps >= rs)) &&
+      (B[-ps + i + 1 - rs] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % ps >= rs)) && (B[-ps + i - rs] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % ps >= rs) && (i % rs != 0)) &&
+      (B[-ps + i - rs - 1] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != 0)) && (B[-ps + i - 1] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != 0) && (i % ps < ps - rs)) &&
+      (B[-ps + i - 1 + rs] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % ps < ps - rs)) && (B[-ps + i + rs] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % ps < ps - rs) && (i % rs != rs - 1)) &&
+      (B[-ps + i + rs + 1] == lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps)) && (B[-ps + i] == lab)) {
+    mctopo3d_nbvois++;
+  }
   return mctopo3d_nbvois;
 } /* mctopo3d_nbvoislab26() */
 
@@ -748,12 +1092,24 @@ int32_t mctopo3d_nbvoislabc6(
 {
   int32_t lab = B[i];
   int32_t mctopo3d_nbvois = 0;
-  if ((i%rs!=rs-1) && B[i+1] && (B[i+1]!=lab))    mctopo3d_nbvois++;
-  if (((i%ps)>=rs) && B[i-rs] && (B[i-rs]!=lab))   mctopo3d_nbvois++;
-  if ((i%rs!=0) && B[i-1] && (B[i-1]!=lab))       mctopo3d_nbvois++;
-  if (((i%ps)<ps-rs) && B[i+rs] && (B[i+rs]!=lab)) mctopo3d_nbvois++;
-  if ((i>=ps) && B[i-ps] && (B[i-ps]!=lab))        mctopo3d_nbvois++;
-  if ((i<N-ps) && B[i+ps] && (B[i+ps]!=lab))      mctopo3d_nbvois++;
+  if ((i % rs != rs - 1) && B[i + 1] && (B[i + 1] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps) >= rs) && B[i - rs] && (B[i - rs] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if ((i % rs != 0) && B[i - 1] && (B[i - 1] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps) < ps - rs) && B[i + rs] && (B[i + rs] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if ((i >= ps) && B[i - ps] && (B[i - ps] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if ((i < N - ps) && B[i + ps] && (B[i + ps] != lab)) {
+    mctopo3d_nbvois++;
+  }
   return mctopo3d_nbvois;
 } /* mctopo3d_nbvoislabc6() */
 
@@ -771,24 +1127,72 @@ int32_t mctopo3d_nbvoislabc18(
 {
   int32_t lab = B[i];
   int32_t mctopo3d_nbvois = 0;
-  if (((i<N-ps)&&(i%rs!=rs-1)) && B[ps+i+1] && (B[ps+i+1]!=lab)) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%ps>=rs)) && B[ps+i-rs] && (B[ps+i-rs]!=lab)) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%rs!=0)) && B[ps+i-1] && (B[ps+i-1]!=lab)) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%ps<ps-rs)) && B[ps+i+rs] && (B[ps+i+rs]!=lab)) mctopo3d_nbvois++;
-  if (((i<N-ps)) && B[ps+i] && (B[ps+i]!=lab)) mctopo3d_nbvois++;
-  if (((i%rs!=rs-1)) && B[i+1] && (B[i+1]!=lab)) mctopo3d_nbvois++;
-  if (((i%rs!=rs-1)&&(i%ps>=rs)) && B[i+1-rs] && (B[i+1-rs]!=lab)) mctopo3d_nbvois++;
-  if (((i%ps>=rs)) && B[i-rs] && (B[i-rs]!=lab)) mctopo3d_nbvois++;
-  if (((i%ps>=rs)&&(i%rs!=0)) && B[i-rs-1] && (B[i-rs-1]!=lab)) mctopo3d_nbvois++;
-  if (((i%rs!=0)) && B[i-1] && (B[i-1]!=lab)) mctopo3d_nbvois++;
-  if (((i%rs!=0)&&(i%ps<ps-rs)) && B[i-1+rs] && (B[i-1+rs]!=lab)) mctopo3d_nbvois++;
-  if (((i%ps<ps-rs)) && B[i+rs] && (B[i+rs]!=lab)) mctopo3d_nbvois++;
-  if (((i%ps<ps-rs)&&(i%rs!=rs-1)) && B[i+rs+1] && (B[i+rs+1]!=lab)) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%rs!=rs-1)) && B[-ps+i+1] && (B[-ps+i+1]!=lab)) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%ps>=rs)) && B[-ps+i-rs] && (B[-ps+i-rs]!=lab)) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%rs!=0)) && B[-ps+i-1] && (B[-ps+i-1]!=lab)) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%ps<ps-rs)) && B[-ps+i+rs] && (B[-ps+i+rs]!=lab)) mctopo3d_nbvois++;
-  if (((i>=ps)) && B[-ps+i] && (B[-ps+i]!=lab)) mctopo3d_nbvois++;
+  if (((i < N - ps) && (i % rs != rs - 1)) && B[ps + i + 1] &&
+      (B[ps + i + 1] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps >= rs)) && B[ps + i - rs] &&
+      (B[ps + i - rs] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % rs != 0)) && B[ps + i - 1] &&
+      (B[ps + i - 1] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps < ps - rs)) && B[ps + i + rs] &&
+      (B[ps + i + rs] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps)) && B[ps + i] && (B[ps + i] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != rs - 1)) && B[i + 1] && (B[i + 1] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != rs - 1) && (i % ps >= rs)) && B[i + 1 - rs] &&
+      (B[i + 1 - rs] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps >= rs)) && B[i - rs] && (B[i - rs] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps >= rs) && (i % rs != 0)) && B[i - rs - 1] &&
+      (B[i - rs - 1] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != 0)) && B[i - 1] && (B[i - 1] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != 0) && (i % ps < ps - rs)) && B[i - 1 + rs] &&
+      (B[i - 1 + rs] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps < ps - rs)) && B[i + rs] && (B[i + rs] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps < ps - rs) && (i % rs != rs - 1)) && B[i + rs + 1] &&
+      (B[i + rs + 1] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != rs - 1)) && B[-ps + i + 1] &&
+      (B[-ps + i + 1] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % ps >= rs)) && B[-ps + i - rs] &&
+      (B[-ps + i - rs] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != 0)) && B[-ps + i - 1] &&
+      (B[-ps + i - 1] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % ps < ps - rs)) && B[-ps + i + rs] &&
+      (B[-ps + i + rs] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps)) && B[-ps + i] && (B[-ps + i] != lab)) {
+    mctopo3d_nbvois++;
+  }
   return mctopo3d_nbvois;
 } /* mctopo3d_nbvoislabc18() */
 
@@ -806,32 +1210,104 @@ int32_t mctopo3d_nbvoislabc26(
 {
   int32_t lab = B[i];
   int32_t mctopo3d_nbvois = 0;
-  if (((i<N-ps)&&(i%rs!=rs-1)) && B[ps+i+1] && (B[ps+i+1]!=lab)) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%rs!=rs-1)&&(i%ps>=rs)) && B[ps+i+1-rs] && (B[ps+i+1-rs]!=lab)) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%ps>=rs)) && B[ps+i-rs] && (B[ps+i-rs]!=lab)) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%ps>=rs)&&(i%rs!=0)) && B[ps+i-rs-1] && (B[ps+i-rs-1]!=lab)) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%rs!=0)) && B[ps+i-1] && (B[ps+i-1]!=lab)) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%rs!=0)&&(i%ps<ps-rs)) && B[ps+i-1+rs] && (B[ps+i-1+rs]!=lab)) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%ps<ps-rs)) && B[ps+i+rs] && (B[ps+i+rs]!=lab)) mctopo3d_nbvois++;
-  if (((i<N-ps)&&(i%ps<ps-rs)&&(i%rs!=rs-1)) && B[ps+i+rs+1] && (B[ps+i+rs+1]!=lab)) mctopo3d_nbvois++;
-  if (((i<N-ps)) && B[ps+i] && (B[ps+i]!=lab)) mctopo3d_nbvois++;
-  if (((i%rs!=rs-1)) && B[i+1] && (B[i+1]!=lab)) mctopo3d_nbvois++;
-  if (((i%rs!=rs-1)&&(i%ps>=rs)) && B[i+1-rs] && (B[i+1-rs]!=lab)) mctopo3d_nbvois++;
-  if (((i%ps>=rs)) && B[i-rs] && (B[i-rs]!=lab)) mctopo3d_nbvois++;
-  if (((i%ps>=rs)&&(i%rs!=0)) && B[i-rs-1] && (B[i-rs-1]!=lab)) mctopo3d_nbvois++;
-  if (((i%rs!=0)) && B[i-1] && (B[i-1]!=lab)) mctopo3d_nbvois++;
-  if (((i%rs!=0)&&(i%ps<ps-rs)) && B[i-1+rs] && (B[i-1+rs]!=lab)) mctopo3d_nbvois++;
-  if (((i%ps<ps-rs)) && B[i+rs] && (B[i+rs]!=lab)) mctopo3d_nbvois++;
-  if (((i%ps<ps-rs)&&(i%rs!=rs-1)) && B[i+rs+1] && (B[i+rs+1]!=lab)) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%rs!=rs-1)) && B[-ps+i+1] && (B[-ps+i+1]!=lab)) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%rs!=rs-1)&&(i%ps>=rs)) && B[-ps+i+1-rs] && (B[-ps+i+1-rs]!=lab)) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%ps>=rs)) && B[-ps+i-rs] && (B[-ps+i-rs]!=lab)) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%ps>=rs)&&(i%rs!=0)) && B[-ps+i-rs-1] && (B[-ps+i-rs-1]!=lab)) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%rs!=0)) && B[-ps+i-1] && (B[-ps+i-1]!=lab)) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%rs!=0)&&(i%ps<ps-rs)) && B[-ps+i-1+rs] && (B[-ps+i-1+rs]!=lab)) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%ps<ps-rs)) && B[-ps+i+rs] && (B[-ps+i+rs]!=lab)) mctopo3d_nbvois++;
-  if (((i>=ps)&&(i%ps<ps-rs)&&(i%rs!=rs-1)) && B[-ps+i+rs+1] && (B[-ps+i+rs+1]!=lab)) mctopo3d_nbvois++;
-  if (((i>=ps)) && B[-ps+i] && (B[-ps+i]!=lab)) mctopo3d_nbvois++;
+  if (((i < N - ps) && (i % rs != rs - 1)) && B[ps + i + 1] &&
+      (B[ps + i + 1] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % rs != rs - 1) && (i % ps >= rs)) &&
+      B[ps + i + 1 - rs] && (B[ps + i + 1 - rs] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps >= rs)) && B[ps + i - rs] &&
+      (B[ps + i - rs] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps >= rs) && (i % rs != 0)) && B[ps + i - rs - 1] &&
+      (B[ps + i - rs - 1] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % rs != 0)) && B[ps + i - 1] &&
+      (B[ps + i - 1] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % rs != 0) && (i % ps < ps - rs)) &&
+      B[ps + i - 1 + rs] && (B[ps + i - 1 + rs] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps < ps - rs)) && B[ps + i + rs] &&
+      (B[ps + i + rs] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps) && (i % ps < ps - rs) && (i % rs != rs - 1)) &&
+      B[ps + i + rs + 1] && (B[ps + i + rs + 1] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i < N - ps)) && B[ps + i] && (B[ps + i] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != rs - 1)) && B[i + 1] && (B[i + 1] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != rs - 1) && (i % ps >= rs)) && B[i + 1 - rs] &&
+      (B[i + 1 - rs] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps >= rs)) && B[i - rs] && (B[i - rs] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps >= rs) && (i % rs != 0)) && B[i - rs - 1] &&
+      (B[i - rs - 1] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != 0)) && B[i - 1] && (B[i - 1] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % rs != 0) && (i % ps < ps - rs)) && B[i - 1 + rs] &&
+      (B[i - 1 + rs] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps < ps - rs)) && B[i + rs] && (B[i + rs] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i % ps < ps - rs) && (i % rs != rs - 1)) && B[i + rs + 1] &&
+      (B[i + rs + 1] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != rs - 1)) && B[-ps + i + 1] &&
+      (B[-ps + i + 1] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != rs - 1) && (i % ps >= rs)) &&
+      B[-ps + i + 1 - rs] && (B[-ps + i + 1 - rs] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % ps >= rs)) && B[-ps + i - rs] &&
+      (B[-ps + i - rs] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % ps >= rs) && (i % rs != 0)) && B[-ps + i - rs - 1] &&
+      (B[-ps + i - rs - 1] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != 0)) && B[-ps + i - 1] &&
+      (B[-ps + i - 1] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % rs != 0) && (i % ps < ps - rs)) &&
+      B[-ps + i - 1 + rs] && (B[-ps + i - 1 + rs] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % ps < ps - rs)) && B[-ps + i + rs] &&
+      (B[-ps + i + rs] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps) && (i % ps < ps - rs) && (i % rs != rs - 1)) &&
+      B[-ps + i + rs + 1] && (B[-ps + i + rs + 1] != lab)) {
+    mctopo3d_nbvois++;
+  }
+  if (((i >= ps)) && B[-ps + i] && (B[-ps + i] != lab)) {
+    mctopo3d_nbvois++;
+  }
   return mctopo3d_nbvois;
 } /* mctopo3d_nbvoislabc26() */
 
@@ -903,35 +1379,143 @@ static void preparecube(
  */
 {
   /* plan "HAUT" (+ps) */
-  if (B[ps+i+1])    cube[23].val = 1; else cube[23].val = 0;
-  if (B[ps+i+1-rs]) cube[20].val = 1; else cube[20].val = 0;
-  if (B[ps+i-rs])   cube[19].val = 1; else cube[19].val = 0;
-  if (B[ps+i-rs-1]) cube[18].val = 1; else cube[18].val = 0;
-  if (B[ps+i-1])    cube[21].val = 1; else cube[21].val = 0;
-  if (B[ps+i-1+rs]) cube[24].val = 1; else cube[24].val = 0;
-  if (B[ps+i+rs])   cube[25].val = 1; else cube[25].val = 0;
-  if (B[ps+i+rs+1]) cube[26].val = 1; else cube[26].val = 0;
-  if (B[ps+i])      cube[22].val = 1; else cube[22].val = 0;
+  if (B[ps + i + 1]) {
+    cube[23].val = 1;
+  } else {
+    cube[23].val = 0;
+  }
+  if (B[ps + i + 1 - rs]) {
+    cube[20].val = 1;
+  } else {
+    cube[20].val = 0;
+  }
+  if (B[ps + i - rs]) {
+    cube[19].val = 1;
+  } else {
+    cube[19].val = 0;
+  }
+  if (B[ps + i - rs - 1]) {
+    cube[18].val = 1;
+  } else {
+    cube[18].val = 0;
+  }
+  if (B[ps + i - 1]) {
+    cube[21].val = 1;
+  } else {
+    cube[21].val = 0;
+  }
+  if (B[ps + i - 1 + rs]) {
+    cube[24].val = 1;
+  } else {
+    cube[24].val = 0;
+  }
+  if (B[ps + i + rs]) {
+    cube[25].val = 1;
+  } else {
+    cube[25].val = 0;
+  }
+  if (B[ps + i + rs + 1]) {
+    cube[26].val = 1;
+  } else {
+    cube[26].val = 0;
+  }
+  if (B[ps + i]) {
+    cube[22].val = 1;
+  } else {
+    cube[22].val = 0;
+  }
   /* plan "COURANT" () */
-  if (B[i+1])       cube[14].val = 1; else cube[14].val = 0;
-  if (B[i+1-rs])    cube[11].val = 1; else cube[11].val = 0;
-  if (B[i-rs])      cube[10].val = 1; else cube[10].val = 0;
-  if (B[i-rs-1])    cube[9].val = 1; else cube[9].val = 0;
-  if (B[i-1])       cube[12].val = 1; else cube[12].val = 0;
-  if (B[i-1+rs])    cube[15].val = 1; else cube[15].val = 0;
-  if (B[i+rs])      cube[16].val = 1; else cube[16].val = 0;
-  if (B[i+rs+1])    cube[17].val = 1; else cube[17].val = 0;
-  if (B[i])         cube[13].val = 1; else cube[13].val = 0;
+  if (B[i + 1]) {
+    cube[14].val = 1;
+  } else {
+    cube[14].val = 0;
+  }
+  if (B[i + 1 - rs]) {
+    cube[11].val = 1;
+  } else {
+    cube[11].val = 0;
+  }
+  if (B[i - rs]) {
+    cube[10].val = 1;
+  } else {
+    cube[10].val = 0;
+  }
+  if (B[i - rs - 1]) {
+    cube[9].val = 1;
+  } else {
+    cube[9].val = 0;
+  }
+  if (B[i - 1]) {
+    cube[12].val = 1;
+  } else {
+    cube[12].val = 0;
+  }
+  if (B[i - 1 + rs]) {
+    cube[15].val = 1;
+  } else {
+    cube[15].val = 0;
+  }
+  if (B[i + rs]) {
+    cube[16].val = 1;
+  } else {
+    cube[16].val = 0;
+  }
+  if (B[i + rs + 1]) {
+    cube[17].val = 1;
+  } else {
+    cube[17].val = 0;
+  }
+  if (B[i]) {
+    cube[13].val = 1;
+  } else {
+    cube[13].val = 0;
+  }
   /* plan "BAS" (-ps) */
-  if (B[-ps+i+1])    cube[5].val = 1; else cube[5].val = 0;
-  if (B[-ps+i+1-rs]) cube[2].val = 1; else cube[2].val = 0;
-  if (B[-ps+i-rs])   cube[1].val = 1; else cube[1].val = 0;
-  if (B[-ps+i-rs-1]) cube[0].val = 1; else cube[0].val = 0;
-  if (B[-ps+i-1])    cube[3].val = 1; else cube[3].val = 0;
-  if (B[-ps+i-1+rs]) cube[6].val = 1; else cube[6].val = 0;
-  if (B[-ps+i+rs])   cube[7].val = 1; else cube[7].val = 0;
-  if (B[-ps+i+rs+1]) cube[8].val = 1; else cube[8].val = 0;
-  if (B[-ps+i])      cube[4].val = 1; else cube[4].val = 0;
+  if (B[-ps + i + 1]) {
+    cube[5].val = 1;
+  } else {
+    cube[5].val = 0;
+  }
+  if (B[-ps + i + 1 - rs]) {
+    cube[2].val = 1;
+  } else {
+    cube[2].val = 0;
+  }
+  if (B[-ps + i - rs]) {
+    cube[1].val = 1;
+  } else {
+    cube[1].val = 0;
+  }
+  if (B[-ps + i - rs - 1]) {
+    cube[0].val = 1;
+  } else {
+    cube[0].val = 0;
+  }
+  if (B[-ps + i - 1]) {
+    cube[3].val = 1;
+  } else {
+    cube[3].val = 0;
+  }
+  if (B[-ps + i - 1 + rs]) {
+    cube[6].val = 1;
+  } else {
+    cube[6].val = 0;
+  }
+  if (B[-ps + i + rs]) {
+    cube[7].val = 1;
+  } else {
+    cube[7].val = 0;
+  }
+  if (B[-ps + i + rs + 1]) {
+    cube[8].val = 1;
+  } else {
+    cube[8].val = 0;
+  }
+  if (B[-ps + i]) {
+    cube[4].val = 1;
+  } else {
+    cube[4].val = 0;
+  }
 } /* preparecube() */
 
 /* ==================================== */
@@ -950,35 +1534,143 @@ static void preparecubeval(
  */
 {
   /* plan "HAUT" (+ps) */
-  if (B[ps+i+1]==v)    cube[23].val = 1; else cube[23].val = 0;
-  if (B[ps+i+1-rs]==v) cube[20].val = 1; else cube[20].val = 0;
-  if (B[ps+i-rs]==v)   cube[19].val = 1; else cube[19].val = 0;
-  if (B[ps+i-rs-1]==v) cube[18].val = 1; else cube[18].val = 0;
-  if (B[ps+i-1]==v)    cube[21].val = 1; else cube[21].val = 0;
-  if (B[ps+i-1+rs]==v) cube[24].val = 1; else cube[24].val = 0;
-  if (B[ps+i+rs]==v)   cube[25].val = 1; else cube[25].val = 0;
-  if (B[ps+i+rs+1]==v) cube[26].val = 1; else cube[26].val = 0;
-  if (B[ps+i]==v)      cube[22].val = 1; else cube[22].val = 0;
+  if (B[ps + i + 1] == v) {
+    cube[23].val = 1;
+  } else {
+    cube[23].val = 0;
+  }
+  if (B[ps + i + 1 - rs] == v) {
+    cube[20].val = 1;
+  } else {
+    cube[20].val = 0;
+  }
+  if (B[ps + i - rs] == v) {
+    cube[19].val = 1;
+  } else {
+    cube[19].val = 0;
+  }
+  if (B[ps + i - rs - 1] == v) {
+    cube[18].val = 1;
+  } else {
+    cube[18].val = 0;
+  }
+  if (B[ps + i - 1] == v) {
+    cube[21].val = 1;
+  } else {
+    cube[21].val = 0;
+  }
+  if (B[ps + i - 1 + rs] == v) {
+    cube[24].val = 1;
+  } else {
+    cube[24].val = 0;
+  }
+  if (B[ps + i + rs] == v) {
+    cube[25].val = 1;
+  } else {
+    cube[25].val = 0;
+  }
+  if (B[ps + i + rs + 1] == v) {
+    cube[26].val = 1;
+  } else {
+    cube[26].val = 0;
+  }
+  if (B[ps + i] == v) {
+    cube[22].val = 1;
+  } else {
+    cube[22].val = 0;
+  }
   /* plan "COURANT" () */
-  if (B[i+1]==v)       cube[14].val = 1; else cube[14].val = 0;
-  if (B[i+1-rs]==v)    cube[11].val = 1; else cube[11].val = 0;
-  if (B[i-rs]==v)      cube[10].val = 1; else cube[10].val = 0;
-  if (B[i-rs-1]==v)    cube[9].val = 1; else cube[9].val = 0;
-  if (B[i-1]==v)       cube[12].val = 1; else cube[12].val = 0;
-  if (B[i-1+rs]==v)    cube[15].val = 1; else cube[15].val = 0;
-  if (B[i+rs]==v)      cube[16].val = 1; else cube[16].val = 0;
-  if (B[i+rs+1]==v)    cube[17].val = 1; else cube[17].val = 0;
-  if (B[i]==v)         cube[13].val = 1; else cube[13].val = 0;
+  if (B[i + 1] == v) {
+    cube[14].val = 1;
+  } else {
+    cube[14].val = 0;
+  }
+  if (B[i + 1 - rs] == v) {
+    cube[11].val = 1;
+  } else {
+    cube[11].val = 0;
+  }
+  if (B[i - rs] == v) {
+    cube[10].val = 1;
+  } else {
+    cube[10].val = 0;
+  }
+  if (B[i - rs - 1] == v) {
+    cube[9].val = 1;
+  } else {
+    cube[9].val = 0;
+  }
+  if (B[i - 1] == v) {
+    cube[12].val = 1;
+  } else {
+    cube[12].val = 0;
+  }
+  if (B[i - 1 + rs] == v) {
+    cube[15].val = 1;
+  } else {
+    cube[15].val = 0;
+  }
+  if (B[i + rs] == v) {
+    cube[16].val = 1;
+  } else {
+    cube[16].val = 0;
+  }
+  if (B[i + rs + 1] == v) {
+    cube[17].val = 1;
+  } else {
+    cube[17].val = 0;
+  }
+  if (B[i] == v) {
+    cube[13].val = 1;
+  } else {
+    cube[13].val = 0;
+  }
   /* plan "BAS" (-ps) */
-  if (B[-ps+i+1]==v)    cube[5].val = 1; else cube[5].val = 0;
-  if (B[-ps+i+1-rs]==v) cube[2].val = 1; else cube[2].val = 0;
-  if (B[-ps+i-rs]==v)   cube[1].val = 1; else cube[1].val = 0;
-  if (B[-ps+i-rs-1]==v) cube[0].val = 1; else cube[0].val = 0;
-  if (B[-ps+i-1]==v)    cube[3].val = 1; else cube[3].val = 0;
-  if (B[-ps+i-1+rs]==v) cube[6].val = 1; else cube[6].val = 0;
-  if (B[-ps+i+rs]==v)   cube[7].val = 1; else cube[7].val = 0;
-  if (B[-ps+i+rs+1]==v) cube[8].val = 1; else cube[8].val = 0;
-  if (B[-ps+i]==v)      cube[4].val = 1; else cube[4].val = 0;
+  if (B[-ps + i + 1] == v) {
+    cube[5].val = 1;
+  } else {
+    cube[5].val = 0;
+  }
+  if (B[-ps + i + 1 - rs] == v) {
+    cube[2].val = 1;
+  } else {
+    cube[2].val = 0;
+  }
+  if (B[-ps + i - rs] == v) {
+    cube[1].val = 1;
+  } else {
+    cube[1].val = 0;
+  }
+  if (B[-ps + i - rs - 1] == v) {
+    cube[0].val = 1;
+  } else {
+    cube[0].val = 0;
+  }
+  if (B[-ps + i - 1] == v) {
+    cube[3].val = 1;
+  } else {
+    cube[3].val = 0;
+  }
+  if (B[-ps + i - 1 + rs] == v) {
+    cube[6].val = 1;
+  } else {
+    cube[6].val = 0;
+  }
+  if (B[-ps + i + rs] == v) {
+    cube[7].val = 1;
+  } else {
+    cube[7].val = 0;
+  }
+  if (B[-ps + i + rs + 1] == v) {
+    cube[8].val = 1;
+  } else {
+    cube[8].val = 0;
+  }
+  if (B[-ps + i] == v) {
+    cube[4].val = 1;
+  } else {
+    cube[4].val = 0;
+  }
 } /* preparecubeval() */
 
 /* ==================================== */
@@ -996,38 +1688,151 @@ static void preparecubes(
  */
 {
   /* plan "HAUT" (+ps) */
-  if (B[ps+i+1])    cube_topo3d[23].val = 1; else cube_topo3d[23].val = 0;
-  if (B[ps+i+1-rs]) cube_topo3d[20].val = 1; else cube_topo3d[20].val = 0;
-  if (B[ps+i-rs])   cube_topo3d[19].val = 1; else cube_topo3d[19].val = 0;
-  if (B[ps+i-rs-1]) cube_topo3d[18].val = 1; else cube_topo3d[18].val = 0;
-  if (B[ps+i-1])    cube_topo3d[21].val = 1; else cube_topo3d[21].val = 0;
-  if (B[ps+i-1+rs]) cube_topo3d[24].val = 1; else cube_topo3d[24].val = 0;
-  if (B[ps+i+rs])   cube_topo3d[25].val = 1; else cube_topo3d[25].val = 0;
-  if (B[ps+i+rs+1]) cube_topo3d[26].val = 1; else cube_topo3d[26].val = 0;
-  if (B[ps+i])      cube_topo3d[22].val = 1; else cube_topo3d[22].val = 0;
+  if (B[ps + i + 1]) {
+    cube_topo3d[23].val = 1;
+  } else {
+    cube_topo3d[23].val = 0;
+  }
+  if (B[ps + i + 1 - rs]) {
+    cube_topo3d[20].val = 1;
+  } else {
+    cube_topo3d[20].val = 0;
+  }
+  if (B[ps + i - rs]) {
+    cube_topo3d[19].val = 1;
+  } else {
+    cube_topo3d[19].val = 0;
+  }
+  if (B[ps + i - rs - 1]) {
+    cube_topo3d[18].val = 1;
+  } else {
+    cube_topo3d[18].val = 0;
+  }
+  if (B[ps + i - 1]) {
+    cube_topo3d[21].val = 1;
+  } else {
+    cube_topo3d[21].val = 0;
+  }
+  if (B[ps + i - 1 + rs]) {
+    cube_topo3d[24].val = 1;
+  } else {
+    cube_topo3d[24].val = 0;
+  }
+  if (B[ps + i + rs]) {
+    cube_topo3d[25].val = 1;
+  } else {
+    cube_topo3d[25].val = 0;
+  }
+  if (B[ps + i + rs + 1]) {
+    cube_topo3d[26].val = 1;
+  } else {
+    cube_topo3d[26].val = 0;
+  }
+  if (B[ps + i]) {
+    cube_topo3d[22].val = 1;
+  } else {
+    cube_topo3d[22].val = 0;
+  }
   /* plan "COURANT" () */
-  if (B[i+1])       cube_topo3d[14].val = 1; else cube_topo3d[14].val = 0;
-  if (B[i+1-rs])    cube_topo3d[11].val = 1; else cube_topo3d[11].val = 0;
-  if (B[i-rs])      cube_topo3d[10].val = 1; else cube_topo3d[10].val = 0;
-  if (B[i-rs-1])    cube_topo3d[9].val = 1; else cube_topo3d[9].val = 0;
-  if (B[i-1])       cube_topo3d[12].val = 1; else cube_topo3d[12].val = 0;
-  if (B[i-1+rs])    cube_topo3d[15].val = 1; else cube_topo3d[15].val = 0;
-  if (B[i+rs])      cube_topo3d[16].val = 1; else cube_topo3d[16].val = 0;
-  if (B[i+rs+1])    cube_topo3d[17].val = 1; else cube_topo3d[17].val = 0;
-  if (B[i])         cube_topo3d[13].val = 1; else cube_topo3d[13].val = 0;
+  if (B[i + 1]) {
+    cube_topo3d[14].val = 1;
+  } else {
+    cube_topo3d[14].val = 0;
+  }
+  if (B[i + 1 - rs]) {
+    cube_topo3d[11].val = 1;
+  } else {
+    cube_topo3d[11].val = 0;
+  }
+  if (B[i - rs]) {
+    cube_topo3d[10].val = 1;
+  } else {
+    cube_topo3d[10].val = 0;
+  }
+  if (B[i - rs - 1]) {
+    cube_topo3d[9].val = 1;
+  } else {
+    cube_topo3d[9].val = 0;
+  }
+  if (B[i - 1]) {
+    cube_topo3d[12].val = 1;
+  } else {
+    cube_topo3d[12].val = 0;
+  }
+  if (B[i - 1 + rs]) {
+    cube_topo3d[15].val = 1;
+  } else {
+    cube_topo3d[15].val = 0;
+  }
+  if (B[i + rs]) {
+    cube_topo3d[16].val = 1;
+  } else {
+    cube_topo3d[16].val = 0;
+  }
+  if (B[i + rs + 1]) {
+    cube_topo3d[17].val = 1;
+  } else {
+    cube_topo3d[17].val = 0;
+  }
+  if (B[i]) {
+    cube_topo3d[13].val = 1;
+  } else {
+    cube_topo3d[13].val = 0;
+  }
   /* plan "BAS" (-ps) */
-  if (B[-ps+i+1])    cube_topo3d[5].val = 1; else cube_topo3d[5].val = 0;
-  if (B[-ps+i+1-rs]) cube_topo3d[2].val = 1; else cube_topo3d[2].val = 0;
-  if (B[-ps+i-rs])   cube_topo3d[1].val = 1; else cube_topo3d[1].val = 0;
-  if (B[-ps+i-rs-1]) cube_topo3d[0].val = 1; else cube_topo3d[0].val = 0;
-  if (B[-ps+i-1])    cube_topo3d[3].val = 1; else cube_topo3d[3].val = 0;
-  if (B[-ps+i-1+rs]) cube_topo3d[6].val = 1; else cube_topo3d[6].val = 0;
-  if (B[-ps+i+rs])   cube_topo3d[7].val = 1; else cube_topo3d[7].val = 0;
-  if (B[-ps+i+rs+1]) cube_topo3d[8].val = 1; else cube_topo3d[8].val = 0;
-  if (B[-ps+i])      cube_topo3d[4].val = 1; else cube_topo3d[4].val = 0;
-  
-  for (i = 0; i < 27; i++) 
-    if (cube_topo3d[i].val == 1) cubec_topo3d[i].val = 0; else cubec_topo3d[i].val = 1;
+  if (B[-ps + i + 1]) {
+    cube_topo3d[5].val = 1;
+  } else {
+    cube_topo3d[5].val = 0;
+  }
+  if (B[-ps + i + 1 - rs]) {
+    cube_topo3d[2].val = 1;
+  } else {
+    cube_topo3d[2].val = 0;
+  }
+  if (B[-ps + i - rs]) {
+    cube_topo3d[1].val = 1;
+  } else {
+    cube_topo3d[1].val = 0;
+  }
+  if (B[-ps + i - rs - 1]) {
+    cube_topo3d[0].val = 1;
+  } else {
+    cube_topo3d[0].val = 0;
+  }
+  if (B[-ps + i - 1]) {
+    cube_topo3d[3].val = 1;
+  } else {
+    cube_topo3d[3].val = 0;
+  }
+  if (B[-ps + i - 1 + rs]) {
+    cube_topo3d[6].val = 1;
+  } else {
+    cube_topo3d[6].val = 0;
+  }
+  if (B[-ps + i + rs]) {
+    cube_topo3d[7].val = 1;
+  } else {
+    cube_topo3d[7].val = 0;
+  }
+  if (B[-ps + i + rs + 1]) {
+    cube_topo3d[8].val = 1;
+  } else {
+    cube_topo3d[8].val = 0;
+  }
+  if (B[-ps + i]) {
+    cube_topo3d[4].val = 1;
+  } else {
+    cube_topo3d[4].val = 0;
+  }
+
+  for (i = 0; i < 27; i++) {
+    if (cube_topo3d[i].val == 1) {
+      cubec_topo3d[i].val = 0;
+    } else {
+      cubec_topo3d[i].val = 1;
+    }
+  }
 } /* preparecubes() */
 
 /* ==================================== */
@@ -1046,38 +1851,151 @@ static void preparecubesh(
  */
 {
   /* plan "ARRIERE" (+ps) */
-  if (img[ps+i+1]>=h)    cube_topo3d[17].val = 1; else cube_topo3d[17].val = 0;
-  if (img[ps+i+1-rs]>=h) cube_topo3d[26].val = 1; else cube_topo3d[26].val = 0;
-  if (img[ps+i-rs]>=h)   cube_topo3d[25].val = 1; else cube_topo3d[25].val = 0;
-  if (img[ps+i-rs-1]>=h) cube_topo3d[24].val = 1; else cube_topo3d[24].val = 0;
-  if (img[ps+i-1]>=h)    cube_topo3d[15].val = 1; else cube_topo3d[15].val = 0;
-  if (img[ps+i-1+rs]>=h) cube_topo3d[6].val = 1; else cube_topo3d[6].val = 0;
-  if (img[ps+i+rs]>=h)   cube_topo3d[7].val = 1; else cube_topo3d[7].val = 0;
-  if (img[ps+i+rs+1]>=h) cube_topo3d[8].val = 1; else cube_topo3d[8].val = 0;
-  if (img[ps+i]>=h)      cube_topo3d[16].val = 1; else cube_topo3d[16].val = 0;
+  if (img[ps + i + 1] >= h) {
+    cube_topo3d[17].val = 1;
+  } else {
+    cube_topo3d[17].val = 0;
+  }
+  if (img[ps + i + 1 - rs] >= h) {
+    cube_topo3d[26].val = 1;
+  } else {
+    cube_topo3d[26].val = 0;
+  }
+  if (img[ps + i - rs] >= h) {
+    cube_topo3d[25].val = 1;
+  } else {
+    cube_topo3d[25].val = 0;
+  }
+  if (img[ps + i - rs - 1] >= h) {
+    cube_topo3d[24].val = 1;
+  } else {
+    cube_topo3d[24].val = 0;
+  }
+  if (img[ps + i - 1] >= h) {
+    cube_topo3d[15].val = 1;
+  } else {
+    cube_topo3d[15].val = 0;
+  }
+  if (img[ps + i - 1 + rs] >= h) {
+    cube_topo3d[6].val = 1;
+  } else {
+    cube_topo3d[6].val = 0;
+  }
+  if (img[ps + i + rs] >= h) {
+    cube_topo3d[7].val = 1;
+  } else {
+    cube_topo3d[7].val = 0;
+  }
+  if (img[ps + i + rs + 1] >= h) {
+    cube_topo3d[8].val = 1;
+  } else {
+    cube_topo3d[8].val = 0;
+  }
+  if (img[ps + i] >= h) {
+    cube_topo3d[16].val = 1;
+  } else {
+    cube_topo3d[16].val = 0;
+  }
   /* plan "COURANT" () */
-  if (img[i+1]>=h)       cube_topo3d[14].val = 1; else cube_topo3d[14].val = 0;
-  if (img[i+1-rs]>=h)    cube_topo3d[23].val = 1; else cube_topo3d[23].val = 0;
-  if (img[i-rs]>=h)      cube_topo3d[22].val = 1; else cube_topo3d[22].val = 0;
-  if (img[i-rs-1]>=h)    cube_topo3d[21].val = 1; else cube_topo3d[21].val = 0;
-  if (img[i-1]>=h)       cube_topo3d[12].val = 1; else cube_topo3d[12].val = 0;
-  if (img[i-1+rs]>=h)    cube_topo3d[3].val = 1; else cube_topo3d[3].val = 0;
-  if (img[i+rs]>=h)      cube_topo3d[4].val = 1; else cube_topo3d[4].val = 0;
-  if (img[i+rs+1]>=h)    cube_topo3d[5].val = 1; else cube_topo3d[5].val = 0;
-  if (img[i]>=h)         cube_topo3d[13].val = 1; else cube_topo3d[13].val = 0;
+  if (img[i + 1] >= h) {
+    cube_topo3d[14].val = 1;
+  } else {
+    cube_topo3d[14].val = 0;
+  }
+  if (img[i + 1 - rs] >= h) {
+    cube_topo3d[23].val = 1;
+  } else {
+    cube_topo3d[23].val = 0;
+  }
+  if (img[i - rs] >= h) {
+    cube_topo3d[22].val = 1;
+  } else {
+    cube_topo3d[22].val = 0;
+  }
+  if (img[i - rs - 1] >= h) {
+    cube_topo3d[21].val = 1;
+  } else {
+    cube_topo3d[21].val = 0;
+  }
+  if (img[i - 1] >= h) {
+    cube_topo3d[12].val = 1;
+  } else {
+    cube_topo3d[12].val = 0;
+  }
+  if (img[i - 1 + rs] >= h) {
+    cube_topo3d[3].val = 1;
+  } else {
+    cube_topo3d[3].val = 0;
+  }
+  if (img[i + rs] >= h) {
+    cube_topo3d[4].val = 1;
+  } else {
+    cube_topo3d[4].val = 0;
+  }
+  if (img[i + rs + 1] >= h) {
+    cube_topo3d[5].val = 1;
+  } else {
+    cube_topo3d[5].val = 0;
+  }
+  if (img[i] >= h) {
+    cube_topo3d[13].val = 1;
+  } else {
+    cube_topo3d[13].val = 0;
+  }
   /* plan "AVANT" (-ps) */
-  if (img[-ps+i+1]>=h)    cube_topo3d[11].val = 1; else cube_topo3d[11].val = 0;
-  if (img[-ps+i+1-rs]>=h) cube_topo3d[20].val = 1; else cube_topo3d[20].val = 0;
-  if (img[-ps+i-rs]>=h)   cube_topo3d[19].val = 1; else cube_topo3d[19].val = 0;
-  if (img[-ps+i-rs-1]>=h) cube_topo3d[18].val = 1; else cube_topo3d[18].val = 0;
-  if (img[-ps+i-1]>=h)    cube_topo3d[9].val = 1; else cube_topo3d[9].val = 0;
-  if (img[-ps+i-1+rs]>=h) cube_topo3d[0].val = 1; else cube_topo3d[0].val = 0;
-  if (img[-ps+i+rs]>=h)   cube_topo3d[1].val = 1; else cube_topo3d[1].val = 0;
-  if (img[-ps+i+rs+1]>=h) cube_topo3d[2].val = 1; else cube_topo3d[2].val = 0;
-  if (img[-ps+i]>=h)      cube_topo3d[10].val = 1; else cube_topo3d[10].val = 0;
-  
-  for (i = 0; i < 27; i++) 
-    if (cube_topo3d[i].val == 1) cubec_topo3d[i].val = 0; else cubec_topo3d[i].val = 1;
+  if (img[-ps + i + 1] >= h) {
+    cube_topo3d[11].val = 1;
+  } else {
+    cube_topo3d[11].val = 0;
+  }
+  if (img[-ps + i + 1 - rs] >= h) {
+    cube_topo3d[20].val = 1;
+  } else {
+    cube_topo3d[20].val = 0;
+  }
+  if (img[-ps + i - rs] >= h) {
+    cube_topo3d[19].val = 1;
+  } else {
+    cube_topo3d[19].val = 0;
+  }
+  if (img[-ps + i - rs - 1] >= h) {
+    cube_topo3d[18].val = 1;
+  } else {
+    cube_topo3d[18].val = 0;
+  }
+  if (img[-ps + i - 1] >= h) {
+    cube_topo3d[9].val = 1;
+  } else {
+    cube_topo3d[9].val = 0;
+  }
+  if (img[-ps + i - 1 + rs] >= h) {
+    cube_topo3d[0].val = 1;
+  } else {
+    cube_topo3d[0].val = 0;
+  }
+  if (img[-ps + i + rs] >= h) {
+    cube_topo3d[1].val = 1;
+  } else {
+    cube_topo3d[1].val = 0;
+  }
+  if (img[-ps + i + rs + 1] >= h) {
+    cube_topo3d[2].val = 1;
+  } else {
+    cube_topo3d[2].val = 0;
+  }
+  if (img[-ps + i] >= h) {
+    cube_topo3d[10].val = 1;
+  } else {
+    cube_topo3d[10].val = 0;
+  }
+
+  for (i = 0; i < 27; i++) {
+    if (cube_topo3d[i].val == 1) {
+      cubec_topo3d[i].val = 0;
+    } else {
+      cubec_topo3d[i].val = 1;
+    }
+  }
 } /* preparecubesh() */
 
 /* ==================================== */
@@ -1096,38 +2014,151 @@ static void preparecubesh_l(
  */
 {
   /* plan "ARRIERE" (+ps) */
-  if (img[ps+i+1]>=h)    cube_topo3d[17].val = 1; else cube_topo3d[17].val = 0;
-  if (img[ps+i+1-rs]>=h) cube_topo3d[26].val = 1; else cube_topo3d[26].val = 0;
-  if (img[ps+i-rs]>=h)   cube_topo3d[25].val = 1; else cube_topo3d[25].val = 0;
-  if (img[ps+i-rs-1]>=h) cube_topo3d[24].val = 1; else cube_topo3d[24].val = 0;
-  if (img[ps+i-1]>=h)    cube_topo3d[15].val = 1; else cube_topo3d[15].val = 0;
-  if (img[ps+i-1+rs]>=h) cube_topo3d[6].val = 1; else cube_topo3d[6].val = 0;
-  if (img[ps+i+rs]>=h)   cube_topo3d[7].val = 1; else cube_topo3d[7].val = 0;
-  if (img[ps+i+rs+1]>=h) cube_topo3d[8].val = 1; else cube_topo3d[8].val = 0;
-  if (img[ps+i]>=h)      cube_topo3d[16].val = 1; else cube_topo3d[16].val = 0;
+  if (img[ps + i + 1] >= h) {
+    cube_topo3d[17].val = 1;
+  } else {
+    cube_topo3d[17].val = 0;
+  }
+  if (img[ps + i + 1 - rs] >= h) {
+    cube_topo3d[26].val = 1;
+  } else {
+    cube_topo3d[26].val = 0;
+  }
+  if (img[ps + i - rs] >= h) {
+    cube_topo3d[25].val = 1;
+  } else {
+    cube_topo3d[25].val = 0;
+  }
+  if (img[ps + i - rs - 1] >= h) {
+    cube_topo3d[24].val = 1;
+  } else {
+    cube_topo3d[24].val = 0;
+  }
+  if (img[ps + i - 1] >= h) {
+    cube_topo3d[15].val = 1;
+  } else {
+    cube_topo3d[15].val = 0;
+  }
+  if (img[ps + i - 1 + rs] >= h) {
+    cube_topo3d[6].val = 1;
+  } else {
+    cube_topo3d[6].val = 0;
+  }
+  if (img[ps + i + rs] >= h) {
+    cube_topo3d[7].val = 1;
+  } else {
+    cube_topo3d[7].val = 0;
+  }
+  if (img[ps + i + rs + 1] >= h) {
+    cube_topo3d[8].val = 1;
+  } else {
+    cube_topo3d[8].val = 0;
+  }
+  if (img[ps + i] >= h) {
+    cube_topo3d[16].val = 1;
+  } else {
+    cube_topo3d[16].val = 0;
+  }
   /* plan "COURANT" () */
-  if (img[i+1]>=h)       cube_topo3d[14].val = 1; else cube_topo3d[14].val = 0;
-  if (img[i+1-rs]>=h)    cube_topo3d[23].val = 1; else cube_topo3d[23].val = 0;
-  if (img[i-rs]>=h)      cube_topo3d[22].val = 1; else cube_topo3d[22].val = 0;
-  if (img[i-rs-1]>=h)    cube_topo3d[21].val = 1; else cube_topo3d[21].val = 0;
-  if (img[i-1]>=h)       cube_topo3d[12].val = 1; else cube_topo3d[12].val = 0;
-  if (img[i-1+rs]>=h)    cube_topo3d[3].val = 1; else cube_topo3d[3].val = 0;
-  if (img[i+rs]>=h)      cube_topo3d[4].val = 1; else cube_topo3d[4].val = 0;
-  if (img[i+rs+1]>=h)    cube_topo3d[5].val = 1; else cube_topo3d[5].val = 0;
-  if (img[i]>=h)         cube_topo3d[13].val = 1; else cube_topo3d[13].val = 0;
+  if (img[i + 1] >= h) {
+    cube_topo3d[14].val = 1;
+  } else {
+    cube_topo3d[14].val = 0;
+  }
+  if (img[i + 1 - rs] >= h) {
+    cube_topo3d[23].val = 1;
+  } else {
+    cube_topo3d[23].val = 0;
+  }
+  if (img[i - rs] >= h) {
+    cube_topo3d[22].val = 1;
+  } else {
+    cube_topo3d[22].val = 0;
+  }
+  if (img[i - rs - 1] >= h) {
+    cube_topo3d[21].val = 1;
+  } else {
+    cube_topo3d[21].val = 0;
+  }
+  if (img[i - 1] >= h) {
+    cube_topo3d[12].val = 1;
+  } else {
+    cube_topo3d[12].val = 0;
+  }
+  if (img[i - 1 + rs] >= h) {
+    cube_topo3d[3].val = 1;
+  } else {
+    cube_topo3d[3].val = 0;
+  }
+  if (img[i + rs] >= h) {
+    cube_topo3d[4].val = 1;
+  } else {
+    cube_topo3d[4].val = 0;
+  }
+  if (img[i + rs + 1] >= h) {
+    cube_topo3d[5].val = 1;
+  } else {
+    cube_topo3d[5].val = 0;
+  }
+  if (img[i] >= h) {
+    cube_topo3d[13].val = 1;
+  } else {
+    cube_topo3d[13].val = 0;
+  }
   /* plan "AVANT" (-ps) */
-  if (img[-ps+i+1]>=h)    cube_topo3d[11].val = 1; else cube_topo3d[11].val = 0;
-  if (img[-ps+i+1-rs]>=h) cube_topo3d[20].val = 1; else cube_topo3d[20].val = 0;
-  if (img[-ps+i-rs]>=h)   cube_topo3d[19].val = 1; else cube_topo3d[19].val = 0;
-  if (img[-ps+i-rs-1]>=h) cube_topo3d[18].val = 1; else cube_topo3d[18].val = 0;
-  if (img[-ps+i-1]>=h)    cube_topo3d[9].val = 1; else cube_topo3d[9].val = 0;
-  if (img[-ps+i-1+rs]>=h) cube_topo3d[0].val = 1; else cube_topo3d[0].val = 0;
-  if (img[-ps+i+rs]>=h)   cube_topo3d[1].val = 1; else cube_topo3d[1].val = 0;
-  if (img[-ps+i+rs+1]>=h) cube_topo3d[2].val = 1; else cube_topo3d[2].val = 0;
-  if (img[-ps+i]>=h)      cube_topo3d[10].val = 1; else cube_topo3d[10].val = 0;
-  
-  for (i = 0; i < 27; i++) 
-    if (cube_topo3d[i].val == 1) cubec_topo3d[i].val = 0; else cubec_topo3d[i].val = 1;
+  if (img[-ps + i + 1] >= h) {
+    cube_topo3d[11].val = 1;
+  } else {
+    cube_topo3d[11].val = 0;
+  }
+  if (img[-ps + i + 1 - rs] >= h) {
+    cube_topo3d[20].val = 1;
+  } else {
+    cube_topo3d[20].val = 0;
+  }
+  if (img[-ps + i - rs] >= h) {
+    cube_topo3d[19].val = 1;
+  } else {
+    cube_topo3d[19].val = 0;
+  }
+  if (img[-ps + i - rs - 1] >= h) {
+    cube_topo3d[18].val = 1;
+  } else {
+    cube_topo3d[18].val = 0;
+  }
+  if (img[-ps + i - 1] >= h) {
+    cube_topo3d[9].val = 1;
+  } else {
+    cube_topo3d[9].val = 0;
+  }
+  if (img[-ps + i - 1 + rs] >= h) {
+    cube_topo3d[0].val = 1;
+  } else {
+    cube_topo3d[0].val = 0;
+  }
+  if (img[-ps + i + rs] >= h) {
+    cube_topo3d[1].val = 1;
+  } else {
+    cube_topo3d[1].val = 0;
+  }
+  if (img[-ps + i + rs + 1] >= h) {
+    cube_topo3d[2].val = 1;
+  } else {
+    cube_topo3d[2].val = 0;
+  }
+  if (img[-ps + i] >= h) {
+    cube_topo3d[10].val = 1;
+  } else {
+    cube_topo3d[10].val = 0;
+  }
+
+  for (i = 0; i < 27; i++) {
+    if (cube_topo3d[i].val == 1) {
+      cubec_topo3d[i].val = 0;
+    } else {
+      cubec_topo3d[i].val = 1;
+    }
+  }
 } /* preparecubesh_l() */
 
 /* ==================================== */
@@ -1147,38 +2178,151 @@ static void preparecubeslab(
 {
   int32_t lab = img[i];
   /* plan "ARRIERE" (+ps) */
-  if (img[ps+i+1]==lab)    cube_topo3d[17].val = 1; else cube_topo3d[17].val = 0;
-  if (img[ps+i+1-rs]==lab) cube_topo3d[26].val = 1; else cube_topo3d[26].val = 0;
-  if (img[ps+i-rs]==lab)   cube_topo3d[25].val = 1; else cube_topo3d[25].val = 0;
-  if (img[ps+i-rs-1]==lab) cube_topo3d[24].val = 1; else cube_topo3d[24].val = 0;
-  if (img[ps+i-1]==lab)    cube_topo3d[15].val = 1; else cube_topo3d[15].val = 0;
-  if (img[ps+i-1+rs]==lab) cube_topo3d[6].val = 1; else cube_topo3d[6].val = 0;
-  if (img[ps+i+rs]==lab)   cube_topo3d[7].val = 1; else cube_topo3d[7].val = 0;
-  if (img[ps+i+rs+1]==lab) cube_topo3d[8].val = 1; else cube_topo3d[8].val = 0;
-  if (img[ps+i]==lab)      cube_topo3d[16].val = 1; else cube_topo3d[16].val = 0;
+  if (img[ps + i + 1] == lab) {
+    cube_topo3d[17].val = 1;
+  } else {
+    cube_topo3d[17].val = 0;
+  }
+  if (img[ps + i + 1 - rs] == lab) {
+    cube_topo3d[26].val = 1;
+  } else {
+    cube_topo3d[26].val = 0;
+  }
+  if (img[ps + i - rs] == lab) {
+    cube_topo3d[25].val = 1;
+  } else {
+    cube_topo3d[25].val = 0;
+  }
+  if (img[ps + i - rs - 1] == lab) {
+    cube_topo3d[24].val = 1;
+  } else {
+    cube_topo3d[24].val = 0;
+  }
+  if (img[ps + i - 1] == lab) {
+    cube_topo3d[15].val = 1;
+  } else {
+    cube_topo3d[15].val = 0;
+  }
+  if (img[ps + i - 1 + rs] == lab) {
+    cube_topo3d[6].val = 1;
+  } else {
+    cube_topo3d[6].val = 0;
+  }
+  if (img[ps + i + rs] == lab) {
+    cube_topo3d[7].val = 1;
+  } else {
+    cube_topo3d[7].val = 0;
+  }
+  if (img[ps + i + rs + 1] == lab) {
+    cube_topo3d[8].val = 1;
+  } else {
+    cube_topo3d[8].val = 0;
+  }
+  if (img[ps + i] == lab) {
+    cube_topo3d[16].val = 1;
+  } else {
+    cube_topo3d[16].val = 0;
+  }
   /* plan "COURANT" () */
-  if (img[i+1]==lab)       cube_topo3d[14].val = 1; else cube_topo3d[14].val = 0;
-  if (img[i+1-rs]==lab)    cube_topo3d[23].val = 1; else cube_topo3d[23].val = 0;
-  if (img[i-rs]==lab)      cube_topo3d[22].val = 1; else cube_topo3d[22].val = 0;
-  if (img[i-rs-1]==lab)    cube_topo3d[21].val = 1; else cube_topo3d[21].val = 0;
-  if (img[i-1]==lab)       cube_topo3d[12].val = 1; else cube_topo3d[12].val = 0;
-  if (img[i-1+rs]==lab)    cube_topo3d[3].val = 1; else cube_topo3d[3].val = 0;
-  if (img[i+rs]==lab)      cube_topo3d[4].val = 1; else cube_topo3d[4].val = 0;
-  if (img[i+rs+1]==lab)    cube_topo3d[5].val = 1; else cube_topo3d[5].val = 0;
-  if (img[i]==lab)         cube_topo3d[13].val = 1; else cube_topo3d[13].val = 0;
+  if (img[i + 1] == lab) {
+    cube_topo3d[14].val = 1;
+  } else {
+    cube_topo3d[14].val = 0;
+  }
+  if (img[i + 1 - rs] == lab) {
+    cube_topo3d[23].val = 1;
+  } else {
+    cube_topo3d[23].val = 0;
+  }
+  if (img[i - rs] == lab) {
+    cube_topo3d[22].val = 1;
+  } else {
+    cube_topo3d[22].val = 0;
+  }
+  if (img[i - rs - 1] == lab) {
+    cube_topo3d[21].val = 1;
+  } else {
+    cube_topo3d[21].val = 0;
+  }
+  if (img[i - 1] == lab) {
+    cube_topo3d[12].val = 1;
+  } else {
+    cube_topo3d[12].val = 0;
+  }
+  if (img[i - 1 + rs] == lab) {
+    cube_topo3d[3].val = 1;
+  } else {
+    cube_topo3d[3].val = 0;
+  }
+  if (img[i + rs] == lab) {
+    cube_topo3d[4].val = 1;
+  } else {
+    cube_topo3d[4].val = 0;
+  }
+  if (img[i + rs + 1] == lab) {
+    cube_topo3d[5].val = 1;
+  } else {
+    cube_topo3d[5].val = 0;
+  }
+  if (img[i] == lab) {
+    cube_topo3d[13].val = 1;
+  } else {
+    cube_topo3d[13].val = 0;
+  }
   /* plan "AVANT" (-ps) */
-  if (img[-ps+i+1]==lab)    cube_topo3d[11].val = 1; else cube_topo3d[11].val = 0;
-  if (img[-ps+i+1-rs]==lab) cube_topo3d[20].val = 1; else cube_topo3d[20].val = 0;
-  if (img[-ps+i-rs]==lab)   cube_topo3d[19].val = 1; else cube_topo3d[19].val = 0;
-  if (img[-ps+i-rs-1]==lab) cube_topo3d[18].val = 1; else cube_topo3d[18].val = 0;
-  if (img[-ps+i-1]==lab)    cube_topo3d[9].val = 1; else cube_topo3d[9].val = 0;
-  if (img[-ps+i-1+rs]==lab) cube_topo3d[0].val = 1; else cube_topo3d[0].val = 0;
-  if (img[-ps+i+rs]==lab)   cube_topo3d[1].val = 1; else cube_topo3d[1].val = 0;
-  if (img[-ps+i+rs+1]==lab) cube_topo3d[2].val = 1; else cube_topo3d[2].val = 0;
-  if (img[-ps+i]==lab)      cube_topo3d[10].val = 1; else cube_topo3d[10].val = 0;
-  
-  for (i = 0; i < 27; i++) 
-    if (cube_topo3d[i].val == 1) cubec_topo3d[i].val = 0; else cubec_topo3d[i].val = 1;
+  if (img[-ps + i + 1] == lab) {
+    cube_topo3d[11].val = 1;
+  } else {
+    cube_topo3d[11].val = 0;
+  }
+  if (img[-ps + i + 1 - rs] == lab) {
+    cube_topo3d[20].val = 1;
+  } else {
+    cube_topo3d[20].val = 0;
+  }
+  if (img[-ps + i - rs] == lab) {
+    cube_topo3d[19].val = 1;
+  } else {
+    cube_topo3d[19].val = 0;
+  }
+  if (img[-ps + i - rs - 1] == lab) {
+    cube_topo3d[18].val = 1;
+  } else {
+    cube_topo3d[18].val = 0;
+  }
+  if (img[-ps + i - 1] == lab) {
+    cube_topo3d[9].val = 1;
+  } else {
+    cube_topo3d[9].val = 0;
+  }
+  if (img[-ps + i - 1 + rs] == lab) {
+    cube_topo3d[0].val = 1;
+  } else {
+    cube_topo3d[0].val = 0;
+  }
+  if (img[-ps + i + rs] == lab) {
+    cube_topo3d[1].val = 1;
+  } else {
+    cube_topo3d[1].val = 0;
+  }
+  if (img[-ps + i + rs + 1] == lab) {
+    cube_topo3d[2].val = 1;
+  } else {
+    cube_topo3d[2].val = 0;
+  }
+  if (img[-ps + i] == lab) {
+    cube_topo3d[10].val = 1;
+  } else {
+    cube_topo3d[10].val = 0;
+  }
+
+  for (i = 0; i < 27; i++) {
+    if (cube_topo3d[i].val == 1) {
+      cubec_topo3d[i].val = 0;
+    } else {
+      cubec_topo3d[i].val = 1;
+    }
+  }
 } /* preparecubesh_l() */
 
 
@@ -1301,10 +2445,11 @@ int32_t mctopo3d_simple6(                   /* pour un objet en 6-connexite */
 #undef F_NAME
 #define F_NAME "mctopo3d_simple6"
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubes(img, p, rs, ps, N);
   return ((mctopo3d_T6(cube_topo3d) == 1) && (mctopo3d_T26(cubec_topo3d) == 1));
 } /* mctopo3d_simple6() */
@@ -1320,10 +2465,11 @@ int32_t mctopo3d_simple18(                  /* pour un objet en 18-connexite */
 #undef F_NAME
 #define F_NAME "mctopo3d_simple18"
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubes(img, p, rs, ps, N);
   return ((mctopo3d_T18(cube_topo3d) == 1) && (mctopo3d_T6p(cubec_topo3d) == 1));
 } /* mctopo3d_simple18() */
@@ -1339,10 +2485,11 @@ int32_t mctopo3d_simple26(                  /* pour un objet en 26-connexite */
 #undef F_NAME
 #define F_NAME "mctopo3d_simple26"
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubes(img, p, rs, ps, N);
   return ((mctopo3d_T26(cube_topo3d) == 1) && (mctopo3d_T6(cubec_topo3d) == 1));
 } /* mctopo3d_simple26() */
@@ -1359,10 +2506,11 @@ int32_t mctopo3d_simple6h(                   /* pour un objet en 6-connexite */
 #undef F_NAME
 #define F_NAME "mctopo3d_simple6h"
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, h, rs, ps, N);
   return ((mctopo3d_T6(cube_topo3d) == 1) && (mctopo3d_T26(cubec_topo3d) == 1));
 } /* mctopo3d_simple6h() */
@@ -1379,10 +2527,11 @@ int32_t mctopo3d_simple18h(                  /* pour un objet en 18-connexite */
 #undef F_NAME
 #define F_NAME "mctopo3d_simple18h"
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, h, rs, ps, N);
   return ((mctopo3d_T18(cube_topo3d) == 1) && (mctopo3d_T6p(cubec_topo3d) == 1));
 } /* mctopo3d_simple18h() */
@@ -1399,10 +2548,11 @@ int32_t mctopo3d_simple26h(                  /* pour un objet en 26-connexite */
 #undef F_NAME
 #define F_NAME "mctopo3d_simple26h"
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, h, rs, ps, N);
   return ((mctopo3d_T26(cube_topo3d) == 1) && (mctopo3d_T6(cubec_topo3d) == 1));
 } /* mctopo3d_simple26h() */
@@ -1418,10 +2568,11 @@ int32_t mctopo3d_simple6lab(                   /* pour un objet en 6-connexite *
 #undef F_NAME
 #define F_NAME "mctopo3d_simple6lab"
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubeslab(img, p, rs, ps, N);
   return ((mctopo3d_T6(cube_topo3d) == 1) && (mctopo3d_T26(cubec_topo3d) == 1));
 } /* mctopo3d_simple6lab() */
@@ -1437,10 +2588,11 @@ int32_t mctopo3d_simple18lab(                  /* pour un objet en 18-connexite 
 #undef F_NAME
 #define F_NAME "mctopo3d_simple18lab"
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubeslab(img, p, rs, ps, N);
   return ((mctopo3d_T18(cube_topo3d) == 1) && (mctopo3d_T6p(cubec_topo3d) == 1));
 } /* mctopo3d_simple18lab() */
@@ -1456,10 +2608,11 @@ int32_t mctopo3d_simple26lab(                  /* pour un objet en 26-connexite 
 #undef F_NAME
 #define F_NAME "mctopo3d_simple26lab"
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubeslab(img, p, rs, ps, N);
   return ((mctopo3d_T26(cube_topo3d) == 1) && (mctopo3d_T6(cubec_topo3d) == 1));
 } /* mctopo3d_simple26lab() */
@@ -1474,10 +2627,11 @@ int32_t mctopo3d_tbar6h(               /* pour un objet en 6-connexite */
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return -1;
+  }
   preparecubesh(img, p, h, rs, ps, N);
   return mctopo3d_T26(cubec_topo3d);
 } /* mctopo3d_tbar6h() */
@@ -1492,10 +2646,11 @@ int32_t mctopo3d_tbar26h(              /* pour un objet en 26-connexite */
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return -1;
+  }
   preparecubesh(img, p, h, rs, ps, N);
   return mctopo3d_T6(cubec_topo3d);
 } /* mctopo3d_tbar26h() */
@@ -1522,18 +2677,30 @@ uint8_t mctopo3d_P_simple(voxel * cube, voxel * cubep, voxel * cubec, uint8_t co
   pvoxel xp; /* point central de cubep */
   pvoxel yp; /* point de cubep */
 
-  for (n = 0; n < 27; n++) if (cube[n].val == 1) cubec[n].val = 0; else cubec[n].val = 1;
+  for (n = 0; n < 27; n++) {
+    if (cube[n].val == 1) {
+      cubec[n].val = 0;
+    } else {
+      cubec[n].val = 1;
+    }
+  }
 
   switch (connex) /* teste la condition 2 (theoreme 6) */
   {
-    case 6:  
-      if (mctopo3d_T26(cubec) != 1) return 0; 
+    case 6:
+      if (mctopo3d_T26(cubec) != 1) {
+        return 0;
+      }
       break;
-    case 18: 
-      if (mctopo3d_T6p(cubec) != 1) return 0; 
+    case 18:
+      if (mctopo3d_T6p(cubec) != 1) {
+        return 0;
+      }
       break;
-    case 26: 
-      if (mctopo3d_T6(cubec) != 1) return 0; 
+    case 26:
+      if (mctopo3d_T6(cubec) != 1) {
+        return 0;
+      }
       break;
     default: 
       fprintf(stderr, "mctopo3d_P_simple: mauvaise connexite : %d\n", connex); 
@@ -1554,7 +2721,9 @@ uint8_t mctopo3d_P_simple(voxel * cube, voxel * cubep, voxel * cubec, uint8_t co
           yc = xc->v26[n];
           v = yc->val;
           yc->val = 1;
-          if (mctopo3d_T26(cubec) != 1) return 0;
+          if (mctopo3d_T26(cubec) != 1) {
+            return 0;
+          }
           yc->val = v;
         } /* if (yp->val) */
       } /* for (n = 0; n < x->n26v; n++) */
@@ -1568,7 +2737,9 @@ uint8_t mctopo3d_P_simple(voxel * cube, voxel * cubep, voxel * cubec, uint8_t co
           yc = xc->v6[n];
           v = yc->val;
           yc->val = 1;
-          if (mctopo3d_T6p(cubec) != 1) return 0;
+          if (mctopo3d_T6p(cubec) != 1) {
+            return 0;
+          }
           yc->val = v;
         } /* if (yp->val) */
       } /* for (n = 0; n < x->n6v; n++) */
@@ -1582,7 +2753,9 @@ uint8_t mctopo3d_P_simple(voxel * cube, voxel * cubep, voxel * cubec, uint8_t co
           yc = xc->v6[n];
           v = yc->val;
           yc->val = 1;
-          if (mctopo3d_T6(cubec) != 1) return 0;
+          if (mctopo3d_T6(cubec) != 1) {
+            return 0;
+          }
           yc->val = v;
         } /* if (yp->val) */
       } /* for (n = 0; n < x->n6v; n++) */
@@ -1597,19 +2770,29 @@ uint8_t mctopo3d_P_simple(voxel * cube, voxel * cubep, voxel * cubec, uint8_t co
     y = &(cube[n]);
     yp = &(cubep[n]);
     yc = &(cubec[n]);
-    if (y->val && !yp->val) yc->val = 1; else yc->val = 0;
+    if (y->val && !yp->val) {
+      yc->val = 1;
+    } else {
+      yc->val = 0;
+    }
   } /* for (n = 0; n < 27; n++) */
 
   switch (connex) /* teste la condition 1 (theoreme 6) */
   {
-    case 6:  
-      if (mctopo3d_T6(cubec) != 1) return 0;
+    case 6:
+      if (mctopo3d_T6(cubec) != 1) {
+        return 0;
+      }
       break;
-    case 18: 
-      if (mctopo3d_T18(cubec) != 1) return 0;
+    case 18:
+      if (mctopo3d_T18(cubec) != 1) {
+        return 0;
+      }
       break;
-    case 26: 
-      if (mctopo3d_T26(cubec) != 1) return 0;
+    case 26:
+      if (mctopo3d_T26(cubec) != 1) {
+        return 0;
+      }
       break;
     default: 
       fprintf(stderr, "mctopo3d_P_simple: mauvaise connexite : %d\n", connex); 
@@ -1627,7 +2810,9 @@ uint8_t mctopo3d_P_simple(voxel * cube, voxel * cubep, voxel * cubec, uint8_t co
           yc = xc->v6[n];
           v = yc->val;
           yc->val = 1;
-          if (mctopo3d_T6(cubec) != 1) return 0;
+          if (mctopo3d_T6(cubec) != 1) {
+            return 0;
+          }
           yc->val = v;
         } /* if (yp->val) */
       } /* for (n = 0; n < x->n6v; n++) */
@@ -1641,7 +2826,9 @@ uint8_t mctopo3d_P_simple(voxel * cube, voxel * cubep, voxel * cubec, uint8_t co
           yc = xc->v18[n];
           v = yc->val;
           yc->val = 1;
-          if (mctopo3d_T18(cubec) != 1) return 0;
+          if (mctopo3d_T18(cubec) != 1) {
+            return 0;
+          }
           yc->val = v;
         } /* if (yp->val) */
       } /* for (n = 0; n < x->n18v; n++) */
@@ -1655,7 +2842,9 @@ uint8_t mctopo3d_P_simple(voxel * cube, voxel * cubep, voxel * cubec, uint8_t co
           yc = xc->v26[n];
           v = yc->val;
           yc->val = 1;
-          if (mctopo3d_T26(cubec) != 1) return 0;
+          if (mctopo3d_T26(cubec) != 1) {
+            return 0;
+          }
           yc->val = v;
         } /* if (yp->val) */
       } /* for (n = 0; n < x->n26v; n++) */
@@ -1698,10 +2887,11 @@ int32_t mctopo3d_pdestr6(                   /* pour des minima en 6-connexite */
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p], rs, ps, N);
   return ((mctopo3d_T26(cube_topo3d) == 1) && (mctopo3d_T6(cubec_topo3d) == 1));
 } /* mctopo3d_pdestr6() */
@@ -1715,10 +2905,11 @@ int32_t mctopo3d_pdestr18(                  /* pour des minima en 18-connexite *
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p], rs, ps, N);
   return ((mctopo3d_T6p(cube_topo3d) == 1) && (mctopo3d_T18(cubec_topo3d) == 1));
 } /* mctopo3d_pdestr18() */
@@ -1732,10 +2923,11 @@ int32_t mctopo3d_pdestr26(                  /* pour des minima en 26-connexite *
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p], rs, ps, N);
   return ((mctopo3d_T6(cube_topo3d) == 1) && (mctopo3d_T26(cubec_topo3d) == 1));
 } /* mctopo3d_pdestr26() */
@@ -1749,10 +2941,11 @@ int32_t mctopo3d_plevdestr6(                   /* pour des minima en 6-connexite
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p], rs, ps, N);
   return (mctopo3d_T6(cubec_topo3d) == 1);
 } /* mctopo3d_plevdestr6() */
@@ -1766,10 +2959,11 @@ int32_t mctopo3d_plevdestr18(                  /* pour des minima en 18-connexit
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p], rs, ps, N);
   return (mctopo3d_T18(cubec_topo3d) == 1);
 } /* mctopo3d_plevdestr18() */
@@ -1783,10 +2977,11 @@ int32_t mctopo3d_plevdestr26(                  /* pour des minima en 26-connexit
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p], rs, ps, N);
   return (mctopo3d_T26(cubec_topo3d) == 1);
 } /* mctopo3d_plevdestr26() */
@@ -1800,10 +2995,11 @@ int32_t mctopo3d_pconstr6(                   /* pour des minima en 6-connexite *
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p]+1, rs, ps, N);
   return ((mctopo3d_T26(cube_topo3d) == 1) && (mctopo3d_T6(cubec_topo3d) == 1));
 } /* mctopo3d_pconstr6() */
@@ -1817,10 +3013,11 @@ int32_t mctopo3d_pconstr18(                  /* pour des minima en 18-connexite 
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p]+1, rs, ps, N);
   return ((mctopo3d_T6p(cube_topo3d) == 1) && (mctopo3d_T18(cubec_topo3d) == 1));
 } /* mctopo3d_pconstr18() */
@@ -1834,10 +3031,11 @@ int32_t mctopo3d_pconstr26(                  /* pour des minima en 26-connexite 
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p]+1, rs, ps, N);
   return ((mctopo3d_T6(cube_topo3d) == 1) && (mctopo3d_T26(cubec_topo3d) == 1));
 } /* mctopo3d_pconstr26() */
@@ -1851,10 +3049,11 @@ int32_t mctopo3d_plevconstr6(                   /* pour des minima en 6-connexit
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p]+1, rs, ps, N);
   return (mctopo3d_T26(cube_topo3d) == 1);
 } /* mctopo3d_plevconstr6() */
@@ -1868,10 +3067,11 @@ int32_t mctopo3d_plevconstr18(                  /* pour des minima en 18-connexi
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p]+1, rs, ps, N);
   return (mctopo3d_T6p(cube_topo3d) == 1);
 } /* mctopo3d_plevconstr18() */
@@ -1885,10 +3085,11 @@ int32_t mctopo3d_plevconstr26(                  /* pour des minima en 26-connexi
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p]+1, rs, ps, N);
   return (mctopo3d_T6(cube_topo3d) == 1);
 } /* mctopo3d_plevconstr26() */
@@ -1902,10 +3103,11 @@ int32_t mctopo3d_peak6(                   /* pour des minima en 6-connexite */
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p], rs, ps, N);
   return (mctopo3d_T26(cube_topo3d) == 0);
 } /* mctopo3d_peak6() */
@@ -1919,10 +3121,11 @@ int32_t mctopo3d_peak26(                    /* pour des minima en 26-connexite *
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p], rs, ps, N);
   return (mctopo3d_T6(cube_topo3d) == 0);
 } /* mctopo3d_peak26() */
@@ -1936,10 +3139,11 @@ int32_t mctopo3d_well6(                   /* pour des minima en 6-connexite */
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p]+1, rs, ps, N);
   return (mctopo3d_T6(cubec_topo3d) == 0);
 } /* mctopo3d_well6() */
@@ -1953,10 +3157,11 @@ int32_t mctopo3d_well26(                    /* pour des minima en 26-connexite *
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p]+1, rs, ps, N);
   return (mctopo3d_T26(cubec_topo3d) == 0);
 } /* mctopo3d_well26() */
@@ -1981,12 +3186,16 @@ uint8_t mctopo3d_alpha26m(
         for (k = 0; k < 26; k += 1)
         {
           q = voisin26(p, k, rs, ps, N);
-          if ((q != -1) && ((v=img[q]) < val) && ((int32_t)v > mctopo3d_alpha)) mctopo3d_alpha = (int32_t)v;
-	}
-        if (mctopo3d_alpha == NDG_MIN - 1) 
+          if ((q != -1) && ((v = img[q]) < val) &&
+              ((int32_t)v > mctopo3d_alpha)) {
+            mctopo3d_alpha = (int32_t)v;
+          }
+        }
+        if (mctopo3d_alpha == NDG_MIN - 1) {
           return val;
-        else
+        } else {
           return (uint8_t)mctopo3d_alpha;
+        }
 } /* mctopo3d_alpha26m() */
 
 /* ==================================== */
@@ -2009,12 +3218,16 @@ int32_t mctopo3d_alpha26m_l(
         for (k = 0; k < 26; k += 1)
         {
           q = voisin26(p, k, rs, ps, N);
-          if ((q != -1) && ((v=img[q]) < val) && ((int32_t)v > mctopo3d_alpha)) mctopo3d_alpha = (int32_t)v;
-	}
-        if (mctopo3d_alpha == NDG_MIN - 1) 
+          if ((q != -1) && ((v = img[q]) < val) &&
+              ((int32_t)v > mctopo3d_alpha)) {
+            mctopo3d_alpha = (int32_t)v;
+          }
+        }
+        if (mctopo3d_alpha == NDG_MIN - 1) {
           return val;
-        else
+        } else {
           return (int32_t)mctopo3d_alpha;
+        }
 } /* mctopo3d_alpha26m_l() */
 
 /* ==================================== */
@@ -2037,12 +3250,16 @@ uint8_t mctopo3d_alpha6m(
         for (k = 0; k <= 10; k += 2)
         {
           q = voisin6(p, k, rs, ps, N);
-          if ((q != -1) && ((v=img[q]) < val) && ((int32_t)v > mctopo3d_alpha)) mctopo3d_alpha = (int32_t)v;
-	}
-        if (mctopo3d_alpha == NDG_MIN - 1) 
+          if ((q != -1) && ((v = img[q]) < val) &&
+              ((int32_t)v > mctopo3d_alpha)) {
+            mctopo3d_alpha = (int32_t)v;
+          }
+        }
+        if (mctopo3d_alpha == NDG_MIN - 1) {
           return val;
-        else
+        } else {
           return (uint8_t)mctopo3d_alpha;
+        }
 } /* mctopo3d_alpha6m() */
 
 /* ==================================== */
@@ -2065,12 +3282,16 @@ uint8_t mctopo3d_alpha26p(
         for (k = 0; k < 26; k += 1)
         {
           q = voisin26(p, k, rs, ps, N);
-          if ((q != -1) && ((v=img[q]) > val) && ((int32_t)v < mctopo3d_alpha)) mctopo3d_alpha = (int32_t)v;
-	}
-        if (mctopo3d_alpha == NDG_MAX + 1) 
+          if ((q != -1) && ((v = img[q]) > val) &&
+              ((int32_t)v < mctopo3d_alpha)) {
+            mctopo3d_alpha = (int32_t)v;
+          }
+        }
+        if (mctopo3d_alpha == NDG_MAX + 1) {
           return val;
-        else
+        } else {
           return (uint8_t)mctopo3d_alpha;
+        }
 } /* mctopo3d_alpha26p() */
 
 /* ==================================== */
@@ -2093,12 +3314,16 @@ uint8_t mctopo3d_alpha6p(
         for (k = 0; k <= 10; k += 2)
         {
           q = voisin6(p, k, rs, ps, N);
-          if ((q != -1) && ((v=img[q]) > val) && ((int32_t)v < mctopo3d_alpha)) mctopo3d_alpha = (int32_t)v;
-	}
-        if (mctopo3d_alpha == NDG_MAX + 1) 
+          if ((q != -1) && ((v = img[q]) > val) &&
+              ((int32_t)v < mctopo3d_alpha)) {
+            mctopo3d_alpha = (int32_t)v;
+          }
+        }
+        if (mctopo3d_alpha == NDG_MAX + 1) {
           return val;
-        else
+        } else {
           return (uint8_t)mctopo3d_alpha;
+        }
 } /* mctopo3d_alpha6p() */
 
 /* ==================================== */
@@ -2112,7 +3337,9 @@ uint8_t mctopo3d_delta6m(
 /* ==================================== */
 {	
   uint8_t ret, sav = img[p];
-  while (mctopo3d_pdestr6(img, p, rs, ps, N)) img[p] = mctopo3d_alpha26m(img, p, rs, ps, N);
+  while (mctopo3d_pdestr6(img, p, rs, ps, N)) {
+    img[p] = mctopo3d_alpha26m(img, p, rs, ps, N);
+  }
   ret = img[p];
   img[p] = sav;
   return ret;
@@ -2129,7 +3356,9 @@ uint8_t mctopo3d_delta26m(
 /* ==================================== */
 {	
   uint8_t ret, sav = img[p];
-  while (mctopo3d_pdestr26(img, p, rs, ps, N)) img[p] = mctopo3d_alpha26m(img, p, rs, ps, N);
+  while (mctopo3d_pdestr26(img, p, rs, ps, N)) {
+    img[p] = mctopo3d_alpha26m(img, p, rs, ps, N);
+  }
   ret = img[p];
   img[p] = sav;
   return ret;
@@ -2146,7 +3375,9 @@ uint8_t mctopo3d_delta6p(
 /* ==================================== */
 {	
   uint8_t ret, sav = img[p];
-  while (mctopo3d_pconstr6(img, p, rs, ps, N)) img[p] = mctopo3d_alpha26p(img, p, rs, ps, N);
+  while (mctopo3d_pconstr6(img, p, rs, ps, N)) {
+    img[p] = mctopo3d_alpha26p(img, p, rs, ps, N);
+  }
   ret = img[p];
   img[p] = sav;
   return ret;
@@ -2163,7 +3394,9 @@ uint8_t mctopo3d_delta26p(
 /* ==================================== */
 {	
   uint8_t ret, sav = img[p];
-  while (mctopo3d_pconstr26(img, p, rs, ps, N)) img[p] = mctopo3d_alpha26p(img, p, rs, ps, N);
+  while (mctopo3d_pconstr26(img, p, rs, ps, N)) {
+    img[p] = mctopo3d_alpha26p(img, p, rs, ps, N);
+  }
   ret = img[p];
   img[p] = sav;
   return ret;
@@ -2181,13 +3414,16 @@ int32_t mctopo3d_separant6(  /* teste si un point est separant - minima 6-connex
 {
   index_t k, q;
 
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
 
   preparecubesh(img, p, img[p], rs, ps, N);
-  if (mctopo3d_T6(cubec_topo3d) >= 2) return 1;
+  if (mctopo3d_T6(cubec_topo3d) >= 2) {
+    return 1;
+  }
 
   for (k = 0; k < 26; k += 1)
   {
@@ -2195,7 +3431,9 @@ int32_t mctopo3d_separant6(  /* teste si un point est separant - minima 6-connex
     if ((q != -1) && (img[q] <= img[p]))
     {
       preparecubesh(img, p, img[q], rs, ps, N);
-      if (mctopo3d_T6(cubec_topo3d) >= 2) return 1;
+      if (mctopo3d_T6(cubec_topo3d) >= 2) {
+        return 1;
+      }
     }
   }	
   return 0;
@@ -2212,13 +3450,16 @@ int32_t mctopo3d_hseparant6(  /* teste si un point est hseparant - minima 6-conn
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
 
   preparecubesh(img, p, h, rs, ps, N);
-  if (mctopo3d_T6(cubec_topo3d) >= 2) return 1;
+  if (mctopo3d_T6(cubec_topo3d) >= 2) {
+    return 1;
+  }
   return 0;
 } /* mctopo3d_hseparant6() */
 
@@ -2235,13 +3476,16 @@ int32_t mctopo3d_hfseparant6(  /* teste si un point est hfseparant - minima 6-co
 {
   index_t k, q;
 
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
 
   preparecubesh(img, p, img[p], rs, ps, N);
-  if (mctopo3d_T6(cubec_topo3d) >= 2) return 1;
+  if (mctopo3d_T6(cubec_topo3d) >= 2) {
+    return 1;
+  }
 
   for (k = 0; k < 26; k += 1)
   {
@@ -2249,7 +3493,9 @@ int32_t mctopo3d_hfseparant6(  /* teste si un point est hfseparant - minima 6-co
     if ((q != -1) && (img[q] > h) && (img[q] <= img[p]))
     {
       preparecubesh(img, p, img[q], rs, ps, N);
-      if (mctopo3d_T6(cubec_topo3d) >= 2) return 1;
+      if (mctopo3d_T6(cubec_topo3d) >= 2) {
+        return 1;
+      }
     }
   }	
   return 0;
@@ -2273,17 +3519,24 @@ int32_t mctopo3d_filsombre6(                /* pour des minima en 6-connexite */
 */
 {
   int32_t T, Tb, Nb;
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p]+1, rs, ps, N);
   T = mctopo3d_T26(cube_topo3d);
-  if (T != 1) return 0;
+  if (T != 1) {
+    return 0;
+  }
   Tb = mctopo3d_T6(cubec_topo3d);
-  if (Tb == 0) return 1;
+  if (Tb == 0) {
+    return 1;
+  }
   Nb = mctopo3d_nbvois6(cubec_topo3d);
-  if (Tb > 0) return (Nb == Tb);
+  if (Tb > 0) {
+    return (Nb == Tb);
+  }
   return 0;
 } /* mctopo3d_filsombre6() */
 
@@ -2305,17 +3558,24 @@ int32_t mctopo3d_filsombre26(               /* pour des minima en 26-connexite *
 */
 {
   int32_t T, Tb, Nb;
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p]+1, rs, ps, N);
   T = mctopo3d_T6(cube_topo3d);
-  if (T != 1) return 0;
+  if (T != 1) {
+    return 0;
+  }
   Tb = mctopo3d_T26(cubec_topo3d);
-  if (Tb == 0) return 1;
+  if (Tb == 0) {
+    return 1;
+  }
   Nb = mctopo3d_nbvois26(cubec_topo3d);
-  if (Tb > 0) return (Nb == Tb);
+  if (Tb > 0) {
+    return (Nb == Tb);
+  }
   return 0;
 } /* mctopo3d_filsombre26() */
 
@@ -2336,17 +3596,24 @@ int32_t mctopo3d_filclair6(                /* pour des minima en 6-connexite */
 */
 {
   int32_t T, Tb, Nb;
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p], rs, ps, N);
   Tb = mctopo3d_T6(cubec_topo3d);
-  if (Tb != 1) return 0;
+  if (Tb != 1) {
+    return 0;
+  }
   T = mctopo3d_T26(cube_topo3d);
-  if (T == 0) return 1;
+  if (T == 0) {
+    return 1;
+  }
   Nb = mctopo3d_nbvois26(cube_topo3d);
-  if (T > 0) return (Nb == T);
+  if (T > 0) {
+    return (Nb == T);
+  }
   return 0;
 } /* mctopo3d_filclair6() */
 
@@ -2367,17 +3634,24 @@ int32_t mctopo3d_filclair26(                /* pour des minima en 26-connexite *
 */
 {
   int32_t T, Tb, Nb;
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p], rs, ps, N);
   Tb = mctopo3d_T26(cubec_topo3d);
-  if (Tb != 1) return 0;
+  if (Tb != 1) {
+    return 0;
+  }
   T = mctopo3d_T6(cube_topo3d);
-  if (T == 0) return 1;
+  if (T == 0) {
+    return 1;
+  }
   Nb = mctopo3d_nbvois6(cube_topo3d);
-  if (T > 0) return (Nb == T);
+  if (T > 0) {
+    return (Nb == T);
+  }
   return 0;
 } /* mctopo3d_filclair26() */
 
@@ -2390,10 +3664,11 @@ int32_t mctopo3d_t6mm(                   /* pour des minima en 6-connexite */
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p], rs, ps, N);
   return mctopo3d_T6(cubec_topo3d);
 } /* mctopo3d_t6mm() */
@@ -2407,10 +3682,11 @@ int32_t mctopo3d_t6m(                   /* pour des minima en 6-connexite */
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p]+1, rs, ps, N);
   return mctopo3d_T6(cubec_topo3d);
 } /* mctopo3d_t6m() */
@@ -2424,10 +3700,11 @@ int32_t mctopo3d_t26mm(                   /* pour des minima en 26-connexite */
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p], rs, ps, N);
   return mctopo3d_T26(cubec_topo3d);
 } /* mctopo3d_t26mm() */
@@ -2441,10 +3718,11 @@ int32_t mctopo3d_t26m(                   /* pour des minima en 26-connexite */
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p]+1, rs, ps, N);
   return mctopo3d_T26(cubec_topo3d);
 } /* mctopo3d_t26m() */
@@ -2458,10 +3736,11 @@ int32_t mctopo3d_t6pp(
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p]+1, rs, ps, N);
   return mctopo3d_T6(cube_topo3d);
 } /* mctopo3d_t6pp() */
@@ -2475,10 +3754,11 @@ int32_t mctopo3d_t6p(
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p], rs, ps, N);
   return mctopo3d_T6(cube_topo3d);
 } /* mctopo3d_t6p() */
@@ -2492,10 +3772,11 @@ int32_t mctopo3d_t26pp(
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p]+1, rs, ps, N);
   return mctopo3d_T26(cube_topo3d);
 } /* mctopo3d_t26pp() */
@@ -2509,10 +3790,11 @@ int32_t mctopo3d_t26p(
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh(img, p, img[p], rs, ps, N);
   return mctopo3d_T26(cube_topo3d);
 } /* mctopo3d_t26p() */
@@ -2526,10 +3808,11 @@ int32_t mctopo3d_t26pp_l(
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh_l(img, p, img[p]+1, rs, ps, N);
   return mctopo3d_T26(cube_topo3d);
 } /* mctopo3d_t26pp_l() */
@@ -2543,10 +3826,11 @@ int32_t mctopo3d_t6pp_l(
   index_t N)                       /* taille image */
 /* ==================================== */
 {
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
   preparecubesh_l(img, p, img[p]+1, rs, ps, N);
   return mctopo3d_T6(cube_topo3d);
 } /* mctopo3d_t6pp_l() */
@@ -2596,7 +3880,9 @@ int32_t mctopo3d_bordext6(uint8_t *F, index_t x, index_t rs, index_t ps, index_t
   for (k = 0; k <= 10; k += 2) /* parcourt les voisins en 6-connexite */
   {
     y = voisin6(x, k, rs, ps, N);
-    if ((y != -1) && (F[y] == 0)) return 1;
+    if ((y != -1) && (F[y] == 0)) {
+      return 1;
+    }
   } /* for k */      
   return 0;
 } /* mctopo3d_bordext6() */
@@ -2610,7 +3896,9 @@ int32_t mctopo3d_bordext26(uint8_t *F, index_t x, index_t rs, index_t ps, index_
   for (k = 0; k < 26; k += 1) /* parcourt les voisins en 26-connexite */
   {
     y = voisin26(x, k, rs, ps, N);
-    if ((y != -1) && (F[y] == 0)) return 1;
+    if ((y != -1) && (F[y] == 0)) {
+      return 1;
+    }
   } /* for k */      
   return 0;
 } /* mctopo3d_bordext26() */
@@ -2625,9 +3913,14 @@ int32_t mctopo3d_curve6( /* point de courbe en 6-connexite */
 /* ==================================== */
 {
   assert(!is_on_frame(p, rs, ps, N));
-  if (img[p] == 0) return 0;
+  if (img[p] == 0) {
+    return 0;
+  }
   preparecubes(img, p, rs, ps, N);
-  if ((mctopo3d_T6(cube_topo3d) == 2) && (mctopo3d_nbvoiso6(img, p, rs, ps, N) == 2)) return 1;
+  if ((mctopo3d_T6(cube_topo3d) == 2) &&
+      (mctopo3d_nbvoiso6(img, p, rs, ps, N) == 2)) {
+    return 1;
+  }
   return 0;
 } /* mctopo3d_curve6() */
 
@@ -2641,9 +3934,14 @@ int32_t mctopo3d_curve18( /* point de courbe en 18-connexite */
 /* ==================================== */
 {
   assert(!is_on_frame(p, rs, ps, N));
-  if (img[p] == 0) return 0;
+  if (img[p] == 0) {
+    return 0;
+  }
   preparecubes(img, p, rs, ps, N);
-  if ((mctopo3d_T18(cube_topo3d) == 2) && (mctopo3d_nbvoiso18(img, p, rs, ps, N) == 2)) return 1;
+  if ((mctopo3d_T18(cube_topo3d) == 2) &&
+      (mctopo3d_nbvoiso18(img, p, rs, ps, N) == 2)) {
+    return 1;
+  }
   return 0;
 } /* mctopo3d_curve18() */
 
@@ -2657,9 +3955,14 @@ int32_t mctopo3d_curve26( /* point de courbe en 26-connexite */
 /* ==================================== */
 {
   assert(!is_on_frame(p, rs, ps, N));
-  if (img[p] == 0) return 0;
+  if (img[p] == 0) {
+    return 0;
+  }
   preparecubes(img, p, rs, ps, N);
-  if ((mctopo3d_T26(cube_topo3d) == 2) && (mctopo3d_nbvoiso26(img, p, rs, ps, N) == 2)) return 1;
+  if ((mctopo3d_T26(cube_topo3d) == 2) &&
+      (mctopo3d_nbvoiso26(img, p, rs, ps, N) == 2)) {
+    return 1;
+  }
   return 0;
 } /* mctopo3d_curve26() */
 
@@ -2673,9 +3976,14 @@ int32_t mctopo3d_curve6lab( /* point de courbe en 6-connexite */
 /* ==================================== */
 {
   assert(!is_on_frame(p, rs, ps, N));
-  if (img[p] == 0) return 0;
+  if (img[p] == 0) {
+    return 0;
+  }
   preparecubeslab(img, p, rs, ps, N);
-  if ((mctopo3d_T6(cube_topo3d) == 2) && (mctopo3d_nbvoislab6(img, p, rs, ps, N) == 2)) return 1;
+  if ((mctopo3d_T6(cube_topo3d) == 2) &&
+      (mctopo3d_nbvoislab6(img, p, rs, ps, N) == 2)) {
+    return 1;
+  }
   return 0;
 } /* mctopo3d_curve6lab() */
 
@@ -2689,9 +3997,14 @@ int32_t mctopo3d_curve18lab( /* point de courbe en 18-connexite */
 /* ==================================== */
 {
   assert(!is_on_frame(p, rs, ps, N));
-  if (img[p] == 0) return 0;
+  if (img[p] == 0) {
+    return 0;
+  }
   preparecubeslab(img, p, rs, ps, N);
-  if ((mctopo3d_T18(cube_topo3d) == 2) && (mctopo3d_nbvoislab18(img, p, rs, ps, N) == 2)) return 1;
+  if ((mctopo3d_T18(cube_topo3d) == 2) &&
+      (mctopo3d_nbvoislab18(img, p, rs, ps, N) == 2)) {
+    return 1;
+  }
   return 0;
 } /* mctopo3d_curve18lab() */
 
@@ -2705,9 +4018,14 @@ int32_t mctopo3d_curve26lab( /* point de courbe en 26-connexite */
 /* ==================================== */
 {
   assert(!is_on_frame(p, rs, ps, N));
-  if (img[p] == 0) return 0;
+  if (img[p] == 0) {
+    return 0;
+  }
   preparecubeslab(img, p, rs, ps, N);
-  if ((mctopo3d_T26(cube_topo3d) == 2) && (mctopo3d_nbvoislab26(img, p, rs, ps, N) == 2)) return 1;
+  if ((mctopo3d_T26(cube_topo3d) == 2) &&
+      (mctopo3d_nbvoislab26(img, p, rs, ps, N) == 2)) {
+    return 1;
+  }
   return 0;
 } /* mctopo3d_curve26lab() */
 
@@ -2737,7 +4055,11 @@ int32_t mctopo3d_tsao_fu_nonend( /* pour l'algo de Tsao et Fu (voir lskelpar3d_o
   for (n = 0; n < x->n26v; n++) // marque les points objet non simples
   {
     y = x->v26[n]; yp = xp->v26[n];
-    if (y->val && !yp->val) yp->val = 1; else yp->val = 0;
+    if (y->val && !yp->val) {
+      yp->val = 1;
+    } else {
+      yp->val = 0;
+    }
   }
 
 #ifdef DEBUG_mctopo3d_tsao_fu_nonend
@@ -2774,7 +4096,9 @@ int32_t mctopo3d_tsao_fu_nonend( /* pour l'algo de Tsao et Fu (voir lskelpar3d_o
       for (m = 0; m < yp->n26v; m++) // there must be at least one neighbor in B
       {
 	zp = yp->v26[m];
-	if (zp->val) break; 
+        if (zp->val) {
+          break;
+        }
       } // for (m = 0; m < yp->n26v; m++)
       if (m >= yp->n26v) // no neighbor found for one y
       {
@@ -2812,17 +4136,23 @@ int32_t mctopo3d_simplepair26(     /* pour un objet en 26-connexite */
 {
   uint8_t vp = img[p], vq = img[q];
   int32_t res = 0;
-  if (!vp || !vq) return 0;
+  if (!vp || !vq) {
+    return 0;
+  }
   if (mctopo3d_simple26(img, p, rs, ps, N))
   {
     img[p] = 0;
-    if (mctopo3d_simple26(img, q, rs, ps, N)) res = 1;
+    if (mctopo3d_simple26(img, q, rs, ps, N)) {
+      res = 1;
+    }
     img[p] = vp;    
   }
   if ((res == 0) && mctopo3d_simple26(img, q, rs, ps, N))
   {
     img[q] = 0;
-    if (mctopo3d_simple26(img, p, rs, ps, N)) res = 1;
+    if (mctopo3d_simple26(img, p, rs, ps, N)) {
+      res = 1;
+    }
     img[q] = vq;
   }
   return res;

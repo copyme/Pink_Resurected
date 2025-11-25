@@ -78,10 +78,11 @@ double dist_3(double x1, double y1, double z1, double x2, double y2, double z2)
  **************************************************/
 int32_t sum(int32_t a, int32_t b)
 {
-  if ((a==INFTY) || (b==INFTY))
+  if ((a == INFTY) || (b == INFTY)) {
     return INFTY;
-  else
-    return a+b;
+  } else {
+    return a + b;
+  }
 }
 
 /**
@@ -93,10 +94,11 @@ int32_t sum(int32_t a, int32_t b)
  **************************************************/
 int32_t lvoronoilabelling_prod(int32_t a, int32_t b)
 {
-  if ((a==INFTY) || (b==INFTY))
+  if ((a == INFTY) || (b == INFTY)) {
     return INFTY;
-  else
-    return a*b;
+  } else {
+    return a * b;
+  }
 }
 /**
  **************************************************
@@ -121,12 +123,14 @@ int32_t opp (int32_t a) {
  * @return The division (integer) of divid out of divis handling INFTY
  **************************************************/
 int32_t intdivint (int32_t divid, int32_t divis) {
-  if (divis == 0)
+  if (divis == 0) {
+    return INFTY;
+  }
+  if (divid == INFTY) {
     return  INFTY;
-  if (divid == INFTY)
-    return  INFTY;
-  else
-    return  divid / divis;
+  } else {
+    return divid / divis;
+  }
 }
 
 
@@ -171,20 +175,20 @@ int32_t Sep(int32_t i, int32_t u, int32_t gi2, int32_t gu2) {
 void phaseVoronoiX(struct xvimage *img, struct xvimage *sdt_x, struct xvimage *dx)
 {
   int32_t x,y,z;
-  for (z = 0; z < depth(img) ; z++)
+  for (z = 0; z < depth(img); z++) {
     for (y = 0; y < colsize(img) ; y++)
       {
 	if (voxel(img,0,y,z) == 0)
 	  {
 	    lvoxel(sdt_x,0,y,z)=0;
 	    lvoxel(dx,0,y,z)=0;
-	  }
-	else
-	  lvoxel(sdt_x,0,y,z)=INFTY;
+        } else {
+          lvoxel(sdt_x, 0, y, z) = INFTY;
+        }
 
-	// Forward scan
-	for (x = 1; x < rowsize(img) ; x++)
-	  if (voxel(img,x,y,z) == 0)
+        // Forward scan
+        for (x = 1; x < rowsize(img); x++) {
+          if (voxel(img,x,y,z) == 0)
 	    {
 	      lvoxel(sdt_x,x,y,z)=0;
 	      lvoxel(dx,x,y,z)=x;
@@ -193,17 +197,20 @@ void phaseVoronoiX(struct xvimage *img, struct xvimage *sdt_x, struct xvimage *d
 	    {
 	      lvoxel(sdt_x,x,y,z)=sum(1, lvoxel(sdt_x,(x-1),y,z));;
 	      lvoxel(dx,x,y,z)=lvoxel(dx,(x-1),y,z);
-	    }
-	//Backward scan
-	for (x = rowsize(img) -2; x >= 0; x--)
-	  if (lvoxel(sdt_x,(x+1),y,z) < lvoxel(sdt_x,x,y,z))
+            }
+        }
+        //Backward scan
+        for (x = rowsize(img) - 2; x >= 0; x--) {
+          if (lvoxel(sdt_x,(x+1),y,z) < lvoxel(sdt_x,x,y,z))
 	    {
 	      lvoxel(sdt_x,x,y,z)=sum(1, lvoxel(sdt_x,(x+1),y,z));
 
 	      //Voronoi labeling
 	      lvoxel(dx,x,y,z)=lvoxel(dx,(x+1),y,z);
-	    }
-      }
+          }
+        }
+    }
+  }
 }
 
 /**
@@ -237,7 +244,7 @@ void phaseVoronoiY(struct xvimage *sdt_x, struct xvimage *sdt_xy, struct xvimage
     exit(0);
   }
 
-  for (z = 0; z < depth(sdt_x); z++)
+  for (z = 0; z < depth(sdt_x); z++) {
     for (x = 0; x < rowsize(sdt_x); x++)
       {
 	q=0;
@@ -250,13 +257,19 @@ void phaseVoronoiY(struct xvimage *sdt_x, struct xvimage *sdt_xy, struct xvimage
 	//Forward Scan
 	for (u=1; u < colsize(sdt_x) ; u++)
 	  {
-	    while ((q >= 0) &&
-		   (lvoronoilabelling_F(t[q],s[q],lvoronoilabelling_prod(lvoxel(sdt_x,x,s[q],z),lvoxel(sdt_x,x,s[q],z))) >
-		    lvoronoilabelling_F(t[q],u,lvoronoilabelling_prod(lvoxel(sdt_x,x,u,z),lvoxel(sdt_x,x,u,z))))
-		   )
-	      q--;
+          while ((q >= 0) &&
+                 (lvoronoilabelling_F(
+                      t[q], s[q],
+                      lvoronoilabelling_prod(lvoxel(sdt_x, x, s[q], z),
+                                             lvoxel(sdt_x, x, s[q], z))) >
+                  lvoronoilabelling_F(
+                      t[q], u,
+                      lvoronoilabelling_prod(lvoxel(sdt_x, x, u, z),
+                                             lvoxel(sdt_x, x, u, z))))) {
+            q--;
+          }
 
-	    if (q<0)
+            if (q<0)
 	      {
 		q=0;
 		s[0]=u;
@@ -288,11 +301,12 @@ void phaseVoronoiY(struct xvimage *sdt_x, struct xvimage *sdt_xy, struct xvimage
 	    lvoxel(dx,x,u,z) =dxTemp[s[q]];
 	    lvoxel(dy,x,u,z) = s[q];
 
-
-	    if (u==t[q])
-	      q--;
-	  }
-      }
+            if (u == t[q]) {
+              q--;
+            }
+          }
+    }
+  }
   free(s);
   free(t);
   free(dxTemp);
@@ -331,7 +345,7 @@ void phaseVoronoiZ(struct xvimage *sdt_xy, struct xvimage *sdt_xyz, struct xvima
     exit(0);
   }
 
-  for (y = 0; y < colsize(sdt_xy); y++)
+  for (y = 0; y < colsize(sdt_xy); y++) {
     for (x = 0; x < rowsize(sdt_xy); x++)
       {
 	q=0;
@@ -344,13 +358,13 @@ void phaseVoronoiZ(struct xvimage *sdt_xy, struct xvimage *sdt_xyz, struct xvima
 	//Forward Scan
 	for (u=1; u < depth(sdt_xy) ; u++)
 	  {
-	    while ((q >= 0) &&
-		   (lvoronoilabelling_F(t[q],s[q],lvoxel(sdt_xy,x,y,s[q])) >
-		    lvoronoilabelling_F(t[q],u,lvoxel(sdt_xy,x,y,u)))
-		   )
-	      q--;
+          while ((q >= 0) &&
+                 (lvoronoilabelling_F(t[q], s[q], lvoxel(sdt_xy, x, y, s[q])) >
+                  lvoronoilabelling_F(t[q], u, lvoxel(sdt_xy, x, y, u)))) {
+            q--;
+          }
 
-	    if (q<0)
+            if (q<0)
 	      {
 		q=0;
 		s[0]=u;
@@ -385,10 +399,12 @@ void phaseVoronoiZ(struct xvimage *sdt_xy, struct xvimage *sdt_xyz, struct xvima
 	    lvoxel(dy,x,y,u) = dyTemp[s[q]];
 	    lvoxel(dz,x,y,u) = s[q];
 
-	      if (u==t[q])
-	      q--;
-	  }
-      }
+            if (u == t[q]) {
+              q--;
+            }
+          }
+    }
+  }
   free(s);
   free(t);
   free(dxTemp);
@@ -450,15 +466,17 @@ int32_t lvoronoilabelling(struct xvimage *img,   /* donnee: image binaire */
     phaseVoronoiX(img,dist,dx);
     phaseVoronoiY(dist,sdt_tmp,dx,dy);
     phaseVoronoiZ(sdt_tmp,dist,dx,dy,dz);
-    for (i = 0; i < N; i++)
-      V[i] = Z[i]*ps + Y[i]*rs + X[i];
+    for (i = 0; i < N; i++) {
+      V[i] = Z[i] * ps + Y[i] * rs + X[i];
+    }
   }
   else
   {
     phaseVoronoiX(img,sdt_tmp,dx);
     phaseVoronoiY(sdt_tmp,dist,dx,dy);
-    for (i = 0; i < N; i++)
-      V[i] = Y[i]*rs + X[i];
+    for (i = 0; i < N; i++) {
+      V[i] = Y[i] * rs + X[i];
+    }
   }
 
   freeimage(sdt_tmp);
@@ -528,51 +546,61 @@ Mathematical Morphology: 40 Years On, Springer, 2005, pp. 259-268
     phaseVoronoiX(f,tmp,dx);
     phaseVoronoiY(tmp,dis,dx,dy);
 
-    for (p = j = 0; j < cs; j++)
-    for (i = 0; i < rs; i++, p++)
-    if (F[p])
-    {
-		max=0.0;
-		ftp_x = X[p]; ftp_y = Y[p];
+    for (p = j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++, p++) {
+        if (F[p]) {
+          max = 0.0;
+          ftp_x = X[p];
+          ftp_y = Y[p];
 
-		if ((i > 0) && F[p-1])
-		{
-			ftpe_x = X[p-1]; ftpe_y = Y[p-1];
-			mx = i - 0.5; my = j;
-			t=dist_2(ftpe_x, ftpe_y, ftp_x, ftp_y);
-			if ( (t > max) &&
-				 (dist_2(mx, my, ftpe_x, ftpe_y) <= (dist_2(mx, my, ftp_x, ftp_y))))
-				max=t;
-		}
-		if ((i < rs-1) && F[p+1])
-		{
-			ftpe_x = X[p+1]; ftpe_y = Y[p+1];
-			mx = i + 0.5; my = j;
-			t=dist_2(ftpe_x, ftpe_y, ftp_x, ftp_y);
-			if ( (t > max) &&
-				 (dist_2(mx, my, ftpe_x, ftpe_y) <= (dist_2(mx, my, ftp_x, ftp_y))))
-				max=t;
-		}
-		if ((j < cs-1) && F[p+rs])
-		{
-			ftpe_x = X[p+rs]; ftpe_y = Y[p+rs];
-			mx = i; my = j + 0.5;
-			t=dist_2(ftpe_x, ftpe_y, ftp_x, ftp_y);
-			if ( (t > max) &&
-				 (dist_2(mx, my, ftpe_x, ftpe_y) <= (dist_2(mx, my, ftp_x, ftp_y))))
-				max=t;
-		}
-		if (!medax && (j > 0) && F[p-rs])
-		{
-			ftpe_x = X[p-rs]; ftpe_y = Y[p-rs];
-			mx = i; my = j - 0.5;
-			t=dist_2(ftpe_x, ftpe_y, ftp_x, ftp_y);
-			if ( (t > max) &&
-				 (dist_2(mx, my, ftpe_x, ftpe_y) <= (dist_2(mx, my, ftp_x, ftp_y))))
-				max=t;
-		}
+          if ((i > 0) && F[p - 1]) {
+            ftpe_x = X[p - 1];
+            ftpe_y = Y[p - 1];
+            mx = i - 0.5;
+            my = j;
+            t = dist_2(ftpe_x, ftpe_y, ftp_x, ftp_y);
+            if ((t > max) && (dist_2(mx, my, ftpe_x, ftpe_y) <=
+                              (dist_2(mx, my, ftp_x, ftp_y)))) {
+              max = t;
+            }
+          }
+          if ((i < rs - 1) && F[p + 1]) {
+            ftpe_x = X[p + 1];
+            ftpe_y = Y[p + 1];
+            mx = i + 0.5;
+            my = j;
+            t = dist_2(ftpe_x, ftpe_y, ftp_x, ftp_y);
+            if ((t > max) && (dist_2(mx, my, ftpe_x, ftpe_y) <=
+                              (dist_2(mx, my, ftp_x, ftp_y)))) {
+              max = t;
+            }
+          }
+          if ((j < cs - 1) && F[p + rs]) {
+            ftpe_x = X[p + rs];
+            ftpe_y = Y[p + rs];
+            mx = i;
+            my = j + 0.5;
+            t = dist_2(ftpe_x, ftpe_y, ftp_x, ftp_y);
+            if ((t > max) && (dist_2(mx, my, ftpe_x, ftpe_y) <=
+                              (dist_2(mx, my, ftp_x, ftp_y)))) {
+              max = t;
+            }
+          }
+          if (!medax && (j > 0) && F[p - rs]) {
+            ftpe_x = X[p - rs];
+            ftpe_y = Y[p - rs];
+            mx = i;
+            my = j - 0.5;
+            t = dist_2(ftpe_x, ftpe_y, ftp_x, ftp_y);
+            if ((t > max) && (dist_2(mx, my, ftpe_x, ftpe_y) <=
+                              (dist_2(mx, my, ftp_x, ftp_y)))) {
+              max = t;
+            }
+          }
 
-		R[p] = sqrtf(max);
+          R[p] = sqrtf(max);
+        }
+      }
     }
 
     freeimage(tmp);
@@ -594,70 +622,98 @@ Mathematical Morphology: 40 Years On, Springer, 2005, pp. 259-268
     phaseVoronoiY(dis, tmp, dx, dy);
     phaseVoronoiZ(tmp, dis, dx, dy, dz);
 
-    for (p = k = 0; k < ds; k++)
-    for (    j = 0; j < cs; j++)
-    for (    i = 0; i < rs; i++, p++)
-    if (F[p])
-    {
-		max=0.0;
-		ftp_x = X[p]; ftp_y = Y[p]; ftp_z = Z[p];
+    for (p = k = 0; k < ds; k++) {
+      for (j = 0; j < cs; j++) {
+        for (i = 0; i < rs; i++, p++) {
+          if (F[p]) {
+            max = 0.0;
+            ftp_x = X[p];
+            ftp_y = Y[p];
+            ftp_z = Z[p];
 
-		if ((i > 0) && F[p-1])
-		{
-			ftpe_x = X[p-1]; ftpe_y = Y[p-1]; ftpe_z = Z[p-1];
-			mx = i - 0.5; my = j; mz = k;
-			t=dist_3(ftpe_x, ftpe_y, ftpe_z, ftp_x, ftp_y, ftp_z);
-			if ((t > max) &&
-			    (dist_3(mx, my, mz, ftpe_x, ftpe_y, ftpe_z) <= (dist_3(mx, my, mz, ftp_x, ftp_y, ftp_z))))
-				max = t;
-		}
-		if (!medax && (i < rs-1) && F[p+1])
-		{
-			ftpe_x = X[p+1]; ftpe_y = Y[p+1]; ftpe_z = Z[p+1];
-			mx = i + 0.5; my = j; mz = k;
-			t=dist_3(ftpe_x, ftpe_y, ftpe_z, ftp_x, ftp_y, ftp_z);
-			if ((t > max) &&
-			    (dist_3(mx, my, mz, ftpe_x, ftpe_y, ftpe_z) <= (dist_3(mx, my, mz, ftp_x, ftp_y, ftp_z))))
-				max = t;
-		}
-		if (!medax && (j > 0) && F[p-rs])
-		{
-			ftpe_x = X[p-rs]; ftpe_y = Y[p-rs]; ftpe_z = Z[p-rs];
-			mx = i; my = j - 0.5; mz = k;
-			t=dist_3(ftpe_x, ftpe_y, ftpe_z, ftp_x, ftp_y, ftp_z);
-			if ((t > max) &&
-			    (dist_3(mx, my, mz, ftpe_x, ftpe_y, ftpe_z) <= (dist_3(mx, my, mz, ftp_x, ftp_y, ftp_z))))
-				max = t;
-		}
-		if (!medax && (j < cs-1) && F[p+rs])
-		{
-			ftpe_x = X[p+rs]; ftpe_y = Y[p+rs]; ftpe_z = Z[p+rs];
-			mx = i; my = j + 0.5; mz = k;
-			t=dist_3(ftpe_x, ftpe_y, ftpe_z, ftp_x, ftp_y, ftp_z);
-			if ((t > max) &&
-			    (dist_3(mx, my, mz, ftpe_x, ftpe_y, ftpe_z) <= (dist_3(mx, my, mz, ftp_x, ftp_y, ftp_z))))
-				max = t;
-		}
-		if (!medax && (k > 0) && F[p-ps])
-		{
-			ftpe_x = X[p-ps]; ftpe_y = Y[p-ps]; ftpe_z = Z[p-ps];
-			mx = i; my = j; mz = k - 0.5;
-			t=dist_3(ftpe_x, ftpe_y, ftpe_z, ftp_x, ftp_y, ftp_z);
-			if ((t > max) &&
-			    (dist_3(mx, my, mz, ftpe_x, ftpe_y, ftpe_z) <= (dist_3(mx, my, mz, ftp_x, ftp_y, ftp_z))))
-				max = t;
-		}
-		if (!medax && (j < ds-1) && F[p+ps])
-		{
-			ftpe_x = X[p+ps]; ftpe_y = Y[p+ps]; ftpe_z = Z[p+ps];
-			mx = i; my = j; mz = k + 0.5;
-			t=dist_3(ftpe_x, ftpe_y, ftpe_z, ftp_x, ftp_y, ftp_z);
-			if ((t > max) &&
-			    (dist_3(mx, my, mz, ftpe_x, ftpe_y, ftpe_z) <= (dist_3(mx, my, mz, ftp_x, ftp_y, ftp_z))))
-				max = t;
-		}
+            if ((i > 0) && F[p - 1]) {
+              ftpe_x = X[p - 1];
+              ftpe_y = Y[p - 1];
+              ftpe_z = Z[p - 1];
+              mx = i - 0.5;
+              my = j;
+              mz = k;
+              t = dist_3(ftpe_x, ftpe_y, ftpe_z, ftp_x, ftp_y, ftp_z);
+              if ((t > max) && (dist_3(mx, my, mz, ftpe_x, ftpe_y, ftpe_z) <=
+                                (dist_3(mx, my, mz, ftp_x, ftp_y, ftp_z)))) {
+                max = t;
+              }
+            }
+            if (!medax && (i < rs - 1) && F[p + 1]) {
+              ftpe_x = X[p + 1];
+              ftpe_y = Y[p + 1];
+              ftpe_z = Z[p + 1];
+              mx = i + 0.5;
+              my = j;
+              mz = k;
+              t = dist_3(ftpe_x, ftpe_y, ftpe_z, ftp_x, ftp_y, ftp_z);
+              if ((t > max) && (dist_3(mx, my, mz, ftpe_x, ftpe_y, ftpe_z) <=
+                                (dist_3(mx, my, mz, ftp_x, ftp_y, ftp_z)))) {
+                max = t;
+              }
+            }
+            if (!medax && (j > 0) && F[p - rs]) {
+              ftpe_x = X[p - rs];
+              ftpe_y = Y[p - rs];
+              ftpe_z = Z[p - rs];
+              mx = i;
+              my = j - 0.5;
+              mz = k;
+              t = dist_3(ftpe_x, ftpe_y, ftpe_z, ftp_x, ftp_y, ftp_z);
+              if ((t > max) && (dist_3(mx, my, mz, ftpe_x, ftpe_y, ftpe_z) <=
+                                (dist_3(mx, my, mz, ftp_x, ftp_y, ftp_z)))) {
+                max = t;
+              }
+            }
+            if (!medax && (j < cs - 1) && F[p + rs]) {
+              ftpe_x = X[p + rs];
+              ftpe_y = Y[p + rs];
+              ftpe_z = Z[p + rs];
+              mx = i;
+              my = j + 0.5;
+              mz = k;
+              t = dist_3(ftpe_x, ftpe_y, ftpe_z, ftp_x, ftp_y, ftp_z);
+              if ((t > max) && (dist_3(mx, my, mz, ftpe_x, ftpe_y, ftpe_z) <=
+                                (dist_3(mx, my, mz, ftp_x, ftp_y, ftp_z)))) {
+                max = t;
+              }
+            }
+            if (!medax && (k > 0) && F[p - ps]) {
+              ftpe_x = X[p - ps];
+              ftpe_y = Y[p - ps];
+              ftpe_z = Z[p - ps];
+              mx = i;
+              my = j;
+              mz = k - 0.5;
+              t = dist_3(ftpe_x, ftpe_y, ftpe_z, ftp_x, ftp_y, ftp_z);
+              if ((t > max) && (dist_3(mx, my, mz, ftpe_x, ftpe_y, ftpe_z) <=
+                                (dist_3(mx, my, mz, ftp_x, ftp_y, ftp_z)))) {
+                max = t;
+              }
+            }
+            if (!medax && (j < ds - 1) && F[p + ps]) {
+              ftpe_x = X[p + ps];
+              ftpe_y = Y[p + ps];
+              ftpe_z = Z[p + ps];
+              mx = i;
+              my = j;
+              mz = k + 0.5;
+              t = dist_3(ftpe_x, ftpe_y, ftpe_z, ftp_x, ftp_y, ftp_z);
+              if ((t > max) && (dist_3(mx, my, mz, ftpe_x, ftpe_y, ftpe_z) <=
+                                (dist_3(mx, my, mz, ftp_x, ftp_y, ftp_z)))) {
+                max = t;
+              }
+            }
 
-		R[p] = sqrtf(max);
+            R[p] = sqrtf(max);
+          }
+        }
+      }
     }
 
     freeimage(tmp);

@@ -79,9 +79,11 @@ int32_t ldilatbin3d(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t yc
   }
 
   nptb = 0;
-  for (i = 0; i < Nm; i += 1)
-    if (M[i])
+  for (i = 0; i < Nm; i += 1) {
+    if (M[i]) {
       nptb += 1;
+    }
+  }
 
   tab_es_x = (int32_t *)calloc(1,nptb * sizeof(int32_t));
   tab_es_y = (int32_t *)calloc(1,nptb * sizeof(int32_t));
@@ -93,9 +95,9 @@ int32_t ldilatbin3d(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t yc
   }
 
   l = 0;
-  for (k = 0; k < dsm; k += 1)
-    for (j = 0; j < csm; j += 1)
-      for (i = 0; i < rsm; i += 1)
+  for (k = 0; k < dsm; k += 1) {
+    for (j = 0; j < csm; j += 1) {
+      for (i = 0; i < rsm; i += 1) {
         if (M[k * psm + j * rsm + i])
         {
           tab_es_x[l] = i;
@@ -103,6 +105,9 @@ int32_t ldilatbin3d(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t yc
           tab_es_z[l] = k;
           l += 1;
         }
+      }
+    }
+  }
 
   if (!ldilatbin3d2(f, nptb, tab_es_x, tab_es_y, tab_es_z, xc, yc, zc))
   {
@@ -150,34 +155,35 @@ int32_t ldilatbin3d2(struct xvimage *f, int32_t nptb, int32_t *tab_es_x, int32_t
 
   memcpy(H, F, N);
 
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    /* verifie si (x,y,z) est un point de la frontiere de l'objet */
-    w = z * ps + y * rs + x;
-    if (H[w])
-    {
-      frontiere = 0;
-      for (l = 0; l <= 10; l += 2) /* parcourt les 6 voisins */
-      {
-        v = voisin6(w, l, rs, ps, N);
-        if ((v != -1) && (!H[v])) { frontiere = 1; break; }
-      } /* for l... */
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        /* verifie si (x,y,z) est un point de la frontiere de l'objet */
+        w = z * ps + y * rs + x;
+        if (H[w]) {
+          frontiere = 0;
+          for (l = 0; l <= 10; l += 2) /* parcourt les 6 voisins */
+          {
+            v = voisin6(w, l, rs, ps, N);
+            if ((v != -1) && (!H[v])) {
+              frontiere = 1;
+              break;
+            }
+          } /* for l... */
 
-      if (!frontiere) 
-        F[w] = NDG_MAX;
-      else
-      {
-        for (c = 0; c < nptb ; c += 1)
-        {
-          o = z + tab_es_z[c] - zc;
-          n = y + tab_es_y[c] - yc;
-          l = x + tab_es_x[c] - xc; 
-          if ((o >= 0) && (o < ds) && 
-              (n >= 0) && (n < cs) && 
-              (l >= 0) && (l < rs))
-	    F[o * ps + n * rs + l] = NDG_MAX;
+          if (!frontiere) {
+            F[w] = NDG_MAX;
+          } else {
+            for (c = 0; c < nptb; c += 1) {
+              o = z + tab_es_z[c] - zc;
+              n = y + tab_es_y[c] - yc;
+              l = x + tab_es_x[c] - xc;
+              if ((o >= 0) && (o < ds) && (n >= 0) && (n < cs) && (l >= 0) &&
+                  (l < rs)) {
+                F[o * ps + n * rs + l] = NDG_MAX;
+              }
+            }
+          }
         }
       }
     }
@@ -223,9 +229,11 @@ int32_t ldilateros3d_lerosbin3d(struct xvimage *f, struct xvimage *m, int32_t xc
   }
 
   nptb = 0;
-  for (i = 0; i < Nm; i += 1)
-    if (M[i])
+  for (i = 0; i < Nm; i += 1) {
+    if (M[i]) {
       nptb += 1;
+    }
+  }
 
   tab_es_x = (int32_t *)calloc(1,nptb * sizeof(int32_t));
   tab_es_y = (int32_t *)calloc(1,nptb * sizeof(int32_t));
@@ -237,9 +245,9 @@ int32_t ldilateros3d_lerosbin3d(struct xvimage *f, struct xvimage *m, int32_t xc
   }
 
   l = 0;
-  for (k = 0; k < dsm; k += 1)
-    for (j = 0; j < csm; j += 1)
-      for (i = 0; i < rsm; i += 1)
+  for (k = 0; k < dsm; k += 1) {
+    for (j = 0; j < csm; j += 1) {
+      for (i = 0; i < rsm; i += 1) {
         if (M[k * psm + j * rsm + i])
         {
           tab_es_x[l] = i;
@@ -247,6 +255,9 @@ int32_t ldilateros3d_lerosbin3d(struct xvimage *f, struct xvimage *m, int32_t xc
           tab_es_z[l] = k;
           l += 1;
         }
+      }
+    }
+  }
 
   if (!ldilateros3d_lerosbin3d2(f, nptb, tab_es_x, tab_es_y, tab_es_z, xc, yc, zc))
   {
@@ -296,34 +307,35 @@ int32_t ldilateros3d_lerosbin3d2(struct xvimage *f, int32_t nptb, int32_t *tab_e
 
   memcpy(H, F, N);
 
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    /* verifie si (x,y,z) est un point de la frontiere du fond */
-    w = z * ps + y * rs + x;
-    if (!H[w])
-    {
-      frontiere = 0;
-      for (l = 0; l <= 10; l += 2) /* parcourt les 6 voisins */
-      {
-        v = voisin6(w, l, rs, ps, N);
-        if ((v != -1) && (H[v])) { frontiere = 1; break; }
-      } /* for l... */
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        /* verifie si (x,y,z) est un point de la frontiere du fond */
+        w = z * ps + y * rs + x;
+        if (!H[w]) {
+          frontiere = 0;
+          for (l = 0; l <= 10; l += 2) /* parcourt les 6 voisins */
+          {
+            v = voisin6(w, l, rs, ps, N);
+            if ((v != -1) && (H[v])) {
+              frontiere = 1;
+              break;
+            }
+          } /* for l... */
 
-      if (!frontiere) 
-        F[w] = NDG_MIN;
-      else
-      {
-        for (c = 0; c < nptb ; c += 1)
-        {
-          o = z + tab_es_z[c] - zc;
-          n = y + tab_es_y[c] - yc;
-          l = x + tab_es_x[c] - xc; 
-          if ((o >= 0) && (o < ds) && 
-              (n >= 0) && (n < cs) && 
-              (l >= 0) && (l < rs))
-	    F[o * ps + n * rs + l] = NDG_MIN;
+          if (!frontiere) {
+            F[w] = NDG_MIN;
+          } else {
+            for (c = 0; c < nptb; c += 1) {
+              o = z + tab_es_z[c] - zc;
+              n = y + tab_es_y[c] - yc;
+              l = x + tab_es_x[c] - xc;
+              if ((o >= 0) && (o < ds) && (n >= 0) && (n < cs) && (l >= 0) &&
+                  (l < rs)) {
+                F[o * ps + n * rs + l] = NDG_MIN;
+              }
+            }
+          }
         }
       }
     }
@@ -370,7 +382,9 @@ int32_t ldilateros3d_ldilatfast3d(struct xvimage *f, uint8_t *mask)
       if (mask[k])                      /* element structurant */
       {
         y = voisin26(x, k, rs, n, N);
-        if ((y != -1) && (H[y] > sup)) sup = H[y];
+        if ((y != -1) && (H[y] > sup)) {
+          sup = H[y];
+        }
       }
     } /* for k */
     F[x] = sup;
@@ -416,7 +430,9 @@ int32_t ldilateros3d_lerosfast3d(struct xvimage *f, uint8_t *mask)
       if (mask[k])                      /* element structurant */
       {
         y = voisin26(x, k, rs, n, N);
-        if ((y != -1) && (H[y] < inf)) inf = H[y];
+        if ((y != -1) && (H[y] < inf)) {
+          inf = H[y];
+        }
       }
     } /* for k */
     F[x] = inf;
@@ -468,7 +484,11 @@ int32_t ldilatlong3d(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t y
   memcpy(H, F, 4*N);
 
   nptb = 0;
-  for (i = 0; i < Nm; i++) if (M[i]) nptb += 1;
+  for (i = 0; i < Nm; i++) {
+    if (M[i]) {
+      nptb += 1;
+    }
+  }
 
   tab_es_x = (int32_t *)calloc(1,nptb * sizeof(int32_t));
   tab_es_y = (int32_t *)calloc(1,nptb * sizeof(int32_t));
@@ -480,9 +500,9 @@ int32_t ldilatlong3d(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t y
   }
 
   h = 0;
-  for (k = 0; k < dsm; k += 1)
-    for (j = 0; j < csm; j += 1)
-      for (i = 0; i < rsm; i += 1)
+  for (k = 0; k < dsm; k += 1) {
+    for (j = 0; j < csm; j += 1) {
+      for (i = 0; i < rsm; i += 1) {
         if (M[k*psm + j*rsm + i])
         {
            tab_es_x[h] = rsm - 1 - i;  /* symetrique de l'e.s. */
@@ -490,25 +510,29 @@ int32_t ldilatlong3d(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t y
            tab_es_z[h] = dsm - 1 - k;
            h += 1;
         }
+      }
+    }
+  }
   xc = rsm - 1 - xc;
   yc = csm - 1 - yc;
   zc = dsm - 1 - zc;
 
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    sup = INT32_MIN;
-    for (c = 0; c < nptb ; c += 1)
-    {
-      k = z + tab_es_z[c] - zc;
-      j = y + tab_es_y[c] - yc;
-      i = x + tab_es_x[c] - xc; 
-      if ((k >= 0) && (k < ds) && (j >= 0) && (j < cs) && (i >= 0) && (i < rs) && 
-          (H[k*ps + j*rs + i] > sup))
-	sup = H[k*ps + j*rs + i];
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        sup = INT32_MIN;
+        for (c = 0; c < nptb; c += 1) {
+          k = z + tab_es_z[c] - zc;
+          j = y + tab_es_y[c] - yc;
+          i = x + tab_es_x[c] - xc;
+          if ((k >= 0) && (k < ds) && (j >= 0) && (j < cs) && (i >= 0) &&
+              (i < rs) && (H[k * ps + j * rs + i] > sup)) {
+            sup = H[k * ps + j * rs + i];
+          }
+        }
+        F[z * ps + y * rs + x] = sup;
+      }
     }
-    F[z*ps + y*rs + x] = sup;
   }
 
   free(H);
@@ -560,7 +584,11 @@ int32_t leroslong3d(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t yc
   memcpy(H, F, 4*N);
 
   nptb = 0;
-  for (i = 0; i < Nm; i++) if (M[i]) nptb += 1;
+  for (i = 0; i < Nm; i++) {
+    if (M[i]) {
+      nptb += 1;
+    }
+  }
 
   tab_es_x = (int32_t *)calloc(1,nptb * sizeof(int32_t));
   tab_es_y = (int32_t *)calloc(1,nptb * sizeof(int32_t));
@@ -572,9 +600,9 @@ int32_t leroslong3d(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t yc
   }
 
   h = 0;
-  for (k = 0; k < dsm; k += 1)
-    for (j = 0; j < csm; j += 1)
-      for (i = 0; i < rsm; i += 1)
+  for (k = 0; k < dsm; k += 1) {
+    for (j = 0; j < csm; j += 1) {
+      for (i = 0; i < rsm; i += 1) {
         if (M[k*psm + j*rsm + i])
         {
            tab_es_x[h] = rsm - 1 - i;  /* symetrique de l'e.s. */
@@ -582,25 +610,29 @@ int32_t leroslong3d(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t yc
            tab_es_z[h] = dsm - 1 - k;
            h += 1;
         }
+      }
+    }
+  }
   xc = rsm - 1 - xc;
   yc = csm - 1 - yc;
   zc = dsm - 1 - zc;
 
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    inf = INT32_MAX;
-    for (c = 0; c < nptb ; c += 1)
-    {
-      k = z + tab_es_z[c] - zc;
-      j = y + tab_es_y[c] - yc;
-      i = x + tab_es_x[c] - xc; 
-      if ((k >= 0) && (k < ds) && (j >= 0) && (j < cs) && (i >= 0) && (i < rs) && 
-          (H[k*ps + j*rs + i] < inf))
-	inf = H[k*ps + j*rs + i];
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        inf = INT32_MAX;
+        for (c = 0; c < nptb; c += 1) {
+          k = z + tab_es_z[c] - zc;
+          j = y + tab_es_y[c] - yc;
+          i = x + tab_es_x[c] - xc;
+          if ((k >= 0) && (k < ds) && (j >= 0) && (j < cs) && (i >= 0) &&
+              (i < rs) && (H[k * ps + j * rs + i] < inf)) {
+            inf = H[k * ps + j * rs + i];
+          }
+        }
+        F[z * ps + y * rs + x] = inf;
+      }
     }
-    F[z*ps + y*rs + x] = inf;
   }
 
   free(H);
@@ -652,7 +684,11 @@ int32_t ldilatfloat3d(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t 
   memcpy(H, F, N*sizeof(float));
 
   nptb = 0;
-  for (i = 0; i < Nm; i++) if (M[i]) nptb += 1;
+  for (i = 0; i < Nm; i++) {
+    if (M[i]) {
+      nptb += 1;
+    }
+  }
 
   tab_es_x = (int32_t *)calloc(1,nptb * sizeof(int32_t));
   tab_es_y = (int32_t *)calloc(1,nptb * sizeof(int32_t));
@@ -664,9 +700,9 @@ int32_t ldilatfloat3d(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t 
   }
 
   h = 0;
-  for (k = 0; k < dsm; k += 1)
-    for (j = 0; j < csm; j += 1)
-      for (i = 0; i < rsm; i += 1)
+  for (k = 0; k < dsm; k += 1) {
+    for (j = 0; j < csm; j += 1) {
+      for (i = 0; i < rsm; i += 1) {
         if (M[k*psm + j*rsm + i])
         {
            tab_es_x[h] = rsm - 1 - i;  /* symetrique de l'e.s. */
@@ -674,25 +710,29 @@ int32_t ldilatfloat3d(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t 
            tab_es_z[h] = dsm - 1 - k;
            h += 1;
         }
+      }
+    }
+  }
   xc = rsm - 1 - xc;
   yc = csm - 1 - yc;
   zc = dsm - 1 - zc;
 
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    sup = FLOAT_MIN;
-    for (c = 0; c < nptb ; c += 1)
-    {
-      k = z + tab_es_z[c] - zc;
-      j = y + tab_es_y[c] - yc;
-      i = x + tab_es_x[c] - xc; 
-      if ((k >= 0) && (k < ds) && (j >= 0) && (j < cs) && (i >= 0) && (i < rs) && 
-          (H[k*ps + j*rs + i] > sup))
-	sup = H[k*ps + j*rs + i];
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        sup = FLOAT_MIN;
+        for (c = 0; c < nptb; c += 1) {
+          k = z + tab_es_z[c] - zc;
+          j = y + tab_es_y[c] - yc;
+          i = x + tab_es_x[c] - xc;
+          if ((k >= 0) && (k < ds) && (j >= 0) && (j < cs) && (i >= 0) &&
+              (i < rs) && (H[k * ps + j * rs + i] > sup)) {
+            sup = H[k * ps + j * rs + i];
+          }
+        }
+        F[z * ps + y * rs + x] = sup;
+      }
     }
-    F[z*ps + y*rs + x] = sup;
   }
 
   free(H);
@@ -744,7 +784,11 @@ int32_t lerosfloat3d(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t y
   memcpy(H, F, N*sizeof(float));
 
   nptb = 0;
-  for (i = 0; i < Nm; i++) if (M[i]) nptb += 1;
+  for (i = 0; i < Nm; i++) {
+    if (M[i]) {
+      nptb += 1;
+    }
+  }
 
   tab_es_x = (int32_t *)calloc(1,nptb * sizeof(int32_t));
   tab_es_y = (int32_t *)calloc(1,nptb * sizeof(int32_t));
@@ -756,9 +800,9 @@ int32_t lerosfloat3d(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t y
   }
 
   h = 0;
-  for (k = 0; k < dsm; k += 1)
-    for (j = 0; j < csm; j += 1)
-      for (i = 0; i < rsm; i += 1)
+  for (k = 0; k < dsm; k += 1) {
+    for (j = 0; j < csm; j += 1) {
+      for (i = 0; i < rsm; i += 1) {
         if (M[k*psm + j*rsm + i])
         {
            tab_es_x[h] = rsm - 1 - i;  /* symetrique de l'e.s. */
@@ -766,25 +810,29 @@ int32_t lerosfloat3d(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t y
            tab_es_z[h] = dsm - 1 - k;
            h += 1;
         }
+      }
+    }
+  }
   xc = rsm - 1 - xc;
   yc = csm - 1 - yc;
   zc = dsm - 1 - zc;
 
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    inf = FLOAT_MAX;
-    for (c = 0; c < nptb ; c += 1)
-    {
-      k = z + tab_es_z[c] - zc;
-      j = y + tab_es_y[c] - yc;
-      i = x + tab_es_x[c] - xc; 
-      if ((k >= 0) && (k < ds) && (j >= 0) && (j < cs) && (i >= 0) && (i < rs) && 
-          (H[k*ps + j*rs + i] < inf))
-	inf = H[k*ps + j*rs + i];
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        inf = FLOAT_MAX;
+        for (c = 0; c < nptb; c += 1) {
+          k = z + tab_es_z[c] - zc;
+          j = y + tab_es_y[c] - yc;
+          i = x + tab_es_x[c] - xc;
+          if ((k >= 0) && (k < ds) && (j >= 0) && (j < cs) && (i >= 0) &&
+              (i < rs) && (H[k * ps + j * rs + i] < inf)) {
+            inf = H[k * ps + j * rs + i];
+          }
+        }
+        F[z * ps + y * rs + x] = inf;
+      }
     }
-    F[z*ps + y*rs + x] = inf;
   }
 
   free(H);
@@ -836,7 +884,11 @@ int32_t ldilatbyte3d(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t y
   memcpy(H, F, N);
 
   nptb = 0;
-  for (i = 0; i < Nm; i++) if (M[i]) nptb += 1;
+  for (i = 0; i < Nm; i++) {
+    if (M[i]) {
+      nptb += 1;
+    }
+  }
 
   tab_es_x = (int32_t *)calloc(1,nptb * sizeof(int32_t));
   tab_es_y = (int32_t *)calloc(1,nptb * sizeof(int32_t));
@@ -848,9 +900,9 @@ int32_t ldilatbyte3d(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t y
   }
 
   h = 0;
-  for (k = 0; k < dsm; k += 1)
-    for (j = 0; j < csm; j += 1)
-      for (i = 0; i < rsm; i += 1)
+  for (k = 0; k < dsm; k += 1) {
+    for (j = 0; j < csm; j += 1) {
+      for (i = 0; i < rsm; i += 1) {
         if (M[k*psm + j*rsm + i])
         {
            tab_es_x[h] = rsm - 1 - i;  /* symetrique de l'e.s. */
@@ -858,25 +910,29 @@ int32_t ldilatbyte3d(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t y
            tab_es_z[h] = dsm - 1 - k;
            h += 1;
         }
+      }
+    }
+  }
   xc = rsm - 1 - xc;
   yc = csm - 1 - yc;
   zc = dsm - 1 - zc;
 
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    sup = NDG_MIN;
-    for (c = 0; c < nptb ; c += 1)
-    {
-      k = z + tab_es_z[c] - zc;
-      j = y + tab_es_y[c] - yc;
-      i = x + tab_es_x[c] - xc; 
-      if ((k >= 0) && (k < ds) && (j >= 0) && (j < cs) && (i >= 0) && (i < rs) && 
-          (H[k*ps + j*rs + i] > sup))
-	sup = H[k*ps + j*rs + i];
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        sup = NDG_MIN;
+        for (c = 0; c < nptb; c += 1) {
+          k = z + tab_es_z[c] - zc;
+          j = y + tab_es_y[c] - yc;
+          i = x + tab_es_x[c] - xc;
+          if ((k >= 0) && (k < ds) && (j >= 0) && (j < cs) && (i >= 0) &&
+              (i < rs) && (H[k * ps + j * rs + i] > sup)) {
+            sup = H[k * ps + j * rs + i];
+          }
+        }
+        F[z * ps + y * rs + x] = sup;
+      }
     }
-    F[z*ps + y*rs + x] = sup;
   }
 
   free(H);
@@ -928,7 +984,11 @@ int32_t lerosbyte3d(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t yc
   memcpy(H, F, N);
 
   nptb = 0;
-  for (i = 0; i < Nm; i++) if (M[i]) nptb += 1;
+  for (i = 0; i < Nm; i++) {
+    if (M[i]) {
+      nptb += 1;
+    }
+  }
 
   tab_es_x = (int32_t *)calloc(1,nptb * sizeof(int32_t));
   tab_es_y = (int32_t *)calloc(1,nptb * sizeof(int32_t));
@@ -940,9 +1000,9 @@ int32_t lerosbyte3d(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t yc
   }
 
   h = 0;
-  for (k = 0; k < dsm; k += 1)
-    for (j = 0; j < csm; j += 1)
-      for (i = 0; i < rsm; i += 1)
+  for (k = 0; k < dsm; k += 1) {
+    for (j = 0; j < csm; j += 1) {
+      for (i = 0; i < rsm; i += 1) {
         if (M[k*psm + j*rsm + i])
         {
            tab_es_x[h] = rsm - 1 - i;  /* symetrique de l'e.s. */
@@ -950,25 +1010,29 @@ int32_t lerosbyte3d(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t yc
            tab_es_z[h] = dsm - 1 - k;
            h += 1;
         }
+      }
+    }
+  }
   xc = rsm - 1 - xc;
   yc = csm - 1 - yc;
   zc = dsm - 1 - zc;
 
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    inf = NDG_MAX;
-    for (c = 0; c < nptb ; c += 1)
-    {
-      k = z + tab_es_z[c] - zc;
-      j = y + tab_es_y[c] - yc;
-      i = x + tab_es_x[c] - xc; 
-      if ((k >= 0) && (k < ds) && (j >= 0) && (j < cs) && (i >= 0) && (i < rs) && 
-          (H[k*ps + j*rs + i] < inf))
-	inf = H[k*ps + j*rs + i];
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        inf = NDG_MAX;
+        for (c = 0; c < nptb; c += 1) {
+          k = z + tab_es_z[c] - zc;
+          j = y + tab_es_y[c] - yc;
+          i = x + tab_es_x[c] - xc;
+          if ((k >= 0) && (k < ds) && (j >= 0) && (j < cs) && (i >= 0) &&
+              (i < rs) && (H[k * ps + j * rs + i] < inf)) {
+            inf = H[k * ps + j * rs + i];
+          }
+        }
+        F[z * ps + y * rs + x] = inf;
+      }
     }
-    F[z*ps + y*rs + x] = inf;
   }
 
   free(H);
@@ -988,14 +1052,13 @@ int32_t ldilat3d(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t yc, i
 #undef F_NAME
 #define F_NAME "ldilat3d"
 {
-  if (datatype(f) == VFF_TYP_1_BYTE) 
+  if (datatype(f) == VFF_TYP_1_BYTE) {
     return ldilatbyte3d(f, m, xc, yc, zc);
-  else if (datatype(f) == VFF_TYP_4_BYTE) 
+  } else if (datatype(f) == VFF_TYP_4_BYTE) {
     return ldilatlong3d(f, m, xc, yc, zc);
-  else if (datatype(f) == VFF_TYP_FLOAT) 
+  } else if (datatype(f) == VFF_TYP_FLOAT) {
     return ldilatfloat3d(f, m, xc, yc, zc);
-  else
-  {
+  } else {
     fprintf(stderr, "%s: bad datatype\n", F_NAME);
     return 0;
   }
@@ -1011,14 +1074,13 @@ int32_t leros3d(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t yc, in
 #undef F_NAME
 #define F_NAME "leros3d"
 {
-  if (datatype(f) == VFF_TYP_1_BYTE) 
+  if (datatype(f) == VFF_TYP_1_BYTE) {
     return lerosbyte3d(f, m, xc, yc, zc);
-  else if (datatype(f) == VFF_TYP_4_BYTE) 
+  } else if (datatype(f) == VFF_TYP_4_BYTE) {
     return leroslong3d(f, m, xc, yc, zc);
-  else if (datatype(f) == VFF_TYP_FLOAT) 
+  } else if (datatype(f) == VFF_TYP_FLOAT) {
     return lerosfloat3d(f, m, xc, yc, zc);
-  else
-  {
+  } else {
     fprintf(stderr, "%s: bad datatype\n", F_NAME);
     return 0;
   }

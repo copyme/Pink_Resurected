@@ -109,7 +109,9 @@ void TarjanInit(Tarjan * T)
 */
 {
   int32_t i;
-  for (i = 0; i < T->Size; i++) TarjanMakeSet(T, i);
+  for (i = 0; i < T->Size; i++) {
+    TarjanMakeSet(T, i);
+  }
 } //TarjanInit()
 
 /* ==================================== */
@@ -121,8 +123,9 @@ void TarjanPrint(Tarjan * T)
 */
 {
   int32_t i;
-  for (i = 0; i < T->Size; i++)
+  for (i = 0; i < T->Size; i++) {
     printf("%d: Rank = %d ; Fth = %d\n", i, T->Rank[i], T->Fth[i]);
+  }
 } //TarjanPrint()
 
 /* ==================================== */
@@ -149,7 +152,9 @@ int32_t TarjanFind(Tarjan * T, int32_t x)
     \warning x doit appartenir à un ensemble de la famille - pas de vérification
 */
 {
-  if (T->Fth[x] != x) T->Fth[x] = TarjanFind(T, T->Fth[x]);
+  if (T->Fth[x] != x) {
+    T->Fth[x] = TarjanFind(T, T->Fth[x]);
+  }
   return T->Fth[x];
 } //TarjanFind()
 
@@ -165,7 +170,9 @@ int32_t TarjanLink(Tarjan * T, int32_t x, int32_t y)
 */
 {
   if (T->Rank[x] > T->Rank[y]) { int32_t tmp = x; x = y; y = tmp; }
-  if (T->Rank[x] == T->Rank[y]) T->Rank[y] += 1;
+  if (T->Rank[x] == T->Rank[y]) {
+    T->Rank[y] += 1;
+  }
   T->Fth[x] = y;
   return y;
 } //TarjanLink()
@@ -183,7 +190,9 @@ int32_t TarjanLinkSafe(Tarjan * T, int32_t x, int32_t y)
   x = TarjanFind(T, x);
   y = TarjanFind(T, y);
   if (T->Rank[x] > T->Rank[y]) { int32_t tmp = x; x = y; y = tmp; }
-  if (T->Rank[x] == T->Rank[y]) T->Rank[y] += 1;
+  if (T->Rank[x] == T->Rank[y]) {
+    T->Rank[y] += 1;
+  }
   T->Fth[x] = y;
   return y;
 } //TarjanLinkSafe()

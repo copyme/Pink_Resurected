@@ -98,12 +98,16 @@ int32_t lccv(struct xvimage *f, struct xvimage *m)
      return(0);
   }
 
-  for (x = 0; x < N; x++) H[x] = F[x];
+  for (x = 0; x < N; x++) {
+    H[x] = F[x];
+  }
 
   nptb = 0;
-  for (i = 0; i < Nm; i += 1)
-    if (M[i])
+  for (i = 0; i < Nm; i += 1) {
+    if (M[i]) {
       nptb += 1;
+    }
+  }
 
   tab_es_x = (int32_t *)calloc(1,nptb * sizeof(int32_t));
   tab_es_y = (int32_t *)calloc(1,nptb * sizeof(int32_t));
@@ -114,35 +118,35 @@ int32_t lccv(struct xvimage *f, struct xvimage *m)
   }
 
   k = 0;
-  for (j = 0; j < csm; j += 1)
-    for (i = 0; i < rsm; i += 1)
+  for (j = 0; j < csm; j += 1) {
+    for (i = 0; i < rsm; i += 1) {
       if (M[j * rsm + i])
       {
          tab_es_x[k] = i;
          tab_es_y[k] = j;
          k += 1;
       }
+    }
+  }
 
   /* calcul du ccv en chaque point */
 
   m0 = (double)nptb;
 
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    m1 = m2 = 0.0;
-    for (c = 0; c < nptb ; c += 1)
-    {
-      l = y + tab_es_y[c] - yc;
-      k = x + tab_es_x[c] - xc; 
-      if ((l >= 0) && (l < cs) && (k >= 0) && (k < rs))
-      {
-        M1 = (double)H[l * rs + k]; 
-        m1 += M1;
-        m2 += M1 * M1;
+  for (y = 0; y < cs; y++) {
+    for (x = 0; x < rs; x++) {
+      m1 = m2 = 0.0;
+      for (c = 0; c < nptb; c += 1) {
+        l = y + tab_es_y[c] - yc;
+        k = x + tab_es_x[c] - xc;
+        if ((l >= 0) && (l < cs) && (k >= 0) && (k < rs)) {
+          M1 = (double)H[l * rs + k];
+          m1 += M1;
+          m2 += M1 * M1;
+        }
       }
+      F[y * rs + x] = (uint8_t)(100 * ((m2 * m0 / (m1 * m1)) - 1.0));
     }
-    F[y * rs + x] = (uint8_t)(100 * ((m2 * m0 / (m1 * m1)) - 1.0));
   }
 
   free(H);
@@ -189,12 +193,16 @@ int32_t lecarttype(struct xvimage *f, struct xvimage *m)
      return(0);
   }
 
-  for (x = 0; x < N; x++) H[x] = F[x];
+  for (x = 0; x < N; x++) {
+    H[x] = F[x];
+  }
 
   nptb = 0;
-  for (i = 0; i < Nm; i += 1)
-    if (M[i])
+  for (i = 0; i < Nm; i += 1) {
+    if (M[i]) {
       nptb += 1;
+    }
+  }
 
   tab_es_x = (int32_t *)calloc(1,nptb * sizeof(int32_t));
   tab_es_y = (int32_t *)calloc(1,nptb * sizeof(int32_t));
@@ -205,35 +213,35 @@ int32_t lecarttype(struct xvimage *f, struct xvimage *m)
   }
 
   k = 0;
-  for (j = 0; j < csm; j += 1)
-    for (i = 0; i < rsm; i += 1)
+  for (j = 0; j < csm; j += 1) {
+    for (i = 0; i < rsm; i += 1) {
       if (M[j * rsm + i])
       {
          tab_es_x[k] = i;
          tab_es_y[k] = j;
          k += 1;
       }
+    }
+  }
 
   /* calcul de l'ecart-type en chaque point */
 
   m0 = (double)nptb;
 
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    m1 = m2 = 0.0;
-    for (c = 0; c < nptb ; c += 1)
-    {
-      l = y + tab_es_y[c] - yc;
-      k = x + tab_es_x[c] - xc; 
-      if ((l >= 0) && (l < cs) && (k >= 0) && (k < rs))
-      {
-        M1 = (double)H[l * rs + k]; 
-        m1 += M1;
-        m2 += M1 * M1;
+  for (y = 0; y < cs; y++) {
+    for (x = 0; x < rs; x++) {
+      m1 = m2 = 0.0;
+      for (c = 0; c < nptb; c += 1) {
+        l = y + tab_es_y[c] - yc;
+        k = x + tab_es_x[c] - xc;
+        if ((l >= 0) && (l < cs) && (k >= 0) && (k < rs)) {
+          M1 = (double)H[l * rs + k];
+          m1 += M1;
+          m2 += M1 * M1;
+        }
       }
+      F[y * rs + x] = (uint8_t)(sqrt((m2 / m0) - (m1 * m1) / (m0 * m0)));
     }
-    F[y * rs + x] = (uint8_t)(sqrt((m2 / m0) - (m1 * m1) / (m0 * m0)));
   }
 
   free(H);
@@ -284,7 +292,9 @@ double laverage1(struct xvimage * image1)
     exit(0);
   }
 
-  if (n == 0) return 0.0;
+  if (n == 0) {
+    return 0.0;
+  }
   return av / n;
 } /* laverage1() */
 
@@ -319,17 +329,32 @@ double laverage2(struct xvimage * image1, struct xvimage * mask)
   if (datatype(image1) == VFF_TYP_1_BYTE)
   {
     uint8_t *F = UCHARDATA(image1);
-    for (i = 0; i < N; i++) if (M[i] != 0) { av += (double)F[i]; n++; }
+    for (i = 0; i < N; i++) {
+      if (M[i] != 0) {
+        av += (double)F[i];
+        n++;
+      }
+    }
   }
   else if (datatype(image1) == VFF_TYP_4_BYTE)
   {
     int32_t *F = SLONGDATA(image1);
-    for (i = 0; i < N; i++) if (M[i] != 0) { av += (double)F[i]; n++; }
+    for (i = 0; i < N; i++) {
+      if (M[i] != 0) {
+        av += (double)F[i];
+        n++;
+      }
+    }
   }
   else if (datatype(image1) == VFF_TYP_FLOAT)
   {
     float *F = FLOATDATA(image1);
-    for (i = 0; i < N; i++) if (M[i] != 0) { av += (double)F[i]; n++; }
+    for (i = 0; i < N; i++) {
+      if (M[i] != 0) {
+        av += (double)F[i];
+        n++;
+      }
+    }
   }
   else 
   {
@@ -337,7 +362,9 @@ double laverage2(struct xvimage * image1, struct xvimage * mask)
     exit(0);
   }
 
-  if (n == 0) return 0.0;
+  if (n == 0) {
+    return 0.0;
+  }
   return av / n;
 } /* laverage2() */
 
@@ -396,7 +423,9 @@ double lvariance1(struct xvimage * image1)
     exit(0);
   }
 
-  if (m0 == 0.0) return 0.0;
+  if (m0 == 0.0) {
+    return 0.0;
+  }
   return sqrt((m2 / m0) - ((m1*m1) / (m0*m0)));
 } /* lvariance1() */
 
@@ -432,7 +461,7 @@ double lvariance2(struct xvimage * image1, struct xvimage * mask)
   if (datatype(image1) == VFF_TYP_1_BYTE)
   {
     uint8_t *F = UCHARDATA(image1);
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (M[i] != 0) 
       { 
 	M1 = (double)F[i]; 
@@ -440,11 +469,12 @@ double lvariance2(struct xvimage * image1, struct xvimage * mask)
 	m1 += M1;
 	m2 += M1 * M1;
       }
+    }
   }
   else if (datatype(image1) == VFF_TYP_4_BYTE)
   {
     int32_t *F = SLONGDATA(image1);
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (M[i] != 0) 
       { 
 	M1 = (double)F[i]; 
@@ -452,11 +482,12 @@ double lvariance2(struct xvimage * image1, struct xvimage * mask)
 	m1 += M1;
 	m2 += M1 * M1;
       }
+    }
   }
   else if (datatype(image1) == VFF_TYP_FLOAT)
   {
     float *F = FLOATDATA(image1);
-    for (i = 0; i < N; i++) 
+    for (i = 0; i < N; i++) {
       if (M[i] != 0) 
       { 
 	M1 = (double)F[i]; 
@@ -464,6 +495,7 @@ double lvariance2(struct xvimage * image1, struct xvimage * mask)
 	m1 += M1;
 	m2 += M1 * M1;
       }
+    }
   }
   else 
   {
@@ -471,6 +503,8 @@ double lvariance2(struct xvimage * image1, struct xvimage * mask)
     exit(0);
   }
 
-  if (m0 == 0.0) return 0.0;
+  if (m0 == 0.0) {
+    return 0.0;
+  }
   return sqrt((m2 / m0) - ((m1*m1) / (m0*m0)));
 } /* lvariance2() */

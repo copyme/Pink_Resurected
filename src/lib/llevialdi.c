@@ -140,8 +140,10 @@ printf("F = %d ; FT = %d ; rs = %d ; cs = %d ; N = %d\n", (int32_t)F, (int32_t)F
         if (me && ms)
           { F[x] = alpha8m(FT, x, rs, N); stabilite = 0; }
         else if (pe && ps && pse)
-          { F[x] = alpha8p(FT, x, rs, N); stabilite = 0; }
-        else F[x] = FT[x];
+          { F[x] = alpha8p(FT, x, rs, N); stabilite = 0;
+        } else {
+          F[x] = FT[x];
+        }
       } /* if (!bord(x, rs, N)) */
     } /* for (x = 0; x < N; x++) */
 
@@ -154,7 +156,9 @@ printf("fin boucle\n");
 #endif
 
   FTT = UCHARDATA(img);
-  for (x = 0; x < N; x++) FTT[x] = FT[x];
+  for (x = 0; x < N; x++) {
+    FTT[x] = FT[x];
+  }
   free(imgt);
   return(1);
 }
@@ -258,9 +262,10 @@ printf("F = %d ; FT = %d ; rs = %d ; cs = %d ; N = %d\n", (int32_t)F, (int32_t)F
           if (A1 || A2 || B1 || B2 || B3 || B4) 
           { 
             F[x] = alpha8p(FT, x, rs, N); 
-            stabilite = 0; 
+            stabilite = 0;
+          } else {
+            F[x] = FT[x];
           }
-          else F[x] = FT[x];
         } /* if (!bord(x, rs, N)) */
       } /* for (x = 0; x < N; x++) */
       FTT = FT; FT = F; F = FTT;
@@ -305,9 +310,10 @@ printf("F = %d ; FT = %d ; rs = %d ; cs = %d ; N = %d\n", (int32_t)F, (int32_t)F
           if (a1 || a2 || a3 || a4)
           { 
             F[x] = alpha8m(FT, x, rs, N); 
-            stabilite = 0; 
+            stabilite = 0;
+          } else {
+            F[x] = FT[x];
           }
-          else F[x] = FT[x];
         } /* if (!bord(x, rs, N)) */
       } /* for (x = 0; x < N; x++) */
       FTT = FT; FT = F; F = FTT;
@@ -359,9 +365,10 @@ printf("F = %d ; FT = %d ; rs = %d ; cs = %d ; N = %d\n", (int32_t)F, (int32_t)F
           if (A3 || A4 || B1 || B2 || B3 || B4) 
           { 
             F[x] = alpha8p(FT, x, rs, N); 
-            stabilite = 0; 
+            stabilite = 0;
+          } else {
+            F[x] = FT[x];
           }
-          else F[x] = FT[x];
         } /* if (!bord(x, rs, N)) */
       } /* for (x = 0; x < N; x++) */
       FTT = FT; FT = F; F = FTT;
@@ -406,20 +413,31 @@ printf("F = %d ; FT = %d ; rs = %d ; cs = %d ; N = %d\n", (int32_t)F, (int32_t)F
           if (b1 || b2 || b3 || b4)
           { 
             F[x] = alpha8m(FT, x, rs, N); 
-            stabilite = 0; 
+            stabilite = 0;
+          } else {
+            F[x] = FT[x];
           }
-          else F[x] = FT[x];
         } /* if (!bord(x, rs, N)) */
       } /* for (x = 0; x < N; x++) */
 #ifdef WRITEINTER
 sprintf(buf,"_%4d",nbiter);
-{ int32_t i; for (i = 1; i <= 4; i++) if (buf[i] == ' ') buf[i] = '0'; }
+{ int32_t i;
+  for (i = 1; i <= 4; i++) {
+    if (buf[i] == ' ') {
+      buf[i] = '0';
+    }
+  }
+}
 writeimage(img,buf);
 #endif
       FTT = FT; FT = F; F = FTT;
 
     /* detection et abaissement des pics 8-connexes (donc, minima 4-connexes) */
-    for (x = 0; x < N; x++) if (peak4(FT, x, rs, N)) FT[x] = alpha8m(FT, x, rs, N);
+      for (x = 0; x < N; x++) {
+        if (peak4(FT, x, rs, N)) {
+          FT[x] = alpha8m(FT, x, rs, N);
+        }
+      }
 
     nbiter--;
   } /* while ((nbiter > 0) && (!stabilite)) */
@@ -429,7 +447,9 @@ printf("fin boucle\n");
 #endif
 
   FTT = UCHARDATA(img);
-  for (x = 0; x < N; x++) FTT[x] = FT[x];
+  for (x = 0; x < N; x++) {
+    FTT[x] = FT[x];
+  }
   free(imgt);
   return(1);
 }

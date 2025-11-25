@@ -35,19 +35,24 @@ class FIFO{
 
 			inline void push(T val){
 				buffer[back++] = val;
-				if(back>=maxSize)back = 0;
-			}
+                                if (back >= maxSize) {
+                                  back = 0;
+                                }
+                        }
 
 			inline T pop(){
 				T val = buffer[front++];
-				if(front>=maxSize)front = 0;
-				return val;
+                                if (front >= maxSize) {
+                                  front = 0;
+                                }
+                                return val;
 			}
 
 			inline unsigned int size(){
-				if(front <= back)
-					return back-front;
-				return back+maxSize-front;
+                          if (front <= back) {
+                            return back - front;
+                          }
+                                return back+maxSize-front;
 			}
 
 			inline void clear(){

@@ -156,7 +156,11 @@ int main(int argc, char **argv)
     razimage(image);
   }
 
-  if ((argc == 5) || (argc == 7)) scale = atof(argv[argc-2]); else scale = 1.0;
+  if ((argc == 5) || (argc == 7)) {
+    scale = atof(argv[argc - 2]);
+  } else {
+    scale = 1.0;
+  }
 
   if (type == 'e') 
   {
@@ -170,8 +174,9 @@ int main(int argc, char **argv)
       fscanf(fd, "%lf\n", &xx);
       xx *= scale;
       x = arrondi(xx);
-      if ((x >= 0) && (x < rs))
+      if ((x >= 0) && (x < rs)) {
         F[x] = 255;
+      }
     }
   }
   else if (type == 's') 
@@ -186,8 +191,9 @@ int main(int argc, char **argv)
       fscanf(fd, "%lf %lf\n", &xx, &vv);
       xx *= scale;
       x = arrondi(xx);
-      if ((x >= 0) && (x < rs))
+      if ((x >= 0) && (x < rs)) {
         FF[x] = (float)vv;
+      }
     }
   }
   else if (type == 'b') 
@@ -204,8 +210,9 @@ int main(int argc, char **argv)
       yy *= scale;
       x = arrondi(xx);
       y = arrondi(yy);
-      if ((x >= 0) && (x < rs) && (y >= 0) && (y < cs))
+      if ((x >= 0) && (x < rs) && (y >= 0) && (y < cs)) {
         F[y * rs + x] = 255;
+      }
     }
   }
   else if (type == 'n') 
@@ -222,8 +229,9 @@ int main(int argc, char **argv)
       yy *= scale;
       x = arrondi(xx);
       y = arrondi(yy);
-      if ((x >= 0) && (x < rs) && (y >= 0) && (y < cs))
+      if ((x >= 0) && (x < rs) && (y >= 0) && (y < cs)) {
         FF[y * rs + x] = (float)vv;
+      }
     }
   } else if (type == 'B') 
   {
@@ -236,8 +244,10 @@ int main(int argc, char **argv)
       x = arrondi(xx);
       y = arrondi(yy);
       z = arrondi(zz);
-      if ((x >= 0) && (x < rs) && (y >= 0) && (y < cs) && (z >= 0) && (z < ds))
+      if ((x >= 0) && (x < rs) && (y >= 0) && (y < cs) && (z >= 0) &&
+          (z < ds)) {
         F[z * ps + y * rs + x] = 255;
+      }
     }
   }
   else if (type == 'N') 
@@ -251,8 +261,10 @@ int main(int argc, char **argv)
       x = arrondi(xx);
       y = arrondi(yy);
       z = arrondi(zz);
-      if ((x >= 0) && (x < rs) && (y >= 0) && (y < cs) && (z >= 0) && (z < ds))
+      if ((x >= 0) && (x < rs) && (y >= 0) && (y < cs) && (z >= 0) &&
+          (z < ds)) {
         FF[z * ps + y * rs + x] = (float)vv;
+      }
     }
   }
 

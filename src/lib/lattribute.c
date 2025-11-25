@@ -147,9 +147,15 @@ static int32_t orientation(double mx1, double my1, double mx2, double my2, doubl
 #ifdef DEBUGORIEN
   printf("Mx2 = %g ; My2 = %g ; Mxy2 = %g ; lambda1 = %g\n", Mx2, My2, Mxy2, lambda1);
 #endif
-  if (mcabs(lambda1 - Mx2) < EPSILON) return 0; 
+  if (mcabs(lambda1 - Mx2) < EPSILON) {
+    return 0;
+  }
   a = Mxy2 / (lambda1 - Mx2);
-  if (a < 0) sign = -1; else sign = 1; 
+  if (a < 0) {
+    sign = -1;
+  } else {
+    sign = 1;
+  }
   a = a * a;
   x = sqrt(a / (1 + a));
   y = sign * sqrt(1 / (1 + a));
@@ -157,7 +163,11 @@ static int32_t orientation(double mx1, double my1, double mx2, double my2, doubl
   printf("x = %g ; y = %g ; atan2(y,x) = %g\n", x, y, atan2(y,x));
 #endif
   theta = arrondi( (atan2(y,x) / M_PI) * 180.0 );
-  if (theta < 0) return theta + 180; else return theta;
+  if (theta < 0) {
+    return theta + 180;
+  } else {
+    return theta;
+  }
 } /* orientation() */
 
 /* ==================================== */
@@ -172,10 +182,11 @@ int32_t lattribute(
 #undef F_NAME
 #define F_NAME "lattribute"
 {
-  if (depth(img) == 1) 
+  if (depth(img) == 1) {
     return lattribute2d(img, connex, typregion, attrib, seuil, lab);
-  else
+  } else {
     return lattribute3d(img, connex, typregion, attrib, seuil, lab);
+  }
 } // lattribute()
 
 /* ==================================== */
@@ -225,7 +236,9 @@ int32_t lattribute2d(
   } /* switch (connex) */
 
   /* le LABEL initialement est mis a NONMARQUE */
-  for (x = 0; x < N; x++) LABEL[x] = NONMARQUE;
+  for (x = 0; x < N; x++) {
+    LABEL[x] = NONMARQUE;
+  }
 
   LIFO = CreeLifoVide(N);
   if (LIFO == NULL)
@@ -273,34 +286,80 @@ printf("AMORCE p=%d,%d h=%d set LABEL = %d\n", x%rs, x/rs, SOURCE[x], LABEL[x]);
           switch (attrib)
           {
   	    case AREA: val_attrib++; break;
-  	    case VDIAM: if (wy < ymin) ymin = wy; if (wy > ymax) ymax = wy; break;
-  	    case HDIAM: if (wx < xmin) xmin = wx; if (wx > xmax) xmax = wx; break;
-  	    case DIAM: if (wy < ymin) ymin = wy; if (wy > ymax) ymax = wy;
-	               if (wx < xmin) xmin = wx; if (wx > xmax) xmax = wx; break;
-  	    case EXCEN:
+  	    case VDIAM:
+              if (wy < ymin) {
+                ymin = wy;
+              }
+              if (wy > ymax) {
+                ymax = wy;
+              }
+              break;
+            case HDIAM:
+              if (wx < xmin) {
+                xmin = wx;
+              }
+              if (wx > xmax) {
+                xmax = wx;
+              }
+              break;
+            case DIAM:
+              if (wy < ymin) {
+                ymin = wy;
+              }
+              if (wy > ymax) {
+                ymax = wy;
+              }
+              if (wx < xmin) {
+                xmin = wx;
+              }
+              if (wx > xmax) {
+                xmax = wx;
+              }
+              break;
+            case EXCEN:
   	    case ORIEN: area++; mx1 += wx; my1 += wy; mxy2 += wx * wy;
                         mx2 += wx * wx; my2 += wy * wy; break;
-  	    case PERIM: 
-              if (wx==rs-1) val_attrib++; /* point de bord */
-              if (w<rs)       val_attrib++; /* point de bord */
-              if (wx==0)    val_attrib++; /* point de bord */
-              if (w>=N-rs)    val_attrib++; /* point de bord */
+  	    case PERIM:
+              if (wx == rs - 1) {
+                val_attrib++; /* point de bord */
+              }
+              if (w < rs) {
+                val_attrib++; /* point de bord */
+              }
+              if (wx == 0) {
+                val_attrib++; /* point de bord */
+              }
+              if (w >= N - rs) {
+                val_attrib++; /* point de bord */
+              }
               for (k = 0; k < 8; k += 2) /* 4-connexite obligatoire */
               {
                 y = voisin(w, k, rs, N);
-                if ((y != -1) && (SOURCE[y] != SOURCE[w])) val_attrib++;
+                if ((y != -1) && (SOURCE[y] != SOURCE[w])) {
+                  val_attrib++;
+                }
               } /* for k */
             break;
             case CIRC:
               area++;
-              if (wx==rs-1) perim++; /* point de bord */
-              if (w<rs)       perim++; /* point de bord */
-              if (wx==0)    perim++; /* point de bord */
-              if (w>=N-rs)    perim++; /* point de bord */
+              if (wx == rs - 1) {
+                perim++; /* point de bord */
+              }
+              if (w < rs) {
+                perim++; /* point de bord */
+              }
+              if (wx == 0) {
+                perim++; /* point de bord */
+              }
+              if (w >= N - rs) {
+                perim++; /* point de bord */
+              }
               for (k = 0; k < 8; k += 2) /* 4-connexite obligatoire */
               {
                 y = voisin(w, k, rs, N);
-                if ((y != -1) && (SOURCE[y] != SOURCE[w])) perim++;
+                if ((y != -1) && (SOURCE[y] != SOURCE[w])) {
+                  perim++;
+                }
               } /* for k */
               break;
 	  } /* switch (attrib) */
@@ -335,18 +394,26 @@ printf(" p=%d,%d h=%d set LABEL = %d\n", y%rs, y/rs, SOURCE[y], LABEL[y]);
                   for (l = 0; l < 8; l += 1)
                   {
                     z = voisin(y, l, rs, N);
-                    if ((z != -1) && (LABEL[z] == MARQUE))
-                      masque |= imasque; 
+                    if ((z != -1) && (LABEL[z] == MARQUE)) {
+                      masque |= imasque;
+                    }
                     imasque = imasque << 1;
                   } /* for k ... */
 #ifdef DEBUGTROU
 printf(" p=%d,%d h=%d masque=%x t4m=%d t8b=%d\n", y%rs, y/rs, SOURCE[y], masque, t4(masque), t8b(masque));
 #endif
                   if (connex == 4) 
-                    { val_attrib += (t4(masque) - 1); if (t8b(masque) == 0) val_attrib--; }
-                  else
-                    { val_attrib += (t8(masque) - 1); if (t4b(masque) == 0) val_attrib--; }
-	        } /* if (attrib == TROUS) */
+                    { val_attrib += (t4(masque) - 1);
+                    if (t8b(masque) == 0) {
+                      val_attrib--;
+                    }
+                  } else {
+                    val_attrib += (t8(masque) - 1);
+                    if (t4b(masque) == 0) {
+                      val_attrib--;
+                    }
+                  }
+                } /* if (attrib == TROUS) */
               } /* if ((SOURCE[y] == SOURCE[w]) && (LABEL[y] == NONMARQUE)) */
             } /* if (y != -1) */
           } /* for k ... */
@@ -380,16 +447,28 @@ printf(" p=%d,%d h=%d masque=%x t4m=%d t8b=%d\n", y%rs, y/rs, SOURCE[y], masque,
             val_attrib = 255;
 	  }
 	}
-        if (attrib == EXCEN) val_attrib = excentricity(mx1, my1, mx2, my2, mxy2, area);
-        if (attrib == ORIEN) val_attrib = orientation(mx1, my1, mx2, my2, mxy2, area);
-        if (attrib == VDIAM) val_attrib = ymax - ymin + 1;
-        if (attrib == HDIAM) val_attrib = xmax - xmin + 1;
+        if (attrib == EXCEN) {
+          val_attrib = excentricity(mx1, my1, mx2, my2, mxy2, area);
+        }
+        if (attrib == ORIEN) {
+          val_attrib = orientation(mx1, my1, mx2, my2, mxy2, area);
+        }
+        if (attrib == VDIAM) {
+          val_attrib = ymax - ymin + 1;
+        }
+        if (attrib == HDIAM) {
+          val_attrib = xmax - xmin + 1;
+        }
         if (attrib == DIAM) 
 	{
 	  val_attrib = xmax - xmin + 1;
-	  if (val_attrib < ymax - ymin + 1) val_attrib = ymax - ymin + 1;
-	}
-        if (val_attrib <= seuil) val_attrib = 0;
+          if (val_attrib < ymax - ymin + 1) {
+            val_attrib = ymax - ymin + 1;
+          }
+        }
+        if (val_attrib <= seuil) {
+          val_attrib = 0;
+        }
 #ifdef VERBOSE
 printf("valeur attribut = %d\n", val_attrib);
 #endif
@@ -448,34 +527,80 @@ else
         switch (attrib)
         {
 	  case AREA: val_attrib++; break;
-  	  case VDIAM: if (wy < ymin) ymin = wy; if (wy > ymax) ymax = wy; break;
-  	  case HDIAM: if (wx < xmin) xmin = wx; if (wx > xmax) xmax = wx; break;
-  	  case DIAM: if (wy < ymin) ymin = wy; if (wy > ymax) ymax = wy;
-                     if (wx < xmin) xmin = wx; if (wx > xmax) xmax = wx; break;
-	  case EXCEN:
+  	  case VDIAM:
+            if (wy < ymin) {
+              ymin = wy;
+            }
+            if (wy > ymax) {
+              ymax = wy;
+            }
+            break;
+          case HDIAM:
+            if (wx < xmin) {
+              xmin = wx;
+            }
+            if (wx > xmax) {
+              xmax = wx;
+            }
+            break;
+          case DIAM:
+            if (wy < ymin) {
+              ymin = wy;
+            }
+            if (wy > ymax) {
+              ymax = wy;
+            }
+            if (wx < xmin) {
+              xmin = wx;
+            }
+            if (wx > xmax) {
+              xmax = wx;
+            }
+            break;
+          case EXCEN:
 	  case ORIEN: area++; mx1 += wx; my1 += wy; mxy2 += wx * wy;
                       mx2 += wx * wx; my2 += wy * wy; break;
-  	  case PERIM: 
-            if (wx==rs-1) val_attrib++; /* point de bord */
-            if (w<rs)       val_attrib++; /* point de bord */
-            if (wx==0)    val_attrib++; /* point de bord */
-            if (w>=N-rs)    val_attrib++; /* point de bord */
+  	  case PERIM:
+            if (wx == rs - 1) {
+              val_attrib++; /* point de bord */
+            }
+            if (w < rs) {
+              val_attrib++; /* point de bord */
+            }
+            if (wx == 0) {
+              val_attrib++; /* point de bord */
+            }
+            if (w >= N - rs) {
+              val_attrib++; /* point de bord */
+            }
             for (k = 0; k < 8; k += 2) /* 4-connexite obligatoire */
             {
               y = voisin(w, k, rs, N);
-              if ((y != -1) && (SOURCE[y] != SOURCE[w])) val_attrib++;
+              if ((y != -1) && (SOURCE[y] != SOURCE[w])) {
+                val_attrib++;
+              }
             } /* for k */
           break;
           case CIRC:
             area++;
-            if (wx==rs-1) perim++; /* point de bord */
-            if (w<rs)       perim++; /* point de bord */
-            if (wx==0)    perim++; /* point de bord */
-            if (w>=N-rs)    perim++; /* point de bord */
+            if (wx == rs - 1) {
+              perim++; /* point de bord */
+            }
+            if (w < rs) {
+              perim++; /* point de bord */
+            }
+            if (wx == 0) {
+              perim++; /* point de bord */
+            }
+            if (w >= N - rs) {
+              perim++; /* point de bord */
+            }
             for (k = 0; k < 8; k += 2) /* 4-connexite obligatoire */
             {
               y = voisin(w, k, rs, N);
-              if ((y != -1) && (SOURCE[y] != SOURCE[w])) perim++;
+              if ((y != -1) && (SOURCE[y] != SOURCE[w])) {
+                perim++;
+              }
             } /* for k */
             break;
 	} /* switch (attrib) */
@@ -501,16 +626,28 @@ else
           val_attrib = 255;
 	}
       }
-      if (attrib == EXCEN) val_attrib = excentricity(mx1, my1, mx2, my2, mxy2, area);
-      if (attrib == ORIEN) val_attrib = orientation(mx1, my1, mx2, my2, mxy2, area);
-      if (attrib == VDIAM) val_attrib = ymax - ymin + 1;
-      if (attrib == HDIAM) val_attrib = xmax - xmin + 1;
+      if (attrib == EXCEN) {
+        val_attrib = excentricity(mx1, my1, mx2, my2, mxy2, area);
+      }
+      if (attrib == ORIEN) {
+        val_attrib = orientation(mx1, my1, mx2, my2, mxy2, area);
+      }
+      if (attrib == VDIAM) {
+        val_attrib = ymax - ymin + 1;
+      }
+      if (attrib == HDIAM) {
+        val_attrib = xmax - xmin + 1;
+      }
       if (attrib == DIAM) 
       {
 	val_attrib = xmax - xmin + 1;
-	if (val_attrib < ymax - ymin + 1) val_attrib = ymax - ymin + 1;
+        if (val_attrib < ymax - ymin + 1) {
+          val_attrib = ymax - ymin + 1;
+        }
       }
-      if (val_attrib <= seuil) val_attrib = 0;
+      if (val_attrib <= seuil) {
+        val_attrib = 0;
+      }
 
       LifoPush(LIFO, x);         /* on re-parcourt le plateau pour propager l'attribut */
       LABEL[x] = val_attrib;
@@ -571,7 +708,9 @@ int32_t lattribute3d(
   COMPARE_SIZE(img, lab);
 
   /* le LABEL initialement est mis a NONMARQUE */
-  for (x = 0; x < N; x++) LABEL[x] = NONMARQUE;
+  for (x = 0; x < N; x++) {
+    LABEL[x] = NONMARQUE;
+  }
 
   LIFO = CreeLifoVide(N);
   if (LIFO == NULL)
@@ -611,14 +750,50 @@ if ((typregion == LABMIN) || (typregion == LABMAX))
           switch (attrib)
           {
   	    case AREA: val_attrib++; break;
-  	    case PDIAM: if (wz < zmin) zmin = wz; if (wz > zmax) zmax = wz; break;
-  	    case VDIAM: if (wy < ymin) ymin = wy; if (wy > ymax) ymax = wy; break;
-  	    case HDIAM: if (wx < xmin) xmin = wx; if (wx > xmax) xmax = wx; break;
-  	    case DIAM: 
-  	      if (wz < zmin) zmin = wz; if (wz > zmax) zmax = wz;
-  	      if (wy < ymin) ymin = wy; if (wy > ymax) ymax = wy;
-  	      if (wx < xmin) xmin = wx; if (wx > xmax) xmax = wx; 
-	      break;
+  	    case PDIAM:
+              if (wz < zmin) {
+                zmin = wz;
+              }
+              if (wz > zmax) {
+                zmax = wz;
+              }
+              break;
+            case VDIAM:
+              if (wy < ymin) {
+                ymin = wy;
+              }
+              if (wy > ymax) {
+                ymax = wy;
+              }
+              break;
+            case HDIAM:
+              if (wx < xmin) {
+                xmin = wx;
+              }
+              if (wx > xmax) {
+                xmax = wx;
+              }
+              break;
+            case DIAM:
+              if (wz < zmin) {
+                zmin = wz;
+              }
+              if (wz > zmax) {
+                zmax = wz;
+              }
+              if (wy < ymin) {
+                ymin = wy;
+              }
+              if (wy > ymax) {
+                ymax = wy;
+              }
+              if (wx < xmin) {
+                xmin = wx;
+              }
+              if (wx > xmax) {
+                xmax = wx;
+              }
+              break;
 	  } /* switch (attrib) */
 	  switch (connex)
 	  {
@@ -752,16 +927,28 @@ if ((typregion == LABMIN) || (typregion == LABMAX))
       if (label == MARQUE)
       {
 
-	if (attrib == PDIAM) val_attrib = zmax - zmin + 1;
-	if (attrib == VDIAM) val_attrib = ymax - ymin + 1;
-	if (attrib == HDIAM) val_attrib = xmax - xmin + 1;
-	if (attrib == DIAM) 
+        if (attrib == PDIAM) {
+          val_attrib = zmax - zmin + 1;
+        }
+        if (attrib == VDIAM) {
+          val_attrib = ymax - ymin + 1;
+        }
+        if (attrib == HDIAM) {
+          val_attrib = xmax - xmin + 1;
+        }
+        if (attrib == DIAM) 
 	{
 	  val_attrib = xmax - xmin + 1;
-	  if (val_attrib < ymax - ymin + 1) val_attrib = ymax - ymin + 1;
-	  if (val_attrib < zmax - zmin + 1) val_attrib = zmax - zmin + 1;
-	}
-        if (val_attrib <= seuil) val_attrib = 0;
+          if (val_attrib < ymax - ymin + 1) {
+            val_attrib = ymax - ymin + 1;
+          }
+          if (val_attrib < zmax - zmin + 1) {
+            val_attrib = zmax - zmin + 1;
+          }
+        }
+        if (val_attrib <= seuil) {
+          val_attrib = 0;
+        }
         LifoPush(LIFO, x);         /* on re-parcourt le plateau pour propager l'attribut */
         LABEL[x] = val_attrib;
         while (! LifoVide(LIFO))
@@ -837,14 +1024,50 @@ else
         switch (attrib)
         {
 	  case AREA: val_attrib++; break;
-	  case PDIAM: if (wz < zmin) zmin = wz; if (wz > zmax) zmax = wz; break;
-  	  case VDIAM: if (wy < ymin) ymin = wy; if (wy > ymax) ymax = wy; break;
-  	  case HDIAM: if (wx < xmin) xmin = wx; if (wx > xmax) xmax = wx; break;
-  	  case DIAM: 
-  	      if (wz < zmin) zmin = wz; if (wz > zmax) zmax = wz;
-  	      if (wy < ymin) ymin = wy; if (wy > ymax) ymax = wy;
-  	      if (wx < xmin) xmin = wx; if (wx > xmax) xmax = wx; 
-	      break;
+	  case PDIAM:
+            if (wz < zmin) {
+              zmin = wz;
+            }
+            if (wz > zmax) {
+              zmax = wz;
+            }
+            break;
+          case VDIAM:
+            if (wy < ymin) {
+              ymin = wy;
+            }
+            if (wy > ymax) {
+              ymax = wy;
+            }
+            break;
+          case HDIAM:
+            if (wx < xmin) {
+              xmin = wx;
+            }
+            if (wx > xmax) {
+              xmax = wx;
+            }
+            break;
+          case DIAM:
+            if (wz < zmin) {
+              zmin = wz;
+            }
+            if (wz > zmax) {
+              zmax = wz;
+            }
+            if (wy < ymin) {
+              ymin = wy;
+            }
+            if (wy > ymax) {
+              ymax = wy;
+            }
+            if (wx < xmin) {
+              xmin = wx;
+            }
+            if (wx > xmax) {
+              xmax = wx;
+            }
+              break;
 	} /* switch (attrib) */
 
 	switch (connex)
@@ -884,16 +1107,28 @@ else
 	    break;
 	  } // switch (connex)
       } /* while (! LifoVide(LIFO)) */
-      if (attrib == PDIAM) val_attrib = zmax - zmin + 1;
-      if (attrib == VDIAM) val_attrib = ymax - ymin + 1;
-      if (attrib == HDIAM) val_attrib = xmax - xmin + 1;
+      if (attrib == PDIAM) {
+        val_attrib = zmax - zmin + 1;
+      }
+      if (attrib == VDIAM) {
+        val_attrib = ymax - ymin + 1;
+      }
+      if (attrib == HDIAM) {
+        val_attrib = xmax - xmin + 1;
+      }
       if (attrib == DIAM) 
       {
 	val_attrib = xmax - xmin + 1;
-	if (val_attrib < ymax - ymin + 1) val_attrib = ymax - ymin + 1;
-	if (val_attrib < zmax - zmin + 1) val_attrib = zmax - zmin + 1;
+        if (val_attrib < ymax - ymin + 1) {
+          val_attrib = ymax - ymin + 1;
+        }
+        if (val_attrib < zmax - zmin + 1) {
+          val_attrib = zmax - zmin + 1;
+        }
       }
-      if (val_attrib <= seuil) val_attrib = 0;
+      if (val_attrib <= seuil) {
+        val_attrib = 0;
+      }
       LifoPush(LIFO, x);         /* on re-parcourt le plateau pour propager l'attribut */
       LABEL[x] = val_attrib;
       while (! LifoVide(LIFO))
@@ -979,7 +1214,9 @@ int32_t lplanarity(
   COMPARE_SIZE(img, res);
 
   /* le RES initialement est mis a LP_MARK0 */
-  for (x = 0; x < N; x++) RES[x] = LP_MARK0;
+  for (x = 0; x < N; x++) {
+    RES[x] = LP_MARK0;
+  }
 
   LIFO = CreeLifoVide(N);
   if (LIFO == NULL)

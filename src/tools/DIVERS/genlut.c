@@ -99,17 +99,33 @@ int main(int argc, char **argv)
   for (i = 0; i < ncol; i++)
   {
     hue = (double)(minhue + ((maxhue-minhue)*i) / (double)ncol);
-    while (hue < 0.0) hue += 360.0;
-    while (hue >= 360.0) hue -= 360.0;
+    while (hue < 0.0) {
+      hue += 360.0;
+    }
+    while (hue >= 360.0) {
+      hue -= 360.0;
+    }
     lum = (double)(minlum + ((maxlum-minlum)*i) / (double)ncol);
     sat = (double)(minsat + ((maxsat-minsat)*i) / (double)ncol);
     hls2rgb(&r, &g, &b, hue, lum, sat);
     rint = (int32_t)(r*256);
     gint = (int32_t)(g*256);
     bint = (int32_t)(b*256);
-    if (rint>255) R[i]=255; else R[i]=(uint8_t)rint;
-    if (gint>255) G[i]=255; else G[i]=(uint8_t)gint;
-    if (bint>255) B[i]=255; else B[i]=(uint8_t)bint;
+    if (rint > 255) {
+      R[i] = 255;
+    } else {
+      R[i] = (uint8_t)rint;
+    }
+    if (gint > 255) {
+      G[i] = 255;
+    } else {
+      G[i] = (uint8_t)gint;
+    }
+    if (bint > 255) {
+      B[i] = 255;
+    } else {
+      B[i] = (uint8_t)bint;
+    }
   }
 
   writergbimage(lut_r, lut_g, lut_b, argv[argc-1]);

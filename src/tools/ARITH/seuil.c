@@ -87,9 +87,11 @@ int main(int argc, char **argv)
   }
 
   seuil = atof(argv[2]);
-  if (argc==5)
+  if (argc == 5) {
     seuil2 = atof(argv[3]);
-  else seuil2 = 0;
+  } else {
+    seuil2 = 0;
+  }
 
   if (argc == 4)
   {
@@ -124,22 +126,38 @@ int main(int argc, char **argv)
     if (datatype(image) == VFF_TYP_4_BYTE)
     {
       int32_t *FL = SLONGDATA(image);
-      for (x = 0; x < N; x++) F[x] = (uint8_t)FL[x];
+      for (x = 0; x < N; x++) {
+        F[x] = (uint8_t)FL[x];
+      }
     }
     else if (datatype(image) == VFF_TYP_2_BYTE)
     {
       int16_t *FL = SSHORTDATA(image);
-      for (x = 0; x < N; x++) F[x] = (uint8_t)FL[x];
+      for (x = 0; x < N; x++) {
+        F[x] = (uint8_t)FL[x];
+      }
     }
     else if (datatype(image) == VFF_TYP_FLOAT)
     {
       float *FL = FLOATDATA(image);
-      for (x = 0; x < N; x++) if (FL[x] == 0.0) F[x] = NDG_MIN; else F[x] = NDG_MAX;
+      for (x = 0; x < N; x++) {
+        if (FL[x] == 0.0) {
+          F[x] = NDG_MIN;
+        } else {
+          F[x] = NDG_MAX;
+        }
+      }
     }
     else if (datatype(image) == VFF_TYP_DOUBLE)
     {
       double *FL = DOUBLEDATA(image);
-      for (x = 0; x < N; x++) if (FL[x] == 0.0) F[x] = NDG_MIN; else F[x] = NDG_MAX;
+      for (x = 0; x < N; x++) {
+        if (FL[x] == 0.0) {
+          F[x] = NDG_MIN;
+        } else {
+          F[x] = NDG_MAX;
+        }
+      }
     }
     else
     {

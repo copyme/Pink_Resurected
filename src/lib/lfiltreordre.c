@@ -66,10 +66,16 @@ int32_t lfiltreordre_Partitionner(uint8_t *A, int32_t p, int32_t r)
   int32_t j = r + 1;
   while (1)
   {
-    do j--; while (A[j] > x);
-    do i++; while (A[i] < x);
-    if (i < j) { t = A[i]; A[i] = A[j]; A[j] = t; }
-    else return j;
+    do {
+      j--;
+    } while (A[j] > x);
+    do {
+      i++;
+    } while (A[i] < x);
+    if (i < j) { t = A[i]; A[i] = A[j]; A[j] = t;
+    } else {
+      return j;
+    }
   } /* while (1) */   
 } /* lfiltreordre_Partitionner() */
 
@@ -99,12 +105,17 @@ uint8_t lfiltreordre_SelectionStochastique (uint8_t * A, int32_t p, int32_t r, i
   entre l'indice m (compris) a l'indice n (compris) 
 */
 {
-  int32_t q, k; 
-  if (p == r) return A[p];
+  int32_t q, k;
+  if (p == r) {
+    return A[p];
+  }
   q = lfiltreordre_PartitionStochastique(A, p, r);
   k = q - p + 1;
-  if (i <= k) return lfiltreordre_SelectionStochastique (A, p, q, i);
-  else        return lfiltreordre_SelectionStochastique (A, q+1, r, i - k) ;
+  if (i <= k) {
+    return lfiltreordre_SelectionStochastique(A, p, q, i);
+  } else {
+    return lfiltreordre_SelectionStochastique(A, q + 1, r, i - k);
+  }
 } /* lfiltreordre_SelectionStochastique() */
 
 /* ==================================== */
@@ -146,12 +157,16 @@ int32_t lfiltreordre(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t y
      return(0);
   }
 
-  for (x = 0; x < N; x++) H[x] = F[x];
+  for (x = 0; x < N; x++) {
+    H[x] = F[x];
+  }
 
   nptb = 0;
-  for (i = 0; i < Nm; i += 1)
-    if (M[i])
+  for (i = 0; i < Nm; i += 1) {
+    if (M[i]) {
       nptb += 1;
+    }
+  }
 
   rang = (int32_t)((double)(nptb - 1) * r);
 #ifdef VERBOSE
@@ -167,28 +182,31 @@ int32_t lfiltreordre(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t y
   }
 
   k = 0;
-  for (j = 0; j < csm; j += 1)
-    for (i = 0; i < rsm; i += 1)
+  for (j = 0; j < csm; j += 1) {
+    for (i = 0; i < rsm; i += 1) {
       if (M[j * rsm + i])
       {
          tab_es_x[k] = i;
          tab_es_y[k] = j;
          k += 1;
       }
-
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    for (c = 0; c < nptb ; c += 1)
-    {
-      l = y + tab_es_y[c] - yc;
-      k = x + tab_es_x[c] - xc; 
-      if ((l >= 0) && (l < cs) && (k >= 0) && (k < rs))
-        tab_es_val[c] = H[l * rs + k];
-      else
-        tab_es_val[c] = 0;
     }
-    F[y * rs + x] = lfiltreordre_SelectionStochastique(tab_es_val, 0, nptb - 1, rang);
+  }
+
+  for (y = 0; y < cs; y++) {
+    for (x = 0; x < rs; x++) {
+      for (c = 0; c < nptb; c += 1) {
+        l = y + tab_es_y[c] - yc;
+        k = x + tab_es_x[c] - xc;
+        if ((l >= 0) && (l < cs) && (k >= 0) && (k < rs)) {
+          tab_es_val[c] = H[l * rs + k];
+        } else {
+          tab_es_val[c] = 0;
+        }
+      }
+      F[y * rs + x] =
+          lfiltreordre_SelectionStochastique(tab_es_val, 0, nptb - 1, rang);
+    }
   }
 
   free(H);
@@ -235,12 +253,16 @@ int32_t lfiltrerang(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t yc
      return(0);
   }
 
-  for (x = 0; x < N; x++) H[x] = F[x];
+  for (x = 0; x < N; x++) {
+    H[x] = F[x];
+  }
 
   nptb = 0;
-  for (i = 0; i < Nm; i += 1)
-    if (M[i])
+  for (i = 0; i < Nm; i += 1) {
+    if (M[i]) {
       nptb += 1;
+    }
+  }
 
   if ((rang < 0) || (rang > nptb))
   {  
@@ -261,28 +283,31 @@ int32_t lfiltrerang(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t yc
   }
 
   k = 0;
-  for (j = 0; j < csm; j += 1)
-    for (i = 0; i < rsm; i += 1)
+  for (j = 0; j < csm; j += 1) {
+    for (i = 0; i < rsm; i += 1) {
       if (M[j * rsm + i])
       {
          tab_es_x[k] = i;
          tab_es_y[k] = j;
          k += 1;
       }
-
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    for (c = 0; c < nptb ; c += 1)
-    {
-      l = y + tab_es_y[c] - yc;
-      k = x + tab_es_x[c] - xc; 
-      if ((l >= 0) && (l < cs) && (k >= 0) && (k < rs))
-        tab_es_val[c] = H[l * rs + k];
-      else
-        tab_es_val[c] = 0;
     }
-    F[y * rs + x] = lfiltreordre_SelectionStochastique(tab_es_val, 0, nptb - 1, rang);
+  }
+
+  for (y = 0; y < cs; y++) {
+    for (x = 0; x < rs; x++) {
+      for (c = 0; c < nptb; c += 1) {
+        l = y + tab_es_y[c] - yc;
+        k = x + tab_es_x[c] - xc;
+        if ((l >= 0) && (l < cs) && (k >= 0) && (k < rs)) {
+          tab_es_val[c] = H[l * rs + k];
+        } else {
+          tab_es_val[c] = 0;
+        }
+      }
+      F[y * rs + x] =
+          lfiltreordre_SelectionStochastique(tab_es_val, 0, nptb - 1, rang);
+    }
   }
 
   free(H);
@@ -329,12 +354,16 @@ int32_t lfiltreordre3d(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t
      return(0);
   }
 
-  for (x = 0; x < N; x++) H[x] = F[x];
+  for (x = 0; x < N; x++) {
+    H[x] = F[x];
+  }
 
   nptb = 0;
-  for (i = 0; i < Nm; i += 1)
-    if (M[i])
+  for (i = 0; i < Nm; i += 1) {
+    if (M[i]) {
       nptb += 1;
+    }
+  }
 
   rang = (int32_t)((double)(nptb - 1) * r);
 #ifdef VERBOSE
@@ -352,9 +381,9 @@ int32_t lfiltreordre3d(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t
   }
 
   n = 0;
-  for (k = 0; k < dsm; k += 1)
-    for (j = 0; j < csm; j += 1)
-      for (i = 0; i < rsm; i += 1)
+  for (k = 0; k < dsm; k += 1) {
+    for (j = 0; j < csm; j += 1) {
+      for (i = 0; i < rsm; i += 1) {
         if (M[k * psm + j * rsm + i])
         {
            tab_es_x[n] = i;
@@ -362,22 +391,28 @@ int32_t lfiltreordre3d(struct xvimage *f, struct xvimage *m, int32_t xc, int32_t
            tab_es_z[n] = k;
            n += 1;
         }
-
-  for (z = 0; z < ds; z++)
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    for (c = 0; c < nptb ; c += 1)
-    {
-      o = z + tab_es_z[c] - zc;
-      p = y + tab_es_y[c] - yc;
-      n = x + tab_es_x[c] - xc; 
-      if ((o >= 0) && (o < ds) && (p >= 0) && (p < cs) && (n >= 0) && (n < rs))
-        tab_es_val[c] = H[o * ps + p * rs + n];
-      else
-        tab_es_val[c] = 0;
+      }
     }
-    F[z * ps + y * rs + x] = lfiltreordre_SelectionStochastique(tab_es_val, 0, nptb - 1, rang);
+  }
+
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        for (c = 0; c < nptb; c += 1) {
+          o = z + tab_es_z[c] - zc;
+          p = y + tab_es_y[c] - yc;
+          n = x + tab_es_x[c] - xc;
+          if ((o >= 0) && (o < ds) && (p >= 0) && (p < cs) && (n >= 0) &&
+              (n < rs)) {
+            tab_es_val[c] = H[o * ps + p * rs + n];
+          } else {
+            tab_es_val[c] = 0;
+          }
+        }
+        F[z * ps + y * rs + x] =
+            lfiltreordre_SelectionStochastique(tab_es_val, 0, nptb - 1, rang);
+      }
+    }
   }
 
   free(H);

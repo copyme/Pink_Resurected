@@ -126,7 +126,9 @@ int main(int argc, char **argv)
   max=0;
   for (i = 0; i < N; i++)
   {
-    if (O[i] > max) max=O[i];	  
+    if (O[i] > max) {
+      max = O[i];
+    }
   }
   lambda = atof(argv[2]);
   lambda = (lambda*M_PI_4)/100;
@@ -147,9 +149,9 @@ int main(int argc, char **argv)
   if(lowlambda>-1)
   {
     writeimage(image, argv[argc - 1]);
-  }
-  else
+  } else {
     writeimage(lambdaimage, argv[argc - 1]);
+  }
 
   freeimage(lambdaimage);
   freeimage(distimage);

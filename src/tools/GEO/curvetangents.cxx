@@ -88,9 +88,12 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (argc == 3) mode = 1;
-  else mode = atoi(argv[2]);
-  
+  if (argc == 3) {
+    mode = 1;
+  } else {
+    mode = atoi(argv[2]);
+  }
+
   fscanf(fd, "%c", &type);
   if (type == 'b')
   {
@@ -106,8 +109,9 @@ int main(int argc, char **argv)
     X = (int32_t *)calloc(1,npoints*sizeof(int32_t)); assert(X != NULL);
     Y = (int32_t *)calloc(1,npoints*sizeof(int32_t)); assert(Y != NULL);
 
-    for (i = 0; i < npoints; i++)
+    for (i = 0; i < npoints; i++) {
       fscanf(fd, "%d %d", &(X[i]), &(Y[i]));
+    }
     fclose(fd);
   
     if (mode == 1)
@@ -135,8 +139,9 @@ int main(int argc, char **argv)
       exit(1);
     }
     fprintf(fd, "b %d\n", npoints);
-    for (i = 0; i < npoints; i++)
+    for (i = 0; i < npoints; i++) {
       fprintf(fd, "%g %g\n", cos(mstd[i]), sin(mstd[i]));
+    }
     fclose(fd);
 
     free(end);
@@ -216,9 +221,10 @@ int main(int argc, char **argv)
 	    exit(1);
 	  }
 	fprintf(fd, "b %d\n", npoints);
-	for (i = 0; i < npoints; i++)
-	  fprintf(fd, "%10g %10g\n", dX[i], dY[i]);
-	fclose(fd);
+        for (i = 0; i < npoints; i++) {
+          fprintf(fd, "%10g %10g\n", dX[i], dY[i]);
+        }
+        fclose(fd);
 
 	free(tab_combi);
 	free(dX);
@@ -239,8 +245,9 @@ int main(int argc, char **argv)
     X = (int32_t *)calloc(1,npoints*sizeof(int32_t)); assert(X != NULL);
     Y = (int32_t *)calloc(1,npoints*sizeof(int32_t)); assert(Y != NULL);
     Z = (int32_t *)calloc(1,npoints*sizeof(int32_t)); assert(Z != NULL);
-    for (i = 0; i < npoints; i++)
+    for (i = 0; i < npoints; i++) {
       fscanf(fd, "%d %d %d", &(X[i]), &(Y[i]), &(Z[i]));
+    }
     fclose(fd);
 
     if (mode ==1)
@@ -263,8 +270,9 @@ int main(int argc, char **argv)
       exit(1);
     }
     fprintf(fd, "B %d\n", npoints);
-    for (i = 0; i < npoints; i++)
+    for (i = 0; i < npoints; i++) {
       fprintf(fd, "%g %g %g\n", Xmstd[i], Ymstd[i], Zmstd[i]);
+    }
     fclose(fd);
 
     free(Xmstd);
@@ -351,9 +359,10 @@ int main(int argc, char **argv)
 	    exit(1);
 	  }
 	fprintf(fd, "B %d\n", npoints);
-	for (i = 0; i < npoints; i++)
-	  fprintf(fd, "%10g %10g %10g\n", dX[i], dY[i], dZ[i]);
-	fclose(fd);
+        for (i = 0; i < npoints; i++) {
+          fprintf(fd, "%10g %10g %10g\n", dX[i], dY[i], dZ[i]);
+        }
+        fclose(fd);
 
     free(tab_combi);
     free(dX);

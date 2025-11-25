@@ -171,24 +171,31 @@ int main(int argc, char **argv)
       exit(0);
     }
 
-    if (ds == 1) nb = 2; else nb = 3;
+    if (ds == 1) {
+      nb = 2;
+    } else {
+      nb = 3;
+    }
     fputs("NRRD0001\n", fd);
     fprintf(fd, "content: %s\n", argv[1]);
     fprintf(fd, "dimension: %d\n", nb);
-    if (datatype(image) == VFF_TYP_1_BYTE)
+    if (datatype(image) == VFF_TYP_1_BYTE) {
       fprintf(fd, "type: uchar\n");
-    else
+    } else {
       fprintf(fd, "type: unknown\n");
-    if (ds == 1)
+    }
+    if (ds == 1) {
       fprintf(fd, "sizes: %d %d\n", rs, cs);
-    else
+    } else {
       fprintf(fd, "sizes: %d %d %d\n", rs, cs, ds);
+    }
     if (ds > 1)
     {
-      if (image->xdim != 0.0)
-	fprintf(fd, "spacings: %g %g %g\n", image->xdim, image->ydim, image->zdim);
-      else
-	fprintf(fd, "spacings: 1 1 1\n");
+      if (image->xdim != 0.0) {
+        fprintf(fd, "spacings: %g %g %g\n", image->xdim, image->ydim, image->zdim);
+      } else {
+        fprintf(fd, "spacings: 1 1 1\n");
+      }
     }
     fprintf(fd, "data file: ./%s.raw\n", argv[1]);
     fprintf(fd, "encoding: raw\n");
@@ -209,7 +216,11 @@ int main(int argc, char **argv)
       exit(0);
     }
 
-    if (ds == 1) nb = 2; else nb = 3;
+    if (ds == 1) {
+      nb = 2;
+    } else {
+      nb = 3;
+    }
     fputs("ObjectType = Image\n", fd);
     fprintf(fd, "NDims = %d\n", nb);
     fputs("BinaryData = True\n", fd);
@@ -217,20 +228,31 @@ int main(int argc, char **argv)
     fputs("CompressedData = False\n", fd);
     if (nb == 3)
     {
-      if (image->xdim != 0.0)
-        fprintf(fd, "ElementSpacing = %g %g %g\n", image->xdim, image->ydim, image->zdim );
+      if (image->xdim != 0.0) {
+        fprintf(fd, "ElementSpacing = %g %g %g\n", image->xdim, image->ydim,
+                image->zdim);
+      }
       fprintf(fd, "DimSize = %d %d %d\n", rs, cs, ds);
     }
     else
     {
-      if (image->xdim != 0.0)
-        fprintf(fd, "ElementSpacing = %g %g\n", image->xdim, image->ydim );
+      if (image->xdim != 0.0) {
+        fprintf(fd, "ElementSpacing = %g %g\n", image->xdim, image->ydim);
+      }
       fprintf(fd, "DimSize = %d %d\n", rs, cs);
     }
-    if (datatype(image) == VFF_TYP_1_BYTE) fprintf(fd, "ElementType = MET_CHAR\n");
-    if (datatype(image) == VFF_TYP_2_BYTE) fprintf(fd, "ElementType = MET_SHORT\n");
-    if (datatype(image) == VFF_TYP_4_BYTE) fprintf(fd, "ElementType = MET_LONG\n");
-    if (datatype(image) == VFF_TYP_FLOAT) fprintf(fd, "ElementType = MET_FLOAT\n");
+    if (datatype(image) == VFF_TYP_1_BYTE) {
+      fprintf(fd, "ElementType = MET_CHAR\n");
+    }
+    if (datatype(image) == VFF_TYP_2_BYTE) {
+      fprintf(fd, "ElementType = MET_SHORT\n");
+    }
+    if (datatype(image) == VFF_TYP_4_BYTE) {
+      fprintf(fd, "ElementType = MET_LONG\n");
+    }
+    if (datatype(image) == VFF_TYP_FLOAT) {
+      fprintf(fd, "ElementType = MET_FLOAT\n");
+    }
     fprintf(fd, "ElementDataFile = %s.raw\n", argv[1]);
 
   }

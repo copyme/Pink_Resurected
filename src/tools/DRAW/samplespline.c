@@ -112,7 +112,9 @@ int main(int argc, char **argv)
     }
   
     fprintf(fd, "b %d\n", nsamples);
-    for (i = 0; i < nsamples; i++) fprintf(fd, "%g %g\n", X[i], Y[i]);
+    for (i = 0; i < nsamples; i++) {
+      fprintf(fd, "%g %g\n", X[i], Y[i]);
+    }
     fclose(fd);
 
     free(x); free(y);
@@ -144,7 +146,9 @@ int main(int argc, char **argv)
     }
   
     fprintf(fd, "B %d\n", nsamples);
-    for (i = 0; i < nsamples; i++) fprintf(fd, "%g %g %g\n", X[i], Y[i], Z[i]);
+    for (i = 0; i < nsamples; i++) {
+      fprintf(fd, "%g %g %g\n", X[i], Y[i], Z[i]);
+    }
     fclose(fd);
 
     free(x); free(y); free(z);

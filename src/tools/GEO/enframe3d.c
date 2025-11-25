@@ -82,9 +82,17 @@ int main(int argc, char **argv)
     fprintf(stderr, "%s: readimage failed\n", argv[0]);
     exit(1);
   }
-  
-  if (argc > 2) grayval = atoi(argv[2]); else grayval = 0;
-  if (argc > 3) width = atoi(argv[3]); else width = 1;
+
+  if (argc > 2) {
+    grayval = atoi(argv[2]);
+  } else {
+    grayval = 0;
+  }
+  if (argc > 3) {
+    width = atoi(argv[3]);
+  } else {
+    width = 1;
+  }
   imageout = lenframe3d(image, grayval, width);
   if (imageout == NULL)
   {
@@ -92,10 +100,11 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (argc > 4)  
+  if (argc > 4) {
     writeimage(imageout, argv[argc-1]);
-  else
+  } else {
     writeimage(imageout, argv[1]);
+  }
   freeimage(imageout);
   freeimage(image);
 

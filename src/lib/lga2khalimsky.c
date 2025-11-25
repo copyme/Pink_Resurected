@@ -55,30 +55,34 @@ int32_t lga2khalimsky(struct xvimage *ga,     /* graphe d'arete en entree */
   /* on alloue les elmts 1D ds khalimsky ie les aretes du ga */
   if(bar == 0)
   {
-    for(j = 0; j < cs; j++)
+    for (j = 0; j < cs; j++) {
       for(i = 0; i < rs -1; i++)
       {
 	F[4*j* rs+2*i+1] = GA[j*rs+i];
       }
-    for(j = 0; j < cs-1; j++)
+    }
+    for (j = 0; j < cs - 1; j++) {
       for(i = 0; i < rs; i++)
       {
 	F[(4*j+2)*rs +2*i] = GA[N+j*rs+i];
       }
+    }
     cs = 2*cs;
     rs = 2*rs;
     N = rs*cs;
-    for(j = 0; j < cs; j++)
-      for(i = 0; i < rs; i++)
-	if( !(i%2) && !(j%2)) /* si l'on est sur une elmt 2D de khal */
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        if( !(i%2) && !(j%2)) /* si l'on est sur une elmt 2D de khal */
 	{
 	  x = j*rs+i;
 	  tmp = 255;
 	  for(k = 0; k < 8; k+=2)
 	  {
 	    w = voisin(x,k,rs,N);
-	    if( (w > -1) && (F[w] < tmp)) tmp = F[w];
-	  }
+            if ((w > -1) && (F[w] < tmp)) {
+              tmp = F[w];
+            }
+          }
 	  F[x] = tmp;  /* on conserve le min des elmts 1D contenu ds l'elmt 2D*/
 	}
 	else
@@ -89,38 +93,46 @@ int32_t lga2khalimsky(struct xvimage *ga,     /* graphe d'arete en entree */
 	    for(k = 0; k < 8; k+=2)
 	    {
 	      w = voisin(x,k,rs,N);
-	      if((w > -1) && (F[w] > tmp)) tmp = F[w];
-	    }
+              if ((w > -1) && (F[w] > tmp)) {
+                tmp = F[w];
+              }
+            }
 	    F[x] = tmp;   /* on conserve le max des elmts 1D contenant l'elmt 0D */
-	  }
+        }
+      }
+    }
   }
   else
   {
-    for(j = 0; j < cs; j++)
+    for (j = 0; j < cs; j++) {
       for(i = 0; i < rs -1; i++)
       {
 	F[ 4*j* rs + 2*i+1] = GA[j*rs+i];
       }
-    for(j = 0; j < cs-1; j++)
+    }
+    for (j = 0; j < cs - 1; j++) {
       for(i = 0; i < rs; i++)
       {
 	F[(4*j+2)*rs +2*i] = GA[N+j*rs+i];
       }
-   
+    }
+
     cs = 2*cs;
     rs = 2*rs;
     N = rs*cs;
-    for(j = 0; j < cs; j++)
-      for(i = 0; i < rs; i++)
-	if(!(i%2) && !(j%2)) /* si l'on est sur une elmt 2D de khal */
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        if(!(i%2) && !(j%2)) /* si l'on est sur une elmt 2D de khal */
 	{
 	  x = j*rs+i;
 	  tmp = 0;
 	  for(k = 0; k < 8; k+=2)
 	  {
 	    w = voisin(x,k,rs,N);
-	    if( (w > - 1)  && (F[w] > tmp) ) tmp = F[w];
-	  }
+            if ((w > -1) && (F[w] > tmp)) {
+              tmp = F[w];
+            }
+          }
 	  F[x] = tmp;  /* on conserve le max des elmts 1D contenu ds l'elmt 2D*/
 	}
 	else
@@ -131,10 +143,14 @@ int32_t lga2khalimsky(struct xvimage *ga,     /* graphe d'arete en entree */
 	    for(k = 0; k < 8; k+=2)
 	    {
 	      w = voisin(x,k,rs,N);
-	      if( (w > -1) && (F[w] < tmp)) tmp = F[w];
-	    }
+              if ((w > -1) && (F[w] < tmp)) {
+                tmp = F[w];
+              }
+            }
 	    F[x] = tmp;   /* on conserve le min des elmts 1D contenant l'elmt 0D */
-	  }
+        }
+      }
+    }
   }
   return 1;
 }
@@ -161,9 +177,11 @@ int32_t lga2khalimsky3d(struct xvimage *ga,     /* graphe d'arete en entree */
   int32_t ds_k = 2*ds;
   int32_t ps_k = rs_k*cs_k;
   int32_t N_k = ps_k * ds_k;
-  
-  if(N_k != rowsize(out) * depth(out) * colsize(out)) printf("Erreur icompatible image size \n");
-  
+
+  if (N_k != rowsize(out) * depth(out) * colsize(out)) {
+    printf("Erreur icompatible image size \n");
+  }
+
   /* Les conventions adoptés (à la difference du cas 2D) sont */
   /* celles de mckhalim3d.h c'est à dire:                     */
   /* (i%2) + (j%2) + (k%2) == 0 --> elmt 0D                   */
@@ -184,47 +202,55 @@ int32_t lga2khalimsky3d(struct xvimage *ga,     /* graphe d'arete en entree */
 	  ((i >= 2*N) && (((i- (2*N))/ps) < (ds-1)))){
 	printf("%d ",GA[i]);
 	}*/
-    for(k = 0; k < ds; k++)
-      for(j = 0; j < cs; j++)
-	for(i = 0; i < rs -1; i++)
+    for (k = 0; k < ds; k++) {
+      for (j = 0; j < cs; j++) {
+        for(i = 0; i < rs -1; i++)
 	{
 	  /* elmt du type 2(i+1),2j+1, 2k+1 */	  
 	  F[((2*k)+1)*ps_k + ((2*j)+1)*rs_k + 2*(i+1)] = GA[k*ps + j*rs +i];
-	}   
-    for(k = 0; k < ds; k++)
-      for(j = 0; j < cs-1; j++)
-	for(i = 0; i < rs; i++)
+	}
+      }
+    }
+    for (k = 0; k < ds; k++) {
+      for (j = 0; j < cs - 1; j++) {
+        for(i = 0; i < rs; i++)
 	{
 	  /* elmt du type 2i+1 ,2(j+1), 2k+1 */ 
 	  F[((2*k)+1)*ps_k + 2*(j+1)*rs_k + (2*i)+1] = GA[N + k*ps +j*rs + i];
 	  /* printf("F[%d,%d,%d] = %d ; %d \n", 2*i+1 , 2*(j+1), (2*k+1),
 		 F[(2*k+1)*ps_k + 2*(j+1)*rs_k + 2*i+1],
 		 N+ k*ps +j*rs + i); */
-	}
-    for(k = 0; k < ds-1; k++)
-      for(j = 0; j < cs; j++)
-	for(i = 0; i < rs; i++)
+        }
+      }
+    }
+    for (k = 0; k < ds - 1; k++) {
+      for (j = 0; j < cs; j++) {
+        for(i = 0; i < rs; i++)
 	{
 	  /* elmt du type 2i+1, 2j+1, 2(k+1) */
 	  F[2*(k+1)*ps_k + ((2*j)+1)*rs_k + (2*i)+1] = GA[2*N + k*ps + j*rs + i];
 	  /* printf("F[%d,%d,%d] = %d; %d \n", 2*i+1 , (2*j+1), 2*(k+1),
 		 F[2*(k+1)*ps_k + (2*j+1)*rs_k + 2*i+1],
 		 2*N + k*ps + j*rs + i);*/
-	}
+        }
+      }
+    }
     printf("les elmts 2D ont etes calcules \n");
-    
-    for(k = 0; k < ds_k; k++)
-      for(j = 0; j < cs_k; j++)
-	for(i = 0; i < rs_k; i++)
-	  if(CUBE3D(i,j,k))
+
+    for (k = 0; k < ds_k; k++) {
+      for (j = 0; j < cs_k; j++) {
+        for (i = 0; i < rs_k; i++) {
+          if(CUBE3D(i,j,k))
 	  {
 	    x = i + j*rs_k + k*ps_k; 
 	    tmp = 255;
 	    for(l = 0; l < 6; l++)
 	    {
-	      w = voisin6(x,l,rs_k,ps_k,N_k); 
-	      if((w > -1) && (F[w] < tmp)) tmp = F[w];
-	    }
+	      w = voisin6(x,l,rs_k,ps_k,N_k);
+              if ((w > -1) && (F[w] < tmp)) {
+                tmp = F[w];
+              }
+            }
  	    F[x] = tmp;
 	  }
 	  else if(INTER3D(i, j ,k))
@@ -233,9 +259,13 @@ int32_t lga2khalimsky3d(struct xvimage *ga,     /* graphe d'arete en entree */
 	    tmp = 0;
 	    for(l = 0; l < 12; l+=2)
 	    {
-	      w = voisin6(x,l,rs_k,ps_k,N_k); 
-	      if((w > -1) && (CARRE3D(w%rs_k, (w%ps_k) / rs_k , w/ps_k)) && (F[w] > tmp)) tmp = F[w];
-	    }
+	      w = voisin6(x,l,rs_k,ps_k,N_k);
+              if ((w > -1) &&
+                  (CARRE3D(w % rs_k, (w % ps_k) / rs_k, w / ps_k)) &&
+                  (F[w] > tmp)) {
+                tmp = F[w];
+              }
+            }
 	    F[x] = tmp;
 	  } 
 	  else if(SINGL3D(i,j,k))
@@ -244,47 +274,62 @@ int32_t lga2khalimsky3d(struct xvimage *ga,     /* graphe d'arete en entree */
 	    tmp = 0;
 	    for(l = 0; l < 18; l++)
 	    {
-	      w = voisin18(x,l,rs_k,ps_k,N_k); 
-	      if((w > -1) && (CARRE3D(w%rs_k, (w%ps_k)/rs_k , w/ps_k)) && (F[w] > tmp)) tmp = F[w];
-	    }
+	      w = voisin18(x,l,rs_k,ps_k,N_k);
+              if ((w > -1) &&
+                  (CARRE3D(w % rs_k, (w % ps_k) / rs_k, w / ps_k)) &&
+                  (F[w] > tmp)) {
+                tmp = F[w];
+              }
+            }
 	    F[x] = tmp;
-	  }
+          }
+        }
+      }
+    }
   }
   else
   {
-    for(k = 0; k < ds; k++)
-      for(j = 0; j < cs; j++)
-	for(i = 0; i < rs -1; i++)
+    for (k = 0; k < ds; k++) {
+      for (j = 0; j < cs; j++) {
+        for(i = 0; i < rs -1; i++)
 	{
 	  /* elmt du type 2(i+1),2j+1, 2k+1 */	  
 	  F[(2*k+1)*ps_k + (2*j+1)*rs_k + 2*(i+1)] = GA[j*rs+i];
-	}   
-    for(k = 0; k < ds; k++)
-      for(j = 0; j < cs-1; j++)
-	for(i = 0; i < rs; i++)
+	}
+      }
+    }
+    for (k = 0; k < ds; k++) {
+      for (j = 0; j < cs - 1; j++) {
+        for(i = 0; i < rs; i++)
 	{
 	  /* elmt du type 2i+1 ,2(j+1), 2k+1 */ 
 	  F[(2*k+1)*ps_k + 2*(j+1)*rs_k + 2*i+1] = GA[N+j*rs+i];
-	}
-    for(k = 0; k < ds-1; k++)
-      for(j = 0; j < cs; j++)
-	for(i = 0; i < rs; i++)
+        }
+      }
+    }
+    for (k = 0; k < ds - 1; k++) {
+      for (j = 0; j < cs; j++) {
+        for(i = 0; i < rs; i++)
 	{
 	  /* elmt du type 2i+1, 2j+1, 2(k+1) */
 	  F[2*(k+1)*ps_k + (2*j+1)*rs_k + 2*i+1] = GA[2*N+j*rs+i];
-	}
-    for(k = 0; k < ds_k; k++)
-      for(j = 0; j < cs_k; j++)
-	for(i = 0; i < rs_k; i++)
-	  if(CUBE3D(i,j,k))
+        }
+      }
+    }
+    for (k = 0; k < ds_k; k++) {
+      for (j = 0; j < cs_k; j++) {
+        for (i = 0; i < rs_k; i++) {
+          if(CUBE3D(i,j,k))
 	  {
 	    x = i +j*rs_k+k*ps_k;
 	    tmp = 0;
 	    for(l = 0; l < 6; l++)
 	    {
  	      w = voisin6(x,l,rs_k,ps_k,N_k);
-	      if((w > -1) && (F[w] > tmp)) tmp = F[w];
-	    }
+              if ((w > -1) && (F[w] > tmp)) {
+                tmp = F[w];
+              }
+            }
  	    F[x] = tmp;
 	  }
 	  else if(!CARRE3D(i, j ,k) )
@@ -294,10 +339,17 @@ int32_t lga2khalimsky3d(struct xvimage *ga,     /* graphe d'arete en entree */
 	    for(l = 0; l < 18; l++)
 	    {
 	      w = voisin18(x,l,rs_k,ps_k,N_k);
-	      if((w > -1) && (CARRE3D(w%rs_k, (w%ps_k)/rs_k , w/ps_k)) && (F[w] < tmp)) tmp = F[w];
-	    }
+              if ((w > -1) &&
+                  (CARRE3D(w % rs_k, (w % ps_k) / rs_k, w / ps_k)) &&
+                  (F[w] < tmp)) {
+                tmp = F[w];
+              }
+            }
 	    F[x] = tmp;
-	  } 
+	  }
+        }
+      }
+    }
   }
   return 1;
 }

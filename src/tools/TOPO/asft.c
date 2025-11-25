@@ -129,8 +129,12 @@ int main(int argc, char **argv)
 
   writeimage(image, argv[argc-1]);
   freeimage(image);
-  if (imagec) freeimage(imagec);
-  if (imagecc) freeimage(imagecc);
+  if (imagec) {
+    freeimage(imagec);
+  }
+  if (imagecc) {
+    freeimage(imagecc);
+  }
 
   return 0;
 } /* main */

@@ -100,7 +100,9 @@ int32_t llabelextrema(
   }
 
   /* le LABEL initialement est mis a -1 */
-  for (x = 0; x < N; x++) LABEL[x] = -1;
+  for (x = 0; x < N; x++) {
+    LABEL[x] = -1;
+  }
 
   LIFO = CreeLifoVide(N);
   if (LIFO == NULL)
@@ -765,7 +767,9 @@ int32_t llabeldil(struct xvimage *f,
 
 #define NOLABEL 0
   /* le LABEL initialement est mis a NOLABEL */
-  for (x = 0; x < N; x++) LABEL[x] = NOLABEL;
+  for (x = 0; x < N; x++) {
+    LABEL[x] = NOLABEL;
+  }
 
   LIFO = CreeLifoVide(N);
   if (LIFO == NULL)
@@ -776,9 +780,11 @@ int32_t llabeldil(struct xvimage *f,
   label = NOLABEL;
 
   nptb = 0;
-  for (i = 0; i < Nm; i += 1)
-    if (M[i])
+  for (i = 0; i < Nm; i += 1) {
+    if (M[i]) {
       nptb += 1;
+    }
+  }
 
   tab_es_x = (int32_t *)calloc(1,nptb * sizeof(int32_t));
   tab_es_y = (int32_t *)calloc(1,nptb * sizeof(int32_t));
@@ -789,40 +795,41 @@ int32_t llabeldil(struct xvimage *f,
   }
 
   k = 0;
-  for (j = 0; j < csm; j += 1)
-    for (i = 0; i < rsm; i += 1)
+  for (j = 0; j < csm; j += 1) {
+    for (i = 0; i < rsm; i += 1) {
       if (M[j * rsm + i])
       {
          tab_es_x[k] = i;
          tab_es_y[k] = j;
          k += 1;
       }
+    }
+  }
 
-  for (y = 0; y < cs; y++)
-  for (x = 0; x < rs; x++)
-  {
-    w = y * rs + x;
-    if ((F[w]) && (LABEL[w] == NOLABEL))  /* on trouve un point w non etiquete */
-    {
-      label += 1;       /* on cree un numero d'etiquette */
-      LABEL[w] = label;
-      LifoPush(LIFO, w);   /* on va parcourir la composante a laquelle appartient w */
-      while (! LifoVide(LIFO))
+  for (y = 0; y < cs; y++) {
+    for (x = 0; x < rs; x++) {
+      w = y * rs + x;
+      if ((F[w]) &&
+          (LABEL[w] == NOLABEL)) /* on trouve un point w non etiquete */
       {
-        w = LifoPop(LIFO);
-	x = w % rs;
-	y = w / rs;
-        for (c = 0; c < nptb ; c += 1)
-        {
-          l = y + tab_es_y[c] - yc;
-          k = x + tab_es_x[c] - xc; 
-	  v = l*rs + k;
-          if ((l >= 0) && (l < cs) && (k >= 0) && (k < rs) &&
-	      (F[v]) && (LABEL[v] == NOLABEL))
-	  {
-	    LABEL[v] = label;
-	    LifoPush(LIFO, v);
-	  }
+        label += 1; /* on cree un numero d'etiquette */
+        LABEL[w] = label;
+        LifoPush(LIFO,
+                 w); /* on va parcourir la composante a laquelle appartient w */
+        while (!LifoVide(LIFO)) {
+          w = LifoPop(LIFO);
+          x = w % rs;
+          y = w / rs;
+          for (c = 0; c < nptb; c += 1) {
+            l = y + tab_es_y[c] - yc;
+            k = x + tab_es_x[c] - xc;
+            v = l * rs + k;
+            if ((l >= 0) && (l < cs) && (k >= 0) && (k < rs) && (F[v]) &&
+                (LABEL[v] == NOLABEL)) {
+              LABEL[v] = label;
+              LifoPush(LIFO, v);
+            }
+          }
         }
       }
     }
@@ -872,7 +879,9 @@ int32_t llabelbin(struct xvimage *f,
 #undef NOLABEL
 #define NOLABEL 0
   /* le LABEL initialement est mis a NOLABEL */
-  for (x = 0; x < N; x++) LABEL[x] = NOLABEL;
+  for (x = 0; x < N; x++) {
+    LABEL[x] = NOLABEL;
+  }
 
   LIFO = CreeLifoVide(N);
   if (LIFO == NULL)

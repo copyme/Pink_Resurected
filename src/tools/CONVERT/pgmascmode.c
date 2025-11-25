@@ -86,8 +86,12 @@ void writeascimage_without_header(struct xvimage * image, char *filename)
     { 
       for (i = 0; i < N; i++)
       {
-        if (i % rs == 0) fprintf(fd, "\n");
-        if (i % ps == 0) fprintf(fd, "\n");
+        if (i % rs == 0) {
+          fprintf(fd, "\n");
+        }
+        if (i % ps == 0) {
+          fprintf(fd, "\n");
+        }
         fprintf(fd, "%d ", (int32_t)(UCHARDATA(image)[i]));
       } /* for i */
     }
@@ -95,8 +99,12 @@ void writeascimage_without_header(struct xvimage * image, char *filename)
     { 
       for (i = 0; i < N; i++)
       {
-        if (i % rs == 0) fprintf(fd, "\n");
-        if (i % ps == 0) fprintf(fd, "\n");
+        if (i % rs == 0) {
+          fprintf(fd, "\n");
+        }
+        if (i % ps == 0) {
+          fprintf(fd, "\n");
+        }
         fprintf(fd, "%3d ", (int32_t)(UCHARDATA(image)[i]));
       } /* for i */
     }
@@ -106,8 +114,12 @@ void writeascimage_without_header(struct xvimage * image, char *filename)
   {
     for (i = 0; i < N; i++)
     {
-      if (i % rs == 0) fprintf(fd, "\n");
-      if (i % ps == 0) fprintf(fd, "\n");
+      if (i % rs == 0) {
+        fprintf(fd, "\n");
+      }
+      if (i % ps == 0) {
+        fprintf(fd, "\n");
+      }
       fprintf(fd, "%ld ", (long int)(SLONGDATA(image)[i]));
     } /* for i */
     fprintf(fd, "\n");
@@ -116,8 +128,12 @@ void writeascimage_without_header(struct xvimage * image, char *filename)
   {
     for (i = 0; i < N; i++)
     {
-      if (i % rs == 0) fprintf(fd, "\n");
-      if (i % ps == 0) fprintf(fd, "\n");
+      if (i % rs == 0) {
+        fprintf(fd, "\n");
+      }
+      if (i % ps == 0) {
+        fprintf(fd, "\n");
+      }
       fprintf(fd, "%8g ", FLOATDATA(image)[i]);
     } /* for i */
     fprintf(fd, "\n");
@@ -126,8 +142,12 @@ void writeascimage_without_header(struct xvimage * image, char *filename)
   {
     for (i = 0; i < N; i++)
     {
-      if (i % rs == 0) fprintf(fd, "\n");
-      if (i % ps == 0) fprintf(fd, "\n");
+      if (i % rs == 0) {
+        fprintf(fd, "\n");
+      }
+      if (i % ps == 0) {
+        fprintf(fd, "\n");
+      }
       fprintf(fd, "%8g ", DOUBLEDATA(image)[i]);
     } /* for i */
     fprintf(fd, "\n");
@@ -159,10 +179,11 @@ int main(int argc, char **argv)
       exit(1);
   }
 
-  if (argc == 4)
+  if (argc == 4) {
     writeascimage_without_header(image, argv[argc-1]);
-  else
-    writeascimage(image, argv[argc-1]);
+  } else {
+    writeascimage(image, argv[argc - 1]);
+  }
   freeimage(image);
 
   return 0;

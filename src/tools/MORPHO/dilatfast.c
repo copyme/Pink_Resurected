@@ -98,18 +98,28 @@ int main(int argc, char **argv)
     fprintf(stderr, "%s: readimage failed\n", argv[0]);
     exit(1);
   }
-  
-  if ((strcmp(argv[2], "vois6") == 0) || (strcmp(argv[2], "6") == 0)) mask = vois6; else
-  if ((strcmp(argv[2], "vois18") == 0) || (strcmp(argv[2], "18") == 0)) mask = vois18; else
-  if ((strcmp(argv[2], "vois26") == 0) || (strcmp(argv[2], "26") == 0)) mask = vois26; else
-  if ((strcmp(argv[2], "vois4") == 0) || (strcmp(argv[2], "4") == 0)) mask = vois4; else
-  if ((strcmp(argv[2], "vois8") == 0) || (strcmp(argv[2], "4") == 0)) mask = vois8; else
-  if (strcmp(argv[2], "croix") == 0) mask = croix; else
-  if (strcmp(argv[2], "horiz") == 0) mask = horiz; else
-  if (strcmp(argv[2], "vert") == 0) mask = vert; else
-  if (strcmp(argv[2], "mont") == 0) mask = mont; else
-  if (strcmp(argv[2], "desc") == 0) mask = desc; else
-  {
+
+  if ((strcmp(argv[2], "vois6") == 0) || (strcmp(argv[2], "6") == 0)) {
+    mask = vois6;
+  } else if ((strcmp(argv[2], "vois18") == 0) || (strcmp(argv[2], "18") == 0)) {
+    mask = vois18;
+  } else if ((strcmp(argv[2], "vois26") == 0) || (strcmp(argv[2], "26") == 0)) {
+    mask = vois26;
+  } else if ((strcmp(argv[2], "vois4") == 0) || (strcmp(argv[2], "4") == 0)) {
+    mask = vois4;
+  } else if ((strcmp(argv[2], "vois8") == 0) || (strcmp(argv[2], "4") == 0)) {
+    mask = vois8;
+  } else if (strcmp(argv[2], "croix") == 0) {
+    mask = croix;
+  } else if (strcmp(argv[2], "horiz") == 0) {
+    mask = horiz;
+  } else if (strcmp(argv[2], "vert") == 0) {
+    mask = vert;
+  } else if (strcmp(argv[2], "mont") == 0) {
+    mask = mont;
+  } else if (strcmp(argv[2], "desc") == 0) {
+    mask = desc;
+  } else {
     fprintf(stderr, "%s: bad maskname - use one of the following:\n", argv[0]);
     fprintf(stderr, "6, 18, 26, 8, 4, croix, horiz, vert, mont, desc\n");
     exit(1);

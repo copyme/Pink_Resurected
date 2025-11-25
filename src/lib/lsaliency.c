@@ -88,24 +88,29 @@ int32_t findsaillence(basinT *basins, int32_t l1, int32_t l2)
 
   //cherche le premier flag a 2
   ll1 = l1;
-  while (basins[ll1].flag != 2)
+  while (basins[ll1].flag != 2) {
     ll1 = basins[ll1].father;
+  }
   c1 = l1;
   c2 = l2;
   if (c1 != ll1) {
-    while (basins[c1].father != ll1)
+    while (basins[c1].father != ll1) {
       c1 = basins[c1].father;
+    }
   }
   if (c2 != ll1) {
-    while (basins[c2].father != ll1)
+    while (basins[c2].father != ll1) {
       c2 = basins[c2].father;
+    }
   }
 
   sail = 0;
-  if (c1 != ll1)
+  if (c1 != ll1) {
     sail = basins[c1].dynamics;
-  if (c2 != ll1)
-    sail = (sail > basins[c2].dynamics)? sail : basins[c2].dynamics;
+  }
+  if (c2 != ll1) {
+    sail = (sail > basins[c2].dynamics) ? sail : basins[c2].dynamics;
+  }
 
   /*
   if ( ((l1 == 24) && (l2 == 16)) || ((l2 == 24) && (l1 == 16)) ) {
@@ -259,15 +264,19 @@ int32_t lsaliency(
 
   L = SLONGDATA(label);
   // sort in pixels by increasing grey level
-  for (h = 0; h <= WSHED_HMAX; h++) 
+  for (h = 0; h <= WSHED_HMAX; h++) {
     hi[h] = 0;
+  }
   hc[0] = 0;
   // Histogram (truncated)
   for (x = 0; x < N; x++)   {
-    if (F[x] <= 0) hi[0]++;
-    // Inutile (F est du type char) else if (F[x] >= WSHED_HMAX) hi[WSHED_HMAX]++;
-    else
+    if (F[x] <= 0) {
+      hi[0]++;
+      // Inutile (F est du type char) else if (F[x] >= WSHED_HMAX)
+      // hi[WSHED_HMAX]++;
+    } else {
       hi[F[x]]++;
+    }
     /*
     int32_t max = 0;
     for (k=0; k<8; k+= incr_vois) {
@@ -281,8 +290,9 @@ int32_t lsaliency(
     L[x] = INIT;
   }
   // Cumulative histogram
-  for (h = 1; h <= WSHED_HMAX; h++)
+  for (h = 1; h <= WSHED_HMAX; h++) {
     hc[h] = hc[h - 1] + hi[h - 1];
+  }
 
   it = (uint32_t *) calloc(N, sizeof(int32_t));
   if (it == NULL) {
@@ -302,16 +312,20 @@ int32_t lsaliency(
     hptin=max;
     */
     // adjust pointer to array limits
-    if(hptin<=0) hptin=0;
-    else {
-      if(hptin>=WSHED_HMAX) hptin=WSHED_HMAX;
+    if (hptin <= 0) {
+      hptin = 0;
+    } else {
+      if (hptin >= WSHED_HMAX) {
+        hptin = WSHED_HMAX;
+      }
     }
     it[hc[hptin]] = x;
     hc[hptin]++;
   }
-	
-  for (h = WSHED_HMAX; h > 0; h--)
+
+  for (h = WSHED_HMAX; h > 0; h--) {
     hc[h] = hc[h - 1];
+  }
   hc[0] = 0;
 
   // Now the watershed
@@ -348,11 +362,13 @@ int32_t lsaliency(
 	      int32_t l1 = L[x]-1;
 	      int32_t l2 = L[y]-1;
 	      //printf("a l1 = %d l2 = %d\n", l1, l2);
-	      while (basins[l1].father != -1)
-		l1 = basins[l1].father;
-	      while (basins[l2].father != -1)
-		l2 = basins[l2].father;
-	      //printf("p l1 = %d l2 = %d\n", l1, l2);
+              while (basins[l1].father != -1) {
+                l1 = basins[l1].father;
+              }
+              while (basins[l2].father != -1) {
+                l2 = basins[l2].father;
+              }
+              //printf("p l1 = %d l2 = %d\n", l1, l2);
 	      if (l1 != l2) {
 		if (basins[l1].altitude > basins[l2].altitude) {
 		  basins[l1].dynamics = h - basins[l1].altitude;
@@ -360,9 +376,10 @@ int32_t lsaliency(
 		  printf("dynamics of %d = %d - %d; %d\n", basins[l1].label, basins[l1].dynamics, h, basins[l1].altitude);
 #endif
 		  l2 = L[y]-1;
-		  while ((basins[l2].dynamics <= basins[l1].dynamics)
-			 && (basins[l2].father != -1))
-		    l2 = basins[l2].father;
+                  while ((basins[l2].dynamics <= basins[l1].dynamics) &&
+                         (basins[l2].father != -1)) {
+                    l2 = basins[l2].father;
+                  }
 #ifdef _DEBUG_SALIENCY_
 		  printf("father of %d = %d\n", l1, l2);
 #endif
@@ -373,9 +390,10 @@ int32_t lsaliency(
 		  printf("dynamics of %d = %d - %d; %d\n", basins[l2].label, basins[l2].dynamics, h, basins[l2].altitude);
 #endif
 		  l1 = L[x]-1;
-		  while ((basins[l1].dynamics <= basins[l2].dynamics) 
-			 && (basins[l1].father != -1))
-		    l1 = basins[l1].father;
+                  while ((basins[l1].dynamics <= basins[l2].dynamics) &&
+                         (basins[l1].father != -1)) {
+                    l1 = basins[l1].father;
+                  }
 #ifdef _DEBUG_SALIENCY_
 		  printf("father of %d = %d\n", l2, l1);
 #endif
@@ -455,8 +473,9 @@ int32_t lsaliency(
       max = 0;
       for (k = 0; k < 8; k += 2) {
 	y = voisin(x,k, srs, 2*N+1);
-	if ((y!=-1) && (max < S[y]))
-	  max = S[y];
+        if ((y != -1) && (max < S[y])) {
+          max = S[y];
+        }
       }
       S[x] = max;
     }
@@ -702,15 +721,19 @@ int32_t lsaliency6b(
 
   L = SLONGDATA(label);
   // sort in pixels by increasing grey level
-  for (h = 0; h <= WSHED_HMAX; h++) 
+  for (h = 0; h <= WSHED_HMAX; h++) {
     hi[h] = 0;
+  }
   hc[0] = 0;
   // Histogram (truncated)
   for (x = 0; x < N; x++)   {
-    if (F[x] <= 0) hi[0]++;
-    // Inutile (F est du type char) else if (F[x] >= WSHED_HMAX) hi[WSHED_HMAX]++;
-    else
+    if (F[x] <= 0) {
+      hi[0]++;
+      // Inutile (F est du type char) else if (F[x] >= WSHED_HMAX)
+      // hi[WSHED_HMAX]++;
+    } else {
       hi[F[x]]++;
+    }
     /*
     int32_t max = 0;
     for (k=0; k<8; k+= incr_vois) {
@@ -724,8 +747,9 @@ int32_t lsaliency6b(
     L[x] = INIT;
   }
   // Cumulative histogram
-  for (h = 1; h <= WSHED_HMAX; h++)
+  for (h = 1; h <= WSHED_HMAX; h++) {
     hc[h] = hc[h - 1] + hi[h - 1];
+  }
 
   it = (uint32_t *) calloc(N, sizeof(int32_t));
   if (it == NULL) {
@@ -745,16 +769,20 @@ int32_t lsaliency6b(
     hptin=max;
     */
     // adjust pointer to array limits
-    if(hptin<=0) hptin=0;
-    else {
-      if(hptin>=WSHED_HMAX) hptin=WSHED_HMAX;
+    if (hptin <= 0) {
+      hptin = 0;
+    } else {
+      if (hptin >= WSHED_HMAX) {
+        hptin = WSHED_HMAX;
+      }
     }
     it[hc[hptin]] = x;
     hc[hptin]++;
   }
-	
-  for (h = WSHED_HMAX; h > 0; h--)
+
+  for (h = WSHED_HMAX; h > 0; h--) {
     hc[h] = hc[h - 1];
+  }
   hc[0] = 0;
 
   // Now the watershed
@@ -791,11 +819,13 @@ int32_t lsaliency6b(
 	      int32_t l1 = L[x]-1;
 	      int32_t l2 = L[y]-1;
 	      //printf("a l1 = %d l2 = %d\n", l1, l2);
-	      while (basins[l1].father != -1)
-		l1 = basins[l1].father;
-	      while (basins[l2].father != -1)
-		l2 = basins[l2].father;
-	      //printf("p l1 = %d l2 = %d\n", l1, l2);
+              while (basins[l1].father != -1) {
+                l1 = basins[l1].father;
+              }
+              while (basins[l2].father != -1) {
+                l2 = basins[l2].father;
+              }
+              //printf("p l1 = %d l2 = %d\n", l1, l2);
 	      if (l1 != l2) {
 		if (basins[l1].altitude > basins[l2].altitude) {
 		  basins[l1].dynamics = h - basins[l1].altitude;
@@ -803,9 +833,10 @@ int32_t lsaliency6b(
 		  printf("dynamics of %d = %d - %d; %d\n", basins[l1].label, basins[l1].dynamics, h, basins[l1].altitude);
 #endif
 		  l2 = L[y]-1;
-		  while ((basins[l2].dynamics <= basins[l1].dynamics)
-			 && (basins[l2].father != -1))
-		    l2 = basins[l2].father;
+                  while ((basins[l2].dynamics <= basins[l1].dynamics) &&
+                         (basins[l2].father != -1)) {
+                    l2 = basins[l2].father;
+                  }
 #ifdef _DEBUG_SALIENCY_
 		  printf("father of %d = %d\n", l1, l2);
 #endif
@@ -816,9 +847,10 @@ int32_t lsaliency6b(
 		  printf("dynamics of %d = %d - %d; %d\n", basins[l2].label, basins[l2].dynamics, h, basins[l2].altitude);
 #endif
 		  l1 = L[x]-1;
-		  while ((basins[l1].dynamics <= basins[l2].dynamics) 
-			 && (basins[l1].father != -1))
-		    l1 = basins[l1].father;
+                  while ((basins[l1].dynamics <= basins[l2].dynamics) &&
+                         (basins[l1].father != -1)) {
+                    l1 = basins[l1].father;
+                  }
 #ifdef _DEBUG_SALIENCY_
 		  printf("father of %d = %d\n", l2, l1);
 #endif
@@ -893,8 +925,9 @@ int32_t lsaliency6b(
 	}
       }
       S[x] = findsaillence(basins, c1-1, c2-1);
-    } else
+    } else {
       S[x] = 0;
+    }
   }
 
 

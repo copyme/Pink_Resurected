@@ -67,11 +67,12 @@ int32_t llabeltree(struct xvimage *imgx,   /* donnee: image binaire */
 /* ==================================== */
 #undef F_NAME
 #define F_NAME "llabeltree"
-{ 
-  if ((connex == 4) || (connex == 8))
+{
+  if ((connex == 4) || (connex == 8)) {
     return llabeltree2d(imgx, connex, res);
-  else
+  } else {
     return llabeltree3d(imgx, connex, res);
+  }
 } // llabeltree
 
 
@@ -251,7 +252,9 @@ int32_t labelbranch2d4(uint8_t *X,  /* donnee: pointeur sur l'image x */
   d = D[current_pixel];
   if (nbvois4 (X, current_pixel, rs, N) > 2)
   {
-    if (intersection == 0) intersection = 1;
+    if (intersection == 0) {
+      intersection = 1;
+    }
   }
   else if (intersection == 1)
   {
@@ -295,7 +298,9 @@ int32_t labelbranch2d8(uint8_t *X,  /* donnee: pointeur sur l'image x */
   d = D[current_pixel];
   if (nbvois8 (X, current_pixel, rs, N) > 2)
   {
-    if (intersection == 0) intersection = 1;
+    if (intersection == 0) {
+      intersection = 1;
+    }
   }
   else if (intersection == 1)
   {
@@ -340,7 +345,9 @@ int32_t labelbranch3d6(uint8_t *X,  /* donnee: pointeur sur l'image x */
   d = D[current_pixel];
   if (mctopo3d_nbvoiso6 (X, current_pixel, rs, ps, N) > 2)
   {
-    if (intersection == 0) intersection = 1;
+    if (intersection == 0) {
+      intersection = 1;
+    }
   }
   else if (intersection == 1)
   {
@@ -385,7 +392,9 @@ int32_t labelbranch3d18(uint8_t *X,  /* donnee: pointeur sur l'image x */
   d = D[current_pixel];
   if (mctopo3d_nbvoiso18 (X, current_pixel, rs, ps, N) > 2)
   {
-    if (intersection == 0) intersection = 1;
+    if (intersection == 0) {
+      intersection = 1;
+    }
   }
   else if (intersection == 1)
   {
@@ -430,7 +439,9 @@ int32_t labelbranch3d26(uint8_t *X,  /* donnee: pointeur sur l'image x */
   d = D[current_pixel];
   if (mctopo3d_nbvoiso26 (X, current_pixel, rs, ps, N) > 2)
   {
-    if (intersection == 0) intersection = 1;
+    if (intersection == 0) {
+      intersection = 1;
+    }
   }
   else if (intersection == 1)
   {

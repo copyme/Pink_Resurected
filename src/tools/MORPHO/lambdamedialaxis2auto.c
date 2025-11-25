@@ -139,35 +139,43 @@ int main(int argc, char **argv)
 		float minlam = 10000;
 		float maxope = 0;
 		float minope = 10000;
-		
-		for (i = 0; i < N; i++)
-			if (L[i] > 0)
-			{
-				nbLam++;
-				
-				if(L[i]>maxlam) maxlam = L[i];
-				if(L[i]<minlam) minlam = L[i];
-				
-				if(O[i]>maxope) maxope = O[i];
-				if(O[i]<minope) minope = O[i];
-			}
-		
-		float *Lam = (float *) malloc(nbLam * sizeof (float));
+
+                for (i = 0; i < N; i++) {
+                  if (L[i] > 0) {
+                    nbLam++;
+
+                    if (L[i] > maxlam) {
+                      maxlam = L[i];
+                    }
+                    if (L[i] < minlam) {
+                      minlam = L[i];
+                    }
+
+                    if (O[i] > maxope) {
+                      maxope = O[i];
+                    }
+                    if (O[i] < minope) {
+                      minope = O[i];
+                    }
+                  }
+                }
+
+                float *Lam = (float *) malloc(nbLam * sizeof (float));
 		float *Ope = (float *) malloc(nbLam * sizeof (float));
 		char *idx = (char *) malloc(nbLam * sizeof (char));
 		double *distTo1 = (double *) malloc(nbLam * sizeof (double));
 		double *distTo2 = (double *) malloc(nbLam * sizeof (double));
 		
 		nbLam=0;
-		for (i = 0; i < N; i++)
-			if (L[i] > 0)
-			{
-				Lam[nbLam] = L[i];
-				Ope[nbLam] = O[i];
-				nbLam++;
-			}
-		
-		//initialize centroids
+                for (i = 0; i < N; i++) {
+                  if (L[i] > 0) {
+                    Lam[nbLam] = L[i];
+                    Ope[nbLam] = O[i];
+                    nbLam++;
+                  }
+                }
+
+                //initialize centroids
 		float centroids[] = {0, 0};
 		
 		centroids[0] = logf(maxope+1);
@@ -235,10 +243,11 @@ int main(int argc, char **argv)
 			centroids[1] = centroids[1]/(maxope/2*(val2/count2));
 			centroids[0] = pow(e,centroids[0]);
 			centroids[1] = pow(e,centroids[1]);
-			
-			if (nbIteration > 30)
-				break;
-		}
+
+                        if (nbIteration > 30) {
+                          break;
+                        }
+                }
 		
 		//Calculate parameter which separate 2 sets
 		lambda = logf(maxope+1);
@@ -289,9 +298,9 @@ int main(int argc, char **argv)
   if(lambda>-1)
   {
     writeimage(image, argv[argc - 1]);
-  }
-  else
+  } else {
     writeimage(lambdaimage, argv[argc - 1]);
+  }
 
   freeimage(lambdaimage);
   freeimage(distimage);

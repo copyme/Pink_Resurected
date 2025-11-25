@@ -64,7 +64,9 @@ int32_t lskew(
     tmp = mcmin(tmp,255);
     t[i] = (uint8_t)arrondi(tmp); 
   }
-  
-  for (i = 0; i < N; i++) F[i] = t[F[i]];
+
+  for (i = 0; i < N; i++) {
+    F[i] = t[F[i]];
+  }
   return 1;
 } /* lskew() */

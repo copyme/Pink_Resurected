@@ -136,22 +136,25 @@ int main(int argc, char **argv)
     case VFF_TYP_1_BYTE:
     {
       uint8_t *F = UCHARDATA(image);
-      for (i = 0; i < N; i++)  
-        F[i] = (uint8_t)(g->v_sommets[i]); 
+      for (i = 0; i < N; i++) {
+        F[i] = (uint8_t)(g->v_sommets[i]);
+      }
       break;
     }
     case VFF_TYP_4_BYTE:
     {
       int32_t *F = SLONGDATA(image);
-      for (i = 0; i < N; i++)  
-        F[i] = (uint8_t)(g->v_sommets[i]); 
+      for (i = 0; i < N; i++) {
+        F[i] = (uint8_t)(g->v_sommets[i]);
+      }
       break;
     }
     case VFF_TYP_FLOAT:
     {
       float *F = FLOATDATA(image);
-      for (i = 0; i < N; i++)  
-        F[i] = (float)(g->v_sommets[i]); 
+      for (i = 0; i < N; i++) {
+        F[i] = (float)(g->v_sommets[i]);
+      }
       break;
     }
     default:

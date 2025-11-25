@@ -112,7 +112,9 @@ int main(int argc, char **argv)
   fprintf(fd, "%g\n", E); 
   fclose(fd);
   freeimage(image);
-  if (mask) freeimage(mask);
+  if (mask) {
+    freeimage(mask);
+  }
 
   return 0;
 } /* main */

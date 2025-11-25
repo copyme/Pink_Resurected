@@ -85,13 +85,25 @@ int32_t lgeodilat(
 
     if (depth(f) == 1) 
     {
-      if (datatype(f) == VFF_TYP_1_BYTE) return lgeodilat2d(g, f, connex, niter);
-      if (datatype(f) == VFF_TYP_2_BYTE) return lgeodilat2d_short(g, f, connex, niter);
-      if (datatype(f) == VFF_TYP_4_BYTE) return lgeodilat2d_long(g, f, connex, niter);
+      if (datatype(f) == VFF_TYP_1_BYTE) {
+        return lgeodilat2d(g, f, connex, niter);
+      }
+      if (datatype(f) == VFF_TYP_2_BYTE) {
+        return lgeodilat2d_short(g, f, connex, niter);
+      }
+      if (datatype(f) == VFF_TYP_4_BYTE) {
+        return lgeodilat2d_long(g, f, connex, niter);
+      }
     }
-    if (datatype(f) == VFF_TYP_1_BYTE) return lgeodilat3d(g, f, connex, niter);
-    if (datatype(f) == VFF_TYP_2_BYTE) return lgeodilat3d_short(g, f, connex, niter);
-    if (datatype(f) == VFF_TYP_4_BYTE) return lgeodilat3d_long(g, f, connex, niter);
+    if (datatype(f) == VFF_TYP_1_BYTE) {
+      return lgeodilat3d(g, f, connex, niter);
+    }
+    if (datatype(f) == VFF_TYP_2_BYTE) {
+      return lgeodilat3d_short(g, f, connex, niter);
+    }
+    if (datatype(f) == VFF_TYP_4_BYTE) {
+      return lgeodilat3d_long(g, f, connex, niter);
+    }
     return 1;
 } // lgeodilat()
 
@@ -129,10 +141,12 @@ int32_t lgeodilatcond(
 
     if (depth(f) == 1) 
     {
-      if (datatype(f) == VFF_TYP_1_BYTE) return lgeodilatcond2d(g, f, c, connex, niter);
+      if (datatype(f) == VFF_TYP_1_BYTE) {
+        return lgeodilatcond2d(g, f, c, connex, niter);
+      }
+    } else if (datatype(f) == VFF_TYP_1_BYTE) {
+      return lgeodilatcond3d(g, f, c, connex, niter);
     }
-    else
-      if (datatype(f) == VFF_TYP_1_BYTE) return lgeodilatcond3d(g, f, c, connex, niter);
     return 1;
 } // lgeodilatcond()
 
@@ -206,8 +220,11 @@ int32_t lgeodilat2d(
       return(0);
   }
 
-  for (x = 0; x < N; x++)      /* force G à être <= F */    
-    if (G[x] > F[x]) G[x] = F[x];
+  for (x = 0; x < N; x++) { /* force G à être <= F */
+    if (G[x] > F[x]) {
+      G[x] = F[x];
+    }
+  }
 
   iter = 0;
   do
@@ -222,7 +239,9 @@ int32_t lgeodilat2d(
       for (k = 0; k < 8; k += incr_vois)
       {
         y = voisin(x, k, rs, N);
-        if ((y != -1) && (G[y] > sup)) sup = G[y];
+        if ((y != -1) && (G[y] > sup)) {
+          sup = G[y];
+        }
       } /* for k */
 
       sup = mcmin(sup, F[x]);
@@ -261,12 +280,13 @@ int32_t lgeodilat2d(
   /* remet le resultat dans g si necessaire */
   if (G != UCHARDATA(g))
   {
-    for (x = 0; x < N; x++)
+    for (x = 0; x < N; x++) {
       (UCHARDATA(g))[x] = G[x];
+    }
     free(G);
-  }
-  else
+  } else {
     free(H);
+  }
 
   FifoTermine(FIFO[0]);
   FifoTermine(FIFO[1]);
@@ -326,17 +346,21 @@ int32_t lgeodilatcond2d(
 
   IndicsInit(N);
 
-  for (x = 0; x < N; x++)      /* mise en fifo initiale de tous les points */    
+  for (x = 0; x < N; x++) { /* mise en fifo initiale de tous les points */
     if (C[x])
     {
       FifoPush(FIFO[1], x);
       Set(x, 1);
     }
+  }
 
   H = (uint8_t *)calloc(1,N*sizeof(char)); assert(H != NULL);
 
-  for (x = 0; x < N; x++)      /* force G à être <= F */    
-    if (G[x] > F[x]) G[x] = F[x];
+  for (x = 0; x < N; x++) { /* force G à être <= F */
+    if (G[x] > F[x]) {
+      G[x] = F[x];
+    }
+  }
 
   iter = 0;
   do
@@ -351,7 +375,9 @@ int32_t lgeodilatcond2d(
       for (k = 0; k < 8; k += incr_vois)
       {
         y = voisin(x, k, rs, N);
-        if ((y != -1) && (C[y]) && (G[y] > sup)) sup = G[y];
+        if ((y != -1) && (C[y]) && (G[y] > sup)) {
+          sup = G[y];
+        }
       } /* for k */
 
       sup = mcmin(sup, F[x]);
@@ -390,12 +416,13 @@ int32_t lgeodilatcond2d(
   /* remet le resultat dans g si necessaire */
   if (G != UCHARDATA(g))
   {
-    for (x = 0; x < N; x++)
+    for (x = 0; x < N; x++) {
       (UCHARDATA(g))[x] = G[x];
+    }
     free(G);
-  }
-  else
+  } else {
     free(H);
+  }
 
   FifoTermine(FIFO[0]);
   FifoTermine(FIFO[1]);
@@ -473,8 +500,11 @@ int32_t lgeodilat2d_short(
       return(0);
   }
 
-  for (x = 0; x < N; x++)      /* force G à être <= F */    
-    if (G[x] > F[x]) G[x] = F[x];
+  for (x = 0; x < N; x++) { /* force G à être <= F */
+    if (G[x] > F[x]) {
+      G[x] = F[x];
+    }
+  }
 
   iter = 0;
   do
@@ -489,7 +519,9 @@ int32_t lgeodilat2d_short(
       for (k = 0; k < 8; k += incr_vois)
       {
         y = voisin(x, k, rs, N);
-        if ((y != -1) && (G[y] > sup)) sup = G[y];
+        if ((y != -1) && (G[y] > sup)) {
+          sup = G[y];
+        }
       } /* for k */
 
       sup = mcmin(sup, F[x]);
@@ -528,12 +560,13 @@ int32_t lgeodilat2d_short(
   /* remet le resultat dans g si necessaire */
   if (G != SSHORTDATA(g))
   {
-    for (x = 0; x < N; x++)
+    for (x = 0; x < N; x++) {
       (SSHORTDATA(g))[x] = G[x];
+    }
     free(G);
-  }
-  else
+  } else {
     free(H);
+  }
 
   FifoTermine(FIFO[0]);
   FifoTermine(FIFO[1]);
@@ -611,8 +644,11 @@ int32_t lgeodilat2d_long(
       return(0);
   }
 
-  for (x = 0; x < N; x++)      /* force G à être <= F */    
-    if (G[x] > F[x]) G[x] = F[x];
+  for (x = 0; x < N; x++) { /* force G à être <= F */
+    if (G[x] > F[x]) {
+      G[x] = F[x];
+    }
+  }
 
   iter = 0;
   do
@@ -627,7 +663,9 @@ int32_t lgeodilat2d_long(
       for (k = 0; k < 8; k += incr_vois)
       {
         y = voisin(x, k, rs, N);
-        if ((y != -1) && (G[y] > sup)) sup = G[y];
+        if ((y != -1) && (G[y] > sup)) {
+          sup = G[y];
+        }
       } /* for k */
 
       sup = mcmin(sup, F[x]);
@@ -666,12 +704,13 @@ int32_t lgeodilat2d_long(
   /* remet le resultat dans g si necessaire */
   if (G != SLONGDATA(g))
   {
-    for (x = 0; x < N; x++)
+    for (x = 0; x < N; x++) {
       (SLONGDATA(g))[x] = G[x];
+    }
     free(G);
-  }
-  else
+  } else {
     free(H);
+  }
 
   FifoTermine(FIFO[0]);
   FifoTermine(FIFO[1]);
@@ -763,8 +802,11 @@ int32_t lgeoeros(
     Set(x, 1);
   }
 
-  for (x = 0; x < N; x++)      /* force G à être >= F */    
-    if (G[x] < F[x]) G[x] = F[x];
+  for (x = 0; x < N; x++) { /* force G à être >= F */
+    if (G[x] < F[x]) {
+      G[x] = F[x];
+    }
+  }
 
   iter = 0;
   do
@@ -779,7 +821,9 @@ int32_t lgeoeros(
       for (k = 0; k < 8; k += incr_vois)
       {
         y = voisin(x, k, rs, N);
-        if ((y != -1) && (G[y] < inf)) inf = G[y];
+        if ((y != -1) && (G[y] < inf)) {
+          inf = G[y];
+        }
       } /* for k */
 
       inf = mcmax(inf, F[x]);
@@ -818,12 +862,13 @@ int32_t lgeoeros(
   /* remet le resultat dans g si necessaire */
   if (G != UCHARDATA(g))
   {
-    for (x = 0; x < N; x++)
+    for (x = 0; x < N; x++) {
       (UCHARDATA(g))[x] = G[x];
+    }
     free(G);
-  }
-  else
+  } else {
     free(H);
+  }
 
   FifoTermine(FIFO[0]);
   FifoTermine(FIFO[1]);
@@ -1013,7 +1058,11 @@ int32_t lselectcomp(
       return(0);
   }
 
-  for (i = 0; i < N; i++) if (F[i]) F[i] = 254;
+  for (i = 0; i < N; i++) {
+    if (F[i]) {
+      F[i] = 254;
+    }
+  }
   i = z*ps + y*rs + x;
   if (F[i]) { FifoPush(FIFO, i); F[i] += 1; }
 
@@ -1114,7 +1163,11 @@ int32_t lselectcomp(
     } /* while ! FifoVide */
   } 
   FifoTermine(FIFO);
-  for (i = 0; i < N; i++) if (F[i] != 255) F[i] = 0;
+  for (i = 0; i < N; i++) {
+    if (F[i] != 255) {
+      F[i] = 0;
+    }
+  }
   return 1;
 } /* lselectcomp() */
 
@@ -1176,8 +1229,11 @@ int32_t lgeodilat3d(
       return(0);
   }
 
-  for (x = 0; x < N; x++)      /* force G à être <= F */    
-    if (G[x] > F[x]) G[x] = F[x];
+  for (x = 0; x < N; x++) { /* force G à être <= F */
+    if (G[x] > F[x]) {
+      G[x] = F[x];
+    }
+  }
 
   if (connex == 26)
   {
@@ -1194,7 +1250,9 @@ int32_t lgeodilat3d(
         for (k = 0; k < 26; k += 1)
         {
           y = voisin26(x, k, rs, n, N);
-          if ((y != -1) && (G[y] > sup)) sup = G[y];
+          if ((y != -1) && (G[y] > sup)) {
+            sup = G[y];
+          }
         } /* for k */
   
         sup = mcmin(sup, F[x]);
@@ -1241,7 +1299,9 @@ int32_t lgeodilat3d(
         for (k = 0; k < 18; k += 1)
         {
           y = voisin18(x, k, rs, n, N);
-          if ((y != -1) && (G[y] > sup)) sup = G[y];
+          if ((y != -1) && (G[y] > sup)) {
+            sup = G[y];
+          }
         } /* for k */
   
         sup = mcmin(sup, F[x]);
@@ -1288,7 +1348,9 @@ int32_t lgeodilat3d(
         for (k = 0; k <= 10; k += 2)
         {
           y = voisin6(x, k, rs, n, N);
-          if ((y != -1) && (G[y] > sup)) sup = G[y];
+          if ((y != -1) && (G[y] > sup)) {
+            sup = G[y];
+          }
         } /* for k */
   
         sup = mcmin(sup, F[x]);
@@ -1329,12 +1391,13 @@ int32_t lgeodilat3d(
   /* remet le resultat dans g si necessaire */
   if (G != UCHARDATA(g))
   {
-    for (x = 0; x < N; x++)
+    for (x = 0; x < N; x++) {
       (UCHARDATA(g))[x] = G[x];
+    }
     free(G);
-  }
-  else
+  } else {
     free(H);
+  }
 
   FifoTermine(FIFO[0]);
   FifoTermine(FIFO[1]);
@@ -1393,11 +1456,12 @@ int32_t lgeodilatcond3d(
 
   IndicsInit(N);
 
-  for (x = 0; x < N; x++)      /* mise en fifo initiale de tous les points */       if (C[x])
-    {
+  for (x = 0; x < N; x++) { /* mise en fifo initiale de tous les points */
+    if (C[x]) {
       FifoPush(FIFO[1], x);
       Set(x, 1);
     }
+  }
 
   H = (uint8_t *)calloc(1,N*sizeof(char));
   if (H == NULL)
@@ -1405,8 +1469,11 @@ int32_t lgeodilatcond3d(
       return(0);
   }
 
-  for (x = 0; x < N; x++)      /* force G à être <= F */    
-    if (G[x] > F[x]) G[x] = F[x];
+  for (x = 0; x < N; x++) { /* force G à être <= F */
+    if (G[x] > F[x]) {
+      G[x] = F[x];
+    }
+  }
 
   if (connex == 26)
   {
@@ -1423,7 +1490,9 @@ int32_t lgeodilatcond3d(
         for (k = 0; k < 26; k += 1)
         {
           y = voisin26(x, k, rs, n, N);
-          if ((y != -1) && (C[y]) && (G[y] > sup)) sup = G[y];
+          if ((y != -1) && (C[y]) && (G[y] > sup)) {
+            sup = G[y];
+          }
         } /* for k */
   
         sup = mcmin(sup, F[x]);
@@ -1470,7 +1539,9 @@ int32_t lgeodilatcond3d(
         for (k = 0; k < 18; k += 1)
         {
           y = voisin18(x, k, rs, n, N);
-          if ((y != -1) && (C[y]) && (G[y] > sup)) sup = G[y];
+          if ((y != -1) && (C[y]) && (G[y] > sup)) {
+            sup = G[y];
+          }
         } /* for k */
   
         sup = mcmin(sup, F[x]);
@@ -1517,7 +1588,9 @@ int32_t lgeodilatcond3d(
         for (k = 0; k <= 10; k += 2)
         {
           y = voisin6(x, k, rs, n, N);
-          if ((y != -1) && (C[y]) && (G[y] > sup)) sup = G[y];
+          if ((y != -1) && (C[y]) && (G[y] > sup)) {
+            sup = G[y];
+          }
         } /* for k */
   
         sup = mcmin(sup, F[x]);
@@ -1558,12 +1631,13 @@ int32_t lgeodilatcond3d(
   /* remet le resultat dans g si necessaire */
   if (G != UCHARDATA(g))
   {
-    for (x = 0; x < N; x++)
+    for (x = 0; x < N; x++) {
       (UCHARDATA(g))[x] = G[x];
+    }
     free(G);
-  }
-  else
+  } else {
     free(H);
+  }
 
   FifoTermine(FIFO[0]);
   FifoTermine(FIFO[1]);
@@ -1629,8 +1703,11 @@ int32_t lgeodilat3d_short(
       return(0);
   }
 
-  for (x = 0; x < N; x++)      /* force G à être <= F */    
-    if (G[x] > F[x]) G[x] = F[x];
+  for (x = 0; x < N; x++) { /* force G à être <= F */
+    if (G[x] > F[x]) {
+      G[x] = F[x];
+    }
+  }
 
   if (connex == 26)
   {
@@ -1647,7 +1724,9 @@ int32_t lgeodilat3d_short(
         for (k = 0; k < 26; k += 1)
         {
           y = voisin26(x, k, rs, n, N);
-          if ((y != -1) && (G[y] > sup)) sup = G[y];
+          if ((y != -1) && (G[y] > sup)) {
+            sup = G[y];
+          }
         } /* for k */
   
         sup = mcmin(sup, F[x]);
@@ -1694,7 +1773,9 @@ int32_t lgeodilat3d_short(
         for (k = 0; k < 18; k += 1)
         {
           y = voisin18(x, k, rs, n, N);
-          if ((y != -1) && (G[y] > sup)) sup = G[y];
+          if ((y != -1) && (G[y] > sup)) {
+            sup = G[y];
+          }
         } /* for k */
   
         sup = mcmin(sup, F[x]);
@@ -1741,7 +1822,9 @@ int32_t lgeodilat3d_short(
         for (k = 0; k <= 10; k += 2)
         {
           y = voisin6(x, k, rs, n, N);
-          if ((y != -1) && (G[y] > sup)) sup = G[y];
+          if ((y != -1) && (G[y] > sup)) {
+            sup = G[y];
+          }
         } /* for k */
   
         sup = mcmin(sup, F[x]);
@@ -1782,12 +1865,13 @@ int32_t lgeodilat3d_short(
   /* remet le resultat dans g si necessaire */
   if (G != SSHORTDATA(g))
   {
-    for (x = 0; x < N; x++)
+    for (x = 0; x < N; x++) {
       (SSHORTDATA(g))[x] = G[x];
+    }
     free(G);
-  }
-  else
+  } else {
     free(H);
+  }
 
   FifoTermine(FIFO[0]);
   FifoTermine(FIFO[1]);
@@ -1853,8 +1937,11 @@ int32_t lgeodilat3d_long(
       return(0);
   }
 
-  for (x = 0; x < N; x++)      /* force G à être <= F */    
-    if (G[x] > F[x]) G[x] = F[x];
+  for (x = 0; x < N; x++) { /* force G à être <= F */
+    if (G[x] > F[x]) {
+      G[x] = F[x];
+    }
+  }
 
   if (connex == 26)
   {
@@ -1871,7 +1958,9 @@ int32_t lgeodilat3d_long(
         for (k = 0; k < 26; k += 1)
         {
           y = voisin26(x, k, rs, n, N);
-          if ((y != -1) && (G[y] > sup)) sup = G[y];
+          if ((y != -1) && (G[y] > sup)) {
+            sup = G[y];
+          }
         } /* for k */
   
         sup = mcmin(sup, F[x]);
@@ -1918,7 +2007,9 @@ int32_t lgeodilat3d_long(
         for (k = 0; k < 18; k += 1)
         {
           y = voisin18(x, k, rs, n, N);
-          if ((y != -1) && (G[y] > sup)) sup = G[y];
+          if ((y != -1) && (G[y] > sup)) {
+            sup = G[y];
+          }
         } /* for k */
   
         sup = mcmin(sup, F[x]);
@@ -1965,7 +2056,9 @@ int32_t lgeodilat3d_long(
         for (k = 0; k <= 10; k += 2)
         {
           y = voisin6(x, k, rs, n, N);
-          if ((y != -1) && (G[y] > sup)) sup = G[y];
+          if ((y != -1) && (G[y] > sup)) {
+            sup = G[y];
+          }
         } /* for k */
   
         sup = mcmin(sup, F[x]);
@@ -2006,12 +2099,13 @@ int32_t lgeodilat3d_long(
   /* remet le resultat dans g si necessaire */
   if (G != SLONGDATA(g))
   {
-    for (x = 0; x < N; x++)
+    for (x = 0; x < N; x++) {
       (SLONGDATA(g))[x] = G[x];
+    }
     free(G);
-  }
-  else
+  } else {
     free(H);
+  }
 
   FifoTermine(FIFO[0]);
   FifoTermine(FIFO[1]);
@@ -2091,8 +2185,11 @@ int32_t lgeoeros3d(
       return(0);
   }
 
-  for (x = 0; x < N; x++)      /* force G à être >= F */    
-    if (G[x] < F[x]) G[x] = F[x];
+  for (x = 0; x < N; x++) { /* force G à être >= F */
+    if (G[x] < F[x]) {
+      G[x] = F[x];
+    }
+  }
 
   if (connex == 26)
   {
@@ -2109,7 +2206,9 @@ int32_t lgeoeros3d(
         for (k = 0; k < 26; k += 1)
         {
           y = voisin26(x, k, rs, n, N);
-          if ((y != -1) && (G[y] < inf)) inf = G[y];
+          if ((y != -1) && (G[y] < inf)) {
+            inf = G[y];
+          }
         } /* for k */
   
         inf = mcmax(inf, F[x]);
@@ -2156,7 +2255,9 @@ int32_t lgeoeros3d(
         for (k = 0; k < 18; k += 1)
         {
           y = voisin18(x, k, rs, n, N);
-          if ((y != -1) && (G[y] < inf)) inf = G[y];
+          if ((y != -1) && (G[y] < inf)) {
+            inf = G[y];
+          }
         } /* for k */
   
         inf = mcmax(inf, F[x]);
@@ -2203,7 +2304,9 @@ int32_t lgeoeros3d(
         for (k = 0; k <= 10; k += 2)
         {
           y = voisin6(x, k, rs, n, N);
-          if ((y != -1) && (G[y] < inf)) inf = G[y];
+          if ((y != -1) && (G[y] < inf)) {
+            inf = G[y];
+          }
         } /* for k */
   
         inf = mcmax(inf, F[x]);
@@ -2244,12 +2347,13 @@ int32_t lgeoeros3d(
   /* remet le resultat dans g si necessaire */
   if (G != UCHARDATA(g))
   {
-    for (x = 0; x < N; x++)
+    for (x = 0; x < N; x++) {
       (UCHARDATA(g))[x] = G[x];
+    }
     free(G);
-  }
-  else
+  } else {
     free(H);
+  }
 
   FifoTermine(FIFO[0]);
   FifoTermine(FIFO[1]);
@@ -2317,7 +2421,11 @@ int32_t lamont(
       return(0);
   }
 
-  for (i = 0; i < N; i++) if (M[i]) FifoPush(FIFO, i); 
+  for (i = 0; i < N; i++) {
+    if (M[i]) {
+      FifoPush(FIFO, i);
+    }
+  }
 
   if ((connex == 4) || (connex == 8))
   {
@@ -2326,27 +2434,31 @@ int32_t lamont(
       fprintf(stderr,"%s : connexity 4 or 8 not defined for 3D\n", F_NAME);
       return(0);
     }
-    if (strict)
-    while (! FifoVide(FIFO))
-    {
-      i = FifoPop(FIFO);
-      for (k = 0; k < 8; k += incr_vois)
-      {
-        j = voisin(i, k, rs, N);
-        if ((j != -1) && !M[j] && (F[j] > F[i])) { FifoPush(FIFO, j); M[j] = 255; }
-      } /* for k */
-    } /* while ! FifoVide */
-    else
-    while (! FifoVide(FIFO))
-    {
-      i = FifoPop(FIFO);
-      for (k = 0; k < 8; k += incr_vois)
-      {
-        j = voisin(i, k, rs, N);
-//printf("i=%d ; j=%d ; Mj=%d ; Fj=%ld ; Fi=%ld\n", i, j, M[j], F[j], F[i]);
-        if ((j != -1) && !M[j] && (F[j] >= F[i])) { FifoPush(FIFO, j); M[j] = 255; }
-      } /* for k */
-    } /* while ! FifoVide */
+    if (strict) {
+      while (!FifoVide(FIFO)) {
+        i = FifoPop(FIFO);
+        for (k = 0; k < 8; k += incr_vois) {
+          j = voisin(i, k, rs, N);
+          if ((j != -1) && !M[j] && (F[j] > F[i])) {
+            FifoPush(FIFO, j);
+            M[j] = 255;
+          }
+        } /* for k */
+      }   /* while ! FifoVide */
+    } else {
+      while (!FifoVide(FIFO)) {
+        i = FifoPop(FIFO);
+        for (k = 0; k < 8; k += incr_vois) {
+          j = voisin(i, k, rs, N);
+          // printf("i=%d ; j=%d ; Mj=%d ; Fj=%ld ; Fi=%ld\n", i, j, M[j], F[j],
+          // F[i]);
+          if ((j != -1) && !M[j] && (F[j] >= F[i])) {
+            FifoPush(FIFO, j);
+            M[j] = 255;
+          }
+        } /* for k */
+      }   /* while ! FifoVide */
+    }
   } 
   else if (connex == 6)
   {
@@ -2354,26 +2466,29 @@ int32_t lamont(
     {   fprintf(stderr,"%s : connexity 6 not defined for 2D\n", F_NAME);
         return(0);
     }
-    if (strict)
-    while (! FifoVide(FIFO))
-    {
-      i = FifoPop(FIFO);
-      for (k = 0; k <= 10; k += 2)
-      {
-        j = voisin6(i, k, rs, ps, N);
-        if ((j != -1) && !M[j] && (F[j] > F[i])) { FifoPush(FIFO, j); M[j] = 255; }
-      } /* for k */
-    } /* while ! FifoVide */
-    else
-    while (! FifoVide(FIFO))
-    {
-      i = FifoPop(FIFO);
-      for (k = 0; k <= 10; k += 2)
-      {
-        j = voisin6(i, k, rs, ps, N);
-        if ((j != -1) && !M[j] && (F[j] >= F[i])) { FifoPush(FIFO, j); M[j] = 255; }
-      } /* for k */
-    } /* while ! FifoVide */
+    if (strict) {
+      while (!FifoVide(FIFO)) {
+        i = FifoPop(FIFO);
+        for (k = 0; k <= 10; k += 2) {
+          j = voisin6(i, k, rs, ps, N);
+          if ((j != -1) && !M[j] && (F[j] > F[i])) {
+            FifoPush(FIFO, j);
+            M[j] = 255;
+          }
+        } /* for k */
+      }   /* while ! FifoVide */
+    } else {
+      while (!FifoVide(FIFO)) {
+        i = FifoPop(FIFO);
+        for (k = 0; k <= 10; k += 2) {
+          j = voisin6(i, k, rs, ps, N);
+          if ((j != -1) && !M[j] && (F[j] >= F[i])) {
+            FifoPush(FIFO, j);
+            M[j] = 255;
+          }
+        } /* for k */
+      }   /* while ! FifoVide */
+    }
   } 
   else if (connex == 18)
   {
@@ -2381,28 +2496,31 @@ int32_t lamont(
     {   fprintf(stderr,"%s : connexity 18 not defined for 2D\n", F_NAME);
         return(0);
     }
-    if (strict)
-    while (! FifoVide(FIFO))
-    {
-      i = FifoPop(FIFO);
-      for (k = 0; k < 18; k += 1)
-      {
-        j = voisin18(i, k, rs, ps, N);
-        if ((j != -1) && !M[j] && (F[j] > F[i])) { FifoPush(FIFO, j); M[j] = 255; }
+    if (strict) {
+      while (!FifoVide(FIFO)) {
+        i = FifoPop(FIFO);
+        for (k = 0; k < 18; k += 1) {
+          j = voisin18(i, k, rs, ps, N);
+          if ((j != -1) && !M[j] && (F[j] > F[i])) {
+            FifoPush(FIFO, j);
+            M[j] = 255;
+          }
 
-      } /* for k */
-    } /* while ! FifoVide */
-    else
-    while (! FifoVide(FIFO))
-    {
-      i = FifoPop(FIFO);
-      for (k = 0; k < 18; k += 1)
-      {
-        j = voisin18(i, k, rs, ps, N);
-        if ((j != -1) && !M[j] && (F[j] >= F[i])) { FifoPush(FIFO, j); M[j] = 255; }
+        } /* for k */
+      }   /* while ! FifoVide */
+    } else {
+      while (!FifoVide(FIFO)) {
+        i = FifoPop(FIFO);
+        for (k = 0; k < 18; k += 1) {
+          j = voisin18(i, k, rs, ps, N);
+          if ((j != -1) && !M[j] && (F[j] >= F[i])) {
+            FifoPush(FIFO, j);
+            M[j] = 255;
+          }
 
-      } /* for k */
-    } /* while ! FifoVide */
+        } /* for k */
+      }   /* while ! FifoVide */
+    }
   } 
   else if (connex == 26)
   {
@@ -2410,26 +2528,29 @@ int32_t lamont(
     {   fprintf(stderr,"%s : connexity 26 not defined for 2D\n", F_NAME);
         return(0);
     }
-    if (strict)
-    while (! FifoVide(FIFO))
-    {
-      i = FifoPop(FIFO);
-      for (k = 0; k < 26; k += 1)
-      {
-        j = voisin26(i, k, rs, ps, N);
-        if ((j != -1) && !M[j] && (F[j] > F[i])) { FifoPush(FIFO, j); M[j] = 255; }
-      } /* for k */
-    } /* while ! FifoVide */
-    else
-    while (! FifoVide(FIFO))
-    {
-      i = FifoPop(FIFO);
-      for (k = 0; k < 26; k += 1)
-      {
-        j = voisin26(i, k, rs, ps, N);
-        if ((j != -1) && !M[j] && (F[j] >= F[i])) { FifoPush(FIFO, j); M[j] = 255; }
-      } /* for k */
-    } /* while ! FifoVide */
+    if (strict) {
+      while (!FifoVide(FIFO)) {
+        i = FifoPop(FIFO);
+        for (k = 0; k < 26; k += 1) {
+          j = voisin26(i, k, rs, ps, N);
+          if ((j != -1) && !M[j] && (F[j] > F[i])) {
+            FifoPush(FIFO, j);
+            M[j] = 255;
+          }
+        } /* for k */
+      }   /* while ! FifoVide */
+    } else {
+      while (!FifoVide(FIFO)) {
+        i = FifoPop(FIFO);
+        for (k = 0; k < 26; k += 1) {
+          j = voisin26(i, k, rs, ps, N);
+          if ((j != -1) && !M[j] && (F[j] >= F[i])) {
+            FifoPush(FIFO, j);
+            M[j] = 255;
+          }
+        } /* for k */
+      }   /* while ! FifoVide */
+    }
   } 
   FifoTermine(FIFO);
   return 1;

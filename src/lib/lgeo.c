@@ -108,8 +108,14 @@ printf("s1 = (%g,%g),(%g,%g)  ", r->s1.x1, r->s1.y1, r->s1.x2, r->s1.y2);
 printf("s2 = (%g,%g),(%g,%g)\n", r->s2.x1, r->s2.y1, r->s2.x2, r->s2.y2);
 #endif
 
-  if (equdroite(r->s1.x1, r->s1.y1, r->s1.x2, r->s1.y2, &(r->s1.a), &(r->s1.b), &(r->s1.c)) == 0) return 0;
-  if (equdroite(r->s2.x1, r->s2.y1, r->s2.x2, r->s2.y2, &(r->s2.a), &(r->s2.b), &(r->s2.c)) == 0) return 0;
+if (equdroite(r->s1.x1, r->s1.y1, r->s1.x2, r->s1.y2, &(r->s1.a), &(r->s1.b),
+              &(r->s1.c)) == 0) {
+  return 0;
+}
+if (equdroite(r->s2.x1, r->s2.y1, r->s2.x2, r->s2.y2, &(r->s2.a), &(r->s2.b),
+              &(r->s2.c)) == 0) {
+  return 0;
+}
 
   r->c1.x0 = (r->s1.x2 + r->s2.x1) / 2;  r->c1.y0 = (r->s1.y2 + r->s2.y1) / 2;
   r->c2.x0 = (r->s2.x2 + r->s1.x1) / 2;  r->c2.y0 = (r->s2.y2 + r->s1.y1) / 2;
@@ -137,7 +143,9 @@ printf("distpointrectanglearrondi: h = %g ; a,b,c = %g,%g,%g\n", r->h, r->s1.a, 
 printf("c1 = %g,%g,%g  ", r->c1.x0, r->c1.y0, r->c1.r);
 printf("c2 = %g,%g,%g\n", r->c2.x0, r->c2.y0, r->c2.r);
 #endif
-  if (r->h < MCGEO_EPSILON) return distpointcercle(p, r->c1);
+if (r->h < MCGEO_EPSILON) {
+  return distpointcercle(p, r->c1);
+}
 
   a = r->s1.a; b = r->s1.b; c = r->s1.c; /* distance au premier cote */
   det = a * a + b * b;
@@ -166,7 +174,11 @@ printf("distpointrectanglearrondi: dist au 1er cote = %g\n", d);
 #ifdef DEBUG
 printf("distpointrectanglearrondi: dist au 2e cote = %g\n", dd);
 #endif
-    if (d < dd) return d; else return dd;
+if (d < dd) {
+  return d;
+} else {
+  return dd;
+}
   } /* if ((x >= x1) && (x <= x2)) */
   /* else */
   d = distpointcercle(p, r->c1);
@@ -174,7 +186,11 @@ printf("distpointrectanglearrondi: dist au 2e cote = %g\n", dd);
 #ifdef DEBUG
 printf("distpointrectanglearrondi: dist aux 2 cercles = %g %g\n", d,dd);
 #endif
-  if (d < dd) return d; else return dd;
+if (d < dd) {
+  return d;
+} else {
+  return dd;
+}
 } /* distpointrectanglearrondi() */
 
 /* ==================================== */
@@ -257,14 +273,18 @@ rectangle *AjusteRectangle(int32_t *pb, int32_t npb, double xc, double yc, doubl
       R->h += dh;
       initrectangle(R);
       cp = SomCarDist(pb, npb, R, rs);
-      if (cp < c) c = cp;
-      else
-      {
+      if (cp < c) {
+        c = cp;
+      } else {
         R->h -= dh+dh;
         initrectangle(R);
         cm = SomCarDist(pb, npb, R, rs);
-        if (cm < c) c = cm;
-        else { R->h += dh; dh = dh / 2; }
+        if (cm < c) {
+          c = cm;
+        } else {
+          R->h += dh;
+          dh = dh / 2;
+        }
       }
     } /* if (dh >= PRH) */
 
@@ -273,14 +293,18 @@ rectangle *AjusteRectangle(int32_t *pb, int32_t npb, double xc, double yc, doubl
       R->w += dw;
       initrectangle(R);
       cp = SomCarDist(pb, npb, R, rs);
-      if (cp < c) c = cp;
-      else
-      {
+      if (cp < c) {
+        c = cp;
+      } else {
         R->w -= dw+dw;
         initrectangle(R);
         cm = SomCarDist(pb, npb, R, rs);
-        if (cm < c) c = cm;
-        else { R->w += dw; dw = dw / 2; }
+        if (cm < c) {
+          c = cm;
+        } else {
+          R->w += dw;
+          dw = dw / 2;
+        }
       }
     } /* if (dw >= PRW) */
 
@@ -289,14 +313,18 @@ rectangle *AjusteRectangle(int32_t *pb, int32_t npb, double xc, double yc, doubl
       R->centre.x += dx;
       initrectangle(R);
       cp = SomCarDist(pb, npb, R, rs);
-      if (cp < c) c = cp;
-      else
-      {
+      if (cp < c) {
+        c = cp;
+      } else {
         R->centre.x -= dx+dx;
         initrectangle(R);
         cm = SomCarDist(pb, npb, R, rs);
-        if (cm < c) c = cm;
-        else { R->centre.x += dx; dx = dx / 2; }
+        if (cm < c) {
+          c = cm;
+        } else {
+          R->centre.x += dx;
+          dx = dx / 2;
+        }
       }
     } /* if (dx >= PRX) */
 
@@ -305,14 +333,18 @@ rectangle *AjusteRectangle(int32_t *pb, int32_t npb, double xc, double yc, doubl
       R->centre.y += dy;
       initrectangle(R);
       cp = SomCarDist(pb, npb, R, rs);
-      if (cp < c) c = cp;
-      else
-      {
+      if (cp < c) {
+        c = cp;
+      } else {
         R->centre.y -= dy+dy;
         initrectangle(R);
         cm = SomCarDist(pb, npb, R, rs);
-        if (cm < c) c = cm;
-        else { R->centre.y += dy; dy = dy / 2; }
+        if (cm < c) {
+          c = cm;
+        } else {
+          R->centre.y += dy;
+          dy = dy / 2;
+        }
       }
     } /* if (dy >= PRY) */
 
@@ -321,19 +353,24 @@ rectangle *AjusteRectangle(int32_t *pb, int32_t npb, double xc, double yc, doubl
       R->angle += dt;
       initrectangle(R);
       cp = SomCarDist(pb, npb, R, rs);
-      if (cp < c) c = cp;
-      else
-      {
+      if (cp < c) {
+        c = cp;
+      } else {
         R->angle -= dt+dt;
         initrectangle(R);
         cm = SomCarDist(pb, npb, R, rs);
-        if (cm < c) c = cm;
-        else { R->angle += dt; dt = dt / 2; }
+        if (cm < c) {
+          c = cm;
+        } else {
+          R->angle += dt;
+          dt = dt / 2;
+        }
       }
     } /* if (dt >= PRT) */
 
-    if ((dh < PRH) && (dw < PRW) && (dx < PRX) && (dy < PRY) && (dt < PRT))
+    if ((dh < PRH) && (dw < PRW) && (dx < PRX) && (dy < PRY) && (dt < PRT)) {
       break;
+    }
 
   } /* for (i = 0; i < MAXITER; i++) */
 
@@ -371,8 +408,16 @@ rectangle *RectangleIncluant(int32_t *pb, int32_t npb, double xc, double yc, dou
     p = pb[i]; x = (p%rs) - xc; y = (p/rs) - yc;
     xp = x * costheta + y * sintheta;
     yp = y * costheta - x * sintheta;
-    if (xp < xpmin) xpmin = xp; else if (xp > xpmax) xpmax = xp;
-    if (yp < ypmin) ypmin = yp; else if (yp > ypmax) ypmax = yp;
+    if (xp < xpmin) {
+      xpmin = xp;
+    } else if (xp > xpmax) {
+      xpmax = xp;
+    }
+    if (yp < ypmin) {
+      ypmin = yp;
+    } else if (yp > ypmax) {
+      ypmax = yp;
+    }
   } /* for i */    
 
   xp1 = xpmin; yp1 = ypmin;
@@ -431,14 +476,18 @@ rectanglearrondi *AjusteRectangleArrondi(int32_t *pb, int32_t npb, double xc, do
       R->h += dh;
       initrectanglearrondi(R);
       cp = SomCarDistRA(pb, npb, R, rs);
-      if (cp < c) c = cp;
-      else
-      {
+      if (cp < c) {
+        c = cp;
+      } else {
         R->h = mcmax((R->h-(dh+dh)),0); /* pas de valeurs negatives */
         initrectanglearrondi(R);
         cm = SomCarDistRA(pb, npb, R, rs);
-        if (cm < c) c = cm;
-        else { R->h += dh; dh = dh / 2; }
+        if (cm < c) {
+          c = cm;
+        } else {
+          R->h += dh;
+          dh = dh / 2;
+        }
       }
     } /* if (dh >= PRH) */
 
@@ -447,14 +496,18 @@ rectanglearrondi *AjusteRectangleArrondi(int32_t *pb, int32_t npb, double xc, do
       R->w += dw;
       initrectanglearrondi(R);
       cp = SomCarDistRA(pb, npb, R, rs);
-      if (cp < c) c = cp;
-      else
-      {
+      if (cp < c) {
+        c = cp;
+      } else {
         R->w -= dw+dw;
         initrectanglearrondi(R);
         cm = SomCarDistRA(pb, npb, R, rs);
-        if (cm < c) c = cm;
-        else { R->w += dw; dw = dw / 2; }
+        if (cm < c) {
+          c = cm;
+        } else {
+          R->w += dw;
+          dw = dw / 2;
+        }
       }
     } /* if (dw >= PRW) */
 
@@ -463,14 +516,18 @@ rectanglearrondi *AjusteRectangleArrondi(int32_t *pb, int32_t npb, double xc, do
       R->centre.x += dx;
       initrectanglearrondi(R);
       cp = SomCarDistRA(pb, npb, R, rs);
-      if (cp < c) c = cp;
-      else
-      {
+      if (cp < c) {
+        c = cp;
+      } else {
         R->centre.x -= dx+dx;
         initrectanglearrondi(R);
         cm = SomCarDistRA(pb, npb, R, rs);
-        if (cm < c) c = cm;
-        else { R->centre.x += dx; dx = dx / 2; }
+        if (cm < c) {
+          c = cm;
+        } else {
+          R->centre.x += dx;
+          dx = dx / 2;
+        }
       }
     } /* if (dx >= PRX) */
 
@@ -479,14 +536,18 @@ rectanglearrondi *AjusteRectangleArrondi(int32_t *pb, int32_t npb, double xc, do
       R->centre.y += dy;
       initrectanglearrondi(R);
       cp = SomCarDistRA(pb, npb, R, rs);
-      if (cp < c) c = cp;
-      else
-      {
+      if (cp < c) {
+        c = cp;
+      } else {
         R->centre.y -= dy+dy;
         initrectanglearrondi(R);
         cm = SomCarDistRA(pb, npb, R, rs);
-        if (cm < c) c = cm;
-        else { R->centre.y += dy; dy = dy / 2; }
+        if (cm < c) {
+          c = cm;
+        } else {
+          R->centre.y += dy;
+          dy = dy / 2;
+        }
       }
     } /* if (dy >= PRY) */
 
@@ -495,19 +556,24 @@ rectanglearrondi *AjusteRectangleArrondi(int32_t *pb, int32_t npb, double xc, do
       R->angle += dt;
       initrectanglearrondi(R);
       cp = SomCarDistRA(pb, npb, R, rs);
-      if (cp < c) c = cp;
-      else
-      {
+      if (cp < c) {
+        c = cp;
+      } else {
         R->angle -= dt+dt;
         initrectanglearrondi(R);
         cm = SomCarDistRA(pb, npb, R, rs);
-        if (cm < c) c = cm;
-        else { R->angle += dt; dt = dt / 2; }
+        if (cm < c) {
+          c = cm;
+        } else {
+          R->angle += dt;
+          dt = dt / 2;
+        }
       }
     } /* if (dt >= PRT) */
 
-    if ((dh < PRH) && (dw < PRW) && (dx < PRX) && (dy < PRY) && (dt < PRT))
+    if ((dh < PRH) && (dw < PRW) && (dx < PRX) && (dy < PRY) && (dt < PRT)) {
       break;
+    }
 
   } /* for (i = 0; i < MAXITER; i++) */
 
@@ -649,8 +715,16 @@ printf("point %d %d : nouvelle composante\n", x%rs, x/rs);
       while (! LifoVide(LIFO))   /* premier parcours */
       {
         w = LifoPop(LIFO);
-        if (w%rs < xmin) xmin = w%rs; else if (w%rs > xmax) xmax = w%rs;
-        if (w/rs < ymin) ymin = w/rs; else if (w/rs > ymax) ymax = w/rs;
+        if (w % rs < xmin) {
+          xmin = w % rs;
+        } else if (w % rs > xmax) {
+          xmax = w % rs;
+        }
+        if (w / rs < ymin) {
+          ymin = w / rs;
+        } else if (w / rs > ymax) {
+          ymax = w / rs;
+        }
         for (k = 0; k < 8; k += incr_vois)
         {
           y = voisin(w, k, rs, N);
@@ -722,25 +796,45 @@ int32_t lboxmin(struct xvimage *img)
 
   xmin = rs; xmax = -1; 
   ymin = cs; ymax = -1; 
-  zmin = ds; zmax = -1; 
-  for (z = 0; z < ds; z++)
-    for (y = 0; y < cs; y++)
-      for (x = 0; x < rs; x++)
+  zmin = ds; zmax = -1;
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
         if (F[z*ps + y*rs + x])
         {
-          if (x < xmin) xmin = x;
-          if (x > xmax) xmax = x;
-          if (y < ymin) ymin = y;
-          if (y > ymax) ymax = y;
-          if (z < zmin) zmin = z;
-          if (z > zmax) zmax = z;
+          if (x < xmin) {
+            xmin = x;
+          }
+          if (x > xmax) {
+            xmax = x;
+          }
+          if (y < ymin) {
+            ymin = y;
+          }
+          if (y > ymax) {
+            ymax = y;
+          }
+          if (z < zmin) {
+            zmin = z;
+          }
+          if (z > zmax) {
+            zmax = z;
+          }
         } // for z for y for x if (F[x])
+      }
+    }
+  }
   //printf("%d %d %d %d %d %d\n", xmin, xmax, ymin, ymax, zmin, zmax);
-  for (z = 0; z < ds; z++)
-    for (y = 0; y < cs; y++)
-      for (x = 0; x < rs; x++)
-        if ((x >= xmin) && (x <= xmax) && (y >= ymin) && (y <= ymax) && (z >= zmin) && (z <= zmax))
-          F[z*ps + y*rs + x] = NDG_MAX;
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        if ((x >= xmin) && (x <= xmax) && (y >= ymin) && (y <= ymax) &&
+            (z >= zmin) && (z <= zmax)) {
+          F[z * ps + y * rs + x] = NDG_MAX;
+        }
+      }
+    }
+  }
   return(1);
 } // boxmin()
 
@@ -891,10 +985,9 @@ printf("lambda1 = %g ; lambda2 = %g\n", lambda1, lambda2);
         return 0;
       }
 
-      if (mcabs(Mx2 - My2) < MCGEO_EPSILON) 
+      if (mcabs(Mx2 - My2) < MCGEO_EPSILON) {
         theta = 0.0;
-      else
-      {
+      } else {
         double mi1, mi2, theta2;
         theta = 0.5 * atan( 2 * Mxy1 / (Mx2 - My2));
         /* la direction est determinee a pi/2 pres */
@@ -911,7 +1004,9 @@ printf("lambda1 = %g ; lambda2 = %g\n", lambda1, lambda2);
 printf("mi1 = %g ; mi2 = %g ; theta1 = %g ; theta2 = %g\n", 
         mi1, mi2, theta * 180 / M_PI, theta2 * 180 / M_PI);
 #endif
-        if (mi2 < mi1) theta = theta2;
+if (mi2 < mi1) {
+  theta = theta2;
+}
       }
 
       LABEL[x] = 0;              /* label nul */
@@ -922,8 +1017,16 @@ printf("mi1 = %g ; mi2 = %g ; theta1 = %g ; theta2 = %g\n",
         w = LifoPop(LIFO);
         switch (connex)
         {
-          case 4: if (nbvoisc8(SOURCE,w,rs,N) != 0) pointsbord[nbpointsbord++] = w; break;
-          case 8: if (nbvoisc4(SOURCE,w,rs,N) != 0) pointsbord[nbpointsbord++] = w; break;
+          case 4:
+            if (nbvoisc8(SOURCE, w, rs, N) != 0) {
+              pointsbord[nbpointsbord++] = w;
+            }
+            break;
+          case 8:
+            if (nbvoisc4(SOURCE, w, rs, N) != 0) {
+              pointsbord[nbpointsbord++] = w;
+            }
+            break;
         }        
         for (k = 0; k < 8; k += incr_vois)
         {
@@ -944,10 +1047,11 @@ printf("mi1 = %g ; mi2 = %g ; theta1 = %g ; theta2 = %g\n",
       else
       {
         R = AjusteRectangle(pointsbord, nbpointsbord, xc, yc, theta, 2.0 * lambda1, 2.0 * lambda2, rs);
-        if (mode == 0) 
+        if (mode == 0) {
           DrawRectangle(*R, RES, rs);
-        else
+        } else {
           DrawAxe(*R, RES, rs);
+        }
       }
     } /* if (LABEL[x]) */
   } /* for (x = 0; x < N; x++) */
@@ -1109,10 +1213,9 @@ printf("lambda1 = %g ; lambda2 = %g\n", lambda1, lambda2);
         return 0;
       }
 
-      if (mcabs(Mx2 - My2) < MCGEO_EPSILON) 
+      if (mcabs(Mx2 - My2) < MCGEO_EPSILON) {
         theta = 0.0;
-      else
-      {
+      } else {
         double mi1, mi2, theta2;
         theta = 0.5 * atan( 2 * Mxy1 / (Mx2 - My2));
         /* la direction est determinee a pi/2 pres */
@@ -1129,7 +1232,9 @@ printf("lambda1 = %g ; lambda2 = %g\n", lambda1, lambda2);
 printf("mi1 = %g ; mi2 = %g ; theta1 = %g ; theta2 = %g\n", 
         mi1, mi2, theta * 180 / M_PI, theta2 * 180 / M_PI);
 #endif
-        if (mi2 < mi1) theta = theta2;
+if (mi2 < mi1) {
+  theta = theta2;
+}
       }
 
       LABEL[x] = 0;              /* label nul */
@@ -1140,8 +1245,16 @@ printf("mi1 = %g ; mi2 = %g ; theta1 = %g ; theta2 = %g\n",
         w = LifoPop(LIFO);
         switch (connex)
         {
-          case 4: if (nbvoisc8(SOURCE,w,rs,N) != 0) pointsbord[nbpointsbord++] = w; break;
-          case 8: if (nbvoisc4(SOURCE,w,rs,N) != 0) pointsbord[nbpointsbord++] = w; break;
+          case 4:
+            if (nbvoisc8(SOURCE, w, rs, N) != 0) {
+              pointsbord[nbpointsbord++] = w;
+            }
+            break;
+          case 8:
+            if (nbvoisc4(SOURCE, w, rs, N) != 0) {
+              pointsbord[nbpointsbord++] = w;
+            }
+            break;
         }        
         for (k = 0; k < 8; k += incr_vois)
         {
@@ -1308,10 +1421,9 @@ printf("lambda1 = %g ; lambda2 = %g\n", lambda1, lambda2);
         return 0;
       }
 
-      if (mcabs(Mx2 - My2) < MCGEO_EPSILON) 
+      if (mcabs(Mx2 - My2) < MCGEO_EPSILON) {
         theta = 0.0;
-      else
-      {
+      } else {
         double mi1, mi2, theta2;
         theta = 0.5 * atan( 2 * Mxy1 / (Mx2 - My2));
         /* la direction est determinee a pi/2 pres */
@@ -1328,7 +1440,9 @@ printf("lambda1 = %g ; lambda2 = %g\n", lambda1, lambda2);
 printf("mi1 = %g ; mi2 = %g ; theta1 = %g ; theta2 = %g\n", 
         mi1, mi2, theta * 180 / M_PI, theta2 * 180 / M_PI);
 #endif
-        if (mi2 < mi1) theta = theta2;
+if (mi2 < mi1) {
+  theta = theta2;
+}
       }
 
       x1 = lambda1 * cos(theta);
@@ -1506,10 +1620,9 @@ printf("lambda1 = %g ; lambda2 = %g\n", lambda1, lambda2);
         return 0;
       }
 
-      if (mcabs(Mx2 - My2) < MCGEO_EPSILON) 
+      if (mcabs(Mx2 - My2) < MCGEO_EPSILON) {
         theta = 0.0;
-      else
-      {
+      } else {
         double mi1, mi2, theta2;
         theta = 0.5 * atan( 2 * Mxy1 / (Mx2 - My2));
         /* la direction est determinee a pi/2 pres */
@@ -1526,7 +1639,9 @@ printf("lambda1 = %g ; lambda2 = %g\n", lambda1, lambda2);
 printf("mi1 = %g ; mi2 = %g ; theta1 = %g ; theta2 = %g\n", 
         mi1, mi2, theta * 180 / M_PI, theta2 * 180 / M_PI);
 #endif
-        if (mi2 < mi1) theta = theta2;
+if (mi2 < mi1) {
+  theta = theta2;
+}
       }
 
       x1 = lambda1 * cos(theta);
@@ -1541,7 +1656,9 @@ printf("mi1 = %g ; mi2 = %g ; theta1 = %g ; theta2 = %g\n",
       while (! LifoVide(LIFO))   /* et on calcule le facteur d'ellipticite */
       {
         w = LifoPop(LIFO);
-        if (InEllipse(ell,w%rs,w/rs)) ni++;
+        if (InEllipse(ell, w % rs, w / rs)) {
+          ni++;
+        }
         for (k = 0; k < 8; k += incr_vois)
         {
           y = voisin(w, k, rs, N);
@@ -1654,8 +1771,10 @@ cercle *AjusteCercle(struct xvimage *img, double xc, double yc, double r)
     {
       C->x0 -= dx+dx;
       cm = MeanGrayCircle(img, C);
-      if (cm < cost) { cost = cm; stab = 0; }
-      else C->x0 += dx;
+      if (cm < cost) { cost = cm; stab = 0;
+      } else {
+        C->x0 += dx;
+      }
     }
 
     // STEP FOR THE Y DIMENSION
@@ -1666,8 +1785,10 @@ cercle *AjusteCercle(struct xvimage *img, double xc, double yc, double r)
     {
       C->y0 -= dy+dy;
       cm = MeanGrayCircle(img, C);
-      if (cm < cost) { cost = cm; stab = 0; }
-      else C->y0 += dy;
+      if (cm < cost) { cost = cm; stab = 0;
+      } else {
+        C->y0 += dy;
+      }
     }
 
     // STEP FOR THE R DIMENSION
@@ -1678,14 +1799,17 @@ cercle *AjusteCercle(struct xvimage *img, double xc, double yc, double r)
     {
       C->r -= dr+dr;
       cm = MeanGrayCircle(img, C);
-      if (cm < cost) { cost = cm; stab = 0; }
-      else C->r += dr;
+      if (cm < cost) { cost = cm; stab = 0;
+      } else {
+        C->r += dr;
+      }
     }
 
     // LOOP TESTS
     if (stab) { dx /= 2; dy /= 2; dr /= 2; }
-    if ((dx < PRX) && (dy < PRY) && (dr < PRR))
+    if ((dx < PRX) && (dy < PRY) && (dr < PRR)) {
       break;
+    }
 
   } /* for (i = 0; i < MAXITER; i++) */
   return C;
@@ -1734,8 +1858,10 @@ cercle *AjusteCercle2(struct xvimage *img, double xc, double yc, double r)
     {
       C->x0 -= dx+dx;
       cm = MeanGrayCircle(img, C);
-      if (cm < cost) { cost = cm; stab = 0; }
-      else C->x0 += dx;
+      if (cm < cost) { cost = cm; stab = 0;
+      } else {
+        C->x0 += dx;
+      }
     }
 
     // STEP FOR THE Y DIMENSION
@@ -1746,14 +1872,17 @@ cercle *AjusteCercle2(struct xvimage *img, double xc, double yc, double r)
     {
       C->y0 -= dy+dy;
       cm = MeanGrayCircle(img, C);
-      if (cm < cost) { cost = cm; stab = 0; }
-      else C->y0 += dy;
+      if (cm < cost) { cost = cm; stab = 0;
+      } else {
+        C->y0 += dy;
+      }
     }
 
     // LOOP TESTS
     if (stab) { dx /= 2; dy /= 2; }
-    if ((dx < PRX) && (dy < PRY))
+    if ((dx < PRX) && (dy < PRY)) {
       break;
+    }
 
   } /* for (i = 0; i < MAXITER; i++) */
   return C;
@@ -1779,12 +1908,18 @@ struct xvimage *lcar2pol(struct xvimage *img, double xc, double yc)
   // calculates the radius max_r of the smallest disc centered on xc, yc
   // which contains the image
   max_r = dist2(xc, yc, 0.0, 0.0); 
-  t = dist2(xc, yc, 0.0, (double)(cs-1)); 
-  if (t > max_r) max_r = t;
-  t = dist2(xc, yc, (double)(rs-1), 0.0); 
-  if (t > max_r) max_r = t;
-  t = dist2(xc, yc, (double)(rs-1), (double)(cs-1)); 
-  if (t > max_r) max_r = t;
+  t = dist2(xc, yc, 0.0, (double)(cs-1));
+  if (t > max_r) {
+    max_r = t;
+  }
+  t = dist2(xc, yc, (double)(rs-1), 0.0);
+  if (t > max_r) {
+    max_r = t;
+  }
+  t = dist2(xc, yc, (double)(rs-1), (double)(cs-1));
+  if (t > max_r) {
+    max_r = t;
+  }
   max_r += 1.0;
 
   angle_step = asin(1.0 / max_r);
@@ -1840,7 +1975,7 @@ int32_t lpol2car(struct xvimage *img, struct xvimage *res, double xc, double yc)
 
   memset(R, 0, N);
 
-  for (y = 0; y < csc; y++)
+  for (y = 0; y < csc; y++) {
     for (x = 0; x < rsc; x++)
     {
       r = dist2(xc, yc, (double)x, (double)y);
@@ -1857,6 +1992,7 @@ int32_t lpol2car(struct xvimage *img, struct xvimage *res, double xc, double yc)
         R[y*rsc + x] = arrondi(f);
       }
     } // for y for x
+  }
 
   return 1;
 } // lpol2car()
@@ -1953,10 +2089,18 @@ struct xvimage *lsection(struct xvimage *img,
       z = z0 + i*dz1 + j*dz2;
       if ((x >= 0) && (y >= 0) && (z >= 0) && (x < rs) && (y < cs) && (z < ds))
       {
-	if (i < imin) imin = i;
-	if (j < jmin) jmin = j;
-	if (i > imax) imax = i;
-	if (j > jmax) jmax = j;
+        if (i < imin) {
+          imin = i;
+        }
+        if (j < jmin) {
+          jmin = j;
+        }
+        if (i > imax) {
+          imax = i;
+        }
+        if (j > jmax) {
+          jmax = j;
+        }
       }
     }
   }

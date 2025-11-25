@@ -124,10 +124,11 @@ int main(int argc, char **argv)
     fprintf(stderr, "%s: cannot open file: %s\n", argv[0], argv[1]);
     exit(1);
   }
-  if (argc == 4)
+  if (argc == 4) {
     tolerance = atof(argv[2]);
-  else
+  } else {
     tolerance = DEFAULT_TOLERANCE;
+  }
 
   fscanf(fd, "%c", &type);
   if ((type != 'b') && (type != 'B'))
@@ -169,9 +170,13 @@ int main(int argc, char **argv)
     }
   
     fprintf(fd, "c %d\n", n);
-    for (i = 0; i < n; i++) fprintf(fd, "%d %d\n", X[W[i]], Y[W[i]]);
-    for (i = 0; i < n-1; i++) fprintf(fd, "%g %g %g %g %g %g %g %g\n", 
-                                          C0[i], D0[i], C1[i], D1[i], C2[i], D2[i], C3[i], D3[i]);
+    for (i = 0; i < n; i++) {
+      fprintf(fd, "%d %d\n", X[W[i]], Y[W[i]]);
+    }
+    for (i = 0; i < n - 1; i++) {
+      fprintf(fd, "%g %g %g %g %g %g %g %g\n", C0[i], D0[i], C1[i], D1[i],
+              C2[i], D2[i], C3[i], D3[i]);
+    }
 
     fclose(fd);
     free(X); free(Y); free(W);
@@ -217,9 +222,13 @@ int main(int argc, char **argv)
     }
   
     fprintf(fd, "C %d\n", n);
-    for (i = 0; i < n; i++) fprintf(fd, "%d %d %d\n", X[W[i]], Y[W[i]], Z[W[i]]);
-    for (i = 0; i < n-1; i++) fprintf(fd, "%g %g %g %g %g %g %g %g %g %g %g %g\n", 
-                                          C0[i], D0[i], E0[i], C1[i], D1[i], E1[i], C2[i], D2[i], E2[i], C3[i], D3[i], E3[i]);
+    for (i = 0; i < n; i++) {
+      fprintf(fd, "%d %d %d\n", X[W[i]], Y[W[i]], Z[W[i]]);
+    }
+    for (i = 0; i < n - 1; i++) {
+      fprintf(fd, "%g %g %g %g %g %g %g %g %g %g %g %g\n", C0[i], D0[i], E0[i],
+              C1[i], D1[i], E1[i], C2[i], D2[i], E2[i], C3[i], D3[i], E3[i]);
+    }
 
     fclose(fd);
     free(X); free(Y); free(Z); free(W);

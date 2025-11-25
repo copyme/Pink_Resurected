@@ -91,10 +91,9 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (strcmp(argv[2],"null") == 0) 
+  if (strcmp(argv[2], "null") == 0) {
     imagecond = NULL;
-  else
-  {
+  } else {
     fprintf(stderr, "%s: imagecond not yet implemented\n", argv[0]);
     exit(1);
     /*    
@@ -116,7 +115,9 @@ int main(int argc, char **argv)
 
   writeimage(image, argv[argc-1]);
   freeimage(image);
-  if (imagecond != NULL) freeimage(imagecond);
+  if (imagecond != NULL) {
+    freeimage(imagecond);
+  }
 
   return 0;
 } /* main */

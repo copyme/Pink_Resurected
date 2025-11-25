@@ -125,16 +125,18 @@ int main(int argc, char **argv)
   {
     val = 1;
     connex = connex / 10;
+  } else {
+    val = 0;
   }
-  else val = 0;
 
   if (argc > 4)
   { 
     x = atoi(argv[3]);
     y = atoi(argv[4]);
   }
-  if (argc > 6)
+  if (argc > 6) {
     z = atoi(argv[5]);
+  }
 
   rs = rowsize(image);
   cs = colsize(image);
@@ -144,8 +146,12 @@ int main(int argc, char **argv)
   F = UCHARDATA(image);
 
   if (argc > 4)
-  {   
-    if (argc > 6) p = z*ps + y*rs + x; else p = y*rs + x;
+  {
+    if (argc > 6) {
+      p = z * ps + y * rs + x;
+    } else {
+      p = y * rs + x;
+    }
 
     if (!F[p])
     {
@@ -183,15 +189,42 @@ int main(int argc, char **argv)
   {
     p = -1;
     if (connex == 4)
-    { for (x = 0; x < N; x++) if ((F[x]) && (nbvois4(F, x, rs, N) == 1)) { p = x; break; } }
-    else if (connex == 8)
-    { for (x = 0; x < N; x++) if ((F[x]) && (nbvois8(F, x, rs, N) == 1)) { p = x; break; } }
-    else if (connex == 6)
-    { for (x = 0; x < N; x++) if ((F[x]) && (mctopo3d_nbvoiso6(F, x, rs, ps, N) == 1)) { p = x; break; } }
-    else if (connex == 18)
-    { for (x = 0; x < N; x++) if ((F[x]) && (mctopo3d_nbvoiso18(F, x, rs, ps, N) == 1)) { p = x; break; } }
-    else if (connex == 26)
-    { for (x = 0; x < N; x++) if ((F[x]) && (mctopo3d_nbvoiso26(F, x, rs, ps, N) == 1)) { p = x; break; } }
+    {
+      for (x = 0; x < N; x++) {
+        if ((F[x]) && (nbvois4(F, x, rs, N) == 1)) {
+          p = x;
+          break;
+        }
+      }
+    } else if (connex == 8) {
+      for (x = 0; x < N; x++) {
+        if ((F[x]) && (nbvois8(F, x, rs, N) == 1)) {
+          p = x;
+          break;
+        }
+      }
+    } else if (connex == 6) {
+      for (x = 0; x < N; x++) {
+        if ((F[x]) && (mctopo3d_nbvoiso6(F, x, rs, ps, N) == 1)) {
+          p = x;
+          break;
+        }
+      }
+    } else if (connex == 18) {
+      for (x = 0; x < N; x++) {
+        if ((F[x]) && (mctopo3d_nbvoiso18(F, x, rs, ps, N) == 1)) {
+          p = x;
+          break;
+        }
+      }
+    } else if (connex == 26) {
+      for (x = 0; x < N; x++) {
+        if ((F[x]) && (mctopo3d_nbvoiso26(F, x, rs, ps, N) == 1)) {
+          p = x;
+          break;
+        }
+      }
+    }
     if (p == -1)
     {
       fprintf(stderr, "%s: no end point\n", argv[0]);
@@ -199,10 +232,11 @@ int main(int argc, char **argv)
     }
   }
 
-  if ((connex == 4) || (connex == 8))
+  if ((connex == 4) || (connex == 8)) {
     (void)lcurves_extractcurve(F, p, rs, N, connex, &X, &Y, &n);
-  else
+  } else {
     (void)lcurves_extractcurve3d(F, p, rs, ps, N, connex, &X, &Y, &Z, &n);
+  }
 
   fd = fopen(argv[argc - 1],"w");
   if (!fd)
@@ -215,30 +249,35 @@ int main(int argc, char **argv)
   {
     if ((connex == 4) || (connex == 8))
     {
-      fprintf(fd, "n %d\n", n); 
-      for (p = 0; p < n; p++)
-	fprintf(fd, "%d %d %d\n", X[p], Y[p], F[Y[p]*rs + X[p]]);
+      fprintf(fd, "n %d\n", n);
+      for (p = 0; p < n; p++) {
+        fprintf(fd, "%d %d %d\n", X[p], Y[p], F[Y[p] * rs + X[p]]);
+      }
     }
     else
     {
-      fprintf(fd, "N %d\n", n); 
-      for (p = 0; p < n; p++) 
-	fprintf(fd, "%d %d %d %d\n", X[p], Y[p], Z[p], F[Z[p]*ps + Y[p]*rs + X[p]]);
+      fprintf(fd, "N %d\n", n);
+      for (p = 0; p < n; p++) {
+        fprintf(fd, "%d %d %d %d\n", X[p], Y[p], Z[p],
+                F[Z[p] * ps + Y[p] * rs + X[p]]);
+      }
     }
   }
   else
   {
     if ((connex == 4) || (connex == 8))
     {
-      fprintf(fd, "b %d\n", n); 
-      for (p = 0; p < n; p++)
-	fprintf(fd, "%d %d\n", X[p], Y[p]);
+      fprintf(fd, "b %d\n", n);
+      for (p = 0; p < n; p++) {
+        fprintf(fd, "%d %d\n", X[p], Y[p]);
+      }
     }
     else
     {
-      fprintf(fd, "B %d\n", n); 
-      for (p = 0; p < n; p++) 
-	fprintf(fd, "%d %d %d\n", X[p], Y[p], Z[p]);
+      fprintf(fd, "B %d\n", n);
+      for (p = 0; p < n; p++) {
+        fprintf(fd, "%d %d %d\n", X[p], Y[p], Z[p]);
+      }
     }
   }
 
@@ -246,6 +285,8 @@ int main(int argc, char **argv)
   freeimage(image);
   free(X);
   free(Y);
-  if (Z != NULL) free(Z);
+  if (Z != NULL) {
+    free(Z);
+  }
   return 0;
 }

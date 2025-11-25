@@ -120,7 +120,9 @@ int32_t llabelplateaux(
   }
 
   /* le LABEL initialement est mis a 0 (minimum) */
-  for (x = 0; x < N; x++) LABEL[x] = 0;
+  for (x = 0; x < N; x++) {
+    LABEL[x] = 0;
+  }
 
   LIFO = CreeLifoVide(N);
   if (LIFO == NULL)

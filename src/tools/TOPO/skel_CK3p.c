@@ -110,7 +110,9 @@ int main(int argc, char **argv)
 
   writeimage(image, argv[argc-1]);
   freeimage(image);
-  if (inhibit) freeimage(inhibit);
+  if (inhibit) {
+    freeimage(inhibit);
+  }
 
   return 0;
 } /* main */

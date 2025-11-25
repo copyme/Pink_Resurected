@@ -83,10 +83,9 @@ int main(int argc, char **argv)
   
   x = atoi(argv[3]);
   y = atoi(argv[4]);
-  if (argc == 7)
+  if (argc == 7) {
     r = atof(argv[5]);
-  else
-  {
+  } else {
     z = atof(argv[5]);
     r = atof(argv[6]);
   }

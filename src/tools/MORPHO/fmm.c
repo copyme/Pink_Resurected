@@ -142,9 +142,10 @@ int main(int argc, char **argv)
 #endif
     
     ndim = 2;
-    if (ss > 1)
-        ++ndim;
-    
+    if (ss > 1) {
+      ++ndim;
+    }
+
     dim[0] = rs ; dim[1] = cs ; dim[2] = ss;
     
     if ((error = lfmmdist(SeedIn, SeedOut, dim, ndim, SpeedIn, stop, threshold, SpeedOut)) != 0)

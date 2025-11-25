@@ -102,7 +102,9 @@ int main(int argc, char **argv)
   }
   Im = UCHARDATA(image);
   Imc = UCHARDATA(imagec);
-  for (i = 0; i < N; i++) Im[i] = 0;
+  for (i = 0; i < N; i++) {
+    Im[i] = 0;
+  }
 
   do
   {
@@ -117,10 +119,12 @@ int main(int argc, char **argv)
       case 1: 
         printf("coordonnees x, y, z du point : \n");
         scanf("%d %d %d", &i, &j, &k);
-        if ((i >= 0) && (j >= 0) && (k >= 0) && (i < rs) && (j < cs) && (k < ds)) 
+        if ((i >= 0) && (j >= 0) && (k >= 0) && (i < rs) && (j < cs) &&
+            (k < ds)) {
           Im[k*ps + j*rs + i] = 255;
-        else 
+        } else {
           printf("point hors image\n");
+        }
         break;
 
       case 2:
@@ -156,8 +160,10 @@ int main(int argc, char **argv)
           i = (int32_t)(x + rayon*sin(theta));
           j = (int32_t)(y + rayon*cos(theta));
           k = (int32_t)z;
-          if ((i >= 0) && (j >= 0) && (k >= 0) && (i < rs) && (j < cs) && (k < ds)) 
-            Im[k*ps + j*rs + i] = 255;
+          if ((i >= 0) && (j >= 0) && (k >= 0) && (i < rs) && (j < cs) &&
+              (k < ds)) {
+            Im[k * ps + j * rs + i] = 255;
+          }
         }
         break;
         

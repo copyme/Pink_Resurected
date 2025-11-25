@@ -140,9 +140,15 @@ int32_t lsegreconsheight(struct xvimage *image, int32_t connex, int32_t param)
   /* INITIALISATIONS                                  */
   /* ================================================ */
 
-  for (i = 0; i < N; i++) STATUS[i] = NOT_ANALYZED;
+  for (i = 0; i < N; i++) {
+    STATUS[i] = NOT_ANALYZED;
+  }
   k = 0;             /* recherche un pixel k de niveau de gris minimal dans l'image */
-  for (i = 1; i < N; i++) if (F[i] < F[k]) k = i;
+  for (i = 1; i < N; i++) {
+    if (F[i] < F[k]) {
+      k = i;
+    }
+  }
   FahsPush(FAHS, k, F[k]);
 
 #ifdef VERBOSE

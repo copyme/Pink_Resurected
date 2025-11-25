@@ -90,7 +90,9 @@ int32_t lseamcarving_old(struct xvimage *in, struct xvimage *en, int32_t w, stru
     printf("%s: r = %d\n", F_NAME, r);
 #endif
     // remplit les tableaux D et P
-    for (i = 0; i < rs-r; i++) D[i] = (float)E[i]; // init 1ere ligne
+    for (i = 0; i < rs - r; i++) {
+      D[i] = (float)E[i]; // init 1ere ligne
+    }
     for (j = 1; j < cs; j++)
     {
       i = 0; // cas particulier 1er element
@@ -133,8 +135,10 @@ int32_t lseamcarving_old(struct xvimage *in, struct xvimage *en, int32_t w, stru
     
     // recherche d'un min dans la dernière ligne
     vmin = D[(cs-1)*rs + 0]; imin = 0;
-    for (i = 1; i < rs-r; i++)
-      if (D[(cs-1)*rs + i] < vmin) { vmin = D[(cs-1)*rs + i]; imin = i; }
+    for (i = 1; i < rs - r; i++) {
+      if (D[(cs-1)*rs + i] < vmin) { vmin = D[(cs-1)*rs + i]; imin = i;
+      }
+    }
 
     // remontée d'un chemin min et décalages
     for (j = cs-1; j >= 0; j--)
@@ -148,19 +152,23 @@ int32_t lseamcarving_old(struct xvimage *in, struct xvimage *en, int32_t w, stru
 	I[N+N+ j*rs + i] = I[N+N + j*rs + i+1]; 
       }
       // maj imin
-      if (P[j*rs + imin] == 0) imin -= 1;
-      else if (P[j*rs + imin] == 2) imin += 1;
+      if (P[j * rs + imin] == 0) {
+        imin -= 1;
+      } else if (P[j * rs + imin] == 2) {
+        imin += 1;
+      }
     } // for (j = cs-1; j >= 0; j--)
   } // for (r = 0; r < rs-w; r++)
 
   // recopie des valeurs dans l'image résultat
-  for (j = 0; j < cs; j++)
+  for (j = 0; j < cs; j++) {
     for (i = 0; i < w; i++)
     {
       O[j*w + i] = I[j*rs + i]; 
       O[NO + j*w + i] = I[N + j*rs + i]; 
-      O[NO+NO + j*w + i] = I[N+N + j*rs + i]; 
+      O[NO+NO + j*w + i] = I[N+N + j*rs + i];
     }
+  }
 
   free(D);
   free(P);
@@ -208,7 +216,9 @@ int32_t lseamcarving(struct xvimage *in, struct xvimage *en, int32_t w, struct x
     printf("%s: r = %d\n", F_NAME, r);
 #endif
     // remplit le tableau D
-    for (i = 0; i < rs-r; i++) D[i] = (float)E[i]; // init 1ere ligne
+    for (i = 0; i < rs - r; i++) {
+      D[i] = (float)E[i]; // init 1ere ligne
+    }
     for (j = 1; j < cs; j++)
     {
       i = 0; // cas particulier 1er element
@@ -244,8 +254,10 @@ int32_t lseamcarving(struct xvimage *in, struct xvimage *en, int32_t w, struct x
     
     // recherche d'un min dans la dernière ligne
     vmin = D[(cs-1)*rs + 0]; imin = 0;
-    for (i = 1; i < rs-r; i++)
-      if (D[(cs-1)*rs + i] < vmin) { vmin = D[(cs-1)*rs + i]; imin = i; }
+    for (i = 1; i < rs - r; i++) {
+      if (D[(cs-1)*rs + i] < vmin) { vmin = D[(cs-1)*rs + i]; imin = i;
+      }
+    }
 
     // remontée d'un chemin min et décalages
     for (j = cs-1; j >= 0; j--)
@@ -261,20 +273,26 @@ int32_t lseamcarving(struct xvimage *in, struct xvimage *en, int32_t w, struct x
       // maj imin
       if (j > 0)
       {
-	if ((imin < rs-1) && (D[(j-1)*rs + imin+1] < D[(j-1)*rs + imin])) imin += 1;
-	else if ((imin > 0) && (D[(j-1)*rs + imin-1] < D[(j-1)*rs + imin])) imin -= 1;
+        if ((imin < rs - 1) &&
+            (D[(j - 1) * rs + imin + 1] < D[(j - 1) * rs + imin])) {
+          imin += 1;
+        } else if ((imin > 0) &&
+                   (D[(j - 1) * rs + imin - 1] < D[(j - 1) * rs + imin])) {
+          imin -= 1;
+        }
       }
     } // for (j = cs-1; j >= 0; j--)
   } // for (r = 0; r < rs-w; r++)
 
   // recopie des valeurs dans l'image résultat
-  for (j = 0; j < cs; j++)
+  for (j = 0; j < cs; j++) {
     for (i = 0; i < w; i++)
     {
       O[j*w + i] = I[j*rs + i]; 
       O[NO + j*w + i] = I[N + j*rs + i]; 
-      O[NO+NO + j*w + i] = I[N+N + j*rs + i]; 
+      O[NO+NO + j*w + i] = I[N+N + j*rs + i];
     }
+  }
 
   free(D);
   return 1;

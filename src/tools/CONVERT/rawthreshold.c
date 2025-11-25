@@ -141,20 +141,23 @@ int main(int argc, char **argv)
   assert(nbytesperpix == 4);
 
   fputs("P5\n", fdo);
-  if ((xdim != 0.0) && (ds > 1))
+  if ((xdim != 0.0) && (ds > 1)) {
     fprintf(fdo, "#xdim %g\n#ydim %g\n#zdim %g\n", xdim, ydim, zdim);
-  if ((xdim != 0.0) && (ds == 1))
+  }
+  if ((xdim != 0.0) && (ds == 1)) {
     fprintf(fdo, "#xdim %g\n#ydim %g\n", xdim, ydim);
-  
-  if (ds > 1) 
+  }
+
+  if (ds > 1) {
 #ifdef MC_64_BITS
     fprintf(fdo, "%ld %ld %ld\n", rs, cs, ds); 
 #else
     fprintf(fdo, "%d %d %d\n", rs, cs, ds); 
 #endif
-  else 
+  } else {
 #ifdef MC_64_BITS
     fprintf(fdo, "%ld %ld\n", rs, cs);
+  }
 #else
     fprintf(fdo, "%d %d\n", rs, cs);
 #endif
@@ -171,9 +174,10 @@ int main(int argc, char **argv)
     for (i = 0; i < N; i++) 
     { 
 #ifdef VERBOSE
-      if ((i % 100000000) == 0) 
+      if ((i % 100000000) == 0) {
 #ifdef MC_64_BITS
-	printf("%ld written elements\n", i);
+        printf("%ld written elements\n", i);
+      }
 #else
 	printf("%d written elements\n", i);
 #endif
@@ -186,7 +190,11 @@ int main(int argc, char **argv)
       tmp = tmp | (((uint32_t)tmp2) << 16);
       tmp = tmp | (((uint32_t)tmp1) << 24);      
       f = *((float *)(&tmp));
-      if ((f >= thresh1) && (f <= thresh2)) tmp1 = NDG_MAX; else tmp1 = 0;
+      if ((f >= thresh1) && (f <= thresh2)) {
+        tmp1 = NDG_MAX;
+      } else {
+        tmp1 = 0;
+      }
       fwrite(&tmp1, sizeof(uint8_t), 1, fdo);
     }
   }
@@ -204,9 +212,15 @@ int main(int argc, char **argv)
       n_r = (int32_t)fread(F, sizeof(float), n_elts, fdi); assert(n_r > 0);
       for (i = 0; i < n_r; i++)
       {
-	if ((F[i] >= thresh1) && (F[i] <= thresh2)) B[i] = NDG_MAX; else B[i] = 0;
+        if ((F[i] >= thresh1) && (F[i] <= thresh2)) {
+          B[i] = NDG_MAX;
+        } else {
+          B[i] = 0;
+        }
       }
-      if (n_w + n_r > N) n_r = N - n_w;
+      if (n_w + n_r > N) {
+        n_r = N - n_w;
+      }
       fwrite(B, sizeof(uint8_t), n_r, fdo);
       n_w = n_w + n_r;
     } while (n_w < N);

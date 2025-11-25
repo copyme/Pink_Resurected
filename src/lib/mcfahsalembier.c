@@ -70,11 +70,17 @@ Fahs * CreeFahsVide(
   L->Util = 0;
   L->Maxutil = 0;
   L->Niv = 0;
-  for (i = 0; i < taillemax - 1; i++) L->Elts[i].Next = &(L->Elts[i+1]);
+  for (i = 0; i < taillemax - 1; i++) {
+    L->Elts[i].Next = &(L->Elts[i + 1]);
+  }
   L->Elts[taillemax - 1].Next = NULL;
   L->Libre = &(L->Elts[0]);
-  for (i = 0; i < FAHS_NPRIO; i++) L->Tete[i]= NULL;
-  for (i = 0; i < FAHS_NPRIO; i++) L->Queue[i]= NULL;
+  for (i = 0; i < FAHS_NPRIO; i++) {
+    L->Tete[i] = NULL;
+  }
+  for (i = 0; i < FAHS_NPRIO; i++) {
+    L->Queue[i] = NULL;
+  }
   return L;
 } /* CreeFahsVide() */
 
@@ -86,11 +92,17 @@ void FahsFlush(
   index_t i;
   L->Niv = 0;
   L->Util = 0;
-  for (i = 0; i < L->Max - 1; i++) L->Elts[i].Next = &(L->Elts[i+1]);
+  for (i = 0; i < L->Max - 1; i++) {
+    L->Elts[i].Next = &(L->Elts[i + 1]);
+  }
   L->Elts[L->Max - 1].Next = NULL;
   L->Libre = &(L->Elts[0]);
-  for (i = 0; i < FAHS_NPRIO; i++) L->Tete[i]= NULL;
-  for (i = 0; i < FAHS_NPRIO; i++) L->Queue[i]= NULL;
+  for (i = 0; i < FAHS_NPRIO; i++) {
+    L->Tete[i] = NULL;
+  }
+  for (i = 0; i < FAHS_NPRIO; i++) {
+    L->Queue[i] = NULL;
+  }
 } /* FahsFlush() */
 
 /* ==================================== */
@@ -98,7 +110,9 @@ int32_t FahsVide(
   Fahs * L)
 /* ==================================== */
 {
-  if (L->Util == 0) return 1;
+  if (L->Util == 0) {
+    return 1;
+  }
   return 0;
 } /* FahsVide() */
 
@@ -108,7 +122,9 @@ int32_t FahsVideNiveau(
   int32_t niv)
 /* ==================================== */
 {
-  if (L->Queue[niv] == NULL) return 1;
+  if (L->Queue[niv] == NULL) {
+    return 1;
+  }
   return 0;
 } /* FahsVideNiveau() */
 
@@ -137,10 +153,11 @@ index_t FahsPopNiveau(
   if (FE == NULL) /* plus aucun element dans la liste */
   {
     L->Tete[niv] = NULL;
-    if (niv == L->Niv)
-      do (L->Niv)++;                 /* incrementer le niveau */
-      while ((L->Niv < FAHS_NPRIO)          
-              && (L->Tete[L->Niv] == NULL));
+    if (niv == L->Niv) {
+      do {
+        (L->Niv)++; /* incrementer le niveau */
+      } while ((L->Niv < FAHS_NPRIO) && (L->Tete[L->Niv] == NULL));
+    }
   }
   else if (L->Tete[niv] == L->Queue[niv]) /* seul un element reste dans la liste */
   {
@@ -181,10 +198,14 @@ void FahsPush(
     exit(1);
   }
 
-  if ((L->Util == 0) || (Ni < L->Niv)) L->Niv = Ni;
+  if ((L->Util == 0) || (Ni < L->Niv)) {
+    L->Niv = Ni;
+  }
 
   L->Util++;
-  if (L->Util > L->Maxutil) L->Maxutil = L->Util;
+  if (L->Util > L->Maxutil) {
+    L->Maxutil = L->Util;
+  }
   if (L->Tete[Ni] != NULL)   /* insertion dans la liste de niveau Ni non vide */
   {
     FahsElt * FE = L->Tete[Ni];
@@ -225,18 +246,20 @@ void FahsPrint(
   FahsElt * FE = NULL;
   if (FahsVide(L)) {printf("[]\n"); return;}
   printf("niveau courant = %d\n", L->Niv);
-  for (i = 0; i < FAHS_NPRIO; i++)
+  for (i = 0; i < FAHS_NPRIO; i++) {
     if (L->Tete[i] != NULL) 
     {
       printf("%d [ ", i);
-      for (FE = L->Tete[i]; FE != NULL; FE = FE->Next)
+      for (FE = L->Tete[i]; FE != NULL; FE = FE->Next) {
 #ifdef MC_64_BITS
         printf("%ld ", FE->Point);
+      }
 #else
         printf("%d ", FE->Point);
 #endif
       printf("]\n");
-    }  
+    }
+  }
 } /* FahsPrint() */
 
 #ifdef TESTFAHS

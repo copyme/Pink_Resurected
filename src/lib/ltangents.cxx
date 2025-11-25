@@ -227,8 +227,11 @@ Reference:
 #endif
       }
       M[typemax]->Tangent(typemax, aa, bb);
-      if (aa == 0) angle[pos] = M_PI_2;
-      else angle[pos] = atan((double)bb / (double)aa);
+      if (aa == 0) {
+        angle[pos] = M_PI_2;
+      } else {
+        angle[pos] = atan((double)bb / (double)aa);
+      }
       lastend = end[pos] = pos + indmax -1;
     }
     else
@@ -411,9 +414,10 @@ Reference:
       MOxy[i]->Init(); curEp = 0;
       for (int k = 0; (curEp < ep) && (pos+k < npoints); k++ )
       {
-	if ((k > 0) && (pointsxy[pos+k] == pointsxy[pos+k-1]))
-	  // projection is not a bijection: invalid segment
-	  break;
+        if ((k > 0) && (pointsxy[pos + k] == pointsxy[pos + k - 1])) {
+          // projection is not a bijection: invalid segment
+          break;
+        }
         MOxy[i]->Insert(curEp,pointsxy[pos+k]);
         if (curEp < ep)
         {
@@ -428,9 +432,10 @@ Reference:
       MOyz[i]->Init(); curEp = 0;
       for (int k = 0; (curEp < ep) && (pos+k < npoints); k++ )
       {
-	if ((k > 0) && (pointsyz[pos+k] == pointsyz[pos+k-1]))
-	  // projection is not a bijection: invalid segment
-	  break;
+        if ((k > 0) && (pointsyz[pos + k] == pointsyz[pos + k - 1])) {
+          // projection is not a bijection: invalid segment
+          break;
+        }
         MOyz[i]->Insert(curEp,pointsyz[pos+k]);
         if (curEp < ep)
         {
@@ -445,9 +450,10 @@ Reference:
       MOxz[i]->Init(); curEp = 0;
       for (int k = 0; (curEp < ep) && (pos+k < npoints); k++ )
       {
-	if ((k > 0) && (pointsxz[pos+k] == pointsxz[pos+k-1]))
-	  // projection is not a bijection: invalid segment
-	  break;
+        if ((k > 0) && (pointsxz[pos + k] == pointsxz[pos + k - 1])) {
+          // projection is not a bijection: invalid segment
+          break;
+        }
         MOxz[i]->Insert(curEp,pointsxz[pos+k]);
         if (curEp < ep)
         {
@@ -468,14 +474,14 @@ Reference:
 #define XZ 3
     int elim;
 
-    if ((xyindmax <= yzindmax) && (xyindmax <= xzindmax))
+    if ((xyindmax <= yzindmax) && (xyindmax <= xzindmax)) {
       elim = XY;
-    else
-    {
-      if ((yzindmax <= xyindmax) && (yzindmax <= xzindmax))
-	elim = YZ;
-      else
-	elim = XZ;
+    } else {
+      if ((yzindmax <= xyindmax) && (yzindmax <= xzindmax)) {
+        elim = YZ;
+      } else {
+        elim = XZ;
+      }
     }
 
     switch (elim)
@@ -497,21 +503,21 @@ Reference:
 	  MOxz[xztypemax]->Insert(curEp,pointsxz[pos+i]);
 	MOxz[xztypemax]->Tangent(xztypemax, xp, zp);
 
-	if (xp == 0) xt = 0;
-	else 
-	{
-	  if (yt == 0) { xt = xp; zt = zp; }
+        if (xp == 0) {
+          xt = 0;
+        } else {
+          if (yt == 0) { xt = xp; zt = zp; }
 	  else
 	  {
 	    if ((zt == 0) && (zp == 0)) { xt = xp; }
 	    else { xt = xp*zt; yt = yt*zp; zt = zt*zp; }
 	  }
-	}
+        }
 
-	lastend = end[pos] = pos + indmax -1;
+        lastend = end[pos] = pos + indmax -1;
+      } else {
+        end[pos] = -1;
       }
-      else
-	end[pos] = -1;
       break;
 
     case YZ:
@@ -536,21 +542,21 @@ printf("point[pos]=%d,%d,%d point[pos+1]=%d,%d,%d\n",
 printf("xt=%d yt=%d ", xt, yt);
 printf("xp=%d zp=%d\n", xp, zp);
 */
-	if (zp == 0) zt = 0;
-	else 
-	{
-	  if (yt == 0) { xt = xp; zt = zp; }
+        if (zp == 0) {
+          zt = 0;
+        } else {
+          if (yt == 0) { xt = xp; zt = zp; }
 	  else
 	  {
 	    if ((xt == 0) && (xp == 0)) { zt = zp; }
 	    else { yt = yt*xp; zt = zp*xt; xt = xp*xt; }
 	  }
-	}
+        }
 
-	lastend = end[pos] = pos + indmax -1;
+        lastend = end[pos] = pos + indmax -1;
+      } else {
+        end[pos] = -1;
       }
-      else
-	end[pos] = -1;
       break;
 
     case XZ:
@@ -570,21 +576,21 @@ printf("xp=%d zp=%d\n", xp, zp);
 	  MOxy[xytypemax]->Insert(curEp,pointsxy[pos+i]);
 	MOxy[xytypemax]->Tangent(xytypemax, xp, yp);
 
-	if (xp == 0) xt = 0;
-	else 
-	{
-	  if (zt == 0) { xt = xp; yt = yp; }
+        if (xp == 0) {
+          xt = 0;
+        } else {
+          if (zt == 0) { xt = xp; yt = yp; }
 	  else
 	  {
 	    if ((yt == 0) && (yp == 0)) { xt = xp; }
 	    else { xt = xp*yt; zt = zt*yp; yt = yt*yp; }
 	  }
-	}
+        }
 
-	lastend = end[pos] = pos + indmax -1;
+        lastend = end[pos] = pos + indmax -1;
+      } else {
+        end[pos] = -1;
       }
-      else
-	end[pos] = -1;
       break;
     default: assert(1);
     } // switch (elim)
@@ -711,9 +717,10 @@ Reference:
       MOxy[i]->Init(); curEp = 0;
       for (int k = 0; (curEp < ep) && (pos+k < npoints); k++ )
       {
-	if ((k > 0) && (pointsxy[pos+k] == pointsxy[pos+k-1]))
-	  // projection is not a bijection: invalid segment
-	  break;
+        if ((k > 0) && (pointsxy[pos + k] == pointsxy[pos + k - 1])) {
+          // projection is not a bijection: invalid segment
+          break;
+        }
         MOxy[i]->Insert(curEp,pointsxy[pos+k]);
         if (curEp < ep)
         {
@@ -728,9 +735,10 @@ Reference:
       MOyz[i]->Init(); curEp = 0;
       for (int k = 0; (curEp < ep) && (pos+k < npoints); k++ )
       {
-	if ((k > 0) && (pointsyz[pos+k] == pointsyz[pos+k-1]))
-	  // projection is not a bijection: invalid segment
-	  break;
+        if ((k > 0) && (pointsyz[pos + k] == pointsyz[pos + k - 1])) {
+          // projection is not a bijection: invalid segment
+          break;
+        }
         MOyz[i]->Insert(curEp,pointsyz[pos+k]);
         if (curEp < ep)
         {
@@ -745,9 +753,10 @@ Reference:
       MOxz[i]->Init(); curEp = 0;
       for (int k = 0; (curEp < ep) && (pos+k < npoints); k++ )
       {
-	if ((k > 0) && (pointsxz[pos+k] == pointsxz[pos+k-1]))
-	  // projection is not a bijection: invalid segment
-	  break;
+        if ((k > 0) && (pointsxz[pos + k] == pointsxz[pos + k - 1])) {
+          // projection is not a bijection: invalid segment
+          break;
+        }
         MOxz[i]->Insert(curEp,pointsxz[pos+k]);
         if (curEp < ep)
         {
@@ -768,14 +777,14 @@ Reference:
 #define XZ 3
     int elim;
 
-    if ((xyindmax <= yzindmax) && (xyindmax <= xzindmax))
+    if ((xyindmax <= yzindmax) && (xyindmax <= xzindmax)) {
       elim = XY;
-    else
-    {
-      if ((yzindmax <= xyindmax) && (yzindmax <= xzindmax))
-	elim = YZ;
-      else
-	elim = XZ;
+    } else {
+      if ((yzindmax <= xyindmax) && (yzindmax <= xzindmax)) {
+        elim = YZ;
+      } else {
+        elim = XZ;
+      }
     }
 
     switch (elim)
@@ -897,9 +906,10 @@ Reference:
       MOxy[i]->Init(); curEp = 0;
       for (int k = 0; (curEp < ep) && (pos+k < npoints); k++ )
       {
-	if ((k > 0) && (pointsxy[pos+k] == pointsxy[pos+k-1]))
-	  // projection is not a bijection: invalid segment
-	  break;
+        if ((k > 0) && (pointsxy[pos + k] == pointsxy[pos + k - 1])) {
+          // projection is not a bijection: invalid segment
+          break;
+        }
         MOxy[i]->Insert(curEp,pointsxy[pos+k]);
         if (curEp < ep)
         {
@@ -914,9 +924,10 @@ Reference:
       MOyz[i]->Init(); curEp = 0;
       for (int k = 0; (curEp < ep) && (pos+k < npoints); k++ )
       {
-	if ((k > 0) && (pointsyz[pos+k] == pointsyz[pos+k-1]))
-	  // projection is not a bijection: invalid segment
-	  break;
+        if ((k > 0) && (pointsyz[pos + k] == pointsyz[pos + k - 1])) {
+          // projection is not a bijection: invalid segment
+          break;
+        }
         MOyz[i]->Insert(curEp,pointsyz[pos+k]);
         if (curEp < ep)
         {
@@ -931,9 +942,10 @@ Reference:
       MOxz[i]->Init(); curEp = 0;
       for (int k = 0; (curEp < ep) && (pos+k < npoints); k++ )
       {
-	if ((k > 0) && (pointsxz[pos+k] == pointsxz[pos+k-1]))
-	  // projection is not a bijection: invalid segment
-	  break;
+        if ((k > 0) && (pointsxz[pos + k] == pointsxz[pos + k - 1])) {
+          // projection is not a bijection: invalid segment
+          break;
+        }
         MOxz[i]->Insert(curEp,pointsxz[pos+k]);
         if (curEp < ep)
         {
@@ -954,15 +966,15 @@ Reference:
 #define XZ 3
   int elim;
 
-  if ((xyindmax <= yzindmax) && (xyindmax <= xzindmax))
+  if ((xyindmax <= yzindmax) && (xyindmax <= xzindmax)) {
     elim = XY;
-  else
-    {
-      if ((yzindmax <= xyindmax) && (yzindmax <= xzindmax))
-	elim = YZ;
-      else
-	elim = XZ;
+  } else {
+    if ((yzindmax <= xyindmax) && (yzindmax <= xzindmax)) {
+      elim = YZ;
+    } else {
+      elim = XZ;
     }
+  }
 
   switch (elim)
     {
@@ -1074,10 +1086,11 @@ Reference:
 
   for (int i = 1; i < npoints-1; i++)
   {
-    if (sumeik[i] > EPSILON)
+    if (sumeik[i] > EPSILON) {
       mstd[i] = mstd[i] / sumeik[i];
-    else
-      mstd[i] = (mstd[i-1] + (mstd[i+1] / sumeik[i+1])) / 2;
+    } else {
+      mstd[i] = (mstd[i - 1] + (mstd[i + 1] / sumeik[i + 1])) / 2;
+    }
   }
   mstd[0] = mstd[1];
   mstd[npoints-1] = mstd[npoints-2];
@@ -1183,7 +1196,9 @@ double ComputeLength(int32_t npoints, double *mstd)
     // très mauvaise estimation - remplacée par la suivante :
 #else
     alpha = fabs(mstd[i]);
-    if (alpha > M_PI_4) alpha = M_PI_2 - alpha;
+    if (alpha > M_PI_4) {
+      alpha = M_PI_2 - alpha;
+    }
     L += 1.0 / fabs(cos(alpha));
 #endif
   }
@@ -1214,15 +1229,15 @@ double ComputeLength3D(int32_t npoints, double *Xmstd, double *Ymstd, double *Zm
   Fori(npoints)
   {
     x = fabs(Xmstd[i]); y = fabs(Ymstd[i]); z = fabs(Zmstd[i]);
-    if ((x >= y) && (x >= z))
+    if ((x >= y) && (x >= z)) {
       C = sqrt(1.0 + ((y*y + z*z) / (x*x)));
-    else
-    {
-      if (y >= z)
-	C = sqrt(1.0 + ((x*x + z*z) / (y*y)));
-      else
-	C = sqrt(1.0 + ((x*x + y*y) / (z*z)));      
-    }  
+    } else {
+      if (y >= z) {
+        C = sqrt(1.0 + ((x*x + z*z) / (y*y)));
+      } else {
+        C = sqrt(1.0 + ((x*x + y*y) / (z*z)));
+      }
+    }
 #ifdef DEBUG_ComputeLength3D
     printf("%s: C = %g\n", F_NAME, C);
 #endif
@@ -1422,8 +1437,9 @@ int32_t lcurvenormalplanes3D(int32_t ngauss, int32_t npoints, int32_t *X, int32_
       lin_multscal(dif, -1, 1, 3);
       lin_sub(dif, prevn2, 1, 3);
       k = lin_normevec2(dif, 3);
-      if (k < d)
-	lin_multscal(rn2, -1, 1, 3);
+      if (k < d) {
+        lin_multscal(rn2, -1, 1, 3);
+      }
 
       lin_copy(n1, rn1, 1, 3);
       lin_copy(n2, rn2, 1, 3);

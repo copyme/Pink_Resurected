@@ -77,8 +77,9 @@ printf("testabaisse : point %d (%d %d), val = %d\n", x, x%rs, x/rs, SOURCE[x]);
 
   nbtopo(SOURCE, x, rs, N, &t4mm, &t4m, &t8p, &t8pp);
 
-  if (t4mm == 2)
+  if (t4mm == 2) {
     Set(x, COURBE);
+  }
 
 #ifdef REGULARISE
   if (IsSet(x, COURBE))
@@ -94,8 +95,9 @@ printf("testabaisse : point %d (%d %d), val = %d\n", x, x%rs, x/rs, SOURCE[x]);
     for (k = 0; k < 8; k += 2)               /* parcourt les voisins en 4-connexite */
     {
       y = voisin(x, k, rs, N);
-      if ((y != -1) && (IsSet(y, MINI)) &&  ((int32_t)(SOURCE[y]) > valmaxmin))
-        valmaxmin = (int32_t)(SOURCE[y]); 
+      if ((y != -1) && (IsSet(y, MINI)) && ((int32_t)(SOURCE[y]) > valmaxmin)) {
+        valmaxmin = (int32_t)(SOURCE[y]);
+      }
     } /* for k */
     if ((valmaxmin > -1) && ((SOURCE[x] - (uint8_t)valmaxmin) < seuil))
     {

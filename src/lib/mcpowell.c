@@ -170,13 +170,14 @@ int32_t bracket(FUNCe f, ensemble *ens, double *x0, double *x1, double *x2)
 	x[i] = ax + i * (bx - ax) / ((double) NUM_DIV);
 	fx[i] = f(x[i],ens);
     }
-    for (i = 1; i < NUM_DIV; i++)
-	if (fx[i] < fx[i - 1] && fx[i] < fx[i + 1]) {	/* found!! */
-	    *x0 = x[i - 1];
-	    *x1 = x[i];
-	    *x2 = x[i + 1];
-	    return M_FOUND;
-	}
+    for (i = 1; i < NUM_DIV; i++) {
+      if (fx[i] < fx[i - 1] && fx[i] < fx[i + 1]) { /* found!! */
+        *x0 = x[i - 1];
+        *x1 = x[i];
+        *x2 = x[i + 1];
+        return M_FOUND;
+      }
+    }
     /* not found inside, so go downhill */
 
     cx = bx + GOLD * (bx - ax);
@@ -187,9 +188,10 @@ int32_t bracket(FUNCe f, ensemble *ens, double *x0, double *x1, double *x2)
 	cx = bx + GOLD * (bx - ax);
 	fb = fc;
 	fc = f(cx,ens);
-	if (i++ == MAX_ITER)	/* too many iterations */
-	    return M_MAX_ITER;
-	/* printf("c %15.10f  fc %15.10f\n",cx,fc); */
+        if (i++ == MAX_ITER) { /* too many iterations */
+          return M_MAX_ITER;
+        }
+        /* printf("c %15.10f  fc %15.10f\n",cx,fc); */
     }
 
     *x0 = ax;
@@ -222,13 +224,14 @@ int32_t bracket_num(FUNCn f, struct xvimage * image1, struct xvimage * image2, d
 	x[i] = ax + i * (bx - ax) / ((double) NUM_DIV);
 	fx[i] = f(x[i], image1, image2);
     }
-    for (i = 1; i < NUM_DIV; i++)
-	if (fx[i] < fx[i - 1] && fx[i] < fx[i + 1]) {	/* found!! */
-	    *x0 = x[i - 1];
-	    *x1 = x[i];
-	    *x2 = x[i + 1];
-	    return M_FOUND;
-	}
+    for (i = 1; i < NUM_DIV; i++) {
+      if (fx[i] < fx[i - 1] && fx[i] < fx[i + 1]) { /* found!! */
+        *x0 = x[i - 1];
+        *x1 = x[i];
+        *x2 = x[i + 1];
+        return M_FOUND;
+      }
+    }
     /* not found inside, so go downhill */
 
     cx = bx + GOLD * (bx - ax);
@@ -239,9 +242,10 @@ int32_t bracket_num(FUNCn f, struct xvimage * image1, struct xvimage * image2, d
 	cx = bx + GOLD * (bx - ax);
 	fb = fc;
 	fc = f(cx, image1, image2);
-	if (i++ == MAX_ITER)	/* too many iterations */
-	    return M_MAX_ITER;
-	/* printf("c %15.10f  fc %15.10f\n",cx,fc); */
+        if (i++ == MAX_ITER) { /* too many iterations */
+          return M_MAX_ITER;
+        }
+        /* printf("c %15.10f  fc %15.10f\n",cx,fc); */
     }
 
     *x0 = ax;
@@ -289,51 +293,57 @@ int32_t brent(FUNCe f, ensemble *ens, double ax, double bx, double cx, double to
 	    q = (x - v) * (fx - fw);
 	    p = (x - v) * q - (x - w) * r;
 	    q = 2 * (q - r);
-	    if (q > 0.0)
-		p = -p;
-	    q = mcabs(q);
+            if (q > 0.0) {
+              p = -p;
+            }
+            q = mcabs(q);
 	    temp = e;
 	    e = d;
 	    /* now check if parabolic fit is ok */
 	    if (mcabs(p) < mcabs(.5 * q * temp) || (p > q * (a - x) && p < q * (b - x))) {
 		d = p / q;
 		u = x + d;
-		if (u - a < tol2 || b - u < tol2)
-		    d = tol1 * mcsign(xm - x);
-		flag = 1;
+                if (u - a < tol2 || b - u < tol2) {
+                  d = tol1 * mcsign(xm - x);
+                }
+                flag = 1;
 	    }
 	}
 	if (flag == 0) {
-	    if (x >= xm)
-		e = a - x;
-	    else
-		e = b - x;
-	    d = CGOLD * e;
+          if (x >= xm) {
+            e = a - x;
+          } else {
+            e = b - x;
+          }
+            d = CGOLD * e;
 	}
-	if (mcabs(d) >= tol1)
-	    u = x + d;
-	else
-	    u = x + tol1 * mcsign(d);
+        if (mcabs(d) >= tol1) {
+          u = x + d;
+        } else {
+          u = x + tol1 * mcsign(d);
+        }
 
-	fu = f(u, ens);
+        fu = f(u, ens);
 	if (fu <= fx) {
-	    if (u >= x)
-		a = x;
-	    else
-		b = x;
-	    v = w;
+          if (u >= x) {
+            a = x;
+          } else {
+            b = x;
+          }
+            v = w;
 	    fv = fw;
 	    w = x;
 	    fw = fx;
 	    x = u;
 	    fx = fu;
 	} else {
-	    if (u < x)
-		a = u;
-	    else
-		b = u;
+          if (u < x) {
+            a = u;
+          } else {
+            b = u;
+          }
 
-	    if (fu <= fw || w == x) {
+            if (fu <= fw || w == x) {
 		v = w;
 		fv = fw;
 		w = u;
@@ -382,51 +392,57 @@ int32_t brent_num(FUNCn f, struct xvimage * image1, struct xvimage * image2,
 	    q = (x - v) * (fx - fw);
 	    p = (x - v) * q - (x - w) * r;
 	    q = 2 * (q - r);
-	    if (q > 0.0)
-		p = -p;
-	    q = mcabs(q);
+            if (q > 0.0) {
+              p = -p;
+            }
+            q = mcabs(q);
 	    temp = e;
 	    e = d;
 	    /* now check if parabolic fit is ok */
 	    if (mcabs(p) < mcabs(.5 * q * temp) || (p > q * (a - x) && p < q * (b - x))) {
 		d = p / q;
 		u = x + d;
-		if (u - a < tol2 || b - u < tol2)
-		    d = tol1 * mcsign(xm - x);
-		flag = 1;
+                if (u - a < tol2 || b - u < tol2) {
+                  d = tol1 * mcsign(xm - x);
+                }
+                flag = 1;
 	    }
 	}
 	if (flag == 0) {
-	    if (x >= xm)
-		e = a - x;
-	    else
-		e = b - x;
-	    d = CGOLD * e;
+          if (x >= xm) {
+            e = a - x;
+          } else {
+            e = b - x;
+          }
+            d = CGOLD * e;
 	}
-	if (mcabs(d) >= tol1)
-	    u = x + d;
-	else
-	    u = x + tol1 * mcsign(d);
+        if (mcabs(d) >= tol1) {
+          u = x + d;
+        } else {
+          u = x + tol1 * mcsign(d);
+        }
 
-	fu = f(u, image1, image2);
+        fu = f(u, image1, image2);
 	if (fu <= fx) {
-	    if (u >= x)
-		a = x;
-	    else
-		b = x;
-	    v = w;
+          if (u >= x) {
+            a = x;
+          } else {
+            b = x;
+          }
+            v = w;
 	    fv = fw;
 	    w = x;
 	    fw = fx;
 	    x = u;
 	    fx = fu;
 	} else {
-	    if (u < x)
-		a = u;
-	    else
-		b = u;
+          if (u < x) {
+            a = u;
+          } else {
+            b = u;
+          }
 
-	    if (fu <= fw || w == x) {
+            if (fu <= fw || w == x) {
 		v = w;
 		fv = fw;
 		w = u;
@@ -457,8 +473,9 @@ static double f1dim(double x, ensemble *e)
 {
     int32_t j;
 
-    for (j = 0; j < ndim; j++)
-	ptrial[j] = point[j] + x * direc[j];
+    for (j = 0; j < ndim; j++) {
+      ptrial[j] = point[j] + x * direc[j];
+    }
 
     return func(ptrial, e);
 } // f1dim()
@@ -467,8 +484,9 @@ static double f1dim_num(double x, struct xvimage * image1, struct xvimage * imag
 {
     int32_t j;
 
-    for (j = 0; j < ndim; j++)
-	ptrial[j] = point[j] + x * direc[j];
+    for (j = 0; j < ndim; j++) {
+      ptrial[j] = point[j] + x * direc[j];
+    }
 
     return func_num(ptrial, image1, image2);
 } // f1dim_num()
@@ -498,11 +516,13 @@ int32_t linmcmin(PFNe f, ensemble *ens, double p[], double dirv[], int32_t n, do
 
     x1 = 0.0;			/* MUST CHANGE THIS.... */
     x2 = 0.1;
-    if ((code = bracket(f1dim, ens, &x1, &x2, &x3)) != M_FOUND)
-	return code;
+    if ((code = bracket(f1dim, ens, &x1, &x2, &x3)) != M_FOUND) {
+      return code;
+    }
 
-    if ((code = brent(f1dim, ens, x1, x2, x3, PTOL, &xmin, fmin)) != M_FOUND)
-	return code;
+    if ((code = brent(f1dim, ens, x1, x2, x3, PTOL, &xmin, fmin)) != M_FOUND) {
+      return code;
+    }
 
     for (i = 0; i < ndim; i++) {
 	dirv[i] *= xmin;	/* update direction vector */
@@ -525,11 +545,15 @@ int32_t linmin_num(PFNn f, struct xvimage * image1, struct xvimage * image2, dou
 
     x1 = 0.0;			/* MUST CHANGE THIS.... */
     x2 = 0.1;
-    if ((code = bracket_num(f1dim_num, image1, image2, &x1, &x2, &x3)) != M_FOUND)
-	return code;
+    if ((code = bracket_num(f1dim_num, image1, image2, &x1, &x2, &x3)) !=
+        M_FOUND) {
+      return code;
+    }
 
-    if ((code = brent_num(f1dim_num, image1, image2, x1, x2, x3, PTOL, &xmin, fmin)) != M_FOUND)
-	return code;
+    if ((code = brent_num(f1dim_num, image1, image2, x1, x2, x3, PTOL, &xmin,
+                          fmin)) != M_FOUND) {
+      return code;
+    }
 
     for (i = 0; i < ndim; i++) {
 	dirv[i] *= xmin;	/* update direction vector */
@@ -560,14 +584,17 @@ int32_t powell(PFNe f, ensemble * ens, double p[], int32_t n, double tol,
 	printf("***ERROR:powell: Too many parameters. Max = %d\n", MAXDIM);
 	exit(-1);
     }
-    for (i = 0; i < n; i++)	/* set up scale lenght */
-	for (j = 0; j < n; j++)
-	    dir[i][j] = ((i == j) ? scale : 0.0);
+    for (i = 0; i < n; i++) { /* set up scale lenght */
+      for (j = 0; j < n; j++) {
+        dir[i][j] = ((i == j) ? scale : 0.0);
+      }
+    }
 
     new_value = f(p,ens);		/* compute initial value */
-    for (i = 0; i < n; i++)	/* save the old point */
-	pold[i] = p[i];
-    
+    for (i = 0; i < n; i++) {           /* save the old point */
+      pold[i] = p[i];
+    }
+
     for (iter = 0; iter < maxiter; iter++) 
     {
       go_down = -1;		/* impossible direction */
@@ -579,17 +606,18 @@ int32_t powell(PFNe f, ensemble * ens, double p[], int32_t n, double tol,
 
       for (i = 0; i < n; i++) 
       {
-	for (j = 0; j < n; j++) new_dir[j] = dir[j][i];
-	prev_value = new_value;
+        for (j = 0; j < n; j++) {
+          new_dir[j] = dir[j][i];
+        }
+        prev_value = new_value;
 	flag = linmcmin(f, ens, p, new_dir, n, &new_value);
-	if (flag != M_FOUND)
-	  // printf("dir %d ener %.13g\n", i, new_value);
+        if (flag != M_FOUND) {
+          // printf("dir %d ener %.13g\n", i, new_value);
 	  ;
-	else if (prev_value - new_value > max_decr) 
-	{
-	  max_decr = prev_value - new_value;
+        } else if (prev_value - new_value > max_decr) {
+          max_decr = prev_value - new_value;
 	  go_down = i;
-	}
+        }
       }
 
       if (2 * mcabs(cur_value - new_value) <= tol * (mcabs(cur_value) + mcabs(new_value))) {
@@ -613,8 +641,9 @@ int32_t powell(PFNe f, ensemble * ens, double p[], int32_t n, double tol,
 	pold[i] = p[i];
       }
       trial_value = f(pextrap,ens);
-      if (trial_value >= cur_value)	/* don't use new direction */
-	continue;		/* jump to next iteration */
+      if (trial_value >= cur_value) { /* don't use new direction */
+        continue;                     /* jump to next iteration */
+      }
 
       tmp = (cur_value - new_value - max_decr) * (cur_value - new_value - max_decr);
       tmp = tmp * 2 * (cur_value - 2 * new_value + trial_value);
@@ -622,12 +651,15 @@ int32_t powell(PFNe f, ensemble * ens, double p[], int32_t n, double tol,
 	(cur_value - trial_value) * (cur_value - trial_value);
       if (tmp < 0.0) {	/* good direction */
 	flag = linmcmin(f,ens, p, new_dir, n, &new_value);	/* move along it */
-	for (i = 0; i < n; i++)	/* update dir */
-	  dir[i][go_down] = new_dir[i];
+        for (i = 0; i < n; i++) {                               /* update dir */
+          dir[i][go_down] = new_dir[i];
+        }
       }
 #ifdef VERBOSE 
       printf("Cost: %g ; Params : ", new_value);
-      for (i = 0; i < n; i++) printf("%g ", p[i]);
+      for (i = 0; i < n; i++) {
+        printf("%g ", p[i]);
+      }
       printf("\n");
 #endif
     }
@@ -657,14 +689,17 @@ int32_t powell_num(PFNn f, struct xvimage * image1, struct xvimage * image2,
 	printf("***ERROR:powell: Too many parameters. Max = %d\n", MAXDIM);
 	exit(-1);
     }
-    for (i = 0; i < n; i++)	/* set up scale lenght */
-	for (j = 0; j < n; j++)
-	    dir[i][j] = ((i == j) ? scale : 0.0);
+    for (i = 0; i < n; i++) { /* set up scale lenght */
+      for (j = 0; j < n; j++) {
+        dir[i][j] = ((i == j) ? scale : 0.0);
+      }
+    }
 
     new_value = f(p, image1, image2);	/* compute initial value */
-    for (i = 0; i < n; i++)	/* save the old point */
-	pold[i] = p[i];
-    
+    for (i = 0; i < n; i++) {           /* save the old point */
+      pold[i] = p[i];
+    }
+
     for (iter = 0; iter < maxiter; iter++) 
     {
 #ifdef VERBOSE
@@ -678,17 +713,18 @@ int32_t powell_num(PFNn f, struct xvimage * image1, struct xvimage * image2,
       */
       for (i = 0; i < n; i++) 
       {
-	for (j = 0; j < n; j++) new_dir[j] = dir[j][i];
-	prev_value = new_value;
+        for (j = 0; j < n; j++) {
+          new_dir[j] = dir[j][i];
+        }
+        prev_value = new_value;
 	flag = linmin_num(f, image1, image2, p, new_dir, n, &new_value);
-	if (flag != M_FOUND)
-	  // printf("dir %d ener %.13g\n", i, new_value);
+        if (flag != M_FOUND) {
+          // printf("dir %d ener %.13g\n", i, new_value);
 	  ;
-	else if (prev_value - new_value > max_decr) 
-	{
-	  max_decr = prev_value - new_value;
+        } else if (prev_value - new_value > max_decr) {
+          max_decr = prev_value - new_value;
 	  go_down = i;
-	}
+        }
       }
 
       if (2 * mcabs(cur_value - new_value) <= tol * (mcabs(cur_value) + mcabs(new_value))) {
@@ -719,8 +755,9 @@ int32_t powell_num(PFNn f, struct xvimage * image1, struct xvimage * image2,
       }
 
       trial_value = f(pextrap, image1, image2);
-      if (trial_value >= cur_value)	/* don't use new direction */
-	continue;		/* jump to next iteration */
+      if (trial_value >= cur_value) { /* don't use new direction */
+        continue;                     /* jump to next iteration */
+      }
 
       tmp = (cur_value - new_value - max_decr) * (cur_value - new_value - max_decr);
       tmp = tmp * 2 * (cur_value - 2 * new_value + trial_value);
@@ -728,12 +765,15 @@ int32_t powell_num(PFNn f, struct xvimage * image1, struct xvimage * image2,
 	(cur_value - trial_value) * (cur_value - trial_value);
       if (tmp < 0.0) {	/* good direction */
 	flag = linmin_num(f, image1, image2, p, new_dir, n, &new_value);	/* move along it */
-	for (i = 0; i < n; i++)	/* update dir */
-	  dir[i][go_down] = new_dir[i];
+        for (i = 0; i < n; i++) { /* update dir */
+          dir[i][go_down] = new_dir[i];
+        }
       }
 #ifdef VERBOSE 
       printf("Cost: %g ; Params : ", new_value);
-      for (i = 0; i < n; i++) printf("%g ", p[i]);
+      for (i = 0; i < n; i++) {
+        printf("%g ", p[i]);
+      }
       printf("\n");
 #endif
     }

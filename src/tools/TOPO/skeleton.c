@@ -180,9 +180,14 @@ int main(int argc, char **argv)
     }
     N = rowsize(image) * colsize(image) * depth(image);
     F = UCHARDATA(image);;
-    for (i = 0; i < N; i++) // inverse l'image
-      if (F[i]) F[i] = 0; else F[i] = NDG_MAX;
-  
+    for (i = 0; i < N; i++) { // inverse l'image
+      if (F[i]) {
+        F[i] = 0;
+      } else {
+        F[i] = NDG_MAX;
+      }
+    }
+
     if (priocode == 0)
     {
       if (depth(image) == 1)
@@ -248,8 +253,13 @@ int main(int argc, char **argv)
         exit(1);
       }
     }
-    for (i = 0; i < N; i++) // re-inverse l'image
-      if (F[i]) F[i] = 0; else F[i] = NDG_MAX;
+    for (i = 0; i < N; i++) { // re-inverse l'image
+      if (F[i]) {
+        F[i] = 0;
+      } else {
+        F[i] = NDG_MAX;
+      }
+    }
   }
 
   connex = atoi(argv[3]);
@@ -266,8 +276,9 @@ int main(int argc, char **argv)
         exit(1);
       }
     }
+  } else {
+    inhibvalue = -1;
   }
-  else inhibvalue = -1;
 
   if (depth(image) == 1)
   {
@@ -311,7 +322,9 @@ int main(int argc, char **argv)
   writeimage(image, argv[argc-1]);
   freeimage(image);
   freeimage(prio);
-  if (inhibimage) freeimage(inhibimage);
+  if (inhibimage) {
+    freeimage(inhibimage);
+  }
 
   return 0;
 } /* main */

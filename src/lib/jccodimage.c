@@ -68,28 +68,89 @@ knowledge of the CeCILL license and that you accept its terms.
 
 int32_t voisinGA(int32_t i, int32_t k, int32_t rs, int32_t nb)
 {
-  if(i < nb)                  /* i est horizontale */
+  if (i < nb) { /* i est horizontale */
     switch(k)
     {
-    case 0: if(i/rs > 0) return nb+i-rs; else return -1;
-    case 1: if(i%rs > 0) return i-1; else return -1;
-    case 2: if(i < nb-rs) return nb+i; else return -1;
-    case 3: if((i < nb-rs) && (i%rs < rs-1)) return nb+i+1; else return -1;
-    case 4: if(i%rs < rs-2) return i+1; else return -1;
-    case 5: if((i/rs > 0) &&  (i%rs < rs-1)) return nb+i-rs+1; else return -1;
+    case 0:
+      if (i / rs > 0) {
+        return nb + i - rs;
+      } else {
+        return -1;
+      }
+    case 1:
+      if (i % rs > 0) {
+        return i - 1;
+      } else {
+        return -1;
+      }
+    case 2:
+      if (i < nb - rs) {
+        return nb + i;
+      } else {
+        return -1;
+      }
+    case 3:
+      if ((i < nb - rs) && (i % rs < rs - 1)) {
+        return nb + i + 1;
+      } else {
+        return -1;
+      }
+    case 4:
+      if (i % rs < rs - 2) {
+        return i + 1;
+      } else {
+        return -1;
+      }
+    case 5:
+      if ((i / rs > 0) && (i % rs < rs - 1)) {
+        return nb + i - rs + 1;
+      } else {
+        return -1;
+      }
     default:  return -1;
     }
-  else                       /* sinon i est verticale */
+  } else { /* sinon i est verticale */
     switch(k)
     {
-    case 0: if(i%rs < rs-1) return i-nb; else return -1;
-    case 1: if( ((i-nb)/rs)>0) return i-rs; else return -1;
-    case 2: if(i%rs > 0) return i-nb-1; else return -1;
-    case 3: if( ((i-nb) < nb-rs) && (i%rs > 0)) return i-nb-1+rs; else return -1; 
-    case 4: if((i-nb) < nb-2*rs) return i+rs;else return -1;
-    case 5: if( ((i-nb) < nb-rs) && (i%rs < rs-1)) return i-nb+rs; else return -1;
+    case 0:
+      if (i % rs < rs - 1) {
+        return i - nb;
+      } else {
+        return -1;
+      }
+    case 1:
+      if (((i - nb) / rs) > 0) {
+        return i - rs;
+      } else {
+        return -1;
+      }
+    case 2:
+      if (i % rs > 0) {
+        return i - nb - 1;
+      } else {
+        return -1;
+      }
+    case 3:
+      if (((i - nb) < nb - rs) && (i % rs > 0)) {
+        return i - nb - 1 + rs;
+      } else {
+        return -1;
+      }
+    case 4:
+      if ((i - nb) < nb - 2 * rs) {
+        return i + rs;
+      } else {
+        return -1;
+      }
+    case 5:
+      if (((i - nb) < nb - rs) && (i % rs < rs - 1)) {
+        return i - nb + rs;
+      } else {
+        return -1;
+      }
     default: return -1;
     }
+  }
   assert(1); exit(1);
 }
 
@@ -106,13 +167,33 @@ int32_t incidente(int32_t i, int32_t k, int32_t rs, int32_t nb)
   switch(k)
   {
     /* EST */
-  case 0:        if (i%rs!=rs-1)              return i;     else return -1;
+  case 0:
+    if (i % rs != rs - 1) {
+      return i;
+    } else {
+      return -1;
+    }
     /* NORD */
-  case 1:        if (i>=rs)                   return nb+i-rs;  else return -1;
+  case 1:
+    if (i >= rs) {
+      return nb + i - rs;
+    } else {
+      return -1;
+    }
     /*OUEST */
-  case 2:        if (i%rs!=0)                 return i-1;     else return -1;
+  case 2:
+    if (i % rs != 0) {
+      return i - 1;
+    } else {
+      return -1;
+    }
     /* SUD */
-  case 3:        if (i<nb-rs)                 return nb+i;     else return -1;
+  case 3:
+    if (i < nb - rs) {
+      return nb + i;
+    } else {
+      return -1;
+    }
   default: return -1;
   }
 }
@@ -130,17 +211,47 @@ int32_t incidente3d(int32_t i, int32_t k, int32_t rs, int32_t nb, int32_t ps)
   switch(k)
   {
     /* EST */
-  case 0:        if (i%rs!=rs-1) return i; else return -1;
+  case 0:
+    if (i % rs != rs - 1) {
+      return i;
+    } else {
+      return -1;
+    }
     /* NORD */
-  case 1:        if ((i%ps)>=rs) return nb+i-rs; else return -1;
+  case 1:
+    if ((i % ps) >= rs) {
+      return nb + i - rs;
+    } else {
+      return -1;
+    }
     /* OUEST */
-  case 2:        if (i%rs!= 0) return i-1; else return -1;
+  case 2:
+    if (i % rs != 0) {
+      return i - 1;
+    } else {
+      return -1;
+    }
     /*SUD*/
-  case 3:        if ((i%ps)<ps-rs) return nb+i; else return -1;
+  case 3:
+    if ((i % ps) < ps - rs) {
+      return nb + i;
+    } else {
+      return -1;
+    }
     /* DEVANT */
-  case 4:        if (i>=ps) return (2*nb)+i-ps; else return -1;
+  case 4:
+    if (i >= ps) {
+      return (2 * nb) + i - ps;
+    } else {
+      return -1;
+    }
     /* DERRIERE */
-  case 5:        if (i<nb-ps) return (2*nb)+i; else return -1;
+  case 5:
+    if (i < nb - ps) {
+      return (2 * nb) + i;
+    } else {
+      return -1;
+    }
   default: return -1;
   }
 }
@@ -160,21 +271,61 @@ int32_t incidente4d(int32_t i, int32_t k, int32_t rs, int32_t nb, int32_t ps, in
   switch(k)
   {
     /* EST */
-  case 0:        if (i%rs!=rs-1) return i; else return -1;
+  case 0:
+    if (i % rs != rs - 1) {
+      return i;
+    } else {
+      return -1;
+    }
     /* NORD */
-  case 1:        if ((i%ps)>=rs) return nb+i-rs; else return -1;
+  case 1:
+    if ((i % ps) >= rs) {
+      return nb + i - rs;
+    } else {
+      return -1;
+    }
     /* OUEST */
-  case 2:        if (i%rs != 0) return i-1; else return -1;
+  case 2:
+    if (i % rs != 0) {
+      return i - 1;
+    } else {
+      return -1;
+    }
     /*SUD*/
-  case 3:        if ((i%ps)<ps-rs) return nb+i; else return -1;
+  case 3:
+    if ((i % ps) < ps - rs) {
+      return nb + i;
+    } else {
+      return -1;
+    }
     /* DERRIERE */
-  case 4:        if (i%vs >= ps) return (2*nb)+i-ps; else return -1;
+  case 4:
+    if (i % vs >= ps) {
+      return (2 * nb) + i - ps;
+    } else {
+      return -1;
+    }
     /* DEVANT */
-  case 5:        if (i%vs < (vs-ps)) return (2*nb)+i; else return -1;
+  case 5:
+    if (i % vs < (vs - ps)) {
+      return (2 * nb) + i;
+    } else {
+      return -1;
+    }
     /* AVANT */
-  case 6:        if (i >= vs) return (3*nb)+i - vs; else return -1; 
+  case 6:
+    if (i >= vs) {
+      return (3 * nb) + i - vs;
+    } else {
+      return -1;
+    }
     /* APRES */
-  case 7:        if (i < (nb-vs) ) return (3*nb)+i; else return -1; 
+  case 7:
+    if (i < (nb - vs)) {
+      return (3 * nb) + i;
+    } else {
+      return -1;
+    }
   default: return -1;
   }
 }
@@ -233,10 +384,15 @@ int32_t Arete(int32_t x, int32_t y, int32_t rs, int32_t N)
 {
   int32_t z;
   if(y < x){z = x; x = y; y = z;}
-  z =  y - x; 
-  if(z == 1) return x;  
-  if(z == rs) return x+N; 
-  else return -1;
+  z =  y - x;
+  if (z == 1) {
+    return x;
+  }
+  if (z == rs) {
+    return x + N;
+  } else {
+    return -1;
+  }
 }
 
 /* ==================================== */
@@ -252,14 +408,54 @@ int32_t voisin4D8(int32_t i, int32_t k, int32_t rs, int32_t ps, int32_t N, int32
 {
   switch(k)
   {
-  case 0:  if (i%rs!=rs-1) return i+1; else return -1;
-  case 1:  if ((i%ps)>=rs) return i-rs; else return -1;
-  case 2:  if (i%rs!=0) return i-1; else return -1;
-  case 3:  if ((i%ps)<ps-rs) return i+rs; else return -1;
-  case 4:  if ((i%N) >=ps) return i-ps; else return -1;
-  case 5:  if ((i%N) <N-ps) return i+ps; else return -1;
-  case 6:  if (i > N) return i-N; else return -1;
-  case 7:  if (i < Nt - N) return i+N; else return -1;
+  case 0:
+    if (i % rs != rs - 1) {
+      return i + 1;
+    } else {
+      return -1;
+    }
+  case 1:
+    if ((i % ps) >= rs) {
+      return i - rs;
+    } else {
+      return -1;
+    }
+  case 2:
+    if (i % rs != 0) {
+      return i - 1;
+    } else {
+      return -1;
+    }
+  case 3:
+    if ((i % ps) < ps - rs) {
+      return i + rs;
+    } else {
+      return -1;
+    }
+  case 4:
+    if ((i % N) >= ps) {
+      return i - ps;
+    } else {
+      return -1;
+    }
+  case 5:
+    if ((i % N) < N - ps) {
+      return i + ps;
+    } else {
+      return -1;
+    }
+  case 6:
+    if (i > N) {
+      return i - N;
+    } else {
+      return -1;
+    }
+  case 7:
+    if (i < Nt - N) {
+      return i + N;
+    } else {
+      return -1;
+    }
   }
   assert(1); exit(1);
 }/* voisin4D8() */

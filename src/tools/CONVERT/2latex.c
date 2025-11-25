@@ -142,7 +142,9 @@ int main(int argc, char **argv)
   fprintf(fd, "%s\n\n", image->name);    
 
   fprintf(fd, "%s", BEGIMAGE);
-  for (x = 0; x < rs; x++) fprintf(fd, "l");
+  for (x = 0; x < rs; x++) {
+    fprintf(fd, "l");
+  }
   fprintf(fd, "}\n");
 
   for (y = 0; y < cs; y++)
@@ -151,20 +153,24 @@ int main(int argc, char **argv)
     {
       if (bold && *(UCHARDATA(bold) + y * rs + x))
       {
-        if (underl && *(UCHARDATA(underl) + y * rs + x))
+        if (underl && *(UCHARDATA(underl) + y * rs + x)) {
           macro = (char *)"\\zc";
-        else
+        } else {
           macro = (char *)"\\za";
+        }
       }
       else
       {
-        if (underl && *(UCHARDATA(underl) + y * rs + x))
+        if (underl && *(UCHARDATA(underl) + y * rs + x)) {
           macro = (char *)"\\zd";
-        else
+        } else {
           macro = (char *)"\\zb";
+        }
       }
       fprintf(fd, "%s{%3d}", macro, *(UCHARDATA(image) + y * rs + x));
-      if (x != rs - 1) fprintf(fd, "&");
+      if (x != rs - 1) {
+        fprintf(fd, "&");
+      }
     } /* for x */
     fprintf(fd, "%s\n", "\\\\");
   } /* for y */
@@ -173,8 +179,12 @@ int main(int argc, char **argv)
   fprintf(fd, "%s\n", ENDDOC);
   fclose(fd);
   freeimage(image);
-  if (argc > 4) freeimage(underl);
-  if (argc > 3) freeimage(bold);
+  if (argc > 4) {
+    freeimage(underl);
+  }
+  if (argc > 3) {
+    freeimage(bold);
+  }
   return 0;
 }
 

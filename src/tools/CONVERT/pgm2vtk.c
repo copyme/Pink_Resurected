@@ -293,21 +293,24 @@ int main(int argc, char **argv)
     fprintf (fd, "ASCII\n\n");
     fprintf (fd, "DATASET POLYDATA\n");
 
-    for (z = 0; z < ds; z++)
-      for (y = 0; y < cs; y++)
-	for (x = 0; x < rs; x++)
+    for (z = 0; z < ds; z++) {
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++)
 	{
-	  if (K[z * ps + y * rs + x] && CARRE3D(x,y,z)) 
-	    nb_cells++;
-	}
+          if (K[z * ps + y * rs + x] && CARRE3D(x, y, z)) {
+            nb_cells++;
+          }
+        }
+      }
+    }
 
     nb_points = 4 * nb_cells;
     fprintf (fd, "POINTS %d float\n", nb_points);
 
-    for (z = 0; z < ds; z++)
-      for (y = 0; y < cs; y++)
-	for (x = 0; x < rs; x++)
-	  if (K[z * ps + y * rs + x]) 
+    for (z = 0; z < ds; z++) {
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++) {
+          if (K[z * ps + y * rs + x]) 
  	  {
 #ifdef PARANO
 	    if (CUBE3D(x,y,z))
@@ -315,20 +318,31 @@ int main(int argc, char **argv)
 	      fprintf(stderr, "%s: warning: 3D element found\n", argv[0]);
 	    }
 #endif
-	    if (CARRE3DXY(x,y,z)) add_points_xy(fd, x, y, z);
-	    else if (CARRE3DXZ(x,y,z)) add_points_xz(fd, x, y, z);
-	    else if (CARRE3DYZ(x,y,z)) add_points_yz(fd, x, y, z);
-	  }
-  
+            if (CARRE3DXY(x, y, z)) {
+              add_points_xy(fd, x, y, z);
+            } else if (CARRE3DXZ(x, y, z)) {
+              add_points_xz(fd, x, y, z);
+            } else if (CARRE3DYZ(x, y, z)) {
+              add_points_yz(fd, x, y, z);
+            }
+          }
+        }
+      }
+    }
+
     if (mode == 1)
     { 
       fprintf (fd, "\nPOLYGONS %d %d\n", nb_cells, 5 * nb_cells);
-      for (x=0; x < nb_cells; x++) add_cell(fd, x);
+      for (x = 0; x < nb_cells; x++) {
+        add_cell(fd, x);
+      }
     }
     if (mode == 2) 
     {  
       fprintf (fd, "\nPOLYGONS %d %d\n", 2 * nb_cells, 8 * nb_cells);
-      for (x=0; x < nb_cells; x++) add_cell_triang(fd, x);
+      for (x = 0; x < nb_cells; x++) {
+        add_cell_triang(fd, x);
+      }
     }
   }
   else
@@ -340,24 +354,34 @@ int main(int argc, char **argv)
     fprintf (fd, "ASCII\n\n");
     fprintf (fd, "DATASET POLYDATA\n");
 
-    for (z = 0; z < ds; z++)
-      for (y = 0; y < cs; y++)
-	for (x = 0; x < rs; x++)
-	  if (K[z * ps + y * rs + x]) 
-	    nb_cells++;
+    for (z = 0; z < ds; z++) {
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++) {
+          if (K[z * ps + y * rs + x]) {
+            nb_cells++;
+          }
+        }
+      }
+    }
 
     nb_points = NBPOINTS_CUBE * nb_cells;
     fprintf (fd, "POINTS %d float\n", nb_points);
 
-    for (z = 0; z < ds; z++)
-      for (y = 0; y < cs; y++)
-	for (x = 0; x < rs; x++)
-	  if (K[z * ps + y * rs + x])
-	    add_points_cube(fd, x, y, z, RADIUSCUBE);
+    for (z = 0; z < ds; z++) {
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++) {
+          if (K[z * ps + y * rs + x]) {
+            add_points_cube(fd, x, y, z, RADIUSCUBE);
+          }
+        }
+      }
+    }
 
     fprintf (fd, "\nPOLYGONS %d %d\n", 
 	     NBFACES_CUBE * nb_cells, NBFACES_CUBE * SIZE_FACE_CUBE * nb_cells);
-    for (x=0; x < nb_cells; x++) add_cells_cube(fd, x);
+    for (x = 0; x < nb_cells; x++) {
+      add_cells_cube(fd, x);
+    }
 
   }
   else
@@ -370,77 +394,103 @@ int main(int argc, char **argv)
     fprintf (fd, "ASCII\n\n");
     fprintf (fd, "DATASET POLYDATA\n");
 
-    for (x = 0; x < rs; x++)
+    for (x = 0; x < rs; x++) {
       for (y = 0; y < cs; y++)
       {
-	for (z = 0; z < ds; z++)
-	  if (K[z * ps + y * rs + x]) 
-	  { nb_cells++; break; }
-	  
+        for (z = 0; z < ds; z++) {
+          if (K[z * ps + y * rs + x]) 
+	  { nb_cells++; break;
+          }
+        }
       }
-    for (x = 0; x < rs; x++)
+    }
+    for (x = 0; x < rs; x++) {
       for (z = 0; z < ds; z++)
       {
-	for (y = 0; y < cs; y++)
-	  if (K[z * ps + y * rs + x]) 
-	  { nb_cells++; break; }
-	  
+        for (y = 0; y < cs; y++) {
+          if (K[z * ps + y * rs + x]) 
+	  { nb_cells++; break;
+          }
+        }
       }
-    for (z = 0; z < ds; z++)
+    }
+    for (z = 0; z < ds; z++) {
       for (y = 0; y < cs; y++)
       {
-	for (x = 0; x < rs; x++)
-	  if (K[z * ps + y * rs + x]) 
-	  { nb_cells++; break; }
-	
+        for (x = 0; x < rs; x++) {
+          if (K[z * ps + y * rs + x]) 
+	  { nb_cells++; break;
+          }
+        }
       }
+    }
 
     nb_points = NBPOINTS_CUBE * nb_cells;
     fprintf (fd, "POINTS %d float\n", nb_points);
 
-    for (x = 0; x < rs; x++)
+    for (x = 0; x < rs; x++) {
       for (y = 0; y < cs; y++)
       {
 	imin = imax = -1;
-	for (z = 0; z < ds; z++)
-	  if (K[z * ps + y * rs + x]) 
-	  { imin = z; break; }
-	for (z = ds - 1; z >= 0; z--)
-	  if (K[z * ps + y * rs + x]) 
-	  { imax = z; break; }
-	if (imin != -1)
-	  add_points_line_z(fd, x, y, imin, imax, RADIUSLINE);
+        for (z = 0; z < ds; z++) {
+          if (K[z * ps + y * rs + x]) 
+	  { imin = z; break;
+          }
+        }
+        for (z = ds - 1; z >= 0; z--) {
+          if (K[z * ps + y * rs + x]) 
+	  { imax = z; break;
+          }
+        }
+        if (imin != -1) {
+          add_points_line_z(fd, x, y, imin, imax, RADIUSLINE);
+        }
       }
-    for (x = 0; x < rs; x++)
+    }
+    for (x = 0; x < rs; x++) {
       for (z = 0; z < ds; z++)
       {
 	imin = imax = -1;
-	for (y = 0; y < cs; y++)
-	  if (K[z * ps + y * rs + x]) 
-	  { imin = y; break; }
-	for (y = cs - 1; y >= 0; y--)
-	  if (K[z * ps + y * rs + x]) 
-	  { imax = y; break; }
-	if (imin != -1)
-	  add_points_line_y(fd, x, imin, imax, z, RADIUSLINE);
+        for (y = 0; y < cs; y++) {
+          if (K[z * ps + y * rs + x]) 
+	  { imin = y; break;
+          }
+        }
+        for (y = cs - 1; y >= 0; y--) {
+          if (K[z * ps + y * rs + x]) 
+	  { imax = y; break;
+          }
+        }
+        if (imin != -1) {
+          add_points_line_y(fd, x, imin, imax, z, RADIUSLINE);
+        }
       }
-    for (z = 0; z < ds; z++)
+    }
+    for (z = 0; z < ds; z++) {
       for (y = 0; y < cs; y++)
       {
 	imin = imax = -1;
-	for (x = 0; x < rs; x++)
-	  if (K[z * ps + y * rs + x]) 
-	  { imin = x; break; }
-	for (x = rs - 1; x >= 0; x--)
-	  if (K[z * ps + y * rs + x]) 
-	  { imax = x; break; }
-	if (imin != -1)
-	  add_points_line_x(fd, imin, imax, y, z, RADIUSLINE);
+        for (x = 0; x < rs; x++) {
+          if (K[z * ps + y * rs + x]) 
+	  { imin = x; break;
+          }
+        }
+        for (x = rs - 1; x >= 0; x--) {
+          if (K[z * ps + y * rs + x]) 
+	  { imax = x; break;
+          }
+        }
+        if (imin != -1) {
+          add_points_line_x(fd, imin, imax, y, z, RADIUSLINE);
+        }
       }
-  
+    }
+
     fprintf (fd, "\nPOLYGONS %d %d\n", 
 	     NBFACES_CUBE * nb_cells, NBFACES_CUBE * SIZE_FACE_CUBE * nb_cells);
-    for (x=0; x < nb_cells; x++) add_cells_cube(fd, x);
+    for (x = 0; x < nb_cells; x++) {
+      add_cells_cube(fd, x);
+    }
 
   }
   else
@@ -451,24 +501,34 @@ int main(int argc, char **argv)
     fprintf (fd, "ASCII\n\n");
     fprintf (fd, "DATASET POLYDATA\n");
 
-    for (z = 0; z < ds; z++)
-      for (y = 0; y < cs; y++)
-	for (x = 0; x < rs; x++)
-	  if (K[z * ps + y * rs + x]) 
-	    nb_cells++;
+    for (z = 0; z < ds; z++) {
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++) {
+          if (K[z * ps + y * rs + x]) {
+            nb_cells++;
+          }
+        }
+      }
+    }
 
     nb_points = NBPOINTS_OCTAEDRON * nb_cells;
     fprintf (fd, "POINTS %d float\n", nb_points);
 
-    for (z = 0; z < ds; z++)
-      for (y = 0; y < cs; y++)
-	for (x = 0; x < rs; x++)
-	  if (K[z * ps + y * rs + x])
-	    add_points_octaedron(fd, x, y, z, RADIUSOCTAEDRON);
+    for (z = 0; z < ds; z++) {
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++) {
+          if (K[z * ps + y * rs + x]) {
+            add_points_octaedron(fd, x, y, z, RADIUSOCTAEDRON);
+          }
+        }
+      }
+    }
 
     fprintf (fd, "\nPOLYGONS %d %d\n", 
 	     NBFACES_OCTAEDRON * nb_cells, NBFACES_OCTAEDRON * SIZE_FACE_OCTAEDRON * nb_cells);
-    for (x=0; x < nb_cells; x++) add_cells_octaedron(fd, x);
+    for (x = 0; x < nb_cells; x++) {
+      add_cells_octaedron(fd, x);
+    }
 
   }
   else
@@ -481,21 +541,24 @@ int main(int argc, char **argv)
     fprintf (fd, "ASCII\n\n");
     fprintf (fd, "DATASET POLYDATA\n");
 
-    for (z = 0; z < ds; z++)
-      for (y = 0; y < cs; y++)
-	for (x = 0; x < rs; x++)
+    for (z = 0; z < ds; z++) {
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++)
 	{
-	  if (K[z * ps + y * rs + x] && INTER3D(x,y,z)) 
-	    nb_cells++;
-	}
+          if (K[z * ps + y * rs + x] && INTER3D(x, y, z)) {
+            nb_cells++;
+          }
+        }
+      }
+    }
 
     nb_points = NBPOINTS_CUBE * nb_cells;
     fprintf (fd, "POINTS %d float\n", nb_points);
 
-    for (z = 0; z < ds; z++)
-      for (y = 0; y < cs; y++)
-	for (x = 0; x < rs; x++)
-	  if (K[z * ps + y * rs + x]) 
+    for (z = 0; z < ds; z++) {
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++) {
+          if (K[z * ps + y * rs + x]) 
  	  {
 #ifdef PARANO
 	    if (CUBE3D(x,y,z) || CARRE3D(x,y,z))
@@ -503,14 +566,23 @@ int main(int argc, char **argv)
 	      fprintf(stderr, "%s: warning: 2D or 3D element found\n", argv[0]);
 	    }
 #endif
-	    if (INTER3DX(x,y,z))      add_points_line_x(fd, x-1, x+1, y, z, RADIUSLINE);
-	    else if (INTER3DY(x,y,z)) add_points_line_y(fd, x, y-1, y+1, z, RADIUSLINE);
-	    else if (INTER3DZ(x,y,z)) add_points_line_z(fd, x, y, z-1, z+1, RADIUSLINE);
-	  }
-  
+            if (INTER3DX(x, y, z)) {
+              add_points_line_x(fd, x - 1, x + 1, y, z, RADIUSLINE);
+            } else if (INTER3DY(x, y, z)) {
+              add_points_line_y(fd, x, y - 1, y + 1, z, RADIUSLINE);
+            } else if (INTER3DZ(x, y, z)) {
+              add_points_line_z(fd, x, y, z - 1, z + 1, RADIUSLINE);
+            }
+          }
+        }
+      }
+    }
+
     fprintf (fd, "\nPOLYGONS %d %d\n", 
 	     NBFACES_CUBE * nb_cells, NBFACES_CUBE * SIZE_FACE_CUBE * nb_cells);
-    for (x=0; x < nb_cells; x++) add_cells_cube(fd, x);
+    for (x = 0; x < nb_cells; x++) {
+      add_cells_cube(fd, x);
+    }
   }
   else
 
@@ -522,28 +594,36 @@ int main(int argc, char **argv)
     fprintf (fd, "ASCII\n\n");
     fprintf (fd, "DATASET POLYDATA\n");
 
-    for (z = 0; z < ds; z++)
-      for (y = 0; y < cs; y++)
-	for (x = 0; x < rs; x++)
+    for (z = 0; z < ds; z++) {
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++)
 	{
-	  if (K[z * ps + y * rs + x] && SINGL3D(x,y,z)) 
-	    nb_cells++;
-	}
+          if (K[z * ps + y * rs + x] && SINGL3D(x, y, z)) {
+            nb_cells++;
+          }
+        }
+      }
+    }
 
     nb_points = NBPOINTS_OCTAEDRON * nb_cells;
     fprintf (fd, "POINTS %d float\n", nb_points);
 
-    for (z = 0; z < ds; z++)
-      for (y = 0; y < cs; y++)
-	for (x = 0; x < rs; x++)
-	  if (K[z * ps + y * rs + x] && SINGL3D(x,y,z)) 
+    for (z = 0; z < ds; z++) {
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++) {
+          if (K[z * ps + y * rs + x] && SINGL3D(x,y,z)) 
  	  {
 	    add_points_octaedron(fd, x, y, z, RADIUSDOT);
-	  }
-  
+          }
+        }
+      }
+    }
+
     fprintf (fd, "\nPOLYGONS %d %d\n", 
 	     NBFACES_OCTAEDRON * nb_cells, NBFACES_OCTAEDRON * SIZE_FACE_OCTAEDRON * nb_cells);
-    for (x=0; x < nb_cells; x++) add_cells_octaedron(fd, x);
+    for (x = 0; x < nb_cells; x++) {
+      add_cells_octaedron(fd, x);
+    }
   }
 
   else

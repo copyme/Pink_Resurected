@@ -153,23 +153,25 @@ int main(int argc, char **argv)
   }
   
   /* on explore d'abord les aretes horizontales */
-  for(j = 0; j < cs; j++)
+  for (j = 0; j < cs; j++) {
     for(i = 0; i < rs -1; i++){
       u = j * rs + i; x = Sommetx(u,N,rs); y = Sommety(u,N,rs);
       if (argc == 3) {
 	fprintf(fp, "\\path[edge] (%c) -- node[weight] {$%d$} (%c);\n",
 		BASE_ASCII+x, GA[u], BASE_ASCII+y);
       } else {
-	if (GA[u] != 0)
-	  fprintf(fp, "\\path[selected edge] (%c) --  (%c);\n",
+        if (GA[u] != 0) {
+          fprintf(fp, "\\path[selected edge] (%c) --  (%c);\n",
 		  BASE_ASCII+x,  BASE_ASCII+y);
-	else 
-	  fprintf(fp, "\\path[separating edge] (%c) --  (%c);\n",
-		  BASE_ASCII+x,  BASE_ASCII+y);
+        } else {
+          fprintf(fp, "\\path[separating edge] (%c) --  (%c);\n",
+                  BASE_ASCII + x, BASE_ASCII + y);
+        }
       }
     }
+  }
   /* puis les aretes verticales */
-  for(j = 0; j < cs -1; j++)
+  for (j = 0; j < cs - 1; j++) {
     for(i = 0; i < rs; i++)
       {
 	u = N + j * rs + i; x = Sommetx(u,N,rs); y = Sommety(u,N,rs);
@@ -177,33 +179,37 @@ int main(int argc, char **argv)
 	  fprintf(fp, "\\path[edge] (%c) -- node[weight] {$%d$} (%c);\n",
 		  BASE_ASCII+x, GA[u], BASE_ASCII+y);
 	} else {
-	  if (GA[u] != 0)
-	    fprintf(fp, "\\path[selected edge] (%c) --  (%c);\n",
+          if (GA[u] != 0) {
+            fprintf(fp, "\\path[selected edge] (%c) --  (%c);\n",
 		    BASE_ASCII+x,  BASE_ASCII+y);
-	  else 
-	    fprintf(fp, "\\path[separating edge] (%c) --  (%c);\n",
-		    BASE_ASCII+x,  BASE_ASCII+y);
-	}
-      } 
+          } else {
+            fprintf(fp, "\\path[separating edge] (%c) --  (%c);\n",
+                    BASE_ASCII + x, BASE_ASCII + y);
+          }
+        }
+      }
+  }
 
   if (argc == 3) {
     // Colore les edges
     fprintf(fp,"\\begin{pgfonlayer}{background}\n");
     /* on explore d'abord les aretes horizontales */
-    for(j = 0; j < cs; j++)
+    for (j = 0; j < cs; j++) {
       for(i = 0; i < rs -1; i++){
 	u = j * rs + i; x = Sommetx(u,N,rs); y = Sommety(u,N,rs);
 	fprintf(fp, "\\path[color%d] (%c) --  (%c);\n",
 		GA[u], BASE_ASCII+x,  BASE_ASCII+y);
       }
+    }
     /* puis les aretes verticales */
-    for(j = 0; j < cs -1; j++)
+    for (j = 0; j < cs - 1; j++) {
       for(i = 0; i < rs; i++)
 	{
 	  u = N + j * rs + i; x = Sommetx(u,N,rs); y = Sommety(u,N,rs);
 	  fprintf(fp, "\\path[color%d] (%c) -- (%c);\n",
 		  GA[u], BASE_ASCII+x, BASE_ASCII+y);
-	} 
+	}
+    }
     fprintf(fp, "\\end{pgfonlayer}\n");
   }
 

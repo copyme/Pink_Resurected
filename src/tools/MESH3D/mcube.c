@@ -226,9 +226,15 @@ int32_t estfixe(uint8_t *cube, int32_t point)
   - il est entre deux points > BOR_OBJ
 */
 {
-  if ((cube[DSF[point][0]]==BOR_FOND) && (cube[DSF[point][1]]>TEST_BOR)) return 1;
-  if ((cube[DSF[point][1]]==BOR_FOND) && (cube[DSF[point][0]]>TEST_BOR)) return 1;
-  if ((cube[DSF[point][0]]>BOR_OBJ) && (cube[DSF[point][1]]>BOR_OBJ))  return 1;
+  if ((cube[DSF[point][0]] == BOR_FOND) && (cube[DSF[point][1]] > TEST_BOR)) {
+    return 1;
+  }
+  if ((cube[DSF[point][1]] == BOR_FOND) && (cube[DSF[point][0]] > TEST_BOR)) {
+    return 1;
+  }
+  if ((cube[DSF[point][0]] > BOR_OBJ) && (cube[DSF[point][1]] > BOR_OBJ)) {
+    return 1;
+  }
   return 0;
 } /* estfixe() */
 
@@ -250,7 +256,11 @@ int32_t lmarchingcubes(struct xvimage * f, uint8_t v,
   meshbox MB0; 
 
   /* v est la valeur de seuil. si v == 0 alors il s'agit d'une image binaire */
-  if (v == 0) s = 1; else s = v;
+  if (v == 0) {
+    s = 1;
+  } else {
+    s = v;
+  }
 
   rs = rowsize(f);
   cs = colsize(f);
@@ -271,26 +281,51 @@ int32_t lmarchingcubes(struct xvimage * f, uint8_t v,
   yoff = 0.5-ds/2.0;
   zoff = 0.5-cs/2.0;
 
-  for (z = 0; z < cs-1; z++) /* coordonnees image sortie */
-  for (y = 0; y < ds-1; y++)
-  for (x = 0; x < rs-1; x++)
-  {
-    /* calcule les coordonnees dans l'image 
-       du point de base du cube 2x2x2 correspondant */
-    i = x; j = cs - 1 - z; k = y;
-    /* encode le cube 2x2x2 */
-    c = 0;
-    cube[0] = F[k*ps     + j*rs     + i];   if (cube[0]>=s) c |= 0x01; 
-    cube[1] = F[k*ps     + j*rs     + i+1]; if (cube[1]>=s) c |= 0x02; 
-    cube[2] = F[(k+1)*ps + j*rs     + i];   if (cube[2]>=s) c |= 0x04; 
-    cube[3] = F[(k+1)*ps + j*rs     + i+1]; if (cube[3]>=s) c |= 0x08; 
-    cube[4] = F[k*ps     + (j-1)*rs + i];   if (cube[4]>=s) c |= 0x10; 
-    cube[5] = F[k*ps     + (j-1)*rs + i+1]; if (cube[5]>=s) c |= 0x20; 
-    cube[6] = F[(k+1)*ps + (j-1)*rs + i];   if (cube[6]>=s) c |= 0x40; 
-    cube[7] = F[(k+1)*ps + (j-1)*rs + i+1]; if (cube[7]>=s) c |= 0x80; 
+  for (z = 0; z < cs - 1; z++) { /* coordonnees image sortie */
+    for (y = 0; y < ds - 1; y++) {
+      for (x = 0; x < rs - 1; x++) {
+        /* calcule les coordonnees dans l'image
+           du point de base du cube 2x2x2 correspondant */
+        i = x;
+        j = cs - 1 - z;
+        k = y;
+        /* encode le cube 2x2x2 */
+        c = 0;
+        cube[0] = F[k * ps + j * rs + i];
+        if (cube[0] >= s) {
+          c |= 0x01;
+        }
+        cube[1] = F[k * ps + j * rs + i + 1];
+        if (cube[1] >= s) {
+          c |= 0x02;
+        }
+        cube[2] = F[(k + 1) * ps + j * rs + i];
+        if (cube[2] >= s) {
+          c |= 0x04;
+        }
+        cube[3] = F[(k + 1) * ps + j * rs + i + 1];
+        if (cube[3] >= s) {
+          c |= 0x08;
+        }
+        cube[4] = F[k * ps + (j - 1) * rs + i];
+        if (cube[4] >= s) {
+          c |= 0x10;
+        }
+        cube[5] = F[k * ps + (j - 1) * rs + i + 1];
+        if (cube[5] >= s) {
+          c |= 0x20;
+        }
+        cube[6] = F[(k + 1) * ps + (j - 1) * rs + i];
+        if (cube[6] >= s) {
+          c |= 0x40;
+        }
+        cube[7] = F[(k + 1) * ps + (j - 1) * rs + i + 1];
+        if (cube[7] >= s) {
+          c |= 0x80;
+        }
 
-    /* trouve le nombre de facettes dans la LUT */
-    nbfac = LUT[c][0];
+        /* trouve le nombre de facettes dans la LUT */
+        nbfac = LUT[c][0];
 #ifdef DEBUG
     printf("synth %d %d %d voxel %d %d %d code %x nbfac %d\n", 
            x, y, z, i, j, k, c, nbfac);
@@ -304,7 +339,9 @@ int32_t lmarchingcubes(struct xvimage * f, uint8_t v,
       pointcst(x,y,z,cube,LUT[c][fac+2],xoff,yoff,zoff, xdim,ydim,zdim, &x3, &y3, &z3);
       (void)AddFace(x1, y1, z1, x2, y2, z2, x3, y3, z3);
     }
-  } /* for z, y, x */
+      } /* for z, y, x */
+    }
+  }
 
   RegulMeshLaplacian(nregul); 
   //if (nregul) RegulMeshHamam(1.0);
@@ -371,9 +408,10 @@ int32_t lmarchingcubes(struct xvimage * f, uint8_t v,
       }
       fprintf(fileout, "\n");
       //FACES
-      for (i = 0; i < Faces->cur; i++)
-	fprintf(fileout, "%d %d %d\n", Faces->f[i].vert[0],
-		Faces->f[i].vert[1], Faces->f[i].vert[2]);
+      for (i = 0; i < Faces->cur; i++) {
+        fprintf(fileout, "%d %d %d\n", Faces->f[i].vert[0], Faces->f[i].vert[1],
+                Faces->f[i].vert[2]);
+      }
       fprintf(fileout, "\n");
 
       // NORMALES AUX SOMMETS
@@ -451,26 +489,51 @@ int32_t lmarchingcubes2(struct xvimage * f,
   yoff = 0.5-ds/2.0;
   zoff = 0.5-cs/2.0;
 
-  for (z = 0; z < cs-1; z++) /* coordonnees image sortie */
-  for (y = 0; y < ds-1; y++)
-  for (x = 0; x < rs-1; x++)
-  {
-    /* calcule les coordonnees dans l'image 
-       du point de base du cube 2x2x2 correspondant */
-    i = x; j = cs - 1 - z; k = y;
-    /* encode le cube 2x2x2 */
-    c = 0;
-    cube[0] = F[k*ps     + j*rs     + i];   if ((cube[0]%BOR_OBJ)==obj_id) c |= 0x01; 
-    cube[1] = F[k*ps     + j*rs     + i+1]; if ((cube[1]%BOR_OBJ)==obj_id) c |= 0x02; 
-    cube[2] = F[(k+1)*ps + j*rs     + i];   if ((cube[2]%BOR_OBJ)==obj_id) c |= 0x04; 
-    cube[3] = F[(k+1)*ps + j*rs     + i+1]; if ((cube[3]%BOR_OBJ)==obj_id) c |= 0x08; 
-    cube[4] = F[k*ps     + (j-1)*rs + i];   if ((cube[4]%BOR_OBJ)==obj_id) c |= 0x10; 
-    cube[5] = F[k*ps     + (j-1)*rs + i+1]; if ((cube[5]%BOR_OBJ)==obj_id) c |= 0x20; 
-    cube[6] = F[(k+1)*ps + (j-1)*rs + i];   if ((cube[6]%BOR_OBJ)==obj_id) c |= 0x40; 
-    cube[7] = F[(k+1)*ps + (j-1)*rs + i+1]; if ((cube[7]%BOR_OBJ)==obj_id) c |= 0x80; 
+  for (z = 0; z < cs - 1; z++) { /* coordonnees image sortie */
+    for (y = 0; y < ds - 1; y++) {
+      for (x = 0; x < rs - 1; x++) {
+        /* calcule les coordonnees dans l'image
+           du point de base du cube 2x2x2 correspondant */
+        i = x;
+        j = cs - 1 - z;
+        k = y;
+        /* encode le cube 2x2x2 */
+        c = 0;
+        cube[0] = F[k * ps + j * rs + i];
+        if ((cube[0] % BOR_OBJ) == obj_id) {
+          c |= 0x01;
+        }
+        cube[1] = F[k * ps + j * rs + i + 1];
+        if ((cube[1] % BOR_OBJ) == obj_id) {
+          c |= 0x02;
+        }
+        cube[2] = F[(k + 1) * ps + j * rs + i];
+        if ((cube[2] % BOR_OBJ) == obj_id) {
+          c |= 0x04;
+        }
+        cube[3] = F[(k + 1) * ps + j * rs + i + 1];
+        if ((cube[3] % BOR_OBJ) == obj_id) {
+          c |= 0x08;
+        }
+        cube[4] = F[k * ps + (j - 1) * rs + i];
+        if ((cube[4] % BOR_OBJ) == obj_id) {
+          c |= 0x10;
+        }
+        cube[5] = F[k * ps + (j - 1) * rs + i + 1];
+        if ((cube[5] % BOR_OBJ) == obj_id) {
+          c |= 0x20;
+        }
+        cube[6] = F[(k + 1) * ps + (j - 1) * rs + i];
+        if ((cube[6] % BOR_OBJ) == obj_id) {
+          c |= 0x40;
+        }
+        cube[7] = F[(k + 1) * ps + (j - 1) * rs + i + 1];
+        if ((cube[7] % BOR_OBJ) == obj_id) {
+          c |= 0x80;
+        }
 
-    /* trouve le nombre de facettes dans la LUT */
-    nbfac = LUT[c][0];
+        /* trouve le nombre de facettes dans la LUT */
+        nbfac = LUT[c][0];
 #ifdef DEBUG
     printf("synth %d %d %d voxel %d %d %d code %x nbfac %d\n", 
            x, y, z, i, j, k, c, nbfac);
@@ -487,7 +550,9 @@ int32_t lmarchingcubes2(struct xvimage * f,
       fix3 = estfixe(cube,LUT[c][fac+2]);      
       (void)AddFaceFixe(x1, y1, z1, x2, y2, z2, x3, y3, z3, fix1, fix2, fix3);
     }
-  } /* for z, y, x */
+      } /* for z, y, x */
+    }
+  }
 
   Edges = AllocEdges(1000);
   ComputeEdges();
@@ -546,9 +611,10 @@ int32_t lmarchingcubes2(struct xvimage * f,
       }
       fprintf(fileout, "\n");
       //FACES
-      for (i = 0; i < Faces->cur; i++)
-	fprintf(fileout, "%d %d %d\n", Faces->f[i].vert[0],
-		Faces->f[i].vert[1], Faces->f[i].vert[2]);
+      for (i = 0; i < Faces->cur; i++) {
+        fprintf(fileout, "%d %d %d\n", Faces->f[i].vert[0], Faces->f[i].vert[1],
+                Faces->f[i].vert[2]);
+      }
       fprintf(fileout, "\n");
 
       // NORMALES AUX SOMMETS
@@ -606,24 +672,23 @@ int main(int argc, char **argv)
   v = (uint8_t)atoi(argv[2]);
   nregul = atoi(argv[3]);
   obj_id = atoi(argv[4]);
-  if ((strcmp(argv[5], "pov") == 0) || (strcmp(argv[5], "POV") == 0))
+  if ((strcmp(argv[5], "pov") == 0) || (strcmp(argv[5], "POV") == 0)) {
     format = T_POV;
-  else if ((strcmp(argv[5], "povb") == 0) || (strcmp(argv[5], "POVB") == 0))
+  } else if ((strcmp(argv[5], "povb") == 0) || (strcmp(argv[5], "POVB") == 0)) {
     format = T_POVB;
-  else if ((strcmp(argv[5], "col") == 0) || (strcmp(argv[5], "COL") == 0))
+  } else if ((strcmp(argv[5], "col") == 0) || (strcmp(argv[5], "COL") == 0)) {
     format = T_COL;
-  else if ((strcmp(argv[5], "mcm") == 0) || (strcmp(argv[5], "MCM") == 0))
+  } else if ((strcmp(argv[5], "mcm") == 0) || (strcmp(argv[5], "MCM") == 0)) {
     format = T_MCM;
-  else if ((strcmp(argv[5], "ac") == 0) || (strcmp(argv[5], "AC") == 0))
+  } else if ((strcmp(argv[5], "ac") == 0) || (strcmp(argv[5], "AC") == 0)) {
     format = T_AC;
-  else if ((strcmp(argv[5], "gl") == 0) || (strcmp(argv[5], "GL") == 0))
+  } else if ((strcmp(argv[5], "gl") == 0) || (strcmp(argv[5], "GL") == 0)) {
     format = T_GL;
-  else if ((strcmp(argv[5], "vtk") == 0) || (strcmp(argv[5], "VTK") == 0))
+  } else if ((strcmp(argv[5], "vtk") == 0) || (strcmp(argv[5], "VTK") == 0)) {
     format = T_VTK;
-  else if ((strcmp(argv[5], "raw") == 0) || (strcmp(argv[5], "RAW") == 0))
+  } else if ((strcmp(argv[5], "raw") == 0) || (strcmp(argv[5], "RAW") == 0)) {
     format = T_RAW;
-  else 
-  {
+  } else {
     fprintf(stderr, "%s: formats: POV, POVB, COL, MCM, AC, GL, VTK, RAW\n", argv[0]);
     exit(0);
   }
@@ -635,8 +700,13 @@ int main(int argc, char **argv)
     {
       uint8_t * pt = NULL;
       int32_t i, N = rowsize(f) * colsize(f) * depth(f);
-      for (pt = UCHARDATA(f), i = 0; i < N; i++, pt++)
-        if (*pt) *pt = 0; else *pt = NDG_MAX;  
+      for (pt = UCHARDATA(f), i = 0; i < N; i++, pt++) {
+        if (*pt) {
+          *pt = 0;
+        } else {
+          *pt = NDG_MAX;
+        }
+      }
     }
     else if (connex != 26)
     {

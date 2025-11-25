@@ -125,9 +125,21 @@ void genmeshbox(scene *s, meshbox *MB)
       x = s->tabobj[i]->points[j].x;
       y = s->tabobj[i]->points[j].y;
       z = s->tabobj[i]->points[j].z;
-      if (MB->bxmin > x) MB->bxmin = x; else if (MB->bxmax < x) MB->bxmax = x;
-      if (MB->bymin > y) MB->bymin = y; else if (MB->bymax < y) MB->bymax = y;
-      if (MB->bzmin > z) MB->bzmin = z; else if (MB->bzmax < z) MB->bzmax = z;
+      if (MB->bxmin > x) {
+        MB->bxmin = x;
+      } else if (MB->bxmax < x) {
+        MB->bxmax = x;
+      }
+      if (MB->bymin > y) {
+        MB->bymin = y;
+      } else if (MB->bymax < y) {
+        MB->bymax = y;
+      }
+      if (MB->bzmin > z) {
+        MB->bzmin = z;
+      } else if (MB->bzmax < z) {
+        MB->bzmax = z;
+      }
     }
   } // for (i = 0; i < nobj; i++)
 } // genmeshbox()
@@ -148,12 +160,11 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if ((strcmp(argv[2], "pov") == 0) || (strcmp(argv[2], "POV") == 0))
+  if ((strcmp(argv[2], "pov") == 0) || (strcmp(argv[2], "POV") == 0)) {
     format = T_POV;
-  else if ((strcmp(argv[2], "povb") == 0) || (strcmp(argv[2], "POVB") == 0))
+  } else if ((strcmp(argv[2], "povb") == 0) || (strcmp(argv[2], "POVB") == 0)) {
     format = T_POVB;
-  else 
-  {
+  } else {
     fprintf(stderr, "%s: available formats: POV, POVB\n", argv[0]);
     exit(0);
   }
@@ -258,9 +269,10 @@ int main(int argc, char **argv)
       z = scene_in->tabobj[i]->points[2].z;
       fprintf(fdout, "<%g,%g,%g>, myradius\n", x, y, z);
       fprintf(fdout, "  tolerance mytolerance\n  texture{mytexture}\n}\n");
+    } else {
+      fprintf(stderr, "%s : warning : i = %d ; unsupported object type : %d\n",
+              argv[0], i, scene_in->tabobj[i]->objtype);
     }
-    else fprintf(stderr, "%s : warning : i = %d ; unsupported object type : %d\n", 
-		 argv[0], i, scene_in->tabobj[i]->objtype);
   } // for (i = 0; i < nobj; i++)
 
   if (format == T_POV) 

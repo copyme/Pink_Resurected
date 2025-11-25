@@ -101,12 +101,13 @@ int main(int argc, char **argv)
       exit(1);
     }
     I2 = UCHARDATA(im2);
-    for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
       I2[i] = (uint8_t)IL[i];
+    }
     writeimage(im2, argv[3]);
-  }
-  else
+  } else {
     writeimage(image, argv[3]);
+  }
 
   freeimage(image);
 

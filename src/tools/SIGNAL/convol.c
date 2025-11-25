@@ -94,7 +94,9 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (argc == 5) mode = atoi(argv[3]);
+  if (argc == 5) {
+    mode = atoi(argv[3]);
+  }
 
   if (! convertfloat(&mask))
   {

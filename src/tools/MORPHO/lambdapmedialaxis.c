@@ -132,13 +132,15 @@ int main(int argc, char **argv)
     I = UCHARDATA(image);
     L = FLOATDATA(lambdaimage);
     lambda = atof(argv[2]);
-    for (i = 0; i < N; i++)
-      if (L[i] < lambda) 
-	I[i] = NDG_MIN;
+    for (i = 0; i < N; i++) {
+      if (L[i] < lambda) {
+        I[i] = NDG_MIN;
+      }
+    }
     writeimage(image, argv[argc - 1]);
-  }
-  else
+  } else {
     writeimage(lambdaimage, argv[argc - 1]);
+  }
 
   freeimage(lambdaimage);
   freeimage(distimage);

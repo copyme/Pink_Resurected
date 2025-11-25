@@ -114,8 +114,9 @@ int main(int argc, char **argv)
 
   connex = atoi(argv[2]);
 
-  if (argc == 5)
+  if (argc == 5) {
     len = atoi(argv[3]);
+  }
 
   if (! (S = limage2skel(image, connex, len)))
   {

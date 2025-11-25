@@ -122,7 +122,11 @@ int main(int argc, char **argv)
 
   r = atoi(argv[2]);
 
-  if (argc == 5) mode = atoi(argv[3]); else mode = 0;
+  if (argc == 5) {
+    mode = atoi(argv[3]);
+  } else {
+    mode = 0;
+  }
   if ((mode != 0) && (mode != 2) && (mode != 3) && (mode != 4) && 
       (mode != 8) && (mode != 6) && (mode != 18) && (mode != 26))
   {

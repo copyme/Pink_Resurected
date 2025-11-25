@@ -75,8 +75,9 @@ static void inverse(struct xvimage * image)
 {
   index_t i, N = rowsize(image) * colsize(image) * depth(image);
   uint8_t *pt;
-  for (pt = UCHARDATA(image), i = 0; i < N; i++, pt++)
+  for (pt = UCHARDATA(image), i = 0; i < N; i++, pt++) {
     *pt = NDG_MAX - *pt;
+  }
 } // inverse
 
 /* =============================================================== */
@@ -108,14 +109,18 @@ int main(int argc, char **argv)
   }
 
   connex = atoi(argv[3]);
-  
-  if (argc == 5) inverse(image);
+
+  if (argc == 5) {
+    inverse(image);
+  }
   if (! lwshedtopobin(image, marker, connex))
   {
     fprintf(stderr, "%s: lwshedtopobin failed\n", argv[0]);
     exit(1);
   }
-  if (argc == 5) inverse(image);
+  if (argc == 5) {
+    inverse(image);
+  }
 
   writeimage(image, argv[argc - 1]);
   freeimage(image);

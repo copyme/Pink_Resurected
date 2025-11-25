@@ -64,7 +64,9 @@ void attributNoeud(RAG *rag, struct xvimage *label, struct xvimage *ga, struct x
   int32_t alt;
   int32_t l;
 
-  if (annexe!=NULL)   F = UCHARDATA(annexe);
+  if (annexe != NULL) {
+    F = UCHARDATA(annexe);
+  }
 
   for(i = 0; i < rag->g->nsom; i++) {
     /* tout ca peut se calculer au vol lors de la construction de la LPE */
@@ -78,8 +80,9 @@ void attributNoeud(RAG *rag, struct xvimage *label, struct xvimage *ga, struct x
     l = LABEL[i];
     rag->profondeur[l] = mcmin(alt,rag->profondeur[l]);
     rag->surface[l] ++;
-    if (annexe!=NULL)
+    if (annexe != NULL) {
       rag->altitude[l] = F[i];
+    }
   }
 }
 
@@ -98,8 +101,11 @@ RAG *construitRAG(struct xvimage *ga, struct xvimage *label, struct xvimage *ann
   int32_t nblabels;
 
   nblabels = 0;
-  for(i = 0; i < N; i++)
-    if(LABEL[i] > nblabels) nblabels = LABEL[i];
+  for (i = 0; i < N; i++) {
+    if (LABEL[i] > nblabels) {
+      nblabels = LABEL[i];
+    }
+  }
   nblabels++;
   rag = initRAG(nblabels, 3*N);
   /* Parcourt de toutes les aretes du graphe d'arete F */
@@ -108,7 +114,9 @@ RAG *construitRAG(struct xvimage *ga, struct xvimage *label, struct xvimage *ann
     if( ( (u < N) && (u%rs < rs-1)) || ((u >= N) && (u < N_t - rs))){
       x = Sommetx(u, N, rs);
       y = Sommety(u, N, rs);
-      if(LABEL[x] != LABEL[y]) updateRAGArc(rag, LABEL[x], LABEL[y], UCHARDATA(ga)[u]);
+      if (LABEL[x] != LABEL[y]) {
+        updateRAGArc(rag, LABEL[x], LABEL[y], UCHARDATA(ga)[u]);
+      }
     }
   }
   // Puis calcul les attributs de noeuds du rag
@@ -170,24 +178,27 @@ void dynaRecCompTree(JCctree *CT,  /* arbre des coupes    */
 {
   JCsoncell * s = NULL;
   int32_t father = CT->tabnodes[root].father;
-  
-  if(father == -1)
+
+  if (father == -1) {
     /* la racine de l'arbre de fusion a une dynamique infinie */
     dynamic[root] = 256;
-  else
-  {
-    if(minSon[root] == minSon[father]) 
+  } else {
+    if (minSon[root] == minSon[father]) {
       if(dynamic[father] == 256){ 
 	/* l'infini est un cas à part */
-	dynamic[root] = 256; 
+	dynamic[root] = 256;
+      } else {
+        dynamic[root] = (CT->tabnodes[father].data - CT->tabnodes[root].data) +
+                        dynamic[father];
       }
-      else dynamic[root] = (CT->tabnodes[father].data - CT->tabnodes[root].data) + dynamic[father];
-    else
+    } else {
       dynamic[root] = CT->tabnodes[father].data - CT->tabnodes[root].data;
+    }
   }
-  // on peut maintenant calculer la dynamique des enfants 
-  for(s = CT->tabnodes[root].sonlist; s != NULL; s = s->next)
+  // on peut maintenant calculer la dynamique des enfants
+  for (s = CT->tabnodes[root].sonlist; s != NULL; s = s->next) {
     dynaRecCompTree(CT, s->son, minSon, dynamic);
+  }
 }
 
 void volumeRec(JCctree *CT, int32_t *SurfaceCompo, int32_t *fuzzyAreaCompo, int32_t *volumeCompo, int32_t root)
@@ -212,9 +223,11 @@ void volumeRec(JCctree *CT, int32_t *SurfaceCompo, int32_t *fuzzyAreaCompo, int3
 			  (int32_t)CT->tabnodes[CT->tabnodes[root].father].data) - 
       (int32_t)fuzzyAreaCompo[root];
 
-  }else volumeCompo[root] = (int32_t)SurfaceCompo[root] * 
-	  (int32_t)CT->tabnodes[root].data - 
-	  (int32_t)fuzzyAreaCompo[root];
+  } else {
+    volumeCompo[root] =
+        (int32_t)SurfaceCompo[root] * (int32_t)CT->tabnodes[root].data -
+        (int32_t)fuzzyAreaCompo[root];
+  }
 }
 
 // NB: cette fonction devrait etre utilisé de maniere générique quel
@@ -226,21 +239,26 @@ int32_t attributOpenningRec(JCctree *CT, int32_t *attributCompo, int32_t *attrib
   int32_t max,v;
   JCsoncell * s = NULL;
   if(CT->tabnodes[root].father == -1){
-    for(s = CT->tabnodes[root].sonlist; s != NULL; s = s->next) 
+    for (s = CT->tabnodes[root].sonlist; s != NULL; s = s->next) {
       attributOpenningRec(CT, attributCompo, attributMerge, s->son);
+    }
     attributMerge[root] = attributCompo[root];
     return attributMerge[root]; 
   }  
   if(CT->tabnodes[CT->tabnodes[root].father].data != CT->tabnodes[root].data){
-    for(s = CT->tabnodes[root].sonlist; s != NULL; s = s->next) 
+    for (s = CT->tabnodes[root].sonlist; s != NULL; s = s->next) {
       attributOpenningRec(CT, attributCompo, attributMerge, s->son);
+    }
     attributMerge[root] = attributCompo[root]; 
     return attributMerge[root]; 
   }
   max = 0;
-  for(s = CT->tabnodes[root].sonlist; s != NULL; s = s->next)
-    if( (v=attributOpenningRec(CT, attributCompo, attributMerge, s->son)) > max) 
+  for (s = CT->tabnodes[root].sonlist; s != NULL; s = s->next) {
+    if ((v = attributOpenningRec(CT, attributCompo, attributMerge, s->son)) >
+        max) {
       max = v;
+    }
+  }
   attributMerge[root] = max; 
   return attributMerge[root];
 }
@@ -253,21 +271,26 @@ int32_t surfaceOpenningRec(JCctree *CT, int32_t *SurfaceCompo, int32_t *SurfaceM
   int32_t max,v;
   JCsoncell * s = NULL;
   if(CT->tabnodes[root].father == -1){
-    for(s = CT->tabnodes[root].sonlist; s != NULL; s = s->next) 
+    for (s = CT->tabnodes[root].sonlist; s != NULL; s = s->next) {
       surfaceOpenningRec(CT, SurfaceCompo, SurfaceMerge, s->son);
+    }
     SurfaceMerge[root] = SurfaceCompo[root];
     return SurfaceMerge[root]; 
   }  
   if(CT->tabnodes[CT->tabnodes[root].father].data != CT->tabnodes[root].data){
-    for(s = CT->tabnodes[root].sonlist; s != NULL; s = s->next) 
+    for (s = CT->tabnodes[root].sonlist; s != NULL; s = s->next) {
       surfaceOpenningRec(CT, SurfaceCompo, SurfaceMerge, s->son);
+    }
     SurfaceMerge[root] = SurfaceCompo[root]; 
     return SurfaceMerge[root]; 
   }
   max = 0;
   for(s = CT->tabnodes[root].sonlist; s != NULL; s = s->next) 
   {
-    if( (v=surfaceOpenningRec(CT, SurfaceCompo, SurfaceMerge, s->son)) > max) max = v;
+    if ((v = surfaceOpenningRec(CT, SurfaceCompo, SurfaceMerge, s->son)) >
+        max) {
+      max = v;
+    }
   }
   SurfaceMerge[root] = max; 
   return SurfaceMerge[root];
@@ -342,9 +365,10 @@ int32_t * omegaMergeTree(JCctree *CT, RAG *rag)
   
   propagate1(CT, CT->root, omegaCompo);
   propagate2(CT, CT->root, omegaCompo, 255);
-  //attributOpenningRec(CT, omegaCompo, omegaMerge, CT->root); 
-  for(i = 0; i < CT->nbnodes; i++)
+  //attributOpenningRec(CT, omegaCompo, omegaMerge, CT->root);
+  for (i = 0; i < CT->nbnodes; i++) {
     omegaMerge[i] = omegaCompo[i];
+  }
   //omegaMerge[i] = computeOmegaMerge(CT, i, omegaCompo);
   free(omegaCompo);
   return omegaMerge;
@@ -362,8 +386,14 @@ int32_t* altitudeOrdering(uint8_t* F, int32_t N)
     fprintf(stderr, "%s() : malloc failed for T\n", F_NAME);
     return NULL;
   }
-  for (i = 0; i < 256; i++) H[i] = 0;   // initialise l'histogramme
-  for (i = 0; i < N; i++) if(i < N)  H[F[i]] += 1; // calcule l'histogramme
+  for (i = 0; i < 256; i++) {
+    H[i] = 0; // initialise l'histogramme
+  }
+  for (i = 0; i < N; i++) {
+    if (i < N) {
+      H[F[i]] += 1; // calcule l'histogramme
+    }
+  }
   j = H[0]; H[0] = 0;                   // calcule l'histogramme cumule
   for (i = 1; i < 256; i++) { k = H[i]; H[i] = j; j += k; } 
   for (i = 0; i < N; i++)   
@@ -428,8 +458,9 @@ int32_t * surfaceMergeTree(JCctree *CT, RAG *rag)
     exit(0);
   }  
   /* Initialisation des feuilles de CT */
-  for(i = 0; i <rag->g->nsom; i++)
+  for (i = 0; i < rag->g->nsom; i++) {
     SurfaceCompo[i] = rag->surface[i];
+  }
   surfaceRec(CT, SurfaceCompo, CT->root); 
   surfaceOpenningRec(CT, SurfaceCompo, SurfaceMerge, CT->root); 
   free(SurfaceCompo);
@@ -458,15 +489,17 @@ int32_t *dynaMergeTree(JCctree *CT, RAG *rag)
     fprintf(stderr,"%s: erreur de malloc \n",F_NAME);
     exit(0);
   }
-  for(i = 0; i < rag->g->nsom; i++)
+  for (i = 0; i < rag->g->nsom; i++) {
     F[i] = CT->tabnodes[i].data;
+  }
   clefs =  altitudeOrdering(F, rag->g->nsom);  
   ordonneCompTree(clefs, CT, CT->root, minSon);
   dynaRecCompTree(CT, CT->root, minSon, dynaMerge);
-  for(i = 0; i < CT->nbnodes; i++)
+  for (i = 0; i < CT->nbnodes; i++) {
     // permet simplement de reporter les valeurs de merge sur les
     // aretes du MST
     dynaMerge[i] = dynaMerge[minSon[i]];
+  }
   fflush(stdout);
   free(minSon);
   free(clefs);
@@ -500,9 +533,10 @@ int32_t *volumeMergeTree(JCctree *CT, RAG *rag)
   }
 
   /* Initialisation des feuilles de CT */
-  for(i = 0; i < nbsoms; i++)
+  for (i = 0; i < nbsoms; i++) {
     SurfaceCompo[i] = rag->surface[i];
-  
+  }
+
   volumeRec(CT, SurfaceCompo, fuzzyAreaCompo, VolumeCompo, CT->root);  
   if( (VolumeMerge = (int32_t*)malloc(sizeof(int32_t) * CT->nbnodes)) == NULL){
     fprintf(stderr,"%s: erreur de malloc\n", F_NAME);
@@ -589,7 +623,7 @@ int32_t computeSaliencyMap(JCctree *CT, struct xvimage *ga, int32_t *label, int3
   Minim = jccomptree_LCApreprocess(CT, Euler, Depth, Represent, Number, &nbRepresent, &logn);
   printf("LCApreprocess done\n");
 #endif
-  for(j = 0; j < cs; j++)
+  for (j = 0; j < cs; j++) {
     for(i = 0; i < rs -1; i++){
       u = j * rs + i; 
       x = Sommetx(u,N,rs); y = Sommety(u,N,rs);
@@ -605,11 +639,13 @@ int32_t computeSaliencyMap(JCctree *CT, struct xvimage *ga, int32_t *label, int3
 	c1 = jccomptree_LowComAncSlow(CT, (int32_t)label[x], (int32_t)label[y]);
 #endif
 	F[u] = salScale(attribut[c1], attribut[CT->root], param);
-      } 
-       else F[u] =0; 
+      } else {
+        F[u] = 0;
+      }
     }
+  }
   /* puis les aretes verticales */
-   for(j = 0; j < cs -1; j++)
+  for (j = 0; j < cs - 1; j++) {
     for(i = 0; i < rs; i++)
     {
       u = N + j * rs + i; x = Sommetx(u,N,rs); y = Sommety(u,N,rs);
@@ -629,9 +665,11 @@ int32_t computeSaliencyMap(JCctree *CT, struct xvimage *ga, int32_t *label, int3
 	  exit(0);
 	} 
 	F[u] = salScale(attribut[c1], attribut[CT->root], param);
+      } else {
+        F[u] = 0;
       }
-      else F[u] = 0;
     }
+  }
 #ifdef LCAFAST
    free(Euler);
    free(Represent);
@@ -668,9 +706,10 @@ int32_t main_cascade(struct xvimage *image, struct xvimage *ga, int32_t param)
     fprintf(stderr, "%s: Erreur de malloc\n", F_NAME);
     exit(0);
   }
-  
-  for(i = 0; i < 2*N; i++)
+
+  for (i = 0; i < 2 * N; i++) {
     G[i] = 0;
+  }
   printf("Initialisation du Ga out done \n");
   
   g1 = initGrapheValue(N, 4*N - 2*rs - 2*cs); /* nbre d'arete du graphe 4-connexe symetrique correspondant */
@@ -679,12 +718,13 @@ int32_t main_cascade(struct xvimage *image, struct xvimage *ga, int32_t param)
   for(i = 0; i < N; i++){
     Label1[i] = i;
     for (k = 0; k < 4; k += 2){
-      if((y = voisin(i, k, rs, N)) != -1)
-	switch(param){
+      if ((y = voisin(i, k, rs, N)) != -1) {
+        switch(param){
 	case 0: updateArcValue(g1,i, y, (uint8_t)mcmax(F[i],F[y])); break;
 	case 1: updateArcValue(g1,i, y, (uint8_t)mcabs((int32_t)F[i] - (int32_t)F[y])); break;
 	default: fprintf(stderr,"%s: Mauvais parametre \n", F_NAME); exit(0);
-	}
+        }
+      }
     }
   }
   printf("Graphe utile calcule \n");
@@ -697,8 +737,8 @@ int32_t main_cascade(struct xvimage *image, struct xvimage *ga, int32_t param)
     g2 = initGrapheValue((int32_t)nbregions, (int32_t)mcmin(nbregions*(nbregions-1), (int32_t)(4*N - 2*rs - 2*cs)) );   
     printf("2eme graphe initialise \n");
     for(i = 0; i < N; i++){
-      for(k=0; k < 2; k++)
-	if((y = voisin(i, 2*k, rs, N)) != -1){
+      for (k = 0; k < 2; k++) {
+        if((y = voisin(i, 2*k, rs, N)) != -1){
 	  if(Label2[Label1[i]] != Label2[Label1[y]]){
 	    // Mise a jour de la carte de saillance du waterfall
 	    G[incidente(i,k,rs,N)] ++;
@@ -709,7 +749,8 @@ int32_t main_cascade(struct xvimage *image, struct xvimage *ga, int32_t param)
 	    default: fprintf(stderr,"%s: Mauvais parametre \n", F_NAME); exit(0);
 	    }
 	  }
-	}
+        }
+      }
    }
    for(i = 0; i < N; i++){
      Label1[i] = Label2[Label1[i]];

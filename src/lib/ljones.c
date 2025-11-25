@@ -117,7 +117,9 @@ int32_t ljones(struct xvimage *image, int32_t connex)
   }
 
   /* M initialement est mis a NULL */
-  for (x = 0; x < N; x++) M[x] = NULL;
+  for (x = 0; x < N; x++) {
+    M[x] = NULL;
+  }
 
   nmaxima = 0;
   cell = AllocTreeCell();
@@ -185,23 +187,28 @@ int32_t ljones(struct xvimage *image, int32_t connex)
       return(0);
   }
 
-  for (x = 0; x < 256; x++) histomax[x] = 0;
-  for (x = 0; x < N; x++)
-    if (IsSet(x, LOCMAX))
-      histomax[F[x]]++;     /* histogramme calcule */
+  for (x = 0; x < 256; x++) {
+    histomax[x] = 0;
+  }
+  for (x = 0; x < N; x++) {
+    if (IsSet(x, LOCMAX)) {
+      histomax[F[x]]++; /* histogramme calcule */
+    }
+  }
   maxi = 0;  
   for (x = 255; x >= 0; x--)
   {
     histomax[x] += maxi;
     maxi = histomax[x];
   }                         /* histogramme cumule inverse calcule */
-  for (x = 0; x < N; x++)
+  for (x = 0; x < N; x++) {
     if (IsSet(x, LOCMAX))
     {
       i = histomax[F[x]];
       histomax[F[x]]--;
       tabmax[i-1] = M[x];
-    }                       /* tri par denombrement calcule */
+    } /* tri par denombrement calcule */
+  }
 
 #ifdef VERBOSE
 printf("TRI DES MAXIMA TERMINE\n");
@@ -270,7 +277,9 @@ printf("branche arbre : %d(%d) -> %d(%d)\n", fcell->key, F[fcell->key], cell->ke
       } /* for k ... */
     } /* else */
   } /* while (!FahVide(FAH)) */
-  for (i = 0; i < N; i++) UnSetAll(i);
+  for (i = 0; i < N; i++) {
+    UnSetAll(i);
+  }
 
 #ifdef VERBOSE
 printf("PREMIER MAXIMUM TERMINE\n");
@@ -353,7 +362,9 @@ printf("branche arbre (jonction) : %d(%d) -> %d(%d)\n", cell->key, F[cell->key],
     printf("\n");
 #endif
 #ifdef VERBOSE
-if (i%1000 == 0) printf("%d MAXIMA TRAITES\n", i);
+    if (i % 1000 == 0) {
+      printf("%d MAXIMA TRAITES\n", i);
+    }
 #endif
   } /* for (i = 1; i < nmaxima; i++) */
 
@@ -365,15 +376,18 @@ if (i%1000 == 0) printf("%d MAXIMA TRAITES\n", i);
   /* CALCUL DE L'ATTRIBUT DE PROFONDEUR               */
   /* ================================================ */
 
-  for (i = 0; i < nmaxima; i++) 
-    for (cell = tabmax[i]; cell != NULL; cell = cell->father)
-      cell->prof = 0;
+      for (i = 0; i < nmaxima; i++) {
+        for (cell = tabmax[i]; cell != NULL; cell = cell->father) {
+          cell->prof = 0;
+        }
+      }
 
   for (i = 0; i < nmaxima; i++) 
   {
     maxi = F[tabmax[i]->key];
-    for (cell = tabmax[i]; cell != NULL; cell = cell->father)
-      cell->prof = mcmax(cell->prof,maxi-F[cell->key]);
+    for (cell = tabmax[i]; cell != NULL; cell = cell->father) {
+      cell->prof = mcmax(cell->prof, maxi - F[cell->key]);
+    }
   } /* for (i = 1; i < nmaxima; i++) */
 
 #ifdef DEBUG
@@ -390,8 +404,9 @@ if (i%1000 == 0) printf("%d MAXIMA TRAITES\n", i);
     printf("entrer un point (x,y)\n");
     scanf("%d", &X);
     scanf("%d", &Y);
-    for (cell = M[Y*rs + X]; cell != NULL; cell = cell->father)
+    for (cell = M[Y * rs + X]; cell != NULL; cell = cell->father) {
       printf("%d %d\n", NDG_MAX - F[cell->key], cell->prof);
+    }
     printf("continue ? (o/n)\n");
     scanf("%s", buf);
   } while(buf[0] != 'n');

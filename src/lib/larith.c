@@ -105,26 +105,30 @@ int32_t ladd(
   if ((datatype(image1) == VFF_TYP_1_BYTE) && (datatype(image2) == VFF_TYP_1_BYTE))
   {
     pt1 = UCHARDATA(image1); pt2 = UCHARDATA(image2);
-    for (i = 0; i < N; i++, pt1++, pt2++)
-      *pt1 = (uint8_t)mcmin(NDG_MAX,((int32_t)*pt1+(int32_t)*pt2));
+    for (i = 0; i < N; i++, pt1++, pt2++) {
+      *pt1 = (uint8_t)mcmin(NDG_MAX, ((int32_t)*pt1 + (int32_t)*pt2));
+    }
   }
   else if ((datatype(image1) == VFF_TYP_4_BYTE) && (datatype(image2) == VFF_TYP_4_BYTE))
   {
     PT1 = SLONGDATA(image1); PT2 = SLONGDATA(image2);
-    for (i = 0; i < N; i++, PT1++, PT2++)
+    for (i = 0; i < N; i++, PT1++, PT2++) {
       *PT1 = *PT1 + *PT2;
+    }
   }
   else if ((datatype(image1) == VFF_TYP_FLOAT) && (datatype(image2) == VFF_TYP_FLOAT))
   {
     FPT1 = FLOATDATA(image1); FPT2 = FLOATDATA(image2);
-    for (i = 0; i < N; i++, FPT1++, FPT2++)
+    for (i = 0; i < N; i++, FPT1++, FPT2++) {
       *FPT1 = *FPT1 + *FPT2;
+    }
   }
   else if ((datatype(image1) == VFF_TYP_COMPLEX) && (datatype(image2) == VFF_TYP_COMPLEX))
   {
     FPT1 = FLOATDATA(image1); FPT2 = FLOATDATA(image2);
-    for (i = 0; i < N+N; i++, FPT1++, FPT2++)
+    for (i = 0; i < N + N; i++, FPT1++, FPT2++) {
       *FPT1 = *FPT1 + *FPT2;
+    }
   }
   else 
   {
@@ -156,20 +160,26 @@ int32_t laddconst(struct xvimage * image1, int32_t constante)
   if (datatype(image1) == VFF_TYP_1_BYTE)
   {
     pt1 = UCHARDATA(image1);
-    for (i = 0; i < N; i++, pt1++)
-      *pt1 = (uint8_t)mcmin(NDG_MAX, mcmax(NDG_MIN, (int32_t)(*pt1) + constante));
+    for (i = 0; i < N; i++, pt1++) {
+      *pt1 =
+          (uint8_t)mcmin(NDG_MAX, mcmax(NDG_MIN, (int32_t)(*pt1) + constante));
+    }
   }
   else if (datatype(image1) == VFF_TYP_2_BYTE)
   {
     spt1 = USHORTDATA(image1);
-    for (i = 0; i < N; i++, spt1++)
-      *spt1 = (uint16_t)mcmin(USHRT_MAX,mcmax(0,(uint16_t)(*spt1)+constante));
+    for (i = 0; i < N; i++, spt1++) {
+      *spt1 =
+          (uint16_t)mcmin(USHRT_MAX, mcmax(0, (uint16_t)(*spt1) + constante));
+    }
   }
   else if (datatype(image1) == VFF_TYP_4_BYTE)
   {
     lpt1 = SLONGDATA(image1);
-    for (i = 0; i < N; i++, lpt1++)
-      *lpt1 = (int32_t)mcmin(INT32_MAX,mcmax(INT32_MIN,(int32_t)(*lpt1)+constante));
+    for (i = 0; i < N; i++, lpt1++) {
+      *lpt1 = (int32_t)mcmin(INT32_MAX,
+                             mcmax(INT32_MIN, (int32_t)(*lpt1) + constante));
+    }
   }
   else 
   {
@@ -199,8 +209,9 @@ int32_t laddconst2(struct xvimage * image1, double constante)
   if (datatype(image1) == VFF_TYP_FLOAT)
   {
     FPT1 = FLOATDATA(image1);
-    for (i = 0; i < N; i++, FPT1++)
+    for (i = 0; i < N; i++, FPT1++) {
       *FPT1 = *FPT1 + (float)constante;
+    }
   }
   else 
   {
@@ -232,15 +243,27 @@ index_t larea(
   {
     if (datatype(image) == VFF_TYP_1_BYTE)
     {
-      for (pt = UCHARDATA(image), i = 0; i < N; i++, pt++) if (*pt) a++;
+      for (pt = UCHARDATA(image), i = 0; i < N; i++, pt++) {
+        if (*pt) {
+          a++;
+        }
+      }
     }
     else if (datatype(image) == VFF_TYP_4_BYTE)
     {
-      for (PT = SLONGDATA(image), i = 0; i < N; i++, PT++) if (*PT) a++;
+      for (PT = SLONGDATA(image), i = 0; i < N; i++, PT++) {
+        if (*PT) {
+          a++;
+        }
+      }
     }
     else if (datatype(image) == VFF_TYP_FLOAT)
     {
-      for (FPT = FLOATDATA(image), i = 0; i < N; i++, FPT++) if (*FPT != 0.0) a++;
+      for (FPT = FLOATDATA(image), i = 0; i < N; i++, FPT++) {
+        if (*FPT != 0.0) {
+          a++;
+        }
+      }
     }
     else 
     {
@@ -255,8 +278,14 @@ index_t larea(
       pt = UCHARDATA(image);
       for (i = 0; i < N; i++) 
       {
-	for (b = 0; b < nb; b++) if (pt[b*N + i]) break; 
-	if (b < nb) a++;
+        for (b = 0; b < nb; b++) {
+          if (pt[b * N + i]) {
+            break;
+          }
+        }
+        if (b < nb) {
+          a++;
+        }
       }
     }
     else if (datatype(image) == VFF_TYP_4_BYTE)
@@ -264,8 +293,14 @@ index_t larea(
       PT = SLONGDATA(image);
       for (i = 0; i < N; i++) 
       {
-	for (b = 0; b < nb; b++) if (PT[b*N + i]) break; 
-	if (b < nb) a++;
+        for (b = 0; b < nb; b++) {
+          if (PT[b * N + i]) {
+            break;
+          }
+        }
+        if (b < nb) {
+          a++;
+        }
       }
     }
     else if (datatype(image) == VFF_TYP_FLOAT)
@@ -273,8 +308,14 @@ index_t larea(
       FPT = FLOATDATA(image);
       for (i = 0; i < N; i++) 
       {
-	for (b = 0; b < nb; b++) if (FPT[b*N + i] != 0.0) break; 
-	if (b < nb) a++;
+        for (b = 0; b < nb; b++) {
+          if (FPT[b * N + i] != 0.0) {
+            break;
+          }
+        }
+        if (b < nb) {
+          a++;
+        }
       }
     }
     else 
@@ -309,20 +350,23 @@ int32_t laverage(
   if ((datatype(image1) == VFF_TYP_1_BYTE) && (datatype(image2) == VFF_TYP_1_BYTE))
   {
     pt1 = UCHARDATA(image1); pt2 = UCHARDATA(image2);
-    for (i = 0; i < N; i++, pt1++, pt2++)
+    for (i = 0; i < N; i++, pt1++, pt2++) {
       *pt1 = (uint8_t)((alpha * *pt1) + ((1.0 - alpha) * *pt2));
+    }
   }
   else if ((datatype(image1) == VFF_TYP_4_BYTE) && (datatype(image2) == VFF_TYP_4_BYTE))
   {
     PT1 = SLONGDATA(image1); PT2 = SLONGDATA(image2);
-    for (i = 0; i < N; i++, PT1++, PT2++)
+    for (i = 0; i < N; i++, PT1++, PT2++) {
       *PT1 = (int32_t)((alpha * *PT1) + ((1.0 - alpha) * *PT2));
+    }
   }
   else if ((datatype(image1) == VFF_TYP_FLOAT) && (datatype(image2) == VFF_TYP_FLOAT))
   {
     FPT1 = FLOATDATA(image1); FPT2 = FLOATDATA(image2);
-    for (i = 0; i < N; i++, FPT1++, FPT2++)
+    for (i = 0; i < N; i++, FPT1++, FPT2++) {
       *FPT1 = (float)((alpha * *FPT1) + ((1.0 - alpha) * *FPT2));
+    }
   }
   else 
   {
@@ -353,26 +397,30 @@ int32_t ldiff(
   if ((datatype(image1) == VFF_TYP_1_BYTE) && (datatype(image2) == VFF_TYP_1_BYTE))
   {
     pt1 = UCHARDATA(image1); pt2 = UCHARDATA(image2);
-    for (i = 0; i < N; i++, pt1++, pt2++)
-      *pt1 = (uint8_t)mcabs((int32_t)*pt1-(int32_t)*pt2);
+    for (i = 0; i < N; i++, pt1++, pt2++) {
+      *pt1 = (uint8_t)mcabs((int32_t)*pt1 - (int32_t)*pt2);
+    }
   }
   else if ((datatype(image1) == VFF_TYP_4_BYTE) && (datatype(image2) == VFF_TYP_4_BYTE))
   {
     PT1 = SLONGDATA(image1); PT2 = SLONGDATA(image2);
-    for (i = 0; i < N; i++, PT1++, PT2++)
-      *PT1 = mcabs(*PT1-*PT2);
+    for (i = 0; i < N; i++, PT1++, PT2++) {
+      *PT1 = mcabs(*PT1 - *PT2);
+    }
   }
   else if ((datatype(image1) == VFF_TYP_FLOAT) && (datatype(image2) == VFF_TYP_FLOAT))
   {
     FPT1 = FLOATDATA(image1); FPT2 = FLOATDATA(image2);
-    for (i = 0; i < N; i++, FPT1++, FPT2++)
-      *FPT1 = (float)fabsf((float)(*FPT1)-(float)(*FPT2));
+    for (i = 0; i < N; i++, FPT1++, FPT2++) {
+      *FPT1 = (float)fabsf((float)(*FPT1) - (float)(*FPT2));
+    }
   }
   else if ((datatype(image1) == VFF_TYP_COMPLEX) && (datatype(image2) == VFF_TYP_COMPLEX))
   {
     FPT1 = FLOATDATA(image1); FPT2 = FLOATDATA(image2);
-    for (i = 0; i < N+N; i++, FPT1++, FPT2++)
-      *FPT1 = (float)fabsf((float)(*FPT1)-(float)(*FPT2));
+    for (i = 0; i < N + N; i++, FPT1++, FPT2++) {
+      *FPT1 = (float)fabsf((float)(*FPT1) - (float)(*FPT2));
+    }
   }
   else 
   {
@@ -403,20 +451,35 @@ int32_t ldivide(
   if ((datatype(image1) == VFF_TYP_1_BYTE) && (datatype(image2) == VFF_TYP_1_BYTE))
   {
     pt1 = UCHARDATA(image1); pt2 = UCHARDATA(image2);
-    for (i = 0; i < N; i++, pt1++, pt2++)
-      if (*pt2 != 0) *pt1 = *pt1 / *pt2; else *pt1 = 0;
+    for (i = 0; i < N; i++, pt1++, pt2++) {
+      if (*pt2 != 0) {
+        *pt1 = *pt1 / *pt2;
+      } else {
+        *pt1 = 0;
+      }
+    }
   }
   else if ((datatype(image1) == VFF_TYP_4_BYTE) && (datatype(image2) == VFF_TYP_4_BYTE))
   {
     PT1 = SLONGDATA(image1); PT2 = SLONGDATA(image2);
-    for (i = 0; i < N; i++, PT1++, PT2++)
-      if (*PT2 != 0) *PT1 = *PT1 / *PT2; else *PT1 = 0;
+    for (i = 0; i < N; i++, PT1++, PT2++) {
+      if (*PT2 != 0) {
+        *PT1 = *PT1 / *PT2;
+      } else {
+        *PT1 = 0;
+      }
+    }
   }
   else if ((datatype(image1) == VFF_TYP_FLOAT) && (datatype(image2) == VFF_TYP_FLOAT))
   {
     FPT1 = FLOATDATA(image1); FPT2 = FLOATDATA(image2);
-    for (i = 0; i < N; i++, FPT1++, FPT2++)
-      if (*FPT2 != 0.0) *FPT1 = *FPT1 / *FPT2; else *FPT1 = 0.0;
+    for (i = 0; i < N; i++, FPT1++, FPT2++) {
+      if (*FPT2 != 0.0) {
+        *FPT1 = *FPT1 / *FPT2;
+      } else {
+        *FPT1 = 0.0;
+      }
+    }
   }
   else 
   {
@@ -447,26 +510,38 @@ int32_t lequal(
   if ((datatype(image1) == VFF_TYP_1_BYTE) && (datatype(image2) == VFF_TYP_1_BYTE))
   {
     pt1 = UCHARDATA(image1); pt2 = UCHARDATA(image2);
-    for (i = 0; i < N; i++, pt1++, pt2++)
-      if (*pt1 != *pt2) return 0;
+    for (i = 0; i < N; i++, pt1++, pt2++) {
+      if (*pt1 != *pt2) {
+        return 0;
+      }
+    }
   }
   else if ((datatype(image1) == VFF_TYP_4_BYTE) && (datatype(image2) == VFF_TYP_4_BYTE))
   {
     PT1 = SLONGDATA(image1); PT2 = SLONGDATA(image2);
-    for (i = 0; i < N; i++, PT1++, PT2++)
-      if (*PT1 != *PT2) return 0;
+    for (i = 0; i < N; i++, PT1++, PT2++) {
+      if (*PT1 != *PT2) {
+        return 0;
+      }
+    }
   }
   else if ((datatype(image1) == VFF_TYP_FLOAT) && (datatype(image2) == VFF_TYP_FLOAT))
   {
     FPT1 = FLOATDATA(image1); FPT2 = FLOATDATA(image2);
-    for (i = 0; i < N; i++, FPT1++, FPT2++)
-      if (*FPT1 != *FPT2) return 0;
+    for (i = 0; i < N; i++, FPT1++, FPT2++) {
+      if (*FPT1 != *FPT2) {
+        return 0;
+      }
+    }
   }
   else if ((datatype(image1) == VFF_TYP_COMPLEX) && (datatype(image2) == VFF_TYP_COMPLEX))
   {
     FPT1 = FLOATDATA(image1); FPT2 = FLOATDATA(image2);
-    for (i = 0; i < N+N; i++, FPT1++, FPT2++)
-      if (*FPT1 != *FPT2) return 0;
+    for (i = 0; i < N + N; i++, FPT1++, FPT2++) {
+      if (*FPT1 != *FPT2) {
+        return 0;
+      }
+    }
   }
   else 
   {
@@ -507,20 +582,28 @@ int32_t lgammacor(
     ndgmin = ndgmax = Im[0];
     for (x = 0; x < N; x++)
     {
-      if (Im[x] < ndgmin) ndgmin = Im[x];
-      else if (Im[x] > ndgmax) ndgmax = Im[x];
+      if (Im[x] < ndgmin) {
+        ndgmin = Im[x];
+      } else if (Im[x] > ndgmax) {
+        ndgmax = Im[x];
+      }
     }
     ndgmax = ndgmax - ndgmin;
-    if (ndgmax == 0) ndgmax = 1;
+    if (ndgmax == 0) {
+      ndgmax = 1;
+    }
 
-    for (x = 0; x < N; x++)
+    for (x = 0; x < N; x++) {
       Fl[x] = (float)(Im[x] - ndgmin) / (float)ndgmax;
+    }
 
-    for (x = 0; x < N; x++)
+    for (x = 0; x < N; x++) {
       Fl[x] = (float)pow((double)(Fl[x]), gamma);
+    }
 
-    for (x = 0; x < N; x++)
-      Im[x] = (uint8_t)(Fl[x]*(ndgmax-ndgmin)) + ndgmin;
+    for (x = 0; x < N; x++) {
+      Im[x] = (uint8_t)(Fl[x] * (ndgmax - ndgmin)) + ndgmin;
+    }
 
   }
   else if (datatype(image) == VFF_TYP_4_BYTE)
@@ -531,20 +614,28 @@ int32_t lgammacor(
     ndgmin = ndgmax = Im[0];
     for (x = 0; x < N; x++)
     {
-      if (Im[x] < ndgmin) ndgmin = Im[x];
-      else if (Im[x] > ndgmax) ndgmax = Im[x];
+      if (Im[x] < ndgmin) {
+        ndgmin = Im[x];
+      } else if (Im[x] > ndgmax) {
+        ndgmax = Im[x];
+      }
     }
     ndgmax = ndgmax - ndgmin;
-    if (ndgmax == 0) ndgmax = 1;
+    if (ndgmax == 0) {
+      ndgmax = 1;
+    }
 
-    for (x = 0; x < N; x++)
+    for (x = 0; x < N; x++) {
       Fl[x] = (float)(Im[x] - ndgmin) / (float)ndgmax;
+    }
 
-    for (x = 0; x < N; x++)
+    for (x = 0; x < N; x++) {
       Fl[x] = (float)pow((double)(Fl[x]), gamma);
+    }
 
-    for (x = 0; x < N; x++)
-      Im[x] = (int32_t)(Fl[x]*(ndgmax-ndgmin)) + ndgmin;
+    for (x = 0; x < N; x++) {
+      Im[x] = (int32_t)(Fl[x] * (ndgmax - ndgmin)) + ndgmin;
+    }
   }
   else if (datatype(image) == VFF_TYP_FLOAT)
   {
@@ -554,20 +645,28 @@ int32_t lgammacor(
     ndgmin = ndgmax = Im[0];
     for (x = 0; x < N; x++)
     {
-      if (Im[x] < ndgmin) ndgmin = Im[x];
-      else if (Im[x] > ndgmax) ndgmax = Im[x];
+      if (Im[x] < ndgmin) {
+        ndgmin = Im[x];
+      } else if (Im[x] > ndgmax) {
+        ndgmax = Im[x];
+      }
     }
     ndgmax = ndgmax - ndgmin;
-    if (ndgmax < EPSILON) ndgmax = 1.0;
+    if (ndgmax < EPSILON) {
+      ndgmax = 1.0;
+    }
 
-    for (x = 0; x < N; x++)
+    for (x = 0; x < N; x++) {
       Fl[x] = (Im[x] - ndgmin) / ndgmax;
+    }
 
-    for (x = 0; x < N; x++)
+    for (x = 0; x < N; x++) {
       Fl[x] = (float)pow((double)(Fl[x]), gamma);
+    }
 
-    for (x = 0; x < N; x++)
-      Im[x] = (Fl[x]*(ndgmax-ndgmin)) + ndgmin;
+    for (x = 0; x < N; x++) {
+      Im[x] = (Fl[x] * (ndgmax - ndgmin)) + ndgmin;
+    }
   }
   else
   {
@@ -598,22 +697,37 @@ int32_t linf(
   {
     uint8_t *pt1, *pt2;
     pt1 = UCHARDATA(image1); pt2 = UCHARDATA(image2);
-    for (i = 0; i < N; i++, pt1++, pt2++)
-      if (*pt1 <= *pt2) *pt1 = NDG_MAX; else *pt1 = NDG_MIN;
+    for (i = 0; i < N; i++, pt1++, pt2++) {
+      if (*pt1 <= *pt2) {
+        *pt1 = NDG_MAX;
+      } else {
+        *pt1 = NDG_MIN;
+      }
+    }
   }
   else if ((datatype(image1) == VFF_TYP_4_BYTE) && (datatype(image2) == VFF_TYP_4_BYTE))
   {
     int32_t *pt1, *pt2; 
     pt1 = SLONGDATA(image1); pt2 = SLONGDATA(image2);
-    for (i = 0; i < N; i++, pt1++, pt2++)
-      if (*pt1 <= *pt2) *pt1 = NDG_MAX; else *pt1 = NDG_MIN;
+    for (i = 0; i < N; i++, pt1++, pt2++) {
+      if (*pt1 <= *pt2) {
+        *pt1 = NDG_MAX;
+      } else {
+        *pt1 = NDG_MIN;
+      }
+    }
   }
   else if ((datatype(image1) == VFF_TYP_FLOAT) && (datatype(image2) == VFF_TYP_FLOAT))
   {
     float *pt1, *pt2; 
     pt1 = FLOATDATA(image1); pt2 = FLOATDATA(image2);
-    for (i = 0; i < N; i++, pt1++, pt2++)
-      if (*pt1 <= *pt2) *pt1 = NDG_MAX; else *pt1 = NDG_MIN;
+    for (i = 0; i < N; i++, pt1++, pt2++) {
+      if (*pt1 <= *pt2) {
+        *pt1 = NDG_MAX;
+      } else {
+        *pt1 = NDG_MIN;
+      }
+    }
   }
   else 
   {
@@ -642,22 +756,37 @@ int32_t lsup(
   {
     uint8_t *pt1, *pt2;
     pt1 = UCHARDATA(image1); pt2 = UCHARDATA(image2);
-    for (i = 0; i < N; i++, pt1++, pt2++)
-      if (*pt1 >= *pt2) *pt1 = NDG_MAX; else *pt1 = NDG_MIN;
+    for (i = 0; i < N; i++, pt1++, pt2++) {
+      if (*pt1 >= *pt2) {
+        *pt1 = NDG_MAX;
+      } else {
+        *pt1 = NDG_MIN;
+      }
+    }
   }
   else if ((datatype(image1) == VFF_TYP_4_BYTE) && (datatype(image2) == VFF_TYP_4_BYTE))
   {
     int32_t *pt1, *pt2; 
     pt1 = SLONGDATA(image1); pt2 = SLONGDATA(image2);
-    for (i = 0; i < N; i++, pt1++, pt2++)
-      if (*pt1 >= *pt2) *pt1 = NDG_MAX; else *pt1 = NDG_MIN;
+    for (i = 0; i < N; i++, pt1++, pt2++) {
+      if (*pt1 >= *pt2) {
+        *pt1 = NDG_MAX;
+      } else {
+        *pt1 = NDG_MIN;
+      }
+    }
   }
   else if ((datatype(image1) == VFF_TYP_FLOAT) && (datatype(image2) == VFF_TYP_FLOAT))
   {
     float *pt1, *pt2; 
     pt1 = FLOATDATA(image1); pt2 = FLOATDATA(image2);
-    for (i = 0; i < N; i++, pt1++, pt2++)
-      if (*pt1 >= *pt2) *pt1 = NDG_MAX; else *pt1 = NDG_MIN;
+    for (i = 0; i < N; i++, pt1++, pt2++) {
+      if (*pt1 >= *pt2) {
+        *pt1 = NDG_MAX;
+      } else {
+        *pt1 = NDG_MIN;
+      }
+    }
   }
   else 
   {
@@ -690,26 +819,35 @@ int32_t linvert(
   if (datatype(image) == VFF_TYP_1_BYTE)
   {
     uint8_t *pt;
-    for (pt = UCHARDATA(image), i = 0; i < N; i++, pt++)
+    for (pt = UCHARDATA(image), i = 0; i < N; i++, pt++) {
       *pt = NDG_MAX - *pt;
+    }
   }
   else if (datatype(image) == VFF_TYP_4_BYTE)
   {
     int32_t *pt, vmax;
     vmax = 0;
-    for (pt = SLONGDATA(image), i = 0; i < N; i++, pt++)
-      if (*pt > vmax) vmax = *pt;
-    for (pt = SLONGDATA(image), i = 0; i < N; i++, pt++)
+    for (pt = SLONGDATA(image), i = 0; i < N; i++, pt++) {
+      if (*pt > vmax) {
+        vmax = *pt;
+      }
+    }
+    for (pt = SLONGDATA(image), i = 0; i < N; i++, pt++) {
       *pt = vmax - *pt;
+    }
   }
   else if (datatype(image) == VFF_TYP_FLOAT)
   {
     float *pt, vmax;
     vmax = 0;
-    for (pt = FLOATDATA(image), i = 0; i < N; i++, pt++)
-      if (*pt > vmax) vmax = *pt;
-    for (pt = FLOATDATA(image), i = 0; i < N; i++, pt++)
+    for (pt = FLOATDATA(image), i = 0; i < N; i++, pt++) {
+      if (*pt > vmax) {
+        vmax = *pt;
+      }
+    }
+    for (pt = FLOATDATA(image), i = 0; i < N; i++, pt++) {
       *pt = vmax - *pt;
+    }
   }
   else
   {
@@ -758,29 +896,41 @@ int32_t lmask(
   {
     uint8_t *pt1;
     pt1 = UCHARDATA(image);
-    for (i = 0; i < N; i++, pt1++, pt2++)
-      if (*pt2 == 0) *pt1 = 0;
+    for (i = 0; i < N; i++, pt1++, pt2++) {
+      if (*pt2 == 0) {
+        *pt1 = 0;
+      }
+    }
   }
   else if (datatype(image) == VFF_TYP_4_BYTE)
   {
     int32_t *PT1;
     PT1 = SLONGDATA(image);
-    for (i = 0; i < N; i++, PT1++, pt2++)
-      if (*pt2 == 0) *PT1 = 0;
+    for (i = 0; i < N; i++, PT1++, pt2++) {
+      if (*pt2 == 0) {
+        *PT1 = 0;
+      }
+    }
   }
   else if (datatype(image) == VFF_TYP_FLOAT)
   {
     float *FPT1;
     FPT1 = FLOATDATA(image);
-    for (i = 0; i < N; i++, FPT1++, pt2++)
-      if (*pt2 == 0) *FPT1 = 0;
+    for (i = 0; i < N; i++, FPT1++, pt2++) {
+      if (*pt2 == 0) {
+        *FPT1 = 0;
+      }
+    }
   }
   else if (datatype(image) == VFF_TYP_COMPLEX)
   {
     fcomplex *CPT1;
     CPT1 = COMPLEXDATA(image);
-    for (i = 0; i < N; i++, CPT1++, pt2++)
-      if (*pt2 == 0) (*CPT1).re = (*CPT1).im = 0;
+    for (i = 0; i < N; i++, CPT1++, pt2++) {
+      if (*pt2 == 0) {
+        (*CPT1).re = (*CPT1).im = 0;
+      }
+    }
   }
   else 
   {
@@ -811,20 +961,23 @@ int32_t lmax(
   if ((datatype(image1) == VFF_TYP_1_BYTE) && (datatype(image2) == VFF_TYP_1_BYTE))
   {
     pt1 = UCHARDATA(image1); pt2 = UCHARDATA(image2);
-    for (i = 0; i < N; i++, pt1++, pt2++)
+    for (i = 0; i < N; i++, pt1++, pt2++) {
       *pt1 = mcmax(*pt1, *pt2);
+    }
   }
   else if ((datatype(image1) == VFF_TYP_4_BYTE) && (datatype(image2) == VFF_TYP_4_BYTE))
   {
     PT1 = SLONGDATA(image1); PT2 = SLONGDATA(image2);
-    for (i = 0; i < N; i++, PT1++, PT2++)
+    for (i = 0; i < N; i++, PT1++, PT2++) {
       *PT1 = mcmax(*PT1, *PT2);
+    }
   }
   else if ((datatype(image1) == VFF_TYP_FLOAT) && (datatype(image2) == VFF_TYP_FLOAT))
   {
     FPT1 = FLOATDATA(image1); FPT2 = FLOATDATA(image2);
-    for (i = 0; i < N; i++, FPT1++, FPT2++)
+    for (i = 0; i < N; i++, FPT1++, FPT2++) {
       *FPT1 = mcmax(*FPT1, *FPT2);
+    }
   }
   else 
   {
@@ -849,19 +1002,31 @@ double lmax1(struct xvimage * image1)
   {
     uint8_t *F = UCHARDATA(image1);
     maxval = (double)F[0];
-    for (i = 1; i < N; i++) if ((double)F[i] > maxval) maxval = (double)F[i];
+    for (i = 1; i < N; i++) {
+      if ((double)F[i] > maxval) {
+        maxval = (double)F[i];
+      }
+    }
   }
   else if (datatype(image1) == VFF_TYP_4_BYTE)
   {
     int32_t *F = SLONGDATA(image1);
     maxval = (double)F[0];
-    for (i = 1; i < N; i++) if ((double)F[i] > maxval) maxval = (double)F[i];
+    for (i = 1; i < N; i++) {
+      if ((double)F[i] > maxval) {
+        maxval = (double)F[i];
+      }
+    }
   }
   else if (datatype(image1) == VFF_TYP_FLOAT)
   {
     float *F = FLOATDATA(image1);
     maxval = (double)F[0];
-    for (i = 1; i < N; i++) if ((double)F[i] > maxval) maxval = (double)F[i];
+    for (i = 1; i < N; i++) {
+      if ((double)F[i] > maxval) {
+        maxval = (double)F[i];
+      }
+    }
   }
   else 
   {
@@ -886,25 +1051,41 @@ double lmin1(struct xvimage * image1)
   {
     uint8_t *F = UCHARDATA(image1);
     minval = (double)F[0];
-    for (i = 1; i < N; i++) if ((double)F[i] < minval) minval = (double)F[i];
+    for (i = 1; i < N; i++) {
+      if ((double)F[i] < minval) {
+        minval = (double)F[i];
+      }
+    }
   }
   else if (datatype(image1) == VFF_TYP_2_BYTE)
   {
     int16_t *F = SSHORTDATA(image1);
     minval = (double)F[0];
-    for (i = 1; i < N; i++) if ((double)F[i] < minval) minval = (double)F[i];
+    for (i = 1; i < N; i++) {
+      if ((double)F[i] < minval) {
+        minval = (double)F[i];
+      }
+    }
   }
   else if (datatype(image1) == VFF_TYP_4_BYTE)
   {
     int32_t *F = SLONGDATA(image1);
     minval = (double)F[0];
-    for (i = 1; i < N; i++) if ((double)F[i] < minval) minval = (double)F[i];
+    for (i = 1; i < N; i++) {
+      if ((double)F[i] < minval) {
+        minval = (double)F[i];
+      }
+    }
   }
   else if (datatype(image1) == VFF_TYP_FLOAT)
   {
     float *F = FLOATDATA(image1);
     minval = (double)F[0];
-    for (i = 1; i < N; i++) if ((double)F[i] < minval) minval = (double)F[i];
+    for (i = 1; i < N; i++) {
+      if ((double)F[i] < minval) {
+        minval = (double)F[i];
+      }
+    }
   }
   else 
   {
@@ -930,19 +1111,34 @@ index_t largmin(struct xvimage * image1)
   {
     uint8_t *F = UCHARDATA(image1);
     minval = (double)F[0];
-    for (i = 1; i < N; i++) if ((double)F[i] < minval) { minval = (double)F[i]; arg = i; }
+    for (i = 1; i < N; i++) {
+      if ((double)F[i] < minval) {
+        minval = (double)F[i];
+        arg = i;
+      }
+    }
   }
   else if (datatype(image1) == VFF_TYP_4_BYTE)
   {
     int32_t *F = SLONGDATA(image1);
     minval = (double)F[0];
-    for (i = 1; i < N; i++) if ((double)F[i] < minval) { minval = (double)F[i]; arg = i; }
+    for (i = 1; i < N; i++) {
+      if ((double)F[i] < minval) {
+        minval = (double)F[i];
+        arg = i;
+      }
+    }
   }
   else if (datatype(image1) == VFF_TYP_FLOAT)
   {
     float *F = FLOATDATA(image1);
     minval = (double)F[0];
-    for (i = 1; i < N; i++) if ((double)F[i] < minval) { minval = (double)F[i]; arg = i; }
+    for (i = 1; i < N; i++) {
+      if ((double)F[i] < minval) {
+        minval = (double)F[i];
+        arg = i;
+      }
+    }
   }
   else 
   {
@@ -968,19 +1164,34 @@ index_t largmax(struct xvimage * image1)
   {
     uint8_t *F = UCHARDATA(image1);
     maxval = (double)F[0];
-    for (i = 1; i < N; i++) if ((double)F[i] > maxval) { maxval = (double)F[i]; arg = i; }
+    for (i = 1; i < N; i++) {
+      if ((double)F[i] > maxval) {
+        maxval = (double)F[i];
+        arg = i;
+      }
+    }
   }
   else if (datatype(image1) == VFF_TYP_4_BYTE)
   {
     int32_t *F = SLONGDATA(image1);
     maxval = (double)F[0];
-    for (i = 1; i < N; i++) if ((double)F[i] > maxval) { maxval = (double)F[i]; arg = i; }
+    for (i = 1; i < N; i++) {
+      if ((double)F[i] > maxval) {
+        maxval = (double)F[i];
+        arg = i;
+      }
+    }
   }
   else if (datatype(image1) == VFF_TYP_FLOAT)
   {
     float *F = FLOATDATA(image1);
     maxval = (double)F[0];
-    for (i = 1; i < N; i++) if ((double)F[i] > maxval) { maxval = (double)F[i]; arg = i; }
+    for (i = 1; i < N; i++) {
+      if ((double)F[i] > maxval) {
+        maxval = (double)F[i];
+        arg = i;
+      }
+    }
   }
   else 
   {
@@ -1012,26 +1223,30 @@ int32_t lmin(
   if ((datatype(image1) == VFF_TYP_1_BYTE) && (datatype(image2) == VFF_TYP_1_BYTE))
   {
     pt1 = UCHARDATA(image1); pt2 = UCHARDATA(image2);
-    for (i = 0; i < N; i++, pt1++, pt2++)
+    for (i = 0; i < N; i++, pt1++, pt2++) {
       *pt1 = mcmin(*pt1, *pt2);
+    }
   }
   else if ((datatype(image1) == VFF_TYP_2_BYTE) && (datatype(image2) == VFF_TYP_2_BYTE))
   {
     SPT1 = USHORTDATA(image1); SPT2 = USHORTDATA(image2);
-    for (i = 0; i < N; i++, SPT1++, SPT2++)
+    for (i = 0; i < N; i++, SPT1++, SPT2++) {
       *SPT1 = mcmin(*SPT1, *SPT2);
+    }
   }
   else if ((datatype(image1) == VFF_TYP_4_BYTE) && (datatype(image2) == VFF_TYP_4_BYTE))
   {
     PT1 = SLONGDATA(image1); PT2 = SLONGDATA(image2);
-    for (i = 0; i < N; i++, PT1++, PT2++)
+    for (i = 0; i < N; i++, PT1++, PT2++) {
       *PT1 = mcmin(*PT1, *PT2);
+    }
   }
   else if ((datatype(image1) == VFF_TYP_FLOAT) && (datatype(image2) == VFF_TYP_FLOAT))
   {
     FPT1 = FLOATDATA(image1); FPT2 = FLOATDATA(image2);
-    for (i = 0; i < N; i++, FPT1++, FPT2++)
+    for (i = 0; i < N; i++, FPT1++, FPT2++) {
       *FPT1 = mcmin(*FPT1, *FPT2);
+    }
   }
   else 
   {
@@ -1087,36 +1302,43 @@ int32_t lmult(
   {
     uint8_t *pt1, *pt2;
     pt1 = UCHARDATA(image1);
-    for (b = 0; b < nb1; b++)
-      for (pt2 = UCHARDATA(image2), i = 0; i < N; i++, pt1++, pt2++)
-	*pt1 = (uint8_t)mcmin(NDG_MAX, (int32_t)*pt1 * (int32_t)*pt2);
+    for (b = 0; b < nb1; b++) {
+      for (pt2 = UCHARDATA(image2), i = 0; i < N; i++, pt1++, pt2++) {
+        *pt1 = (uint8_t)mcmin(NDG_MAX, (int32_t)*pt1 * (int32_t)*pt2);
+      }
+    }
   }
   else if ((datatype(image1) == VFF_TYP_4_BYTE) && (datatype(image2) == VFF_TYP_4_BYTE))
   {
     int32_t *PT1, *PT2; 
     PT1 = SLONGDATA(image1);
-    for (b = 0; b < nb1; b++)
-      for (PT2 = SLONGDATA(image2), i = 0; i < N; i++, PT1++, PT2++)
-	*PT1 = *PT1 * *PT2;
+    for (b = 0; b < nb1; b++) {
+      for (PT2 = SLONGDATA(image2), i = 0; i < N; i++, PT1++, PT2++) {
+        *PT1 = *PT1 * *PT2;
+      }
+    }
   }
   else if ((datatype(image1) == VFF_TYP_FLOAT) && (datatype(image2) == VFF_TYP_FLOAT))
   {
     float *FPT1, *FPT2; 
     FPT1 = FLOATDATA(image1);
-    for (b = 0; b < nb1; b++)
-      for (FPT2 = FLOATDATA(image2), i = 0; i < N; i++, FPT1++, FPT2++)
-	*FPT1 = *FPT1 * *FPT2;
+    for (b = 0; b < nb1; b++) {
+      for (FPT2 = FLOATDATA(image2), i = 0; i < N; i++, FPT1++, FPT2++) {
+        *FPT1 = *FPT1 * *FPT2;
+      }
+    }
   }
   else if ((datatype(image1) == VFF_TYP_COMPLEX) && (datatype(image2) == VFF_TYP_COMPLEX))
   {
     fcomplex *CPT1, *CPT2; 
     CPT1 = COMPLEXDATA(image1);
-    for (b = 0; b < nb1; b++)
+    for (b = 0; b < nb1; b++) {
       for (CPT2 = COMPLEXDATA(image2), i = 0; i < N; i++, CPT1++, CPT2++)
       {
 	(*CPT1).re = ((*CPT1).re * (*CPT2).re) - ((*CPT1).im * (*CPT2).im);
 	(*CPT1).im = ((*CPT1).re * (*CPT2).im) + ((*CPT1).im * (*CPT2).re);
       }
+    }
   }
   else 
   {
@@ -1141,8 +1363,13 @@ int32_t lneg(
 
   if (datatype(image) == VFF_TYP_1_BYTE)
   {
-    for (pt = UCHARDATA(image), i = 0; i < N; i++, pt++)
-      if (*pt) *pt = 0; else *pt = NDG_MAX;
+    for (pt = UCHARDATA(image), i = 0; i < N; i++, pt++) {
+      if (*pt) {
+        *pt = 0;
+      } else {
+        *pt = NDG_MAX;
+      }
+    }
   }
   else
   {
@@ -1178,13 +1405,19 @@ int32_t lnormalize(struct xvimage * image, float nmin, float nmax)
     ndgmin = ndgmax = Im[0];
     for (x = 0; x < N; x++)
     {
-      if (Im[x] < ndgmin) ndgmin = Im[x];
-      else if (Im[x] > ndgmax) ndgmax = Im[x];
+      if (Im[x] < ndgmin) {
+        ndgmin = Im[x];
+      } else if (Im[x] > ndgmax) {
+        ndgmax = Im[x];
+      }
     }
     ndgmax = ndgmax - ndgmin;
-    if (ndgmax == 0) ndgmax = 1;
-    for (x = 0; x < N; x++)
-      Im[x] = Nmin + ((Im[x] - ndgmin) * (Nmax-Nmin)) / ndgmax;
+    if (ndgmax == 0) {
+      ndgmax = 1;
+    }
+    for (x = 0; x < N; x++) {
+      Im[x] = Nmin + ((Im[x] - ndgmin) * (Nmax - Nmin)) / ndgmax;
+    }
   }
   else if (datatype(image) == VFF_TYP_4_BYTE)
   {
@@ -1196,13 +1429,19 @@ int32_t lnormalize(struct xvimage * image, float nmin, float nmax)
     ndgmin = ndgmax = Im[0];
     for (x = 0; x < N; x++)
     {
-      if (Im[x] < ndgmin) ndgmin = Im[x];
-      else if (Im[x] > ndgmax) ndgmax = Im[x];
+      if (Im[x] < ndgmin) {
+        ndgmin = Im[x];
+      } else if (Im[x] > ndgmax) {
+        ndgmax = Im[x];
+      }
     }
     ndgmax = ndgmax - ndgmin;
-    if (ndgmax == 0) ndgmax = 1;
-    for (x = 0; x < N; x++)
-      Im[x] = Nmin + ((Im[x] - ndgmin) * (Nmax-Nmin)) / ndgmax;
+    if (ndgmax == 0) {
+      ndgmax = 1;
+    }
+    for (x = 0; x < N; x++) {
+      Im[x] = Nmin + ((Im[x] - ndgmin) * (Nmax - Nmin)) / ndgmax;
+    }
   }
   else if (datatype(image) == VFF_TYP_FLOAT)
   {
@@ -1212,13 +1451,19 @@ int32_t lnormalize(struct xvimage * image, float nmin, float nmax)
     ndgmin = ndgmax = Im[0];
     for (x = 0; x < N; x++)
     {
-      if (Im[x] < ndgmin) ndgmin = Im[x];
-      else if (Im[x] > ndgmax) ndgmax = Im[x];
+      if (Im[x] < ndgmin) {
+        ndgmin = Im[x];
+      } else if (Im[x] > ndgmax) {
+        ndgmax = Im[x];
+      }
     }
     ndgmax = ndgmax - ndgmin;
-    if (ndgmax < EPSILON) ndgmax = 1.0;
-    for (x = 0; x < N; x++)
-      Im[x] = nmin + ((Im[x] - ndgmin) * (nmax-nmin)) / ndgmax;
+    if (ndgmax < EPSILON) {
+      ndgmax = 1.0;
+    }
+    for (x = 0; x < N; x++) {
+      Im[x] = nmin + ((Im[x] - ndgmin) * (nmax - nmin)) / ndgmax;
+    }
   }
   else
   {
@@ -1245,26 +1490,38 @@ int32_t lnull(struct xvimage * image1)
   if (datatype(image1) == VFF_TYP_1_BYTE)
   {
     pt1 = UCHARDATA(image1);
-    for (i = 0; i < N; i++, pt1++)
-      if (*pt1) return 0;
+    for (i = 0; i < N; i++, pt1++) {
+      if (*pt1) {
+        return 0;
+      }
+    }
   }
   else if (datatype(image1) == VFF_TYP_4_BYTE)
   {
     PT1 = SLONGDATA(image1);
-    for (i = 0; i < N; i++, PT1++)
-      if (*PT1) return 0;
+    for (i = 0; i < N; i++, PT1++) {
+      if (*PT1) {
+        return 0;
+      }
+    }
   }
   else if (datatype(image1) == VFF_TYP_FLOAT)
   {
     FPT1 = FLOATDATA(image1);
-    for (i = 0; i < N; i++, FPT1++)
-      if (*FPT1 != 0.0) return 0;
+    for (i = 0; i < N; i++, FPT1++) {
+      if (*FPT1 != 0.0) {
+        return 0;
+      }
+    }
   }
   else if (datatype(image1) == VFF_TYP_COMPLEX)
   {
     FPT1 = FLOATDATA(image1);
-    for (i = 0; i < N+N; i++, FPT1++)
-      if (*FPT1 != 0.0) return 0;
+    for (i = 0; i < N + N; i++, FPT1++) {
+      if (*FPT1 != 0.0) {
+        return 0;
+      }
+    }
   }
   else 
   {
@@ -1451,32 +1708,37 @@ int32_t lsub(
   if ((datatype(image1) == VFF_TYP_1_BYTE) && (datatype(image2) == VFF_TYP_1_BYTE))
   {
     pt1 = UCHARDATA(image1); pt2 = UCHARDATA(image2);
-    for (i = 0; i < N; i++, pt1++, pt2++)
+    for (i = 0; i < N; i++, pt1++, pt2++) {
       *pt1 = (uint8_t)mcmax(NDG_MIN, (int32_t)*pt1 - (int32_t)*pt2);
+    }
   }
   else if ((datatype(image1) == VFF_TYP_2_BYTE) && (datatype(image2) == VFF_TYP_2_BYTE))
   {
     pt3 = USHORTDATA(image1); pt4 = USHORTDATA(image2);
-    for (i = 0; i < N; i++, pt3++, pt4++)
+    for (i = 0; i < N; i++, pt3++, pt4++) {
       *pt3 = (uint16_t)mcmax(NDG_MIN, (uint16_t)*pt3 - (uint16_t)*pt4);
+    }
   }
   else if ((datatype(image1) == VFF_TYP_4_BYTE) && (datatype(image2) == VFF_TYP_4_BYTE))
   {
     PT1 = SLONGDATA(image1); PT2 = SLONGDATA(image2);
-    for (i = 0; i < N; i++, PT1++, PT2++)
+    for (i = 0; i < N; i++, PT1++, PT2++) {
       *PT1 = (int32_t)mcmax(NDG_MIN, (int32_t)*PT1 - (int32_t)*PT2);
+    }
   }
   else if ((datatype(image1) == VFF_TYP_FLOAT) && (datatype(image2) == VFF_TYP_FLOAT))
   {
     FPT1 = FLOATDATA(image1); FPT2 = FLOATDATA(image2);
-    for (i = 0; i < N; i++, FPT1++, FPT2++)
+    for (i = 0; i < N; i++, FPT1++, FPT2++) {
       *FPT1 = *FPT1 - *FPT2;
+    }
   }
   else if ((datatype(image1) == VFF_TYP_COMPLEX) && (datatype(image2) == VFF_TYP_COMPLEX))
   {
     FPT1 = FLOATDATA(image1); FPT2 = FLOATDATA(image2);
-    for (i = 0; i < N+N; i++, FPT1++, FPT2++)
+    for (i = 0; i < N + N; i++, FPT1++, FPT2++) {
       *FPT1 = *FPT1 - *FPT2;
+    }
   }
   else 
   {
@@ -1503,16 +1765,19 @@ int32_t lvolume(
   double fvolume = 0.0; 
   index_t N = rowsize(image) * colsize(image) * depth(image) * tsize(image) * nbands(image);
 
-  if (datatype(image) == VFF_TYP_1_BYTE)
-    for (pt = UCHARDATA(image), i = 0; i < N; i++, pt++) fvolume += (double)*pt;
-  else 
-  if (datatype(image) == VFF_TYP_4_BYTE)
-    for (PT = SLONGDATA(image), i = 0; i < N; i++, PT++) fvolume += (double)*PT;
-  else 
-  if (datatype(image) == VFF_TYP_FLOAT)
-    for (FPT = FLOATDATA(image), i = 0; i < N; i++, FPT++) fvolume += (double)*FPT;
-  else 
-  {
+  if (datatype(image) == VFF_TYP_1_BYTE) {
+    for (pt = UCHARDATA(image), i = 0; i < N; i++, pt++) {
+      fvolume += (double)*pt;
+    }
+  } else if (datatype(image) == VFF_TYP_4_BYTE) {
+    for (PT = SLONGDATA(image), i = 0; i < N; i++, PT++) {
+      fvolume += (double)*PT;
+    }
+  } else if (datatype(image) == VFF_TYP_FLOAT) {
+    for (FPT = FLOATDATA(image), i = 0; i < N; i++, FPT++) {
+      fvolume += (double)*FPT;
+    }
+  } else {
     fprintf(stderr, "%s: bad image type(s)\n", F_NAME);
     return 0;
   }
@@ -1542,10 +1807,11 @@ int32_t lxor(
   {
     for (i = 0; i < N; i++)
       {
-        if (((F1[i] == 0) && (F2[i] == 0)) || ((F1[i] != 0) && (F2[i] != 0)))
-	  F1[i]=0;
-        else 
-     	  F1[i]=255;
+      if (((F1[i] == 0) && (F2[i] == 0)) || ((F1[i] != 0) && (F2[i] != 0))) {
+        F1[i] = 0;
+      } else {
+        F1[i] = 255;
+      }
       }
   }
   else 
@@ -1615,7 +1881,9 @@ int32_t lreal(struct xvimage * image, struct xvimage * result)
   N = rowsize(image) * colsize(image) * depth(image);
   F = COMPLEXDATA(image);
   R = FLOATDATA(result);
-  for (i = 0; i < N; i++) R[i] = F[i].re;
+  for (i = 0; i < N; i++) {
+    R[i] = F[i].re;
+  }
   return 1;
 } /* lreal() */
 
@@ -1640,6 +1908,8 @@ int32_t limaginary(struct xvimage * image, struct xvimage * result)
   N = rowsize(image) * colsize(image) * depth(image);
   F = COMPLEXDATA(image);
   R = FLOATDATA(result);
-  for (i = 0; i < N; i++) R[i] = F[i].im;
+  for (i = 0; i < N; i++) {
+    R[i] = F[i].im;
+  }
   return 1;
 } /* limaginary() */

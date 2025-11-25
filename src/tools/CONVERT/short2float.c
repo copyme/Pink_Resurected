@@ -107,7 +107,9 @@ int main(int argc, char **argv)
   imagefloat->ydim = imageshort->ydim;
   imagefloat->zdim = imageshort->zdim;
 
-  for (x = 0; x < N; x++) F[x] = (float)S[x];
+  for (x = 0; x < N; x++) {
+    F[x] = (float)S[x];
+  }
 
   writeimage(imagefloat, argv[argc-1]);
   freeimage(imagefloat);

@@ -82,7 +82,9 @@ double lrecalagerigide_translateplane_Delta(double *X, int n, double *Y, int m)
     for (j = 1; j < m; j++)
     {
       t = distcarre(x1, x2, Y[j*2 + 0], Y[j*2 + 1]);
-      if (t < tmin) tmin = t;
+      if (t < tmin) {
+        tmin = t;
+      }
     } // for (j = 1; j < m; j++)
     delta += tmin;
   } // for (i = 0; i < n; i++)
@@ -174,7 +176,9 @@ double *lrecalagerigide2d_translateplane(double *X, int32_t n, double *Y, int32_
   lrecalagerigide_translateplane_Tgamma(X, n, G, ens.Tmp);
   G[3] -= BX1; G[4] -= BX2;
 
-  for (i = 0; i < n+n; i++) X[i] = ens.Tmp[i]; 
+  for (i = 0; i < n + n; i++) {
+    X[i] = ens.Tmp[i];
+  }
 
   Gamma = (double *)calloc(1,5 * sizeof(double));
   memcpy(Gamma, G, 5 * sizeof(double));
@@ -213,7 +217,9 @@ double lrecalagerigide_translateplane_Delta3d(double *X, int n, double *Y, int m
     for (j = 1; j < m; j++)
     {
       t = distcarre3d(x1, x2, x3, Y[j*3 + 0], Y[j*3 + 1], Y[j*3 + 2]);
-      if (t < tmin) tmin = t;
+      if (t < tmin) {
+        tmin = t;
+      }
     } // for (j = 1; j < m; j++)
     delta += tmin;
   } // for (i = 0; i < n; i++)
@@ -323,9 +329,11 @@ double *lrecalagerigide3d_translateplane(double *X, int n, double *Y, int m)
   lrecalagerigide_translateplane_Tgamma3dbis(X, n, G, ens.Tmp);
   G[0] -= BX1; G[1] -= BX2; 
   printf("les params : %lf %lf \n", G[0], G[1]);
-  
-  for (i = 0; i < 3*n; i++) X[i] = ens.Tmp[i]; 
-  
+
+  for (i = 0; i < 3 * n; i++) {
+    X[i] = ens.Tmp[i];
+  }
+
   Gamma = (double *)calloc(1, 2 * sizeof(double));
   memcpy(Gamma, G, 2 * sizeof(double));
   free(ens.Tmp);
@@ -381,8 +389,10 @@ double *lrecalagerigide3d_translate(double *X, int n, double *Y, int m)
   G[0] -= BX1; G[1] -= BX2; G[2] -= BX3;
   printf("les params : %lf %lf %lf \n", G[0], G[1], G[2]);
   printf("Cout de la transformation : %lf\n", fmin);
-  for (i = 0; i < 3*n; i++) X[i] = ens.Tmp[i]; 
-  
+  for (i = 0; i < 3 * n; i++) {
+    X[i] = ens.Tmp[i];
+  }
+
   Gamma = (double *)calloc(1, 3 * sizeof(double));
   memcpy(Gamma, G, 3 * sizeof(double));
   free(ens.Tmp);

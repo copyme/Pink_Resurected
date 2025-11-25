@@ -268,10 +268,12 @@ static int32_t Comp8Tab[256][4] =
 
 static int32_t is_on_frame(index_t p, index_t rs, index_t N)
 {
-  if ((p%rs==rs-1) || (p<rs) || (p%rs==0) || (p>=N-rs)) /* point de bord */
+  if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+      (p >= N - rs)) { /* point de bord */
     return 1;
-  else
+  } else {
     return 0;
+  }
 }
 
 /* ==================================== */
@@ -288,14 +290,32 @@ uint8_t mask(
 	register uint8_t * ptr = img+p;
 	register uint8_t v;
 	assert(!is_on_frame(p, rs, N));
-	if ( *(ptr+1)   ) v=1; else v=0;
- 	if ( *(ptr+1-rs)) v|=2;
- 	if ( *(ptr-rs)  ) v|=4;
- 	if ( *(ptr-rs-1)) v|=8;
- 	if ( *(ptr-1)   ) v|=16;
- 	if ( *(ptr-1+rs)) v|=32;
- 	if ( *(ptr+rs)  ) v|=64;
- 	if ( *(ptr+rs+1)) v|=128;
+        if (*(ptr + 1)) {
+          v = 1;
+        } else {
+          v = 0;
+        }
+        if (*(ptr + 1 - rs)) {
+          v |= 2;
+        }
+        if (*(ptr - rs)) {
+          v |= 4;
+        }
+        if (*(ptr - rs - 1)) {
+          v |= 8;
+        }
+        if (*(ptr - 1)) {
+          v |= 16;
+        }
+        if (*(ptr - 1 + rs)) {
+          v |= 32;
+        }
+        if (*(ptr + rs)) {
+          v |= 64;
+        }
+        if (*(ptr + rs + 1)) {
+          v |= 128;
+        }
         return v;
 } /* mask() */
 
@@ -333,14 +353,32 @@ uint8_t maskmm(
         v6 = *(ptr+rs)  ;
         v7 = *(ptr+rs+1);
 
-	if (v0 < val) t=1; else t=0;
- 	if (v1 < val) t|=2;
- 	if (v2 < val) t|=4;
- 	if (v3 < val) t|=8;
- 	if (v4 < val) t|=16;
- 	if (v5 < val) t|=32;
- 	if (v6 < val) t|=64;
- 	if (v7 < val) t|=128;
+        if (v0 < val) {
+          t = 1;
+        } else {
+          t = 0;
+        }
+        if (v1 < val) {
+          t |= 2;
+        }
+        if (v2 < val) {
+          t |= 4;
+        }
+        if (v3 < val) {
+          t |= 8;
+        }
+        if (v4 < val) {
+          t |= 16;
+        }
+        if (v5 < val) {
+          t |= 32;
+        }
+        if (v6 < val) {
+          t |= 64;
+        }
+        if (v7 < val) {
+          t |= 128;
+        }
 
         return t;
 } /* maskmm() */
@@ -379,14 +417,32 @@ uint8_t maskpp(
         v6 = *(ptr+rs)  ;
         v7 = *(ptr+rs+1);
 
-	if (v0 > val) t=1; else t=0;
- 	if (v1 > val) t|=2;
- 	if (v2 > val) t|=4;
- 	if (v3 > val) t|=8;
- 	if (v4 > val) t|=16;
- 	if (v5 > val) t|=32;
- 	if (v6 > val) t|=64;
- 	if (v7 > val) t|=128;
+        if (v0 > val) {
+          t = 1;
+        } else {
+          t = 0;
+        }
+        if (v1 > val) {
+          t |= 2;
+        }
+        if (v2 > val) {
+          t |= 4;
+        }
+        if (v3 > val) {
+          t |= 8;
+        }
+        if (v4 > val) {
+          t |= 16;
+        }
+        if (v5 > val) {
+          t |= 32;
+        }
+        if (v6 > val) {
+          t |= 64;
+        }
+        if (v7 > val) {
+          t |= 128;
+        }
 
         return t;
 } /* maskpp() */
@@ -426,14 +482,32 @@ uint8_t maskmmh(
         v6 = *(ptr+rs)  ;
         v7 = *(ptr+rs+1);
 
-	if (v0 < val) t=1; else t=0;
- 	if (v1 < val) t|=2;
- 	if (v2 < val) t|=4;
- 	if (v3 < val) t|=8;
- 	if (v4 < val) t|=16;
- 	if (v5 < val) t|=32;
- 	if (v6 < val) t|=64;
- 	if (v7 < val) t|=128;
+        if (v0 < val) {
+          t = 1;
+        } else {
+          t = 0;
+        }
+        if (v1 < val) {
+          t |= 2;
+        }
+        if (v2 < val) {
+          t |= 4;
+        }
+        if (v3 < val) {
+          t |= 8;
+        }
+        if (v4 < val) {
+          t |= 16;
+        }
+        if (v5 < val) {
+          t |= 32;
+        }
+        if (v6 < val) {
+          t |= 64;
+        }
+        if (v7 < val) {
+          t |= 128;
+        }
 
         return t;
 } /* maskmmh() */
@@ -473,14 +547,32 @@ uint8_t maskpph(
         v6 = *(ptr+rs)  ;
         v7 = *(ptr+rs+1);
 
-	if (v0 > val) t=1; else t=0;
- 	if (v1 > val) t|=2;
- 	if (v2 > val) t|=4;
- 	if (v3 > val) t|=8;
- 	if (v4 > val) t|=16;
- 	if (v5 > val) t|=32;
- 	if (v6 > val) t|=64;
- 	if (v7 > val) t|=128;
+        if (v0 > val) {
+          t = 1;
+        } else {
+          t = 0;
+        }
+        if (v1 > val) {
+          t |= 2;
+        }
+        if (v2 > val) {
+          t |= 4;
+        }
+        if (v3 > val) {
+          t |= 8;
+        }
+        if (v4 > val) {
+          t |= 16;
+        }
+        if (v5 > val) {
+          t |= 32;
+        }
+        if (v6 > val) {
+          t |= 64;
+        }
+        if (v7 > val) {
+          t |= 128;
+        }
 
         return t;
 } /* maskpph() */
@@ -520,28 +612,64 @@ void nbtopo(        /* nombres topologiques pour minima 4-connexes */
         v6 = *(ptr+rs)  ;
         v7 = *(ptr+rs+1);
 
-	if (v0 >= val) t=1; else t=0;
- 	if (v1 >= val) t|=2;
- 	if (v2 >= val) t|=4;
- 	if (v3 >= val) t|=8;
- 	if (v4 >= val) t|=16;
- 	if (v5 >= val) t|=32;
- 	if (v6 >= val) t|=64;
- 	if (v7 >= val) t|=128;
+        if (v0 >= val) {
+          t = 1;
+        } else {
+          t = 0;
+        }
+        if (v1 >= val) {
+          t |= 2;
+        }
+        if (v2 >= val) {
+          t |= 4;
+        }
+        if (v3 >= val) {
+          t |= 8;
+        }
+        if (v4 >= val) {
+          t |= 16;
+        }
+        if (v5 >= val) {
+          t |= 32;
+        }
+        if (v6 >= val) {
+          t |= 64;
+        }
+        if (v7 >= val) {
+          t |= 128;
+        }
 
-	*t4mm=TopoTab[t][0];
+        *t4mm=TopoTab[t][0];
 	*t8p=TopoTab[t][1];
 
-	if (v0 > val) t=1; else t=0;
- 	if (v1 > val) t|=2;
- 	if (v2 > val) t|=4;
- 	if (v3 > val) t|=8;
- 	if (v4 > val) t|=16;
- 	if (v5 > val) t|=32;
- 	if (v6 > val) t|=64;
- 	if (v7 > val) t|=128;
+        if (v0 > val) {
+          t = 1;
+        } else {
+          t = 0;
+        }
+        if (v1 > val) {
+          t |= 2;
+        }
+        if (v2 > val) {
+          t |= 4;
+        }
+        if (v3 > val) {
+          t |= 8;
+        }
+        if (v4 > val) {
+          t |= 16;
+        }
+        if (v5 > val) {
+          t |= 32;
+        }
+        if (v6 > val) {
+          t |= 64;
+        }
+        if (v7 > val) {
+          t |= 128;
+        }
 
-	*t4m=TopoTab[t][0];
+        *t4m=TopoTab[t][0];
 	*t8pp=TopoTab[t][1];
 } /* nbtopo() */
 
@@ -576,16 +704,34 @@ int32_t t4mm(        /* nombre topologique mm pour minima 4-connexes */
         v6 = *(ptr+rs)  ;
         v7 = *(ptr+rs+1);
 
-	if (v0 >= val) t=1; else t=0;
- 	if (v1 >= val) t|=2;
- 	if (v2 >= val) t|=4;
- 	if (v3 >= val) t|=8;
- 	if (v4 >= val) t|=16;
- 	if (v5 >= val) t|=32;
- 	if (v6 >= val) t|=64;
- 	if (v7 >= val) t|=128;
+        if (v0 >= val) {
+          t = 1;
+        } else {
+          t = 0;
+        }
+        if (v1 >= val) {
+          t |= 2;
+        }
+        if (v2 >= val) {
+          t |= 4;
+        }
+        if (v3 >= val) {
+          t |= 8;
+        }
+        if (v4 >= val) {
+          t |= 16;
+        }
+        if (v5 >= val) {
+          t |= 32;
+        }
+        if (v6 >= val) {
+          t |= 64;
+        }
+        if (v7 >= val) {
+          t |= 128;
+        }
 
-	return TopoTab[t][0];
+        return TopoTab[t][0];
 } /* t4mm() */
 
 /* ==================================== */
@@ -619,16 +765,34 @@ int32_t t4m(        /* nombre topologique m pour minima 4-connexes */
         v6 = *(ptr+rs)  ;
         v7 = *(ptr+rs+1);
 
-	if (v0 > val) t=1; else t=0;
- 	if (v1 > val) t|=2;
- 	if (v2 > val) t|=4;
- 	if (v3 > val) t|=8;
- 	if (v4 > val) t|=16;
- 	if (v5 > val) t|=32;
- 	if (v6 > val) t|=64;
- 	if (v7 > val) t|=128;
+        if (v0 > val) {
+          t = 1;
+        } else {
+          t = 0;
+        }
+        if (v1 > val) {
+          t |= 2;
+        }
+        if (v2 > val) {
+          t |= 4;
+        }
+        if (v3 > val) {
+          t |= 8;
+        }
+        if (v4 > val) {
+          t |= 16;
+        }
+        if (v5 > val) {
+          t |= 32;
+        }
+        if (v6 > val) {
+          t |= 64;
+        }
+        if (v7 > val) {
+          t |= 128;
+        }
 
-	return TopoTab[t][0];
+        return TopoTab[t][0];
 } /* t4m() */
 
 /* ==================================== */
@@ -662,16 +826,34 @@ int32_t t8p(        /* nombre topologique p pour minima 4-connexes */
         v6 = *(ptr+rs)  ;
         v7 = *(ptr+rs+1);
 
-	if (v0 >= val) t=1; else t=0;
- 	if (v1 >= val) t|=2;
- 	if (v2 >= val) t|=4;
- 	if (v3 >= val) t|=8;
- 	if (v4 >= val) t|=16;
- 	if (v5 >= val) t|=32;
- 	if (v6 >= val) t|=64;
- 	if (v7 >= val) t|=128;
+        if (v0 >= val) {
+          t = 1;
+        } else {
+          t = 0;
+        }
+        if (v1 >= val) {
+          t |= 2;
+        }
+        if (v2 >= val) {
+          t |= 4;
+        }
+        if (v3 >= val) {
+          t |= 8;
+        }
+        if (v4 >= val) {
+          t |= 16;
+        }
+        if (v5 >= val) {
+          t |= 32;
+        }
+        if (v6 >= val) {
+          t |= 64;
+        }
+        if (v7 >= val) {
+          t |= 128;
+        }
 
-	return TopoTab[t][1];
+        return TopoTab[t][1];
 } /* t8p() */
 
 /* ==================================== */
@@ -705,16 +887,34 @@ int32_t t8pp(        /* nombre topologique pp pour minima 4-connexes */
         v6 = *(ptr+rs)  ;
         v7 = *(ptr+rs+1);
 
-	if (v0 > val) t=1; else t=0;
- 	if (v1 > val) t|=2;
- 	if (v2 > val) t|=4;
- 	if (v3 > val) t|=8;
- 	if (v4 > val) t|=16;
- 	if (v5 > val) t|=32;
- 	if (v6 > val) t|=64;
- 	if (v7 > val) t|=128;
+        if (v0 > val) {
+          t = 1;
+        } else {
+          t = 0;
+        }
+        if (v1 > val) {
+          t |= 2;
+        }
+        if (v2 > val) {
+          t |= 4;
+        }
+        if (v3 > val) {
+          t |= 8;
+        }
+        if (v4 > val) {
+          t |= 16;
+        }
+        if (v5 > val) {
+          t |= 32;
+        }
+        if (v6 > val) {
+          t |= 64;
+        }
+        if (v7 > val) {
+          t |= 128;
+        }
 
-	return TopoTab[t][1];
+        return TopoTab[t][1];
 } /* t8pp() */
 
 /* ==================================== */
@@ -748,16 +948,34 @@ int32_t t8pp_l(        /* nombre topologique pp pour minima 4-connexes (images t
         v6 = *(ptr+rs)  ;
         v7 = *(ptr+rs+1);
 
-	if (v0 > val) t=1; else t=0;
- 	if (v1 > val) t|=2;
- 	if (v2 > val) t|=4;
- 	if (v3 > val) t|=8;
- 	if (v4 > val) t|=16;
- 	if (v5 > val) t|=32;
- 	if (v6 > val) t|=64;
- 	if (v7 > val) t|=128;
+        if (v0 > val) {
+          t = 1;
+        } else {
+          t = 0;
+        }
+        if (v1 > val) {
+          t |= 2;
+        }
+        if (v2 > val) {
+          t |= 4;
+        }
+        if (v3 > val) {
+          t |= 8;
+        }
+        if (v4 > val) {
+          t |= 16;
+        }
+        if (v5 > val) {
+          t |= 32;
+        }
+        if (v6 > val) {
+          t |= 64;
+        }
+        if (v7 > val) {
+          t |= 128;
+        }
 
-	return TopoTab[t][1];
+        return TopoTab[t][1];
 } /* t8pp_l() */
 
 /* ==================================== */
@@ -795,28 +1013,64 @@ void nbtopo2(        /* nombres topologiques pour minima 8-connexes */
         v6 = *(ptr+rs)  ;
         v7 = *(ptr+rs+1);
 
-	if (v0 <= val) t=1; else t=0;
- 	if (v1 <= val) t|=2;
- 	if (v2 <= val) t|=4;
- 	if (v3 <= val) t|=8;
- 	if (v4 <= val) t|=16;
- 	if (v5 <= val) t|=32;
- 	if (v6 <= val) t|=64;
- 	if (v7 <= val) t|=128;
+        if (v0 <= val) {
+          t = 1;
+        } else {
+          t = 0;
+        }
+        if (v1 <= val) {
+          t |= 2;
+        }
+        if (v2 <= val) {
+          t |= 4;
+        }
+        if (v3 <= val) {
+          t |= 8;
+        }
+        if (v4 <= val) {
+          t |= 16;
+        }
+        if (v5 <= val) {
+          t |= 32;
+        }
+        if (v6 <= val) {
+          t |= 64;
+        }
+        if (v7 <= val) {
+          t |= 128;
+        }
 
-	*t4pp=TopoTab[t][0];
+        *t4pp=TopoTab[t][0];
 	*t8m=TopoTab[t][1];
 
-	if (v0 < val) t=1; else t=0;
- 	if (v1 < val) t|=2;
- 	if (v2 < val) t|=4;
- 	if (v3 < val) t|=8;
- 	if (v4 < val) t|=16;
- 	if (v5 < val) t|=32;
- 	if (v6 < val) t|=64;
- 	if (v7 < val) t|=128;
+        if (v0 < val) {
+          t = 1;
+        } else {
+          t = 0;
+        }
+        if (v1 < val) {
+          t |= 2;
+        }
+        if (v2 < val) {
+          t |= 4;
+        }
+        if (v3 < val) {
+          t |= 8;
+        }
+        if (v4 < val) {
+          t |= 16;
+        }
+        if (v5 < val) {
+          t |= 32;
+        }
+        if (v6 < val) {
+          t |= 64;
+        }
+        if (v7 < val) {
+          t |= 128;
+        }
 
-	*t4p=TopoTab[t][0];
+        *t4p=TopoTab[t][0];
 	*t8mm=TopoTab[t][1];
 } /* nbtopo2() */
 
@@ -851,16 +1105,34 @@ int32_t t8mm(        /* nombre topologique mm pour minima 8-connexes */
         v6 = *(ptr+rs)  ;
         v7 = *(ptr+rs+1);
 
-	if (v0 < val) t=1; else t=0;
- 	if (v1 < val) t|=2;
- 	if (v2 < val) t|=4;
- 	if (v3 < val) t|=8;
- 	if (v4 < val) t|=16;
- 	if (v5 < val) t|=32;
- 	if (v6 < val) t|=64;
- 	if (v7 < val) t|=128;
+        if (v0 < val) {
+          t = 1;
+        } else {
+          t = 0;
+        }
+        if (v1 < val) {
+          t |= 2;
+        }
+        if (v2 < val) {
+          t |= 4;
+        }
+        if (v3 < val) {
+          t |= 8;
+        }
+        if (v4 < val) {
+          t |= 16;
+        }
+        if (v5 < val) {
+          t |= 32;
+        }
+        if (v6 < val) {
+          t |= 64;
+        }
+        if (v7 < val) {
+          t |= 128;
+        }
 
-	return TopoTab[t][1];
+        return TopoTab[t][1];
 } /* t8mm() */
 
 /* ==================================== */
@@ -894,16 +1166,34 @@ int32_t t8m(        /* nombre topologique m pour minima 8-connexes */
         v6 = *(ptr+rs)  ;
         v7 = *(ptr+rs+1);
 
-	if (v0 <= val) t=1; else t=0;
- 	if (v1 <= val) t|=2;
- 	if (v2 <= val) t|=4;
- 	if (v3 <= val) t|=8;
- 	if (v4 <= val) t|=16;
- 	if (v5 <= val) t|=32;
- 	if (v6 <= val) t|=64;
- 	if (v7 <= val) t|=128;
+        if (v0 <= val) {
+          t = 1;
+        } else {
+          t = 0;
+        }
+        if (v1 <= val) {
+          t |= 2;
+        }
+        if (v2 <= val) {
+          t |= 4;
+        }
+        if (v3 <= val) {
+          t |= 8;
+        }
+        if (v4 <= val) {
+          t |= 16;
+        }
+        if (v5 <= val) {
+          t |= 32;
+        }
+        if (v6 <= val) {
+          t |= 64;
+        }
+        if (v7 <= val) {
+          t |= 128;
+        }
 
-	return TopoTab[t][1];
+        return TopoTab[t][1];
 } /* t8m() */
 
 /* ==================================== */
@@ -937,16 +1227,34 @@ int32_t t4p(        /* nombre topologique p pour minima 8-connexes */
         v6 = *(ptr+rs)  ;
         v7 = *(ptr+rs+1);
 
-	if (v0 < val) t=1; else t=0;
- 	if (v1 < val) t|=2;
- 	if (v2 < val) t|=4;
- 	if (v3 < val) t|=8;
- 	if (v4 < val) t|=16;
- 	if (v5 < val) t|=32;
- 	if (v6 < val) t|=64;
- 	if (v7 < val) t|=128;
+        if (v0 < val) {
+          t = 1;
+        } else {
+          t = 0;
+        }
+        if (v1 < val) {
+          t |= 2;
+        }
+        if (v2 < val) {
+          t |= 4;
+        }
+        if (v3 < val) {
+          t |= 8;
+        }
+        if (v4 < val) {
+          t |= 16;
+        }
+        if (v5 < val) {
+          t |= 32;
+        }
+        if (v6 < val) {
+          t |= 64;
+        }
+        if (v7 < val) {
+          t |= 128;
+        }
 
-	return TopoTab[t][0];
+        return TopoTab[t][0];
 } /* t4p() */
 
 /* ==================================== */
@@ -980,16 +1288,34 @@ int32_t t4pp(        /* nombre topologique pp pour minima 8-connexes */
         v6 = *(ptr+rs)  ;
         v7 = *(ptr+rs+1);
 
-	if (v0 <= val) t=1; else t=0;
- 	if (v1 <= val) t|=2;
- 	if (v2 <= val) t|=4;
- 	if (v3 <= val) t|=8;
- 	if (v4 <= val) t|=16;
- 	if (v5 <= val) t|=32;
- 	if (v6 <= val) t|=64;
- 	if (v7 <= val) t|=128;
+        if (v0 <= val) {
+          t = 1;
+        } else {
+          t = 0;
+        }
+        if (v1 <= val) {
+          t |= 2;
+        }
+        if (v2 <= val) {
+          t |= 4;
+        }
+        if (v3 <= val) {
+          t |= 8;
+        }
+        if (v4 <= val) {
+          t |= 16;
+        }
+        if (v5 <= val) {
+          t |= 32;
+        }
+        if (v6 <= val) {
+          t |= 64;
+        }
+        if (v7 <= val) {
+          t |= 128;
+        }
 
-	return TopoTab[t][0];
+        return TopoTab[t][0];
 } /* t4pp() */
 
 /* ==================================== */
@@ -1023,16 +1349,34 @@ int32_t t4pp_l(        /* nombre topologique pp pour minima 8-connexes (images t
         v6 = *(ptr+rs)  ;
         v7 = *(ptr+rs+1);
 
-	if (v0 <= val) t=1; else t=0;
- 	if (v1 <= val) t|=2;
- 	if (v2 <= val) t|=4;
- 	if (v3 <= val) t|=8;
- 	if (v4 <= val) t|=16;
- 	if (v5 <= val) t|=32;
- 	if (v6 <= val) t|=64;
- 	if (v7 <= val) t|=128;
+        if (v0 <= val) {
+          t = 1;
+        } else {
+          t = 0;
+        }
+        if (v1 <= val) {
+          t |= 2;
+        }
+        if (v2 <= val) {
+          t |= 4;
+        }
+        if (v3 <= val) {
+          t |= 8;
+        }
+        if (v4 <= val) {
+          t |= 16;
+        }
+        if (v5 <= val) {
+          t |= 32;
+        }
+        if (v6 <= val) {
+          t |= 64;
+        }
+        if (v7 <= val) {
+          t |= 128;
+        }
 
-	return TopoTab[t][0];
+        return TopoTab[t][0];
 } /* t4pp_l() */
 
 /* ==================================== */
@@ -1071,28 +1415,64 @@ void nbtopoh(    /* minima 4-connexes - version avec hauteur de la coupe variabl
         v6 = *(ptr+rs)  ;
         v7 = *(ptr+rs+1);
 
-	if (v0 >= val) t=1; else t=0;
- 	if (v1 >= val) t|=2;
- 	if (v2 >= val) t|=4;
- 	if (v3 >= val) t|=8;
- 	if (v4 >= val) t|=16;
- 	if (v5 >= val) t|=32;
- 	if (v6 >= val) t|=64;
- 	if (v7 >= val) t|=128;
+        if (v0 >= val) {
+          t = 1;
+        } else {
+          t = 0;
+        }
+        if (v1 >= val) {
+          t |= 2;
+        }
+        if (v2 >= val) {
+          t |= 4;
+        }
+        if (v3 >= val) {
+          t |= 8;
+        }
+        if (v4 >= val) {
+          t |= 16;
+        }
+        if (v5 >= val) {
+          t |= 32;
+        }
+        if (v6 >= val) {
+          t |= 64;
+        }
+        if (v7 >= val) {
+          t |= 128;
+        }
 
-	*t4mm=TopoTab[t][0];
+        *t4mm=TopoTab[t][0];
 	*t8p=TopoTab[t][1];
 
-	if (v0 > val) t=1; else t=0;
- 	if (v1 > val) t|=2;
- 	if (v2 > val) t|=4;
- 	if (v3 > val) t|=8;
- 	if (v4 > val) t|=16;
- 	if (v5 > val) t|=32;
- 	if (v6 > val) t|=64;
- 	if (v7 > val) t|=128;
+        if (v0 > val) {
+          t = 1;
+        } else {
+          t = 0;
+        }
+        if (v1 > val) {
+          t |= 2;
+        }
+        if (v2 > val) {
+          t |= 4;
+        }
+        if (v3 > val) {
+          t |= 8;
+        }
+        if (v4 > val) {
+          t |= 16;
+        }
+        if (v5 > val) {
+          t |= 32;
+        }
+        if (v6 > val) {
+          t |= 64;
+        }
+        if (v7 > val) {
+          t |= 128;
+        }
 
-	*t4m=TopoTab[t][0];
+        *t4m=TopoTab[t][0];
 	*t8pp=TopoTab[t][1];
 } /* nbtopoh() */
 
@@ -1132,28 +1512,64 @@ void nbtopoh2(        /* minima 8-connexes - version avec hauteur de la coupe va
         v6 = *(ptr+rs)  ;
         v7 = *(ptr+rs+1);
 
-	if (v0 <= val) t=1; else t=0;
- 	if (v1 <= val) t|=2;
- 	if (v2 <= val) t|=4;
- 	if (v3 <= val) t|=8;
- 	if (v4 <= val) t|=16;
- 	if (v5 <= val) t|=32;
- 	if (v6 <= val) t|=64;
- 	if (v7 <= val) t|=128;
+        if (v0 <= val) {
+          t = 1;
+        } else {
+          t = 0;
+        }
+        if (v1 <= val) {
+          t |= 2;
+        }
+        if (v2 <= val) {
+          t |= 4;
+        }
+        if (v3 <= val) {
+          t |= 8;
+        }
+        if (v4 <= val) {
+          t |= 16;
+        }
+        if (v5 <= val) {
+          t |= 32;
+        }
+        if (v6 <= val) {
+          t |= 64;
+        }
+        if (v7 <= val) {
+          t |= 128;
+        }
 
-	*t4pp=TopoTab[t][0];
+        *t4pp=TopoTab[t][0];
 	*t8m=TopoTab[t][1];
 
-	if (v0 < val) t=1; else t=0;
- 	if (v1 < val) t|=2;
- 	if (v2 < val) t|=4;
- 	if (v3 < val) t|=8;
- 	if (v4 < val) t|=16;
- 	if (v5 < val) t|=32;
- 	if (v6 < val) t|=64;
- 	if (v7 < val) t|=128;
+        if (v0 < val) {
+          t = 1;
+        } else {
+          t = 0;
+        }
+        if (v1 < val) {
+          t |= 2;
+        }
+        if (v2 < val) {
+          t |= 4;
+        }
+        if (v3 < val) {
+          t |= 8;
+        }
+        if (v4 < val) {
+          t |= 16;
+        }
+        if (v5 < val) {
+          t |= 32;
+        }
+        if (v6 < val) {
+          t |= 64;
+        }
+        if (v7 < val) {
+          t |= 128;
+        }
 
-	*t4p=TopoTab[t][0];
+        *t4p=TopoTab[t][0];
 	*t8mm=TopoTab[t][1];
 } /* nbtopoh2() */
 
@@ -1193,28 +1609,64 @@ void nbtopoh_l(    /* minima 4-connexes - version avec hauteur de la coupe varia
         v6 = *(ptr+rs)  ;
         v7 = *(ptr+rs+1);
 
-	if (v0 >= val) t=1; else t=0;
- 	if (v1 >= val) t|=2;
- 	if (v2 >= val) t|=4;
- 	if (v3 >= val) t|=8;
- 	if (v4 >= val) t|=16;
- 	if (v5 >= val) t|=32;
- 	if (v6 >= val) t|=64;
- 	if (v7 >= val) t|=128;
+        if (v0 >= val) {
+          t = 1;
+        } else {
+          t = 0;
+        }
+        if (v1 >= val) {
+          t |= 2;
+        }
+        if (v2 >= val) {
+          t |= 4;
+        }
+        if (v3 >= val) {
+          t |= 8;
+        }
+        if (v4 >= val) {
+          t |= 16;
+        }
+        if (v5 >= val) {
+          t |= 32;
+        }
+        if (v6 >= val) {
+          t |= 64;
+        }
+        if (v7 >= val) {
+          t |= 128;
+        }
 
-	*t4mm=TopoTab[t][0];
+        *t4mm=TopoTab[t][0];
 	*t8p=TopoTab[t][1];
 
-	if (v0 > val) t=1; else t=0;
- 	if (v1 > val) t|=2;
- 	if (v2 > val) t|=4;
- 	if (v3 > val) t|=8;
- 	if (v4 > val) t|=16;
- 	if (v5 > val) t|=32;
- 	if (v6 > val) t|=64;
- 	if (v7 > val) t|=128;
+        if (v0 > val) {
+          t = 1;
+        } else {
+          t = 0;
+        }
+        if (v1 > val) {
+          t |= 2;
+        }
+        if (v2 > val) {
+          t |= 4;
+        }
+        if (v3 > val) {
+          t |= 8;
+        }
+        if (v4 > val) {
+          t |= 16;
+        }
+        if (v5 > val) {
+          t |= 32;
+        }
+        if (v6 > val) {
+          t |= 64;
+        }
+        if (v7 > val) {
+          t |= 128;
+        }
 
-	*t4m=TopoTab[t][0];
+        *t4m=TopoTab[t][0];
 	*t8pp=TopoTab[t][1];
 } /* nbtopoh_l() */
 
@@ -1254,28 +1706,64 @@ void nbtopoh2_l(        /* minima 8-connexes - version avec hauteur de la coupe 
         v6 = *(ptr+rs)  ;
         v7 = *(ptr+rs+1);
 
-	if (v0 <= val) t=1; else t=0;
- 	if (v1 <= val) t|=2;
- 	if (v2 <= val) t|=4;
- 	if (v3 <= val) t|=8;
- 	if (v4 <= val) t|=16;
- 	if (v5 <= val) t|=32;
- 	if (v6 <= val) t|=64;
- 	if (v7 <= val) t|=128;
+        if (v0 <= val) {
+          t = 1;
+        } else {
+          t = 0;
+        }
+        if (v1 <= val) {
+          t |= 2;
+        }
+        if (v2 <= val) {
+          t |= 4;
+        }
+        if (v3 <= val) {
+          t |= 8;
+        }
+        if (v4 <= val) {
+          t |= 16;
+        }
+        if (v5 <= val) {
+          t |= 32;
+        }
+        if (v6 <= val) {
+          t |= 64;
+        }
+        if (v7 <= val) {
+          t |= 128;
+        }
 
-	*t4pp=TopoTab[t][0];
+        *t4pp=TopoTab[t][0];
 	*t8m=TopoTab[t][1];
 
-	if (v0 < val) t=1; else t=0;
- 	if (v1 < val) t|=2;
- 	if (v2 < val) t|=4;
- 	if (v3 < val) t|=8;
- 	if (v4 < val) t|=16;
- 	if (v5 < val) t|=32;
- 	if (v6 < val) t|=64;
- 	if (v7 < val) t|=128;
+        if (v0 < val) {
+          t = 1;
+        } else {
+          t = 0;
+        }
+        if (v1 < val) {
+          t |= 2;
+        }
+        if (v2 < val) {
+          t |= 4;
+        }
+        if (v3 < val) {
+          t |= 8;
+        }
+        if (v4 < val) {
+          t |= 16;
+        }
+        if (v5 < val) {
+          t |= 32;
+        }
+        if (v6 < val) {
+          t |= 64;
+        }
+        if (v7 < val) {
+          t |= 128;
+        }
 
-	*t4p=TopoTab[t][0];
+        *t4p=TopoTab[t][0];
 	*t8mm=TopoTab[t][1];
 } /* nbtopoh2_l() */
 
@@ -1295,25 +1783,42 @@ uint8_t alpha8m(
 	register int32_t alpha = NDG_MIN - 1;
 
         v = (p%rs!=rs-1)             ? *(ptr+1)    : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p%rs!=rs-1)&&(p>=rs))  ? *(ptr+1-rs) : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p>=rs)                  ? *(ptr-rs)   : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p>=rs)&&(p%rs!=0))     ? *(ptr-rs-1) : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p%rs!=0)                ? *(ptr-1)    : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p%rs!=0)&&(p<N-rs))    ? *(ptr-1+rs) : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p<N-rs)                 ? *(ptr+rs)   : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p<N-rs)&&(p%rs!=rs-1)) ? *(ptr+rs+1) : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
-        if (alpha == NDG_MIN - 1) 
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
+        if (alpha == NDG_MIN - 1) {
           return val;
-        else
+        } else {
           return (uint8_t)alpha;
+        }
 } /* alpha8m() */
 
 /* ==================================== */
@@ -1332,18 +1837,27 @@ uint8_t alpha4m(
 	register int32_t alpha = NDG_MIN - 1;
 
         v = (p%rs!=rs-1)             ? *(ptr+1)    : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p>=rs)                  ? *(ptr-rs)   : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p%rs!=0)                ? *(ptr-1)    : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p<N-rs)                 ? *(ptr+rs)   : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
 
-        if (alpha == NDG_MIN - 1) 
+        if (alpha == NDG_MIN - 1) {
           return val;
-        else
+        } else {
           return (uint8_t)alpha;
+        }
 } /* alpha4m() */
 
 /* ==================================== */
@@ -1362,25 +1876,42 @@ uint8_t alpha8p(
 	register int32_t alpha = NDG_MAX + 1;
 
         v = (p%rs!=rs-1)             ? *(ptr+1)    : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p%rs!=rs-1)&&(p>=rs))  ? *(ptr+1-rs) : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p>=rs)                  ? *(ptr-rs)   : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p>=rs)&&(p%rs!=0))     ? *(ptr-rs-1) : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p%rs!=0)                ? *(ptr-1)    : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p%rs!=0)&&(p<N-rs))    ? *(ptr-1+rs) : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p<N-rs)                 ? *(ptr+rs)   : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p<N-rs)&&(p%rs!=rs-1)) ? *(ptr+rs+1) : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
-        if (alpha == NDG_MAX + 1) 
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
+        if (alpha == NDG_MAX + 1) {
           return val;
-        else
+        } else {
           return (uint8_t)alpha;
+        }
 } /* alpha8p() */
 
 /* ==================================== */
@@ -1399,17 +1930,26 @@ uint8_t alpha4p(
 	register int32_t alpha = NDG_MAX + 1;
 
         v = (p%rs!=rs-1)             ? *(ptr+1)    : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p>=rs)                  ? *(ptr-rs)   : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p%rs!=0)                ? *(ptr-1)    : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p<N-rs)                 ? *(ptr+rs)   : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
-        if (alpha == NDG_MAX + 1) 
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
+        if (alpha == NDG_MAX + 1) {
           return val;
-        else
+        } else {
           return (uint8_t)alpha;
+        }
 } /* alpha4p() */
 
 /* ==================================== */
@@ -1431,25 +1971,42 @@ uint8_t calpha8m(
 	register int32_t alpha = NDG_MIN - 1;
 
         v = (p%rs!=rs-1)             ? *(ptr+1)    : val;
-        if ((*(ntr+1) == 0) && (v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((*(ntr + 1) == 0) && (v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p%rs!=rs-1)&&(p>=rs))  ? *(ptr+1-rs) : val;
-        if ((*(ntr+1-rs) == 0) && (v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((*(ntr + 1 - rs) == 0) && (v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p>=rs)                  ? *(ptr-rs)   : val;
-        if ((*(ntr-rs) == 0) && (v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((*(ntr - rs) == 0) && (v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p>=rs)&&(p%rs!=0))     ? *(ptr-rs-1) : val;
-        if ((*(ntr-rs-1) == 0) && (v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((*(ntr - rs - 1) == 0) && (v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p%rs!=0)                ? *(ptr-1)    : val;
-        if ((*(ntr-1) == 0) && (v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((*(ntr - 1) == 0) && (v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p%rs!=0)&&(p<N-rs))    ? *(ptr-1+rs) : val;
-        if ((*(ntr-1+rs) == 0) && (v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((*(ntr - 1 + rs) == 0) && (v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p<N-rs)                 ? *(ptr+rs)   : val;
-        if ((*(ntr+rs) == 0) && (v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((*(ntr + rs) == 0) && (v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p<N-rs)&&(p%rs!=rs-1)) ? *(ptr+rs+1) : val;
-        if ((*(ntr+rs+1) == 0) && (v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
-        if (alpha == NDG_MIN - 1) 
+        if ((*(ntr + rs + 1) == 0) && (v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
+        if (alpha == NDG_MIN - 1) {
           return val;
-        else
+        } else {
           return (uint8_t)alpha;
+        }
 } /* calpha8m() */
 
 /* ==================================== */
@@ -1471,18 +2028,27 @@ uint8_t calpha4m(
 	register int32_t alpha = NDG_MIN - 1;
 
         v = (p%rs!=rs-1)             ? *(ptr+1)    : val;
-        if ((*(ntr+1) == 0) && (v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((*(ntr + 1) == 0) && (v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p>=rs)                  ? *(ptr-rs)   : val;
-        if ((*(ntr-rs) == 0) && (v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((*(ntr - rs) == 0) && (v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p%rs!=0)                ? *(ptr-1)    : val;
-        if ((*(ntr-1) == 0) && (v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((*(ntr - 1) == 0) && (v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p<N-rs)                 ? *(ptr+rs)   : val;
-        if ((*(ntr+rs) == 0) && (v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((*(ntr + rs) == 0) && (v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
 
-        if (alpha == NDG_MIN - 1) 
+        if (alpha == NDG_MIN - 1) {
           return val;
-        else
+        } else {
           return (uint8_t)alpha;
+        }
 } /* calpha4m() */
 
 /* ==================================== */
@@ -1504,25 +2070,42 @@ uint8_t calpha8p(
 	register int32_t alpha = NDG_MAX + 1;
 
         v = (p%rs!=rs-1)             ? *(ptr+1)    : val;
-        if ((*(ntr+1) == 0) && (v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((*(ntr + 1) == 0) && (v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p%rs!=rs-1)&&(p>=rs))  ? *(ptr+1-rs) : val;
-        if ((*(ntr+1-rs) == 0) && (v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((*(ntr + 1 - rs) == 0) && (v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p>=rs)                  ? *(ptr-rs)   : val;
-        if ((*(ntr-rs) == 0) && (v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((*(ntr - rs) == 0) && (v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p>=rs)&&(p%rs!=0))     ? *(ptr-rs-1) : val;
-        if ((*(ntr-rs-1) == 0) && (v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((*(ntr - rs - 1) == 0) && (v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p%rs!=0)                ? *(ptr-1)    : val;
-        if ((*(ntr-1) == 0) && (v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((*(ntr - 1) == 0) && (v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p%rs!=0)&&(p<N-rs))    ? *(ptr-1+rs) : val;
-        if ((*(ntr-1+rs) == 0) && (v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((*(ntr - 1 + rs) == 0) && (v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p<N-rs)                 ? *(ptr+rs)   : val;
-        if ((*(ntr+rs) == 0) && (v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((*(ntr + rs) == 0) && (v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p<N-rs)&&(p%rs!=rs-1)) ? *(ptr+rs+1) : val;
-        if ((*(ntr+rs+1) == 0) && (v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
-        if (alpha == NDG_MAX + 1) 
+        if ((*(ntr + rs + 1) == 0) && (v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
+        if (alpha == NDG_MAX + 1) {
           return val;
-        else
+        } else {
           return (uint8_t)alpha;
+        }
 } /* calpha8p() */
 
 /* ==================================== */
@@ -1544,17 +2127,26 @@ uint8_t calpha4p(
 	register int32_t alpha = NDG_MAX + 1;
 
         v = (p%rs!=rs-1)             ? *(ptr+1)    : val;
-        if ((*(ntr+1) == 0) && (v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((*(ntr + 1) == 0) && (v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p>=rs)                  ? *(ptr-rs)   : val;
-        if ((*(ntr-rs) == 0) && (v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((*(ntr - rs) == 0) && (v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p%rs!=0)                ? *(ptr-1)    : val;
-        if ((*(ntr-1) == 0) && (v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((*(ntr - 1) == 0) && (v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p<N-rs)                 ? *(ptr+rs)   : val;
-        if ((*(ntr+rs) == 0) && (v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
-        if (alpha == NDG_MAX + 1) 
+        if ((*(ntr + rs) == 0) && (v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
+        if (alpha == NDG_MAX + 1) {
           return val;
-        else
+        } else {
           return (uint8_t)alpha;
+        }
 } /* calpha4p() */
 
 /* ==================================== */
@@ -1574,25 +2166,42 @@ uint8_t halpha8m(
 	register int32_t alpha = NDG_MIN - 1;
 
         v = (p%rs!=rs-1)             ? *(ptr+1)    : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p%rs!=rs-1)&&(p>=rs))  ? *(ptr+1-rs) : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p>=rs)                  ? *(ptr-rs)   : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p>=rs)&&(p%rs!=0))     ? *(ptr-rs-1) : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p%rs!=0)                ? *(ptr-1)    : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p%rs!=0)&&(p<N-rs))    ? *(ptr-1+rs) : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p<N-rs)                 ? *(ptr+rs)   : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p<N-rs)&&(p%rs!=rs-1)) ? *(ptr+rs+1) : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
-        if (alpha == NDG_MIN - 1) 
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
+        if (alpha == NDG_MIN - 1) {
           return val;
-        else
+        } else {
           return (uint8_t)alpha;
+        }
 } /* halpha8m() */
 
 /* ==================================== */
@@ -1612,18 +2221,27 @@ uint8_t halpha4m(
 	register int32_t alpha = NDG_MIN - 1;
 
         v = (p%rs!=rs-1)             ? *(ptr+1)    : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p>=rs)                  ? *(ptr-rs)   : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p%rs!=0)                ? *(ptr-1)    : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p<N-rs)                 ? *(ptr+rs)   : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
 
-        if (alpha == NDG_MIN - 1) 
+        if (alpha == NDG_MIN - 1) {
           return val;
-        else
+        } else {
           return (uint8_t)alpha;
+        }
 } /* halpha4m() */
 
 /* ==================================== */
@@ -1643,25 +2261,42 @@ uint8_t halpha8p(
 	register int32_t alpha = NDG_MAX + 1;
 
         v = (p%rs!=rs-1)             ? *(ptr+1)    : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p%rs!=rs-1)&&(p>=rs))  ? *(ptr+1-rs) : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p>=rs)                  ? *(ptr-rs)   : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p>=rs)&&(p%rs!=0))     ? *(ptr-rs-1) : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p%rs!=0)                ? *(ptr-1)    : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p%rs!=0)&&(p<N-rs))    ? *(ptr-1+rs) : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p<N-rs)                 ? *(ptr+rs)   : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p<N-rs)&&(p%rs!=rs-1)) ? *(ptr+rs+1) : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
-        if (alpha == NDG_MAX + 1) 
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
+        if (alpha == NDG_MAX + 1) {
           return val;
-        else
+        } else {
           return (uint8_t)alpha;
+        }
 } /* halpha8p() */
 
 /* ==================================== */
@@ -1681,17 +2316,26 @@ uint8_t halpha4p(
 	register int32_t alpha = NDG_MAX + 1;
 
         v = (p%rs!=rs-1)             ? *(ptr+1)    : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p>=rs)                  ? *(ptr-rs)   : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p%rs!=0)                ? *(ptr-1)    : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p<N-rs)                 ? *(ptr+rs)   : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
-        if (alpha == NDG_MAX + 1) 
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
+        if (alpha == NDG_MAX + 1) {
           return val;
-        else
+        } else {
           return (uint8_t)alpha;
+        }
 } /* halpha4p() */
 
 /* ==================================== */
@@ -1710,25 +2354,42 @@ int32_t alpha8m_l(
 	register int32_t alpha = - 1;
 
         v = (p%rs!=rs-1)             ? *(ptr+1)    : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p%rs!=rs-1)&&(p>=rs))  ? *(ptr+1-rs) : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p>=rs)                  ? *(ptr-rs)   : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p>=rs)&&(p%rs!=0))     ? *(ptr-rs-1) : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p%rs!=0)                ? *(ptr-1)    : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p%rs!=0)&&(p<N-rs))    ? *(ptr-1+rs) : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p<N-rs)                 ? *(ptr+rs)   : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p<N-rs)&&(p%rs!=rs-1)) ? *(ptr+rs+1) : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
-        if (alpha == - 1) 
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
+        if (alpha == -1) {
           return val;
-        else
+        } else {
           return (int32_t)alpha;
+        }
 } /* alpha8m_l() */
 
 /* ==================================== */
@@ -1747,18 +2408,27 @@ int32_t alpha4m_l(
 	register int32_t alpha = - 1;
 
         v = (p%rs!=rs-1)             ? *(ptr+1)    : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p>=rs)                  ? *(ptr-rs)   : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p%rs!=0)                ? *(ptr-1)    : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p<N-rs)                 ? *(ptr+rs)   : val;
-        if ((v < val) && ((int32_t)v > alpha)) alpha = (int32_t)v;
+        if ((v < val) && ((int32_t)v > alpha)) {
+          alpha = (int32_t)v;
+        }
 
-        if (alpha == - 1) 
+        if (alpha == -1) {
           return val;
-        else
+        } else {
           return (int32_t)alpha;
+        }
 } /* alpha4m_l() */
 
 /* ==================================== */
@@ -1777,25 +2447,42 @@ int32_t alpha8p_l(
 	register int32_t alpha = INT32_MAX;
 
         v = (p%rs!=rs-1)             ? *(ptr+1)    : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p%rs!=rs-1)&&(p>=rs))  ? *(ptr+1-rs) : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p>=rs)                  ? *(ptr-rs)   : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p>=rs)&&(p%rs!=0))     ? *(ptr-rs-1) : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p%rs!=0)                ? *(ptr-1)    : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p%rs!=0)&&(p<N-rs))    ? *(ptr-1+rs) : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p<N-rs)                 ? *(ptr+rs)   : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = ((p<N-rs)&&(p%rs!=rs-1)) ? *(ptr+rs+1) : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
-        if (alpha == INT32_MAX) 
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
+        if (alpha == INT32_MAX) {
           return val;
-        else
+        } else {
           return (int32_t)alpha;
+        }
 } /* alpha8p_l() */
 
 /* ==================================== */
@@ -1814,17 +2501,26 @@ int32_t alpha4p_l(
 	register int32_t alpha = INT32_MAX;
 
         v = (p%rs!=rs-1)             ? *(ptr+1)    : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p>=rs)                  ? *(ptr-rs)   : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p%rs!=0)                ? *(ptr-1)    : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
         v = (p<N-rs)                 ? *(ptr+rs)   : val;
-        if ((v > val) && ((int32_t)v < alpha)) alpha = (int32_t)v;
-        if (alpha == INT32_MAX) 
+        if ((v > val) && ((int32_t)v < alpha)) {
+          alpha = (int32_t)v;
+        }
+        if (alpha == INT32_MAX) {
           return val;
-        else
+        } else {
           return (int32_t)alpha;
+        }
 } /* alpha4p_l() */
 
 /* ==================================== */
@@ -1843,21 +2539,37 @@ uint8_t beta8m(
 	register uint8_t beta = val;
 
         v = (p%rs!=rs-1)             ? *(ptr+1)    : val;
-        if (v < beta) beta = (int32_t)v;
+        if (v < beta) {
+          beta = (int32_t)v;
+        }
         v = ((p%rs!=rs-1)&&(p>=rs))  ? *(ptr+1-rs) : val;
-        if (v < beta) beta = (int32_t)v;
+        if (v < beta) {
+          beta = (int32_t)v;
+        }
         v = (p>=rs)                  ? *(ptr-rs)   : val;
-        if (v < beta) beta = (int32_t)v;
+        if (v < beta) {
+          beta = (int32_t)v;
+        }
         v = ((p>=rs)&&(p%rs!=0))     ? *(ptr-rs-1) : val;
-        if (v < beta) beta = (int32_t)v;
+        if (v < beta) {
+          beta = (int32_t)v;
+        }
         v = (p%rs!=0)                ? *(ptr-1)    : val;
-        if (v < beta) beta = (int32_t)v;
+        if (v < beta) {
+          beta = (int32_t)v;
+        }
         v = ((p%rs!=0)&&(p<N-rs))    ? *(ptr-1+rs) : val;
-        if (v < beta) beta = (int32_t)v;
+        if (v < beta) {
+          beta = (int32_t)v;
+        }
         v = (p<N-rs)                 ? *(ptr+rs)   : val;
-        if (v < beta) beta = (int32_t)v;
+        if (v < beta) {
+          beta = (int32_t)v;
+        }
         v = ((p<N-rs)&&(p%rs!=rs-1)) ? *(ptr+rs+1) : val;
-        if (v < beta) beta = (int32_t)v;
+        if (v < beta) {
+          beta = (int32_t)v;
+        }
         return beta;
 } /* beta8m() */
 
@@ -1877,21 +2589,37 @@ uint8_t beta8p(
 	register uint8_t beta = val;
 
         v = (p%rs!=rs-1)             ? *(ptr+1)    : val;
-        if (v > beta) beta = (int32_t)v;
+        if (v > beta) {
+          beta = (int32_t)v;
+        }
         v = ((p%rs!=rs-1)&&(p>=rs))  ? *(ptr+1-rs) : val;
-        if (v > beta) beta = (int32_t)v;
+        if (v > beta) {
+          beta = (int32_t)v;
+        }
         v = (p>=rs)                  ? *(ptr-rs)   : val;
-        if (v > beta) beta = (int32_t)v;
+        if (v > beta) {
+          beta = (int32_t)v;
+        }
         v = ((p>=rs)&&(p%rs!=0))     ? *(ptr-rs-1) : val;
-        if (v > beta) beta = (int32_t)v;
+        if (v > beta) {
+          beta = (int32_t)v;
+        }
         v = (p%rs!=0)                ? *(ptr-1)    : val;
-        if (v > beta) beta = (int32_t)v;
+        if (v > beta) {
+          beta = (int32_t)v;
+        }
         v = ((p%rs!=0)&&(p<N-rs))    ? *(ptr-1+rs) : val;
-        if (v > beta) beta = (int32_t)v;
+        if (v > beta) {
+          beta = (int32_t)v;
+        }
         v = (p<N-rs)                 ? *(ptr+rs)   : val;
-        if (v > beta) beta = (int32_t)v;
+        if (v > beta) {
+          beta = (int32_t)v;
+        }
         v = ((p<N-rs)&&(p%rs!=rs-1)) ? *(ptr+rs+1) : val;
-        if (v > beta) beta = (int32_t)v;
+        if (v > beta) {
+          beta = (int32_t)v;
+        }
         return beta;
 } /* beta8p() */
 
@@ -1911,13 +2639,21 @@ uint8_t beta4m(
 	register uint8_t beta = val;
 
         v = (p%rs!=rs-1)             ? *(ptr+1)    : val;
-        if (v < beta) beta = (int32_t)v;
+        if (v < beta) {
+          beta = (int32_t)v;
+        }
         v = (p>=rs)                  ? *(ptr-rs)   : val;
-        if (v < beta) beta = (int32_t)v;
+        if (v < beta) {
+          beta = (int32_t)v;
+        }
         v = (p%rs!=0)                ? *(ptr-1)    : val;
-        if (v < beta) beta = (int32_t)v;
+        if (v < beta) {
+          beta = (int32_t)v;
+        }
         v = (p<N-rs)                 ? *(ptr+rs)   : val;
-        if (v < beta) beta = (int32_t)v;
+        if (v < beta) {
+          beta = (int32_t)v;
+        }
         return beta;
 } /* beta4m() */
 
@@ -1937,13 +2673,21 @@ uint8_t beta4p(
 	register uint8_t beta = val;
 
         v = (p%rs!=rs-1)             ? *(ptr+1)    : val;
-        if (v > beta) beta = (int32_t)v;
+        if (v > beta) {
+          beta = (int32_t)v;
+        }
         v = (p>=rs)                  ? *(ptr-rs)   : val;
-        if (v > beta) beta = (int32_t)v;
+        if (v > beta) {
+          beta = (int32_t)v;
+        }
         v = (p%rs!=0)                ? *(ptr-1)    : val;
-        if (v > beta) beta = (int32_t)v;
+        if (v > beta) {
+          beta = (int32_t)v;
+        }
         v = (p<N-rs)                 ? *(ptr+rs)   : val;
-        if (v > beta) beta = (int32_t)v;
+        if (v > beta) {
+          beta = (int32_t)v;
+        }
         return beta;
 } /* beta4p() */
 
@@ -1957,32 +2701,49 @@ int32_t typetopo(                  /* types topologiques avec la 4-connexite pou
 {
 	int32_t t4mm,t4m,t8p,t8pp;
 
-        if ((p%rs==rs-1) || (p<rs) || (p%rs==0) || (p>=N-rs)) /* point de bord */
-                return UNDEFINED;
+        if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+            (p >= N - rs)) { /* point de bord */
+          return UNDEFINED;
+        }
 
         nbtopo(img, p, rs, N, &t4mm, &t4m, &t8p, &t8pp);
 
-	if ((t8p==0) && (t4mm==1) && (t8pp==0) && (t4m==1))
-		return PEAK;
-	
-	if ((t8p==1) && (t4mm==0))
+        if ((t8p == 0) && (t4mm == 1) && (t8pp == 0) && (t4m == 1)) {
+          return PEAK;
+        }
+
+        if ((t8p==1) && (t4mm==0))
 		{
-		if ((t8pp==0) && (t4m==1)) return PLATEAU;
-		if ((t8pp==1) && (t4m==0)) return WELL;
-		if ((t8pp==1) && (t4m==1)) return CONST_FLOOR;
-		return CONV_FLOOR;
+          if ((t8pp == 0) && (t4m == 1)) {
+            return PLATEAU;
+          }
+          if ((t8pp == 1) && (t4m == 0)) {
+            return WELL;
+          }
+          if ((t8pp == 1) && (t4m == 1)) {
+            return CONST_FLOOR;
+          }
+                return CONV_FLOOR;
 		}
 
 	if ((t8p==1) && (t4mm==1))
 		{
-		if ((t8pp==0) && (t4m==1)) return DEST_CEILING;
-		if ((t8pp==1) && (t4m==1)) return CONST_DEST;
-		return CONV_DEST;
-		}		
+          if ((t8pp == 0) && (t4m == 1)) {
+            return DEST_CEILING;
+          }
+          if ((t8pp == 1) && (t4m == 1)) {
+            return CONST_DEST;
+          }
+                return CONV_DEST;
+		}
 
-	if ((t8pp==0) && (t4m==1)) return DIV_CEILING;
-	if ((t8pp==1) && (t4m==1)) return DIV_CONST;
-	return SADDLE;
+                if ((t8pp == 0) && (t4m == 1)) {
+                  return DIV_CEILING;
+                }
+                if ((t8pp == 1) && (t4m == 1)) {
+                  return DIV_CONST;
+                }
+        return SADDLE;
 } /* typetopo() */
 
 /* ==================================== */
@@ -1995,32 +2756,49 @@ int32_t typetopo8(  /* types topologiques avec la 8-connexite pour les minima */
 {
 	int32_t t8mm,t8m,t4p,t4pp;
 
-        if ((p%rs==rs-1) || (p<rs) || (p%rs==0) || (p>=N-rs)) /* point de bord */
-                return UNDEFINED;
+        if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+            (p >= N - rs)) { /* point de bord */
+          return UNDEFINED;
+        }
 
         nbtopo2(img, p, rs, N, &t8mm, &t8m, &t4p, &t4pp);
 
-	if ((t4p==0) && (t8mm==1) && (t4pp==0) && (t8m==1))
-		return PEAK;
-	
-	if ((t4p==1) && (t8mm==0))
+        if ((t4p == 0) && (t8mm == 1) && (t4pp == 0) && (t8m == 1)) {
+          return PEAK;
+        }
+
+        if ((t4p==1) && (t8mm==0))
         {
-          if ((t4pp==0) && (t8m==1)) return PLATEAU;
-          if ((t4pp==1) && (t8m==0)) return WELL;
-          if ((t4pp==1) && (t8m==1)) return CONST_FLOOR;
+          if ((t4pp == 0) && (t8m == 1)) {
+            return PLATEAU;
+          }
+          if ((t4pp == 1) && (t8m == 0)) {
+            return WELL;
+          }
+          if ((t4pp == 1) && (t8m == 1)) {
+            return CONST_FLOOR;
+          }
           return CONV_FLOOR;
         }
 
 	if ((t4p==1) && (t8mm==1))
 	{
-          if ((t4pp==0) && (t8m==1)) return DEST_CEILING;
-          if ((t4pp==1) && (t8m==1)) return CONST_DEST;
+          if ((t4pp == 0) && (t8m == 1)) {
+            return DEST_CEILING;
+          }
+          if ((t4pp == 1) && (t8m == 1)) {
+            return CONST_DEST;
+          }
           return CONV_DEST;
-	}		
+	}
 
-	if ((t4pp==0) && (t8m==1)) return DIV_CEILING;
-	if ((t4pp==1) && (t8m==1)) return DIV_CONST;
-	return SADDLE;
+        if ((t4pp == 0) && (t8m == 1)) {
+          return DIV_CEILING;
+        }
+        if ((t4pp == 1) && (t8m == 1)) {
+          return DIV_CONST;
+        }
+        return SADDLE;
 } /* typetopo8() */
 
 /* ==================================== */
@@ -2033,14 +2811,17 @@ int32_t pdestr( /* teste si un point est destructible - minima 4-connexes */
 /* ==================================== */
 {	
 	int32_t t4mm,t8p,b,n;
-	
-        if ((p%rs==rs-1) || (p<rs) || (p%rs==0) || (p>=N-rs)) /* point de bord */
-                return 0;
+
+        if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+            (p >= N - rs)) { /* point de bord */
+          return 0;
+        }
 
         nbtopo(img, p, rs, N, &t4mm, &b, &t8p, &n);
-	if ((t4mm==1) && (t8p==1))
-		return 1;
-	return 0;
+        if ((t4mm == 1) && (t8p == 1)) {
+          return 1;
+        }
+        return 0;
 } /* pdestr() */
 
 /* ==================================== */
@@ -2052,14 +2833,17 @@ int32_t pdestr4( /* teste si un point est destructible - minima 4-connexes */
 /* ==================================== */
 {	
 	int32_t t4mm,t8p,b,n;
-	
-        if ((p%rs==rs-1) || (p<rs) || (p%rs==0) || (p>=N-rs)) /* point de bord */
-                return 0;
+
+        if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+            (p >= N - rs)) { /* point de bord */
+          return 0;
+        }
 
         nbtopo(img, p, rs, N, &t4mm, &b, &t8p, &n);
-	if ((t4mm==1) && (t8p==1))
-		return 1;
-	return 0;
+        if ((t4mm == 1) && (t8p == 1)) {
+          return 1;
+        }
+        return 0;
 } /* pdestr4() */
 
 /* ==================================== */
@@ -2071,14 +2855,17 @@ int32_t pdestr8( /* teste si un point est destructible - minima 8-connexes */
 /* ==================================== */
 {	
 	int32_t t8mm,t4p,b,n;
-	
-        if ((p%rs==rs-1)||(p<rs)||(p%rs==0)||(p>=N-rs)) /* point de bord */
-                return 0;
+
+        if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+            (p >= N - rs)) { /* point de bord */
+          return 0;
+        }
 
         nbtopo2(img, p, rs, N, &t8mm, &b, &t4p, &n);
-	if ((t8mm==1) && (t4p==1))
-		return 1;
-	return 0;
+        if ((t8mm == 1) && (t4p == 1)) {
+          return 1;
+        }
+        return 0;
 } /* pdestr8() */
 
 /* ==================================== */
@@ -2092,13 +2879,16 @@ int32_t pconstr(   /* teste si un point est constructible - minima 4-connexes */
 {	
 	int32_t t4m,t8pp,b,n;
 
-        if ((p%rs==rs-1)||(p<rs)||(p%rs==0)||(p>=N-rs)) /* point de bord */
-                return 0;
+        if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+            (p >= N - rs)) { /* point de bord */
+          return 0;
+        }
 
         nbtopo(img, p, rs, N, &b, &t4m, &n, &t8pp);
-	if ((t4m==1) && (t8pp==1))
-		return 1;
-	return 0;
+        if ((t4m == 1) && (t8pp == 1)) {
+          return 1;
+        }
+        return 0;
 } /* pconstr() */
 
 /* ==================================== */
@@ -2111,13 +2901,16 @@ int32_t pconstr4(  /* teste si un point est constructible - minima 4-connexes */
 {	
 	int32_t t4m,t8pp,b,n;
 
-        if ((p%rs==rs-1)||(p<rs)||(p%rs==0)||(p>=N-rs)) /* point de bord */
-                return 0;
+        if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+            (p >= N - rs)) { /* point de bord */
+          return 0;
+        }
 
         nbtopo(img, p, rs, N, &b, &t4m, &n, &t8pp);
-	if ((t4m==1) && (t8pp==1))
-		return 1;
-	return 0;
+        if ((t4m == 1) && (t8pp == 1)) {
+          return 1;
+        }
+        return 0;
 } /* pconstr4() */
 
 /* ==================================== */
@@ -2130,13 +2923,16 @@ int32_t pconstr8(   /* teste si un point est constructible - minima 8-connexes *
 {	
 	int32_t t8m,t4pp,b,n;
 
-        if ((p%rs==rs-1)||(p<rs)||(p%rs==0)||(p>=N-rs)) /* point de bord */
-                return 0;
+        if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+            (p >= N - rs)) { /* point de bord */
+          return 0;
+        }
 
         nbtopo2(img, p, rs, N, &b, &t8m, &n, &t4pp);
-	if ((t8m==1) && (t4pp==1))
-		return 1;
-	return 0;
+        if ((t8m == 1) && (t4pp == 1)) {
+          return 1;
+        }
+        return 0;
 } /* pconstr8() */
 
 /* ==================================== */
@@ -2148,13 +2944,17 @@ int32_t peakordestr4( /* teste si un point est pic ou destructible - minima 4-co
 /* ==================================== */
 {	
 	int32_t t4mm,t8p,b,n;
-	
-        if ((p%rs==rs-1) || (p<rs) || (p%rs==0) || (p>=N-rs)) /* point de bord */
-                return 0;
+
+        if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+            (p >= N - rs)) { /* point de bord */
+          return 0;
+        }
 
         nbtopo(img, p, rs, N, &t4mm, &b, &t8p, &n);
-	if (t4mm==1) return 1;
-	return 0;
+        if (t4mm == 1) {
+          return 1;
+        }
+        return 0;
 } /* peakordestr4() */
 
 /* ==================================== */
@@ -2166,13 +2966,17 @@ int32_t peakordestr8( /* teste si un point est pic ou destructible - minima 8-co
 /* ==================================== */
 {	
 	int32_t t8mm,t4p,b,n;
-	
-        if ((p%rs==rs-1)||(p<rs)||(p%rs==0)||(p>=N-rs)) /* point de bord */
-                return 0;
+
+        if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+            (p >= N - rs)) { /* point de bord */
+          return 0;
+        }
 
         nbtopo2(img, p, rs, N, &t8mm, &b, &t4p, &n);
-	if (t8mm==1) return 1;
-	return 0;
+        if (t8mm == 1) {
+          return 1;
+        }
+        return 0;
 } /* peakordestr8() */
 
 /* ==================================== */
@@ -2185,12 +2989,16 @@ int32_t wellorconstr4(  /* teste si un point est puits ou constructible - minima
 {	
 	int32_t t4m,t8pp,b,n;
 
-        if ((p%rs==rs-1)||(p<rs)||(p%rs==0)||(p>=N-rs)) /* point de bord */
-                return 0;
+        if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+            (p >= N - rs)) { /* point de bord */
+          return 0;
+        }
 
         nbtopo(img, p, rs, N, &b, &t4m, &n, &t8pp);
-	if (t8pp==1) return 1;
-	return 0;
+        if (t8pp == 1) {
+          return 1;
+        }
+        return 0;
 } /* wellorconstr4() */
 
 /* ==================================== */
@@ -2203,12 +3011,16 @@ int32_t wellorconstr8(   /* teste si un point est puits ou constructible - minim
 {	
 	int32_t t8m,t4pp,b,n;
 
-        if ((p%rs==rs-1)||(p<rs)||(p%rs==0)||(p>=N-rs)) /* point de bord */
-                return 0;
+        if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+            (p >= N - rs)) { /* point de bord */
+          return 0;
+        }
 
         nbtopo2(img, p, rs, N, &b, &t8m, &n, &t4pp);
-	if (t4pp==1) return 1;
-	return 0;
+        if (t4pp == 1) {
+          return 1;
+        }
+        return 0;
 } /* wellorconstr8() */
 
 /* ==================================== */
@@ -2220,13 +3032,17 @@ int32_t peak4( /* teste si un point est pic - minima 4-connexes */
 /* ==================================== */
 {	
 	int32_t t4mm,t8p,b,n;
-	
-        if ((p%rs==rs-1) || (p<rs) || (p%rs==0) || (p>=N-rs)) /* point de bord */
-                return 0;
+
+        if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+            (p >= N - rs)) { /* point de bord */
+          return 0;
+        }
 
         nbtopo(img, p, rs, N, &t4mm, &b, &t8p, &n);
-	if ((t4mm==1) && (t8p==0)) return 1;
-	return 0;
+        if ((t4mm == 1) && (t8p == 0)) {
+          return 1;
+        }
+        return 0;
 } /* peak4() */
 
 /* ==================================== */
@@ -2238,13 +3054,17 @@ int32_t peak8( /* teste si un point est pic - minima 8-connexes */
 /* ==================================== */
 {	
 	int32_t t8mm,t4p,b,n;
-	
-        if ((p%rs==rs-1)||(p<rs)||(p%rs==0)||(p>=N-rs)) /* point de bord */
-                return 0;
+
+        if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+            (p >= N - rs)) { /* point de bord */
+          return 0;
+        }
 
         nbtopo2(img, p, rs, N, &t8mm, &b, &t4p, &n);
-	if ((t8mm==1) && (t4p==0)) return 1;
-	return 0;
+        if ((t8mm == 1) && (t4p == 0)) {
+          return 1;
+        }
+        return 0;
 } /* peak8() */
 
 /* ==================================== */
@@ -2257,12 +3077,16 @@ int32_t well4(  /* teste si un point est puits - minima 4-connexes */
 {	
 	int32_t t4m,t8pp,b,n;
 
-        if ((p%rs==rs-1)||(p<rs)||(p%rs==0)||(p>=N-rs)) /* point de bord */
-                return 0;
+        if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+            (p >= N - rs)) { /* point de bord */
+          return 0;
+        }
 
         nbtopo(img, p, rs, N, &b, &t4m, &n, &t8pp);
-	if ((t8pp==1) && (t4m==0)) return 1;
-	return 0;
+        if ((t8pp == 1) && (t4m == 0)) {
+          return 1;
+        }
+        return 0;
 } /* well4() */
 
 /* ==================================== */
@@ -2275,12 +3099,16 @@ int32_t well8(   /* teste si un point est puits - minima 8-connexes */
 {	
 	int32_t t8m,t4pp,b,n;
 
-        if ((p%rs==rs-1)||(p<rs)||(p%rs==0)||(p>=N-rs)) /* point de bord */
-                return 0;
+        if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+            (p >= N - rs)) { /* point de bord */
+          return 0;
+        }
 
         nbtopo2(img, p, rs, N, &b, &t8m, &n, &t4pp);
-	if ((t4pp==1) && (t8m==0)) return 1;
-	return 0;
+        if ((t4pp == 1) && (t8m == 0)) {
+          return 1;
+        }
+        return 0;
 } /* well8() */
 
 /* ==================================== */
@@ -2292,7 +3120,9 @@ uint8_t delta4m( /* retourne la valeur max. a laquelle p est destructible - mini
 /* ==================================== */
 {	
   uint8_t ret, sav = img[p];
-  while (pdestr4(img, p, rs, N)) img[p] = alpha8m(img, p, rs, N);
+  while (pdestr4(img, p, rs, N)) {
+    img[p] = alpha8m(img, p, rs, N);
+  }
   ret = img[p];
   img[p] = sav;
   return ret;
@@ -2307,7 +3137,9 @@ uint8_t delta8m( /* retourne la valeur max. a laquelle p est destructible - mini
 /* ==================================== */
 {	
   uint8_t ret, sav = img[p];
-  while (pdestr8(img, p, rs, N)) img[p] = alpha8m(img, p, rs, N);
+  while (pdestr8(img, p, rs, N)) {
+    img[p] = alpha8m(img, p, rs, N);
+  }
   ret = img[p];
   img[p] = sav;
   return ret;
@@ -2322,7 +3154,9 @@ uint8_t delta4p( /* retourne la valeur max. a laquelle p est constructible - min
 /* ==================================== */
 {	
   uint8_t ret, sav = img[p];
-  while (pconstr4(img, p, rs, N)) img[p] = alpha8p(img, p, rs, N);
+  while (pconstr4(img, p, rs, N)) {
+    img[p] = alpha8p(img, p, rs, N);
+  }
   ret = img[p];
   img[p] = sav;
   return ret;
@@ -2337,7 +3171,9 @@ uint8_t delta8p( /* retourne la valeur max. a laquelle p est constructible - min
 /* ==================================== */
 {	
   uint8_t ret, sav = img[p];
-  while (pconstr8(img, p, rs, N)) img[p] = alpha8p(img, p, rs, N);
+  while (pconstr8(img, p, rs, N)) {
+    img[p] = alpha8p(img, p, rs, N);
+  }
   ret = img[p];
   img[p] = sav;
   return ret;
@@ -2353,13 +3189,16 @@ int32_t pconv4(  /* teste si un point est convergent - minima 4-connexes */
 {	
 	int32_t t4mm, t4m, t8p, t8pp;
 
-        if ((p%rs==rs-1)||(p<rs)||(p%rs==0)||(p>=N-rs)) /* point de bord */
-                return 0;
+        if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+            (p >= N - rs)) { /* point de bord */
+          return 0;
+        }
 
         nbtopo(img, p, rs, N, &t4mm, &t4m, &t8p, &t8pp);
-	if (t8pp >= 2)
-		return 1;
-	return 0;
+        if (t8pp >= 2) {
+          return 1;
+        }
+        return 0;
 } /* pconv4() */
 
 /* ==================================== */
@@ -2372,13 +3211,16 @@ int32_t pconv8(   /* teste si un point est convergent - minima 8-connexes */
 {	
 	int32_t t8mm, t8m, t4p, t4pp;
 
-        if ((p%rs==rs-1)||(p<rs)||(p%rs==0)||(p>=N-rs)) /* point de bord */
-                return 0;
+        if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+            (p >= N - rs)) { /* point de bord */
+          return 0;
+        }
 
         nbtopo2(img, p, rs, N, &t8mm, &t8m, &t4p, &t4pp);
-	if (t4pp >= 2)
-		return 1;
-	return 0;
+        if (t4pp >= 2) {
+          return 1;
+        }
+        return 0;
 } /* pconv8() */
 
 /* ==================================== */
@@ -2391,13 +3233,16 @@ int32_t pdiv4(  /* teste si un point est divergent - minima 4-connexes */
 {	
 	int32_t t4mm, t4m, t8p, t8pp;
 
-        if ((p%rs==rs-1)||(p<rs)||(p%rs==0)||(p>=N-rs)) /* point de bord */
-                return 0;
+        if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+            (p >= N - rs)) { /* point de bord */
+          return 0;
+        }
 
         nbtopo(img, p, rs, N, &t4mm, &t4m, &t8p, &t8pp);
-	if (t4mm >= 2)
-		return 1;
-	return 0;
+        if (t4mm >= 2) {
+          return 1;
+        }
+        return 0;
 } /* pdiv4() */
 
 /* ==================================== */
@@ -2410,13 +3255,16 @@ int32_t pdiv8(   /* teste si un point est divergent - minima 8-connexes */
 {	
 	int32_t t8mm, t8m, t4p, t4pp;
 
-        if ((p%rs==rs-1)||(p<rs)||(p%rs==0)||(p>=N-rs)) /* point de bord */
-                return 0;
+        if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+            (p >= N - rs)) { /* point de bord */
+          return 0;
+        }
 
         nbtopo2(img, p, rs, N, &t8mm, &t8m, &t4p, &t4pp);
-	if (t8mm >= 2)
-		return 1;
-	return 0;
+        if (t8mm >= 2) {
+          return 1;
+        }
+        return 0;
 } /* pdiv8() */
 
 /* ==================================== */
@@ -2429,12 +3277,16 @@ int32_t saddle4(                   /* point selle avec la 4-connexite pour les m
 {
 	int32_t t4mm,t4m,t8p,t8pp;
 
-        if ((p%rs==rs-1) || (p<rs) || (p%rs==0) || (p>=N-rs)) /* point de bord */
-                return 0;
+        if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+            (p >= N - rs)) { /* point de bord */
+          return 0;
+        }
 
         nbtopo(img, p, rs, N, &t4mm, &t4m, &t8p, &t8pp);
-	if ((t8pp > 1) && (t4mm > 1)) return t8pp;
-	return 0;
+        if ((t8pp > 1) && (t4mm > 1)) {
+          return t8pp;
+        }
+        return 0;
 } /* saddle4() */
 
 /* ==================================== */
@@ -2447,12 +3299,16 @@ int32_t saddle8(                   /* point selle avec la 8-connexite pour les m
 {
 	int32_t t8mm,t8m,t4p,t4pp;
 
-        if ((p%rs==rs-1) || (p<rs) || (p%rs==0) || (p>=N-rs)) /* point de bord */
-                return 0;
+        if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+            (p >= N - rs)) { /* point de bord */
+          return 0;
+        }
 
         nbtopo2(img, p, rs, N, &t8mm, &t8m, &t4p, &t4pp);
-	if ((t4pp > 1) && (t8mm > 1)) return t4pp;
-	return 0;
+        if ((t4pp > 1) && (t8mm > 1)) {
+          return t4pp;
+        }
+        return 0;
 } /* saddle8() */
 
 /* ==================================== */
@@ -2475,15 +3331,21 @@ int32_t lambdadestr4( /* teste si un point est lambda-destructible - minima 4-co
 {	
   int32_t t4mm, t8p, b, n, i, k, m, mi, q, destr;
 
-  if ((p%rs==rs-1) || (p<rs) || (p%rs==0) || (p>=N-rs)) /* bord */
+  if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+      (p >= N - rs)) { /* bord */
     return 0;
+  }
 
   nbtopo(F, p, rs, N, &t4mm, &b, &t8p, &n);
-  if ((t4mm == 1) && (t8p == 1)) return 1;
+  if ((t4mm == 1) && (t8p == 1)) {
+    return 1;
+  }
 
 #define DETRUIT_LAMBDA_PICS 
-#ifdef DETRUIT_LAMBDA_PICS 
-  if ((t4mm == 1) && (t8p == 0)) return ((F[p] - alpha8m(F,p,rs,N)) <= lambda);
+#ifdef DETRUIT_LAMBDA_PICS
+  if ((t4mm == 1) && (t8p == 0)) {
+    return ((F[p] - alpha8m(F, p, rs, N)) <= lambda);
+  }
 #endif
   destr = 0;
   if (t4mm >= 2)
@@ -2493,19 +3355,27 @@ int32_t lambdadestr4( /* teste si un point est lambda-destructible - minima 4-co
     for (i = 0; i < t4mm; i++) 
     { 
       mi = Comp4Tab[m][i];
-      if (mi == 0) break;
+      if (mi == 0) {
+        break;
+      }
       for (k = 0; k < 8; k++)
       {
         if ((mi % 2) != 0)
 	{
           q = voisin(p, k, rs, N);
-          if ((F[p] - F[q]) > lambda) break; /* composante eloignee */
-	}
+          if ((F[p] - F[q]) > lambda) {
+            break; /* composante eloignee */
+          }
+        }
         mi = mi >> 1;
       } /* for (k = 0; k < 8; k++) */
-      if (k == 8) n++;   /* compte le nb de composantes proches */
+      if (k == 8) {
+        n++; /* compte le nb de composantes proches */
+      }
     } /* for (i = 0; i < t4mm; i++) */
-    if (n >= (t4mm - 1)) return 1;
+    if (n >= (t4mm - 1)) {
+      return 1;
+    }
   } /* if (t4mm >= 2) */
   return 0;
 } /* lambdadestr4() */
@@ -2530,15 +3400,21 @@ int32_t lambdaconstr4( /* teste si un point est lambda-constructible - minima 4-
 {	
   int32_t t4mm, t8p, t4m, t8pp, i, k, n, m, mi, q, constr;
 
-  if ((p%rs==rs-1) || (p<rs) || (p%rs==0) || (p>=N-rs)) /* bord */
+  if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+      (p >= N - rs)) { /* bord */
     return 0;
+  }
 
   nbtopo(F, p, rs, N, &t4mm, &t4m, &t8p, &t8pp);
-  if ((t4m == 1) && (t8pp == 1)) return 1;
+  if ((t4m == 1) && (t8pp == 1)) {
+    return 1;
+  }
 
 #define DETRUIT_LAMBDA_PUITS 
-#ifdef DETRUIT_LAMBDA_PUITS 
-  if ((t8pp == 1) && (t4m == 0)) return ((alpha8p(F,p,rs,N) - F[p]) <= lambda);
+#ifdef DETRUIT_LAMBDA_PUITS
+  if ((t8pp == 1) && (t4m == 0)) {
+    return ((alpha8p(F, p, rs, N) - F[p]) <= lambda);
+  }
 #endif
   constr = 0;
   if (t8pp >= 2)
@@ -2548,19 +3424,27 @@ int32_t lambdaconstr4( /* teste si un point est lambda-constructible - minima 4-
     for (i = 0; i < t8pp; i++) 
     { 
       mi = Comp8Tab[m][i];
-      if (mi == 0) break;
+      if (mi == 0) {
+        break;
+      }
       for (k = 0; k < 8; k++)
       {
         if ((mi % 2) != 0)
 	{
           q = voisin(p, k, rs, N);
-          if ((F[q] - F[p]) > lambda) break; /* composante eloignee */
-	}
+          if ((F[q] - F[p]) > lambda) {
+            break; /* composante eloignee */
+          }
+        }
         mi = mi >> 1;
       } /* for (k = 0; k < 8; k++) */
-      if (k == 8) n++;   /* compte le nb de composantes proches */
+      if (k == 8) {
+        n++; /* compte le nb de composantes proches */
+      }
     } /* for (i = 0; i < t8pp; i++) */
-    if (n >= (t8pp - 1)) return 1;
+    if (n >= (t8pp - 1)) {
+      return 1;
+    }
   } /* if (t8pp >= 2) */
   return 0;
 } /* lambdaconstr4() */
@@ -2585,14 +3469,20 @@ int32_t lambdadestr8( /* teste si un point est lambda-destructible - minima 8-co
 {	
   int32_t t8mm, t4p, b, n, i, k, m, mi, q, destr;
 
-  if ((p%rs==rs-1) || (p<rs) || (p%rs==0) || (p>=N-rs)) /* bord */
+  if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+      (p >= N - rs)) { /* bord */
     return 0;
+  }
 
   nbtopo2(F, p, rs, N, &t8mm, &b, &t4p, &n);
-  if ((t8mm == 1) && (t4p == 1)) return 1;
+  if ((t8mm == 1) && (t4p == 1)) {
+    return 1;
+  }
 
-#ifdef DETRUIT_LAMBDA_PICS 
-  if ((t8mm == 1) && (t4p == 0)) return ((F[p] - alpha8m(F,p,rs,N)) <= lambda);
+#ifdef DETRUIT_LAMBDA_PICS
+  if ((t8mm == 1) && (t4p == 0)) {
+    return ((F[p] - alpha8m(F, p, rs, N)) <= lambda);
+  }
 #endif
   destr = 0;
   if (t8mm >= 2)
@@ -2602,19 +3492,27 @@ int32_t lambdadestr8( /* teste si un point est lambda-destructible - minima 8-co
     for (i = 0; i < t8mm; i++) 
     { 
       mi = Comp8Tab[m][i];
-      if (mi == 0) break;
+      if (mi == 0) {
+        break;
+      }
       for (k = 0; k < 8; k++)
       {
         if ((mi % 2) != 0)
 	{
           q = voisin(p, k, rs, N);
-          if ((F[p] - F[q]) > lambda) break; /* composante eloignee */
-	}
+          if ((F[p] - F[q]) > lambda) {
+            break; /* composante eloignee */
+          }
+        }
         mi = mi >> 1;
       } /* for (k = 0; k < 8; k++) */
-      if (k == 8) n++;   /* compte le nb de composantes proches */
+      if (k == 8) {
+        n++; /* compte le nb de composantes proches */
+      }
     } /* for (i = 0; i < t8mm; i++) */
-    if (n >= (t8mm - 1)) return 1;
+    if (n >= (t8mm - 1)) {
+      return 1;
+    }
   } /* if (t8mm >= 2) */
   return 0;
 } /* lambdadestr8() */
@@ -2639,14 +3537,20 @@ int32_t lambdaconstr8( /* teste si un point est lambda-constructible - minima 8-
 {	
   int32_t t8mm, t4p, t8m, t4pp, i, k, n, m, mi, q, constr;
 
-  if ((p%rs==rs-1) || (p<rs) || (p%rs==0) || (p>=N-rs)) /* bord */
+  if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+      (p >= N - rs)) { /* bord */
     return 0;
+  }
 
   nbtopo2(F, p, rs, N, &t8mm, &t8m, &t4p, &t4pp);
-  if ((t8m == 1) && (t4pp == 1)) return 1;
+  if ((t8m == 1) && (t4pp == 1)) {
+    return 1;
+  }
 
-#ifdef DETRUIT_LAMBDA_PUITS 
-  if ((t4pp == 1) && (t8m == 0)) return ((alpha8p(F,p,rs,N) - F[p]) <= lambda);
+#ifdef DETRUIT_LAMBDA_PUITS
+  if ((t4pp == 1) && (t8m == 0)) {
+    return ((alpha8p(F, p, rs, N) - F[p]) <= lambda);
+  }
 #endif
   constr = 0;
   if (t4pp >= 2)
@@ -2656,19 +3560,27 @@ int32_t lambdaconstr8( /* teste si un point est lambda-constructible - minima 8-
     for (i = 0; i < t4pp; i++) 
     { 
       mi = Comp4Tab[m][i];
-      if (mi == 0) break;
+      if (mi == 0) {
+        break;
+      }
       for (k = 0; k < 8; k++)
       {
         if ((mi % 2) != 0)
 	{
           q = voisin(p, k, rs, N);
-          if ((F[q] - F[p]) > lambda) break; /* composante eloignee */
-	}
+          if ((F[q] - F[p]) > lambda) {
+            break; /* composante eloignee */
+          }
+        }
         mi = mi >> 1;
       } /* for (k = 0; k < 8; k++) */
-      if (k == 8) n++;   /* compte le nb de composantes proches */
+      if (k == 8) {
+        n++; /* compte le nb de composantes proches */
+      }
     } /* for (i = 0; i < t4pp; i++) */
-    if (n >= (t4pp - 1)) return 1;
+    if (n >= (t4pp - 1)) {
+      return 1;
+    }
   } /* if (t4pp >= 2) */
   return 0;
 } /* lambdaconstr8() */
@@ -2692,16 +3604,34 @@ void top8(                     /* pour un objet en 8-connexite */
 
 	assert(!is_on_frame(p, rs, N));
 
-	if ( *(ptr+1)   ) v=1; else v=0;
- 	if ( *(ptr+1-rs)) v|=2;
- 	if ( *(ptr-rs)  ) v|=4;
- 	if ( *(ptr-rs-1)) v|=8;
- 	if ( *(ptr-1)   ) v|=16;
- 	if ( *(ptr-1+rs)) v|=32;
- 	if ( *(ptr+rs)  ) v|=64;
- 	if ( *(ptr+rs+1)) v|=128;
+        if (*(ptr + 1)) {
+          v = 1;
+        } else {
+          v = 0;
+        }
+        if (*(ptr + 1 - rs)) {
+          v |= 2;
+        }
+        if (*(ptr - rs)) {
+          v |= 4;
+        }
+        if (*(ptr - rs - 1)) {
+          v |= 8;
+        }
+        if (*(ptr - 1)) {
+          v |= 16;
+        }
+        if (*(ptr - 1 + rs)) {
+          v |= 32;
+        }
+        if (*(ptr + rs)) {
+          v |= 64;
+        }
+        if (*(ptr + rs + 1)) {
+          v |= 128;
+        }
 
-	*tb=TopoTab[v][0];
+        *tb=TopoTab[v][0];
 	*t=TopoTab[v][1];
 } /* top8() */
 
@@ -2720,14 +3650,32 @@ void top4(                     /* pour un objet en 4-connexite */
 
 	assert(!is_on_frame(p, rs, N));
 
-	if ( *(ptr+1)   ) v=1; else v=0;
- 	if ( *(ptr+1-rs)) v|=2;
- 	if ( *(ptr-rs)  ) v|=4;
- 	if ( *(ptr-rs-1)) v|=8;
- 	if ( *(ptr-1)   ) v|=16;
- 	if ( *(ptr-1+rs)) v|=32;
- 	if ( *(ptr+rs)  ) v|=64;
- 	if ( *(ptr+rs+1)) v|=128;
+        if (*(ptr + 1)) {
+          v = 1;
+        } else {
+          v = 0;
+        }
+        if (*(ptr + 1 - rs)) {
+          v |= 2;
+        }
+        if (*(ptr - rs)) {
+          v |= 4;
+        }
+        if (*(ptr - rs - 1)) {
+          v |= 8;
+        }
+        if (*(ptr - 1)) {
+          v |= 16;
+        }
+        if (*(ptr - 1 + rs)) {
+          v |= 32;
+        }
+        if (*(ptr + rs)) {
+          v |= 64;
+        }
+        if (*(ptr + rs + 1)) {
+          v |= 128;
+        }
         v = ~v & 0xff;
 
 	*t=TopoTab[v][0];
@@ -2749,16 +3697,34 @@ void top8_l(                   /* pour un objet en 8-connexite */
 
 	assert(!is_on_frame(p, rs, N));
 
-	if ( *(ptr+1)   ) v=1; else v=0;
- 	if ( *(ptr+1-rs)) v|=2;
- 	if ( *(ptr-rs)  ) v|=4;
- 	if ( *(ptr-rs-1)) v|=8;
- 	if ( *(ptr-1)   ) v|=16;
- 	if ( *(ptr-1+rs)) v|=32;
- 	if ( *(ptr+rs)  ) v|=64;
- 	if ( *(ptr+rs+1)) v|=128;
+        if (*(ptr + 1)) {
+          v = 1;
+        } else {
+          v = 0;
+        }
+        if (*(ptr + 1 - rs)) {
+          v |= 2;
+        }
+        if (*(ptr - rs)) {
+          v |= 4;
+        }
+        if (*(ptr - rs - 1)) {
+          v |= 8;
+        }
+        if (*(ptr - 1)) {
+          v |= 16;
+        }
+        if (*(ptr - 1 + rs)) {
+          v |= 32;
+        }
+        if (*(ptr + rs)) {
+          v |= 64;
+        }
+        if (*(ptr + rs + 1)) {
+          v |= 128;
+        }
 
-	*tb=TopoTab[v][0];
+        *tb=TopoTab[v][0];
 	*t=TopoTab[v][1];
 } /* top8_l() */
 
@@ -2777,14 +3743,32 @@ void top4_l(                   /* pour un objet en 4-connexite */
 
 	assert(!is_on_frame(p, rs, N));
 
-	if ( *(ptr+1)   ) v=1; else v=0;
- 	if ( *(ptr+1-rs)) v|=2;
- 	if ( *(ptr-rs)  ) v|=4;
- 	if ( *(ptr-rs-1)) v|=8;
- 	if ( *(ptr-1)   ) v|=16;
- 	if ( *(ptr-1+rs)) v|=32;
- 	if ( *(ptr+rs)  ) v|=64;
- 	if ( *(ptr+rs+1)) v|=128;
+        if (*(ptr + 1)) {
+          v = 1;
+        } else {
+          v = 0;
+        }
+        if (*(ptr + 1 - rs)) {
+          v |= 2;
+        }
+        if (*(ptr - rs)) {
+          v |= 4;
+        }
+        if (*(ptr - rs - 1)) {
+          v |= 8;
+        }
+        if (*(ptr - 1)) {
+          v |= 16;
+        }
+        if (*(ptr - 1 + rs)) {
+          v |= 32;
+        }
+        if (*(ptr + rs)) {
+          v |= 64;
+        }
+        if (*(ptr + rs + 1)) {
+          v |= 128;
+        }
         v = ~v & 0xff;
 
 	*t=TopoTab[v][0];
@@ -2800,7 +3784,9 @@ int32_t simple8(                   /* pour un objet en 8-connexite */
 /* ==================================== */
 {
         int32_t t, tb;
-        if ((p%rs==rs-1) || (p<rs) || (p%rs==0) || (p>=N-rs)) return(0);
+        if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) || (p >= N - rs)) {
+          return (0);
+        }
         top8(img, p, rs, N, &t, &tb);
         return (t == 1) && (tb == 1);
 } /* simple8() */
@@ -2814,7 +3800,9 @@ int32_t simple4(                   /* pour un objet en 4-connexite */
 /* ==================================== */
 {
         int32_t t, tb;
-        if ((p%rs==rs-1) || (p<rs) || (p%rs==0) || (p>=N-rs)) return(0);
+        if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) || (p >= N - rs)) {
+          return (0);
+        }
         top4(img, p, rs, N, &t, &tb);
         return (t == 1) && (tb == 1);
 } /* simple4() */
@@ -2828,14 +3816,28 @@ int32_t typetopobin( /* types topo. en binaire et en 4-connexite */
 /* ==================================== */
 {
   int32_t t, tb;
-  if (img[p] == 0) return 0;
-  if ((p%rs==rs-1) || (p<rs) || (p%rs==0) || (p>=N-rs)) return(0);
+  if (img[p] == 0) {
+    return 0;
+  }
+  if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) || (p >= N - rs)) {
+    return (0);
+  }
   top4(img, p, rs, N, &t, &tb);
-  if ((t == 1) && (tb == 1)) return SIMPLE;
-  if (t > 2) return MULTIPLE;
-  if (t > 1) return SEPARANT;
-  if (t == 0) return ISOLE;
-  if (tb == 0) return INTERIEUR;
+  if ((t == 1) && (tb == 1)) {
+    return SIMPLE;
+  }
+  if (t > 2) {
+    return MULTIPLE;
+  }
+  if (t > 1) {
+    return SEPARANT;
+  }
+  if (t == 0) {
+    return ISOLE;
+  }
+  if (tb == 0) {
+    return INTERIEUR;
+  }
   return 0;
 } /* typetopobin() */
 
@@ -2848,14 +3850,28 @@ int32_t typetopobin8( /* types topo. en binaire et en 8-connexite */
 /* ==================================== */
 {
   int32_t t, tb;
-  if (img[p] == 0) return 0;
-  if ((p%rs==rs-1) || (p<rs) || (p%rs==0) || (p>=N-rs)) return(0);
+  if (img[p] == 0) {
+    return 0;
+  }
+  if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) || (p >= N - rs)) {
+    return (0);
+  }
   top8(img, p, rs, N, &t, &tb);
-  if ((t == 1) && (tb == 1)) return SIMPLE;
-  if (t > 2) return MULTIPLE;
-  if (t > 1) return SEPARANT;
-  if (t == 0) return ISOLE;
-  if (tb == 0) return INTERIEUR;
+  if ((t == 1) && (tb == 1)) {
+    return SIMPLE;
+  }
+  if (t > 2) {
+    return MULTIPLE;
+  }
+  if (t > 1) {
+    return SEPARANT;
+  }
+  if (t == 0) {
+    return ISOLE;
+  }
+  if (tb == 0) {
+    return INTERIEUR;
+  }
   return 0;
 } /* typetopobin8() */
 
@@ -2901,14 +3917,30 @@ int32_t nbvois8(
 	register uint8_t * ptr = img+p;
 	register int32_t n = 0;
 
-        if ((p%rs!=rs-1) && (*(ptr+1))) n++;
-        if (((p%rs!=rs-1)&&(p>=rs)) && (*(ptr+1-rs))) n++;
-        if ((p>=rs) && (*(ptr-rs))) n++;
-        if (((p>=rs)&&(p%rs!=0)) && (*(ptr-rs-1))) n++;
-        if ((p%rs!=0) && (*(ptr-1))) n++;
-        if (((p%rs!=0)&&(p<N-rs)) && (*(ptr-1+rs))) n++;
-        if ((p<N-rs) && (*(ptr+rs))) n++;
-        if (((p<N-rs)&&(p%rs!=rs-1)) && (*(ptr+rs+1))) n++;
+        if ((p % rs != rs - 1) && (*(ptr + 1))) {
+          n++;
+        }
+        if (((p % rs != rs - 1) && (p >= rs)) && (*(ptr + 1 - rs))) {
+          n++;
+        }
+        if ((p >= rs) && (*(ptr - rs))) {
+          n++;
+        }
+        if (((p >= rs) && (p % rs != 0)) && (*(ptr - rs - 1))) {
+          n++;
+        }
+        if ((p % rs != 0) && (*(ptr - 1))) {
+          n++;
+        }
+        if (((p % rs != 0) && (p < N - rs)) && (*(ptr - 1 + rs))) {
+          n++;
+        }
+        if ((p < N - rs) && (*(ptr + rs))) {
+          n++;
+        }
+        if (((p < N - rs) && (p % rs != rs - 1)) && (*(ptr + rs + 1))) {
+          n++;
+        }
         return n;
 } /* nbvois8() */
 
@@ -2924,10 +3956,18 @@ int32_t nbvois4(
 	register uint8_t * ptr = img+p;
 	register int32_t n = 0;
 
-        if ((p%rs!=rs-1) && (*(ptr+1))) n++;
-        if ((p>=rs) && (*(ptr-rs))) n++;
-        if ((p%rs!=0) && (*(ptr-1))) n++;
-        if ((p<N-rs) && (*(ptr+rs))) n++;
+        if ((p % rs != rs - 1) && (*(ptr + 1))) {
+          n++;
+        }
+        if ((p >= rs) && (*(ptr - rs))) {
+          n++;
+        }
+        if ((p % rs != 0) && (*(ptr - 1))) {
+          n++;
+        }
+        if ((p < N - rs) && (*(ptr + rs))) {
+          n++;
+        }
         return n;
 } /* nbvois4() */
 
@@ -2943,14 +3983,30 @@ int32_t nbvoisc8(
 	register uint8_t * ptr = img+p;
 	register int32_t n = 0;
 
-        if ((p%rs!=rs-1) && (*(ptr+1)==0)) n++;
-        if (((p%rs!=rs-1)&&(p>=rs)) && (*(ptr+1-rs)==0)) n++;
-        if ((p>=rs) && (*(ptr-rs)==0)) n++;
-        if (((p>=rs)&&(p%rs!=0)) && (*(ptr-rs-1)==0)) n++;
-        if ((p%rs!=0) && (*(ptr-1)==0)) n++;
-        if (((p%rs!=0)&&(p<N-rs)) && (*(ptr-1+rs)==0)) n++;
-        if ((p<N-rs) && (*(ptr+rs)==0)) n++;
-        if (((p<N-rs)&&(p%rs!=rs-1)) && (*(ptr+rs+1)==0)) n++;
+        if ((p % rs != rs - 1) && (*(ptr + 1) == 0)) {
+          n++;
+        }
+        if (((p % rs != rs - 1) && (p >= rs)) && (*(ptr + 1 - rs) == 0)) {
+          n++;
+        }
+        if ((p >= rs) && (*(ptr - rs) == 0)) {
+          n++;
+        }
+        if (((p >= rs) && (p % rs != 0)) && (*(ptr - rs - 1) == 0)) {
+          n++;
+        }
+        if ((p % rs != 0) && (*(ptr - 1) == 0)) {
+          n++;
+        }
+        if (((p % rs != 0) && (p < N - rs)) && (*(ptr - 1 + rs) == 0)) {
+          n++;
+        }
+        if ((p < N - rs) && (*(ptr + rs) == 0)) {
+          n++;
+        }
+        if (((p < N - rs) && (p % rs != rs - 1)) && (*(ptr + rs + 1) == 0)) {
+          n++;
+        }
         return n;
 } /* nbvoisc8() */
 
@@ -2966,10 +4022,18 @@ int32_t nbvoisc4(
 	register uint8_t * ptr = img+p;
 	register int32_t n = 0;
 
-        if ((p%rs!=rs-1) && (*(ptr+1)==0)) n++;
-        if ((p>=rs) && (*(ptr-rs)==0)) n++;
-        if ((p%rs!=0) && (*(ptr-1)==0)) n++;
-        if ((p<N-rs) && (*(ptr+rs)==0)) n++;
+        if ((p % rs != rs - 1) && (*(ptr + 1) == 0)) {
+          n++;
+        }
+        if ((p >= rs) && (*(ptr - rs) == 0)) {
+          n++;
+        }
+        if ((p % rs != 0) && (*(ptr - 1) == 0)) {
+          n++;
+        }
+        if ((p < N - rs) && (*(ptr + rs) == 0)) {
+          n++;
+        }
         return n;
 } /* nbvoisc4() */
 
@@ -2986,14 +4050,31 @@ int32_t nbvois8neq(
         register int32_t pval = *ptr;
 	register int32_t n = 0;
 
-        if (!((p%rs!=rs-1) && (*(ptr+1) == pval))) n++;
-        if (!(((p%rs!=rs-1)&&(p>=rs)) && (*(ptr+1-rs) == pval))) n++;
-        if (!((p>=rs) && (*(ptr-rs) == pval))) n++;
-        if (!(((p>=rs)&&(p%rs!=0)) && (*(ptr-rs-1) == pval))) n++;
-        if (!((p%rs!=0) && (*(ptr-1) == pval))) n++;
-        if (!(((p%rs!=0)&&(p<N-rs)) && (*(ptr-1+rs) == pval))) n++;
-        if (!((p<N-rs) && (*(ptr+rs) == pval))) n++;
-        if (!(((p<N-rs)&&(p%rs!=rs-1)) && (*(ptr+rs+1) == pval))) n++;
+        if (!((p % rs != rs - 1) && (*(ptr + 1) == pval))) {
+          n++;
+        }
+        if (!(((p % rs != rs - 1) && (p >= rs)) && (*(ptr + 1 - rs) == pval))) {
+          n++;
+        }
+        if (!((p >= rs) && (*(ptr - rs) == pval))) {
+          n++;
+        }
+        if (!(((p >= rs) && (p % rs != 0)) && (*(ptr - rs - 1) == pval))) {
+          n++;
+        }
+        if (!((p % rs != 0) && (*(ptr - 1) == pval))) {
+          n++;
+        }
+        if (!(((p % rs != 0) && (p < N - rs)) && (*(ptr - 1 + rs) == pval))) {
+          n++;
+        }
+        if (!((p < N - rs) && (*(ptr + rs) == pval))) {
+          n++;
+        }
+        if (!(((p < N - rs) && (p % rs != rs - 1)) &&
+              (*(ptr + rs + 1) == pval))) {
+          n++;
+        }
         return n;
 } /* nbvois8neq() */
 
@@ -3010,10 +4091,18 @@ int32_t nbvois4neq(
         register int32_t pval = *ptr;
 	register int32_t n = 0;
 
-        if (!((p%rs!=rs-1) && (*(ptr+1) == pval))) n++;
-        if (!((p>=rs) && (*(ptr-rs) == pval))) n++;
-        if (!((p%rs!=0) && (*(ptr-1) == pval))) n++;
-        if (!((p<N-rs) && (*(ptr+rs) == pval))) n++;
+        if (!((p % rs != rs - 1) && (*(ptr + 1) == pval))) {
+          n++;
+        }
+        if (!((p >= rs) && (*(ptr - rs) == pval))) {
+          n++;
+        }
+        if (!((p % rs != 0) && (*(ptr - 1) == pval))) {
+          n++;
+        }
+        if (!((p < N - rs) && (*(ptr + rs) == pval))) {
+          n++;
+        }
         return n;
 } /* nbvois4neq() */
 
@@ -3030,14 +4119,30 @@ int32_t nbvoisp8(
 	register uint8_t * ptr = img+p;
 	register int32_t n = 0;
 
-        if ((p%rs!=rs-1) && (*(ptr+1) >= val)) n++;
-        if (((p%rs!=rs-1)&&(p>=rs)) && (*(ptr+1-rs) >= val)) n++;
-        if ((p>=rs) && (*(ptr-rs) >= val)) n++;
-        if (((p>=rs)&&(p%rs!=0)) && (*(ptr-rs-1) >= val)) n++;
-        if ((p%rs!=0) && (*(ptr-1) >= val)) n++;
-        if (((p%rs!=0)&&(p<N-rs)) && (*(ptr-1+rs) >= val)) n++;
-        if ((p<N-rs) && (*(ptr+rs) >= val)) n++;
-        if (((p<N-rs)&&(p%rs!=rs-1)) && (*(ptr+rs+1) >= val)) n++;
+        if ((p % rs != rs - 1) && (*(ptr + 1) >= val)) {
+          n++;
+        }
+        if (((p % rs != rs - 1) && (p >= rs)) && (*(ptr + 1 - rs) >= val)) {
+          n++;
+        }
+        if ((p >= rs) && (*(ptr - rs) >= val)) {
+          n++;
+        }
+        if (((p >= rs) && (p % rs != 0)) && (*(ptr - rs - 1) >= val)) {
+          n++;
+        }
+        if ((p % rs != 0) && (*(ptr - 1) >= val)) {
+          n++;
+        }
+        if (((p % rs != 0) && (p < N - rs)) && (*(ptr - 1 + rs) >= val)) {
+          n++;
+        }
+        if ((p < N - rs) && (*(ptr + rs) >= val)) {
+          n++;
+        }
+        if (((p < N - rs) && (p % rs != rs - 1)) && (*(ptr + rs + 1) >= val)) {
+          n++;
+        }
         return n;
 } /* nbvoisp8() */
 
@@ -3054,10 +4159,18 @@ int32_t nbvoisp4(
 	register uint8_t * ptr = img+p;
 	register int32_t n = 0;
 
-        if ((p%rs!=rs-1) && (*(ptr+1) >= val)) n++;
-        if ((p>=rs) && (*(ptr-rs) >= val)) n++;
-        if ((p%rs!=0) && (*(ptr-1) >= val)) n++;
-        if ((p<N-rs) && (*(ptr+rs) >= val)) n++;
+        if ((p % rs != rs - 1) && (*(ptr + 1) >= val)) {
+          n++;
+        }
+        if ((p >= rs) && (*(ptr - rs) >= val)) {
+          n++;
+        }
+        if ((p % rs != 0) && (*(ptr - 1) >= val)) {
+          n++;
+        }
+        if ((p < N - rs) && (*(ptr + rs) >= val)) {
+          n++;
+        }
         return n;
 } /* nbvoisp4() */
 
@@ -3074,14 +4187,30 @@ int32_t nbvoism8(
 	register uint8_t * ptr = img+p;
 	register int32_t n = 0;
 
-        if ((p%rs!=rs-1) && (*(ptr+1) <= val)) n++;
-        if (((p%rs!=rs-1)&&(p>=rs)) && (*(ptr+1-rs) <= val)) n++;
-        if ((p>=rs) && (*(ptr-rs) <= val)) n++;
-        if (((p>=rs)&&(p%rs!=0)) && (*(ptr-rs-1) <= val)) n++;
-        if ((p%rs!=0) && (*(ptr-1) <= val)) n++;
-        if (((p%rs!=0)&&(p<N-rs)) && (*(ptr-1+rs) <= val)) n++;
-        if ((p<N-rs) && (*(ptr+rs) <= val)) n++;
-        if (((p<N-rs)&&(p%rs!=rs-1)) && (*(ptr+rs+1) <= val)) n++;
+        if ((p % rs != rs - 1) && (*(ptr + 1) <= val)) {
+          n++;
+        }
+        if (((p % rs != rs - 1) && (p >= rs)) && (*(ptr + 1 - rs) <= val)) {
+          n++;
+        }
+        if ((p >= rs) && (*(ptr - rs) <= val)) {
+          n++;
+        }
+        if (((p >= rs) && (p % rs != 0)) && (*(ptr - rs - 1) <= val)) {
+          n++;
+        }
+        if ((p % rs != 0) && (*(ptr - 1) <= val)) {
+          n++;
+        }
+        if (((p % rs != 0) && (p < N - rs)) && (*(ptr - 1 + rs) <= val)) {
+          n++;
+        }
+        if ((p < N - rs) && (*(ptr + rs) <= val)) {
+          n++;
+        }
+        if (((p < N - rs) && (p % rs != rs - 1)) && (*(ptr + rs + 1) <= val)) {
+          n++;
+        }
         return n;
 } /* nbvoism8() */
 
@@ -3100,22 +4229,54 @@ int32_t extremite8(
 	register uint8_t * ptr = img+p;
 	register int32_t n = 0;
 
-        if ((p%rs!=rs-1) && (*(ptr+1) >= val)) n++;
-        if (((p%rs!=rs-1)&&(p>=rs)) && (*(ptr+1-rs) >= val)) n++;
-        if (n > 1) return 0;
-        if ((p>=rs) && (*(ptr-rs) >= val)) n++;
-        if (n > 1) return 0;
-        if (((p>=rs)&&(p%rs!=0)) && (*(ptr-rs-1) >= val)) n++;
-        if (n > 1) return 0;
-        if ((p%rs!=0) && (*(ptr-1) >= val)) n++;
-        if (n > 1) return 0;
-        if (((p%rs!=0)&&(p<N-rs)) && (*(ptr-1+rs) >= val)) n++;
-        if (n > 1) return 0;
-        if ((p<N-rs) && (*(ptr+rs) >= val)) n++;
-        if (n > 1) return 0;
-        if (((p<N-rs)&&(p%rs!=rs-1)) && (*(ptr+rs+1) >= val)) n++;
-        if (n > 1) return 0;
-        if (n < 1) return 0;
+        if ((p % rs != rs - 1) && (*(ptr + 1) >= val)) {
+          n++;
+        }
+        if (((p % rs != rs - 1) && (p >= rs)) && (*(ptr + 1 - rs) >= val)) {
+          n++;
+        }
+        if (n > 1) {
+          return 0;
+        }
+        if ((p >= rs) && (*(ptr - rs) >= val)) {
+          n++;
+        }
+        if (n > 1) {
+          return 0;
+        }
+        if (((p >= rs) && (p % rs != 0)) && (*(ptr - rs - 1) >= val)) {
+          n++;
+        }
+        if (n > 1) {
+          return 0;
+        }
+        if ((p % rs != 0) && (*(ptr - 1) >= val)) {
+          n++;
+        }
+        if (n > 1) {
+          return 0;
+        }
+        if (((p % rs != 0) && (p < N - rs)) && (*(ptr - 1 + rs) >= val)) {
+          n++;
+        }
+        if (n > 1) {
+          return 0;
+        }
+        if ((p < N - rs) && (*(ptr + rs) >= val)) {
+          n++;
+        }
+        if (n > 1) {
+          return 0;
+        }
+        if (((p < N - rs) && (p % rs != rs - 1)) && (*(ptr + rs + 1) >= val)) {
+          n++;
+        }
+        if (n > 1) {
+          return 0;
+        }
+        if (n < 1) {
+          return 0;
+        }
         return 1;
 } /* extremite8() */
 
@@ -3134,14 +4295,30 @@ int32_t extremite4(
 	register uint8_t * ptr = img+p;
 	register int32_t n = 0;
 
-        if ((p%rs!=rs-1) && (*(ptr+1) >= val)) n++;
-        if ((p>=rs) && (*(ptr-rs) >= val)) n++;
-        if (n > 1) return 0;
-        if ((p%rs!=0) && (*(ptr-1) >= val)) n++;
-        if (n > 1) return 0;
-        if ((p<N-rs) && (*(ptr+rs) >= val)) n++;
-        if (n > 1) return 0;
-        if (n < 1) return 0;
+        if ((p % rs != rs - 1) && (*(ptr + 1) >= val)) {
+          n++;
+        }
+        if ((p >= rs) && (*(ptr - rs) >= val)) {
+          n++;
+        }
+        if (n > 1) {
+          return 0;
+        }
+        if ((p % rs != 0) && (*(ptr - 1) >= val)) {
+          n++;
+        }
+        if (n > 1) {
+          return 0;
+        }
+        if ((p < N - rs) && (*(ptr + rs) >= val)) {
+          n++;
+        }
+        if (n > 1) {
+          return 0;
+        }
+        if (n < 1) {
+          return 0;
+        }
         return 1;
 } /* extremite4() */
 
@@ -3160,22 +4337,54 @@ int32_t extremite8m(
 	register uint8_t * ptr = img+p;
 	register int32_t n = 0;
 
-        if ((p%rs!=rs-1) && (*(ptr+1) <= val)) n++;
-        if (((p%rs!=rs-1)&&(p>=rs)) && (*(ptr+1-rs) <= val)) n++;
-        if (n > 1) return 0;
-        if ((p>=rs) && (*(ptr-rs) <= val)) n++;
-        if (n > 1) return 0;
-        if (((p>=rs)&&(p%rs!=0)) && (*(ptr-rs-1) <= val)) n++;
-        if (n > 1) return 0;
-        if ((p%rs!=0) && (*(ptr-1) <= val)) n++;
-        if (n > 1) return 0;
-        if (((p%rs!=0)&&(p<N-rs)) && (*(ptr-1+rs) <= val)) n++;
-        if (n > 1) return 0;
-        if ((p<N-rs) && (*(ptr+rs) <= val)) n++;
-        if (n > 1) return 0;
-        if (((p<N-rs)&&(p%rs!=rs-1)) && (*(ptr+rs+1) <= val)) n++;
-        if (n > 1) return 0;
-        if (n < 1) return 0;
+        if ((p % rs != rs - 1) && (*(ptr + 1) <= val)) {
+          n++;
+        }
+        if (((p % rs != rs - 1) && (p >= rs)) && (*(ptr + 1 - rs) <= val)) {
+          n++;
+        }
+        if (n > 1) {
+          return 0;
+        }
+        if ((p >= rs) && (*(ptr - rs) <= val)) {
+          n++;
+        }
+        if (n > 1) {
+          return 0;
+        }
+        if (((p >= rs) && (p % rs != 0)) && (*(ptr - rs - 1) <= val)) {
+          n++;
+        }
+        if (n > 1) {
+          return 0;
+        }
+        if ((p % rs != 0) && (*(ptr - 1) <= val)) {
+          n++;
+        }
+        if (n > 1) {
+          return 0;
+        }
+        if (((p % rs != 0) && (p < N - rs)) && (*(ptr - 1 + rs) <= val)) {
+          n++;
+        }
+        if (n > 1) {
+          return 0;
+        }
+        if ((p < N - rs) && (*(ptr + rs) <= val)) {
+          n++;
+        }
+        if (n > 1) {
+          return 0;
+        }
+        if (((p < N - rs) && (p % rs != rs - 1)) && (*(ptr + rs + 1) <= val)) {
+          n++;
+        }
+        if (n > 1) {
+          return 0;
+        }
+        if (n < 1) {
+          return 0;
+        }
         return 1;
 } /* extremite8m() */
 
@@ -3194,14 +4403,30 @@ int32_t extremite4m(
 	register uint8_t * ptr = img+p;
 	register int32_t n = 0;
 
-        if ((p%rs!=rs-1) && (*(ptr+1) <= val)) n++;
-        if ((p>=rs) && (*(ptr-rs) <= val)) n++;
-        if (n > 1) return 0;
-        if ((p%rs!=0) && (*(ptr-1) <= val)) n++;
-        if (n > 1) return 0;
-        if ((p<N-rs) && (*(ptr+rs) <= val)) n++;
-        if (n > 1) return 0;
-        if (n < 1) return 0;
+        if ((p % rs != rs - 1) && (*(ptr + 1) <= val)) {
+          n++;
+        }
+        if ((p >= rs) && (*(ptr - rs) <= val)) {
+          n++;
+        }
+        if (n > 1) {
+          return 0;
+        }
+        if ((p % rs != 0) && (*(ptr - 1) <= val)) {
+          n++;
+        }
+        if (n > 1) {
+          return 0;
+        }
+        if ((p < N - rs) && (*(ptr + rs) <= val)) {
+          n++;
+        }
+        if (n > 1) {
+          return 0;
+        }
+        if (n < 1) {
+          return 0;
+        }
         return 1;
 } /* extremite4m() */
 
@@ -3238,12 +4463,24 @@ int32_t ridge(
         v6 = *(ptr+rs)  ;
         v7 = *(ptr+rs+1);
 
-        if (mcmin(v1,val) > mcmax(v0,v2)) return 1; 
-        if (mcmin(v3,val) > mcmax(v2,v4)) return 1; 
-        if (mcmin(v5,val) > mcmax(v4,v6)) return 1; 
-        if (mcmin(v7,val) > mcmax(v6,v0)) return 1; 
-        if (mcmin(v0,mcmin(v4,val)) > mcmax(v2,v6)) return 1; 
-        if (mcmin(v2,mcmin(v6,val)) > mcmax(v0,v4)) return 1; 
+        if (mcmin(v1, val) > mcmax(v0, v2)) {
+          return 1;
+        }
+        if (mcmin(v3, val) > mcmax(v2, v4)) {
+          return 1;
+        }
+        if (mcmin(v5, val) > mcmax(v4, v6)) {
+          return 1;
+        }
+        if (mcmin(v7, val) > mcmax(v6, v0)) {
+          return 1;
+        }
+        if (mcmin(v0, mcmin(v4, val)) > mcmax(v2, v6)) {
+          return 1;
+        }
+        if (mcmin(v2, mcmin(v6, val)) > mcmax(v0, v4)) {
+          return 1;
+        }
 
         return 0;
 } /* ridge() */
@@ -3257,7 +4494,9 @@ int32_t bordext4(uint8_t *F, index_t x, index_t rs, index_t N)
   for (k = 0; k < 8; k += 2) /* parcourt les voisins en 4-connexite */
   {
     y = voisin(x, k, rs, N);
-    if ((y != -1) && (F[y] == 0)) return 1;
+    if ((y != -1) && (F[y] == 0)) {
+      return 1;
+    }
   } /* for k */      
   return 0;
 } /* bordext4() */
@@ -3271,7 +4510,9 @@ int32_t bordext8(uint8_t *F, index_t x, index_t rs, index_t N)
   for (k = 0; k < 8; k += 1) /* parcourt les voisins en 8-connexite */
   {
     y = voisin(x, k, rs, N);
-    if ((y != -1) && (F[y] == 0)) return 1;
+    if ((y != -1) && (F[y] == 0)) {
+      return 1;
+    }
   } /* for k */      
   return 0;
 } /* bordext8() */
@@ -3285,10 +4526,16 @@ int32_t curve4( /* point de courbe en 4-connexite */
 /* ==================================== */
 {
   int32_t t, tb;
-  if (img[p] == 0) return 0;
-  if ((p%rs==rs-1) || (p<rs) || (p%rs==0) || (p>=N-rs)) return(0);
+  if (img[p] == 0) {
+    return 0;
+  }
+  if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) || (p >= N - rs)) {
+    return (0);
+  }
   top4(img, p, rs, N, &t, &tb);
-  if ((t == 2) && (nbvois4(img, p, rs, N) == 2)) return 1;
+  if ((t == 2) && (nbvois4(img, p, rs, N) == 2)) {
+    return 1;
+  }
   return 0;
 } /* curve4() */
 
@@ -3301,10 +4548,16 @@ int32_t curve8( /* point de courbe en 8-connexite */
 /* ==================================== */
 {
   int32_t t, tb;
-  if (img[p] == 0) return 0;
-  if ((p%rs==rs-1) || (p<rs) || (p%rs==0) || (p>=N-rs)) return(0);
+  if (img[p] == 0) {
+    return 0;
+  }
+  if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) || (p >= N - rs)) {
+    return (0);
+  }
   top8(img, p, rs, N, &t, &tb);
-  if ((t == 2) && (nbvois8(img, p, rs, N) == 2)) return 1;
+  if ((t == 2) && (nbvois8(img, p, rs, N) == 2)) {
+    return 1;
+  }
   return 0;
 } /* curve8() */
 
@@ -3327,8 +4580,12 @@ http://igm.univ-mlv.fr/LIGM/internal_report/pdf/2006_02.v2.pdf
   index_t q;
   int32_t i, j, m;
 
-  if (!simple8(X, p, rs, N)) return 0; // p must be simple
-  if (!P[p]) return 0; // p must be in P
+  if (!simple8(X, p, rs, N)) {
+    return 0; // p must be simple
+  }
+  if (!P[p]) {
+    return 0; // p must be in P
+  }
 
   // R = X \ P
   R[0] = X[p - rs - 1] && !P[p - rs - 1];
@@ -3342,20 +4599,26 @@ http://igm.univ-mlv.fr/LIGM/internal_report/pdf/2006_02.v2.pdf
 
   // N8*(p) inter R must be non-empty and connected
   m = mask(R, 4, 3, 9);
-  if (t8(m) != 1) return 0; 
+  if (t8(m) != 1) {
+    return 0;
+  }
 
   // each q in N8*(p) inter P must be adjacent to N8*(p) inter R
-  for (j = 0; j < 3; j++)
-  for (i = 0; i < 3; i++)
-  if (i != j)
-  {
-    q = p + (j-1)*rs + i-1; assert(q >= 0); assert(q < N); 
-    if (P[q])
-    {
-      R[j*3 + i] = 1;
-      m = mask(R, 4, 3, 9);
-      if (t8(m) != 1) return 0; 
-      R[j*3 + i] = 0;
+  for (j = 0; j < 3; j++) {
+    for (i = 0; i < 3; i++) {
+      if (i != j) {
+        q = p + (j - 1) * rs + i - 1;
+        assert(q >= 0);
+        assert(q < N);
+        if (P[q]) {
+          R[j * 3 + i] = 1;
+          m = mask(R, 4, 3, 9);
+          if (t8(m) != 1) {
+            return 0;
+          }
+          R[j * 3 + i] = 0;
+        }
+      }
     }
   }
   return 1;
@@ -3374,17 +4637,23 @@ int32_t separant4(  /* teste si un point est separant - minima 4-connexes
   int32_t t4mm, t4m, t8p, t8pp;
   index_t k, q;
 
-  if ((p%rs==rs-1)||(p<rs)||(p%rs==0)||(p>=N-rs)) /* point de bord */
-     return 0;
+  if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+      (p >= N - rs)) { /* point de bord */
+    return 0;
+  }
   nbtopo(img, p, rs, N, &t4mm, &t4m, &t8p, &t8pp);
-  if (t4mm >= 2) return img[p];
+  if (t4mm >= 2) {
+    return img[p];
+  }
   for (k = 0; k < 8; k += 1)
   {
     q = voisin(p, k, rs, N);
     if ((q != -1) && (img[q] < img[p]))
     {
       nbtopoh(img, p, img[q], rs, N, &t4mm, &t4m, &t8p, &t8pp);
-      if (t4mm >= 2) return img[q];
+      if (t4mm >= 2) {
+        return img[q];
+      }
     }
   }	
   return 0;
@@ -3401,10 +4670,14 @@ int32_t separant4h(  /* teste si un point est separant pour la coupe h - minima 
 {	
   int32_t t4mm, t4m, t8p, t8pp;
 
-  if ((p%rs==rs-1)||(p<rs)||(p%rs==0)||(p>=N-rs)) /* point de bord */
-     return 0;
+  if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+      (p >= N - rs)) { /* point de bord */
+    return 0;
+  }
   nbtopoh(img, p, h, rs, N, &t4mm, &t4m, &t8p, &t8pp);
-  if (t4mm >= 2) return 1;
+  if (t4mm >= 2) {
+    return 1;
+  }
   return 0;
 } /* separant4h() */
 
@@ -3421,18 +4694,26 @@ int32_t hseparant4(  /* teste si un point est h-separant - minima 4-connexes
   int32_t t4mm, t4m, t8p, t8pp;
   index_t k, q;
 
-  if ((p%rs==rs-1)||(p<rs)||(p%rs==0)||(p>=N-rs)) /* point de bord */
-     return 0;
-  if (img[p] <= h) return 0;
+  if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+      (p >= N - rs)) { /* point de bord */
+    return 0;
+  }
+  if (img[p] <= h) {
+    return 0;
+  }
   nbtopo(img, p, rs, N, &t4mm, &t4m, &t8p, &t8pp);
-  if (t4mm >= 2) return 1;
+  if (t4mm >= 2) {
+    return 1;
+  }
   for (k = 0; k < 8; k += 1)
   {
     q = voisin(p, k, rs, N);
     if ((q != -1) && (img[q] > h) && (img[q] < img[p]))
     {
       nbtopoh(img, p, img[q], rs, N, &t4mm, &t4m, &t8p, &t8pp);
-      if (t4mm >= 2) return 1;
+      if (t4mm >= 2) {
+        return 1;
+      }
     }
   }	
   return 0;
@@ -3451,18 +4732,26 @@ int32_t hseparant8(  /* teste si un point est h-separant - minima 8-connexes
   int32_t t8mm, t8m, t4p, t4pp;
   index_t k, q;
 
-  if ((p%rs==rs-1)||(p<rs)||(p%rs==0)||(p>=N-rs)) /* point de bord */
-     return 0;
-  if (img[p] <= h) return 0;
+  if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+      (p >= N - rs)) { /* point de bord */
+    return 0;
+  }
+  if (img[p] <= h) {
+    return 0;
+  }
   nbtopo2(img, p, rs, N, &t8mm, &t8m, &t4p, &t4pp);
-  if (t8mm >= 2) return 1;
+  if (t8mm >= 2) {
+    return 1;
+  }
   for (k = 0; k < 8; k += 1)
   {
     q = voisin(p, k, rs, N);
     if ((q != -1) && (img[q] > h) && (img[q] < img[p]))
     {
       nbtopoh2(img, p, img[q], rs, N, &t8mm, &t8m, &t4p, &t4pp);
-      if (t8mm >= 2) return 1;
+      if (t8mm >= 2) {
+        return 1;
+      }
     }
   }	
   return 0;
@@ -3481,17 +4770,23 @@ int32_t separant8(  /* teste si un point est separant - minima 8-connexes
   int32_t t8mm, t8m, t4p, t4pp;
   index_t k, q;
 
-  if ((p%rs==rs-1)||(p<rs)||(p%rs==0)||(p>=N-rs)) /* point de bord */
-     return 0;
+  if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+      (p >= N - rs)) { /* point de bord */
+    return 0;
+  }
   nbtopo2(img, p, rs, N, &t8mm, &t8m, &t4p, &t4pp);
-  if (t8mm >= 2) return img[p];
+  if (t8mm >= 2) {
+    return img[p];
+  }
   for (k = 0; k < 8; k += 1)
   {
     q = voisin(p, k, rs, N);
     if ((q != -1) && (img[q] < img[p]))
     {
       nbtopoh2(img, p, img[q], rs, N, &t8mm, &t8m, &t4p, &t4pp);
-      if (t8mm >= 2) return img[q];
+      if (t8mm >= 2) {
+        return img[q];
+      }
     }
   }	
   return 0;
@@ -3516,11 +4811,15 @@ int32_t museparant4(
   int32_t i, k, c, m, mi, d, dmax, n;
   index_t q;
 
-  if ((p%rs==rs-1)||(p<rs)||(p%rs==0)||(p>=N-rs)) /* point de bord */
-     return 0;
+  if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+      (p >= N - rs)) { /* point de bord */
+    return 0;
+  }
   nbtopo(F, p, rs, N, &t4mm, &t4m, &t8p, &t8pp);
   c = F[p];
-  if (t4mm >= 2) goto step2;
+  if (t4mm >= 2) {
+    goto step2;
+  }
   for (k = 0; k < 8; k += 1)
   {
     q = voisin(p, k, rs, N);
@@ -3528,7 +4827,9 @@ int32_t museparant4(
     if ((q != -1) && (c < F[p]))
     {
       nbtopoh(F, p, c, rs, N, &t4mm, &t4m, &t8p, &t8pp);
-      if (t4mm >= 2) goto step2;
+      if (t4mm >= 2) {
+        goto step2;
+      }
     }
   }	
   return 0;
@@ -3538,7 +4839,9 @@ step2:
   for (i = 0; i < t4mm; i++) 
   { 
     mi = Comp4Tab[m][i];
-    if (mi == 0) break;
+    if (mi == 0) {
+      break;
+    }
     dmax = 0;
     for (k = 0; k < 8; k++)
     {
@@ -3546,13 +4849,19 @@ step2:
       {
         q = voisin(p, k, rs, N);
         d = F[p] - F[q];
-        if (dmax < d) dmax = d;
+        if (dmax < d) {
+          dmax = d;
+        }
       }
       mi = mi >> 1;
     } /* for (k = 0; k < 8; k++) */
-    if (dmax >= mu) n++;
+    if (dmax >= mu) {
+      n++;
+    }
   } /* for (i = 0; i < t4mm; i++) */
-  if (n >= 2) return 1;
+  if (n >= 2) {
+    return 1;
+  }
   return 0;
 } /* museparant4() */
 
@@ -3571,16 +4880,24 @@ int32_t nbtrans8(
   int32_t k, r, n = 0;
   index_t q;
   q = voisin(p, 0, rs, N);
-  if (q == -1) return -1;
+  if (q == -1) {
+    return -1;
+  }
   for (k = 1; k < 8; k += 1)
   {
     r = voisin(p, k, rs, N);
-    if (r == -1) return -1;
-    if (F[r] && !F[q]) n++;
+    if (r == -1) {
+      return -1;
+    }
+    if (F[r] && !F[q]) {
+      n++;
+    }
     q = r;
   }	
   r = voisin(p, 0, rs, N);
-  if (F[r] && !F[q]) n++;
+  if (F[r] && !F[q]) {
+    n++;
+  }
   return n;
 }
 

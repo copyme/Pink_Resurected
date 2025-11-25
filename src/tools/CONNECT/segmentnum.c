@@ -82,11 +82,13 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (strcmp(argv[2], "surf") == 0) mesure = SURFACE;
-  else if (strcmp(argv[2], "prof") == 0) mesure = PROFONDEUR;
-  else if (strcmp(argv[2], "vol") == 0) mesure = VOLUME;
-  else 
-  {
+  if (strcmp(argv[2], "surf") == 0) {
+    mesure = SURFACE;
+  } else if (strcmp(argv[2], "prof") == 0) {
+    mesure = PROFONDEUR;
+  } else if (strcmp(argv[2], "vol") == 0) {
+    mesure = VOLUME;
+  } else {
     fprintf(stderr, "usage: %s filein.pgm {surf|prof|vol} seuil [trace] fileout.pgm\n", argv[0]);
     exit(1);
   }

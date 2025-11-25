@@ -164,8 +164,10 @@ MCP * MCP_Init(int32_t taillemax)
   P->Faces = MCP_AllocFaces(taillemax);
   P->Edges = NULL;
   P->RBT = mcrbt_CreeRbtVide(taillemax);
-  if ((P == NULL) || (P->Vertices == NULL) || (P->Faces == NULL) || (P->RBT == NULL))
+  if ((P == NULL) || (P->Vertices == NULL) || (P->Faces == NULL) ||
+      (P->RBT == NULL)) {
     exit(0);
+  }
   return P;
 } /* MCP_Init() */
 
@@ -175,7 +177,9 @@ void MCP_Termine(MCP *P)
 {
   free(P->Vertices);
   free(P->Faces);
-  if (P->Edges) free(P->Edges);
+  if (P->Edges) {
+    free(P->Edges);
+  }
   mcrbt_RbtTermine(P->RBT);
   free(P);
 } /* MCP_Termine() */
@@ -190,7 +194,9 @@ int32_t MCP_AddVertex(MCP *P, double x, double y, double z)
 #define F_NAME "MCP_AddVertex"
 {
   index_t i;
-  if (P->Vertices->cur >= P->Vertices->max) MCP_ReAllocVertices(&P->Vertices);
+  if (P->Vertices->cur >= P->Vertices->max) {
+    MCP_ReAllocVertices(&P->Vertices);
+  }
   i = P->Vertices->cur;
   P->Vertices->nsp += 1;
   P->Vertices->cur += 1;
@@ -210,7 +216,9 @@ int32_t MCP_AddAuxVertex(MCP *P, double x, double y, double z)
 #define F_NAME "MCP_AddAuxVertex"
 {
   index_t i;
-  if (P->Vertices->cur >= P->Vertices->max) MCP_ReAllocVertices(&P->Vertices);
+  if (P->Vertices->cur >= P->Vertices->max) {
+    MCP_ReAllocVertices(&P->Vertices);
+  }
   i = P->Vertices->cur;
   P->Vertices->cur += 1;
   P->Vertices->v[i].x = x;
@@ -226,7 +234,9 @@ int32_t MCP_AddFace(MCP *P, Liste *Face)
 {
   int32_t i, n;
   index_t indface;
-  if (P->Faces->cur >= P->Faces->max) MCP_ReAllocFaces(&P->Faces);
+  if (P->Faces->cur >= P->Faces->max) {
+    MCP_ReAllocFaces(&P->Faces);
+  }
   indface = P->Faces->cur;
   P->Faces->cur += 1;
   n = ListeTaille(Face);
@@ -235,9 +245,10 @@ int32_t MCP_AddFace(MCP *P, Liste *Face)
     fprintf(stderr, "%s : too many vertices in a face (max %d)\n", F_NAME, MCP_MAXVERTFACE);
     exit(0);
   }
-  P->Faces->f[indface].n = n; 
-  for (i = 0; i < n; i++)
+  P->Faces->f[indface].n = n;
+  for (i = 0; i < n; i++) {
     P->Faces->f[indface].vert[i] = ListeElt(Face, i);
+  }
   return indface;
 } /* MCP_AddFace() */
 
@@ -255,8 +266,9 @@ void MCP_ComputeFaces(MCP *P)
   int32_t nvert = P->Vertices->cur;
   int32_t nface = P->Faces->cur;
 
-  for (k = 0; k < nvert; k++)
+  for (k = 0; k < nvert; k++) {
     P->Vertices->v[k].nfaces = 0;
+  }
 
   for (i = 0; i < nface; i++)
   {
@@ -277,7 +289,9 @@ int32_t MCP_AddEdge(MCP *P, index_t v1, index_t v2)
 /* modifie la var. globale MCP_Edges */
 {
   int32_t indedge;
-  if (P->Edges->cur >= P->Edges->max) MCP_ReAllocEdges(&P->Edges);
+  if (P->Edges->cur >= P->Edges->max) {
+    MCP_ReAllocEdges(&P->Edges);
+  }
   indedge = P->Edges->cur;
   P->Edges->cur += 1;
   P->Edges->e[indedge].v1 = v1;
@@ -344,7 +358,9 @@ void MCP_SubdivEdges(MCP *P, double param)
     return;
   }
 
-  if (P->Edges == NULL) return;
+  if (P->Edges == NULL) {
+    return;
+  }
   for (i = 0; i < P->Edges->cur; i++)
   {
     a = P->Edges->e[i].v1;
@@ -466,18 +482,20 @@ POLYGONS %d %d    // Faces - champ obligatoire
 	  E = P->Edges->e[re->auxdata];
 	  if (a == E.v1)
 	  {
-	    for (k = 0; k < E.n; k++)
+            for (k = 0; k < E.n; k++) {
 #ifdef MC_64_BITS
-	      fprintf(fileout, "%lld ", (long long)E.vert[k]);
+              fprintf(fileout, "%lld ", (long long)E.vert[k]);
+            }
 #else
 	      fprintf(fileout, "%d ", E.vert[k]);
 #endif
 	  } 
 	  else
 	  {
-	    for (k = E.n - 1; k >= 0; k--)
+            for (k = E.n - 1; k >= 0; k--) {
 #ifdef MC_64_BITS
-	      fprintf(fileout, "%lld ", (long long)E.vert[k]);
+              fprintf(fileout, "%lld ", (long long)E.vert[k]);
+            }
 #else
 	      fprintf(fileout, "%d ", E.vert[k]);
 #endif
@@ -527,8 +545,8 @@ sorties :
     if (re != P->RBT->nil)
     {
       E = P->Edges->e[re->auxdata];
-      if (a == E.v1)
-	for (k = 0; k < E.n; k++)
+      if (a == E.v1) {
+        for (k = 0; k < E.n; k++)
         { 
 	  assert(i < taille);
 	  pi[i] = E.vert[k];
@@ -537,16 +555,17 @@ sorties :
 	  pz[i] = P->Vertices->v[E.vert[k]].z; 
 	  i++; 
 	}
-      else
-	for (k = E.n - 1; k >= 0; k--)
+      } else {
+        for (k = E.n - 1; k >= 0; k--)
         { 
 	  assert(i < taille);
 	  pi[i] = E.vert[k];
 	  px[i] = P->Vertices->v[E.vert[k]].x; 
 	  py[i] = P->Vertices->v[E.vert[k]].y; 
 	  pz[i] = P->Vertices->v[E.vert[k]].z; 
-	  i++; 
-	}
+	  i++;
+        }
+      }
     } /* if (re != P->RBT->nil) */
   } /* for j */
   *n = i;
@@ -580,7 +599,9 @@ POLYGONS %d %d    // Faces - champ obligatoire
   {
     do { ret=fgets(buf, sbuf, filein); }
     while (ret && strncmp(buf,"POINTS",6) && strncmp(buf,"POLYGONS",8));
-    if (ret == NULL) goto end;
+    if (ret == NULL) {
+      goto end;
+    }
     if (strncmp(buf,"POINTS",6) == 0)
     {
       sscanf(buf+7, "%d", &nvert);
@@ -636,10 +657,11 @@ void MCP_Print(MCP *P)
   {
     printf("v[%d]: x=%g, y=%g, z=%g", i, 
            P->Vertices->v[i].x, P->Vertices->v[i].y, P->Vertices->v[i].z);
-    printf("  faces "); 
-    for (j = 0; j < P->Vertices->v[i].nfaces; j++)
+    printf("  faces ");
+    for (j = 0; j < P->Vertices->v[i].nfaces; j++) {
 #ifdef MC_64_BITS
       printf("%lld  ", (long long)P->Vertices->v[i].face[j]);
+    }
 #else
       printf("%d  ", P->Vertices->v[i].face[j]);
 #endif
@@ -649,9 +671,10 @@ void MCP_Print(MCP *P)
   for (i = 0; i < P->Faces->cur; i++)
   {
     printf("f[%d]: [ ", i);
-    for (j = 0; j < P->Faces->f[i].n; j++)
+    for (j = 0; j < P->Faces->f[i].n; j++) {
 #ifdef MC_64_BITS
       printf("%lld ", (long long)P->Faces->f[i].vert[j]);
+    }
 #else
       printf("%d ", P->Faces->f[i].vert[j]);
 #endif
@@ -672,9 +695,10 @@ void MCP_Print(MCP *P)
       if (E.n)
       {
 	printf("  subdiv: ");
-	for (j = 0; j < E.n; j++)	
+        for (j = 0; j < E.n; j++) {
 #ifdef MC_64_BITS
-	  printf("%lld ", (long long)E.vert[j]);
+          printf("%lld ", (long long)E.vert[j]);
+        }
 #else
 	  printf("%d ", E.vert[j]);
 #endif

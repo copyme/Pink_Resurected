@@ -94,12 +94,13 @@ int32_t limagemoments(
   }
 
   area = 0; mx1 = my1 = mxy1 = mx2 = my2 = mxy2 = 0.0;
-  for (i = 0; i < N; i++)
+  for (i = 0; i < N; i++) {
     if (F[i])
     {    
       area++; mx1 += i%rs; my1 += i/rs; mxy1 += ((i%rs) * (i/rs));
       mxy2 += (i%rs) * (i/rs); mx2 += (i%rs) * (i%rs); my2 += (i/rs) * (i/rs);
     }
+  }
 
   indic->area = area;
   xc = indic->xcentre = mx1/area;
@@ -127,10 +128,9 @@ printf("lambda1 = %g ; lambda2 = %g\n", lambda1, lambda2);
     return 0;
   }
 
-  if (mcabs(Mx2 - My2) < EPSILON) 
+  if (mcabs(Mx2 - My2) < EPSILON) {
     theta = 0.0;
-  else
-  {
+  } else {
     double mi1, mi2, theta2;
     theta = 0.5 * atan( 2 * Mxy1 / (Mx2 - My2));
     /* la direction est determinee a pi/2 pres */
@@ -147,7 +147,9 @@ printf("lambda1 = %g ; lambda2 = %g\n", lambda1, lambda2);
 printf("mi1 = %g ; mi2 = %g ; theta1 = %g ; theta2 = %g\n", 
         mi1, mi2, theta * 180 / M_PI, theta2 * 180 / M_PI);
 #endif
-    if (mi2 < mi1) theta = theta2;
+if (mi2 < mi1) {
+  theta = theta2;
+}
   }
   indic->gaxe = lambda1;
   indic->excen = lambda2 / lambda1;
@@ -159,7 +161,9 @@ printf("mi1 = %g ; mi2 = %g ; theta1 = %g ; theta2 = %g\n",
     xx = (double)(i%rs);
     yy = (double)(i/rs);
     theta = (xc - xx)*(xc - xx) + (yc - yy)*(yc - yy);
-    if (theta > gdiam) gdiam = theta;
+    if (theta > gdiam) {
+      gdiam = theta;
+    }
   } // for (i = 0; i < N; i++)
   indic->gdiam = sqrt(gdiam);
 
@@ -293,10 +297,9 @@ printf("lambda1 = %g ; lambda2 = %g\n", lambda1, lambda2);
         return 0;
       }
 
-      if (mcabs(Mx2 - My2) < EPSILON) 
+      if (mcabs(Mx2 - My2) < EPSILON) {
         theta = 0.0;
-      else
-      {
+      } else {
         double mi1, mi2, theta2;
         theta = 0.5 * atan( 2 * Mxy1 / (Mx2 - My2));
         /* la direction est determinee a pi/2 pres */
@@ -313,7 +316,9 @@ printf("lambda1 = %g ; lambda2 = %g\n", lambda1, lambda2);
 printf("mi1 = %g ; mi2 = %g ; theta1 = %g ; theta2 = %g\n", 
         mi1, mi2, theta * 180 / M_PI, theta2 * 180 / M_PI);
 #endif
-        if (mi2 < mi1) theta = theta2;
+if (mi2 < mi1) {
+  theta = theta2;
+}
       }
 
       tab[label-1].gaxe = lambda1;
@@ -329,7 +334,9 @@ printf("mi1 = %g ; mi2 = %g ; theta1 = %g ; theta2 = %g\n",
         xx = (double)(w%rs);
         yy = (double)(w/rs);
         theta = (xc - xx)*(xc - xx) + (yc - yy)*(yc - yy);
-        if (theta > gdiam) gdiam = theta;
+        if (theta > gdiam) {
+          gdiam = theta;
+        }
         for (k = 0; k < 8; k += incr_vois)
         {
           y = voisin(w, k, rs, N);
@@ -464,10 +471,9 @@ printf("lambda1 = %g ; lambda2 = %g\n", lambda1, lambda2);
         return 0;
       }
 
-      if (mcabs(Mx2 - My2) < EPSILON) 
+      if (mcabs(Mx2 - My2) < EPSILON) {
         theta = 0.0;
-      else
-      {
+      } else {
         double mi1, mi2, theta2;
         theta = 0.5 * atan( 2 * Mxy1 / (Mx2 - My2));
         /* la direction est determinee a pi/2 pres */
@@ -484,7 +490,9 @@ printf("lambda1 = %g ; lambda2 = %g\n", lambda1, lambda2);
 printf("mi1 = %g ; mi2 = %g ; theta1 = %g ; theta2 = %g\n", 
         mi1, mi2, theta * 180 / M_PI, theta2 * 180 / M_PI);
 #endif
-        if (mi2 < mi1) theta = theta2;
+if (mi2 < mi1) {
+  theta = theta2;
+}
       }
 
       tab[label-1].gaxe = lambda1;
@@ -500,7 +508,9 @@ printf("mi1 = %g ; mi2 = %g ; theta1 = %g ; theta2 = %g\n",
         xx = (double)(w%rs);
         yy = (double)(w/rs);
         theta = (xc - xx)*(xc - xx) + (yc - yy)*(yc - yy);
-        if (theta > gdiam) gdiam = theta;
+        if (theta > gdiam) {
+          gdiam = theta;
+        }
         for (k = 0; k < 8; k += incr_vois)
         {
           y = voisin(w, k, rs, N);
@@ -584,10 +594,9 @@ printf("lambda1 = %g ; lambda2 = %g\n", lambda1, lambda2);
     return 0;
   }
 
-  if (mcabs(Mx2 - My2) < EPSILON) 
+  if (mcabs(Mx2 - My2) < EPSILON) {
     theta = 0.0;
-  else
-  {
+  } else {
     double mi1, mi2, theta2;
     theta = 0.5 * atan( 2 * Mxy1 / (Mx2 - My2));
     /* la direction est determinee a pi/2 pres */
@@ -604,7 +613,9 @@ printf("lambda1 = %g ; lambda2 = %g\n", lambda1, lambda2);
 printf("mi1 = %g ; mi2 = %g ; theta1 = %g ; theta2 = %g\n", 
         mi1, mi2, theta * 180 / M_PI, theta2 * 180 / M_PI);
 #endif
-    if (mi2 < mi1) theta = theta2;
+if (mi2 < mi1) {
+  theta = theta2;
+}
   }
   indic->gaxe = lambda1;
   indic->excen = lambda2 / lambda1;
@@ -616,7 +627,9 @@ printf("mi1 = %g ; mi2 = %g ; theta1 = %g ; theta2 = %g\n",
     xx = X[i];
     yy = Y[i];
     theta = (xc - xx)*(xc - xx) + (yc - yy)*(yc - yy);
-    if (theta > gdiam) gdiam = theta;
+    if (theta > gdiam) {
+      gdiam = theta;
+    }
   } // for (i = 0; i < N; i++)
   indic->gdiam = sqrt(gdiam);
 
@@ -657,8 +670,10 @@ int32_t ldirectionsprincipales2d(
   cov[1][1] = my2 - my1 * my1;  
   cov[1][0] = cov[0][1] = mxy2 - mx1 * my1;
 
-  ret = lin_jacobi((double *)cov, 2, (double *)D, (double *)V, 0);      
-  if (ret == 0) return 0;
+  ret = lin_jacobi((double *)cov, 2, (double *)D, (double *)V, 0);
+  if (ret == 0) {
+    return 0;
+  }
 
 #ifdef DEBUG
   printf("N, mx1, my1, mx2, my2, mxy2 = %d %g %g %g %g %g\n", N, mx1, my1, mx2, my2, mxy2);
@@ -722,8 +737,10 @@ int32_t ldirectionsprincipales3d(
   cov[2][0] = cov[0][2] = mxz2 - mx1 * mz1 / N;
   cov[1][2] = cov[2][1] = myz2 - my1 * mz1 / N;
 
-  ret = lin_jacobi((double *)cov, 3, (double *)D, (double *)V, 0);      
-  if (ret == 0) return 0;
+  ret = lin_jacobi((double *)cov, 3, (double *)D, (double *)V, 0);
+  if (ret == 0) {
+    return 0;
+  }
 
 #ifdef DEBUG
   printf("cov = \n");

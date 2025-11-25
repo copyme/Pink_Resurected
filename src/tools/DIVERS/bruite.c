@@ -82,16 +82,17 @@ static double bruite(double f, int32_t type, double alpha, double p)
       if (tmp <= p) {
 	tmp = ((double)f) + Uniform(-2*alpha,2*alpha);
 	//if (tmp>255) printf("tmp = %lg\n", tmp);
+      } else {
+        tmp = f;
       }
-      else 
-	tmp = f;
       break;
     case 1:
       tmp = Prob();
-      if (tmp <= p)
-	tmp = ((double)f) + Normal(0.0, alpha);
-      else 
-	tmp = f;
+      if (tmp <= p) {
+        tmp = ((double)f) + Normal(0.0, alpha);
+      } else {
+        tmp = f;
+      }
       break;
     default:
       exit(1);
@@ -121,17 +122,19 @@ int main(int argc, char **argv)
   int32_t n;
   double alpha, tmp, p;
 
-  if (argc != 6)
+  if (argc != 6) {
     usage(argc, argv);
+  }
 
 #ifdef RANDOMIZE
   ResetProb(usecs());
 #endif
 
   n = atoi(argv[2]);
-  if ((n!=0) && (n!=1))
+  if ((n != 0) && (n != 1)) {
     usage(argc, argv);
-  
+  }
+
   alpha = atof(argv[3]);
   p = atof(argv[4]);
 

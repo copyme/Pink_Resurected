@@ -41,18 +41,17 @@ int main(int argc, char* argv[])
 		exit(1);
 	}
 
-	if(strcmp(argv[2],"pgm")==0)
-		mode=1; //pgm
-	else if(strcmp(argv[2],"raw")==0)
-		mode=0; //raw
-	else
-	{
-		fprintf(stderr, "%s: Chosen mode not recognised (pgm or raw)\n", argv[0]);
-		exit(1);
-	}
+        if (strcmp(argv[2], "pgm") == 0) {
+          mode = 1; // pgm
+        } else if (strcmp(argv[2], "raw") == 0) {
+          mode = 0; // raw
+        } else {
+          fprintf(stderr, "%s: Chosen mode not recognised (pgm or raw)\n",
+                  argv[0]);
+          exit(1);
+        }
 
-
-	//Read info from input file
+        //Read info from input file
 
 	if(mode==0)
 	{

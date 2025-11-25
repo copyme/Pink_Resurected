@@ -96,8 +96,9 @@ int main(int argc, char **argv)
   
   for (i = 0; i < N; i++)
   {
-    if (Uniform(0,1) <= p)
+    if (Uniform(0, 1) <= p) {
       Im[i] = (uint8_t)Uniform(inf, sup);
+    }
   }
   writeimage(image, argv[5]);
   freeimage(image);

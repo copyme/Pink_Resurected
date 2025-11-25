@@ -130,7 +130,11 @@ int32_t abaisse8(int32_t x, int32_t *DT, int32_t rs, int32_t N)
       }
     } // if ((t8p == 1) && (t4mm == 1))
   } while (abaisse);
-  if (DT[x] < old) return 1; else return 0;
+  if (DT[x] < old) {
+    return 1;
+  } else {
+    return 0;
+  }
 } // abaisse8()
 
 /* ==================================== */
@@ -171,7 +175,11 @@ int32_t abaisse4(int32_t x, int32_t *DT, int32_t rs, int32_t N)
       }  // if ((t4p == 1) && (t8mm == 1))
     } // if ((t4p == 1) && (t8mm == 1))
   } while (abaisse);
-  if (DT[x] < old) return 1; else return 0;
+  if (DT[x] < old) {
+    return 1;
+  } else {
+    return 0;
+  }
 } // abaisse4()
 
 /* ==================================== */
@@ -229,15 +237,21 @@ int32_t lsquelval(struct xvimage *image, // entree/sortie: image originale / squ
 #endif
 
   // INITIALISATION DT
-  for (x = 0; x < N; x++) if (IM[x]) DT[x] = INFINI; else DT[x] = 0;
+    for (x = 0; x < N; x++) {
+      if (IM[x]) {
+        DT[x] = INFINI;
+      } else {
+        DT[x] = 0;
+      }
+    }
 
   // INITIALISATION DU RBT
-  for (x = 0; x < N; x++)
-    if (IM[x] && (DX[x] != val_inhibit) && bordext8(IM, x, rs, N))
-    {
-      mcrbt_RbtInsert(&RBT, DX[x], x);
-      Set(x, EN_RBT);
-    } // if, for
+    for (x = 0; x < N; x++) {
+      if (IM[x] && (DX[x] != val_inhibit) && bordext8(IM, x, rs, N)) {
+        mcrbt_RbtInsert(&RBT, DX[x], x);
+        Set(x, EN_RBT);
+      } // if, for
+    }
 
   d = 1;
   if (connex == 4)
@@ -362,10 +376,20 @@ int32_t lsquelval(struct xvimage *image, // entree/sortie: image originale / squ
 
   // RECUPERATION DU RESULTAT
   d = 0; // valeur pour l'infini: plus grande valeur finie + 1
-  for (x = 0; x < N; x++) if ((DT[x] > d) && (DT[x] < INFINI)) d = DT[x];
+  for (x = 0; x < N; x++) {
+    if ((DT[x] > d) && (DT[x] < INFINI)) {
+      d = DT[x];
+    }
+  }
   d += 1;
-  for (x = 0; x < N; x++) if (DT[x] == INFINI) DX[x] = d; else DX[x] = DT[x];
-  
+  for (x = 0; x < N; x++) {
+    if (DT[x] == INFINI) {
+      DX[x] = d;
+    } else {
+      DX[x] = DT[x];
+    }
+  }
+
   /* ================================================ */
   /* UN PEU DE MENAGE                                 */
   /* ================================================ */
@@ -433,15 +457,22 @@ int32_t lsquelval3d(struct xvimage *image, // entree/sortie: image originale / s
 #endif
 
   // INITIALISATION DT
-  for (x = 0; x < N; x++) if (IM[x]) DT[x] = -1; else DT[x] = 0;
+    for (x = 0; x < N; x++) {
+      if (IM[x]) {
+        DT[x] = -1;
+      } else {
+        DT[x] = 0;
+      }
+    }
 
   // INITIALISATION DU RBT
-  for (x = 0; x < N; x++)
-    if (IM[x] && (DX[x] != val_inhibit) && mctopo3d_bordext26(IM, x, rs, ps, N))
-    {
-      mcrbt_RbtInsert(&RBT, DX[x], x);
-      Set(x, EN_RBT);
-    } // if, for
+    for (x = 0; x < N; x++) {
+      if (IM[x] && (DX[x] != val_inhibit) &&
+          mctopo3d_bordext26(IM, x, rs, ps, N)) {
+        mcrbt_RbtInsert(&RBT, DX[x], x);
+        Set(x, EN_RBT);
+      } // if, for
+    }
 
   d = 1;
   if (connex == 6)
@@ -501,13 +532,16 @@ int32_t lsquelval3d(struct xvimage *image, // entree/sortie: image originale / s
 #endif
 
   // INITIALISATION DU RBT
-  for (k = 1; k < ds-1; k++) 
-    for (j = 1; j < cs-1; j++) 
-      for (i = 1; i < rs-1; i++) 
-      {
-        x = k * ps + j * rs + i;
-        if (DT[x]) mcrbt_RbtInsert(&RBT, DT[x], x);
+    for (k = 1; k < ds - 1; k++) {
+      for (j = 1; j < cs - 1; j++) {
+        for (i = 1; i < rs - 1; i++) {
+          x = k * ps + j * rs + i;
+          if (DT[x]) {
+            mcrbt_RbtInsert(&RBT, DT[x], x);
+          }
+        }
       }
+    }
 
   if (connex == 6)
   {
@@ -562,9 +596,19 @@ int32_t lsquelval3d(struct xvimage *image, // entree/sortie: image originale / s
 
   // RECUPERATION DU RESULTAT
   d = 0;
-  for (x = 0; x < N; x++) if ((DT[x] > d) && (DT[x] < INFINI)) d = DT[x];
+  for (x = 0; x < N; x++) {
+    if ((DT[x] > d) && (DT[x] < INFINI)) {
+      d = DT[x];
+    }
+  }
   d += 1;
-  for (x = 0; x < N; x++) if (DT[x] == INFINI) DX[x] = d; else DX[x] = DT[x];
+  for (x = 0; x < N; x++) {
+    if (DT[x] == INFINI) {
+      DX[x] = d;
+    } else {
+      DX[x] = DT[x];
+    }
+  }
 
   /* ================================================ */
   /* UN PEU DE MENAGE                                 */
@@ -600,19 +644,25 @@ int32_t smooth(struct xvimage *image, int32_t x, int32_t r, Liste *cx, Liste *cy
       i = y % rs; j = y / rs; 
       open = 1;
       joker = 1;
-      for (k = i-r; k <= i+r; k++)
-      for (l = j-r; l <= j+r; l++)
-      if ((k-i)*(k-i)+(l-j)*(l-j) <= r*r)
-      {
-        z = l * rs + k;
-        if (((k < 0) && (k >= rs) && (l < 0) && (l >= cs)) || 
-            ((z != x) && (IM[z] != 0)))
-        {
-          if (joker) joker--;
-          else { open = 0; break; }
+      for (k = i - r; k <= i + r; k++) {
+        for (l = j - r; l <= j + r; l++) {
+          if ((k - i) * (k - i) + (l - j) * (l - j) <= r * r) {
+            z = l * rs + k;
+            if (((k < 0) && (k >= rs) && (l < 0) && (l >= cs)) ||
+                ((z != x) && (IM[z] != 0))) {
+              if (joker) {
+                joker--;
+              } else {
+                open = 0;
+                break;
+              }
+            }
+          }
         }
       }
-      if (open) return 1; 
+      if (open) {
+        return 1;
+      }
     }
   } // while (!ListeVide(cx))
   return 0;
@@ -676,18 +726,29 @@ int32_t lsquelsmoothval(struct xvimage *image, // entree/sortie: image originale
     return(0);
   }
 
-  for (dmax = 0, x = 0; x < N; x++) if (DX[x] > dmax) dmax = DX[x];
+  for (dmax = 0, x = 0; x < N; x++) {
+    if (DX[x] > dmax) {
+      dmax = DX[x];
+    }
+  }
 
   // INITIALISATION DT
-  for (x = 0; x < N; x++) if (IM[x]) DT[x] = INFINI; else DT[x] = 0;
+  for (x = 0; x < N; x++) {
+    if (IM[x]) {
+      DT[x] = INFINI;
+    } else {
+      DT[x] = 0;
+    }
+  }
 
   // INITIALISATION DU RBT
-  for (x = 0; x < N; x++)
+  for (x = 0; x < N; x++) {
     if (IM[x] && (DX[x] != val_inhibit) && bordext8(IM, x, rs, N))
     {
       mcrbt_RbtInsert(&RBT, DX[x], x);
       Set(x, EN_RBT);
     } // if, for
+  }
 
   cx = CreeListeVide(2*rs + 2*cs);
   cy = CreeListeVide(2*rs + 2*cs);
@@ -723,7 +784,9 @@ int32_t lsquelsmoothval(struct xvimage *image, // entree/sortie: image originale
         else
 	{
           DX[x] += INCR_PRIO;
-          if (DX[x] > dmax) break;
+          if (DX[x] > dmax) {
+            break;
+          }
           mcrbt_RbtInsert(&RBT, DX[x], x);
           Set(x, EN_RBT);
 	}
@@ -738,10 +801,20 @@ int32_t lsquelsmoothval(struct xvimage *image, // entree/sortie: image originale
 
   // RECUPERATION DU RESULTAT
   d = 0; // valeur pour l'infini: plus grande valeur finie + 1
-  for (x = 0; x < N; x++) if ((DT[x] > d) && (DT[x] < INFINI)) d = DT[x];
+  for (x = 0; x < N; x++) {
+    if ((DT[x] > d) && (DT[x] < INFINI)) {
+      d = DT[x];
+    }
+  }
   d += 1;
-  for (x = 0; x < N; x++) if (DT[x] == INFINI) DX[x] = d; else DX[x] = DT[x];
-  
+  for (x = 0; x < N; x++) {
+    if (DT[x] == INFINI) {
+      DX[x] = d;
+    } else {
+      DX[x] = DT[x];
+    }
+  }
+
   /* ================================================ */
   /* UN PEU DE MENAGE                                 */
   /* ================================================ */

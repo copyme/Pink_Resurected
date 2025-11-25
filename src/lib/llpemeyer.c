@@ -77,8 +77,11 @@ int32_t llpemeyer_NotIn(int32_t e, int32_t *list, int32_t n)
 /* e : l'element a rechercher */
 /* list : la liste (tableau d'entiers) */
 /* n : le nombre d'elements dans la liste */
-  while (n > 0)
-    if (list[--n] == e) return 0;
+while (n > 0) {
+  if (list[--n] == e) {
+    return 0;
+  }
+}
   return 1;
 } /* llpemeyer_NotIn() */
 
@@ -117,8 +120,9 @@ int32_t llpemeyer(
   uint8_t *A;
 #endif
 
-  if (depth(image) != 1) 
+  if (depth(image) != 1) {
     return llpemeyer3d(image, marqueurs, marqueursfond, masque, connex);
+  }
 
   ACCEPTED_TYPES1(image, VFF_TYP_1_BYTE);
   ACCEPTED_TYPES1(marqueurs, VFF_TYP_1_BYTE);
@@ -128,8 +132,12 @@ int32_t llpemeyer(
   if (marqueursfond) ACCEPTED_TYPES1(marqueursfond, VFF_TYP_1_BYTE);
   if (marqueursfond) COMPARE_SIZE(image, marqueursfond);
 
-  if (masque) MA = UCHARDATA(masque);
-  if (marqueursfond) BF = UCHARDATA(marqueursfond);
+  if (masque) {
+    MA = UCHARDATA(masque);
+  }
+  if (marqueursfond) {
+    BF = UCHARDATA(marqueursfond);
+  }
 
   IndicsInit(N);
   FAH = CreeFahVide(N+1);
@@ -295,7 +303,11 @@ int32_t llpemeyer(
 
   for (x = 0; x < N; x++)
   {
-    if ((M[x] == nlabels) || (M[x] == 0)) F[x] = 255; else F[x] = 0;
+    if ((M[x] == nlabels) || (M[x] == 0)) {
+      F[x] = 255;
+    } else {
+      F[x] = 0;
+    }
   }
 
   /* ================================================ */
@@ -337,15 +349,18 @@ int32_t llpemeyer2(
   int32_t incr_vois;
   index_t nlabels;
 
-  if (depth(image) != 1) 
+  if (depth(image) != 1) {
     return llpemeyer3d2(image, marqueurs, masque, connex);
+  }
 
   ACCEPTED_TYPES1(image, VFF_TYP_1_BYTE);
   ACCEPTED_TYPES1(marqueurs, VFF_TYP_4_BYTE);
   if (masque) ACCEPTED_TYPES1(masque, VFF_TYP_1_BYTE);
   COMPARE_SIZE(image, marqueurs);
   if (masque) COMPARE_SIZE(image, masque);
-  if (masque) MA = UCHARDATA(masque);
+  if (masque) {
+    MA = UCHARDATA(masque);
+  }
 
   IndicsInit(N);
   FAH = CreeFahVide(N+1);
@@ -364,7 +379,11 @@ int32_t llpemeyer2(
   } /* switch (connex) */    
 
   nlabels = 0;
-  for (x = 0; x < N; x++) if (M[x] > nlabels) nlabels = M[x];
+  for (x = 0; x < N; x++) {
+    if (M[x] > nlabels) {
+      nlabels = M[x];
+    }
+  }
 
   /* ================================================ */
   /* INITIALISATION DE LA FAH                         */
@@ -438,7 +457,11 @@ int32_t llpemeyer2(
 
   for (x = 0; x < N; x++)
   {
-    if ((M[x] == nlabels) || (M[x] == 0)) F[x] = 255; else F[x] = 0;
+    if ((M[x] == nlabels) || (M[x] == 0)) {
+      F[x] = 255;
+    } else {
+      F[x] = 0;
+    }
   }
 
   /* ================================================ */
@@ -543,7 +566,9 @@ int32_t llpemeyer3(
     fprintf(stderr, "%s: incompatible image sizes\n", F_NAME);
     return 0;
   }
-  if (masque) MA = UCHARDATA(masque);
+  if (masque) {
+    MA = UCHARDATA(masque);
+  }
 
   if (datatype(marqueurs) != VFF_TYP_4_BYTE)
   {
@@ -716,13 +741,17 @@ int32_t llpemeyer3(
      fprintf(stderr, "%s: incompatible image sizes\n", F_NAME);
      return 0;
    }
-   if (marqueursfond) BF = UCHARDATA(marqueursfond);
+   if (marqueursfond) {
+     BF = UCHARDATA(marqueursfond);
+   }
    if (masque && ((rowsize(masque) != rs) || (colsize(masque) != cs)))
    {
      fprintf(stderr, "%s: incompatible image sizes\n", F_NAME);
      return 0;
    }
-   if (masque) MA = UCHARDATA(masque);
+   if (masque) {
+     MA = UCHARDATA(masque);
+   }
 
    IndicsInit(N);
    FAH = CreeFahVide(N+1);
@@ -811,10 +840,15 @@ int32_t llpemeyer3(
        {
          y = tab[k]; 
          if (!M[y] && !IsSet(y, EN_FAH))
-         { 
-           if (CARRE(y%rs,y/rs))           
-           FahPush(FAH, y, F[y]*2);
-           else FahPush(FAH, y, F[y]*2+1); //plus grande priorite pour les elements de rang <2
+         {
+           if (CARRE(y % rs, y / rs)) {
+             FahPush(FAH, y, F[y] * 2);
+           } else {
+             FahPush(
+                 FAH, y,
+                 F[y] * 2 +
+                     1); // plus grande priorite pour les elements de rang <2
+           }
            Set(y, EN_FAH);
          }
        } /* for (k = 0; k < 8; k += 2) */
@@ -855,9 +889,13 @@ int32_t llpemeyer3(
          y = tab[k];
          if ((M[y] == 0) && (! IsSet(y, EN_FAH)) && (!masque || MA[y]))
          {
-           if (CARRE(y%rs,y/rs))    
-           FahPush(FAH, y, F[y]*2);
-           else FahPush(FAH, y, F[y]*2+1); // priorite superieure pour les element de rang <2
+           if (CARRE(y % rs, y / rs)) {
+             FahPush(FAH, y, F[y] * 2);
+           } else {
+             FahPush(FAH, y,
+                     F[y] * 2 +
+                         1); // priorite superieure pour les element de rang <2
+           }
            Set(y, EN_FAH);
          } /* if ((y != -1) && (! IsSet(y, EN_FAH))) */
        } /* for k */
@@ -873,7 +911,11 @@ int32_t llpemeyer3(
 
    for (x = 0; x < N; x++)
    {
-     if ((M[x] == nlabels) || (M[x] == 0)) F[x] = 255; else F[x] = 0;
+     if ((M[x] == nlabels) || (M[x] == 0)) {
+       F[x] = 255;
+     } else {
+       F[x] = 0;
+     }
    }
 
    /* ================================================ */
@@ -975,8 +1017,12 @@ int32_t llpemeyersansligne(
     fprintf(stderr, "%s: incompatible image sizes\n", F_NAME);
     return 0;
   }
-  if (masque) MA = UCHARDATA(masque);
-  if (marqueursfond) BF = UCHARDATA(marqueursfond);
+  if (masque) {
+    MA = UCHARDATA(masque);
+  }
+  if (marqueursfond) {
+    BF = UCHARDATA(marqueursfond);
+  }
 
   IndicsInit(N);
   FAH = CreeFahVide(N+1);
@@ -1199,7 +1245,9 @@ int32_t llpemeyersanslignelab(
     fprintf(stderr, "%s: incompatible image sizes\n", F_NAME);
     return 0;
   }
-  if (masque) MA = UCHARDATA(masque);
+  if (masque) {
+    MA = UCHARDATA(masque);
+  }
 
   IndicsInit(N);
   FAH = CreeFahVide(N+1);
@@ -1344,8 +1392,12 @@ int32_t llpemeyer3d(
   if (marqueursfond) ACCEPTED_TYPES1(marqueursfond, VFF_TYP_1_BYTE);
   if (marqueursfond) COMPARE_SIZE(image, marqueursfond);
 
-  if (marqueursfond) BF = UCHARDATA(marqueursfond);
-  if (masque) MA = UCHARDATA(masque);
+  if (marqueursfond) {
+    BF = UCHARDATA(marqueursfond);
+  }
+  if (masque) {
+    MA = UCHARDATA(masque);
+  }
 
   IndicsInit(N);
   FAH = CreeFahVide(N+1);
@@ -1591,7 +1643,11 @@ int32_t llpemeyer3d(
 
   for (x = 0; x < N; x++)
   {
-    if ((M[x] == nlabels) || (M[x] == 0)) F[x] = 255; else F[x] = 0;
+    if ((M[x] == nlabels) || (M[x] == 0)) {
+      F[x] = 255;
+    } else {
+      F[x] = 0;
+    }
   }
 
   /* ================================================ */
@@ -1683,13 +1739,17 @@ int32_t llpemeyer3dsansligne(
     fprintf(stderr, "%s: incompatible image sizes\n", F_NAME);
     return 0;
   }
-  if (marqueursfond) BF = UCHARDATA(marqueursfond);
+  if (marqueursfond) {
+    BF = UCHARDATA(marqueursfond);
+  }
   if (masque && ((rowsize(masque) != rs) || (colsize(masque) != cs) || (depth(masque) != d)))
   {
     fprintf(stderr, "%s: incompatible image sizes\n", F_NAME);
     return 0;
   }
-  if (masque) MA = UCHARDATA(masque);
+  if (masque) {
+    MA = UCHARDATA(masque);
+  }
 
   IndicsInit(N);
   FAH = CreeFahVide(N+1);
@@ -1993,7 +2053,9 @@ int32_t llpemeyer3dsanslignelab(
     fprintf(stderr, "%s: incompatible image sizes\n", F_NAME);
     return 0;
   }
-  if (masque) MA = UCHARDATA(masque);
+  if (masque) {
+    MA = UCHARDATA(masque);
+  }
 
   IndicsInit(N);
   FAH = CreeFahVide(N+1);
@@ -2180,7 +2242,9 @@ int32_t llpemeyer3d2(
   if (masque) ACCEPTED_TYPES1(masque, VFF_TYP_1_BYTE);
   COMPARE_SIZE(image, marqueurs);
   if (masque) COMPARE_SIZE(image, masque);
-  if (masque) MA = UCHARDATA(masque);
+  if (masque) {
+    MA = UCHARDATA(masque);
+  }
 
   IndicsInit(N);
   FAH = CreeFahVide(N+1);
@@ -2190,7 +2254,11 @@ int32_t llpemeyer3d2(
   }
 
   nlabels = 0;
-  for (x = 0; x < N; x++) if (M[x] > nlabels) nlabels = M[x];
+  for (x = 0; x < N; x++) {
+    if (M[x] > nlabels) {
+      nlabels = M[x];
+    }
+  }
 
   /* ================================================ */
   /* INITIALISATION DE LA FAH                         */
@@ -2337,7 +2405,11 @@ int32_t llpemeyer3d2(
 
   for (x = 0; x < N; x++)
   {
-    if ((M[x] == nlabels) || (M[x] == 0)) F[x] = 255; else F[x] = 0;
+    if ((M[x] == nlabels) || (M[x] == 0)) {
+      F[x] = 255;
+    } else {
+      F[x] = 0;
+    }
   }
 
   /* ================================================ */
@@ -2422,7 +2494,9 @@ int32_t llpemeyer3d2b(
     fprintf(stderr, "%s: incompatible image sizes\n", F_NAME);
     return 0;
   }
-  if (masque) MA = UCHARDATA(masque);
+  if (masque) {
+    MA = UCHARDATA(masque);
+  }
 
   IndicsInit(N);
   FAH = CreeFahVide(N+1);
@@ -2432,7 +2506,11 @@ int32_t llpemeyer3d2b(
   }
 
   nlabels = 0;
-  for (x = 0; x < N; x++) if (M[x] > nlabels) nlabels = M[x];
+  for (x = 0; x < N; x++) {
+    if (M[x] > nlabels) {
+      nlabels = M[x];
+    }
+  }
 
   /* ================================================ */
   /* INITIALISATION DE LA FAH                         */
@@ -2570,10 +2648,10 @@ int32_t llpemeyer3d2b(
     } // if (ncc == 1)
     else if (ncc > 1)
     {
-      if (ncc > 2) M[x] = nlabels + 1;
-      else 
-      {
-	if (etiqcc[0] < etiqcc[1]) { i = etiqcc[0]; j = etiqcc[1]; }
+      if (ncc > 2) {
+        M[x] = nlabels + 1;
+      } else {
+        if (etiqcc[0] < etiqcc[1]) { i = etiqcc[0]; j = etiqcc[1]; }
 	else                       { j = etiqcc[0]; i = etiqcc[1]; }
 	M[x] = j * (nlabels+1) + i;
       }
@@ -2583,7 +2661,11 @@ int32_t llpemeyer3d2b(
 
   for (x = 0; x < N; x++)
   {
-    if ((M[x] > nlabels) || (M[x] == 0)) F[x] = 255; else F[x] = 0;
+    if ((M[x] > nlabels) || (M[x] == 0)) {
+      F[x] = 255;
+    } else {
+      F[x] = 0;
+    }
   }
 
   /* ================================================ */
@@ -2662,7 +2744,9 @@ int32_t llpemeyer3d3(
     fprintf(stderr, "%s: incompatible image sizes\n", F_NAME);
     return 0;
   }
-  if (masque) MA = UCHARDATA(masque);
+  if (masque) {
+    MA = UCHARDATA(masque);
+  }
 
   IndicsInit(N);
   FAH = CreeFahVide(N+1);
@@ -2897,8 +2981,12 @@ int32_t llpemeyerbiconnecte(
     fprintf(stderr, "%s: incompatible image sizes\n", F_NAME);
     return 0;
   }
-  if (masque) MA = UCHARDATA(masque);
-  if (marqueursfond) BF = UCHARDATA(marqueursfond);
+  if (masque) {
+    MA = UCHARDATA(masque);
+  }
+  if (marqueursfond) {
+    BF = UCHARDATA(marqueursfond);
+  }
 
   IndicsInit(N);
   FAH = CreeFahVide(N+1);
@@ -3056,7 +3144,11 @@ int32_t llpemeyerbiconnecte(
 
   for (x = 0; x < N; x++)
   {
-    if ((M[x] == nlabels) || (M[x] == 0)) F[x] = 255; else F[x] = 0;
+    if ((M[x] == nlabels) || (M[x] == 0)) {
+      F[x] = 255;
+    } else {
+      F[x] = 0;
+    }
   }
 
   /* ================================================ */
@@ -3134,13 +3226,17 @@ int32_t llpemeyerbiconnecte3d(
     fprintf(stderr, "%s: incompatible image sizes\n", F_NAME);
     return 0;
   }
-  if (marqueursfond) BF = UCHARDATA(marqueursfond);
+  if (marqueursfond) {
+    BF = UCHARDATA(marqueursfond);
+  }
   if (masque && ((rowsize(masque) != rs) || (colsize(masque) != cs) || (depth(masque) != d)))
   {
     fprintf(stderr, "%s: incompatible image sizes\n", F_NAME);
     return 0;
   }
-  if (masque) MA = UCHARDATA(masque);
+  if (masque) {
+    MA = UCHARDATA(masque);
+  }
 
   IndicsInit(N);
   FAH = CreeFahVide(N+1);
@@ -3275,7 +3371,11 @@ int32_t llpemeyerbiconnecte3d(
   
   for (x = 0; x < N; x++)
   {
-    if ((M[x] == nlabels) || (M[x] == 0)) F[x] = 255; else F[x] = 0;
+    if ((M[x] == nlabels) || (M[x] == 0)) {
+      F[x] = 255;
+    } else {
+      F[x] = 0;
+    }
   }
 
   /* ================================================ */

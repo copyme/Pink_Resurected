@@ -86,8 +86,11 @@ int32_t longest(double *tab, int32_t n, int32_t i, double tol)
   while ((j < n) && ((maxv - minv) <= tol)) 
   {
     j++;
-    if (tab[j] < minv) minv = tab[j];
-    else if (tab[j] > maxv) maxv = tab[j];
+    if (tab[j] < minv) {
+      minv = tab[j];
+    } else if (tab[j] > maxv) {
+      maxv = tab[j];
+    }
   }
   return j - i;
 } // longest()
@@ -107,7 +110,11 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (argc == 4) tol = atof(argv[2]); else tol = 0.0;
+  if (argc == 4) {
+    tol = atof(argv[2]);
+  } else {
+    tol = 0.0;
+  }
 
   fd = fopen(argv[1],"r");
   if (!fd)

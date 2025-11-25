@@ -82,8 +82,9 @@ static void inverse(struct xvimage * image)
 {
   int32_t i, N = rowsize(image) * colsize(image) * depth(image);
   uint8_t *pt;
-  for (pt = UCHARDATA(image), i = 0; i < N; i++, pt++)
+  for (pt = UCHARDATA(image), i = 0; i < N; i++, pt++) {
     *pt = NDG_MAX - *pt;
+  }
 } // inverse
 
 /* =============================================================== */
@@ -113,14 +114,18 @@ int main(int argc, char **argv)
   }
 
   connex = atoi(argv[2]);
-  
-  if (argc == 4) inverse(image);
+
+  if (argc == 4) {
+    inverse(image);
+  }
   if (! lwshedtopo_lwshedtopo(image, connex))
   {
     fprintf(stderr, "%s: lwshedtopo_lwshedtopo failed\n", argv[0]);
     exit(1);
   }
-  if (argc == 4) inverse(image);
+  if (argc == 4) {
+    inverse(image);
+  }
 
   writeimage(image, argv[argc - 1]);
   freeimage(image);

@@ -116,10 +116,11 @@ int main(int argc, char **argv)
     fprintf(stderr, "%s: readimage failed\n", argv[0]);
     exit(1);
   }
-  if(argc == 4)
+  if (argc == 4) {
     type = atoi(argv[3]);
-  else
+  } else {
     type = 1;
+  }
   if( (type > 4) || (type < 0)){
     fprintf(stderr, "usage: %s GAin.pgm out.pgm [type] \n\tif type = 0, then produces a watershed by M-border algorithm;\n\tif type = 1, then outputs a watershed by a non-recursive algorithm based on stream;\n\tif type = 2 outputs a watershed by a recursive algorithm based on streams;\n\tif type = 3 outputs an M-border watershed;\n\tif type = 4 outputs a flow mapping, out.pgm is a long integer image;\n\tdefault type = 1.\n", argv[0]); 
   }
@@ -247,7 +248,9 @@ int main(int argc, char **argv)
     printf("Super totosizeofdouble %lu \n", sizeof(double));
     break;
   }
-  if(!gaout) free(gaout);
+  if (!gaout) {
+    free(gaout);
+  }
   free(watershed); free(ga);
   return 0;
 }

@@ -131,14 +131,16 @@ int main(int argc, char **argv)
     yc = xc = rayon; 
     d = 2 * rayon + 1;
     nptb = 0;
-    for (x = 0; x < d; x++)
-      for (y = 0; y < d; y++)
+    for (x = 0; x < d; x++) {
+      for (y = 0; y < d; y++) {
         if (((x - xc) * (x - xc) + (y - yc) * (y - yc)) <= (rayon * rayon))
 	{
           tab_es_x[nptb] = x;
           tab_es_y[nptb] = y;
           nptb++;
-	}
+        }
+      }
+    }
 
 #ifdef DILATATION_D_ABORD
     if (! ldilat2(image, nptb, tab_es_x, tab_es_y, xc, yc))
@@ -195,7 +197,9 @@ int main(int argc, char **argv)
       exit(1);
     }
 
-    if (rayon < rayonmax) memcpy(UCHARDATA(copy), UCHARDATA(image), N);
+    if (rayon < rayonmax) {
+      memcpy(UCHARDATA(copy), UCHARDATA(image), N);
+    }
 #endif
 
   } /* for (rayon = 1; rayon <= rayonmax; rayon++) */

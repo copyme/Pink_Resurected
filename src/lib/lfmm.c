@@ -130,9 +130,11 @@ int heapAdd(
 	int index;
 
 	/* Check for duplicates */
-	if (heapStruct->imageToHeap[imageIndex] != -1) return 1;
+        if (heapStruct->imageToHeap[imageIndex] != -1) {
+          return 1;
+        }
 
-	/* Insert it at the end of the heap */
+        /* Insert it at the end of the heap */
 	heapStruct->heapEnd++;
 	heapStruct->heapToImage[heapStruct->heapEnd] = imageIndex;
 	heapStruct->imageToHeap[imageIndex] = heapStruct->heapEnd;
@@ -192,9 +194,11 @@ int heapShuffleUp(
 
 	/* Shuffle it up the tree until it's in the right place */
 	while(LSTB_TRUE) {
-		if (index == 0) break;	/* At root of tree, therefore complete */
+          if (index == 0) {
+            break; /* At root of tree, therefore complete */
+          }
 
-		/* Grab the parent's index */
+                /* Grab the parent's index */
 		newIndex = (index - 1)/2;
 
 		/* If out of order, swap */
@@ -237,9 +241,11 @@ int heapShuffleDown(
 		float leftVal, rightVal;
 		int newIndex;
 
-		if ((2*index + 1) > heapStruct->heapEnd) break;	/* End of heap, nothing more to do */
+                if ((2 * index + 1) > heapStruct->heapEnd) {
+                  break; /* End of heap, nothing more to do */
+                }
 
-		leftVal = phi->buf[heapStruct->heapToImage[2*index+1]];
+                leftVal = phi->buf[heapStruct->heapToImage[2*index+1]];
 
 		/* Check if a right child exists */
 		if ((2*index + 2) > heapStruct->heapEnd) {
@@ -256,11 +262,12 @@ int heapShuffleDown(
 		}
 
 		/* If each child is larger than the current node, shuffling is complete */
-		if (phi->buf[heapStruct->heapToImage[index]]
-			< phi->buf[heapStruct->heapToImage[newIndex]])
-			break;
+                if (phi->buf[heapStruct->heapToImage[index]] <
+                    phi->buf[heapStruct->heapToImage[newIndex]]) {
+                  break;
+                }
 
-		/* Swap offsets */
+                /* Swap offsets */
 		swap = heapStruct->heapToImage[index];
 		heapStruct->heapToImage[index] = heapStruct->heapToImage[newIndex];
 		heapStruct->heapToImage[newIndex] = swap;
@@ -652,9 +659,11 @@ int RIE_INT_add(
 	RIE_INT new_elem;
 
 	/* Deal with special case */
-	if (dx == 0 && dy == 0) return 0;
+        if (dx == 0 && dy == 0) {
+          return 0;
+        }
 
-	/* Offset the point */
+        /* Offset the point */
 	new_elem.x = self->x + dx;
 	new_elem.y = self->y + dy;
 	new_elem.z = self->z;			/* Default value */
@@ -673,11 +682,13 @@ int RIE_INT_add(
 	}
 
 	/* Restrict the coordinate to a valid surface point */
-	if (restrict_to_surface)
-		if (!RIE_INT_on_surface(&new_elem, rie_surf))
-			return 1;
+        if (restrict_to_surface) {
+          if (!RIE_INT_on_surface(&new_elem, rie_surf)) {
+            return 1;
+          }
+        }
 
-	/* Copy temporary coordinate to output */
+        /* Copy temporary coordinate to output */
 	memcpy(self, &new_elem, sizeof(RIE_INT));
 
 	return 0;
@@ -696,9 +707,11 @@ int RIE_FLOAT_add(
 	RIE_FLOAT new_elem;
 
 	/* Deal with special case */
-	if (dx == 0 && dy == 0) return 0;
+        if (dx == 0 && dy == 0) {
+          return 0;
+        }
 
-	/* Offset the point */
+        /* Offset the point */
 	new_elem.x = self->x + dx;
 	new_elem.y = self->y + dy;
 	new_elem.z = self->z;			/* Default value */
@@ -716,11 +729,13 @@ int RIE_FLOAT_add(
 	}
 
 	/* Restrict the coordinate to a valid surface point */
-	if (restrict_to_surface)
-		if (!RIE_FLOAT_on_surface(&new_elem, rie_surf))
-			return 1;
+        if (restrict_to_surface) {
+          if (!RIE_FLOAT_on_surface(&new_elem, rie_surf)) {
+            return 1;
+          }
+        }
 
-	/* Copy temporary coordinate to output */
+        /* Copy temporary coordinate to output */
 	memcpy(self, &new_elem, sizeof(RIE_FLOAT));
 
 	return 0;

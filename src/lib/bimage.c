@@ -120,10 +120,11 @@ float BVECT_sum_sqr(BVECT * in) {
 	float return_val;
 
 	return_val = 0;
-	for (i = 0; i < in->length; i++)
-		return_val += in->buf[i]*in->buf[i];
+        for (i = 0; i < in->length; i++) {
+          return_val += in->buf[i] * in->buf[i];
+        }
 
-	return return_val;
+        return return_val;
 }
 
 /* BVECT_add:
@@ -132,12 +133,15 @@ float BVECT_sum_sqr(BVECT * in) {
 int BVECT_add(BVECT *dest, BVECT *source) {
 	int i;
 
-	if (dest->length != source->length) return 1;
+        if (dest->length != source->length) {
+          return 1;
+        }
 
-	for (i = 0; i < dest->length; i++)
-		dest->buf[i] += source->buf[i];
+        for (i = 0; i < dest->length; i++) {
+          dest->buf[i] += source->buf[i];
+        }
 
-	return 0;
+        return 0;
 }
 
 /* BVECT_sub:
@@ -146,12 +150,15 @@ int BVECT_add(BVECT *dest, BVECT *source) {
 int BVECT_sub(BVECT *dest, BVECT *source) {
 	int i;
 
-	if (dest->length != source->length) return 1;
+        if (dest->length != source->length) {
+          return 1;
+        }
 
-	for (i = 0; i < dest->length; i++)
-		dest->buf[i] -= source->buf[i];
+        for (i = 0; i < dest->length; i++) {
+          dest->buf[i] -= source->buf[i];
+        }
 
-	return 0;
+        return 0;
 }
 
 /* BVECT_inc:
@@ -164,8 +171,10 @@ int BVECT_inc(BVECT * in, BVECT * dim) {
 		in->buf[i]++;
 		if (in->buf[i] == dim->buf[i]) {
 			in->buf[i] = 0;
-		} else break;
-	}
+                } else {
+                  break;
+                }
+        }
 
 	return 0;
 }
@@ -180,8 +189,10 @@ int BVECT_dec(BVECT * in, BVECT * dim) {
 		in->buf[i]--;
 		if (in->buf[i] == -1) {
 			in->buf[i] = dim->buf[i] - 1;
-		} else break;
-	}
+                } else {
+                  break;
+                }
+        }
 
 	return 0;
 }
@@ -198,9 +209,11 @@ int BVECT_zero(BVECT * in) {
 	Copy source to destination
 */
 int BVECT_copy(BVECT * dest, BVECT * source) {			/* dest = source by value */
-	if (dest->length != source->length) return 1;
+  if (dest->length != source->length) {
+    return 1;
+  }
 
-	memcpy(dest->buf, source->buf, dest->length * sizeof(int));
+        memcpy(dest->buf, source->buf, dest->length * sizeof(int));
 
 	return 0;
 }
@@ -211,11 +224,15 @@ int BVECT_copy(BVECT * dest, BVECT * source) {			/* dest = source by value */
 char BVECT_compare(BVECT * a, BVECT * b) {
 	int i;
 
-	if (a->length != b->length) return LSTB_FALSE;
+        if (a->length != b->length) {
+          return LSTB_FALSE;
+        }
 
-	for (i = 0; i < a->length; i++) {
-		if (a->buf[i] != b->buf[i]) return LSTB_FALSE;
-	}
+        for (i = 0; i < a->length; i++) {
+          if (a->buf[i] != b->buf[i]) {
+            return LSTB_FALSE;
+          }
+        }
 
 	return LSTB_TRUE;
 }
@@ -230,8 +247,10 @@ int BVECT_print(BVECT * in) {
 	printf("(");
 	for (i = 0; i < in->length; i++) {
 		printf("%i", in->buf[i]);
-		if (i != in->length - 1) printf(", ");
-	}
+                if (i != in->length - 1) {
+                  printf(", ");
+                }
+        }
 	printf(")");
 	#else
 	LSTB_debug("(");
@@ -255,8 +274,10 @@ int BVECT_max(
 
 	return_val = in->buf[0];
 	for (i = 1; i < in->length; i++) {
-		if (return_val < in->buf[i]) return_val = in->buf[i];
-	}
+          if (return_val < in->buf[i]) {
+            return_val = in->buf[i];
+          }
+        }
 
 	return return_val;
 }
@@ -271,8 +292,10 @@ int BVECT_min(
 
 	return_val = in->buf[0];
 	for (i = 1; i < in->length; i++) {
-		if (return_val > in->buf[i]) return_val = in->buf[i];
-	}
+          if (return_val > in->buf[i]) {
+            return_val = in->buf[i];
+          }
+        }
 
 	return return_val;
 }
@@ -325,9 +348,11 @@ BIMAGE * BIMAGE_constructor(
 
 	/* Set up the step vector, default to unit steps */
 	bimage->steps = (float *)malloc(dim->length*sizeof(float));
-	for (i = 0; i < dim->length; i++) bimage->steps[i] = 1.0;
+        for (i = 0; i < dim->length; i++) {
+          bimage->steps[i] = 1.0;
+        }
 
-	return bimage;
+        return bimage;
 }
 
 /* Copy constructor for BIMAGE 'class'  */
@@ -360,9 +385,11 @@ BIMAGE * BIMAGE_constructor_double(
 
 	/* Set up the step vector, default to unit steps */
 	bimage->steps = (float *)malloc(dim->length*sizeof(float));
-	for (i = 0; i < dim->length; i++) bimage->steps[i] = 1.0;
+        for (i = 0; i < dim->length; i++) {
+          bimage->steps[i] = 1.0;
+        }
 
-	return bimage;
+        return bimage;
 }
 
 BIMAGE * BIMAGE_constructor_float(
@@ -382,9 +409,11 @@ BIMAGE * BIMAGE_constructor_float(
 
 	/* Set up the step vector, default to unit steps */
 	bimage->steps = (float *)malloc(dim->length*sizeof(float));
-	for (i = 0; i < dim->length; i++) bimage->steps[i] = 1.0;
+        for (i = 0; i < dim->length; i++) {
+          bimage->steps[i] = 1.0;
+        }
 
-	return bimage;
+        return bimage;
 }
 
 BIMAGE * BIMAGE_constructor_int(
@@ -408,9 +437,11 @@ BIMAGE * BIMAGE_constructor_int(
 
 	/* Set up the step vector, default to unit steps */
 	bimage->steps = (float *)malloc(dim->length*sizeof(float));
-	for (i = 0; i < dim->length; i++) bimage->steps[i] = 1.0;
+        for (i = 0; i < dim->length; i++) {
+          bimage->steps[i] = 1.0;
+        }
 
-	return bimage;
+        return bimage;
 }
 
 BIMAGE * BIMAGE_constructor_char(
@@ -434,9 +465,11 @@ BIMAGE * BIMAGE_constructor_char(
 
 	/* Set up the step vector, default to unit steps */
 	bimage->steps = (float *)malloc(dim->length*sizeof(float));
-	for (i = 0; i < dim->length; i++) bimage->steps[i] = 1.0;
+        for (i = 0; i < dim->length; i++) {
+          bimage->steps[i] = 1.0;
+        }
 
-	return bimage;
+        return bimage;
 }
 
 void BIMAGE_destructor(BIMAGE * bimage) {

@@ -112,11 +112,14 @@ int main(int argc, char **argv)
 
   if (x1 > x2) {x = x1; x1 = x2; x2 = x;} 
   if (y1 > y2) {y = y1; y1 = y2; y2 = y;} 
-  if (z1 > z2) {z = z1; z1 = z2; z2 = z;} 
-  for (z = z1; z <= z2; z++)
-    for (y = y1; y <= y2; y++)
-      for (x = x1; x <= x2; x++)
-	Im[z * ps + y * rs + x] = NDG_MAX;
+  if (z1 > z2) {z = z1; z1 = z2; z2 = z;}
+  for (z = z1; z <= z2; z++) {
+    for (y = y1; y <= y2; y++) {
+      for (x = x1; x <= x2; x++) {
+        Im[z * ps + y * rs + x] = NDG_MAX;
+      }
+    }
+  }
 
   writeimage(image, argv[argc-1]);
   freeimage(image);

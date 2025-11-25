@@ -118,11 +118,12 @@ int main(int32_t argc, char **argv)
   }
   printf("Calcule de la MSE effectué \n");
   /* Il faut surement tester la valeur de retour de writeimage() */
-  if(atoi(argv[3]) == 0)
-    writeGA4d(ga,argv[4]); 
-  else 
+  if (atoi(argv[3]) == 0) {
+    writeGA4d(ga,argv[4]);
+  } else {
     writeimage4D(marqueurs, argv[argc - 1], atoi(argv[3]));
-  
+  }
+
   freeGA4d(ga); freeimage4D(marqueurs); 
   return 0;
 }

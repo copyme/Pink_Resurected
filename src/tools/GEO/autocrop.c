@@ -86,21 +86,23 @@ int main(int argc, char **argv)
     fprintf(stderr, "%s: readimage failed\n", argv[0]);
     exit(1);
   }
-  
-  if (argc > 2) 
+
+  if (argc > 2) {
     seuil = atof(argv[2]);
-  else 
+  } else {
     seuil = 0;
+  }
 
   lautocrop2(in, seuil, &xmin, &ymin, &zmin, &w, &h, &p);
 #ifdef VERBOSE
   printf("Crop: xmin=%d, ymin=%d, zmin=%d, w=%d, h=%d, p=%d\n",
 	 xmin, ymin, zmin, w, h, p);
 #endif
-  if (depth(in) == 1) 
+  if (depth(in) == 1) {
     out = lcrop(in, xmin, ymin, w, h);
-  else        
+  } else {
     out = lcrop3d(in, xmin, ymin, zmin, w, h, p);
+  }
 
   if (out == NULL)
   {
@@ -108,10 +110,11 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (argc > 3) 
+  if (argc > 3) {
     writeimage(out, argv[3]);
-  else
+  } else {
     writeimage(out, argv[1]);
+  }
 
   if (argc > 4) 
   {

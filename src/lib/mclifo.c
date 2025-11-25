@@ -129,9 +129,10 @@ void LifoPrint(Lifo * L)
   index_t i;
   if (LifoVide(L)) {printf("[]"); return;}
   printf("[ ");
-  for (i = 0; i < L->Sp; i++)
+  for (i = 0; i < L->Sp; i++) {
 #ifdef MC_64_BITS
     printf("%ld ", L->Pts[i]);
+  }
 #else
     printf("%d ", L->Pts[i]);
 #endif
@@ -145,9 +146,10 @@ void LifoPrintLine(Lifo * L)
   index_t i;
   if (LifoVide(L)) {printf("[]\n"); return;}
   printf("[ ");
-  for (i = 0; i < L->Sp; i++)
+  for (i = 0; i < L->Sp; i++) {
 #ifdef MC_64_BITS
     printf("%ld ", L->Pts[i]);
+  }
 #else
     printf("%d ", L->Pts[i]);
 #endif

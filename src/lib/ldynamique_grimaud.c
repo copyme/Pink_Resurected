@@ -96,7 +96,9 @@ Definition Grimaud : obligation d'atteindre un maximum de niveau strictement sup
   }
 
   /* met le champ dyn a 0 */
-  for (i = 0; i < nbcomp; i++)  cpct->dyn[i] = 0;
+  for (i = 0; i < nbcomp; i++) {
+    cpct->dyn[i] = 0;
+  }
 
   /* balaye les feuilles par ordre decroissant */
   for (h = 255; h > 0; h--)
@@ -316,9 +318,15 @@ int32_t ldynamique_grimaud_ldynamique(struct xvimage *image, int32_t connex)
   /* INITIALISATIONS                                  */
   /* ================================================ */
 
-  for (i = 0; i < N; i++) STATUS[i] = NOT_ANALYZED;
+  for (i = 0; i < N; i++) {
+    STATUS[i] = NOT_ANALYZED;
+  }
   k = 0;             /* recherche un pixel k de niveau de gris minimal dans l'image */
-  for (i = 1; i < N; i++) if (F[i] < F[k]) k = i;
+  for (i = 1; i < N; i++) {
+    if (F[i] < F[k]) {
+      k = i;
+    }
+  }
   FahsPush(FAHS, k, F[k]);
 
 #ifdef VERBOSE
@@ -329,10 +337,12 @@ int32_t ldynamique_grimaud_ldynamique(struct xvimage *image, int32_t connex)
   /* APPEL FONCTION RECURSIVE flood                   */
   /* ================================================ */
 
-  if ((connex == 4) || (connex == 8))
-    (void)flood(F[k], FAHS, STATUS, number_nodes, node_at_level, TREE, incr_vois, rs, N, F); 
-  else
-    (void)flood3d(F[k], FAHS, STATUS, number_nodes, node_at_level, TREE, connex, rs, ps, N, F);
+  if ((connex == 4) || (connex == 8)) {
+    (void)flood(F[k], FAHS, STATUS, number_nodes, node_at_level, TREE, incr_vois, rs, N, F);
+  } else {
+    (void)flood3d(F[k], FAHS, STATUS, number_nodes, node_at_level, TREE, connex,
+                  rs, ps, N, F);
+  }
 
 #ifdef VERBOSE
   fprintf(stderr, "flood terminee\n");
@@ -382,32 +392,30 @@ static void SimplifyComp(CompactTree *cpct, int32_t *ncomp, int32_t *tabcomp)
 /* ==================================== */
 // supprime dans tabcomp les composantes qui sont ancetres d'une autre
 {
-  int32_t k, j, i; 
-  for (i = 0; i < *ncomp; i++)
-  if (tabcomp[i] != -1)
-  {
-    for (j = i + 1; j < *ncomp; j++)
-    if (tabcomp[j] != -1)
-    {
-      if (Ancestor(cpct, tabcomp[j], tabcomp[i])) 
-      {
-        tabcomp[j] = -1;
+  int32_t k, j, i;
+  for (i = 0; i < *ncomp; i++) {
+    if (tabcomp[i] != -1) {
+      for (j = i + 1; j < *ncomp; j++) {
+        if (tabcomp[j] != -1) {
+          if (Ancestor(cpct, tabcomp[j], tabcomp[i])) {
+            tabcomp[j] = -1;
+          } else if (Ancestor(cpct, tabcomp[i], tabcomp[j])) {
+            tabcomp[i] = -1;
+            break;
+          }
+        } // for j
       }
-      else if (Ancestor(cpct, tabcomp[i], tabcomp[j])) 
-      {
-        tabcomp[i] = -1;
-        break;
-      }
-    } // for j
-  } // for i
+    } // for i
+  }
   k = j = 0;
   for (i = 0; i < *ncomp; i++)
   {
     tabcomp[j] = tabcomp[i];
-    if (tabcomp[i] != -1)
+    if (tabcomp[i] != -1) {
       j++;
-    else
+    } else {
       k++; // nb elements supprimes
+    }
   }
   *ncomp -= k;
 } /* SimplifyComp() */
@@ -423,15 +431,23 @@ static void BuildTree(uint8_t *F, int32_t rs, int32_t ps, int32_t N, int32_t con
   int32_t i, k;
 
   // INITIALISATIONS
-  for (i = 0; i < N; i++) STATUS[i] = NOT_ANALYZED;
+  for (i = 0; i < N; i++) {
+    STATUS[i] = NOT_ANALYZED;
+  }
   k = 0;             /* recherche un pixel k de niveau de gris minimal dans l'image */
-  for (i = 0; i < N; i++) if (F[i] < F[k]) k = i;
+  for (i = 0; i < N; i++) {
+    if (F[i] < F[k]) {
+      k = i;
+    }
+  }
   FahsPush(FAHS, k, F[k]);
   // APPEL FONCTION RECURSIVE flood
-  if ((connex == 4) || (connex == 8))
-    (void)flood(F[k], FAHS, STATUS, number_nodes, node_at_level, TREE, incr_vois, rs, N, F); 
-  else
-    (void)flood3d(F[k], FAHS, STATUS, number_nodes, node_at_level, TREE, connex, rs, ps, N, F);
+  if ((connex == 4) || (connex == 8)) {
+    (void)flood(F[k], FAHS, STATUS, number_nodes, node_at_level, TREE, incr_vois, rs, N, F);
+  } else {
+    (void)flood3d(F[k], FAHS, STATUS, number_nodes, node_at_level, TREE, connex,
+                  rs, ps, N, F);
+  }
   *cpct = CompTree2CompactTree(TREE, number_nodes);
 } // BuildTree()
 
@@ -472,7 +488,9 @@ static int32_t TrouveComposantes2(int32_t x, uint8_t *F, int32_t rs, int32_t N, 
   for (k = 0; k < 8; k += incr_vois) // parcourt les c-voisins y de x d'un niveau > F[x]
   {
     y = voisin(x, k, rs, N);
-    if ((y != -1) && (F[y] > maxval)) maxval = F[y];
+    if ((y != -1) && (F[y] > maxval)) {
+      maxval = F[y];
+    }
   } /* for (k = 0; k < 8; k += incr_vois) */
 
   if (maxval == F[x]) 
@@ -537,7 +555,9 @@ void Watershed(
   for (i = 0; i < N; i++)
   {
     c = INDEXCOMP(cpct, F[i],STATUS[i]);
-    if (NBFILS(cpct, c) == 0) Set(i,MASSIF);
+    if (NBFILS(cpct, c) == 0) {
+      Set(i, MASSIF);
+    }
   } // for (i = 0; i < N; i++)
 
   // empile les c-voisins des c-maxima
@@ -569,10 +589,11 @@ void Watershed(
 
     ncomp = TrouveComposantes(x, F, rs, N, incr_vois, STATUS, cpct, tabcomp);
 
-    if (ncomp == 1)
+    if (ncomp == 1) {
       c = tabcomp[0];
-    else 
+    } else {
       c = LowestCommonAncestor(cpct, ncomp, tabcomp, F[x]);
+    }
 
 #ifdef DEBUG
     printf("    LCA: %d\n", c);
@@ -635,10 +656,11 @@ void Watershed(
 
     ncomp = TrouveComposantes(x, F, rs, N, incr_vois, STATUS, cpct, tabcomp);
 
-    if (ncomp == 1)
+    if (ncomp == 1) {
       c = tabcomp[0];
-    else 
+    } else {
       c = LowestCommonAncestor(cpct, ncomp, tabcomp, F[x]);
+    }
 
 #ifdef DEBUG
     printf("    LCA: %d\n", c);
@@ -670,8 +692,9 @@ void Watershed(
       Set(x,MODIFIE);
 
 #ifdef PARANO
-      if (NBFILS(cpct, c) == 0) // feuille
+      if (NBFILS(cpct, c) == 0) { // feuille
         printf("ERREUR: POINT MASSIF TROUVE EN PASSE 2!!!!\n");
+      }
 #endif
 
       // empile les c-voisins de x non marques MASSIF ni WATERSHED ni EN_FAHS
@@ -838,7 +861,9 @@ static void Watershed2(struct xvimage *image, int32_t incr_vois,
   for (i = 0; i < N; i++)
   {
     c = INDEXCOMP(cpct, F[i],STATUS[i]);
-    if (NBFILS(cpct, c) == 0) Set(i,MASSIF);
+    if (NBFILS(cpct, c) == 0) {
+      Set(i, MASSIF);
+    }
   } // for (i = 0; i < N; i++)
 
   // empile les c-voisins des c-maxima
@@ -878,10 +903,11 @@ static void Watershed2(struct xvimage *image, int32_t incr_vois,
 #endif
     ncomp = TrouveComposantes(x, F, rs, N, incr_vois, STATUS, cpct, tabcomp);
 
-    if (ncomp == 1)
+    if (ncomp == 1) {
       c = tabcomp[0];
-    else 
+    } else {
       c = LowestCommonAncestor(cpct, ncomp, tabcomp, F[x]);
+    }
 
 #ifdef DEBUG
     printf("    LCA: %d\n", c);
@@ -917,8 +943,9 @@ static void Watershed2(struct xvimage *image, int32_t incr_vois,
 #endif
       }
 #ifdef PARANO
-      else
+      else {
         printf("%s : ERREUR COMPOSANTE BRANCHE!!!\n", F_NAME);
+      }
 #endif
 
       // empile les c-voisins de x non marques MASSIF ni EN_FAHS
@@ -1102,7 +1129,9 @@ static void Watershed4(struct xvimage *image, int32_t incr_vois,
   for (i = 0; i < N; i++)
   {
     c = INDEXCOMP(cpct, F[i],STATUS[i]);
-    if (NBFILS(cpct, c) == 0) Set(i,MASSIF);
+    if (NBFILS(cpct, c) == 0) {
+      Set(i, MASSIF);
+    }
   } // for (i = 0; i < N; i++)
 
   // empile les c-voisins des c-maxima
@@ -1135,16 +1164,17 @@ static void Watershed4(struct xvimage *image, int32_t incr_vois,
 
     if (ncomp > 0)
     {
-      if (ncomp == 1)
+      if (ncomp == 1) {
         c = tabcomp[0];
-      else 
-      {
+      } else {
         int32_t c1;
         c = tabcomp[0];
         for (k = 1; k < ncomp; k++)
         {
           c1 = LowComAnc(cpct, c, tabcomp[k]);
-          if (c1 != tabcomp[k]) c = c1;
+          if (c1 != tabcomp[k]) {
+            c = c1;
+          }
         }
       }
 
@@ -1174,8 +1204,9 @@ printf("    Eleve au niveau: %d ; LPE\n", F[x]);
 #endif
         }
 #ifdef PARANO
-        else
+        else {
           printf("%s : ERREUR COMPOSANTE BRANCHE!!!\n", F_NAME);
+        }
 #endif
 
         // empile les c-voisins de x non marques MASSIF ni EN_FAHS
@@ -1315,13 +1346,14 @@ jusqu'a size(tree) ==  1
     // trouve la feuille f de dyn. minimale
     f = -1;
     df = NDG_MAX+1;
-    for (k = 0; k < cpct->nbcomp; k++) 
+    for (k = 0; k < cpct->nbcomp; k++) {
       if (!(cpct->flags[k] & FILTERED_OUT) && 
            (NbFilsNonFiltres(cpct,k) == 0) && (cpct->dyn[k] < df))
       {
         f = k;
         df = cpct->dyn[f];
       }
+    }
 
     //  hcf = |ndg(f) - dyn(f)| 
     hcf = DECODENIV(cpct->comp[f]) - df;
@@ -1337,8 +1369,10 @@ printf("f = %d ; dyn = %d ; ndg = %d ; hcf = %d\n", f, cpct->dyn[f], hcf+df, hcf
       h = F[x];
       c = STATUS[x];
       comp = INDEXCOMP(cpct, h,c);
-      while ((comp != cpct->pere[comp]) && (cpct->flags[cpct->pere[comp]] & FILTERED_OUT)) 
+      while ((comp != cpct->pere[comp]) &&
+             (cpct->flags[cpct->pere[comp]] & FILTERED_OUT)) {
         comp = cpct->pere[comp]; // remonte branche morte
+      }
       if ((comp != f) && (h == hcf))
       {
         for (k = 0; k < 8; k += incr_vois)
@@ -1349,8 +1383,10 @@ printf("f = %d ; dyn = %d ; ndg = %d ; hcf = %d\n", f, cpct->dyn[f], hcf+df, hcf
             h = F[y];
             c = STATUS[y];
             comp = INDEXCOMP(cpct, h,c);
-            while ((comp != cpct->pere[comp]) && (cpct->flags[cpct->pere[comp]] & FILTERED_OUT)) 
+            while ((comp != cpct->pere[comp]) &&
+                   (cpct->flags[cpct->pere[comp]] & FILTERED_OUT)) {
               comp = cpct->pere[comp]; // remonte branche morte
+            }
             if (comp == f)
             {
               ptcol = x;
@@ -1442,7 +1478,7 @@ printf("x = %d,%d ; nouveau F[x] = %d\n", x % rs, x / rs, F[x]);
 
     //  raccourcir branches
     //  i.e. supprimer peres des noeuds dont le pere n'a qu'un fils
-    for (comp = 0; comp < cpct->nbcomp; comp++)
+    for (comp = 0; comp < cpct->nbcomp; comp++) {
       if (!(cpct->flags[comp] & FILTERED_OUT) && (NbFilsNonFiltres(cpct,cpct->pere[comp]) == 1))
         {
           if (!(cpct->flags[cpct->pere[comp]] & FILTERED_OUT))
@@ -1453,7 +1489,8 @@ printf("x = %d,%d ; nouveau F[x] = %d\n", x % rs, x / rs, F[x]);
 printf("supprime %d ; nbcomp = %d\n", cpct->pere[comp], nbcomp);
 #endif
 	  }
-	}
+      }
+    }
 
 #ifdef DEBUG
 AfficheCompactTree(cpct);
@@ -1548,9 +1585,15 @@ int32_t ldynamique_grimaud_ldynamique_grimaud_lwshedtopo(struct xvimage *image, 
   /* INITIALISATIONS                                  */
   /* ================================================ */
 
-  for (i = 0; i < N; i++) STATUS[i] = NOT_ANALYZED;
+  for (i = 0; i < N; i++) {
+    STATUS[i] = NOT_ANALYZED;
+  }
   k = 0;             /* recherche un pixel k de niveau de gris minimal dans l'image */
-  for (i = 0; i < N; i++) if (F[i] < F[k]) k = i;
+  for (i = 0; i < N; i++) {
+    if (F[i] < F[k]) {
+      k = i;
+    }
+  }
   FahsPush(FAHS, k, F[k]);
 
 #ifdef VERBOSE
@@ -1561,10 +1604,12 @@ int32_t ldynamique_grimaud_ldynamique_grimaud_lwshedtopo(struct xvimage *image, 
   /* APPEL FONCTION RECURSIVE flood                   */
   /* ================================================ */
 
-  if ((connex == 4) || (connex == 8))
-    (void)flood(F[k], FAHS, STATUS, number_nodes, node_at_level, TREE, incr_vois, rs, N, F); 
-  else
-    (void)flood3d(F[k], FAHS, STATUS, number_nodes, node_at_level, TREE, connex, rs, ps, N, F);
+  if ((connex == 4) || (connex == 8)) {
+    (void)flood(F[k], FAHS, STATUS, number_nodes, node_at_level, TREE, incr_vois, rs, N, F);
+  } else {
+    (void)flood3d(F[k], FAHS, STATUS, number_nodes, node_at_level, TREE, connex,
+                  rs, ps, N, F);
+  }
 
 #ifdef VERBOSE
   fprintf(stderr, "flood terminee\n");

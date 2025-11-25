@@ -86,7 +86,9 @@ double lrecalagerigide_Delta(double *X, int32_t n, double *Y, int32_t m)
     for (j = 1; j < m; j++)
     {
       t = distcarre(x1, x2, Y[j*2 + 0], Y[j*2 + 1]);
-      if (t < tmin) tmin = t;
+      if (t < tmin) {
+        tmin = t;
+      }
     } // for (j = 1; j < m; j++)
     delta += tmin;
   } // for (i = 0; i < n; i++)
@@ -178,7 +180,9 @@ double *lrecalagerigide_lrecalagerigide2d(double *X, int32_t n, double *Y, int32
   lrecalagerigide_Tgamma(X, n, G, ens.Tmp);
   G[3] -= BX1; G[4] -= BX2;
 
-  for (i = 0; i < n+n; i++) X[i] = ens.Tmp[i]; 
+  for (i = 0; i < n + n; i++) {
+    X[i] = ens.Tmp[i];
+  }
 
   Gamma = (double *)calloc(1, 5 * sizeof(double));
   memcpy(Gamma, G, 5 * sizeof(double));
@@ -227,7 +231,9 @@ double *lrecalagerigide_lrecalagerigidesanszoom2d(double *X, int32_t n, double *
   lrecalagerigide_Tgamma(X, n, G, ens.Tmp);
   G[1] -= BX1; G[2] -= BX2;
 
-  for (i = 0; i < n+n; i++) X[i] = ens.Tmp[i]; 
+  for (i = 0; i < n + n; i++) {
+    X[i] = ens.Tmp[i];
+  }
 
   Gamma = (double *)calloc(1, 3 * sizeof(double));
   memcpy(Gamma, G, 3 * sizeof(double));
@@ -266,7 +272,9 @@ double lrecalagerigide_Delta3d(double *X, int32_t n, double *Y, int32_t m)
     for (j = 1; j < m; j++)
     {
       t = distcarre3d(x1, x2, x3, Y[j*3 + 0], Y[j*3 + 1], Y[j*3 + 2]);
-      if (t < tmin) tmin = t;
+      if (t < tmin) {
+        tmin = t;
+      }
     } // for (j = 1; j < m; j++)
     delta += tmin;
   } // for (i = 0; i < n; i++)
@@ -372,7 +380,9 @@ double *lrecalagerigide3d(double *X, int32_t n, double *Y, int32_t m)
   lrecalagerigide_Tgamma3d(X, n, G, ens.Tmp);
   G[5] -= BX1; G[6] -= BX2; G[7] -= BX3;
 
-  for (i = 0; i < 3*n; i++) X[i] = ens.Tmp[i]; 
+  for (i = 0; i < 3 * n; i++) {
+    X[i] = ens.Tmp[i];
+  }
 
   Gamma = (double *)calloc(1, 8 * sizeof(double));
   memcpy(Gamma, G, 8 * sizeof(double));
@@ -459,9 +469,10 @@ double lrecalagerigide_F_num(double *G, struct xvimage * image1, struct xvimage 
       t = t - I1[y*rs + x];
       t = t * t;
 #ifndef ESSAI
-      if (t <= SEUIL2)
+      if (t <= SEUIL2) {
 #endif
-	ErrorQuad = ErrorQuad + t;
+        ErrorQuad = ErrorQuad + t;
+      }
     }
   } // for (i = 0; i < N; i++)
 

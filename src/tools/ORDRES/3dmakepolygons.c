@@ -79,8 +79,11 @@ int32_t degrepoint(struct xvimage * b, index_t i, index_t j, index_t k)
   index_t tab[27];
   uint8_t *B = UCHARDATA(b);
   Betacarre3d(rowsize(b), colsize(b), depth(b), i, j, k, tab, &n);
-  for (a = u = 0; u < n; u++) // parcourt les eventuels beta-voisins
-    if (B[tab[u]]) a++;
+  for (a = u = 0; u < n; u++) { // parcourt les eventuels beta-voisins
+    if (B[tab[u]]) {
+      a++;
+    }
+  }
   return a;
 }
 
@@ -99,10 +102,14 @@ void getlabels(struct xvimage * lab,
 
   ListeFlush(Labels);
   Betacarre3d(rs, cs, ds, ip, jp, kp, tab, &n);
-  for (u = 0; u < n; u++) 
-    if (L[tab[u]] && CARRE3D((tab[u]%rs),((tab[u]%ps)/rs),(tab[u]/ps)))
-      if (!ListeIn(Labels, L[tab[u]]))
-	ListePush(Labels, L[tab[u]]);
+  for (u = 0; u < n; u++) {
+    if (L[tab[u]] &&
+        CARRE3D((tab[u] % rs), ((tab[u] % ps) / rs), (tab[u] / ps))) {
+      if (!ListeIn(Labels, L[tab[u]])) {
+        ListePush(Labels, L[tab[u]]);
+      }
+    }
+  }
 }
 
 void pointsegnextpoint(struct xvimage * lab, struct xvimage * b, 
@@ -126,7 +133,9 @@ void pointsegnextpoint(struct xvimage * lab, struct xvimage * b,
   for (u = 0; u < n; u++) // parcourt les deux alpha-voisins
   {
     *i = tab[u]%rs; *j = (tab[u]%ps)/rs; *k = tab[u]/ps;
-    if ((*i != ip) || (*j != jp) || (*k != kp)) break;
+    if ((*i != ip) || (*j != jp) || (*k != kp)) {
+      break;
+    }
   }
 } // pointsegnextpoint()
 
@@ -375,9 +384,12 @@ int main(int argc, char **argv)
     fprintf(stderr, "%s: CreeListeVide failed\n", argv[0]);
     exit(1);
   }
-  
-  for (maxlab = x = 0; x < N; x++)
-    if (L[x] > maxlab) maxlab = L[x];
+
+  for (maxlab = x = 0; x < N; x++) {
+    if (L[x] > maxlab) {
+      maxlab = L[x];
+    }
+  }
 
   marklab = (int8_t *)calloc((maxlab + 1), sizeof (int8_t));
   if (marklab == NULL)
@@ -388,40 +400,39 @@ int main(int argc, char **argv)
 
   // 1er parcours pour les points
 
-  for (k = 0; k < ds; k++)
-  for (j = 0; j < cs; j++)
-  for (i = 0; i < rs; i++)
-  {
-    x = k*ps + j*rs + i;
-    if (B[x] && SINGL3D(i,j,k))
-      if (degrepoint(bor, i, j, k) != 2) // point multiple ou extrémité
-      {
-	indx = MCP_AddVertex(P, (double)i, (double)j, (double)k);
-	L[x] = indx; // on stocke l'index du point dans l'image lab
+  for (k = 0; k < ds; k++) {
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        x = k * ps + j * rs + i;
+        if (B[x] && SINGL3D(i, j, k)) {
+          if (degrepoint(bor, i, j, k) != 2) // point multiple ou extrémité
+          {
+            indx = MCP_AddVertex(P, (double)i, (double)j, (double)k);
+            L[x] = indx; // on stocke l'index du point dans l'image lab
+          }
+        }
       }
+    }
   }
 
   // 2eme parcours pour les faces
 
-  for (k = 0; k < ds; k++)
-  for (j = 0; j < cs; j++)
-  for (i = 0; i < rs; i++)
-  {
-    x = k*ps + j*rs + i;
-    if (B[x] && SINGL3D(i,j,k))
-    {
-      if (degrepoint(bor, i, j, k) > 2) // point multiple du bord
-      { // récupère l'ensemble des labels adjacents
-	getlabels(lab, i, j, k, Labels);
-	nl = ListeTaille(Labels);
-	assert(nl > 0);
-	for (u = 0; u < nl; u++)
-	{
-	  label = ListeElt(Labels, u);
-	  if (!marklab[label]) // nouveau label
-	  {
-	    marklab[label] = 1;
-	    spol = scanpolygon(lab, bor, label, i, j, k, Poly);	    
+  for (k = 0; k < ds; k++) {
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        x = k * ps + j * rs + i;
+        if (B[x] && SINGL3D(i, j, k)) {
+          if (degrepoint(bor, i, j, k) > 2) // point multiple du bord
+          { // récupère l'ensemble des labels adjacents
+            getlabels(lab, i, j, k, Labels);
+            nl = ListeTaille(Labels);
+            assert(nl > 0);
+            for (u = 0; u < nl; u++) {
+              label = ListeElt(Labels, u);
+              if (!marklab[label]) // nouveau label
+              {
+                marklab[label] = 1;
+                spol = scanpolygon(lab, bor, label, i, j, k, Poly);	    
 #ifdef MISEAUPOINT1
 	    printf("point multiple %d,%d,%d  ", i, j, k);
 	    printf("label %d\n", label);
@@ -431,8 +442,10 @@ int main(int argc, char **argv)
 	    for (v = 0; v < spol; v++)
 	    {
 	      x = ListeElt(Poly, v);
-	      if (x == -1) break;
-	      indx = L[x];
+              if (x == -1) {
+                break;
+              }
+              indx = L[x];
 	      ListePush(Face, indx);
 	    } // for (v = 0; v < spol; v++)
 	    if (x == -1)
@@ -440,8 +453,10 @@ int main(int argc, char **argv)
 	      for (v = ListeTaille(Poly)-1; v >= 0 ; v--)
 	      {
 		x = ListeElt(Poly, v);
-		if (x == -1) break;
-		indx = L[x];
+                if (x == -1) {
+                  break;
+                }
+                indx = L[x];
 		ListePush(Face, indx);
 	      }	// for v
 	    } // if (x == -1)
@@ -452,7 +467,9 @@ int main(int argc, char **argv)
 	} // for (u = 0; u < nl; u++)
       } // if (degrepoint(bor, i, j, k) > 2)
     } // if (B[x] && SINGL3D(i,j,k))
-  } // for i, j, k
+      } // for i, j, k
+    }
+  }
 
   MCP_ComputeFaces(P);
 
@@ -467,7 +484,9 @@ MCP_Print(P);
     fprintf(stderr, "%s: malloc failed\n", argv[0]);
     exit(1);
   }
-  for (i = 0; i < P->Vertices->cur; i++) markvert[i] = -1;
+  for (i = 0; i < P->Vertices->cur; i++) {
+    markvert[i] = -1;
+  }
 
   for (i = 0; i < P->Faces->cur; i++)
   {  
@@ -511,17 +530,19 @@ MCP_Print(P);
 	  printf("Fusionne: %d,%d -> %d\n", a, b, markvert[a]);
 #endif
 	// on retire a de la face i
-	for (k = j; k < P->Faces->f[i].n - 1; k++)
-	  P->Faces->f[i].vert[k] = P->Faces->f[i].vert[k+1]; 
-	P->Faces->f[i].n -= 1;
+          for (k = j; k < P->Faces->f[i].n - 1; k++) {
+            P->Faces->f[i].vert[k] = P->Faces->f[i].vert[k + 1];
+          }
+        P->Faces->f[i].n -= 1;
 	// on remplace b par markvert[a]
-	if (j < P->Faces->f[i].n)
-	  P->Faces->f[i].vert[j] = markvert[a];
-	else
-	  P->Faces->f[i].vert[0] = markvert[a];
+        if (j < P->Faces->f[i].n) {
+          P->Faces->f[i].vert[j] = markvert[a];
+        } else {
+          P->Faces->f[i].vert[0] = markvert[a];
+        }
+      } else {
+        j++;
       }
-      else
-	j++;
     } // while (j < P->Faces->f[i].n)
   } // for (i = 0; i < P->Faces->cur; i++)
 
@@ -530,9 +551,10 @@ MCP_Print(P);
   {  
     for (j = 0; j < P->Faces->f[i].n; j++)
     {
-      a = P->Faces->f[i].vert[j]; 
-      if (markvert[a] != -1)
-	P->Faces->f[i].vert[j] = markvert[a]; // on remplace a par markvert[a]
+      a = P->Faces->f[i].vert[j];
+      if (markvert[a] != -1) {
+        P->Faces->f[i].vert[j] = markvert[a]; // on remplace a par markvert[a]
+      }
     } // 
   } // for (i = 0; i < P->Faces->cur; i++)
 
@@ -573,9 +595,10 @@ MCP_Print(P);
   {  
     for (j = 0; j < P->Faces->f[i].n; j++)
     {
-      a = P->Faces->f[i].vert[j]; 
-      if (markvert[a] != -1)
-	P->Faces->f[i].vert[j] = markvert[a]; // on remplace a par markvert[a]
+      a = P->Faces->f[i].vert[j];
+      if (markvert[a] != -1) {
+        P->Faces->f[i].vert[j] = markvert[a]; // on remplace a par markvert[a]
+      }
     } // 
   } // for (i = 0; i < P->Faces->cur; i++)
  } // while (degenerate)
@@ -587,7 +610,9 @@ MCP_Print(P);
   P->Edges = MCP_AllocEdges(100);
   MCP_ComputeEdges(P);
 
-  if (subdiv > 0) MCP_SubdivEdges(P, subdiv);
+  if (subdiv > 0) {
+    MCP_SubdivEdges(P, subdiv);
+  }
 
   // SAUVEGARDE RESULTAT
 

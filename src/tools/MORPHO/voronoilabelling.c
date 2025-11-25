@@ -90,8 +90,9 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (argc == 4)
-    writeimage(dist, argv[argc-2]);
+  if (argc == 4) {
+    writeimage(dist, argv[argc - 2]);
+  }
   writeimage(vor, argv[argc-1]);
   freeimage(image);
   freeimage(dist);

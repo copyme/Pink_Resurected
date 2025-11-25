@@ -85,29 +85,59 @@ int main(int argc, char **argv)
     fprintf(stderr, "usage: %s in [resolution] out\n", argv[0]);
     exit(0);
   }
-  if (argc == 4) resolution = atof(argv[2]);
+  if (argc == 4) {
+    resolution = atof(argv[2]);
+  }
 
   formatin = UNKNOWN;
-  if (strcmp(argv[1]+strlen(argv[1])-4, ".MCM") == 0) formatin = T_MCM;
-  if (strcmp(argv[1]+strlen(argv[1])-4, ".mcm") == 0) formatin = T_MCM;
-  if (strcmp(argv[1]+strlen(argv[1])-4, ".VTK") == 0) formatin = T_VTK;
-  if (strcmp(argv[1]+strlen(argv[1])-4, ".vtk") == 0) formatin = T_VTK;
-  if (strcmp(argv[1]+strlen(argv[1])-4, ".IFS") == 0) formatin = T_IFS;
-  if (strcmp(argv[1]+strlen(argv[1])-4, ".ifs") == 0) formatin = T_IFS;
-  if (strcmp(argv[1]+strlen(argv[1])-5, ".CGAL") == 0) formatin = T_CGAL;
-  if (strcmp(argv[1]+strlen(argv[1])-5, ".cgal") == 0) formatin = T_CGAL;
+  if (strcmp(argv[1] + strlen(argv[1]) - 4, ".MCM") == 0) {
+    formatin = T_MCM;
+  }
+  if (strcmp(argv[1] + strlen(argv[1]) - 4, ".mcm") == 0) {
+    formatin = T_MCM;
+  }
+  if (strcmp(argv[1] + strlen(argv[1]) - 4, ".VTK") == 0) {
+    formatin = T_VTK;
+  }
+  if (strcmp(argv[1] + strlen(argv[1]) - 4, ".vtk") == 0) {
+    formatin = T_VTK;
+  }
+  if (strcmp(argv[1] + strlen(argv[1]) - 4, ".IFS") == 0) {
+    formatin = T_IFS;
+  }
+  if (strcmp(argv[1] + strlen(argv[1]) - 4, ".ifs") == 0) {
+    formatin = T_IFS;
+  }
+  if (strcmp(argv[1] + strlen(argv[1]) - 5, ".CGAL") == 0) {
+    formatin = T_CGAL;
+  }
+  if (strcmp(argv[1] + strlen(argv[1]) - 5, ".cgal") == 0) {
+    formatin = T_CGAL;
+  }
   if (formatin == UNKNOWN)
   {
     fprintf(stderr, "%s: bad input file format\n", argv[0]);
     exit(0);
   }
   formatout = UNKNOWN;
-  if (strcmp(argv[argc-1]+strlen(argv[argc-1])-4, ".MCM") == 0) formatout = T_MCM;
-  if (strcmp(argv[argc-1]+strlen(argv[argc-1])-4, ".mcm") == 0) formatout = T_MCM;
-  if (strcmp(argv[argc-1]+strlen(argv[argc-1])-4, ".VTK") == 0) formatout = T_VTK;
-  if (strcmp(argv[argc-1]+strlen(argv[argc-1])-4, ".vtk") == 0) formatout = T_VTK;
-  if (strcmp(argv[argc-1]+strlen(argv[argc-1])-4, ".PGM") == 0) formatout = T_PGM;
-  if (strcmp(argv[argc-1]+strlen(argv[argc-1])-4, ".pgm") == 0) formatout = T_PGM;
+  if (strcmp(argv[argc - 1] + strlen(argv[argc - 1]) - 4, ".MCM") == 0) {
+    formatout = T_MCM;
+  }
+  if (strcmp(argv[argc - 1] + strlen(argv[argc - 1]) - 4, ".mcm") == 0) {
+    formatout = T_MCM;
+  }
+  if (strcmp(argv[argc - 1] + strlen(argv[argc - 1]) - 4, ".VTK") == 0) {
+    formatout = T_VTK;
+  }
+  if (strcmp(argv[argc - 1] + strlen(argv[argc - 1]) - 4, ".vtk") == 0) {
+    formatout = T_VTK;
+  }
+  if (strcmp(argv[argc - 1] + strlen(argv[argc - 1]) - 4, ".PGM") == 0) {
+    formatout = T_PGM;
+  }
+  if (strcmp(argv[argc - 1] + strlen(argv[argc - 1]) - 4, ".pgm") == 0) {
+    formatout = T_PGM;
+  }
   if (formatout == UNKNOWN)
   {
     fprintf(stderr, "%s: bad output file format\n", argv[0]);
@@ -120,14 +150,24 @@ int main(int argc, char **argv)
     fprintf(stderr, "%s: cannot open %s\n", argv[0], argv[1]);
     exit(0);
   }
-  if (formatin == T_MCM) LoadMeshMCM(filein);
-  if (formatin == T_IFS) LoadMeshIFS(filein);
-  if (formatin == T_VTK) LoadBuildVTK(filein);
-  if (formatin == T_CGAL) LoadMeshCGAL(filein);
+  if (formatin == T_MCM) {
+    LoadMeshMCM(filein);
+  }
+  if (formatin == T_IFS) {
+    LoadMeshIFS(filein);
+  }
+  if (formatin == T_VTK) {
+    LoadBuildVTK(filein);
+  }
+  if (formatin == T_CGAL) {
+    LoadMeshCGAL(filein);
+  }
   fclose(filein);
 
   fileout = fopen(argv[argc-1],"w");
-  if (formatout == T_MCM) SaveMeshMCM(fileout);
+  if (formatout == T_MCM) {
+    SaveMeshMCM(fileout);
+  }
   if (formatout == T_VTK) 
   {
     genheaderVTK(fileout, (char *)"meshconvert output");    

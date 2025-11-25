@@ -198,13 +198,18 @@ int main(int argc, char **argv)
     }
     /* calcule le barycentre */
     npoints = bx = by = bz = 0;
-      for (z = 0; z < d; z++)
-        for (y = 0; y < cs; y++)
-          for (x = 0; x < rs; x++)
-            if (F[z * ps + y * rs + x]) 
-	    {
-              bx += x; by += y; bz += z; npoints++;
-            }
+    for (z = 0; z < d; z++) {
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++) {
+          if (F[z * ps + y * rs + x]) {
+            bx += x;
+            by += y;
+            bz += z;
+            npoints++;
+          }
+        }
+      }
+    }
     bx /= npoints;
     by /= npoints;
     bz /= npoints;
@@ -230,9 +235,9 @@ int main(int argc, char **argv)
     fprintf(fd, "%s\n", DEBIMAGE);
 #endif
 
-    for (z = 0; z < d; z++)
-      for (y = 0; y < cs; y++)
-        for (x = 0; x < rs; x++)
+    for (z = 0; z < d; z++) {
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++) {
           switch (F[z * ps + y * rs + x]) 
 	  {
             case 0: break;
@@ -252,7 +257,10 @@ int main(int argc, char **argv)
                                       50*(x-(int32_t)bx), 50*(y-(int32_t)by), 50*(z-(int32_t)bz)); break;
             case NDG_CUBE3D: fprintf(fd, "object{ Cube translate <%d,%d,%d>}\n", 
                                       50*(x-(int32_t)bx), 50*(y-(int32_t)by), 50*(z-(int32_t)bz)); break;
-	  }
+            }
+        }
+      }
+    }
 
 #ifdef GENFOOTER
     fprintf(fd, "%s\n", FINIMAGE);
@@ -302,13 +310,18 @@ int main(int argc, char **argv)
 
   /* calcule le barycentre */
   npoints = bx = by = bz = 0;
-    for (z = 0; z < d; z++)
-      for (y = 0; y < cs; y++)
-        for (x = 0; x < rs; x++)
-          if (F[z * ps + y * rs + x]) 
-	  {
-            bx += x; by += y; bz += z; npoints++;
-          }
+  for (z = 0; z < d; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        if (F[z * ps + y * rs + x]) {
+          bx += x;
+          by += y;
+          bz += z;
+          npoints++;
+        }
+      }
+    }
+  }
   bx /= npoints;
   by /= npoints;
   bz /= npoints;
@@ -335,13 +348,17 @@ int main(int argc, char **argv)
 
   if (mode == 5)
   {
-      for (z = 0; z < d; z++)
-        for (y = 0; y < cs; y++)
-          for (x = 0; x < rs; x++)
-            if (F[z * ps + y * rs + x] == 1) 
-              voxcube(fd, x, y, z, (char *)"texture {texture1}");
-	    else if (F[z * ps + y * rs + x] == 2) 
-              voxcube(fd, x, y, z, (char *)"texture {texture2}");
+    for (z = 0; z < d; z++) {
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++) {
+          if (F[z * ps + y * rs + x] == 1) {
+            voxcube(fd, x, y, z, (char *)"texture {texture1}");
+          } else if (F[z * ps + y * rs + x] == 2) {
+            voxcube(fd, x, y, z, (char *)"texture {texture2}");
+          }
+        }
+      }
+    }
   }
 
   if (mode != 5)
@@ -349,27 +366,36 @@ int main(int argc, char **argv)
     /* dessine les spheres */
     if (khalimsky)
     {
-      for (z = 0; z < d; z++)
-        for (y = 0; y < cs; y++)
-          for (x = 0; x < rs; x++)
+      for (z = 0; z < d; z++) {
+        for (y = 0; y < cs; y++) {
+          for (x = 0; x < rs; x++) {
             if (F[z * ps + y * rs + x]) 
  	    {
-              if (CUBE3D(x,y,z))
+              if (CUBE3D(x, y, z)) {
                 sphere(fd, x, y, z, (char *)"RadCube", (char *)"ColCube");
-              else if (CARRE3D(x,y,z))
+              } else if (CARRE3D(x, y, z)) {
                 sphere(fd, x, y, z, (char *)"RadCarre", (char *)"ColCarre");
-              else if (INTER3D(x,y,z))
+              } else if (INTER3D(x, y, z)) {
                 sphere(fd, x, y, z, (char *)"RadInter", (char *)"ColInter");
-              else if (SINGL3D(x,y,z))
+              } else if (SINGL3D(x, y, z)) {
                 sphere(fd, x, y, z, (char *)"RadSingl", (char *)"ColSingl");
-	    }
+              }
+            }
+          }
+        }
+      }
     }
     else
-    {  
-      for (z = 0; z < d; z++)
-        for (y = 0; y < cs; y++)
-          for (x = 0; x < rs; x++)
-            if (F[z * ps + y * rs + x]) sphere(fd, x, y, z, (char *)"RadSphere", (char *)"ColSphere");
+    {
+      for (z = 0; z < d; z++) {
+        for (y = 0; y < cs; y++) {
+          for (x = 0; x < rs; x++) {
+            if (F[z * ps + y * rs + x]) {
+              sphere(fd, x, y, z, (char *)"RadSphere", (char *)"ColSphere");
+            }
+          }
+        }
+      }
     }
   }
 
@@ -377,7 +403,7 @@ int main(int argc, char **argv)
   if ((mode == 1) || (mode == 2))
   {
     /* trace les barreaux a y,z constant (horizontaux en largeur)  */
-    for (z = 0; z < d; z++)
+    for (z = 0; z < d; z++) {
       for (y = 0; y < cs; y++)
       {
         xmin = 0; 
@@ -385,16 +411,30 @@ int main(int argc, char **argv)
         if (mode == 1) 
         {
           xmax = 0;
-          for (x = 0; x < rs; x++) if (F[z * ps + y * rs + x]) { xmin = x ; break; }
-          for (x = rs - 1; x >= 0; x--) if (F[z * ps + y * rs + x]) { xmax = x ; break; }
+          for (x = 0; x < rs; x++) {
+            if (F[z * ps + y * rs + x]) {
+              xmin = x;
+              break;
+            }
+          }
+          for (x = rs - 1; x >= 0; x--) {
+            if (F[z * ps + y * rs + x]) {
+              xmax = x;
+              break;
+            }
+          }
         }
-        if (xmax > xmin) 
-          for (x = xmin; x < xmax; x++) 
-            cylinder(fd, x, y, z, x+1, y, z, (char *)"RadCylinder", (char *)"ColCylinder");
+        if (xmax > xmin) {
+          for (x = xmin; x < xmax; x++) {
+            cylinder(fd, x, y, z, x + 1, y, z, (char *)"RadCylinder",
+                     (char *)"ColCylinder");
+          }
+        }
       }
+    }
 
     /* trace les barreaux a x,z constant (verticaux)  */
-    for (z = 0; z < d; z++)
+    for (z = 0; z < d; z++) {
       for (x = 0; x < rs; x++)
       {
         ymin = 0; 
@@ -402,16 +442,30 @@ int main(int argc, char **argv)
         if (mode == 1) 
         {
           ymax = 0;
-          for (y = 0; y < cs; y++) if (F[z * ps + y * rs + x]) { ymin = y ; break; }
-          for (y = cs - 1; y >= 0; y--) if (F[z * ps + y * rs + x]) { ymax = y ; break; }
+          for (y = 0; y < cs; y++) {
+            if (F[z * ps + y * rs + x]) {
+              ymin = y;
+              break;
+            }
+          }
+          for (y = cs - 1; y >= 0; y--) {
+            if (F[z * ps + y * rs + x]) {
+              ymax = y;
+              break;
+            }
+          }
         }
-        if (ymax > ymin) 
-          for (y = ymin; y < ymax; y++) 
-            cylinder(fd, x, y, z, x, y+1, z, (char *)"RadCylinder", (char *)"ColCylinder");
+        if (ymax > ymin) {
+          for (y = ymin; y < ymax; y++) {
+            cylinder(fd, x, y, z, x, y + 1, z, (char *)"RadCylinder",
+                     (char *)"ColCylinder");
+          }
+        }
       }
+    }
 
     /* trace les barreaux a x,y constant (horizontaux en profondeur)  */
-    for (y = 0; y < cs; y++)
+    for (y = 0; y < cs; y++) {
       for (x = 0; x < rs; x++)
       {
         zmin = 0; 
@@ -419,13 +473,27 @@ int main(int argc, char **argv)
         if (mode == 1) 
         {
           zmax = 0;
-          for (z = 0; z < d; z++) if (F[z * ps + y * rs + x]) { zmin = z ; break; }
-          for (z = d - 1; z >= 0; z--) if (F[z * ps + y * rs + x]) { zmax = z ; break; }
+          for (z = 0; z < d; z++) {
+            if (F[z * ps + y * rs + x]) {
+              zmin = z;
+              break;
+            }
+          }
+          for (z = d - 1; z >= 0; z--) {
+            if (F[z * ps + y * rs + x]) {
+              zmax = z;
+              break;
+            }
+          }
         }
-        if (zmax > zmin) 
-          for (z = zmin; z < zmax; z++) 
-            cylinder(fd, x, y, z, x, y, z+1, (char *)"RadCylinder", (char *)"ColCylinder");
+        if (zmax > zmin) {
+          for (z = zmin; z < zmax; z++) {
+            cylinder(fd, x, y, z, x, y, z + 1, (char *)"RadCylinder",
+                     (char *)"ColCylinder");
+          }
+        }
       }
+    }
   }
 
   if (mode == 3)
@@ -441,12 +509,14 @@ int main(int argc, char **argv)
       y1 = y % 3;
       y2 = (y % 9) / 3;
       y3 = y / 9;
-      if (y1 + y2 + y3 - 3 > 0) tabdir[n++] = k;
+      if (y1 + y2 + y3 - 3 > 0) {
+        tabdir[n++] = k;
+      }
     }
     if (n != 3) { fprintf(stderr, "BUG! BUG! BUG! n = %d\n", n); exit(1); }
 
     /* trace les voisinages */
-    for (x = 0; x < N; x++)
+    for (x = 0; x < N; x++) {
       if (F[x]) 
       {
         x1 = x % rs;
@@ -463,7 +533,8 @@ int main(int argc, char **argv)
             cylinder(fd, x1, x2, x3, y1, y2, y3, (char *)"RadCylinder", (char *)"ColCylinder");
 	  }
 	}
-      }    
+      }
+    }
   } /* if (mode == 3) */
 
   if (mode == 4)
@@ -480,15 +551,18 @@ int main(int argc, char **argv)
       y1 = y % 3;
       y2 = (y % 9) / 3;
       y3 = y / 9;
-      if (y1 + y2 + y3 - 3 > 0)
+      if (y1 + y2 + y3 - 3 > 0) {
         tabdir[n++] = k;
-      if ( (y1 + y2 + y3 - 3 == 0) && (3 * (y1-1) + 2 * (y2-1) + y3-1 > 0) )
+      }
+      if ((y1 + y2 + y3 - 3 == 0) &&
+          (3 * (y1 - 1) + 2 * (y2 - 1) + y3 - 1 > 0)) {
         tabdir[n++] = k;
+      }
     }
     if (n != 13) { fprintf(stderr, "BUG! BUG! BUG! n = %d\n", n); exit(1); }
 
     /* trace les voisinages */
-    for (x = 0; x < N; x++)
+    for (x = 0; x < N; x++) {
       if (F[x]) 
       {
         x1 = x % rs;
@@ -505,7 +579,8 @@ int main(int argc, char **argv)
             cylinder(fd, x1, x2, x3, y1, y2, y3, (char *)"RadCylinder", (char *)"ColCylinder");
 	  }
 	}
-      }    
+      }
+    }
   } /* if (mode == 4) */
 
 #ifdef GENFOOTER

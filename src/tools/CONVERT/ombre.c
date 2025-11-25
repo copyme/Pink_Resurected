@@ -94,8 +94,10 @@ int main(int argc, char **argv)
   }
   N = rs * cs;
 
-  if (cs == 1) { cs = 256; ds = 1; }
-  else ds = 256;
+  if (cs == 1) { cs = 256; ds = 1;
+  } else {
+    ds = 256;
+  }
   ombre = allocimage(NULL, rs, cs, ds, VFF_TYP_1_BYTE);
   if (ombre == NULL)
   {   fprintf(stderr,"%s : allocimage failed\n", argv[0]);
@@ -105,16 +107,22 @@ int main(int argc, char **argv)
   O = UCHARDATA(ombre);
   memset(O, NDG_MIN, rs*cs*ds);
 
-  if (ds == 1)
-    for (i = 0; i < rs; i++)
-      for (j = 0; j <= I[i]; j++)
-        O[(cs-j-1)*rs + i] = NDG_MAX;
-  else
-    for (j = 0; j < cs; j++)
-      for (i = 0; i < rs; i++)
-        for (k = 0; k < I[j*rs + i]; k++)
-          O[(ds-k-1)*N + j*rs + i] = NDG_MAX;
-    
+  if (ds == 1) {
+    for (i = 0; i < rs; i++) {
+      for (j = 0; j <= I[i]; j++) {
+        O[(cs - j - 1) * rs + i] = NDG_MAX;
+      }
+    }
+  } else {
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        for (k = 0; k < I[j * rs + i]; k++) {
+          O[(ds - k - 1) * N + j * rs + i] = NDG_MAX;
+        }
+      }
+    }
+  }
+
   writeimage(ombre, argv[argc-1]);
   freeimage(image);
   freeimage(ombre);

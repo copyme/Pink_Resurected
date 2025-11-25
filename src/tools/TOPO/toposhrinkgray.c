@@ -153,8 +153,16 @@ int main(int argc, char** argv)
             {
                 if ((tpmin == 1) && (tpmax == 1) && (tmmmin == 1) && (tmmmin == 1))
                 {
-                    if (connex == 8) pValAb = delta8m; else pValAb = delta4m;
-                    if (connex == 26) pValAb3d = mctopo3d_delta26m; else pValAb3d = mctopo3d_delta6m;
+                  if (connex == 8) {
+                    pValAb = delta8m;
+                  } else {
+                    pValAb = delta4m;
+                  }
+                  if (connex == 26) {
+                    pValAb3d = mctopo3d_delta26m;
+                  } else {
+                    pValAb3d = mctopo3d_delta6m;
+                  }
                 }
                 else
                 {
@@ -199,7 +207,9 @@ int main(int argc, char** argv)
 
     writeimage(image, argv[argc-1]);
     freeimage(image);
-    if (inhibimage) freeimage(inhibimage);
+    if (inhibimage) {
+      freeimage(inhibimage);
+    }
 
     return 0;
 } /* main */
@@ -219,13 +229,17 @@ int32_t largepdestr4(uint8_t *img,          /* pointeur base image */
 /* ==================================== */
 {   
     int32_t t4mm,t8p,b,n;
-    
-    if ((p%rs==rs-1) || (p<rs) || (p%rs==0) || (p>=N-rs)) /* point de bord */
-        return 0;
+
+    if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+        (p >= N - rs)) { /* point de bord */
+      return 0;
+    }
 
     nbtopo(img, p, rs, N, &t4mm, &b, &t8p, &n);
-    if ((t4mmmin <= t4mm) && (t4mm <= t4mmmax) && (t8pmin <= t8p) && (t8p <= t8pmax))
-        return 1;
+    if ((t4mmmin <= t4mm) && (t4mm <= t4mmmax) && (t8pmin <= t8p) &&
+        (t8p <= t8pmax)) {
+      return 1;
+    }
     return 0;
 } /* largepdestr4() */
 
@@ -244,13 +258,17 @@ int32_t largepdestr8(uint8_t *img,          /* pointeur base image */
 /* ==================================== */
 {   
     int32_t t8mm,t4p,b,n;
-    
-    if ((p%rs==rs-1)||(p<rs)||(p%rs==0)||(p>=N-rs)) /* point de bord */
-        return 0;
+
+    if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+        (p >= N - rs)) { /* point de bord */
+      return 0;
+    }
 
     nbtopo2(img, p, rs, N, &t8mm, &b, &t4p, &n);
-    if ((t8mmmin <= t8mm) && (t8mm <= t8mmmax) && (t4pmin <= t4p) && (t4p <= t4pmax))
-        return 1;
+    if ((t8mmmin <= t8mm) && (t8mm <= t8mmmax) && (t4pmin <= t4p) &&
+        (t4p <= t4pmax)) {
+      return 1;
+    }
     return 0;
 } /* largepdestr8() */
 
@@ -307,10 +325,11 @@ int32_t ltoposhrinkgray(struct xvimage *image,
         {
             if ((!I || !I[x]) && largepdestr4(F,x,rs,N, tpmin, tpmax, tmmmin, tmmmax)) 
             {
-	      if (ThinningMethod == NULL)
-		F[x] = 0;
-	      else
-		F[x] = ThinningMethod(G,x,rs,N);
+              if (ThinningMethod == NULL) {
+                F[x] = 0;
+              } else {
+                F[x] = ThinningMethod(G, x, rs, N);
+              }
             }
         }
     }
@@ -320,10 +339,11 @@ int32_t ltoposhrinkgray(struct xvimage *image,
         {
             if ((!I || !I[x]) && largepdestr8(F,x,rs,N, tpmin, tpmax, tmmmin, tmmmax)) 
             {
-	      if (ThinningMethod == NULL)
-		F[x] = 0;
-	      else
-		F[x] = ThinningMethod(G,x,rs,N);
+              if (ThinningMethod == NULL) {
+                F[x] = 0;
+              } else {
+                F[x] = ThinningMethod(G, x, rs, N);
+              }
             }
         }
     }
@@ -426,10 +446,11 @@ int32_t ltoposhrinkgray3d(struct xvimage *image,
         {
             if ((!I || !I[x]) && largepdestr6(F, x, rs, ps, N, tpmin, tpmax, tmmmin, tmmmax))
             {
-	      if (ThinningMethod == NULL)
-		F[x] = 0;
-	      else
-		F[x] = ThinningMethod(G,x,rs,ps,N);
+              if (ThinningMethod == NULL) {
+                F[x] = 0;
+              } else {
+                F[x] = ThinningMethod(G, x, rs, ps, N);
+              }
             }
         }
     }
@@ -439,10 +460,11 @@ int32_t ltoposhrinkgray3d(struct xvimage *image,
         {
             if ((!I || !I[x]) && largepdestr26(F, x, rs, ps, N, tpmin, tpmax, tmmmin, tmmmax))
             {
-	      if (ThinningMethod == NULL)
-		F[x] = 0;
-	      else
-		F[x] = ThinningMethod(G,x,rs,ps,N);
+              if (ThinningMethod == NULL) {
+                F[x] = 0;
+              } else {
+                F[x] = ThinningMethod(G, x, rs, ps, N);
+              }
             }
         }
     }

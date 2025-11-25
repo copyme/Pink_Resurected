@@ -228,7 +228,9 @@ void lbresenlist(int32_t Ax, int32_t Ay, int32_t Bx, int32_t By, int32_t *lx, in
       {               /* octant Est-Nord */
         for (x = Ax; x <= Bx; x++)
         {
-	  if (nn >= nmax) goto fin;
+          if (nn >= nmax) {
+            goto fin;
+          }
           lx[nn] = x;
           ly[nn++] = y;
           if (P > 0)
@@ -241,7 +243,9 @@ void lbresenlist(int32_t Ax, int32_t Ay, int32_t Bx, int32_t By, int32_t *lx, in
       {               /* octant Est-Sud */
         for (x = Ax; x <= Bx; x++)
         {
-	  if (nn >= nmax) goto fin;
+          if (nn >= nmax) {
+            goto fin;
+          }
           lx[nn] = x;
           ly[nn++] = y;
           if (P > 0)
@@ -257,7 +261,9 @@ void lbresenlist(int32_t Ax, int32_t Ay, int32_t Bx, int32_t By, int32_t *lx, in
       {               /* octant Ouest-Nord */
         for (x = Ax; x >= Bx; x--)
         {
-	  if (nn >= nmax) goto fin;
+          if (nn >= nmax) {
+            goto fin;
+          }
           lx[nn] = x;
           ly[nn++] = y;
           if (P > 0)
@@ -270,7 +276,9 @@ void lbresenlist(int32_t Ax, int32_t Ay, int32_t Bx, int32_t By, int32_t *lx, in
       {               /* octant Ouest-Sud */
         for (x = Ax; x >= Bx; x--)
         {
-	  if (nn >= nmax) goto fin;
+          if (nn >= nmax) {
+            goto fin;
+          }
           lx[nn] = x;
           ly[nn++] = y;
           if (P > 0)
@@ -293,7 +301,9 @@ void lbresenlist(int32_t Ax, int32_t Ay, int32_t Bx, int32_t By, int32_t *lx, in
       {               /* octant Nord-Est */
         for (y = Ay; y <= By; y++)
         {
-	  if (nn >= nmax) goto fin;
+          if (nn >= nmax) {
+            goto fin;
+          }
           lx[nn] = x;
           ly[nn++] = y;
           if (P > 0)
@@ -306,7 +316,9 @@ void lbresenlist(int32_t Ax, int32_t Ay, int32_t Bx, int32_t By, int32_t *lx, in
       {               /* octant Nord-Ouest */
         for (y = Ay; y <= By; y++)
         {
-	  if (nn >= nmax) goto fin;
+          if (nn >= nmax) {
+            goto fin;
+          }
           lx[nn] = x;
           ly[nn++] = y;
           if (P > 0)
@@ -322,7 +334,9 @@ void lbresenlist(int32_t Ax, int32_t Ay, int32_t Bx, int32_t By, int32_t *lx, in
       {               /* octant Sud-Est */
         for (y = Ay; y >= By; y--)
         {
-	  if (nn >= nmax) goto fin;
+          if (nn >= nmax) {
+            goto fin;
+          }
           lx[nn] = x;
           ly[nn++] = y;
           if (P > 0)
@@ -335,7 +349,9 @@ void lbresenlist(int32_t Ax, int32_t Ay, int32_t Bx, int32_t By, int32_t *lx, in
       {               /* octant Sud-Ouest */
         for (y = Ay; y >= By; y--)
         {
-	  if (nn >= nmax) goto fin;
+          if (nn >= nmax) {
+            goto fin;
+          }
           lx[nn] = x;
           ly[nn++] = y;
           if (P > 0)
@@ -378,23 +394,27 @@ int32_t getoctant(int32_t gx, int32_t gy)
 {
   /* Use gradient to identify octant. */
   int32_t upper = mcabs(gx)>mcabs(gy);
-  if (gx>=0)                            /* Right-pointing */
-    if (gy>=0)                          /*    Up */
+  if (gx >= 0) {   /* Right-pointing */
+    if (gy >= 0) { /*    Up */
       return 4 - upper;
-    else                                /*    Down */
+    } else { /*    Down */
       return 1 + upper;
-  else                                  /* Left */
-    if (gy>0)                           /*    Up */
+    }
+  } else          /* Left */
+    if (gy > 0) { /*    Up */
       return 5 + upper;
-    else                                /*    Down */
+    } else { /*    Down */
       return 8 - upper;
+    }
 }
 
 /* ================================================= */
 void plot(uint8_t *I, int32_t rs, int32_t cs, int32_t x, int32_t y, uint8_t color)
 /* ================================================= */
 {
-  if ((x < 0) || (x >= rs) || (y < 0) || (y >= cs)) return;
+  if ((x < 0) || (x >= rs) || (y < 0) || (y >= cs)) {
+    return;
+  }
   I[y*rs + x] = color;
 } /* plot() */
 
@@ -419,8 +439,13 @@ void lconic(uint8_t *I, int32_t rs, int32_t cs, int32_t xs, int32_t ys, int32_t 
   E *= 4;
   F *= 4;
 
-  if (DEBUG) fprintf(stderr,"lconic -- %d %d %d %d %d %d\n", xs, ys, xe, ye, xoffset, yoffset);
-  if (DEBUG) fprintf(stderr,"lconic -- %d %d %d %d %d %d\n", A,B,C,D,E,F);
+  if (DEBUG) {
+    fprintf(stderr, "lconic -- %d %d %d %d %d %d\n", xs, ys, xe, ye, xoffset,
+            yoffset);
+  }
+  if (DEBUG) {
+    fprintf(stderr, "lconic -- %d %d %d %d %d %d\n", A, B, C, D, E, F);
+  }
 
   /* Translate start point to origin... */
   /*
@@ -496,30 +521,36 @@ void lconic(uint8_t *I, int32_t rs, int32_t cs, int32_t xs, int32_t ys, int32_t 
   gy =   B*gxe + 2*C*gye + E;
   
   octantcount = getoctant(gx,gy) - octant;
-  if (octantcount < 0)
+  if (octantcount < 0) {
     octantcount = octantcount + 8;
-  else if (octantcount==0)
-    if((xs>xe && dxD>0) || (ys>ye && dyD>0) ||
-       (xs<xe && dxD<0) || (ys<ye && dyD<0))
-      octantcount +=8;
+  } else if (octantcount == 0) {
+    if ((xs > xe && dxD > 0) || (ys > ye && dyD > 0) || (xs < xe && dxD < 0) ||
+        (ys < ye && dyD < 0)) {
+      octantcount += 8;
+    }
+  }
 
-  if (DEBUG)
-    fprintf(stderr,"octantcount = %d\n", octantcount);
-  
+  if (DEBUG) {
+    fprintf(stderr, "octantcount = %d\n", octantcount);
+  }
+
   x = xs;
   y = ys;
   
   while (octantcount > 0) {
-    if (DEBUG)
-      fprintf(stderr,"-- %d -------------------------\n", octant); 
-    
+    if (DEBUG) {
+      fprintf(stderr,"-- %d -------------------------\n", octant);
+    }
+
     if (mcodd(octant)) {
       while (2*v <= k2) {
         /* Plot this point */
         plot(I, rs, cs, x+xoffset, y+yoffset, NDG_MAX);
         
         /* Are we inside or outside? */
-        if (DEBUG) fprintf(stderr,"x = %3d y = %3d d = %4d\n", x,y,d);
+        if (DEBUG) {
+          fprintf(stderr, "x = %3d y = %3d d = %4d\n", x, y, d);
+        }
         if (d < 0) {                    /* Inside */
           x = x + dxS;
           y = y + dyS;
@@ -548,8 +579,10 @@ void lconic(uint8_t *I, int32_t rs, int32_t cs, int32_t xs, int32_t ys, int32_t 
       while (2*u < k2) {
         /* Plot this point */
         plot(I, rs, cs, x+xoffset, y+yoffset, NDG_MAX);
-        if (DEBUG) fprintf(stderr,"x = %3d y = %3d d = %4d\n", x,y,d);
-        
+        if (DEBUG) {
+          fprintf(stderr, "x = %3d y = %3d d = %4d\n", x, y, d);
+        }
+
         /* Are we inside or outside? */
         if (d > 0) {                    /* Outside */
           x = x + dxS;
@@ -581,18 +614,22 @@ void lconic(uint8_t *I, int32_t rs, int32_t cs, int32_t xs, int32_t ys, int32_t 
   }
 
   /* Draw final octant until we reach the endpoint */
-  if (DEBUG)
-    fprintf(stderr,"-- %d (final) -----------------\n", octant); 
-    
+  if (DEBUG) {
+    fprintf(stderr,"-- %d (final) -----------------\n", octant);
+  }
+
   if (mcodd(octant)) {
     while (2*v <= k2) {
       /* Plot this point */
       plot(I, rs, cs, x+xoffset, y+yoffset, NDG_MAX);
 
-      if (x == xe && y == ye)
+      if (x == xe && y == ye) {
         break;
-      if (DEBUG) fprintf(stderr,"x = %3d y = %3d d = %4d\n", x,y,d);
-      
+      }
+      if (DEBUG) {
+        fprintf(stderr, "x = %3d y = %3d d = %4d\n", x, y, d);
+      }
+
       /* Are we inside or outside? */
       if (d < 0) {                      /* Inside */
         x = x + dxS;
@@ -615,10 +652,13 @@ void lconic(uint8_t *I, int32_t rs, int32_t cs, int32_t xs, int32_t ys, int32_t 
       /* Plot this point */
       plot(I, rs, cs, x+xoffset, y+yoffset, NDG_MAX);
 
-      if (x == xe && y == ye)
+      if (x == xe && y == ye) {
         break;
-      if (DEBUG) fprintf(stderr,"x = %3d y = %3d d = %4d\n", x,y,d);
-      
+      }
+      if (DEBUG) {
+        fprintf(stderr, "x = %3d y = %3d d = %4d\n", x, y, d);
+      }
+
       /* Are we inside or outside? */
       if (d > 0) {                      /* Outside */
         x = x + dxS;
@@ -653,12 +693,17 @@ void lellipsearc(uint8_t *I, int32_t rs, int32_t cs, int32_t xp, int32_t yp, int
 {
   int32_t xprod, tmp;
   int32_t A, B, C, D, E, F;
-  
-  if (DEBUG) fprintf(stderr,"lellipsearc -- %d %d %d %d %d %d\n", xp, yp, xq, yq, xoffset, yoffset);
+
+  if (DEBUG) {
+    fprintf(stderr, "lellipsearc -- %d %d %d %d %d %d\n", xp, yp, xq, yq,
+            xoffset, yoffset);
+  }
 
   xprod = xp*yq - xq*yp;
 
-  if (DEBUG) fprintf(stderr,"xprod = %d\n", xprod);
+  if (DEBUG) {
+    fprintf(stderr, "xprod = %d\n", xprod);
+  }
 
   if (xprod != 0)        /* if 0, the points are colinear ! */
   {
@@ -691,7 +736,10 @@ void lellipse(uint8_t *I, int32_t rs, int32_t cs, int32_t xp, int32_t yp, int32_
   Applies the translation (xoffset, yoffset) to the result.
 */
 {
-  if (DEBUG) fprintf(stderr,"lellipse -- %d %d %d %d %d %d\n", xp, yp, xq, yq, xoffset, yoffset);
+  if (DEBUG) {
+    fprintf(stderr, "lellipse -- %d %d %d %d %d %d\n", xp, yp, xq, yq, xoffset,
+            yoffset);
+  }
   lellipsearc(I, rs, cs, xp, yp, xq, yq, xoffset, yoffset);
   lellipsearc(I, rs, cs, xq, yq, -xp, -yp, xoffset, yoffset);
   lellipsearc(I, rs, cs, -xp, -yp, -xq, -yq, xoffset, yoffset);
@@ -708,11 +756,17 @@ void lellipse(uint8_t *I, int32_t rs, int32_t cs, int32_t xp, int32_t yp, int32_
 void plotlist(ellipse *ell, int32_t rs, int32_t cs, int32_t x, int32_t y)
 /* ================================================= */
 {
-  if ((y < 0) || (y >= cs)) return;
+  if ((y < 0) || (y >= cs)) {
+    return;
+  }
   if (x < 0) { ell->xmin[y] = 0; return; }
   if (x >= rs) { ell->xmax[y] = rs - 1; return; }
-  if (x < ell->xmin[y]) ell->xmin[y] = x;
-  if (x > ell->xmax[y]) ell->xmax[y] = x;
+  if (x < ell->xmin[y]) {
+    ell->xmin[y] = x;
+  }
+  if (x > ell->xmax[y]) {
+    ell->xmax[y] = x;
+  }
 } /* plotlist() */
 
 /* ================================================= */
@@ -736,8 +790,13 @@ void lconiclist(ellipse *ell, int32_t rs, int32_t cs, int32_t xs, int32_t ys, in
   E *= 4;
   F *= 4;
 
-  if (DEBUG) fprintf(stderr,"lconic -- %d %d %d %d %d %d\n", xs, ys, xe, ye, xoffset, yoffset);
-  if (DEBUG) fprintf(stderr,"lconic -- %d %d %d %d %d %d\n", A,B,C,D,E,F);
+  if (DEBUG) {
+    fprintf(stderr, "lconic -- %d %d %d %d %d %d\n", xs, ys, xe, ye, xoffset,
+            yoffset);
+  }
+  if (DEBUG) {
+    fprintf(stderr, "lconic -- %d %d %d %d %d %d\n", A, B, C, D, E, F);
+  }
 
   /* Translate start point to origin... */
   /*
@@ -813,30 +872,36 @@ void lconiclist(ellipse *ell, int32_t rs, int32_t cs, int32_t xs, int32_t ys, in
   gy =   B*gxe + 2*C*gye + E;
   
   octantcount = getoctant(gx,gy) - octant;
-  if (octantcount < 0)
+  if (octantcount < 0) {
     octantcount = octantcount + 8;
-  else if (octantcount==0)
-    if((xs>xe && dxD>0) || (ys>ye && dyD>0) ||
-       (xs<xe && dxD<0) || (ys<ye && dyD<0))
-      octantcount +=8;
+  } else if (octantcount == 0) {
+    if ((xs > xe && dxD > 0) || (ys > ye && dyD > 0) || (xs < xe && dxD < 0) ||
+        (ys < ye && dyD < 0)) {
+      octantcount += 8;
+    }
+  }
 
-  if (DEBUG)
-    fprintf(stderr,"octantcount = %d\n", octantcount);
-  
+  if (DEBUG) {
+    fprintf(stderr, "octantcount = %d\n", octantcount);
+  }
+
   x = xs;
   y = ys;
   
   while (octantcount > 0) {
-    if (DEBUG)
-      fprintf(stderr,"-- %d -------------------------\n", octant); 
-    
+    if (DEBUG) {
+      fprintf(stderr,"-- %d -------------------------\n", octant);
+    }
+
     if (mcodd(octant)) {
       while (2*v <= k2) {
         /* Plot this point */
         plotlist(ell, rs, cs, x+xoffset, y+yoffset);
         
         /* Are we inside or outside? */
-        if (DEBUG) fprintf(stderr,"x = %3d y = %3d d = %4d\n", x,y,d);
+        if (DEBUG) {
+          fprintf(stderr, "x = %3d y = %3d d = %4d\n", x, y, d);
+        }
         if (d < 0) {                    /* Inside */
           x = x + dxS;
           y = y + dyS;
@@ -865,8 +930,10 @@ void lconiclist(ellipse *ell, int32_t rs, int32_t cs, int32_t xs, int32_t ys, in
       while (2*u < k2) {
         /* Plot this point */
         plotlist(ell, rs, cs, x+xoffset, y+yoffset);
-        if (DEBUG) fprintf(stderr,"x = %3d y = %3d d = %4d\n", x,y,d);
-        
+        if (DEBUG) {
+          fprintf(stderr, "x = %3d y = %3d d = %4d\n", x, y, d);
+        }
+
         /* Are we inside or outside? */
         if (d > 0) {                    /* Outside */
           x = x + dxS;
@@ -898,18 +965,22 @@ void lconiclist(ellipse *ell, int32_t rs, int32_t cs, int32_t xs, int32_t ys, in
   }
 
   /* Draw final octant until we reach the endpoint */
-  if (DEBUG)
-    fprintf(stderr,"-- %d (final) -----------------\n", octant); 
-    
+  if (DEBUG) {
+    fprintf(stderr,"-- %d (final) -----------------\n", octant);
+  }
+
   if (mcodd(octant)) {
     while (2*v <= k2) {
       /* Plot this point */
       plotlist(ell, rs, cs, x+xoffset, y+yoffset);
 
-      if (x == xe && y == ye)
+      if (x == xe && y == ye) {
         break;
-      if (DEBUG) fprintf(stderr,"x = %3d y = %3d d = %4d\n", x,y,d);
-      
+      }
+      if (DEBUG) {
+        fprintf(stderr, "x = %3d y = %3d d = %4d\n", x, y, d);
+      }
+
       /* Are we inside or outside? */
       if (d < 0) {                      /* Inside */
         x = x + dxS;
@@ -932,10 +1003,13 @@ void lconiclist(ellipse *ell, int32_t rs, int32_t cs, int32_t xs, int32_t ys, in
       /* Plot this point */
       plotlist(ell, rs, cs, x+xoffset, y+yoffset);
 
-      if (x == xe && y == ye)
+      if (x == xe && y == ye) {
         break;
-      if (DEBUG) fprintf(stderr,"x = %3d y = %3d d = %4d\n", x,y,d);
-      
+      }
+      if (DEBUG) {
+        fprintf(stderr, "x = %3d y = %3d d = %4d\n", x, y, d);
+      }
+
       /* Are we inside or outside? */
       if (d > 0) {                      /* Outside */
         x = x + dxS;
@@ -970,12 +1044,17 @@ void lellipsearclist(ellipse *ell, int32_t rs, int32_t cs, int32_t xp, int32_t y
 {
   int32_t xprod, tmp;
   int32_t A, B, C, D, E, F;
-  
-  if (DEBUG) fprintf(stderr,"lellipsearc -- %d %d %d %d %d %d\n", xp, yp, xq, yq, xoffset, yoffset);
+
+  if (DEBUG) {
+    fprintf(stderr, "lellipsearc -- %d %d %d %d %d %d\n", xp, yp, xq, yq,
+            xoffset, yoffset);
+  }
 
   xprod = xp*yq - xq*yp;
 
-  if (DEBUG) fprintf(stderr,"xprod = %d\n", xprod);
+  if (DEBUG) {
+    fprintf(stderr, "xprod = %d\n", xprod);
+  }
 
   if (xprod != 0)        /* if 0, the points are colinear ! */
   {
@@ -1020,8 +1099,12 @@ void InitEllipseList(ellipse * ell)
 /* ================================================= */
 {
   int32_t i, rs = ell->rs, cs = ell->cs;
-  for (i = 0; i < cs; i++) ell->xmin[i] = rs-1;
-  for (i = 0; i < cs; i++) ell->xmax[i] = 0;
+  for (i = 0; i < cs; i++) {
+    ell->xmin[i] = rs - 1;
+  }
+  for (i = 0; i < cs; i++) {
+    ell->xmax[i] = 0;
+  }
 } /* InitEllipseList() */
 
 /* ================================================= */
@@ -1047,7 +1130,10 @@ void lellipselist(ellipse *ell, int32_t rs, int32_t cs, int32_t xp, int32_t yp, 
 */
 {
   InitEllipseList(ell);
-  if (DEBUG) fprintf(stderr,"lellipse -- %d %d %d %d %d %d\n", xp, yp, xq, yq, xoffset, yoffset);
+  if (DEBUG) {
+    fprintf(stderr, "lellipse -- %d %d %d %d %d %d\n", xp, yp, xq, yq, xoffset,
+            yoffset);
+  }
   lellipsearclist(ell, rs, cs, xp, yp, xq, yq, xoffset, yoffset);
   lellipsearclist(ell, rs, cs, xq, yq, -xp, -yp, xoffset, yoffset);
   lellipsearclist(ell, rs, cs, -xp, -yp, -xq, -yq, xoffset, yoffset);
@@ -1063,11 +1149,12 @@ void lplotfilledellipse(ellipse *ell, uint8_t *I)
   cs = ell->cs;
   for (y = 0; y < cs; y++)
   {
-    if (ell->xmin[y] <= ell->xmax[y])
+    if (ell->xmin[y] <= ell->xmax[y]) {
       for (x = ell->xmin[y]; x <= ell->xmax[y]; x++)
       {
         I[y*rs + x] = NDG_MAX;
       }
+    }
   }
 }  // lplotfilledellipse()
 
@@ -1083,8 +1170,9 @@ void plotliste(Liste *lp, int32_t rs, int32_t x, int32_t y)
 /* ================================================= */
 {
   int32_t p = rs * y + x;
-  if (ListeVide(lp) || ((p != lp->Pts[lp->Sp - 1]) && (p != lp->Pts[0])))
+  if (ListeVide(lp) || ((p != lp->Pts[lp->Sp - 1]) && (p != lp->Pts[0]))) {
     ListePush(lp, p);
+  }
 } /* plotliste() */
 
 /* ================================================= */
@@ -1112,8 +1200,13 @@ void lconicliste(Liste *lp, int32_t rs, int32_t cs, int32_t xs, int32_t ys, int3
   E *= 4;
   F *= 4;
 
-  if (DEBUG) fprintf(stderr,"lconic -- %d %d %d %d %d %d\n", xs, ys, xe, ye, xoffset, yoffset);
-  if (DEBUG) fprintf(stderr,"lconic -- %d %d %d %d %d %d\n", A,B,C,D,E,F);
+  if (DEBUG) {
+    fprintf(stderr, "lconic -- %d %d %d %d %d %d\n", xs, ys, xe, ye, xoffset,
+            yoffset);
+  }
+  if (DEBUG) {
+    fprintf(stderr, "lconic -- %d %d %d %d %d %d\n", A, B, C, D, E, F);
+  }
 
   /* Translate start point to origin... */
   /*
@@ -1189,30 +1282,36 @@ void lconicliste(Liste *lp, int32_t rs, int32_t cs, int32_t xs, int32_t ys, int3
   gy =   B*gxe + 2*C*gye + E;
   
   octantcount = getoctant(gx,gy) - octant;
-  if (octantcount < 0)
+  if (octantcount < 0) {
     octantcount = octantcount + 8;
-  else if (octantcount==0)
-    if((xs>xe && dxD>0) || (ys>ye && dyD>0) ||
-       (xs<xe && dxD<0) || (ys<ye && dyD<0))
-      octantcount +=8;
+  } else if (octantcount == 0) {
+    if ((xs > xe && dxD > 0) || (ys > ye && dyD > 0) || (xs < xe && dxD < 0) ||
+        (ys < ye && dyD < 0)) {
+      octantcount += 8;
+    }
+  }
 
-  if (DEBUG)
-    fprintf(stderr,"octantcount = %d\n", octantcount);
-  
+  if (DEBUG) {
+    fprintf(stderr, "octantcount = %d\n", octantcount);
+  }
+
   x = xs;
   y = ys;
   
   while (octantcount > 0) {
-    if (DEBUG)
-      fprintf(stderr,"-- %d -------------------------\n", octant); 
-    
+    if (DEBUG) {
+      fprintf(stderr,"-- %d -------------------------\n", octant);
+    }
+
     if (mcodd(octant)) {
       while (2*v <= k2) {
         /* Plot this point */
         plotliste(lp, rs, x+xoffset, y+yoffset);
         
         /* Are we inside or outside? */
-        if (DEBUG) fprintf(stderr,"x = %3d y = %3d d = %4d\n", x,y,d);
+        if (DEBUG) {
+          fprintf(stderr, "x = %3d y = %3d d = %4d\n", x, y, d);
+        }
         if (d < 0) {                    /* Inside */
           x = x + dxS;
           y = y + dyS;
@@ -1241,8 +1340,10 @@ void lconicliste(Liste *lp, int32_t rs, int32_t cs, int32_t xs, int32_t ys, int3
       while (2*u < k2) {
         /* Plot this point */
         plotliste(lp, rs, x+xoffset, y+yoffset);
-        if (DEBUG) fprintf(stderr,"x = %3d y = %3d d = %4d\n", x,y,d);
-        
+        if (DEBUG) {
+          fprintf(stderr, "x = %3d y = %3d d = %4d\n", x, y, d);
+        }
+
         /* Are we inside or outside? */
         if (d > 0) {                    /* Outside */
           x = x + dxS;
@@ -1274,18 +1375,22 @@ void lconicliste(Liste *lp, int32_t rs, int32_t cs, int32_t xs, int32_t ys, int3
   }
 
   /* Draw final octant until we reach the endpoint */
-  if (DEBUG)
-    fprintf(stderr,"-- %d (final) -----------------\n", octant); 
-    
+  if (DEBUG) {
+    fprintf(stderr,"-- %d (final) -----------------\n", octant);
+  }
+
   if (mcodd(octant)) {
     while (2*v <= k2) {
       /* Plot this point */
       plotliste(lp, rs, x+xoffset, y+yoffset);
 
-      if (x == xe && y == ye)
+      if (x == xe && y == ye) {
         break;
-      if (DEBUG) fprintf(stderr,"x = %3d y = %3d d = %4d\n", x,y,d);
-      
+      }
+      if (DEBUG) {
+        fprintf(stderr, "x = %3d y = %3d d = %4d\n", x, y, d);
+      }
+
       /* Are we inside or outside? */
       if (d < 0) {                      /* Inside */
         x = x + dxS;
@@ -1308,10 +1413,13 @@ void lconicliste(Liste *lp, int32_t rs, int32_t cs, int32_t xs, int32_t ys, int3
       /* Plot this point */
       plotliste(lp, rs, x+xoffset, y+yoffset);
 
-      if (x == xe && y == ye)
+      if (x == xe && y == ye) {
         break;
-      if (DEBUG) fprintf(stderr,"x = %3d y = %3d d = %4d\n", x,y,d);
-      
+      }
+      if (DEBUG) {
+        fprintf(stderr, "x = %3d y = %3d d = %4d\n", x, y, d);
+      }
+
       /* Are we inside or outside? */
       if (d > 0) {                      /* Outside */
         x = x + dxS;
@@ -1346,12 +1454,17 @@ void lellipsearcliste(Liste *lp, int32_t rs, int32_t cs, int32_t xp, int32_t yp,
 {
   int32_t xprod, tmp;
   int32_t A, B, C, D, E, F;
-  
-  if (DEBUG) fprintf(stderr,"lellipsearc -- %d %d %d %d %d %d\n", xp, yp, xq, yq, xoffset, yoffset);
+
+  if (DEBUG) {
+    fprintf(stderr, "lellipsearc -- %d %d %d %d %d %d\n", xp, yp, xq, yq,
+            xoffset, yoffset);
+  }
 
   xprod = xp*yq - xq*yp;
 
-  if (DEBUG) fprintf(stderr,"xprod = %d\n", xprod);
+  if (DEBUG) {
+    fprintf(stderr, "xprod = %d\n", xprod);
+  }
 
   if (xprod != 0)        /* if 0, the points are colinear ! */
   {

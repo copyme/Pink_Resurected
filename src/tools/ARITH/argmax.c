@@ -98,9 +98,9 @@ int main(int argc, char **argv)
     fprintf(fd, "e %d\n", 3); 
     fprintf(fd, "%ld %ld %ld\n", arg % rs, (arg % ps) / rs, arg/ps); 
     fclose(fd);
+  } else {
+    printf("%ld %ld %ld\n", arg % rs, (arg % ps) / rs, arg/ps);
   }
-  else
-    printf("%ld %ld %ld\n", arg % rs, (arg % ps) / rs, arg/ps); 
 
   freeimage(image);
 

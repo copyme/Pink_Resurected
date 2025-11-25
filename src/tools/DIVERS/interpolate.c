@@ -72,17 +72,20 @@ int32_t linterpolate(struct xvimage * image1, int32_t factor, struct xvimage ** 
   r = UCHARDATA((*res));
   for (z = 0; z < ds-1; z++)
   {
-    for (y = 0; y < cs; y++)
-    for (x = 0; x < rs; x++)
-    {
-      t1 = p[z*ps + y*rs + x];
-      t2 = p[(z+1)*ps + y*rs + x];
-      for (i = 0; i < factor; i++)
-        r[(z*factor + i) * ps + y * rs + x] = t1 + ((t2-t1)*i)/factor;
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        t1 = p[z * ps + y * rs + x];
+        t2 = p[(z + 1) * ps + y * rs + x];
+        for (i = 0; i < factor; i++) {
+          r[(z * factor + i) * ps + y * rs + x] = t1 + ((t2 - t1) * i) / factor;
+        }
+      }
     }
-    for (y = 0; y < cs; y++)
-    for (x = 0; x < rs; x++)
-      r[(ds-1)*factor * ps + y * rs + x] = p[(ds-1)*ps + y*rs + x];
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        r[(ds - 1) * factor * ps + y * rs + x] = p[(ds - 1) * ps + y * rs + x];
+      }
+    }
   }
 
   /* ---------------------------------------------------------- */

@@ -80,8 +80,12 @@ int32_t lwarp_lwarp(
   {   fprintf(stderr,"lwarp_lwarp() : malloc failed for H\n");
       return(0);
   }
-  for (x = 0; x < N; x++) H[x] = F[x];
-  for (x = 0; x < N; x++) F[x] = 0;
+  for (x = 0; x < N; x++) {
+    H[x] = F[x];
+  }
+  for (x = 0; x < N; x++) {
+    F[x] = 0;
+  }
 
   if (inittriangle(ts) == 0)
   {
@@ -112,18 +116,20 @@ int32_t lwarp_lwarp(
   b[0] = ts->xa;
   b[1] = ts->xb;
   b[2] = ts->xc;
-  
-  if (solsyst3(m, b, sol) == 0)
+
+  if (solsyst3(m, b, sol) == 0) {
     printf("determinant nul\n");
+  }
 
   a[0][0] = sol[0];     a[0][1] = sol[1];     a[0][2] = sol[2];
 
   b[0] = ts->ya;
   b[1] = ts->yb;
   b[2] = ts->yc;
-  
-  if (solsyst3(m, b, sol) == 0)
+
+  if (solsyst3(m, b, sol) == 0) {
     printf("determinant nul\n");
+  }
 
   a[1][0] = sol[0];     a[1][1] = sol[1];     a[1][2] = sol[2];
   a[2][0] = 0.0;        a[2][1] = 0.0;        a[2][2] = 1.0;
@@ -139,7 +145,7 @@ int32_t lwarp_lwarp(
 
   if (noclip)
   {
-    for (x = 0; x < rs; x++)
+    for (x = 0; x < rs; x++) {
       for (y = 0; y < cs; y++)
       {
         b[0] = (double)x;
@@ -153,11 +159,12 @@ int32_t lwarp_lwarp(
           F[y * rs + x] = H[((int32_t)Y) * rs + (int32_t)X];
         }
       }
+    }
   } /* if (noclip) */
   else
   {
-    for (x = (int32_t)floor(td->xmin); x <= (int32_t)ceil(td->xmax); x++)
-      for (y = (int32_t)floor(td->ymin); y <= (int32_t)ceil(td->ymax); y++)
+    for (x = (int32_t)floor(td->xmin); x <= (int32_t)ceil(td->xmax); x++) {
+      for (y = (int32_t)floor(td->ymin); y <= (int32_t)ceil(td->ymax); y++) {
         if (danstriangle(td, (double)x, (double)y))
         {
           b[0] = (double)x;
@@ -166,9 +173,12 @@ int32_t lwarp_lwarp(
           multmat3vec3(a, b, sol);
           X = sol[0];
           Y = sol[1];
-          if ((X >= 0) && ((int32_t)X < rs) && (Y >= 0) && ((int32_t)Y < cs))
+          if ((X >= 0) && ((int32_t)X < rs) && (Y >= 0) && ((int32_t)Y < cs)) {
             F[y * rs + x] = H[((int32_t)Y) * rs + (int32_t)X];
+          }
         }
+      }
+    }
   } /* else if (noclip) */
   return 1;
 }

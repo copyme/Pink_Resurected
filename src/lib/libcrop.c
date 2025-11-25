@@ -52,21 +52,22 @@ uint32_t read_size_on_disk(FILE *fd, uint64_t *rs, uint64_t *cs, uint64_t *d)
 	fgets(buffer, 2, fd);
 	while(buffer[0] == '#')
 	{
-		while(buffer[0] != '\n')
-			fgets(buffer, 2, fd);
-		fgets(buffer, 2, fd);
+          while (buffer[0] != '\n') {
+            fgets(buffer, 2, fd);
+          }
+                fgets(buffer, 2, fd);
     }
 	fgets(&buffer[1], 100, fd);
 	/* Sauvegarde des longueurs (rs,cs,depth) de l'image */
 	c=sscanf(buffer, "%ld %ld %ld", rs, cs, d);
-	if (c == 2) *d = 1;
-	else if (c != 3)
-    {
-    	fprintf(stderr,"read_size_on_disk: invalid image format (3)\n");
-    	return(0);
-    }
+        if (c == 2) {
+          *d = 1;
+        } else if (c != 3) {
+          fprintf(stderr, "read_size_on_disk: invalid image format (3)\n");
+          return (0);
+        }
 
-	return(1);
+        return(1);
 }
 
 
@@ -106,39 +107,42 @@ uint32_t crop_on_disk(FILE *fd, struct xvimage** image_decoupee, uint64_t cx, ui
 		return(0);
     }
 
-	if (buffer[1]=='5')type_image = 5 ;
-	else if (buffer[1]=='7')type_image = 7;
-	else if(buffer[1]=='4')type_image = 4;
-	else if(buffer[1]=='8')type_image = 8;
-	else
-	{
-		fprintf(stderr,"crop_on_disk: invalid image format (2)\n");
-		free(buffer);
-		return(0);
-	}
+    if (buffer[1] == '5') {
+      type_image = 5;
+    } else if (buffer[1] == '7') {
+      type_image = 7;
+    } else if (buffer[1] == '4') {
+      type_image = 4;
+    } else if (buffer[1] == '8') {
+      type_image = 8;
+    } else {
+      fprintf(stderr, "crop_on_disk: invalid image format (2)\n");
+      free(buffer);
+      return (0);
+    }
 
-
-	/*On passe tous les commentaires*/
+        /*On passe tous les commentaires*/
 	fgets(buffer, 2, fd);
 	fgets(buffer, 2, fd);
 	while(buffer[0] == '#')
 	{
-		while(buffer[0] != '\n')
-			fgets(buffer, 2, fd);
-		fgets(buffer, 2, fd);
+          while (buffer[0] != '\n') {
+            fgets(buffer, 2, fd);
+          }
+                fgets(buffer, 2, fd);
     }
 	fgets(&buffer[1], 100, fd);
 	/* Sauvegarde des longueurs (rs,cs,depth) de l'image */
 	c = sscanf(buffer, "%ld %ld %ld", &rs, &cs, &d);
-	if (c == 2) d = 1;
-	else if (c != 3)
-    {
-    	fprintf(stderr,"crop_on_disk : invalid image format (3)\n");
-    	free(buffer);
-    	return(0);
-    }
+        if (c == 2) {
+          d = 1;
+        } else if (c != 3) {
+          fprintf(stderr, "crop_on_disk : invalid image format (3)\n");
+          free(buffer);
+          return (0);
+        }
 
-	/* On lit le nombre maximum que peut prendre un voxel (255 pour une image en niveau de gris)*/
+        /* On lit le nombre maximum que peut prendre un voxel (255 pour une image en niveau de gris)*/
 	fgets(buffer,100, fd);
 	sscanf(buffer, "%ld", &ndgmax);
 

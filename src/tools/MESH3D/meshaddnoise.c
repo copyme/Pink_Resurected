@@ -86,20 +86,36 @@ int main(int argc, char **argv)
     exit(0);
   }
   formatin = UNKNOWN;
-  if (strcmp(argv[1]+strlen(argv[1])-4, ".mcm") == 0) formatin = T_MCM;
-  if (strcmp(argv[1]+strlen(argv[1])-4, ".MCM") == 0) formatin = T_MCM;
-  if (strcmp(argv[1]+strlen(argv[1])-4, ".vtk") == 0) formatin = T_VTK;
-  if (strcmp(argv[1]+strlen(argv[1])-4, ".VTK") == 0) formatin = T_VTK;
-  if (strcmp(argv[1]+strlen(argv[1])-4, ".ifs") == 0) formatin = T_IFS;
-  if (strcmp(argv[1]+strlen(argv[1])-4, ".IFS") == 0) formatin = T_IFS;
+  if (strcmp(argv[1] + strlen(argv[1]) - 4, ".mcm") == 0) {
+    formatin = T_MCM;
+  }
+  if (strcmp(argv[1] + strlen(argv[1]) - 4, ".MCM") == 0) {
+    formatin = T_MCM;
+  }
+  if (strcmp(argv[1] + strlen(argv[1]) - 4, ".vtk") == 0) {
+    formatin = T_VTK;
+  }
+  if (strcmp(argv[1] + strlen(argv[1]) - 4, ".VTK") == 0) {
+    formatin = T_VTK;
+  }
+  if (strcmp(argv[1] + strlen(argv[1]) - 4, ".ifs") == 0) {
+    formatin = T_IFS;
+  }
+  if (strcmp(argv[1] + strlen(argv[1]) - 4, ".IFS") == 0) {
+    formatin = T_IFS;
+  }
   if (formatin == UNKNOWN)
   {
     fprintf(stderr, "%s: bad input file format\n", argv[0]);
     exit(0);
   }
   formatout = UNKNOWN;
-  if (strcmp(argv[argc-1]+strlen(argv[argc-1])-4, ".mcm") == 0) formatout = T_MCM;
-  if (strcmp(argv[argc-1]+strlen(argv[argc-1])-4, ".vtk") == 0) formatout = T_VTK;
+  if (strcmp(argv[argc - 1] + strlen(argv[argc - 1]) - 4, ".mcm") == 0) {
+    formatout = T_MCM;
+  }
+  if (strcmp(argv[argc - 1] + strlen(argv[argc - 1]) - 4, ".vtk") == 0) {
+    formatout = T_VTK;
+  }
   if (formatout == UNKNOWN)
   {
     fprintf(stderr, "%s: bad output file format\n", argv[0]);
@@ -107,9 +123,15 @@ int main(int argc, char **argv)
   }
 
   filein = fopen(argv[1],"r");
-  if (formatin == T_MCM) LoadMeshMCM(filein);
-  if (formatin == T_IFS) LoadMeshIFS(filein);
-  if (formatin == T_VTK) LoadBuildVTK(filein);
+  if (formatin == T_MCM) {
+    LoadMeshMCM(filein);
+  }
+  if (formatin == T_IFS) {
+    LoadMeshIFS(filein);
+  }
+  if (formatin == T_VTK) {
+    LoadBuildVTK(filein);
+  }
   fclose(filein);
 
   alpha = atof(argv[2]);
@@ -117,7 +139,9 @@ int main(int argc, char **argv)
   AddNoiseMesh(alpha);
 
   fileout = fopen(argv[argc-1],"w");
-  if (formatout == T_MCM) SaveMeshMCM(fileout);
+  if (formatout == T_MCM) {
+    SaveMeshMCM(fileout);
+  }
   if (formatout == T_VTK) 
   {
     genheaderVTK(fileout, (char *)"meshaddnoise output");    

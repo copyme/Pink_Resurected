@@ -114,10 +114,13 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (strcmp(argv[3], "avg") == 0) mode = SP_AVG; else
-  if (strcmp(argv[3], "min") == 0) mode = SP_MIN; else
-  if (strcmp(argv[3], "max") == 0) mode = SP_MAX; else
-  {
+  if (strcmp(argv[3], "avg") == 0) {
+    mode = SP_AVG;
+  } else if (strcmp(argv[3], "min") == 0) {
+    mode = SP_MIN;
+  } else if (strcmp(argv[3], "max") == 0) {
+    mode = SP_MAX;
+  } else {
     fprintf(stderr, "mode = <min|max|avg>\n");
     exit(1);
   }

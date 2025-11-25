@@ -68,15 +68,23 @@ int32_t ldir(struct xvimage * image1, int32_t dir)
   /* calcul du resultat */
   /* ---------------------------------------------------------- */
   pt1 = UCHARDATA(image1);
-  for (i = 0; i < N; i++)
+  for (i = 0; i < N; i++) {
     if (pt1[i])
     {
       v = voisin(i, dir, rs, N);
-      if ((v != -1) && (pt1[v] < pt1[i]))
-         Set(i,0);
+      if ((v != -1) && (pt1[v] < pt1[i])) {
+        Set(i, 0);
+      }
     }
+  }
 
-  for (i = 0; i < N; i++) if (IsSet(i,0)) pt1[i] = NDG_MAX; else pt1[i] = NDG_MIN;
+  for (i = 0; i < N; i++) {
+    if (IsSet(i, 0)) {
+      pt1[i] = NDG_MAX;
+    } else {
+      pt1[i] = NDG_MIN;
+    }
+  }
 
   IndicsTermine();
   return 1;

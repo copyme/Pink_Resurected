@@ -96,8 +96,9 @@ int main(int argc, char **argv)
     fprintf(fd, "e %d\n", 1); 
     fprintf(fd, "%d\n", area); 
     fclose(fd);
+  } else {
+    printf("%d\n", area);
   }
-  else printf("%d\n", area); 
 
   freeimage(image);
 

@@ -213,8 +213,11 @@ int main(int argc, char **argv)
       fprintf(stderr, "%s : bad file format 3\n", argv[0]);
       exit(1);
     }
-    if (strncmp(buf, "spline", 6) == 0) process_spline(fd, image);
-    else if (strncmp(buf, "closedspline", 6) == 0) process_closedspline(fd, image);
+    if (strncmp(buf, "spline", 6) == 0) {
+      process_spline(fd, image);
+    } else if (strncmp(buf, "closedspline", 6) == 0) {
+      process_closedspline(fd, image);
+    }
   } // for (i = 0; i < nobj; i++)
 
   fclose(fd);

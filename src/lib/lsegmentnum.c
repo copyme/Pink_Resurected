@@ -263,7 +263,9 @@ int32_t lsegmentnum(
       return(0);
   }
   /* calcul des tailles des minima (histogramme des labels) */
-  for (x = 0; x < N; x++) MU[M[x]] += 1;
+  for (x = 0; x < N; x++) {
+    MU[M[x]] += 1;
+  }
 
   /* ================================================ */
   /*                CONSTRUCTION DU CBT               */
@@ -389,13 +391,16 @@ int32_t lsegmentnum(
     PrintCbt(CBT, nbcell);
     for (i = 0; i < N; i++)
     {
-      if (i % rs == 0) printf("\n");
+      if (i % rs == 0) {
+        printf("\n");
+      }
       printf("%3d ", M[i]);
     }
     printf("\n");
     printf("MU = ");
-    for (i = 1; i < nbcell; i++)
+    for (i = 1; i < nbcell; i++) {
       printf("%3d ", MU[i]);
+    }
     printf("\n");
   }
 #endif
@@ -405,8 +410,11 @@ int32_t lsegmentnum(
 #endif
 
 #ifdef PARANO
-  for (i = 0; i < nbcell; i++)
-    if (Label(CBT,i)) printf("ERROR : label = %d\n", Label(CBT, i));
+  for (i = 0; i < nbcell; i++) {
+    if (Label(CBT, i)) {
+      printf("ERROR : label = %d\n", Label(CBT, i));
+    }
+  }
 #endif
 
   /* ================================================ */
@@ -417,7 +425,9 @@ int32_t lsegmentnum(
 
   /* init:  ranger au niveau 0 de la FAH les feuilles du CBT */
   FahFlush(FAH);
-  for (i = 1; i < nminima+1; i++) FahPush(FAH, i, 0);
+  for (i = 1; i < nminima + 1; i++) {
+    FahPush(FAH, i, 0);
+  }
 
   while (! FahVide(FAH))
   {
@@ -437,13 +447,17 @@ int32_t lsegmentnum(
         nbcomp++;
         Label(CBT,x) = PERTINENT;
 #ifdef SEGMENT
-        if (trace) printf("PERTINENT : %d\n", x);
+        if (trace) {
+          printf("PERTINENT : %d\n", x);
+        }
 #endif
         y = Father(CBT,x);
         while ((y != NIL) && (Label(CBT,y) != INVALIDE))
         {
 #ifdef SEGMENT
-          if (trace) printf("INVALIDE : %d\n", y);
+          if (trace) {
+            printf("INVALIDE : %d\n", y);
+          }
 #endif
           Label(CBT,y) = INVALIDE;
           y = Father(CBT,y);
@@ -452,8 +466,9 @@ int32_t lsegmentnum(
       else
       {
         y = Father(CBT,x);
-        if ((y != NIL) && (Label(CBT,y) != INVALIDE))
+        if ((y != NIL) && (Label(CBT, y) != INVALIDE)) {
           FahPush(FAH, y, k + 1);
+        }
       } /* else if (MU[x] >= seuil) */
     } /* if (Label(CBT,x) != INVALIDE) */
   } /* while (! FahVide(FAH)) */
@@ -464,25 +479,32 @@ int32_t lsegmentnum(
  
 /* RECUPERATION DE LA SEGMENTATION */
 
-  for (x = 1; x < nbcell; x++) Aux(CBT,x) = 0; /* pour la renumerotation */
+  for (x = 1; x < nbcell; x++) {
+    Aux(CBT, x) = 0; /* pour la renumerotation */
+  }
   nbcell = 1;                                  /* pour la renumerotation */
 
   for (i = 0; i < N; i++)
   {
     x = M[i];
-    
-    while ((x != NIL) && (Label(CBT,x) == NONMARQUE)) 
-      x = Father(CBT,x);
+
+    while ((x != NIL) && (Label(CBT, x) == NONMARQUE)) {
+      x = Father(CBT, x);
+    }
     if (Label(CBT,x) == PERTINENT)
     {
 #ifdef SEGMENT
-      if (trace) printf("RECUP PERTINENT : %d\n", x);
+      if (trace) {
+        printf("RECUP PERTINENT : %d\n", x);
+      }
 #endif
-      if (Aux(CBT, x) == 0) Aux(CBT, x) = nbcell++;
+      if (Aux(CBT, x) == 0) {
+        Aux(CBT, x) = nbcell++;
+      }
       M[i] = Aux(CBT, x);
-    }
-    else
+    } else {
       M[i] = 0;
+    }
 
   } /* for i */  
 

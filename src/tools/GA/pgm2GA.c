@@ -122,9 +122,11 @@ entre pixel extremite, param = 3 Deriche default for alpha is 1,\n",
   }
   param = atoi(argv[2]);
 
-  if(argc == 5)
+  if (argc == 5) {
     alpha = atof(argv[3]);
-  else alpha = 1;
+  } else {
+    alpha = 1;
+  }
   if(depth(im) == 1)
     {
       switch(datatype(im)){
@@ -151,10 +153,11 @@ entre pixel extremite, param = 3 Deriche default for alpha is 1,\n",
       fprintf(stderr, "%s: erreur de lppm2ga \n", argv[0]);
       exit(1);
     }
-  if(argc == 5) 
-    writerawGAimage(ga, argv[4]);
-  else
-    writerawGAimage(ga, argv[3]); 
+    if (argc == 5) {
+      writerawGAimage(ga, argv[4]);
+    } else {
+      writerawGAimage(ga, argv[3]);
+    }
 
   freeimage(im); 
   freeimage(ga);

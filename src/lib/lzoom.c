@@ -86,9 +86,18 @@ int32_t lzoomoutbyte(
     return 0;
   }
 
-  rs2 = (index_t)(rs * zoomx); if (rs2 < 1) rs2 = 1;
-  cs2 = (index_t)(cs * zoomy); if (cs2 < 1) cs2 = 1;
-  ds2 = (index_t)(ds * zoomz); if (ds2 < 1) ds2 = 1;
+  rs2 = (index_t)(rs * zoomx);
+  if (rs2 < 1) {
+    rs2 = 1;
+  }
+  cs2 = (index_t)(cs * zoomy);
+  if (cs2 < 1) {
+    cs2 = 1;
+  }
+  ds2 = (index_t)(ds * zoomz);
+  if (ds2 < 1) {
+    ds2 = 1;
+  }
   ps2 = rs2 * cs2;
   kx = 1.0 / zoomx;
   ky = 1.0 / zoomy;
@@ -118,12 +127,19 @@ int32_t lzoomoutbyte(
       tmp = 0.0;
       sigmad = 0.0;
       x1 = (index_t)(x * kx); dx1 = 1.0 - ((x * kx) - x1);
-      xn = (index_t)((x+1) * kx); dxn = ((x+1) * kx) - xn; if (xn == rs) xn = rs-1;
+      xn = (index_t)((x+1) * kx); dxn = ((x+1) * kx) - xn;
+      if (xn == rs) {
+        xn = rs - 1;
+      }
       for (xx = x1; xx <= xn; xx++)
       {
 	d = 1.0;
-	if (xx == x1) d *= dx1; else if (xx == xn) d *= dxn;
-	tmp += d * ptin[xx];
+        if (xx == x1) {
+          d *= dx1;
+        } else if (xx == xn) {
+          d *= dxn;
+        }
+        tmp += d * ptin[xx];
 	sigmad += d;
       }
       ptout[x] = (uint8_t)(tmp / sigmad);
@@ -132,54 +148,101 @@ int32_t lzoomoutbyte(
   else if (ds == 1)
   {
     /* pas efficace - a ameliorer */
-    for (y = 0; y < cs2; y++)
-    for (x = 0; x < rs2; x++)
-    {
-      tmp = 0.0;
-      sigmad = 0.0;
-      x1 = (index_t)(x * kx); dx1 = 1.0 - ((x * kx) - x1);
-      xn = (index_t)((x+1) * kx); dxn = ((x+1) * kx) - xn; if (xn == rs) xn = rs-1;
-      y1 = (index_t)(y * ky); dy1 = 1.0 - ((y * ky) - y1);
-      yn = (index_t)((y+1) * ky); dyn = ((y+1) * ky) - yn; if (yn == cs) yn = cs-1;
-      for (yy = y1; yy <= yn; yy++)
-        for (xx = x1; xx <= xn; xx++)
-	{
-          d = 1.0;
-          if (xx == x1) d *= dx1; else if (xx == xn) d *= dxn;
-          if (yy == y1) d *= dy1; else if (yy == yn) d *= dyn;
-          tmp += d * ptin[yy * rs + xx];
-          sigmad += d;
-	}
-      ptout[y * rs2 + x] = (uint8_t)(tmp / sigmad);
+    for (y = 0; y < cs2; y++) {
+      for (x = 0; x < rs2; x++) {
+        tmp = 0.0;
+        sigmad = 0.0;
+        x1 = (index_t)(x * kx);
+        dx1 = 1.0 - ((x * kx) - x1);
+        xn = (index_t)((x + 1) * kx);
+        dxn = ((x + 1) * kx) - xn;
+        if (xn == rs) {
+          xn = rs - 1;
+        }
+        y1 = (index_t)(y * ky);
+        dy1 = 1.0 - ((y * ky) - y1);
+        yn = (index_t)((y + 1) * ky);
+        dyn = ((y + 1) * ky) - yn;
+        if (yn == cs) {
+          yn = cs - 1;
+        }
+        for (yy = y1; yy <= yn; yy++) {
+          for (xx = x1; xx <= xn; xx++) {
+            d = 1.0;
+            if (xx == x1) {
+              d *= dx1;
+            } else if (xx == xn) {
+              d *= dxn;
+            }
+            if (yy == y1) {
+              d *= dy1;
+            } else if (yy == yn) {
+              d *= dyn;
+            }
+            tmp += d * ptin[yy * rs + xx];
+            sigmad += d;
+          }
+        }
+        ptout[y * rs2 + x] = (uint8_t)(tmp / sigmad);
+      }
     }
   } /* if (ds == 1) */
   else
   {
     /* pas efficace - a ameliorer */
-    for (z = 0; z < ds2; z++)
-    for (y = 0; y < cs2; y++)
-    for (x = 0; x < rs2; x++)
-    {
-      tmp = 0.0;
-      sigmad = 0.0;
-      x1 = (index_t)(x * kx); dx1 = 1.0 - ((x * kx) - x1);
-      xn = (index_t)((x+1) * kx); dxn = ((x+1) * kx) - xn; if (xn == rs) xn = rs-1;
-      y1 = (index_t)(y * ky); dy1 = 1.0 - ((y * ky) - y1);
-      yn = (index_t)((y+1) * ky); dyn = ((y+1) * ky) - yn; if (yn == cs) yn = cs-1;
-      z1 = (index_t)(z * kz); dz1 = 1.0 - ((z * kz) - z1);
-      zn = (index_t)((z+1) * kz); dzn = ((z+1) * kz) - zn; if (zn == ds) zn = ds-1;
-      for (zz = z1; zz <= zn; zz++)
-      for (yy = y1; yy <= yn; yy++)
-      for (xx = x1; xx <= xn; xx++)
-      {
-        d = 1.0;
-        if (xx == x1) d *= dx1; else if (xx == xn) d *= dxn;
-        if (yy == y1) d *= dy1; else if (yy == yn) d *= dyn;
-        if (zz == z1) d *= dz1; else if (zz == zn) d *= dzn;
-        tmp += d * ptin[zz*ps + yy*rs + xx];
-        sigmad += d;
+    for (z = 0; z < ds2; z++) {
+      for (y = 0; y < cs2; y++) {
+        for (x = 0; x < rs2; x++) {
+          tmp = 0.0;
+          sigmad = 0.0;
+          x1 = (index_t)(x * kx);
+          dx1 = 1.0 - ((x * kx) - x1);
+          xn = (index_t)((x + 1) * kx);
+          dxn = ((x + 1) * kx) - xn;
+          if (xn == rs) {
+            xn = rs - 1;
+          }
+          y1 = (index_t)(y * ky);
+          dy1 = 1.0 - ((y * ky) - y1);
+          yn = (index_t)((y + 1) * ky);
+          dyn = ((y + 1) * ky) - yn;
+          if (yn == cs) {
+            yn = cs - 1;
+          }
+          z1 = (index_t)(z * kz);
+          dz1 = 1.0 - ((z * kz) - z1);
+          zn = (index_t)((z + 1) * kz);
+          dzn = ((z + 1) * kz) - zn;
+          if (zn == ds) {
+            zn = ds - 1;
+          }
+          for (zz = z1; zz <= zn; zz++) {
+            for (yy = y1; yy <= yn; yy++) {
+              for (xx = x1; xx <= xn; xx++) {
+                d = 1.0;
+                if (xx == x1) {
+                  d *= dx1;
+                } else if (xx == xn) {
+                  d *= dxn;
+                }
+                if (yy == y1) {
+                  d *= dy1;
+                } else if (yy == yn) {
+                  d *= dyn;
+                }
+                if (zz == z1) {
+                  d *= dz1;
+                } else if (zz == zn) {
+                  d *= dzn;
+                }
+                tmp += d * ptin[zz * ps + yy * rs + xx];
+                sigmad += d;
+              }
+            }
+          }
+          ptout[z * ps2 + y * rs2 + x] = (uint8_t)(tmp / sigmad);
+        }
       }
-      ptout[z*ps2 + y*rs2 + x] = (uint8_t)(tmp / sigmad);
     }
   } /* if (ds != 1) */
 
@@ -224,9 +287,18 @@ int32_t lzoomoutlong(
     return 0;
   }
 
-  rs2 = (index_t)(rs * zoomx); if (rs2 < 1) rs2 = 1;
-  cs2 = (index_t)(cs * zoomy); if (cs2 < 1) cs2 = 1;
-  ds2 = (index_t)(ds * zoomz); if (ds2 < 1) ds2 = 1;
+  rs2 = (index_t)(rs * zoomx);
+  if (rs2 < 1) {
+    rs2 = 1;
+  }
+  cs2 = (index_t)(cs * zoomy);
+  if (cs2 < 1) {
+    cs2 = 1;
+  }
+  ds2 = (index_t)(ds * zoomz);
+  if (ds2 < 1) {
+    ds2 = 1;
+  }
   ps2 = rs2 * cs2;
   kx = 1.0 / zoomx;
   ky = 1.0 / zoomy;
@@ -251,54 +323,101 @@ int32_t lzoomoutlong(
   if (ds == 1)
   {
     /* pas efficace - a ameliorer */
-    for (y = 0; y < cs2; y++)
-    for (x = 0; x < rs2; x++)
-    {
-      tmp = 0.0;
-      sigmad = 0.0;
-      x1 = (index_t)(x * kx); dx1 = 1.0 - ((x * kx) - x1);
-      xn = (index_t)((x+1) * kx); dxn = ((x+1) * kx) - xn; if (xn == rs) xn = rs-1;
-      y1 = (index_t)(y * ky); dy1 = 1.0 - ((y * ky) - y1);
-      yn = (index_t)((y+1) * ky); dyn = ((y+1) * ky) - yn; if (yn == cs) yn = cs-1;
-      for (yy = y1; yy <= yn; yy++)
-        for (xx = x1; xx <= xn; xx++)
-	{
-          d = 1.0;
-          if (xx == x1) d *= dx1; else if (xx == xn) d *= dxn;
-          if (yy == y1) d *= dy1; else if (yy == yn) d *= dyn;
-          tmp += d * ptin[yy * rs + xx];
-          sigmad += d;
-	}
-      ptout[y * rs2 + x] = (uint8_t)(tmp / sigmad);
+    for (y = 0; y < cs2; y++) {
+      for (x = 0; x < rs2; x++) {
+        tmp = 0.0;
+        sigmad = 0.0;
+        x1 = (index_t)(x * kx);
+        dx1 = 1.0 - ((x * kx) - x1);
+        xn = (index_t)((x + 1) * kx);
+        dxn = ((x + 1) * kx) - xn;
+        if (xn == rs) {
+          xn = rs - 1;
+        }
+        y1 = (index_t)(y * ky);
+        dy1 = 1.0 - ((y * ky) - y1);
+        yn = (index_t)((y + 1) * ky);
+        dyn = ((y + 1) * ky) - yn;
+        if (yn == cs) {
+          yn = cs - 1;
+        }
+        for (yy = y1; yy <= yn; yy++) {
+          for (xx = x1; xx <= xn; xx++) {
+            d = 1.0;
+            if (xx == x1) {
+              d *= dx1;
+            } else if (xx == xn) {
+              d *= dxn;
+            }
+            if (yy == y1) {
+              d *= dy1;
+            } else if (yy == yn) {
+              d *= dyn;
+            }
+            tmp += d * ptin[yy * rs + xx];
+            sigmad += d;
+          }
+        }
+        ptout[y * rs2 + x] = (uint8_t)(tmp / sigmad);
+      }
     }
   } /* if (ds == 1) */
   else
   {
     /* pas efficace - a ameliorer */
-    for (z = 0; z < ds2; z++)
-    for (y = 0; y < cs2; y++)
-    for (x = 0; x < rs2; x++)
-    {
-      tmp = 0.0;
-      sigmad = 0.0;
-      x1 = (index_t)(x * kx); dx1 = 1.0 - ((x * kx) - x1);
-      xn = (index_t)((x+1) * kx); dxn = ((x+1) * kx) - xn; if (xn == rs) xn = rs-1;
-      y1 = (index_t)(y * ky); dy1 = 1.0 - ((y * ky) - y1);
-      yn = (index_t)((y+1) * ky); dyn = ((y+1) * ky) - yn; if (yn == cs) yn = cs-1;
-      z1 = (index_t)(z * kz); dz1 = 1.0 - ((z * kz) - z1);
-      zn = (index_t)((z+1) * kz); dzn = ((z+1) * kz) - zn; if (zn == ds) zn = ds-1;
-      for (zz = z1; zz <= zn; zz++)
-      for (yy = y1; yy <= yn; yy++)
-      for (xx = x1; xx <= xn; xx++)
-      {
-        d = 1.0;
-        if (xx == x1) d *= dx1; else if (xx == xn) d *= dxn;
-        if (yy == y1) d *= dy1; else if (yy == yn) d *= dyn;
-        if (zz == z1) d *= dz1; else if (zz == zn) d *= dzn;
-        tmp += d * ptin[zz*ps + yy*rs + xx];
-        sigmad += d;
+    for (z = 0; z < ds2; z++) {
+      for (y = 0; y < cs2; y++) {
+        for (x = 0; x < rs2; x++) {
+          tmp = 0.0;
+          sigmad = 0.0;
+          x1 = (index_t)(x * kx);
+          dx1 = 1.0 - ((x * kx) - x1);
+          xn = (index_t)((x + 1) * kx);
+          dxn = ((x + 1) * kx) - xn;
+          if (xn == rs) {
+            xn = rs - 1;
+          }
+          y1 = (index_t)(y * ky);
+          dy1 = 1.0 - ((y * ky) - y1);
+          yn = (index_t)((y + 1) * ky);
+          dyn = ((y + 1) * ky) - yn;
+          if (yn == cs) {
+            yn = cs - 1;
+          }
+          z1 = (index_t)(z * kz);
+          dz1 = 1.0 - ((z * kz) - z1);
+          zn = (index_t)((z + 1) * kz);
+          dzn = ((z + 1) * kz) - zn;
+          if (zn == ds) {
+            zn = ds - 1;
+          }
+          for (zz = z1; zz <= zn; zz++) {
+            for (yy = y1; yy <= yn; yy++) {
+              for (xx = x1; xx <= xn; xx++) {
+                d = 1.0;
+                if (xx == x1) {
+                  d *= dx1;
+                } else if (xx == xn) {
+                  d *= dxn;
+                }
+                if (yy == y1) {
+                  d *= dy1;
+                } else if (yy == yn) {
+                  d *= dyn;
+                }
+                if (zz == z1) {
+                  d *= dz1;
+                } else if (zz == zn) {
+                  d *= dzn;
+                }
+                tmp += d * ptin[zz * ps + yy * rs + xx];
+                sigmad += d;
+              }
+            }
+          }
+          ptout[z * ps2 + y * rs2 + x] = (uint8_t)(tmp / sigmad);
+        }
       }
-      ptout[z*ps2 + y*rs2 + x] = (uint8_t)(tmp / sigmad);
     }
   } /* if (ds != 1) */
 
@@ -343,9 +462,18 @@ int32_t lzoomoutfloat(
     return 0;
   }
 
-  rs2 = (index_t)(rs * zoomx); if (rs2 < 1) rs2 = 1;
-  cs2 = (index_t)(cs * zoomy); if (cs2 < 1) cs2 = 1;
-  ds2 = (index_t)(ds * zoomz); if (ds2 < 1) ds2 = 1;
+  rs2 = (index_t)(rs * zoomx);
+  if (rs2 < 1) {
+    rs2 = 1;
+  }
+  cs2 = (index_t)(cs * zoomy);
+  if (cs2 < 1) {
+    cs2 = 1;
+  }
+  ds2 = (index_t)(ds * zoomz);
+  if (ds2 < 1) {
+    ds2 = 1;
+  }
   ps2 = rs2 * cs2;
   kx = 1.0 / zoomx;
   ky = 1.0 / zoomy;
@@ -370,54 +498,101 @@ int32_t lzoomoutfloat(
   if (ds == 1)
   {
     /* pas efficace - a ameliorer */
-    for (y = 0; y < cs2; y++)
-    for (x = 0; x < rs2; x++)
-    {
-      tmp = 0.0;
-      sigmad = 0.0;
-      x1 = (index_t)(x * kx); dx1 = 1.0 - ((x * kx) - x1);
-      xn = (index_t)((x+1) * kx); dxn = ((x+1) * kx) - xn; if (xn == rs) xn = rs-1;
-      y1 = (index_t)(y * ky); dy1 = 1.0 - ((y * ky) - y1);
-      yn = (index_t)((y+1) * ky); dyn = ((y+1) * ky) - yn; if (yn == cs) yn = cs-1;
-      for (yy = y1; yy <= yn; yy++)
-        for (xx = x1; xx <= xn; xx++)
-	{
-          d = 1.0;
-          if (xx == x1) d *= dx1; else if (xx == xn) d *= dxn;
-          if (yy == y1) d *= dy1; else if (yy == yn) d *= dyn;
-          tmp += d * ptin[yy * rs + xx];
-          sigmad += d;
-	}
-      ptout[y * rs2 + x] = (float)(tmp / sigmad);
+    for (y = 0; y < cs2; y++) {
+      for (x = 0; x < rs2; x++) {
+        tmp = 0.0;
+        sigmad = 0.0;
+        x1 = (index_t)(x * kx);
+        dx1 = 1.0 - ((x * kx) - x1);
+        xn = (index_t)((x + 1) * kx);
+        dxn = ((x + 1) * kx) - xn;
+        if (xn == rs) {
+          xn = rs - 1;
+        }
+        y1 = (index_t)(y * ky);
+        dy1 = 1.0 - ((y * ky) - y1);
+        yn = (index_t)((y + 1) * ky);
+        dyn = ((y + 1) * ky) - yn;
+        if (yn == cs) {
+          yn = cs - 1;
+        }
+        for (yy = y1; yy <= yn; yy++) {
+          for (xx = x1; xx <= xn; xx++) {
+            d = 1.0;
+            if (xx == x1) {
+              d *= dx1;
+            } else if (xx == xn) {
+              d *= dxn;
+            }
+            if (yy == y1) {
+              d *= dy1;
+            } else if (yy == yn) {
+              d *= dyn;
+            }
+            tmp += d * ptin[yy * rs + xx];
+            sigmad += d;
+          }
+        }
+        ptout[y * rs2 + x] = (float)(tmp / sigmad);
+      }
     }
   } /* if (ds == 1) */
   else
   {
     /* pas efficace - a ameliorer */
-    for (z = 0; z < ds2; z++)
-    for (y = 0; y < cs2; y++)
-    for (x = 0; x < rs2; x++)
-    {
-      tmp = 0.0;
-      sigmad = 0.0;
-      x1 = (index_t)(x * kx); dx1 = 1.0 - ((x * kx) - x1);
-      xn = (index_t)((x+1) * kx); dxn = ((x+1) * kx) - xn; if (xn == rs) xn = rs-1;
-      y1 = (index_t)(y * ky); dy1 = 1.0 - ((y * ky) - y1);
-      yn = (index_t)((y+1) * ky); dyn = ((y+1) * ky) - yn; if (yn == cs) yn = cs-1;
-      z1 = (index_t)(z * kz); dz1 = 1.0 - ((z * kz) - z1);
-      zn = (index_t)((z+1) * kz); dzn = ((z+1) * kz) - zn; if (zn == ds) zn = ds-1;
-      for (zz = z1; zz <= zn; zz++)
-      for (yy = y1; yy <= yn; yy++)
-      for (xx = x1; xx <= xn; xx++)
-      {
-        d = 1.0;
-        if (xx == x1) d *= dx1; else if (xx == xn) d *= dxn;
-        if (yy == y1) d *= dy1; else if (yy == yn) d *= dyn;
-        if (zz == z1) d *= dz1; else if (zz == zn) d *= dzn;
-        tmp += d * ptin[zz*ps + yy*rs + xx];
-        sigmad += d;
+    for (z = 0; z < ds2; z++) {
+      for (y = 0; y < cs2; y++) {
+        for (x = 0; x < rs2; x++) {
+          tmp = 0.0;
+          sigmad = 0.0;
+          x1 = (index_t)(x * kx);
+          dx1 = 1.0 - ((x * kx) - x1);
+          xn = (index_t)((x + 1) * kx);
+          dxn = ((x + 1) * kx) - xn;
+          if (xn == rs) {
+            xn = rs - 1;
+          }
+          y1 = (index_t)(y * ky);
+          dy1 = 1.0 - ((y * ky) - y1);
+          yn = (index_t)((y + 1) * ky);
+          dyn = ((y + 1) * ky) - yn;
+          if (yn == cs) {
+            yn = cs - 1;
+          }
+          z1 = (index_t)(z * kz);
+          dz1 = 1.0 - ((z * kz) - z1);
+          zn = (index_t)((z + 1) * kz);
+          dzn = ((z + 1) * kz) - zn;
+          if (zn == ds) {
+            zn = ds - 1;
+          }
+          for (zz = z1; zz <= zn; zz++) {
+            for (yy = y1; yy <= yn; yy++) {
+              for (xx = x1; xx <= xn; xx++) {
+                d = 1.0;
+                if (xx == x1) {
+                  d *= dx1;
+                } else if (xx == xn) {
+                  d *= dxn;
+                }
+                if (yy == y1) {
+                  d *= dy1;
+                } else if (yy == yn) {
+                  d *= dyn;
+                }
+                if (zz == z1) {
+                  d *= dz1;
+                } else if (zz == zn) {
+                  d *= dzn;
+                }
+                tmp += d * ptin[zz * ps + yy * rs + xx];
+                sigmad += d;
+              }
+            }
+          }
+          ptout[z * ps2 + y * rs2 + x] = (float)(tmp / sigmad);
+        }
       }
-      ptout[z*ps2 + y*rs2 + x] = (float)(tmp / sigmad);
     }
   } /* if (ds != 1) */
 
@@ -462,7 +637,11 @@ int32_t lzoominbyte(
 
   rs2 = (index_t)(rs * zoomx);
   cs2 = (index_t)(cs * zoomy);
-  if (ds == 1) ds2 = 1; else ds2 = (index_t)(ds * zoomz);
+  if (ds == 1) {
+    ds2 = 1;
+  } else {
+    ds2 = (index_t)(ds * zoomz);
+  }
   ps2 = rs2 * cs2;
   N2 = ps2 * ds2;
 
@@ -589,7 +768,11 @@ int32_t lzoominlong(
 
   rs2 = (index_t)(rs * zoomx);
   cs2 = (index_t)(cs * zoomy);
-  if (ds == 1) ds2 = 1; else ds2 = (index_t)(ds * zoomz);
+  if (ds == 1) {
+    ds2 = 1;
+  } else {
+    ds2 = (index_t)(ds * zoomz);
+  }
   ps2 = rs2 * cs2;
   N2 = ps2 * ds2;
 
@@ -703,7 +886,11 @@ int32_t lzoominfloat(
 
   rs2 = (index_t)(rs * zoomx);
   cs2 = (index_t)(cs * zoomy);
-  if (ds == 1) ds2 = 1; else ds2 = (index_t)(ds * zoomz);
+  if (ds == 1) {
+    ds2 = 1;
+  } else {
+    ds2 = (index_t)(ds * zoomz);
+  }
   ps2 = rs2 * cs2;
   N2 = ps2 * ds2;
 
@@ -797,28 +984,26 @@ int32_t lzoom(
   }
   else if ((zoomx >= 1.0) && (zoomy >= 1.0) && (zoomz >= 1.0)) 
   {
-    if (datatype(in) == VFF_TYP_1_BYTE)
+    if (datatype(in) == VFF_TYP_1_BYTE) {
       return lzoominbyte(in, out, zoomx, zoomy, zoomz);
-    else if (datatype(in) == VFF_TYP_4_BYTE)
+    } else if (datatype(in) == VFF_TYP_4_BYTE) {
       return lzoominlong(in, out, zoomx, zoomy, zoomz);
-    else if (datatype(in) == VFF_TYP_FLOAT)
+    } else if (datatype(in) == VFF_TYP_FLOAT) {
       return lzoominfloat(in, out, zoomx, zoomy, zoomz);
-    else
-    {  
+    } else {
       fprintf(stderr,"%s : bad data type\n", F_NAME);
       return 0;
     }
   }
   else if ((zoomx <= 1.0) && (zoomy <= 1.0) && (zoomz <= 1.0)) 
   {
-    if (datatype(in) == VFF_TYP_1_BYTE)
+    if (datatype(in) == VFF_TYP_1_BYTE) {
       return lzoomoutbyte(in, out, zoomx, zoomy, zoomz);
-    else if (datatype(in) == VFF_TYP_4_BYTE)
+    } else if (datatype(in) == VFF_TYP_4_BYTE) {
       return lzoomoutlong(in, out, zoomx, zoomy, zoomz);
-    else if (datatype(in) == VFF_TYP_FLOAT)
+    } else if (datatype(in) == VFF_TYP_FLOAT) {
       return lzoomoutfloat(in, out, zoomx, zoomy, zoomz);
-    else
-    {  
+    } else {
       fprintf(stderr,"%s : bad data type\n", F_NAME);
       return 0;
     }
@@ -842,9 +1027,13 @@ int32_t lzoom2(
 {
   double zoom = 0.0;
 
-  if (dim == 'x') zoom = (double)newdim / (double)rowsize(in);
-  else if (dim == 'y') zoom = (double)newdim / (double)colsize(in);
-  else if (dim == 'z') zoom = (double)newdim / (double)depth(in);
+  if (dim == 'x') {
+    zoom = (double)newdim / (double)rowsize(in);
+  } else if (dim == 'y') {
+    zoom = (double)newdim / (double)colsize(in);
+  } else if (dim == 'z') {
+    zoom = (double)newdim / (double)depth(in);
+  }
 
   return lzoom(in, out, zoom, zoom, zoom);
 } // lzoom2()

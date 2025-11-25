@@ -66,9 +66,27 @@ struct xvimage *allocGAimage(
   int32_t ts;                          /* type size */
   switch (t)
   {
-  case VFF_TYP_GABYTE: if(d == 1) ts = 2; else ts = 3; break;      /* cas d'une image d'arete en 2D, chaque pixel a 2 aretes */
-  case VFF_TYP_GAFLOAT: if(d == 1) ts = 2*sizeof(float); else ts = 3*sizeof(float); break;
-  case VFF_TYP_GADOUBLE: if(d == 1) ts = 2*sizeof(double); else ts = 3*sizeof(float); break;
+  case VFF_TYP_GABYTE:
+    if (d == 1) {
+      ts = 2;
+    } else {
+      ts = 3;
+    }
+    break; /* cas d'une image d'arete en 2D, chaque pixel a 2 aretes */
+  case VFF_TYP_GAFLOAT:
+    if (d == 1) {
+      ts = 2 * sizeof(float);
+    } else {
+      ts = 3 * sizeof(float);
+    }
+    break;
+  case VFF_TYP_GADOUBLE:
+    if (d == 1) {
+      ts = 2 * sizeof(double);
+    } else {
+      ts = 3 * sizeof(float);
+    }
+    break;
   default: fprintf(stderr,"%s: bad data type, ne gère que les GAs %d\n", F_NAME, t);
     return NULL;
   } /* switch (t) */
@@ -95,9 +113,9 @@ struct xvimage *allocGAimage(
         return NULL;
     }
     strcpy((char *)(g->name), name);
-  }
-  else
+  } else {
     g->name = NULL;
+  }
 
   rowsize(g) = rs;
   colsize(g) = cs;
@@ -138,13 +156,24 @@ void writerawGAimage(const struct xvimage * image, char *filename)
   }
   switch(datatype(image)){
   case VFF_TYP_GABYTE:
-    if(d == 1) ts = 2; else ts =3;
+    if (d == 1) {
+      ts = 2;
+    } else {
+      ts = 3;
+    }
     fputs("PC\n", fd);
-    if ((image->xdim != 0.0) && (d > 1))
-      fprintf(fd, "#xdim %g\n#ydim %g\n#zdim %g\n", image->xdim, image->ydim, image->zdim);
-    if ((image->xdim != 0.0) && (d == 1))
+    if ((image->xdim != 0.0) && (d > 1)) {
+      fprintf(fd, "#xdim %g\n#ydim %g\n#zdim %g\n", image->xdim, image->ydim,
+              image->zdim);
+    }
+    if ((image->xdim != 0.0) && (d == 1)) {
       fprintf(fd, "#xdim %g\n#ydim %g\n", image->xdim, image->ydim);
-    if (d > 1) fprintf(fd, "%d %d %d\n", rs, cs, d); else  fprintf(fd, "%d %d\n", rs, cs);
+    }
+    if (d > 1) {
+      fprintf(fd, "%d %d %d\n", rs, cs, d);
+    } else {
+      fprintf(fd, "%d %d\n", rs, cs);
+    }
     fprintf(fd, "255\n");
     
     ret = fwrite(UCHARDATA(image), sizeof(char), ts*N, fd);
@@ -155,13 +184,24 @@ void writerawGAimage(const struct xvimage * image, char *filename)
     }
     break;
   case VFF_TYP_GAFLOAT:
-    if(d == 1) ts = 2*sizeof(float); else ts = 3*sizeof(float);
+    if (d == 1) {
+      ts = 2 * sizeof(float);
+    } else {
+      ts = 3 * sizeof(float);
+    }
     fputs("PD\n", fd);
-    if ((image->xdim != 0.0) && (d > 1))
-      fprintf(fd, "#xdim %g\n#ydim %g\n#zdim %g\n", image->xdim, image->ydim, image->zdim);
-    if ((image->xdim != 0.0) && (d == 1))
+    if ((image->xdim != 0.0) && (d > 1)) {
+      fprintf(fd, "#xdim %g\n#ydim %g\n#zdim %g\n", image->xdim, image->ydim,
+              image->zdim);
+    }
+    if ((image->xdim != 0.0) && (d == 1)) {
       fprintf(fd, "#xdim %g\n#ydim %g\n", image->xdim, image->ydim);
-    if (d > 1) fprintf(fd, "%d %d %d\n", rs, cs, d); else  fprintf(fd, "%d %d\n", rs, cs);
+    }
+    if (d > 1) {
+      fprintf(fd, "%d %d %d\n", rs, cs, d);
+    } else {
+      fprintf(fd, "%d %d\n", rs, cs);
+    }
     fprintf(fd, "65535\n");
     ret = fwrite(UCHARDATA(image), sizeof(char), ts*N, fd);
     if (ret != ts*N)
@@ -232,19 +272,21 @@ struct xvimage * readGAimage(const char *filename)
   do 
   {
     fgets(buffer, BUFFERSIZE, fd); /* commentaire */
-    if (strncmp(buffer, "#xdim", 5) == 0)
+    if (strncmp(buffer, "#xdim", 5) == 0) {
       sscanf(buffer+5, "%lf", &xdim);
-    else if (strncmp(buffer, "#ydim", 5) == 0)
+    } else if (strncmp(buffer, "#ydim", 5) == 0) {
       sscanf(buffer+5, "%lf", &ydim);
-    else if (strncmp(buffer, "#zdim", 5) == 0)
-      sscanf(buffer+5, "%lf", &zdim);
+    } else if (strncmp(buffer, "#zdim", 5) == 0) {
+      sscanf(buffer + 5, "%lf", &zdim);
+    }
   } while (!isdigit(buffer[0]));
 
   c = sscanf(buffer, "%d %d %d", &rs, &cs, &d);
-  if (c == 2) d = 1;
-  else if (c != 3)
-  {   fprintf(stderr,"%s : invalid image format\n", F_NAME);
-      return NULL;
+  if (c == 2) {
+    d = 1;
+  } else if (c != 3) {
+    fprintf(stderr, "%s : invalid image format\n", F_NAME);
+    return NULL;
   }
 
   fgets(buffer, BUFFERSIZE, fd);
@@ -263,7 +305,11 @@ struct xvimage * readGAimage(const char *filename)
   if (typepixel == VFF_TYP_GABYTE)
   {
     int32_t ret;
-    if(d == 1) ts=2; else ts = 3;
+    if (d == 1) {
+      ts = 2;
+    } else {
+      ts = 3;
+    }
     ret = fread(UCHARDATA(image), sizeof(char), ts*N, fd);
     if (ret != ts*N)
     {
@@ -276,7 +322,11 @@ struct xvimage * readGAimage(const char *filename)
   if (typepixel == VFF_TYP_GAFLOAT)
   {
     int32_t ret;
-    if(d == 1) ts=2; else ts = 3;
+    if (d == 1) {
+      ts = 2;
+    } else {
+      ts = 3;
+    }
     ret = fread(UCHARDATA(image), sizeof(float), ts*N, fd);
     if (ret != ts*N)
     {
@@ -325,8 +375,9 @@ void freeimage4D(struct xvimage4D * im)     /* derniere frame */
 /* ==================================== */
 {
   int32_t i;
-  for(i = 0; i < im->ss; i++)
+  for (i = 0; i < im->ss; i++) {
     freeimage(im->frame[i]);
+  }
   free(im);
 }
 
@@ -476,12 +527,13 @@ struct GA4d * readGA4d(const char *filename)
   do 
   {
     fgets(buffer, BUFFERSIZE, fd); /* commentaire */
-    if (strncmp(buffer, "#xdim", 5) == 0)
+    if (strncmp(buffer, "#xdim", 5) == 0) {
       sscanf(buffer+5, "%lf", &xdim);
-    else if (strncmp(buffer, "#ydim", 5) == 0)
+    } else if (strncmp(buffer, "#ydim", 5) == 0) {
       sscanf(buffer+5, "%lf", &ydim);
-    else if (strncmp(buffer, "#zdim", 5) == 0)
-      sscanf(buffer+5, "%lf", &zdim);
+    } else if (strncmp(buffer, "#zdim", 5) == 0) {
+      sscanf(buffer + 5, "%lf", &zdim);
+    }
   } while (!isdigit(buffer[0]));
 
   c = sscanf(buffer, "%d %d %d %d", &rs, &cs, &d, &ss);
@@ -540,9 +592,9 @@ struct GA4d *allocGA4d(
         return NULL;
     }
     strcpy((char *)(g->name), name);
-  }
-  else
+  } else {
     g->name = NULL;
+  }
 
   rowsize(g) = rs;
   colsize(g) = cs;

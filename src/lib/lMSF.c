@@ -95,8 +95,12 @@ int32_t MSF(struct xvimage *ga, struct xvimage *marqueurs)
 	/* u est growing edge */
 	mcrbt_RbtInsert(&L, (TypRbtKey)F[u], u);
 	Set(u, TRUE);
-      }else Set(u, FALSE);
-    }else Set(u,FALSE);
+      } else {
+        Set(u, FALSE);
+      }
+    } else {
+      Set(u, FALSE);
+    }
   }
   
  while(!mcrbt_RbtVide(L)){
@@ -138,12 +142,17 @@ int32_t MSF(struct xvimage *ga, struct xvimage *marqueurs)
      }
    }
    UnSet(u,TRUE);
- }  
- 
- for(u = 0; u < N_t; u++)
+ }
+
+ for (u = 0; u < N_t; u++) {
    if( ((u < N) && (u%rs < rs-1)) || ((u >= N) && (u < N_t - rs))){
-     if(G[Sommetx(u,N,rs)] != G[Sommety(u,N,rs)])/*F[u]=255*/; else F[u] = 0;
+     if (G[Sommetx(u, N, rs)] != G[Sommety(u, N, rs)]) { /*F[u]=255*/
+       ;
+     } else {
+       F[u] = 0;
+     }
    }
+ }
   /* Terminer indicateur + R&B tree ... */
  IndicsTermine();
  mcrbt_RbtTermine(L);
@@ -189,8 +198,12 @@ int32_t MSF3d(struct xvimage *ga, struct xvimage *marqueurs)
 	/*	printf("Initialisation: ds Rbt: (%d,%d)\n", x,y);*/
 	mcrbt_RbtInsert(&L, (TypRbtKey)F[u], u);
 	Set(u, TRUE);
-      }else Set(u, FALSE);
-    }else Set(u,FALSE);
+      } else {
+        Set(u, FALSE);
+      }
+    } else {
+      Set(u, FALSE);
+    }
   }
   
   while(!mcrbt_RbtVide(L)){
@@ -234,12 +247,17 @@ int32_t MSF3d(struct xvimage *ga, struct xvimage *marqueurs)
     UnSet(u,TRUE);
   }  
   writeimage(marqueurs,"./toto1");
-  for(u = 0; u < N_t; u++)
+  for (u = 0; u < N_t; u++) {
     if( ( (u < N) && (u%rs < rs-1)) ||
 	((u >= N) && (u < 2*N) && ( (u%ps) < (ps-rs))) ||
 	((u >= 2*N) && (((u- (2*N))/ps) < (ds-1)))){
-      if(G[Sommetx3d(u,N,rs,ps)] != G[Sommety3d(u,N,rs,ps)]) F[u] = 255; else F[u] = 0;
+      if (G[Sommetx3d(u, N, rs, ps)] != G[Sommety3d(u, N, rs, ps)]) {
+        F[u] = 255;
+      } else {
+        F[u] = 0;
+      }
     }
+  }
   /* Terminer indicateur + R&B tree ... */
 
   IndicsTermine();
@@ -269,8 +287,9 @@ int32_t MSF4d(struct GA4d *ga, struct xvimage4D *marqueurs)
   Rbt *L;                                   /* ensembles des aretes adjacentes à exactement un label */
   
   G = (uint8_t **)malloc(sizeof(char *) * ss);
-  for(i = 0; i < ss; i++)
+  for (i = 0; i < ss; i++) {
     G[i] = UCHARDATA(marqueurs->frame[i]);
+  }
 
   if ((rowsize(marqueurs->frame[0]) != rs) || (colsize(marqueurs->frame[0]) != cs) || 
       (depth(marqueurs->frame[0]) != ds) || (marqueurs->ss != ss)) 
@@ -299,8 +318,12 @@ int32_t MSF4d(struct GA4d *ga, struct xvimage4D *marqueurs)
 	/*	printf("Initialisation: ds Rbt: (%d,%d)\n", x,y);*/
 	mcrbt_RbtInsert(&L, (TypRbtKey)F[u], u);
 	Set(u, TRUE);
-      }else Set(u, FALSE);
-    }else Set(u,FALSE);
+      } else {
+        Set(u, FALSE);
+      }
+    } else {
+      Set(u, FALSE);
+    }
   }
   printf("Initialisation OK \n");
   while(!mcrbt_RbtVide(L)){
@@ -347,7 +370,7 @@ int32_t MSF4d(struct GA4d *ga, struct xvimage4D *marqueurs)
     UnSet(u,TRUE);
   }  
   printf("Label map of MSF OK \n");
-  for(u = 0; u < N_t; u++)
+  for (u = 0; u < N_t; u++) {
     if( ( (u < N) && (u%rs < rs-1)) ||
 	( (u >= N) && (u < 2*N) && ( (u%ps) < (ps-rs) ) ) ||
 	( (u >= 2*N) && (u < 3*N) && ( (u%vs) < (vs-ps) ) ) ||
@@ -355,8 +378,13 @@ int32_t MSF4d(struct GA4d *ga, struct xvimage4D *marqueurs)
 	){
       x = Sommetx4d(u,N,rs,ps,vs);
       y = Sommety4d(u,N,rs,ps,vs);
-      if(G[x/vs][x%vs] != G[y/vs][y%vs]) F[u] = 255; else F[u] = 0;
+      if (G[x / vs][x % vs] != G[y / vs][y % vs]) {
+        F[u] = 255;
+      } else {
+        F[u] = 0;
+      }
     }
+  }
   /* Terminer indicateur + R&B tree ... */
   
   IndicsTermine();

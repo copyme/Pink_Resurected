@@ -93,9 +93,9 @@ int main(int argc, char **argv)
       exit(1);
     }
     averageval = laverage2(image, mask);
-  }
-  else
+  } else {
     averageval = laverage1(image);
+  }
 
 #ifdef VERBOSE
     printf("averageval: %g\n", averageval);
@@ -112,7 +112,9 @@ int main(int argc, char **argv)
   fclose(fd);
 
   freeimage(image);
-  if (mask) freeimage(mask);
+  if (mask) {
+    freeimage(mask);
+  }
 
   return 0;
 } /* main */

@@ -128,15 +128,15 @@ int main(int argc, char **argv)
   for (i = 0; i < nellipse; i++)
   {
     fscanf(fd, "%d%d%d%d%d%d", &xc, &yc, &x1, &y1, &x2, &y2);
-    if (argc == 4)
+    if (argc == 4) {
       lellipse(Im, rs, cs, x1, y1, x2, y2, xc, yc);
-    else
-    {
+    } else {
       lellipselist(ell, rs, cs, x1, y1, x2, y2, xc, yc);
       for (y = 0; y < cs; y++) 
       {
-        for (x = ell->xmin[y]; x <= ell->xmax[y]; x++)
-          Im[y*rs + x] = NDG_MAX;
+        for (x = ell->xmin[y]; x <= ell->xmax[y]; x++) {
+          Im[y * rs + x] = NDG_MAX;
+        }
       }
     }
   }

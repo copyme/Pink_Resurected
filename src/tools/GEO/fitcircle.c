@@ -106,10 +106,11 @@ int main(int argc, char **argv)
   y = atof(argv[3]);
   r = atof(argv[4]);
 
-  if (argc == 6)
+  if (argc == 6) {
     C = AjusteCercle(image, x, y, r);
-  else
+  } else {
     C = AjusteCercle2(image, x, y, r);
+  }
 
   printf("%g %g %g\n", C->x0, C->y0, C->r);
 

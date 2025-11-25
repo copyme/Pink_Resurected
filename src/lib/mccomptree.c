@@ -76,8 +76,12 @@ int32_t * linsortimageup(uint8_t *F, int32_t N)
   {   fprintf(stderr, "%s() : malloc failed for T\n", F_NAME);
       return NULL;
   }
-  for (i = 0; i < 256; i++) H[i] = 0;   // initialise l'histogramme
-  for (i = 0; i < N; i++) H[F[i]] += 1; // calcule l'histogramme
+  for (i = 0; i < 256; i++) {
+    H[i] = 0; // initialise l'histogramme
+  }
+  for (i = 0; i < N; i++) {
+    H[F[i]] += 1; // calcule l'histogramme
+  }
   j = H[0]; H[0] = 0;                   // calcule l'histogramme cumule
   for (i = 1; i < 256; i++) { k = H[i]; H[i] = j; j += k; }
   for (i = 0; i < N; i++)               // tri lineaire
@@ -107,8 +111,12 @@ int32_t * linsortimagedown(uint8_t *F, int32_t N)
   {   fprintf(stderr, "%s() : malloc failed for T\n", F_NAME);
       return NULL;
   }
-  for (i = 0; i < 256; i++) H[i] = 0;   // initialise l'histogramme
-  for (i = 0; i < N; i++) H[F[i]] += 1; // calcule l'histogramme
+  for (i = 0; i < 256; i++) {
+    H[i] = 0; // initialise l'histogramme
+  }
+  for (i = 0; i < N; i++) {
+    H[F[i]] += 1; // calcule l'histogramme
+  }
   j = H[255]; H[255] = 0;               // calcule l'histogramme cumule
   for (i = 254; i >= 0; i--) { k = H[i]; H[i] = j; j += k; }
   for (i = 0; i < N; i++)               // tri lineaire
@@ -137,13 +145,16 @@ void addson(ctree *CT, int32_t node, int32_t nodeaux)
     exit(1);
   }
 #ifdef PARANO
-  if (CT->tabnodes[node].nbsons > 0)
-    for (newson = CT->tabnodes[node].sonlist; newson != NULL; newson = newson->next)
+  if (CT->tabnodes[node].nbsons > 0) {
+    for (newson = CT->tabnodes[node].sonlist; newson != NULL;
+         newson = newson->next) {
       if (newson->son == nodeaux)
       {
         fprintf(stderr, "%s : error : son already in list\n", F_NAME);
         return;
       }
+    }
+  }
 #endif
   newson = &(CT->tabsoncells[CT->nbsoncells]);
   CT->nbsoncells += 1;
@@ -171,15 +182,20 @@ void mergenodes(ctree *CT, int32_t node, int32_t nodeaux)
 #define F_NAME "mergenodes"
 {
 #ifdef PARANO
-  soncell * nodeson = NULL, * nodeauxson = NULL;  
-  if ((CT->tabnodes[node].nbsons > 0) && (CT->tabnodes[nodeaux].nbsons > 0))
-    for (nodeson = CT->tabnodes[node].sonlist; nodeson != NULL; nodeson = nodeson->next)
-      for (nodeauxson = CT->tabnodes[nodeaux].sonlist; nodeauxson != NULL; nodeauxson = nodeauxson->next)
+  soncell * nodeson = NULL, * nodeauxson = NULL;
+  if ((CT->tabnodes[node].nbsons > 0) && (CT->tabnodes[nodeaux].nbsons > 0)) {
+    for (nodeson = CT->tabnodes[node].sonlist; nodeson != NULL;
+         nodeson = nodeson->next) {
+      for (nodeauxson = CT->tabnodes[nodeaux].sonlist; nodeauxson != NULL;
+           nodeauxson = nodeauxson->next) {
         if (nodeson->son == nodeauxson->son)
         {
           fprintf(stderr, "%s : error : son already in list (%d)\n", F_NAME, nodeson->son);
           return;
         }
+      }
+    }
+  }
 #endif
   if (CT->tabnodes[nodeaux].nbsons <= 0)
   {
@@ -241,8 +257,8 @@ void mccomptree_ComponentTreePrint(ctree * CT)
   int32_t i;
   soncell * s = NULL;
   printf("root = %d ; nbnodes: %d ; nbleafs: %d ; nbsoncells: %d\n", CT->root, CT->nbnodes, CT->nbleafs, CT->nbsoncells);
-  for (i = 0; i < CT->nbnodes; i++) if (CT->tabnodes[i].nbsons != -1)
-  {
+  for (i = 0; i < CT->nbnodes; i++) {
+    if (CT->tabnodes[i].nbsons != -1) {
 #ifdef ATTRIB_VOL
     printf("node: %d ; level %d ; nbsons: %d ; father: %d ; area: %d ; vol: %d ; ", 
             i, CT->tabnodes[i].data, CT->tabnodes[i].nbsons, CT->tabnodes[i].father, CT->tabnodes[i].area, CT->tabnodes[i].vol);
@@ -253,10 +269,12 @@ void mccomptree_ComponentTreePrint(ctree * CT)
     if (CT->tabnodes[i].nbsons > 0)
     {
       printf("sons: ");
-      for (s = CT->tabnodes[i].sonlist; s != NULL; s = s->next)
+      for (s = CT->tabnodes[i].sonlist; s != NULL; s = s->next) {
         printf("%d  ", s->son);
+      }
     }
     printf("\n");
+    }
   }
 } // mccomptree_ComponentTreePrint()
 
@@ -277,7 +295,9 @@ int32_t ComputeArea(ctree * CT, int32_t node, int32_t *na1)
   soncell * s = NULL;
   int32_t son;
   na1[node] = CT->tabnodes[node].area;
-  if (CT->tabnodes[node].nbsons == 0) return na1[node];
+  if (CT->tabnodes[node].nbsons == 0) {
+    return na1[node];
+  }
   if (CT->tabnodes[node].nbsons > 0)
   {
     for (s = CT->tabnodes[node].sonlist; s != NULL; s = s->next)
@@ -311,9 +331,12 @@ int32_t ComputeVol(ctree * CT, int32_t node, int32_t *na1)
   int32_t son, fth;
   na1[node] = CT->tabnodes[node].area;
   fth = CT->tabnodes[node].father;
-  if (fth != -1)
+  if (fth != -1) {
     na1[node] = na1[node] * (CT->tabnodes[node].data - CT->tabnodes[fth].data);
-  if (CT->tabnodes[node].nbsons == 0) return na1[node];
+  }
+  if (CT->tabnodes[node].nbsons == 0) {
+    return na1[node];
+  }
   if (CT->tabnodes[node].nbsons > 0)
   {
     for (s = CT->tabnodes[node].sonlist; s != NULL; s = s->next)
@@ -438,11 +461,15 @@ printf("  neighbSubtree %d ; neighbNode %d\n", neighbSubtree, neighbNode);
             numbernodes -= 1;
             tmp = TarjanLink(T2, neighbNode, currentNode);
 #ifdef PARANO
-            if ((tmp != currentNode) && (tmp != neighbNode)) 
+            if ((tmp != currentNode) && (tmp != neighbNode)) {
               printf("%s : choix inattendu pour le representant", F_NAME);
-#endif            
-            if (tmp == currentNode) mergenodes(CT, currentNode, neighbNode);
-            else                    mergenodes(CT, neighbNode, currentNode);
+            }
+#endif
+            if (tmp == currentNode) {
+              mergenodes(CT, currentNode, neighbNode);
+            } else {
+              mergenodes(CT, neighbNode, currentNode);
+            }
 #ifdef DEBUG
             printf("  mergenodes: %d %d\n", currentNode, neighbNode);
 #endif
@@ -466,19 +493,25 @@ printf("  addson: %d %d\n", currentNode, neighbNode);
   } // for (i = 0; i < N; i++) 
 
   CT->root = SubtreeRoot[TarjanFind(T1, TarjanFind(T2, 0))];
-  for (i = 0; i < N; i++) CM[i] = TarjanFind(T2, i);
-  for (i = 0; i < N; i++) // construction de la relation "father"
-    if (CT->tabnodes[i].nbsons > 0)
+  for (i = 0; i < N; i++) {
+    CM[i] = TarjanFind(T2, i);
+  }
+  for (i = 0; i < N; i++) { // construction de la relation "father"
+    if (CT->tabnodes[i].nbsons > 0) {
       for (sc = CT->tabnodes[i].sonlist; sc != NULL; sc = sc->next)
       {
         son = sc->son;
         CT->tabnodes[son].father = i;
       }
+    }
+  }
 
   k = 0;
-  for (i = 0; i < N; i++)
-    if (CT->tabnodes[i].nbsons == 0)
+  for (i = 0; i < N; i++) {
+    if (CT->tabnodes[i].nbsons == 0) {
       k++;
+    }
+  }
   CT->nbleafs = k;
 #ifdef VERBOSE
   printf("nombre de feuilles = %d\n", CT->nbleafs);
@@ -495,14 +528,16 @@ printf("  addson: %d %d\n", currentNode, neighbNode);
       return 0;
   }
   ComputeArea(CT, CT->root, area);
-  for (i = 0; i < N; i++)
+  for (i = 0; i < N; i++) {
     CT->tabnodes[i].area = area[i];
+  }
 
 #ifdef ATTRIB_VOL
   ComputeVol(CT, CT->root, area);
 
-  for (i = 0; i < N; i++)
+  for (i = 0; i < N; i++) {
     CT->tabnodes[i].vol = area[i];
+  }
 #endif            
 
   free(area);
@@ -607,11 +642,15 @@ int32_t ComponentTree3d( uint8_t *F, int32_t rs, int32_t ps, int32_t N, int32_t 
 	      numbernodes -= 1;
 	      tmp = TarjanLink(T2, neighbNode, currentNode);
 #ifdef PARANO
-	      if ((tmp != currentNode) && (tmp != neighbNode)) 
-		printf("%s : choix inattendu pour le representant", F_NAME);
-#endif            
-	      if (tmp == currentNode) mergenodes(CT, currentNode, neighbNode);
-	      else                    mergenodes(CT, neighbNode, currentNode);
+              if ((tmp != currentNode) && (tmp != neighbNode)) {
+                printf("%s : choix inattendu pour le representant", F_NAME);
+              }
+#endif
+              if (tmp == currentNode) {
+                mergenodes(CT, currentNode, neighbNode);
+              } else {
+                mergenodes(CT, neighbNode, currentNode);
+              }
 #ifdef ATTRIB_AREA
 	      CT->tabnodes[tmp].area = CT->tabnodes[currentNode].area + CT->tabnodes[neighbNode].area;
 #endif                        
@@ -653,11 +692,15 @@ int32_t ComponentTree3d( uint8_t *F, int32_t rs, int32_t ps, int32_t N, int32_t 
 	      numbernodes -= 1;
 	      tmp = TarjanLink(T2, neighbNode, currentNode);
 #ifdef PARANO
-	      if ((tmp != currentNode) && (tmp != neighbNode)) 
-		printf("%s : choix inattendu pour le representant", F_NAME);
-#endif            
-	      if (tmp == currentNode) mergenodes(CT, currentNode, neighbNode);
-	      else                    mergenodes(CT, neighbNode, currentNode);
+              if ((tmp != currentNode) && (tmp != neighbNode)) {
+                printf("%s : choix inattendu pour le representant", F_NAME);
+              }
+#endif
+              if (tmp == currentNode) {
+                mergenodes(CT, currentNode, neighbNode);
+              } else {
+                mergenodes(CT, neighbNode, currentNode);
+              }
 #ifdef ATTRIB_AREA
 	      CT->tabnodes[tmp].area = CT->tabnodes[currentNode].area + CT->tabnodes[neighbNode].area;
 #endif                                    
@@ -699,11 +742,15 @@ int32_t ComponentTree3d( uint8_t *F, int32_t rs, int32_t ps, int32_t N, int32_t 
 	      numbernodes -= 1;
 	      tmp = TarjanLink(T2, neighbNode, currentNode);
 #ifdef PARANO
-	      if ((tmp != currentNode) && (tmp != neighbNode)) 
-		printf("%s : choix inattendu pour le representant", F_NAME);
-#endif            
-	      if (tmp == currentNode) mergenodes(CT, currentNode, neighbNode);
-	      else                    mergenodes(CT, neighbNode, currentNode);
+              if ((tmp != currentNode) && (tmp != neighbNode)) {
+                printf("%s : choix inattendu pour le representant", F_NAME);
+              }
+#endif
+              if (tmp == currentNode) {
+                mergenodes(CT, currentNode, neighbNode);
+              } else {
+                mergenodes(CT, neighbNode, currentNode);
+              }
 #ifdef ATTRIB_AREA
 	      CT->tabnodes[tmp].area = CT->tabnodes[currentNode].area + CT->tabnodes[neighbNode].area;
 #endif            
@@ -726,19 +773,25 @@ int32_t ComponentTree3d( uint8_t *F, int32_t rs, int32_t ps, int32_t N, int32_t 
   }
 
   CT->root = SubtreeRoot[TarjanFind(T1, TarjanFind(T2, 0))];
-  for (i = 0; i < N; i++) CM[i] = TarjanFind(T2, i);
-  for (i = 0; i < N; i++) // construction de la relation "father"
-    if (CT->tabnodes[i].nbsons > 0)
+  for (i = 0; i < N; i++) {
+    CM[i] = TarjanFind(T2, i);
+  }
+  for (i = 0; i < N; i++) { // construction de la relation "father"
+    if (CT->tabnodes[i].nbsons > 0) {
       for (sc = CT->tabnodes[i].sonlist; sc != NULL; sc = sc->next)
       {
         son = sc->son;
         CT->tabnodes[son].father = i;
       }
+    }
+  }
 
   k = 0;
-  for (i = 0; i < N; i++)
-    if (CT->tabnodes[i].nbsons == 0)
+  for (i = 0; i < N; i++) {
+    if (CT->tabnodes[i].nbsons == 0) {
       k++;
+    }
+  }
   CT->nbleafs = k;
 #ifdef VERBOSE
   printf("nombre de feuilles = %d\n", CT->nbleafs);
@@ -755,13 +808,15 @@ int32_t ComponentTree3d( uint8_t *F, int32_t rs, int32_t ps, int32_t N, int32_t 
       return 0;
   }
   ComputeArea(CT, CT->root, area);
-  for (i = 0; i < N; i++)
+  for (i = 0; i < N; i++) {
     CT->tabnodes[i].area = area[i];
+  }
 
 #ifdef ATTRIB_VOL
   ComputeVol(CT, CT->root, area);
-  for (i = 0; i < N; i++)
+  for (i = 0; i < N; i++) {
     CT->tabnodes[i].vol = area[i];
+  }
 #endif            
 
   free(area);

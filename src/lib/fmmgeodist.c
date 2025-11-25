@@ -120,17 +120,23 @@ int geodist(
 		int d;
 
 		/* Check if the heap is empty */
-		if (heapStruct->heapEnd < 0) break;
+                if (heapStruct->heapEnd < 0) {
+                  break;
+                }
 
-		/* Grab the image index of the heap's root */
+                /* Grab the image index of the heap's root */
 		imageIndex = heapStruct->heapToImage[0];
 
 		/* Early stopping criteria */
 		if (stopping == STOPONMETRIC) {
-			if (g->buf[imageIndex] > threshold) break;
-		} else if (stopping == STOPONDISTANCE) {
-			if (distance->buf[imageIndex] > threshold) break;
-		} /* else no stopping */
+                  if (g->buf[imageIndex] > threshold) {
+                    break;
+                  }
+                } else if (stopping == STOPONDISTANCE) {
+                  if (distance->buf[imageIndex] > threshold) {
+                    break;
+                  }
+                } /* else no stopping */
 
 		/* Decompose the root's image index into pixel co-ordinates */
 		intToBvect(imageIndex, coord, distance->dim);
@@ -145,8 +151,12 @@ int geodist(
 				/* Compute the neighbour's coordinate and image index */
 				BVECT_copy(tempCoord, coord);
 				tempCoord->buf[i] += d;
-				if (tempCoord->buf[i] < 0 || tempCoord->buf[i] > distance->dim->buf[i] - 1) continue;
-				tempImageIndex = bvectToInt(tempCoord, g->dim);
+                                if (tempCoord->buf[i] < 0 ||
+                                    tempCoord->buf[i] >
+                                        distance->dim->buf[i] - 1) {
+                                  continue;
+                                }
+                                tempImageIndex = bvectToInt(tempCoord, g->dim);
 
 				returnVal = updateDistance(distance, g, stateStruct, tempCoord);
 
@@ -206,9 +216,11 @@ static char updateDistance(
 	index = bvectToInt(coord, distance->dim);
 
 	/* If already KNOWNNODE, leave alone */
-	if (stateStruct->nodeState[index] == KNOWNNODE) return NOCHANGE;
+        if (stateStruct->nodeState[index] == KNOWNNODE) {
+          return NOCHANGE;
+        }
 
-	/* Store the old distance for detecting changes */
+        /* Store the old distance for detecting changes */
 	if (stateStruct->nodeState[index] == TRIALNODE) {
 		oldDist = distance->buf[index];
 	} else { /* FARNODE */
@@ -216,15 +228,19 @@ static char updateDistance(
 	}
 
 	/* If FARNODE, set to TRIALNODE and make a note to add it to the heap later */
-	if (stateStruct->nodeState[index] == FARNODE) returnVal = ADD;
-	stateStruct->nodeState[index] = TRIALNODE;
+        if (stateStruct->nodeState[index] == FARNODE) {
+          returnVal = ADD;
+        }
+        stateStruct->nodeState[index] = TRIALNODE;
 
 	/* Initialise the distance list */
 	neighbourDistLength = 0;
 	minNeighbourDist = LSTB_BIGNUM;
-	for (i = 0; i < distance->dim->length; i++) neighbourDist[i] = LSTB_BIGNUM;
+        for (i = 0; i < distance->dim->length; i++) {
+          neighbourDist[i] = LSTB_BIGNUM;
+        }
 
-	/* Find the least-distance neighbour along each axis, where they exist */
+        /* Find the least-distance neighbour along each axis, where they exist */
 	for (i = 0; i < distance->dim->length; i++) {
 		for (d = -1; d <= 1; d += 2) {
 			int tempIndex;
@@ -233,26 +249,37 @@ static char updateDistance(
 			ptempCoord->buf[i] += d;			/* Step in the given direction */
 
 			/* Skip this point if it lies outside the image domain */
-			if (ptempCoord->buf[i] < 0 || ptempCoord->buf[i] > distance->dim->buf[i] - 1) continue;
+                        if (ptempCoord->buf[i] < 0 ||
+                            ptempCoord->buf[i] > distance->dim->buf[i] - 1) {
+                          continue;
+                        }
 
-			tempIndex = bvectToInt(ptempCoord, distance->dim);
+                        tempIndex = bvectToInt(ptempCoord, distance->dim);
 
 			/* Now update the distance */
-			if (stateStruct->nodeState[tempIndex] == KNOWNNODE)
-				if (distance->buf[tempIndex] < neighbourDist[neighbourDistLength]) {
-					neighbourDist[neighbourDistLength] = distance->buf[tempIndex];
+                        if (stateStruct->nodeState[tempIndex] == KNOWNNODE) {
+                          if (distance->buf[tempIndex] <
+                              neighbourDist[neighbourDistLength]) {
+                            neighbourDist[neighbourDistLength] =
+                                distance->buf[tempIndex];
 
-					/* Propagate labels */
-					if (neighbourDist[neighbourDistLength] < minNeighbourDist) {
-						minNeighbourDist = neighbourDist[neighbourDistLength];
-						stateStruct->label->buf[index] = stateStruct->label->buf[tempIndex];
-					}
-				}
-		}
+                            /* Propagate labels */
+                            if (neighbourDist[neighbourDistLength] <
+                                minNeighbourDist) {
+                              minNeighbourDist =
+                                  neighbourDist[neighbourDistLength];
+                              stateStruct->label->buf[index] =
+                                  stateStruct->label->buf[tempIndex];
+                            }
+                          }
+                        }
+                }
 
 		/* Move along to the next element in the distance array if we found one here */
-		if (neighbourDist[neighbourDistLength] != LSTB_BIGNUM) neighbourDistLength++;
-	}
+                if (neighbourDist[neighbourDistLength] != LSTB_BIGNUM) {
+                  neighbourDistLength++;
+                }
+        }
 
 	/* Now solve the quadratic in neighbourDistLength dimensions */
 	c = 0;
@@ -282,10 +309,16 @@ static char updateDistance(
 	}
 
 	/* Check what to return */
-	if (returnVal == ADD) return ADD;
-	if (newDist < oldDist) return DECREASED;
-	if (newDist > oldDist) return INCREASED;
-	/* Default */
+        if (returnVal == ADD) {
+          return ADD;
+        }
+        if (newDist < oldDist) {
+          return DECREASED;
+        }
+        if (newDist > oldDist) {
+          return INCREASED;
+        }
+        /* Default */
 	return NOCHANGE;
 }
 
@@ -309,9 +342,11 @@ static int initContour(
 	num_pixels = BVECT_prod(distance->dim);
 	for (index = 0; index < num_pixels; index++) {
 		/* If there's no label here, continue */
-		if (stateStruct->label->buf[index] == 0) continue;
+                if (stateStruct->label->buf[index] == 0) {
+                  continue;
+                }
 
-		/* Set distance to 0 */
+                /* Set distance to 0 */
 		distance->buf[index] = 0.0;
 		stateStruct->nodeState[index] = TRIALNODE;
 		heapAdd(heapStruct, index, distance);

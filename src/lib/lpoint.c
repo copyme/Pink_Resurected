@@ -65,10 +65,9 @@ int32_t lpoint(struct xvimage * image1, int32_t x, int32_t y, int32_t z, float v
   {
     uint8_t *pt1 = UCHARDATA(image1);
     if ((x >= 0) && (x < rs) && (y >= 0) && (y < cs) && (z >= 0) && (z < d) &&
-        (v >= NDG_MIN) && (v <= NDG_MAX))
+        (v >= NDG_MIN) && (v <= NDG_MAX)) {
       pt1[z * n + y * rs + x] = (uint8_t)v;
-    else
-    {
+    } else {
       fprintf(stderr, "%s : out of range\n", F_NAME);
       return 0;
     }
@@ -78,10 +77,9 @@ int32_t lpoint(struct xvimage * image1, int32_t x, int32_t y, int32_t z, float v
   {
     int32_t *pt1 = SLONGDATA(image1);
     if ((x >= 0) && (x < rs) && (y >= 0) && (y < cs) && (z >= 0) && (z < d) &&
-        (v >= 0))
+        (v >= 0)) {
       pt1[z * n + y * rs + x] = (int32_t)v;
-    else 
-    {
+    } else {
       fprintf(stderr, "%s : out of range\n", F_NAME);
       return 0;
     }
@@ -90,10 +88,9 @@ int32_t lpoint(struct xvimage * image1, int32_t x, int32_t y, int32_t z, float v
   if (datatype(image1) == VFF_TYP_FLOAT)
   {
     float *pt1 = FLOATDATA(image1);
-    if ((x >= 0) && (x < rs) && (y >= 0) && (y < cs) && (z >= 0) && (z < d))
+    if ((x >= 0) && (x < rs) && (y >= 0) && (y < cs) && (z >= 0) && (z < d)) {
       pt1[z * n + y * rs + x] = v;
-    else 
-    {
+    } else {
       fprintf(stderr, "%s : out of range\n", F_NAME);
       return 0;
     }

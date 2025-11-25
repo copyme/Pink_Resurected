@@ -150,8 +150,9 @@ int main(int argc, char **argv)
     for (j = 0; j < n; j++)
     {
       X = lx[j]; Y = ly[j];
-      if ((X >= 0) && (X < rs) && (Y >= 0) && (Y < cs))
-	F[Y*rs + X] = NDG_MAX;
+      if ((X >= 0) && (X < rs) && (Y >= 0) && (Y < cs)) {
+        F[Y * rs + X] = NDG_MAX;
+      }
     }
   }
 

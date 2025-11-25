@@ -99,16 +99,36 @@ int main(int argc, char **argv)
       uint8_t absmax;
       I = UCHARDATA(image);
       absmax = I[0];
-      for (i = 1; i < N; i++) if (I[i] > absmax) absmax = I[i];
-      for (i = 0; i < N; i++) if (I[i] == absmax) I[i] = NDG_MAX; else I[i] = NDG_MIN;
+      for (i = 1; i < N; i++) {
+        if (I[i] > absmax) {
+          absmax = I[i];
+        }
+      }
+      for (i = 0; i < N; i++) {
+        if (I[i] == absmax) {
+          I[i] = NDG_MAX;
+        } else {
+          I[i] = NDG_MIN;
+        }
+      }
     }
     else if (datatype(image) == VFF_TYP_4_BYTE) 
     {   
       int32_t absmax;
       IL = SLONGDATA(image);
       absmax = IL[0];
-      for (i = 1; i < N; i++) if (IL[i] > absmax) absmax = IL[i];
-      for (i = 0; i < N; i++) if (IL[i] == absmax) IL[i] = NDG_MAX; else IL[i] = NDG_MIN;
+      for (i = 1; i < N; i++) {
+        if (IL[i] > absmax) {
+          absmax = IL[i];
+        }
+      }
+      for (i = 0; i < N; i++) {
+        if (IL[i] == absmax) {
+          IL[i] = NDG_MAX;
+        } else {
+          IL[i] = NDG_MIN;
+        }
+      }
     }
   }
   else
@@ -124,14 +144,24 @@ int main(int argc, char **argv)
     if (datatype(image) == VFF_TYP_1_BYTE)
     {   
       I = UCHARDATA(image);
-      for (i = 0; i < N; i++)
-        if (R[i]) I[i] = NDG_MAX; else I[i] = NDG_MIN;
+      for (i = 0; i < N; i++) {
+        if (R[i]) {
+          I[i] = NDG_MAX;
+        } else {
+          I[i] = NDG_MIN;
+        }
+      }
     }
     else if (datatype(image) == VFF_TYP_4_BYTE) 
     {   
       IL = SLONGDATA(image);
-      for (i = 0; i < N; i++)
-        if (R[i]) IL[i] = (int32_t)NDG_MAX; else IL[i] = (int32_t)NDG_MIN;
+      for (i = 0; i < N; i++) {
+        if (R[i]) {
+          IL[i] = (int32_t)NDG_MAX;
+        } else {
+          IL[i] = (int32_t)NDG_MIN;
+        }
+      }
     }
   }
   if (datatype(image) == VFF_TYP_4_BYTE)
@@ -145,11 +175,13 @@ int main(int argc, char **argv)
       exit(1);
     }
     I2 = UCHARDATA(im2);
-    for (i = 0; i < N; i++) I2[i] = (uint8_t)IL[i];
+    for (i = 0; i < N; i++) {
+      I2[i] = (uint8_t)IL[i];
+    }
     writeimage(im2, argv[3]);
-  }
-  else
+  } else {
     writeimage(image, argv[3]);
+  }
   freeimage(result);
   freeimage(image);
 

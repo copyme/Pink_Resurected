@@ -205,7 +205,9 @@ int32_t lsquelbin(struct xvimage *image, int32_t connex, int32_t niseuil)
   /* ================================================ */
 
   iter = 0;
-  if (niseuil == -1) niseuil = 2000000000; // very big positive integer
+  if (niseuil == -1) {
+    niseuil = 2000000000; // very big positive integer
+  }
   if (connex == 4)
   {
     while (! (FifoVide(FIFO)))
@@ -214,7 +216,9 @@ int32_t lsquelbin(struct xvimage *image, int32_t connex, int32_t niseuil)
       if (x == -1)
       {
         iter ++;
-        if (FifoVide(FIFO)) break;
+        if (FifoVide(FIFO)) {
+          break;
+        }
         FifoPush(FIFO, -1);
       } 
       else
@@ -246,7 +250,9 @@ int32_t lsquelbin(struct xvimage *image, int32_t connex, int32_t niseuil)
       if (x == -1)
       {
         iter ++;
-        if (FifoVide(FIFO)) break;
+        if (FifoVide(FIFO)) {
+          break;
+        }
         FifoPush(FIFO, -1);
       }
       else
@@ -396,8 +402,12 @@ int32_t lhthinbin(struct xvimage *image,
   /* ================================================ */
 
   iter = 0;
-  if (niseuil == -1) niseuil = 2000000000; // very big positive integer
-  if (niter == -1) niter = 2000000000; // very big positive integer
+  if (niseuil == -1) {
+    niseuil = 2000000000; // very big positive integer
+  }
+  if (niter == -1) {
+    niter = 2000000000; // very big positive integer
+  }
   if (connex == 4)
   {
     while (! (FifoVide(FIFO)))
@@ -406,8 +416,12 @@ int32_t lhthinbin(struct xvimage *image,
       if (x == -1)
       {
         iter ++;
-        if (iter >= niter) goto menage;
-        if (FifoVide(FIFO)) break;
+        if (iter >= niter) {
+          goto menage;
+        }
+        if (FifoVide(FIFO)) {
+          break;
+        }
         FifoPush(FIFO, -1);
       } 
       else
@@ -439,8 +453,12 @@ int32_t lhthinbin(struct xvimage *image,
       if (x == -1)
       {
         iter ++;
-        if (iter >= niter) goto menage;
-        if (FifoVide(FIFO)) break;
+        if (iter >= niter) {
+          goto menage;
+        }
+        if (FifoVide(FIFO)) {
+          break;
+        }
         FifoPush(FIFO, -1);
       }
       else
@@ -592,8 +610,12 @@ int32_t lhthinbincontr(struct xvimage *image, struct xvimage *contr,
   /* ================================================ */
 
   iter = 0;
-  if (niseuil == -1) niseuil = 2000000000; // very big positive integer
-  if (niter == -1) niter = 2000000000; // very big positive integer
+  if (niseuil == -1) {
+    niseuil = 2000000000; // very big positive integer
+  }
+  if (niter == -1) {
+    niter = 2000000000; // very big positive integer
+  }
   if (connex == 4)
   {
     while (! (FifoVide(FIFO)))
@@ -602,8 +624,12 @@ int32_t lhthinbincontr(struct xvimage *image, struct xvimage *contr,
       if (x == -1)
       {
         iter ++;
-        if (iter >= niter) goto menage;
-        if (FifoVide(FIFO)) break;
+        if (iter >= niter) {
+          goto menage;
+        }
+        if (FifoVide(FIFO)) {
+          break;
+        }
         FifoPush(FIFO, -1);
       } 
       else
@@ -635,8 +661,12 @@ int32_t lhthinbincontr(struct xvimage *image, struct xvimage *contr,
       if (x == -1)
       {
         iter ++;
-        if (iter >= niter) goto menage;
-        if (FifoVide(FIFO)) break;
+        if (iter >= niter) {
+          goto menage;
+        }
+        if (FifoVide(FIFO)) {
+          break;
+        }
         FifoPush(FIFO, -1);
       }
       else
@@ -700,7 +730,9 @@ int32_t lhthickbin(struct xvimage *image,
   /* ================================================ */
 
   // inverse l'image
-  for (x = 0; x < N; x++) F[x] = NDG_MAX - F[x];
+  for (x = 0; x < N; x++) {
+    F[x] = NDG_MAX - F[x];
+  }
 
   /* ========================================================= */
   /*   INITIALISATION FIFO: empile tous les points bord de l'objet non bord d'image */
@@ -789,8 +821,12 @@ int32_t lhthickbin(struct xvimage *image,
   /* ================================================ */
 
   iter = 0;
-  if (niseuil == -1) niseuil = 2000000000; // very big positive integer
-  if (niter == -1) niter = 2000000000; // very big positive integer
+  if (niseuil == -1) {
+    niseuil = 2000000000; // very big positive integer
+  }
+  if (niter == -1) {
+    niter = 2000000000; // very big positive integer
+  }
   if (connex == 4)
   {
     while (! (FifoVide(FIFO)))
@@ -799,8 +835,12 @@ int32_t lhthickbin(struct xvimage *image,
       if (x == -1)
       {
         iter ++;
-        if (iter >= niter) goto menage;
-        if (FifoVide(FIFO)) break;
+        if (iter >= niter) {
+          goto menage;
+        }
+        if (FifoVide(FIFO)) {
+          break;
+        }
         FifoPush(FIFO, -1);
       } 
       else
@@ -832,8 +872,12 @@ int32_t lhthickbin(struct xvimage *image,
       if (x == -1)
       {
         iter ++;
-        if (iter >= niter) goto menage;
-        if (FifoVide(FIFO)) break;
+        if (iter >= niter) {
+          goto menage;
+        }
+        if (FifoVide(FIFO)) {
+          break;
+        }
         FifoPush(FIFO, -1);
       }
       else
@@ -862,7 +906,9 @@ int32_t lhthickbin(struct xvimage *image,
   /* ================================================ */
  menage:
   // inverse l'image
-  for (x = 0; x < N; x++) F[x] = NDG_MAX - F[x];
+  for (x = 0; x < N; x++) {
+    F[x] = NDG_MAX - F[x];
+  }
   IndicsTermine();
   FifoTermine(FIFO);
   return(1);
@@ -900,7 +946,9 @@ int32_t lhthickbincontr(struct xvimage *image, struct xvimage *contr,
   /* ================================================ */
 
   // inverse l'image
-  for (x = 0; x < N; x++) F[x] = NDG_MAX - F[x];
+  for (x = 0; x < N; x++) {
+    F[x] = NDG_MAX - F[x];
+  }
 
   /* ========================================================= */
   /*   INITIALISATION FIFO: empile tous les points bord de l'objet non bord d'image */
@@ -989,8 +1037,12 @@ int32_t lhthickbincontr(struct xvimage *image, struct xvimage *contr,
   /* ================================================ */
 
   iter = 0;
-  if (niseuil == -1) niseuil = 2000000000; // very big positive integer
-  if (niter == -1) niter = 2000000000; // very big positive integer
+  if (niseuil == -1) {
+    niseuil = 2000000000; // very big positive integer
+  }
+  if (niter == -1) {
+    niter = 2000000000; // very big positive integer
+  }
   if (connex == 4)
   {
     while (! (FifoVide(FIFO)))
@@ -999,8 +1051,12 @@ int32_t lhthickbincontr(struct xvimage *image, struct xvimage *contr,
       if (x == -1)
       {
         iter ++;
-        if (iter >= niter) goto menage;
-        if (FifoVide(FIFO)) break;
+        if (iter >= niter) {
+          goto menage;
+        }
+        if (FifoVide(FIFO)) {
+          break;
+        }
         FifoPush(FIFO, -1);
       } 
       else
@@ -1032,8 +1088,12 @@ int32_t lhthickbincontr(struct xvimage *image, struct xvimage *contr,
       if (x == -1)
       {
         iter ++;
-        if (iter >= niter) goto menage;
-        if (FifoVide(FIFO)) break;
+        if (iter >= niter) {
+          goto menage;
+        }
+        if (FifoVide(FIFO)) {
+          break;
+        }
         FifoPush(FIFO, -1);
       }
       else
@@ -1062,7 +1122,9 @@ int32_t lhthickbincontr(struct xvimage *image, struct xvimage *contr,
   /* ================================================ */
  menage:
   // inverse l'image
-  for (x = 0; x < N; x++) F[x] = NDG_MAX - F[x];
+  for (x = 0; x < N; x++) {
+    F[x] = NDG_MAX - F[x];
+  }
   IndicsTermine();
   FifoTermine(FIFO);
   return(1);

@@ -109,8 +109,9 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  for (i = 0; i < n; i++)
-    fscanf(fd, "%lf %lf\n", pbx+i, pby+i);
+  for (i = 0; i < n; i++) {
+    fscanf(fd, "%lf %lf\n", pbx + i, pby + i);
+  }
 
   fclose(fd);
 

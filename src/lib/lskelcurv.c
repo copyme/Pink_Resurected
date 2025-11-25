@@ -160,7 +160,14 @@ static void trouve2voisins(int32_t i, int32_t rs, int32_t ps, int32_t N, int32_t
     {
       j = voisin(i, k, rs, N);
       if ((j != -1) && F[j])
-      { if (n == 0) *v1 = j; else *v2 = j; n++; }
+      {
+        if (n == 0) {
+          *v1 = j;
+        } else {
+          *v2 = j;
+        }
+        n++;
+      }
     } // for k
     break;
   case 8:
@@ -168,7 +175,14 @@ static void trouve2voisins(int32_t i, int32_t rs, int32_t ps, int32_t N, int32_t
     {
       j = voisin(i, k, rs, N);
       if ((j != -1) && F[j])
-      { if (n == 0) *v1 = j; else *v2 = j; n++; }
+      {
+        if (n == 0) {
+          *v1 = j;
+        } else {
+          *v2 = j;
+        }
+        n++;
+      }
     } // for k
     break;
   case 6:
@@ -176,7 +190,14 @@ static void trouve2voisins(int32_t i, int32_t rs, int32_t ps, int32_t N, int32_t
     {
       j = voisin6(i, k, rs, ps, N);
       if ((j != -1) && F[j])
-      { if (n == 0) *v1 = j; else *v2 = j; n++; }
+      {
+        if (n == 0) {
+          *v1 = j;
+        } else {
+          *v2 = j;
+        }
+        n++;
+      }
     } // for k
     break;
   case 18:
@@ -184,7 +205,14 @@ static void trouve2voisins(int32_t i, int32_t rs, int32_t ps, int32_t N, int32_t
     {
       j = voisin18(i, k, rs, ps, N);
       if ((j != -1) && F[j])
-      { if (n == 0) *v1 = j; else *v2 = j; n++; }
+      {
+        if (n == 0) {
+          *v1 = j;
+        } else {
+          *v2 = j;
+        }
+        n++;
+      }
     } // for k
     break;
   case 26:
@@ -192,15 +220,24 @@ static void trouve2voisins(int32_t i, int32_t rs, int32_t ps, int32_t N, int32_t
     {
       j = voisin26(i, k, rs, ps, N);
       if ((j != -1) && F[j])
-      { if (n == 0) *v1 = j; else *v2 = j; n++; }
+      {
+        if (n == 0) {
+          *v1 = j;
+        } else {
+          *v2 = j;
+        }
+        n++;
+      }
     } // for k
     break;
   default:
     fprintf(stderr, "%s: bad connectivity: %d\n", F_NAME, connex);
     exit(0);
   } // switch (connex)
-  if (n != 2) printf("%s: error n = %d != 2; point %d %d %d\n", F_NAME, n, 
-		     i % rs, (i % ps) / rs, i / ps);
+  if (n != 2) {
+    printf("%s: error n = %d != 2; point %d %d %d\n", F_NAME, n, i % rs,
+           (i % ps) / rs, i / ps);
+  }
   assert(n == 2);
 } // trouve2voisins()
 
@@ -218,35 +255,45 @@ static int32_t trouve1voisin(int32_t i, int32_t rs, int32_t ps, int32_t N, int32
     for (k = 0; k < 8; k += 2)
     {
       j = voisin(i, k, rs, N);
-      if ((j != -1) && F[j]) return j;
+      if ((j != -1) && F[j]) {
+        return j;
+      }
     } // for k
     break;
   case 8:
     for (k = 0; k < 8; k += 1)
     {
       j = voisin(i, k, rs, N);
-      if ((j != -1) && F[j]) return j;
+      if ((j != -1) && F[j]) {
+        return j;
+      }
     } // for k
     break;
   case 6:
     for (k = 0; k <= 10; k += 2)
     {
       j = voisin6(i, k, rs, ps, N);
-      if ((j != -1) && F[j]) return j;
+      if ((j != -1) && F[j]) {
+        return j;
+      }
     } // for k
     break;
   case 18:
     for (k = 0; k < 18; k += 1)
     {
       j = voisin18(i, k, rs, ps, N);
-      if ((j != -1) && F[j]) return j;
+      if ((j != -1) && F[j]) {
+        return j;
+      }
     } // for k
     break;
   case 26:
     for (k = 0; k < 26; k += 1)
     {
       j = voisin26(i, k, rs, ps, N);
-      if ((j != -1) && F[j]) return j;
+      if ((j != -1) && F[j]) {
+        return j;
+      }
     } // for k
     break;
   default:
@@ -287,22 +334,34 @@ static void scancurve(int32_t i, struct xvimage *image, int32_t connex, uint8_t 
     T2[i] = 1;
     le++;
     trouve2voisins(i, rs, ps, N, connex, F, &j, &k);
-    if (T2[j] == 1) i = k; else i = j;
-    if (T2[i] == 1) break; // courbe fermée
+    if (T2[j] == 1) {
+      i = k;
+    } else {
+      i = j;
+    }
+    if (T2[i] == 1) {
+      break; // courbe fermée
+    }
   } // while(1)
 
   // suit la branche kk
   i = kk;
   while(1)
   {
-    if (T2[i] == 1) break; // courbe fermée
+    if (T2[i] == 1) {
+      break; // courbe fermée
+    }
     if (T1[i]) { ne++; break; }
     if (T3[i]) { nj++; break; }
     assert((T2[i] == NDG_MAX) && !T1[i]);
     T2[i] = 1;
     le++;
     trouve2voisins(i, rs, ps, N, connex, F, &j, &k);
-    if (T2[j] == 1) i = k; else i = j;
+    if (T2[j] == 1) {
+      i = k;
+    } else {
+      i = j;
+    }
     assert(T2[i] != 1);
   } // while(1)
 
@@ -341,11 +400,15 @@ static void deletecurve(int32_t i, struct xvimage *image, int32_t connex, uint8_
   while(1)
   {
     if (T1[i]) { T1[i] = T2[i] = F[i] = 0; break; }
-    if (T3[i]) break;
+    if (T3[i]) {
+      break;
+    }
     assert(T2[i] == 1);
     T2[i] = F[i] = 0;
     i = trouve1voisin(i, rs, ps, N, connex, F);
-    if (i == -1) break;
+    if (i == -1) {
+      break;
+    }
   } // while(1)
 
   // suit la branche kk
@@ -353,11 +416,15 @@ static void deletecurve(int32_t i, struct xvimage *image, int32_t connex, uint8_
   while(1)
   {
     if (T1[i]) { T1[i] = T2[i] = F[i] = 0; break; }
-    if (T3[i]) break;
+    if (T3[i]) {
+      break;
+    }
     assert(T2[i] == 1);
     T2[i] = F[i] = 0;
     i = trouve1voisin(i, rs, ps, N, connex, F);
-    if (i == -1) break;
+    if (i == -1) {
+      break;
+    }
   } // while(1)
 } // deletecurve()
 
@@ -385,20 +452,32 @@ static void curve2junction(int32_t i, struct xvimage *image, int32_t connex, uin
   i = jj;
   while(1)
   {
-    if (T2[i] != 1) break;
+    if (T2[i] != 1) {
+      break;
+    }
     T2[i] = 0; T3[i] = NDG_MAX;
     trouve2voisins(i, rs, ps, N, connex, F, &j, &k);
-    if (T2[j] != 1) i = k; else i = j;
+    if (T2[j] != 1) {
+      i = k;
+    } else {
+      i = j;
+    }
   } // while(1)
 
   // suit la branche kk
   i = kk;
   while(1)
   {
-    if (T2[i] != 1) break;
+    if (T2[i] != 1) {
+      break;
+    }
     T2[i] = 0; T3[i] = NDG_MAX;
     trouve2voisins(i, rs, ps, N, connex, F, &j, &k);
-    if (T2[j] != 1) i = k; else i = j;
+    if (T2[j] != 1) {
+      i = k;
+    } else {
+      i = j;
+    }
   } // while(1)
 } // curve2junction()
 
@@ -427,7 +506,11 @@ static void processcurv(skel *S, uint8_t *F, uint8_t *T1, uint8_t *T2, uint8_t *
       fprintf(stderr,"%s: connexity 4 or 8 not defined for 3D\n", F_NAME);
       exit(0);
     }
-    if (connex == 4) incr_vois = 2; else incr_vois = 1;
+    if (connex == 4) {
+      incr_vois = 2;
+    } else {
+      incr_vois = 1;
+    }
   }
 
   // 1ere étape: cherche une extrémité si elle existe
@@ -441,9 +524,14 @@ static void processcurv(skel *S, uint8_t *F, uint8_t *T1, uint8_t *T2, uint8_t *
       T2[i] = 2;
       if (T2[j] == 2) 
       {
-	if (T2[k] == 2) trouve = closed = 1; else i = k;
+        if (T2[k] == 2) {
+          trouve = closed = 1;
+        } else {
+          i = k;
+        }
+      } else {
+        i = j;
       }
-      else i = j;
     }    
   } // while (!trouve)
 
@@ -472,7 +560,9 @@ static void processcurv(skel *S, uint8_t *F, uint8_t *T1, uint8_t *T2, uint8_t *
     while (!trouve)
     {
       trouve2voisins(i, rs, ps, N, connex, F, &j, &k);
-      if (T2[j] != 2) j = k; 
+      if (T2[j] != 2) {
+        j = k;
+      }
       if (T2[j] != 2) { trouve = 1; break; }
       T2[j] = 3;
 #ifdef DEBUGPOINT
@@ -526,18 +616,35 @@ static void processcurv(skel *S, uint8_t *F, uint8_t *T1, uint8_t *T2, uint8_t *
     // trouve le premier "vrai point de courbe" adjacent à l'extrémité i
     if (T1[i]) // extrémité "end"
     {
-      if ((connex == 4) || (connex == 8))
-	for (k = 0; k < 8; k += incr_vois)
-	  { j = voisin(i, k, rs, N); if ((j != -1) && F[j]) break; }
-      else if (connex == 6)
-	for (k = 0; k < 10; k += 2)
-	  { j = voisin6(i, k, rs, ps, N); if ((j != -1) && F[j]) break; }
-      else if (connex == 18)
-	for (k = 0; k < 18; k += 1)
-	  { j = voisin18(i, k, rs, ps, N); if ((j != -1) && F[j]) break; }
-      else if (connex == 26)
-	for (k = 0; k < 26; k += 1)
-	  { j = voisin26(i, k, rs, ps, N); if ((j != -1) && F[j]) break; }
+      if ((connex == 4) || (connex == 8)) {
+        for (k = 0; k < 8; k += incr_vois)
+	  { j = voisin(i, k, rs, N);
+          if ((j != -1) && F[j]) {
+            break;
+          }
+        }
+      } else if (connex == 6) {
+        for (k = 0; k < 10; k += 2)
+	  { j = voisin6(i, k, rs, ps, N);
+          if ((j != -1) && F[j]) {
+            break;
+          }
+        }
+      } else if (connex == 18) {
+        for (k = 0; k < 18; k += 1)
+	  { j = voisin18(i, k, rs, ps, N);
+          if ((j != -1) && F[j]) {
+            break;
+          }
+        }
+      } else if (connex == 26) {
+        for (k = 0; k < 26; k += 1)
+	  { j = voisin26(i, k, rs, ps, N);
+          if ((j != -1) && F[j]) {
+            break;
+          }
+        }
+      }
 #ifdef DEBUGPOINT
       nptscurv++;
       printf("add 7a point curv %d,%d nb %d\n", m, i, nptscurv);
@@ -546,18 +653,35 @@ static void processcurv(skel *S, uint8_t *F, uint8_t *T1, uint8_t *T2, uint8_t *
     }
     else // T3[i], extrémité "junc"
     {
-      if ((connex == 4) || (connex == 8))
-	for (k = 0; k < 8; k += incr_vois)
-	  { j = voisin(i, k, rs, N); if ((j != -1) && (T2[j]==2)) break; }
-      else if (connex == 6)
-	for (k = 0; k < 10; k += 2)
-	  { j = voisin6(i, k, rs, ps, N); if ((j != -1) && (T2[j]==2)) break; }
-      else if (connex == 18)
-	for (k = 0; k < 18; k += 1)
-	  { j = voisin18(i, k, rs, ps, N); if ((j != -1) && (T2[j]==2)) break; }
-      else if (connex == 26)
-	for (k = 0; k < 26; k += 1)
-	  { j = voisin26(i, k, rs, ps, N); if ((j != -1) && (T2[j]==2)) break; }
+      if ((connex == 4) || (connex == 8)) {
+        for (k = 0; k < 8; k += incr_vois)
+	  { j = voisin(i, k, rs, N);
+          if ((j != -1) && (T2[j] == 2)) {
+            break;
+          }
+        }
+      } else if (connex == 6) {
+        for (k = 0; k < 10; k += 2)
+	  { j = voisin6(i, k, rs, ps, N);
+          if ((j != -1) && (T2[j] == 2)) {
+            break;
+          }
+        }
+      } else if (connex == 18) {
+        for (k = 0; k < 18; k += 1)
+	  { j = voisin18(i, k, rs, ps, N);
+          if ((j != -1) && (T2[j] == 2)) {
+            break;
+          }
+        }
+      } else if (connex == 26) {
+        for (k = 0; k < 26; k += 1)
+	  { j = voisin26(i, k, rs, ps, N);
+          if ((j != -1) && (T2[j] == 2)) {
+            break;
+          }
+        }
+      }
 #ifdef DEBUGCURV
       printf("extremite junc, point i=%d (%d,%d,%d)\n", i, i%rs, (i%ps)/rs, i/ps);
 #endif
@@ -581,11 +705,17 @@ static void processcurv(skel *S, uint8_t *F, uint8_t *T1, uint8_t *T2, uint8_t *
 	     j, T1[j], T2[j], T3[j], k, T1[k], T2[k], T3[k]);
 #endif
 
-      if ((T2[j] == 3) && ((T2[k] != 3) || T3[k] || T1[k])) i = k; 
-      else if ((T2[k] == 3) && ((T2[j] != 3) || T3[j] || T1[j])) i = j; 
-      else if (T2[k] != 3) i = k; 
-      else if (T2[j] != 3) i = j; 
-      else assert(0);
+      if ((T2[j] == 3) && ((T2[k] != 3) || T3[k] || T1[k])) {
+        i = k;
+      } else if ((T2[k] == 3) && ((T2[j] != 3) || T3[j] || T1[j])) {
+        i = j;
+      } else if (T2[k] != 3) {
+        i = k;
+      } else if (T2[j] != 3) {
+        i = j;
+      } else {
+        assert(0);
+      }
     } // while (!trouve)
 
     // traite dernier point
@@ -624,7 +754,9 @@ static void processcurv(skel *S, uint8_t *F, uint8_t *T1, uint8_t *T2, uint8_t *
       printf("%s: courbe %d adj end %d\n", F_NAME, m, M[i]);
 #endif
     }
-    if (oldi != -1) T2[oldi] = 0;
+    if (oldi != -1) {
+      T2[oldi] = 0;
+    }
   } // courbe ouverte
 } // processcurv()
 
@@ -652,7 +784,11 @@ static void processjunc(skel *S, uint8_t *T1, uint8_t *T2, uint8_t *T3, int32_t 
       fprintf(stderr,"%s: connexity 4 or 8 not defined for 3D\n", F_NAME);
       exit(0);
     }
-    if (connex == 4) incr_vois = 2; else incr_vois = 1;
+    if (connex == 4) {
+      incr_vois = 2;
+    } else {
+      incr_vois = 1;
+    }
   }
 
   LIFO = CreeLifoVide(N);
@@ -684,30 +820,39 @@ static void processjunc(skel *S, uint8_t *T1, uint8_t *T2, uint8_t *T3, int32_t 
   printf("%s: traite point i = %d,%d\n", F_NAME, i%S->rs, i/S->rs);
 #endif
 
-    if ((connex == 4) || (connex == 8))
-      for (k = 0; k < 8; k += incr_vois)
-      {
-	j = voisin(i, k, rs, N);
-	if ((j != -1) && (T3[j] == NDG_MAX)) { LifoPush(LIFO, j); T3[j] = 2; }
-      } /* for k */
-    else if (connex == 6)
-      for (k = 0; k < 10; k += 2)
-      {
-	j = voisin6(i, k, rs, ps, N);
-	if ((j != -1) && (T3[j] == NDG_MAX)) { LifoPush(LIFO, j); T3[j] = 2; }
-      } /* for k */
-    else if (connex == 18)
-      for (k = 0; k < 18; k += 1)
-      {
-	j = voisin18(i, k, rs, ps, N);
-	if ((j != -1) && (T3[j] == NDG_MAX)) { LifoPush(LIFO, j); T3[j] = 2; }
-      } /* for k */
-    else if (connex == 26)
-      for (k = 0; k < 26; k += 1)
-      {
-	j = voisin26(i, k, rs, ps, N);
-	if ((j != -1) && (T3[j] == NDG_MAX)) { LifoPush(LIFO, j); T3[j] = 2; }
-      } /* for k */
+  if ((connex == 4) || (connex == 8)) {
+    for (k = 0; k < 8; k += incr_vois) {
+      j = voisin(i, k, rs, N);
+      if ((j != -1) && (T3[j] == NDG_MAX)) {
+        LifoPush(LIFO, j);
+        T3[j] = 2;
+      }
+    } /* for k */
+  } else if (connex == 6) {
+    for (k = 0; k < 10; k += 2) {
+      j = voisin6(i, k, rs, ps, N);
+      if ((j != -1) && (T3[j] == NDG_MAX)) {
+        LifoPush(LIFO, j);
+        T3[j] = 2;
+      }
+    } /* for k */
+  } else if (connex == 18) {
+    for (k = 0; k < 18; k += 1) {
+      j = voisin18(i, k, rs, ps, N);
+      if ((j != -1) && (T3[j] == NDG_MAX)) {
+        LifoPush(LIFO, j);
+        T3[j] = 2;
+      }
+    } /* for k */
+  } else if (connex == 26) {
+    for (k = 0; k < 26; k += 1) {
+      j = voisin26(i, k, rs, ps, N);
+      if ((j != -1) && (T3[j] == NDG_MAX)) {
+        LifoPush(LIFO, j);
+        T3[j] = 2;
+      }
+    } /* for k */
+  }
 
   } /* while ! LifoVide */
 
@@ -721,15 +866,35 @@ static int32_t is_end(int32_t x, uint8_t *F, int32_t rs, int32_t ps, int32_t N, 
   switch (connex)
   {
   case 4:
-    if (nbvois4(F, x, rs, N) == 1) return 1; else return 0;
+    if (nbvois4(F, x, rs, N) == 1) {
+      return 1;
+    } else {
+      return 0;
+    }
   case 8:
-    if (nbvois8(F, x, rs, N) == 1) return 1; else return 0;
+    if (nbvois8(F, x, rs, N) == 1) {
+      return 1;
+    } else {
+      return 0;
+    }
   case 6:
-    if (mctopo3d_nbvoiso6(F, x, rs, ps, N) == 1) return 1; else return 0;
+    if (mctopo3d_nbvoiso6(F, x, rs, ps, N) == 1) {
+      return 1;
+    } else {
+      return 0;
+    }
   case 18:
-    if (mctopo3d_nbvoiso18(F, x, rs, ps, N) == 1) return 1; else return 0;
+    if (mctopo3d_nbvoiso18(F, x, rs, ps, N) == 1) {
+      return 1;
+    } else {
+      return 0;
+    }
   case 26:
-    if (mctopo3d_nbvoiso26(F, x, rs, ps, N) == 1) return 1; else return 0;
+    if (mctopo3d_nbvoiso26(F, x, rs, ps, N) == 1) {
+      return 1;
+    } else {
+      return 0;
+    }
   default: assert(0);
   }
 } // is_end()
@@ -743,16 +908,36 @@ static int32_t is_simple(int32_t x, uint8_t *F, int32_t rs, int32_t ps, int32_t 
   {
   case 4:
     top4(F, x, rs, N, &t, &tb);
-    if ((t == 1) && (tb == 1)) return 1; else return 0;
+    if ((t == 1) && (tb == 1)) {
+      return 1;
+    } else {
+      return 0;
+    }
   case 8:
     top8(F, x, rs, N, &t, &tb);
-    if ((t == 1) && (tb == 1)) return 1; else return 0;
+    if ((t == 1) && (tb == 1)) {
+      return 1;
+    } else {
+      return 0;
+    }
   case 6:
-    if (mctopo3d_simple6(F, x, rs, ps, N)) return 1; else return 0;
+    if (mctopo3d_simple6(F, x, rs, ps, N)) {
+      return 1;
+    } else {
+      return 0;
+    }
   case 18:
-    if (mctopo3d_simple18(F, x, rs, ps, N)) return 1; else return 0;
+    if (mctopo3d_simple18(F, x, rs, ps, N)) {
+      return 1;
+    } else {
+      return 0;
+    }
   case 26:
-    if (mctopo3d_simple26(F, x, rs, ps, N)) return 1; else return 0;
+    if (mctopo3d_simple26(F, x, rs, ps, N)) {
+      return 1;
+    } else {
+      return 0;
+    }
   default: assert(0);
   }
 } // is_simple()
@@ -762,7 +947,9 @@ static int32_t tailleptliste(SKC_pt_pcell p)
 /* ====================================================================== */
 {
   int32_t n = 0;
-  for (; p != NULL; p = p->next) n++;
+  for (; p != NULL; p = p->next) {
+    n++;
+  }
   return n;
 } /* tailleptliste() */
 
@@ -811,34 +998,54 @@ skel * limage2skel(struct xvimage *image, int32_t connex, int32_t len)
   // filtre les bords de l'image
   if (ds > 1)
   {
-    for (x = 0; x < rs; x++)
-    for (y = 0; y < cs; y++) 
-      F[0 * ps + y * rs + x] = 0;          /* plan z = 0 */
-    for (x = 0; x < rs; x++)
-    for (y = 0; y < cs; y++) 
-      F[(ds-1) * ps + y * rs + x] = 0;     /* plan z = ds-1 */
+    for (x = 0; x < rs; x++) {
+      for (y = 0; y < cs; y++) {
+        F[0 * ps + y * rs + x] = 0; /* plan z = 0 */
+      }
+    }
+    for (x = 0; x < rs; x++) {
+      for (y = 0; y < cs; y++) {
+        F[(ds - 1) * ps + y * rs + x] = 0; /* plan z = ds-1 */
+      }
+    }
 
-    for (x = 0; x < rs; x++)
-    for (z = 0; z < ds; z++) 
-      F[z * ps + 0 * rs + x] = 0;          /* plan y = 0 */
-    for (x = 0; x < rs; x++)
-    for (z = 0; z < ds; z++) 
-      F[z * ps + (cs-1) * rs + x] = 0;     /* plan y = cs-1 */
+    for (x = 0; x < rs; x++) {
+      for (z = 0; z < ds; z++) {
+        F[z * ps + 0 * rs + x] = 0; /* plan y = 0 */
+      }
+    }
+    for (x = 0; x < rs; x++) {
+      for (z = 0; z < ds; z++) {
+        F[z * ps + (cs - 1) * rs + x] = 0; /* plan y = cs-1 */
+      }
+    }
 
-    for (y = 0; y < cs; y++)
-    for (z = 0; z < ds; z++) 
-      F[z * ps + y * rs + 0] = 0;          /* plan x = 0 */
-    for (y = 0; y < cs; y++)
-    for (z = 0; z < ds; z++) 
-      F[z * ps + y * rs + (rs-1)] = 0;     /* plan x = rs-1 */
+    for (y = 0; y < cs; y++) {
+      for (z = 0; z < ds; z++) {
+        F[z * ps + y * rs + 0] = 0; /* plan x = 0 */
+      }
+    }
+    for (y = 0; y < cs; y++) {
+      for (z = 0; z < ds; z++) {
+        F[z * ps + y * rs + (rs - 1)] = 0; /* plan x = rs-1 */
+      }
+    }
   }
   else
   {
-    for (x = 0; x < rs; x++) F[x] = 0;
-    for (x = 0; x < rs; x++) F[(cs - 1) * rs + x] = 0;
+    for (x = 0; x < rs; x++) {
+      F[x] = 0;
+    }
+    for (x = 0; x < rs; x++) {
+      F[(cs - 1) * rs + x] = 0;
+    }
 
-    for (y = 1; y < cs - 1; y++) F[y * rs] = 0;
-    for (y = 1; y < cs - 1; y++) F[y * rs + rs - 1] = 0;
+    for (y = 1; y < cs - 1; y++) {
+      F[y * rs] = 0;
+    }
+    for (y = 1; y < cs - 1; y++) {
+      F[y * rs + rs - 1] = 0;
+    }
   }
 
   // Détection des différents types de points
@@ -851,7 +1058,9 @@ skel * limage2skel(struct xvimage *image, int32_t connex, int32_t len)
   T2 = UCHARDATA(temp2);
   T3 = UCHARDATA(temp3);
   M = (int32_t *)calloc(N, sizeof(int32_t)); assert (M);
-  for (i = 0; i < N; i++) M[i] = -1;
+  for (i = 0; i < N; i++) {
+    M[i] = -1;
+  }
   ret = lptisolated(temp0, connex); assert(ret);
   ret = lptend(temp1, connex); assert(ret);
   ret = lptcurve(temp2, connex); assert(ret);
@@ -925,9 +1134,12 @@ skel * limage2skel(struct xvimage *image, int32_t connex, int32_t len)
     if (F[i])
     {
       if (T0[i]) { T3[i] = 0; } else
-      if (T1[i]) { T3[i] = 0; T2[i] = NDG_MAX; } else
-      if (T2[i]) T3[i] = 0; else
-      if (T3[i]) T3[i] = NDG_MAX;
+      if (T1[i]) { T3[i] = 0; T2[i] = NDG_MAX;
+      } else if (T2[i]) {
+        T3[i] = 0;
+      } else if (T3[i]) {
+        T3[i] = NDG_MAX;
+      }
     }
   } // for (i = 0; i < N; i++) 
 
@@ -941,35 +1153,45 @@ skel * limage2skel(struct xvimage *image, int32_t connex, int32_t len)
     // élimination des courbes de longueur inférieure à len
     for (i = 0; i < N; i++) 
     {
-      if (T0[i] && (len > 0)) F[i] = T0[i] = 0; // points isolés
+      if (T0[i] && (len > 0)) {
+        F[i] = T0[i] = 0; // points isolés
+      }
       if (T1[i] && (len > 1)) // branches de longueur 1
       {
 	j = trouve1voisin(i, rs, ps, N, connex, F);
 	assert(j != -1);
-	if (T3[j]) F[i] = T1[i] = T2[i] = 0;
+        if (T3[j]) {
+          F[i] = T1[i] = T2[i] = 0;
+        }
       } 
       if ((T2[i] == NDG_MAX) && !T1[i])
       {
 	scancurve(i, image, connex, T1, T2, T3, &length, &ne, &nj); // etiquette à 1
 	if (length < len)
 	{
-	  if (((ne == 0) && (nj == 0)) || (ne > 0))
-	    deletecurve(i, image, connex, T1, T2, T3);
-	  else 
-	    curve2junction(i, image, connex, T2, T3);
-	}
+          if (((ne == 0) && (nj == 0)) || (ne > 0)) {
+            deletecurve(i, image, connex, T1, T2, T3);
+          } else {
+            curve2junction(i, image, connex, T2, T3);
+          }
+        }
       }
-    } // for (i = 0; i < N; i++) 
-    for (i = 0; i < N; i++) if (T2[i]) T2[i] = NDG_MAX;
+    } // for (i = 0; i < N; i++)
+    for (i = 0; i < N; i++) {
+      if (T2[i]) {
+        T2[i] = NDG_MAX;
+      }
+    }
 
     do { // retire itérativement les points simples non end
       nbpoints = 0;
-      for (i = 0; i < N; i++)
-	if (F[i] && !is_end(i, F, rs, ps, N, connex) && is_simple(i, F, rs, ps, N, connex))
+      for (i = 0; i < N; i++) {
+        if (F[i] && !is_end(i, F, rs, ps, N, connex) && is_simple(i, F, rs, ps, N, connex))
 	{
 	  nbpoints++;
 	  F[i] = 0;
-	}
+        }
+      }
     } while (nbpoints);
 
 #ifdef RECARAC
@@ -1001,10 +1223,18 @@ skel * limage2skel(struct xvimage *image, int32_t connex, int32_t len)
     if (F[i])
     {
       nbpoints++;
-      if (T0[i]) nbisol++;
-      if (T1[i]) nbend++;
-      if (T2[i]) nbcurv++;
-      if (T3[i]) nbjunc++;
+      if (T0[i]) {
+        nbisol++;
+      }
+      if (T1[i]) {
+        nbend++;
+      }
+      if (T2[i]) {
+        nbcurv++;
+      }
+      if (T3[i]) {
+        nbjunc++;
+      }
     }
   } // for (i = 0; i < N; i++) 
 
@@ -1104,7 +1334,7 @@ skel * limage2skel(struct xvimage *image, int32_t connex, int32_t len)
   } // for i
 
   // ajoute les relations d'adjacence réciproques
-  for (i = S->e_end; i < S->e_curv; i++) 
+  for (i = S->e_end; i < S->e_curv; i++) {
     for (p = S->tskel[i].adj; p != NULL; p = p->next)
     {
 #ifdef DEBUGADJ
@@ -1113,11 +1343,16 @@ skel * limage2skel(struct xvimage *image, int32_t connex, int32_t len)
 #endif
       addadjlist(S, p->val, i);
     }
+  }
 
   // ménage
   free(M);
-  if (lab2) free(lab2);
-  if (lab3) free(lab3);
+  if (lab2) {
+    free(lab2);
+  }
+  if (lab3) {
+    free(lab3);
+  }
   free(temp0);
   free(temp1);
   free(temp2);
@@ -1167,34 +1402,54 @@ skel * limage2skel2(struct xvimage *image, struct xvimage *morejunctions, int32_
   // filtre les bords de l'image
   if (ds > 1)
   {
-    for (x = 0; x < rs; x++)
-    for (y = 0; y < cs; y++) 
-      F[0 * ps + y * rs + x] = 0;          /* plan z = 0 */
-    for (x = 0; x < rs; x++)
-    for (y = 0; y < cs; y++) 
-      F[(ds-1) * ps + y * rs + x] = 0;     /* plan z = ds-1 */
+    for (x = 0; x < rs; x++) {
+      for (y = 0; y < cs; y++) {
+        F[0 * ps + y * rs + x] = 0; /* plan z = 0 */
+      }
+    }
+    for (x = 0; x < rs; x++) {
+      for (y = 0; y < cs; y++) {
+        F[(ds - 1) * ps + y * rs + x] = 0; /* plan z = ds-1 */
+      }
+    }
 
-    for (x = 0; x < rs; x++)
-    for (z = 0; z < ds; z++) 
-      F[z * ps + 0 * rs + x] = 0;          /* plan y = 0 */
-    for (x = 0; x < rs; x++)
-    for (z = 0; z < ds; z++) 
-      F[z * ps + (cs-1) * rs + x] = 0;     /* plan y = cs-1 */
+    for (x = 0; x < rs; x++) {
+      for (z = 0; z < ds; z++) {
+        F[z * ps + 0 * rs + x] = 0; /* plan y = 0 */
+      }
+    }
+    for (x = 0; x < rs; x++) {
+      for (z = 0; z < ds; z++) {
+        F[z * ps + (cs - 1) * rs + x] = 0; /* plan y = cs-1 */
+      }
+    }
 
-    for (y = 0; y < cs; y++)
-    for (z = 0; z < ds; z++) 
-      F[z * ps + y * rs + 0] = 0;          /* plan x = 0 */
-    for (y = 0; y < cs; y++)
-    for (z = 0; z < ds; z++) 
-      F[z * ps + y * rs + (rs-1)] = 0;     /* plan x = rs-1 */
+    for (y = 0; y < cs; y++) {
+      for (z = 0; z < ds; z++) {
+        F[z * ps + y * rs + 0] = 0; /* plan x = 0 */
+      }
+    }
+    for (y = 0; y < cs; y++) {
+      for (z = 0; z < ds; z++) {
+        F[z * ps + y * rs + (rs - 1)] = 0; /* plan x = rs-1 */
+      }
+    }
   }
   else
   {
-    for (x = 0; x < rs; x++) F[x] = 0;
-    for (x = 0; x < rs; x++) F[(cs - 1) * rs + x] = 0;
+    for (x = 0; x < rs; x++) {
+      F[x] = 0;
+    }
+    for (x = 0; x < rs; x++) {
+      F[(cs - 1) * rs + x] = 0;
+    }
 
-    for (y = 1; y < cs - 1; y++) F[y * rs] = 0;
-    for (y = 1; y < cs - 1; y++) F[y * rs + rs - 1] = 0;
+    for (y = 1; y < cs - 1; y++) {
+      F[y * rs] = 0;
+    }
+    for (y = 1; y < cs - 1; y++) {
+      F[y * rs + rs - 1] = 0;
+    }
   }
 
   // detection des differents types de points
@@ -1207,19 +1462,22 @@ skel * limage2skel2(struct xvimage *image, struct xvimage *morejunctions, int32_
   T2 = UCHARDATA(temp2);
   T3 = UCHARDATA(temp3);
   M = (int32_t *)calloc(N, sizeof(int32_t)); assert (M);
-  for (i = 0; i < N; i++) M[i] = -1;
+  for (i = 0; i < N; i++) {
+    M[i] = -1;
+  }
   ret = lptisolated(temp0, connex); assert(ret);
   ret = lptend(temp1, connex); assert(ret);
   ret = lptcurve(temp2, connex); assert(ret);
   ret = lptsimple(temp3, connex); assert(ret);
 
-  for (i = 0; i < N; i++)
+  for (i = 0; i < N; i++) {
     if (T3[i] && !T1[i])
     {
       fprintf(stderr, "%s: input image is not a curvilinear skeleton\n", F_NAME);
       return NULL;
     }
-      
+  }
+
   copy2image(temp3, image);
 
   // detection des points de jonction (T3) par complementation
@@ -1231,10 +1489,15 @@ skel * limage2skel2(struct xvimage *image, struct xvimage *morejunctions, int32_
       if (T0[i]) { T3[i] = 0; } else
       if (T1[i]) { T3[i] = 0; T2[i] = NDG_MAX; } else
       if (T2[i])
-      { 
-	if (J[i]) T2[i] = 0; else T3[i] = 0; 
-      } else
-      if (T3[i] || J[i]) T3[i] = NDG_MAX;
+      {
+        if (J[i]) {
+          T2[i] = 0;
+        } else {
+          T3[i] = 0;
+        }
+      } else if (T3[i] || J[i]) {
+        T3[i] = NDG_MAX;
+      }
     }
   } // for (i = 0; i < N; i++) 
 
@@ -1252,10 +1515,18 @@ skel * limage2skel2(struct xvimage *image, struct xvimage *morejunctions, int32_
     if (F[i])
     {
       nbpoints++;
-      if (T0[i]) nbisol++;
-      if (T1[i]) nbend++;
-      if (T2[i]) nbcurv++;
-      if (T3[i]) nbjunc++;
+      if (T0[i]) {
+        nbisol++;
+      }
+      if (T1[i]) {
+        nbend++;
+      }
+      if (T2[i]) {
+        nbcurv++;
+      }
+      if (T3[i]) {
+        nbjunc++;
+      }
     }
   } // for (i = 0; i < N; i++) 
 
@@ -1354,7 +1625,7 @@ skel * limage2skel2(struct xvimage *image, struct xvimage *morejunctions, int32_
   } // for i
 
   // ajoute les relations d'adjacence réciproques
-  for (i = S->e_end; i < S->e_curv; i++) 
+  for (i = S->e_end; i < S->e_curv; i++) {
     for (p = S->tskel[i].adj; p != NULL; p = p->next)
     {
 #ifdef DEBUGADJ
@@ -1363,11 +1634,16 @@ skel * limage2skel2(struct xvimage *image, struct xvimage *morejunctions, int32_
 #endif
       addadjlist(S, p->val, i);
     }
+  }
 
   // ménage
   free(M);
-  if (lab2) free(lab2);
-  if (lab3) free(lab3);
+  if (lab2) {
+    free(lab2);
+  }
+  if (lab3) {
+    free(lab3);
+  }
   free(temp0);
   free(temp1);
   free(temp2);
@@ -1408,28 +1684,32 @@ struct xvimage * lskel2image(skel *S, int32_t id)
   {
     for (i = S->e_curv; i < S->e_junc; i++)
     {
-      for (p = S->tskel[i].pts; p != NULL; p = p->next) 
-	F[p->val] = VAL_JUNC;
+      for (p = S->tskel[i].pts; p != NULL; p = p->next) {
+        F[p->val] = VAL_JUNC;
+      }
     }
     for (i = S->e_end; i < S->e_curv; i++)
     {
       for (p = S->tskel[i].pts; p != NULL; p = p->next) 
       {
-	if (S->tskel[i].tag)
-	  F[p->val] = VAL_ISOL;
-	else
-	  F[p->val] = VAL_CURV;
+        if (S->tskel[i].tag) {
+          F[p->val] = VAL_ISOL;
+        } else {
+          F[p->val] = VAL_CURV;
+        }
       }
     }
     for (i = S->e_isol; i < S->e_end; i++)
     {
-      for (p = S->tskel[i].pts; p != NULL; p = p->next) 
-	F[p->val] = VAL_END;
+      for (p = S->tskel[i].pts; p != NULL; p = p->next) {
+        F[p->val] = VAL_END;
+      }
     }
     for (i = 0; i < S->e_isol; i++)
     {
-      for (p = S->tskel[i].pts; p != NULL; p = p->next) 
-	F[p->val] = VAL_ISOL;
+      for (p = S->tskel[i].pts; p != NULL; p = p->next) {
+        F[p->val] = VAL_ISOL;
+      }
     }
   }
   else if (id == -1)
@@ -1441,33 +1721,38 @@ struct xvimage * lskel2image(skel *S, int32_t id)
     }
     for (i = S->e_curv; i < S->e_junc; i++)
     {
-      for (p = S->tskel[i].pts; p != NULL; p = p->next) 
-	F[p->val] = (i!=0?i:S->e_junc);
+      for (p = S->tskel[i].pts; p != NULL; p = p->next) {
+        F[p->val] = (i != 0 ? i : S->e_junc);
+      }
     }
     for (i = S->e_end; i < S->e_curv; i++)
     {
       for (p = S->tskel[i].pts; p != NULL; p = p->next) 
       {
-	if (S->tskel[i].tag)
-	  F[p->val] = (i!=0?i:S->e_junc);
-	else
-	  F[p->val] = (i!=0?i:S->e_junc);
+        if (S->tskel[i].tag) {
+          F[p->val] = (i!=0?i:S->e_junc);
+        } else {
+          F[p->val] = (i != 0 ? i : S->e_junc);
+        }
       }
     }
     for (i = S->e_isol; i < S->e_end; i++)
     {
-      for (p = S->tskel[i].pts; p != NULL; p = p->next) 
-	F[p->val] = (i!=0?i:S->e_junc);
+      for (p = S->tskel[i].pts; p != NULL; p = p->next) {
+        F[p->val] = (i != 0 ? i : S->e_junc);
+      }
     }
     for (i = 0; i < S->e_isol; i++)
     {
-      for (p = S->tskel[i].pts; p != NULL; p = p->next) 
-	F[p->val] = (i!=0?i:S->e_junc);
+      for (p = S->tskel[i].pts; p != NULL; p = p->next) {
+        F[p->val] = (i != 0 ? i : S->e_junc);
+      }
+    }
+  } else {
+    for (p = S->tskel[id].pts; p != NULL; p = p->next) {
+      F[p->val] = NDG_MAX;
     }
   }
-  else
-    for (p = S->tskel[id].pts; p != NULL; p = p->next)
-      F[p->val] = NDG_MAX;
 
   return image;
 } /* lskel2image() */
@@ -1499,9 +1784,11 @@ struct xvimage * lskelmarked2image(skel *S)
 
   for (i = 0; i < S->e_junc; i++)
   {
-    if (S->tskel[i].tag)
-      for (p = S->tskel[i].pts; p != NULL; p = p->next) 
-	F[p->val] = NDG_MAX;
+    if (S->tskel[i].tag) {
+      for (p = S->tskel[i].pts; p != NULL; p = p->next) {
+        F[p->val] = NDG_MAX;
+      }
+    }
   }
 
   return image;
@@ -1534,9 +1821,11 @@ struct xvimage * lskelnotmarked2image(skel *S)
 
   for (i = 0; i < S->e_junc; i++)
   {
-    if (!S->tskel[i].tag)
-      for (p = S->tskel[i].pts; p != NULL; p = p->next) 
-	F[p->val] = NDG_MAX;
+    if (!S->tskel[i].tag) {
+      for (p = S->tskel[i].pts; p != NULL; p = p->next) {
+        F[p->val] = NDG_MAX;
+      }
+    }
   }
 
   return image;
@@ -1590,24 +1879,39 @@ int32_t adj_point_junc(skel *S, int32_t e, int32_t J)
   switch(connex)
   {
     case 4:
-      for (p = S->tskel[J].pts; p != NULL; p = p->next)
-	if (sont4voisins(p->val, e, rs)) return 1;
+      for (p = S->tskel[J].pts; p != NULL; p = p->next) {
+        if (sont4voisins(p->val, e, rs)) {
+          return 1;
+        }
+      }
       break;
     case 8:
-      for (p = S->tskel[J].pts; p != NULL; p = p->next)
-	if (sont8voisins(p->val, e, rs)) return 1;
+      for (p = S->tskel[J].pts; p != NULL; p = p->next) {
+        if (sont8voisins(p->val, e, rs)) {
+          return 1;
+        }
+      }
       break;
     case 6:
-      for (p = S->tskel[J].pts; p != NULL; p = p->next)
-	if (sont6voisins(p->val, e, rs, ps)) return 1;
+      for (p = S->tskel[J].pts; p != NULL; p = p->next) {
+        if (sont6voisins(p->val, e, rs, ps)) {
+          return 1;
+        }
+      }
       break;
     case 18:
-      for (p = S->tskel[J].pts; p != NULL; p = p->next)
-	if (sont18voisins(p->val, e, rs, ps)) return 1;
+      for (p = S->tskel[J].pts; p != NULL; p = p->next) {
+        if (sont18voisins(p->val, e, rs, ps)) {
+          return 1;
+        }
+      }
       break;
     case 26:
-      for (p = S->tskel[J].pts; p != NULL; p = p->next)
-	if (sont26voisins(p->val, e, rs, ps)) return 1;
+      for (p = S->tskel[J].pts; p != NULL; p = p->next) {
+        if (sont26voisins(p->val, e, rs, ps)) {
+          return 1;
+        }
+      }
       break;
   }
   return 0;
@@ -1642,11 +1946,14 @@ skel * lskelsmoothing(skel *S, int32_t mode, double param)
   {
     SS->tskel[ind].tag = S->tskel[ind].tag; 
     SS->tskel[ind].fval = S->tskel[ind].fval;
-    for (a = S->tskel[ind].adj; a != NULL; a = a->next)
+    for (a = S->tskel[ind].adj; a != NULL; a = a->next) {
       addadjlist(SS, ind, a->val);
-    if (ind < S->e_end) 
-      for (p = S->tskel[ind].pts; p != NULL; p = p->next)
-	addptslist(SS, ind, p->val);
+    }
+    if (ind < S->e_end) {
+      for (p = S->tskel[ind].pts; p != NULL; p = p->next) {
+        addptslist(SS, ind, p->val);
+      }
+    }
   }
 
   if (ds == 1)
@@ -1968,11 +2275,16 @@ int32_t lskelmarkvertex(skel *S, int32_t vertex_id)
 #define F_NAME "lskelmarkvertex"
   int32_t i;
 
-  if (vertex_id < 0) return 0;
-  if (vertex_id >= S->e_junc) return 0;
+  if (vertex_id < 0) {
+    return 0;
+  }
+  if (vertex_id >= S->e_junc) {
+    return 0;
+  }
 
-  for (i = 0; i < S->e_junc; i++)
+  for (i = 0; i < S->e_junc; i++) {
     S->tskel[i].tag = 0; // not marked
+  }
 
   S->tskel[vertex_id].tag = 1; // marked
   return 1;
@@ -2087,7 +2399,9 @@ static void points_at_tail(skel *S, int32_t A, double delta, int32_t *e, int32_t
     return;
   }
 
-  for (; p != NULL; p = p->next) *e = p->val;
+  for (; p != NULL; p = p->next) {
+    *e = p->val;
+  }
 
   x = (double)(*e % rs);
   y = (double)((*e % ps) / rs);
@@ -2111,8 +2425,9 @@ static void points_at_tail(skel *S, int32_t A, double delta, int32_t *e, int32_t
     xx = (double)(p->val % rs);
     yy = (double)((p->val % ps) / rs);
     zz = (double)(p->val / ps);
-    if (dist3(x, y, z, xx, yy, zz) < delta)
+    if (dist3(x, y, z, xx, yy, zz) < delta) {
       break;
+    }
     pp = p;
   }
   *f = pp->val;
@@ -2150,7 +2465,9 @@ static void list_points_at_head(skel *S, int32_t Ai, double delta, int32_t *list
     xx = (double)(p->val % rs);
     yy = (double)((p->val % ps) / rs);
     zz = (double)(p->val / ps);
-    if (dist3(x, y, z, xx, yy, zz) > delta) break;
+    if (dist3(x, y, z, xx, yy, zz) > delta) {
+      break;
+    }
     assert(n < nmax);
     listpoints[n] = p->val;
     n++;
@@ -2206,7 +2523,9 @@ static void list_points_at_tail(skel *S, int32_t Ai, double delta, int32_t *list
   assert(nmax > 0);
 
   assert(p != NULL);
-  for (; p != NULL; p = p->next) e = p->val; // atteint le dernier point
+  for (; p != NULL; p = p->next) {
+    e = p->val; // atteint le dernier point
+  }
   x = (double)(e % rs);
   y = (double)((e % ps) / rs);
   z = (double)(e / ps); 
@@ -2421,8 +2740,9 @@ int32_t lien(
   int32_t xmax = mcmax(p1%rs,p2%rs), 
           ymax = mcmax((p1%ps)/rs,(p2%ps)/rs), 
           zmax = mcmax(p1/ps,p2/ps);
-  if ((xmax-xmin >= 6) || (ymax-ymin >= 6) || (zmax-zmin >= 6))
+  if ((xmax - xmin >= 6) || (ymax - ymin >= 6) || (zmax - zmin >= 6)) {
     return -1; // on ne sait pas traiter
+  }
 
   pts = (S->tskel)[J].pts;
   while ( pts != NULL )
@@ -2432,10 +2752,13 @@ int32_t lien(
     xmax = mcmax(xmax,x), ymax = mcmax(ymax,y), zmax = mcmax(zmax,z);
     pts = pts->next;
   }
-  if ((xmax-xmin >= 6) || (ymax-ymin >= 6) || (zmax-zmin >= 6))
+  if ((xmax - xmin >= 6) || (ymax - ymin >= 6) || (zmax - zmin >= 6)) {
     return -1; // on ne sait pas traiter
+  }
 
-  for(i=0;i<216;i++) cube[i]=0;
+  for (i = 0; i < 216; i++) {
+    cube[i] = 0;
+  }
   p1_ = (p1/ps-zmin)*36+((p1%ps)/rs-ymin)*6+(p1%rs-xmin); 
   p2_ = (p2/ps-zmin)*36+((p2%ps)/rs-ymin)*6+(p2%rs-xmin);
   cube[p1_]=1;
@@ -2463,8 +2786,10 @@ int32_t lien(
     if ( indice != -1 && cube[indice] == -1 ) 
     { 
       cube[indice]=cube[list[i]]+1; 
-      list[j]=indice; j++; 
-      if (j >= 20) return -1; // on ne sait pas traiter 
+      list[j]=indice; j++;
+      if (j >= 20) {
+        return -1; // on ne sait pas traiter
+      }
     }
   }  
   i++;
@@ -2473,7 +2798,9 @@ int32_t lien(
   // extraire chemin de p1 à p2
   i = cube[p2_]-2;
   // on conjecture qu'il n'y a jamais plus de 4 points pour faire la jonction
-  if (i > 4)  return -1; // on ne sait pas traiter
+  if (i > 4) {
+    return -1; // on ne sait pas traiter
+  }
   j = p2_;
   while( j != p1_ )
   {
@@ -2518,7 +2845,9 @@ static int32_t compute_vectors_from_junction(
   int32_t c[4]; 		// les courbes adjacentes à la jonction
   double angle[6]; 
   double max;
-  for (i=0; i<6; i++) angle[i]=1;
+  for (i = 0; i < 6; i++) {
+    angle[i] = 1;
+  }
 
   adj = (S->tskel[J]).adj;
   c[0] = adj->val;
@@ -2598,8 +2927,11 @@ static int32_t compute_vectors_from_junction(
     }
 
     // on repositionne le second arc si nécessaire
-    if ( n<4 )
-	for(n1=0;n1<npoints;n1++) listpoints[ntemp+n+n1] = listpoints[ntemp+4+n1];
+    if (n < 4) {
+      for (n1 = 0; n1 < npoints; n1++) {
+        listpoints[ntemp + n + n1] = listpoints[ntemp + 4 + n1];
+      }
+    }
 
     npoints = npoints + ntemp + n;
 //fin v2
@@ -2615,22 +2947,29 @@ static int32_t compute_vectors_from_junction(
     lcurvetangents3D( 2, mask, tab_combi, npoints, X, Y, Z, VVx, VVy, VVz);
 
     // calcul de l'angle min (ie le produit scalaire max)
-    for (n1= mcmax(0,ntemp-l); n1< mcmin(npoints-1,ntemp+n+l-1); n1++)
+    for (n1 = mcmax(0, ntemp - l); n1 < mcmin(npoints - 1, ntemp + n + l - 1);
+         n1++) {
       for(n2=n1+1; n2< mcmin(npoints,ntemp+n+l); n2++)
       {
   	// mise à jour de angle[i+j-1]
   	angle[i+j-1+ajust]=mcmin(angle[i+j-1+ajust],VVx[n1]*VVx[n2]+VVy[n1]*VVy[n2]+VVz[n1]*VVz[n2]);
       }
+    }
   } // fin for j
   ajust = narc-3;
   } // fin for i
 
   // j=argmax(angle)
   max = angle[0]; j=0;
-  if (narc==3) ntemp=3;
-  else ntemp=6;
-  for (i=1;i<ntemp;i++)
-    if (angle[i]>max) { max=angle[i]; j=i; }
+  if (narc == 3) {
+    ntemp = 3;
+  } else {
+    ntemp = 6;
+  }
+  for (i = 1; i < ntemp; i++) {
+    if (angle[i]>max) { max=angle[i]; j=i;
+    }
+  }
 
   if (narc==3)
   {
@@ -2777,8 +3116,9 @@ int32_t lskelfilter1a(skel *S, double delta1, double delta2, double theta, int32
   Y = (double *)malloc(nmaxpoints * sizeof(double)); assert(Y != NULL);
   Z = (double *)malloc(nmaxpoints * sizeof(double)); assert(Z != NULL);
 
-  for (J = S->e_curv; J < S->e_junc; J++) // mark all junctions
-    S->tskel[J].tag = 1; 
+  for (J = S->e_curv; J < S->e_junc; J++) { // mark all junctions
+    S->tskel[J].tag = 1;
+  }
 
   for (Ai = S->e_end; Ai < S->e_curv; Ai++) // scan all arcs
   {
@@ -2790,10 +3130,11 @@ int32_t lskelfilter1a(skel *S, double delta1, double delta2, double theta, int32
     }
     assert(p->next != NULL); // soit 0, soit 2 adjacences
     if (((!IS_JUNC(p->val)) && (!IS_JUNC(p->next->val))) ||
-	(tailleptliste(S->tskel[Ai].pts) >= length))
+        (tailleptliste(S->tskel[Ai].pts) >= length)) {
       S->tskel[Ai].tag = 1; // mark as "aligned"
-    else
+    } else {
       S->tskel[Ai].tag = 0; // mark as "not aligned"
+    }
   }
 
   for (J = S->e_curv; J < S->e_junc; J++)
@@ -2896,7 +3237,9 @@ En entrée, nmax contient la taille des tableaux X, Y, Z.
       // If angle(S[j]-S[i], S[j]-S[k]) <= sharp then mark S[j]
       angle = acos(scalarprod(xj-xi, yj-yi, zj-zi, xj-xk, yj-yk, zj-zk) / 
 		   (norm(xj-xi, yj-yi, zj-zi) * norm(xj-xk, yj-yk, zj-zk)));
-      if (angle <= sharp) F[Z[j]*ps + Y[j]* rs + X[j]] = 255;
+      if (angle <= sharp) {
+        F[Z[j] * ps + Y[j] * rs + X[j]] = 255;
+      }
     }
   } // for (C = S->e_end; C < S->e_curv; C++)
 
@@ -2956,11 +3299,15 @@ The matching branches are marked (field "tag" = 1).
 
 #ifdef DEBUG
   printf("%s: length = %g, delta1 = %g, delta2 = %g\n", F_NAME, length, delta1, delta2);
-#endif	  
+#endif
 
-  for (i = 0; i < S->e_junc; i++) S->tskel[i].tag = 0; // unmark all
+  for (i = 0; i < S->e_junc; i++) {
+    S->tskel[i].tag = 0; // unmark all
+  }
 
-  if (S->e_curv == S->e_end) return 1; // no arc: exit 
+  if (S->e_curv == S->e_end) {
+    return 1; // no arc: exit
+  }
 
   nmaxpoints = delta2 * 4;
   listpoints = (int32_t *)malloc(nmaxpoints * sizeof(int32_t)); assert(listpoints != NULL);
@@ -2985,7 +3332,9 @@ The matching branches are marked (field "tag" = 1).
       for (e = 0; e < 2; e++)
       {
 	E = EE[e];
-	if (!IS_JUNC(E)) break; // les 2 doivent être des jonctions
+        if (!IS_JUNC(E)) {
+          break; // les 2 doivent être des jonctions
+        }
 #ifdef DEBUG
 	printf("processing junction E=%d\n", E);
 #endif	  
@@ -3033,8 +3382,8 @@ The matching branches are marked (field "tag" = 1).
 
 //        Let maxangle be min{<Vi,-Vj> | 0 <= i < k and i < j <= k} 
 	  maxangle = 0.0;
-	  for (i = 0; i < nadj-1; i++)
-	    for (j = i+1; j < nadj; j++)
+          for (i = 0; i < nadj - 1; i++) {
+            for (j = i+1; j < nadj; j++)
 	    {
 	      Cij = acos(scalarprod(Vx[i], Vy[i], Vz[i], -Vx[j], -Vy[j], -Vz[j]) / 
 			 (norm(Vx[i], Vy[i], Vz[i]) * norm(Vx[j], Vy[j], Vz[j])));
@@ -3042,7 +3391,8 @@ The matching branches are marked (field "tag" = 1).
 	      printf("    C(%d,%d)=%g(%g)\n", A[i], A[j], Cij, (Cij*180)/M_PI);
 #endif	  
 	      if (Cij > maxangle) { maxangle = Cij; }
-	    }
+            }
+          }
 #ifdef DEBUG
 	  printf("  maxangle=%g\n", maxangle);
 #endif	  
@@ -3106,11 +3456,16 @@ int32_t lskelfilter2(skel *S, double delta1, double delta2)
 
 #ifdef DEBUG
   printf("%s: delta1 = %g, delta2 = %g\n", F_NAME, delta1, delta2);
-#endif	  
+#endif
 
-  for (i = S->e_end, j = 0; i < S->e_curv; i++)
-    if (!SK_DELETED(i)) j++; // counts non-deleted arcs
-  if (j == 0) return 1; // no arc: exit 
+  for (i = S->e_end, j = 0; i < S->e_curv; i++) {
+    if (!SK_DELETED(i)) {
+      j++; // counts non-deleted arcs
+    }
+  }
+  if (j == 0) {
+    return 1; // no arc: exit
+  }
 
   nmaxpoints = delta2 * 4;
   listpoints = (int32_t *)malloc(nmaxpoints * sizeof(int32_t)); assert(listpoints != NULL);
@@ -3120,12 +3475,13 @@ int32_t lskelfilter2(skel *S, double delta1, double delta2)
 
 //Let A0 be the arc in S having the greatest length
   maxlen = 0;
-  for (i = S->e_end; i < S->e_curv; i++) // scan all arcs
+  for (i = S->e_end; i < S->e_curv; i++) { // scan all arcs
     if (!SK_DELETED(i))
     {
       ret = tailleptliste(S->tskel[i].pts);
       if (ret > maxlen) { maxlen = ret; A0 = i; }
     }
+  }
   assert(maxlen > 0);
 
 //Mark A0 (MARK1)
@@ -3179,8 +3535,10 @@ int32_t lskelfilter2(skel *S, double delta1, double delta2)
 	printf("  adjacent arcs: ");
 	for (j = 0; j < nadj; j++) printf("%d ", A[j]);
 	printf("\n");
-#endif	  
-	if (nadj <= 2) break; // end or elbow: stop tracking
+#endif
+        if (nadj <= 2) {
+          break; // end or elbow: stop tracking
+        }
 
 //      Let V0, ... Vk be the corresponding tangent vectors
 	for (j = 0; j < nadj; j++)
@@ -3208,26 +3566,29 @@ int32_t lskelfilter2(skel *S, double delta1, double delta2)
 	    if (Cij < angle) { angle = Cij; m = j; }
 	  }
 	}
-	if (m == -1) break; // only small arcs: stop tracking
+        if (m == -1) {
+          break; // only small arcs: stop tracking
+        }
 #ifdef DEBUG
 	printf("  angle=%g\n", angle);
 #endif	  
 
 //      Let minangle be min{<Vi,-Vj> | 0 <= i < k and i < j <= k} 
 	minangle = 4.0; // greater than any angle
-	for (i = 0; i < nadj-1; i++)
-	for (j = i+1; j < nadj; j++)
-	{
-	  normprod = norm(Vx[i], Vy[i], Vz[i]) * norm(Vx[j], Vy[j], Vz[j]);
-	  if (normprod != 0.0) 
-	  {
-	    Cij = acos(scalarprod(Vx[i], Vy[i], Vz[i], -Vx[j], -Vy[j], -Vz[j]) / normprod);
+        for (i = 0; i < nadj - 1; i++) {
+          for (j = i + 1; j < nadj; j++) {
+            normprod = norm(Vx[i], Vy[i], Vz[i]) * norm(Vx[j], Vy[j], Vz[j]);
+            if (normprod != 0.0) {
+              Cij =
+                  acos(scalarprod(Vx[i], Vy[i], Vz[i], -Vx[j], -Vy[j], -Vz[j]) /
+                       normprod);
 #ifdef DEBUG
 	    printf("    C(%d,%d)=%g(%g)\n", A[i], A[j], Cij, (Cij*180)/M_PI);
 #endif	  
 	    if (Cij < minangle) { minangle = Cij; }
 	  }
-	}
+          }
+        }
 #ifdef DEBUG
 	printf("  minangle=%g\n", minangle);
 #endif	  
@@ -3239,7 +3600,11 @@ int32_t lskelfilter2(skel *S, double delta1, double delta2)
 //        E' = extremity of Am different from E
 	  p = S->tskel[A[m]].adj;
 	  assert(p != NULL); assert(p->next != NULL);
-	  if (p->val == E) Ep = p->next->val; else Ep = p->val;
+          if (p->val == E) {
+            Ep = p->next->val;
+          } else {
+            Ep = p->val;
+          }
 
 //        Mark E as internal junction
 	  SK_UNMARK1(E);
@@ -3314,23 +3679,29 @@ int32_t lskelfilter2b(skel *S)
 
 #ifdef DEBUG_lskelfilter2b
   printf("%s: begin\n", F_NAME);
-#endif	  
+#endif
 
-  for (i = S->e_end, j = 0; i < S->e_curv; i++)
-    if (!SK_DELETED(i)) j++; // counts non-deleted arcs
+  for (i = S->e_end, j = 0; i < S->e_curv; i++) {
+    if (!SK_DELETED(i)) {
+      j++; // counts non-deleted arcs
+    }
+  }
 #ifdef DEBUG_lskelfilter2b
   printf("nb arcs = %d    \n", j);
-#endif	  
-  if (j == 0) return 0; // no arc: exit 
+#endif
+  if (j == 0) {
+    return 0; // no arc: exit
+  }
 
 //Let A0 be the arc in S having the greatest length
   maxlen = 0;
-  for (i = S->e_end; i < S->e_curv; i++) // scan all arcs
+  for (i = S->e_end; i < S->e_curv; i++) { // scan all arcs
     if (!SK_DELETED(i))
     {
       ret = tailleptliste(S->tskel[i].pts);
       if (ret > maxlen) { maxlen = ret; A0 = i; }
     }
+  }
   assert(maxlen > 0);
 
 //Mark A0 (MARK1)
@@ -3385,9 +3756,13 @@ int32_t lskelfilter2b(skel *S)
 	printf("  adjacent arcs: ");
 	for (j = 0; j < nadj; j++) printf("%d ", A[j]);
 	printf("\n");
-#endif	  
-	if (nadj <= 2) break; // end or elbow: stop tracking
-        if (Vx[0]==0 && Vy[0]==0 && Vz[0]==0) break; // end
+#endif
+        if (nadj <= 2) {
+          break; // end or elbow: stop tracking
+        }
+        if (Vx[0] == 0 && Vy[0] == 0 && Vz[0] == 0) {
+          break; // end
+        }
 
 //      Let m be such that the angle <V0,-Vm> is minimal
 	angle = 4.0; // greater than any angle
@@ -3404,26 +3779,29 @@ int32_t lskelfilter2b(skel *S)
 	    if (Cij < angle) { angle = Cij; m = j; }
 	  }
 	}
-	if (m == -1) break; // only small arcs: stop tracking
+        if (m == -1) {
+          break; // only small arcs: stop tracking
+        }
 #ifdef DEBUG_lskelfilter2b
 	printf("  angle=%g\n", angle);
 #endif	  
 
 //      Let minangle be min{<Vi,-Vj> | 0 <= i < k and i < j <= k} 
 	minangle = 4.0; // greater than any angle
-	for (i = 0; i < nadj-1; i++)
-	for (j = i+1; j < nadj; j++)
-	{
-	  normprod = norm(Vx[i], Vy[i], Vz[i]) * norm(Vx[j], Vy[j], Vz[j]);
-	  if (normprod != 0.0) 
-	  {
-	    Cij = acos(scalarprod(Vx[i], Vy[i], Vz[i], -Vx[j], -Vy[j], -Vz[j]) / normprod);
+        for (i = 0; i < nadj - 1; i++) {
+          for (j = i + 1; j < nadj; j++) {
+            normprod = norm(Vx[i], Vy[i], Vz[i]) * norm(Vx[j], Vy[j], Vz[j]);
+            if (normprod != 0.0) {
+              Cij =
+                  acos(scalarprod(Vx[i], Vy[i], Vz[i], -Vx[j], -Vy[j], -Vz[j]) /
+                       normprod);
 #ifdef DEBUG_lskelfilter2b
 	    printf("    C(%d,%d)=%g(%g)\n", A[i], A[j], Cij, (Cij*180)/M_PI);
 #endif	  
 	    if (Cij < minangle) { minangle = Cij; }
 	  }
-	}
+          }
+        }
 #ifdef DEBUG_lskelfilter2b
 	printf("  minangle=%g\n", minangle);
 #endif	  
@@ -3434,7 +3812,11 @@ int32_t lskelfilter2b(skel *S)
 //        E' = extremity of Am different from E
 	  p = S->tskel[A[m]].adj;
 	  assert(p != NULL); assert(p->next != NULL);
-	  if (p->val == E) Ep = p->next->val; else Ep = p->val;
+          if (p->val == E) {
+            Ep = p->next->val;
+          } else {
+            Ep = p->val;
+          }
 
 //        Mark E as internal junction
 	  SK_UNMARK1(E);
@@ -3487,10 +3869,11 @@ int32_t is_elbow(skel *S, int32_t j, double maxelbowangle)
   assert(p != NULL); assert(p->next != NULL); assert(p->next->next == NULL);
   angle = acos(scalarprod(p->vx, p->vy, p->vz, p->next->vx, p->next->vy, p->next->vz) / 
 	       (norm(p->vx, p->vy, p->vz) * norm(p->next->vx, p->next->vy, p->next->vz)));
-  if (angle <= maxelbowangle) 
+  if (angle <= maxelbowangle) {
     return 1;
-  else
+  } else {
     return 0;
+  }
 } // is_elbow()
 
 /* ====================================================================== */
@@ -3535,17 +3918,21 @@ struct xvimage * lskelfilter3(skel *S, double delta1, double delta2, double maxb
   Z = (double *)malloc(nmaxpoints * sizeof(double)); assert(Z != NULL);
 
   // mark all arcs undeleted
-  for (i = S->e_end; i < S->e_curv; i++) SK_UNREMOVE(i);
+  for (i = S->e_end; i < S->e_curv; i++) {
+    SK_UNREMOVE(i);
+  }
 
   // compute all tangent vectors
-  for (j = S->e_curv; j < S->e_junc; j++) // scan all junctions
-    for (p = S->tskel[j].adj; p != NULL; p = p->next)
+  for (j = S->e_curv; j < S->e_junc; j++) { // scan all junctions
+    for (p = S->tskel[j].adj; p != NULL; p = p->next) {
       if (IS_CURV(p->val))
       {
         ret = compute_vector(S, p->val, j, delta1, delta2, listpoints, 
 			   nmaxpoints, X, Y, Z, &VVx, &VVy, &VVz);
         p->vx = VVx; p->vy = VVy; p->vz = VVz;
       }
+    }
+  }
 
   free(listpoints);
   free(X); free(Y); free(Z);
@@ -3564,25 +3951,28 @@ struct xvimage * lskelfilter3(skel *S, double delta1, double delta2, double maxb
 #endif
 
     // output fiber (write labeled voxels in output image) and delete arcs
-    for (i = S->e_end, n=0; i < S->e_junc; i++) // scan arcs and junctions
+    for (i = S->e_end, n = 0; i < S->e_junc; i++) { // scan arcs and junctions
       if (!SK_DELETED(i) && (SK_MARKED1(i) || SK_MARKED2(i)))
       {
 	for (pp = S->tskel[i].pts; pp != NULL; pp = pp->next)
         {  R[pp->val] = nfiber; n++; }       // output
-	if (IS_CURV(i)) skeldelete(S, i); // delete arcs only
+        if (IS_CURV(i)) {
+          skeldelete(S, i); // delete arcs only
+        }
       }
+    }
 
 #ifdef DEBUG_lskelfilter3
     printf("%s: fiber written (%d points)\n", F_NAME, n);
 #endif
 
     // remove branches adjacent to F and not longer than maxbridgelength
-    for (j = S->e_curv; j < S->e_junc; j++) // scan all junctions
+    for (j = S->e_curv; j < S->e_junc; j++) { // scan all junctions
       if (!SK_DELETED(j) && (SK_MARKED1(j) || SK_MARKED2(j)))
       {
 	na = nd = 0; // for counting remaining adjacent arcs
-	for (p = S->tskel[j].adj; p != NULL; p = p->next)
-	  if (IS_CURV(p->val) && !SK_DELETED(p->val))
+        for (p = S->tskel[j].adj; p != NULL; p = p->next) {
+          if (IS_CURV(p->val) && !SK_DELETED(p->val))
 	  {
 	    na++;
 	    if (tailleptliste(S->tskel[p->val].pts) <= maxbridgelength) 
@@ -3592,15 +3982,20 @@ struct xvimage * lskelfilter3(skel *S, double delta1, double delta2, double maxb
 	      printf("%s: arc %d deleted\n", F_NAME, p->val);
 #endif
 	    }
-	  }
-	// and unmark 
+          }
+        }
+        // and unmark 
 	SK_UNMARK1(j); SK_UNMARK2(j);
       } // scan junctions
+    }
 
     // update skeleton (merge branches at 2-junctions that are not elbows)
-    for (j = S->e_curv; j < S->e_junc; j++) // scan all junctions
-      if (!SK_DELETED(j) && (nb_adjacent_elts(S, j) == 2) && (!is_elbow(S, j, maxelbowangle)))
-	skeldelete(S, j);
+    for (j = S->e_curv; j < S->e_junc; j++) { // scan all junctions
+      if (!SK_DELETED(j) && (nb_adjacent_elts(S, j) == 2) &&
+          (!is_elbow(S, j, maxelbowangle))) {
+        skeldelete(S, j);
+      }
+    }
 
   } // while (lskelfilter2b(S))
 
@@ -3688,7 +4083,9 @@ struct xvimage * lskelfilter5(skel *S, int32_t mask, int32_t fenetre, double max
   tab_combi = LigneTrianglePascal(2*mask);
 
   // mark all arcs undeleted
-  for (i = S->e_end; i < S->e_curv; i++) SK_UNREMOVE(i);
+  for (i = S->e_end; i < S->e_curv; i++) {
+    SK_UNREMOVE(i);
+  }
 
   // compute all tangent vectors
   for (j = S->e_curv; j < S->e_junc; j++) // scan all junctions
@@ -3715,25 +4112,28 @@ struct xvimage * lskelfilter5(skel *S, int32_t mask, int32_t fenetre, double max
 #endif
 
     // output fiber (write labeled voxels in output image) and delete arcs
-    for (i = S->e_end, n=0; i < S->e_junc; i++) // scan arcs and junctions
+    for (i = S->e_end, n = 0; i < S->e_junc; i++) { // scan arcs and junctions
       if (!SK_DELETED(i) && (SK_MARKED1(i) || SK_MARKED2(i)))
       {
 	for (pp = S->tskel[i].pts; pp != NULL; pp = pp->next)
         {  R[pp->val] = nfiber; n++; }       // output
-	if (IS_CURV(i)) skeldelete(S, i); // delete arcs only
+        if (IS_CURV(i)) {
+          skeldelete(S, i); // delete arcs only
+        }
       }
+    }
 
 #ifdef DEBUG_lskelfilter5
     printf("%s: fiber written (%d points)\n", F_NAME, n);
 #endif
 
     // remove branches adjacent to F and not longer than maxbridgelength
-    for (j = S->e_curv; j < S->e_junc; j++) // scan all junctions
+    for (j = S->e_curv; j < S->e_junc; j++) { // scan all junctions
       if (!SK_DELETED(j) && (SK_MARKED1(j) || SK_MARKED2(j)))
       {
 	na = nd = 0; // for counting remaining adjacent arcs
-	for (p = S->tskel[j].adj; p != NULL; p = p->next)
-	  if (IS_CURV(p->val) && !SK_DELETED(p->val))
+        for (p = S->tskel[j].adj; p != NULL; p = p->next) {
+          if (IS_CURV(p->val) && !SK_DELETED(p->val))
 	  {
 	    na++;
 	    if (tailleptliste(S->tskel[p->val].pts) <= maxbridgelength) 
@@ -3743,15 +4143,20 @@ struct xvimage * lskelfilter5(skel *S, int32_t mask, int32_t fenetre, double max
 	      printf("%s: arc %d deleted\n", F_NAME, p->val);
 #endif
 	    }
-	  }
-	// and unmark 
+          }
+        }
+        // and unmark 
 	SK_UNMARK1(j); SK_UNMARK2(j);
       } // scan junctions
+    }
 
     // update skeleton (merge branches at 2-junctions that are not elbows)
-    for (j = S->e_curv; j < S->e_junc; j++) // scan all junctions
-      if (!SK_DELETED(j) && (nb_adjacent_elts(S, j) == 2) && (!is_elbow(S, j, maxelbowangle)))
-	skeldelete(S, j);
+    for (j = S->e_curv; j < S->e_junc; j++) { // scan all junctions
+      if (!SK_DELETED(j) && (nb_adjacent_elts(S, j) == 2) &&
+          (!is_elbow(S, j, maxelbowangle))) {
+        skeldelete(S, j);
+      }
+    }
 
   } // while (lskelfilter2b(S))
 
@@ -3792,7 +4197,9 @@ static double calc_inv_angle(int32_t *X, int32_t *Y, int32_t *Z, int32_t n, int3
   xk = X[k]; yk = Y[k]; zk = Z[k];
   angle = acos(scalarprod(xj-xi, yj-yi, zj-zi, xj-xk, yj-yk, zj-zk) / 
 	       (norm(xj-xi, yj-yi, zj-zi) * norm(xj-xk, yj-yk, zj-zk)));
-  if (angle < EPS) return 1.0/EPS;
+  if (angle < EPS) {
+    return 1.0 / EPS;
+  }
   return 1.0/angle;
 } // calc_inv_angle()
 
@@ -3821,7 +4228,9 @@ static int32_t compute_vectors_from_junction6(
   printf("%s: begin id junc=%d \n", F_NAME, J);
 #endif
 
-  for (i=0; i<6; i++) curv[i]=1;
+  for (i = 0; i < 6; i++) {
+    curv[i] = 1;
+  }
 
   adj = (S->tskel[J]).adj;
   assert(adj != NULL);
@@ -3851,8 +4260,9 @@ static int32_t compute_vectors_from_junction6(
   { 
     c[3] = adj->val; // 4eme arc adjacent
     narc++;
-    while ( (adj=adj->next) != NULL ) // plus de 4 arcs
+    while ((adj = adj->next) != NULL) { // plus de 4 arcs
       narc++;
+    }
   }
 
   //  fprintf(stderr,"appel : nbr arc = %d\n",narc);
@@ -3918,9 +4328,11 @@ static int32_t compute_vectors_from_junction6(
     ijunc = ntemp + (n/2);
 
     // on repositionne le second arc si nécessaire
-    if (n < 4)
-      for(n1 = 0; n1 < npoints; n1++) 
-	listpoints[ntemp+n+n1] = listpoints[ntemp+4+n1];
+    if (n < 4) {
+      for (n1 = 0; n1 < npoints; n1++) {
+        listpoints[ntemp + n + n1] = listpoints[ntemp + 4 + n1];
+      }
+    }
 
     npoints = npoints + ntemp + n;
 
@@ -3948,9 +4360,15 @@ static int32_t compute_vectors_from_junction6(
 
   // j=argmin(curv)
   min = curv[0]; j = 0;
-  if (narc == 3) ntemp = 3; else ntemp=6;
-  for (i = 1; i < ntemp; i++)
-    if (curv[i] < min) { min = curv[i]; j = i; }
+  if (narc == 3) {
+    ntemp = 3;
+  } else {
+    ntemp = 6;
+  }
+  for (i = 1; i < ntemp; i++) {
+    if (curv[i] < min) { min = curv[i]; j = i;
+    }
+  }
 
 #ifdef DEBUG_lskelfilter6
     printf("%s: courbure[%d] min = %g \n", F_NAME, j, curv[j]);
@@ -4117,7 +4535,9 @@ struct xvimage * lskelfilter6(skel *S, double maxbridgelength, double maxelbowan
   Z = (int32_t *)malloc(nmaxpoints * sizeof(int32_t)); assert(Z != NULL);
 
   // mark all arcs undeleted
-  for (i = S->e_end; i < S->e_curv; i++) SK_UNREMOVE(i);
+  for (i = S->e_end; i < S->e_curv; i++) {
+    SK_UNREMOVE(i);
+  }
 
   // compute all tangent vectors
   for (j = S->e_curv; j < S->e_junc; j++) // scan all junctions
@@ -4142,13 +4562,16 @@ struct xvimage * lskelfilter6(skel *S, double maxbridgelength, double maxelbowan
 #endif
 
     // output fiber (write labeled voxels in output image) and delete arcs
-    for (i = S->e_end, n=0; i < S->e_junc; i++) // scan arcs and junctions
+    for (i = S->e_end, n = 0; i < S->e_junc; i++) { // scan arcs and junctions
       if (!SK_DELETED(i) && (SK_MARKED1(i) || SK_MARKED2(i)))
       {
 	for (pp = S->tskel[i].pts; pp != NULL; pp = pp->next)
         {  R[pp->val] = nfiber; n++; }       // output
-	if (IS_CURV(i)) skeldelete(S, i); // delete arcs only
+        if (IS_CURV(i)) {
+          skeldelete(S, i); // delete arcs only
+        }
       }
+    }
 
 #ifdef DEBUG_lskelfilter6
     printf("%s: fiber written (%d points)\n", F_NAME, n);
@@ -4162,8 +4585,8 @@ struct xvimage * lskelfilter6(skel *S, double maxbridgelength, double maxelbowan
       {
 //printf("examen jonction %d\n", j);
 	na = nd = 0; // for counting remaining adjacent arcs
-	for (p = S->tskel[j].adj; p != NULL; p = p->next)
-	  if (IS_CURV(p->val) && !SK_DELETED(p->val))
+        for (p = S->tskel[j].adj; p != NULL; p = p->next) {
+          if (IS_CURV(p->val) && !SK_DELETED(p->val))
 	  {
 //printf("examen arc adjacent %d\n", p->val);
 	    na++;
@@ -4174,16 +4597,20 @@ struct xvimage * lskelfilter6(skel *S, double maxbridgelength, double maxelbowan
 	      printf("%s: arc %d deleted\n", F_NAME, p->val);
 #endif
 	    }
-	  }
-	// and unmark 
+          }
+        }
+        // and unmark 
 	SK_UNMARK1(j); SK_UNMARK2(j);
       } // if (!SK_DELETED(j) && (SK_MARKED1(j) || SK_MARKED2(j)))
     } // for j
 
     // update skeleton (merge branches at 2-junctions that are not elbows)
-    for (j = S->e_curv; j < S->e_junc; j++) // scan all junctions
-      if (!SK_DELETED(j) && (nb_adjacent_elts(S, j) == 2) && (!is_elbow(S, j, maxelbowangle)))
-	skeldelete(S, j);
+    for (j = S->e_curv; j < S->e_junc; j++) { // scan all junctions
+      if (!SK_DELETED(j) && (nb_adjacent_elts(S, j) == 2) &&
+          (!is_elbow(S, j, maxelbowangle))) {
+        skeldelete(S, j);
+      }
+    }
 
   } // while (lskelfilter2b(S))
 

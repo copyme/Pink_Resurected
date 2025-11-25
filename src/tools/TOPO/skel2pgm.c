@@ -90,7 +90,11 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (argc == 4) id = atoi(argv[2]); else id = -2;
+  if (argc == 4) {
+    id = atoi(argv[2]);
+  } else {
+    id = -2;
+  }
 
 #ifdef DEBUG
   printskel(S);

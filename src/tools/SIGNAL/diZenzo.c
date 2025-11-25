@@ -104,8 +104,10 @@ int main(int argc, char **argv)
   alpha = atof(argv[2]);
   if (argc == 5) {
     mode = atoi(argv[3]);
-  } else mode = 0;
-  
+  } else {
+    mode = 0;
+  }
+
   if (mode == 0) {
     if (! ldiZenzoGradient(imageR, imageV, imageB, alpha))
       {

@@ -91,10 +91,11 @@ int main(int argc, char **argv)
   I = UCHARDATA(image_in);
   seqsize = atoi(argv[2]);
 
-  if (cs > 1)
+  if (cs > 1) {
     image_out = allocimage(NULL, rs, cs, seqsize, VFF_TYP_1_BYTE);
-  else
+  } else {
     image_out = allocimage(NULL, rs, seqsize, 1, VFF_TYP_1_BYTE);
+  }
 
   if (image_out == NULL)
   {   
@@ -103,17 +104,20 @@ int main(int argc, char **argv)
   }
   O = UCHARDATA(image_out);
 
-  for (j = 0; j < seqsize; j++)
-    for (i = 0; i < N; i++) O[j * N + i] = I[i];
+  for (j = 0; j < seqsize; j++) {
+    for (i = 0; i < N; i++) {
+      O[j * N + i] = I[i];
+    }
+  }
 
   if (argc == 7)
   {
     image_out->xdim = atof(argv[4]);
     image_out->ydim = atof(argv[5]);
     image_out->zdim = atof(argv[6]);
-  }
-  else
+  } else {
     image_out->xdim = image_out->ydim = image_out->zdim = 0.0;
+  }
 
   writeimage(image_out, argv[argc-1]);
   freeimage(image_out);

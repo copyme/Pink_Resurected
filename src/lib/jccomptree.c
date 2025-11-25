@@ -78,8 +78,9 @@ void mergeTreePrint(mtree * MT)
     if (CT->tabnodes[i].nbsons > 0)
     {
       printf("sons: ");
-      for (s = CT->tabnodes[i].sonlist; s != NULL; s = s->next)
+      for (s = CT->tabnodes[i].sonlist; s != NULL; s = s->next) {
         printf("%d  ", s->son);
+      }
     }
     printf("\n");
   }
@@ -225,8 +226,9 @@ int32_t jccomptree_LowComAncFast(int32_t n1, int32_t n2, int32_t *Euler, int32_t
 
   ii = Number[n1];
   jj = Number[n2];
-  if (ii == jj)
+  if (ii == jj) {
     return ii;
+  }
 
   if (ii > jj) {
     kk = jj;
@@ -257,10 +259,16 @@ int32_t i_Partitionner(int32_t *A, int32_t *T, int32_t p, int32_t r)
   int32_t j = r + 1;
   while (1)
   {
-    do j--; while (T[A[j]] > x);
-    do i++; while (T[A[i]] < x);
-    if (i < j) { t = A[i]; A[i] = A[j]; A[j] = t; }
-    else return j;
+    do {
+      j--;
+    } while (T[A[j]] > x);
+    do {
+      i++;
+    } while (T[A[i]] < x);
+    if (i < j) { t = A[i]; A[i] = A[j]; A[j] = t;
+    } else {
+      return j;
+    }
   } /* while (1) */   
 } /* i_Partitionner() */
 
@@ -310,8 +318,14 @@ int32_t* jcLinSortIncreasing(uint8_t *F, int32_t N)
     fprintf(stderr, "%s() : malloc failed for T\n", F_NAME);
     return NULL;
   }
-  for (i = 0; i < 256; i++) H[i] = 0;   // initialise l'histogramme
-  for (i = 0; i < N; i++) if(i < N)  H[F[i]] += 1; // calcule l'histogramme
+  for (i = 0; i < 256; i++) {
+    H[i] = 0; // initialise l'histogramme
+  }
+  for (i = 0; i < N; i++) {
+    if (i < N) {
+      H[F[i]] += 1; // calcule l'histogramme
+    }
+  }
   j = H[0]; H[0] = 0;                   // calcule l'histogramme cumule
   for (i = 1; i < 256; i++) { k = H[i]; H[i] = j; j += k; }
   for (i = 0; i < N; i++)   
@@ -368,7 +382,9 @@ void componentTreeFree(JCctree * CT)
 {
   free(CT->tabnodes);
   free(CT->tabsoncells);
-  if(CT->flags != NULL)free(CT->flags);
+  if (CT->flags != NULL) {
+    free(CT->flags);
+  }
   free(CT);
 } // ComponentTreeFree()
 
@@ -415,8 +431,9 @@ int32_t jcSaliencyTree_b (JCctree ** SaliencyTree, int32_t *MST, int32_t *Valeur
     fprintf(stderr,"jcSaliencyTree: erreur de malloc\n");
     exit(0);
   }
-  for(i = 0; i < taille-1; i++)
-    clefs[i] = i; 
+  for (i = 0; i < taille - 1; i++) {
+    clefs[i] = i;
+  }
   i_TriRapideStochastique(clefs, Valeur, 0, taille-2);
   if( (ST = componentTreeAlloc((2*taille))) == NULL){
     fprintf(stderr, "jcSalliancyTree: erreur de ComponentTreeAlloc\n");
@@ -463,8 +480,9 @@ int32_t jcSaliencyTree_b (JCctree ** SaliencyTree, int32_t *MST, int32_t *Valeur
     STmap[k] = z;
   }
 
-  for(i = 0; i < taille; i++)
+  for (i = 0; i < taille; i++) {
     STaltitude[i] = 0;
+  }
 
   /* Construct father relationship */
   ST->tabnodes[ST->nbnodes-1].father = -1;

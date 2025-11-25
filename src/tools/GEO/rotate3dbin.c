@@ -107,8 +107,9 @@ int main(int argc, char **argv)
       fprintf(stderr, "%s: readimage failed\n", argv[0]);
       exit(1);
     }
+  } else {
+    se = 1;
   }
-  else se = 1;
 
   theta = atof(argv[2]);
   theta = (theta * M_PI) / 180;
@@ -118,22 +119,29 @@ int main(int argc, char **argv)
   resize=1;
   if (argc == 7)
   {
-    if (!se) resize=0;
+    if (!se) {
+      resize = 0;
+    }
     c1 = atof(argv[4]);
     c2 = atof(argv[5]);
-    if (se) fprintf(stderr, "%s: warning ignored parameters %g,%g (structuring element)\n", argv[0], c1, c2);
+    if (se) {
+      fprintf(stderr,
+              "%s: warning ignored parameters %g,%g (structuring element)\n",
+              argv[0], c1, c2);
+    }
   }
   else
   {
-    if (se)
+    if (se) {
       switch(axis)
       {
       case 'x': c1 = (double)y; c2 = (double)z; break;
       case 'y': c1 = (double)x; c2 = (double)z; break;
       case 'z': c1 = (double)x; c2 = (double)y; break;
       }
-    else  
+    } else {
       c1 = c2 = 0.0;
+    }
   }  
 
   switch(axis)
@@ -155,15 +163,16 @@ int main(int argc, char **argv)
     exit(1);
   }
 
-  if (se) 
+  if (se) {
     switch(axis)
     {
     case 'x': writese(image2, argv[argc-1], x, (index_t)newc1, (index_t)newc2); break;
     case 'y': writese(image2, argv[argc-1], (index_t)newc1, y, (index_t)newc2); break;
     case 'z': writese(image2, argv[argc-1], (index_t)newc1, (index_t)newc2, z); break;
     }
-  else
-    writeimage(image2, argv[argc-1]);
+  } else {
+    writeimage(image2, argv[argc - 1]);
+  }
   freeimage(image);
   freeimage(image2);
   return 0;

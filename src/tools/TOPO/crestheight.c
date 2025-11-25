@@ -102,7 +102,13 @@ int32_t lcrestheight(
   SP = UCHARDATA(sp);
   R = UCHARDATA(r);
 
-  for (p = 0; p < N; p++) if (separant4(S, p, rs, N)) SP[p] = 255; else SP[p] = 0;
+  for (p = 0; p < N; p++) {
+    if (separant4(S, p, rs, N)) {
+      SP[p] = 255;
+    } else {
+      SP[p] = 0;
+    }
+  }
 
   for (p = 0; p < N; p++)
   {
@@ -110,16 +116,19 @@ int32_t lcrestheight(
     {
       R[p] = S[p] - calpha8m(S, SP, p, rs, N);
 #ifdef NORMALIZE
-      if (R[p] > vmax) vmax = R[p];
+      if (R[p] > vmax) {
+        vmax = R[p];
+      }
 #endif
-    }
-    else
+    } else {
       R[p] = 0;
+    }
   }
 
 #ifdef NORMALIZE
-  for (p = 0; p < N; p++)
+  for (p = 0; p < N; p++) {
     R[p] = (255 * R[p]) / vmax;
+  }
 #endif
 
   memcpy(S, R, N);

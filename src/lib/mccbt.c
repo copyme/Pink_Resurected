@@ -79,8 +79,11 @@ int32_t mccbt_NotIn(
 /* e : l'element a rechercher */
 /* list : la liste (tableau d'entiers) */
 /* n : le nombre d'elements dans la liste */
-  while (n > 0)
-    if (list[--n] == e) return 0;
+while (n > 0) {
+  if (list[--n] == e) {
+    return 0;
+  }
+}
   return 1;
 } /* mccbt_NotIn() */
 
@@ -96,8 +99,11 @@ int32_t RgMinimum(
 /* ==================================== */
 {                              
   int32_t m = --n;
-  while (n > 0)
-    if (arbre[list[--n]].data < arbre[list[m]].data) m = n;
+  while (n > 0) {
+    if (arbre[list[--n]].data < arbre[list[m]].data) {
+      m = n;
+    }
+  }
   return m;
 } /* RgMinimum() */
 
@@ -214,23 +220,27 @@ void PrintCbt(
   printf("n = %d\n", nbcell - 1);
 
   printf("ta   = [");
-  for (i = 1; i < nbcell - 1 ; i++)
+  for (i = 1; i < nbcell - 1; i++) {
     printf("%3d ", arbre[i].father);
+  }
   printf("]\n");
 
   printf("he   = [");
-  for (i = 1; i < nbcell - 1 ; i++)
+  for (i = 1; i < nbcell - 1; i++) {
     printf("%3d ", i);
+  }
   printf("]\n");
 
   printf("data = [");
-  for (i = 1; i < nbcell ; i++)
+  for (i = 1; i < nbcell; i++) {
     printf("%3d ", arbre[i].data);
+  }
   printf("]\n");
 
   printf("aux  = [");
-  for (i = 1; i < nbcell ; i++)
+  for (i = 1; i < nbcell; i++) {
     printf("%3d ", arbre[i].cbtaux);
+  }
   printf("]\n");
 
   printf("for i = 1:n\n");
@@ -249,8 +259,9 @@ int32_t Anc(
 /* ==================================== */
 {
   int32_t a = cell;
-  while ((arbre[a].father != NIL) && (arbre[arbre[a].father].data <= d)) 
+  while ((arbre[a].father != NIL) && (arbre[arbre[a].father].data <= d)) {
     a = arbre[a].father;
+  }
   /* (arbre[a].father == NIL) || (arbre[arbre[a].father].data > d) */
  
 #ifdef TRACECBT
@@ -289,12 +300,15 @@ printf(") -> ");
     a = argv[i];
     while ((arbre[a].father != NIL) || (arbre[a].ancestor != NIL))
     {
-      if (arbre[a].ancestor != NIL) 
+      if (arbre[a].ancestor != NIL) {
         a = arbre[a].ancestor;
-      else
+      } else {
         a = arbre[a].father;
+      }
     }
-    if (a != argv[i]) arbre[argv[i]].ancestor = a;
+    if (a != argv[i]) {
+      arbre[argv[i]].ancestor = a;
+    }
     if (mccbt_NotIn(a, argv, nv))
     {
       argv[nv] = a;
@@ -320,8 +334,12 @@ int32_t LowComAnc(
 /* ==================================== */
 {
   int32_t x, i, lca, NoComAnc;
-  if (argc <= 0) return -1;
-  if (argc == 1) return argv[0];
+  if (argc <= 0) {
+    return -1;
+  }
+  if (argc == 1) {
+    return argv[0];
+  }
 
   x = argv[0];      /* index de la premiere cellule */
   while ((x != NIL) && (arbre[x].data <= d)) 
@@ -339,18 +357,22 @@ int32_t LowComAnc(
       {
       	arbre[x].label = 2;    /* on le marque 2 */
       	break;                 /* on arrete la remontee (sort du while) */
+      } else {
+        x = arbre[x].father; /* on continue la remontee */
       }
-      else
-        x = arbre[x].father;   /* on continue la remontee */
     }  /* while ((x != NIL) && (arbre[x].data <= d)) */
     NoComAnc = ((x == NIL) || (arbre[x].data > d));   /* pas d'ancetre commun */
-    if (NoComAnc) break;                   /* on sort aussi du for */
+    if (NoComAnc) {
+      break; /* on sort aussi du for */
+    }
   } /* for (i = 1; i < argc; i++) */
 
   x = argv[0];        /* index de la premiere cellule */
   while ((x != NIL) && (arbre[x].data <= d)) 
   {                   /* derniere remontee: demarque et repere le lca */
-    if (arbre[x].label == 2) lca = x;
+    if (arbre[x].label == 2) {
+      lca = x;
+    }
     arbre[x].label = 0;
     x = arbre[x].father;
   }  /* while ((x != NIL) && (arbre[x].data <= d)) */
@@ -362,10 +384,11 @@ printf(") -> ");
 if (NoComAnc) printf("NIL\n"); else printf("%d\n", lca);
 #endif
 
-  if (NoComAnc)                /* pas d'ancetre commun */
-    return NIL;
-  else
-    return lca;
+if (NoComAnc) { /* pas d'ancetre commun */
+  return NIL;
+} else {
+  return lca;
+}
 } /* LowComAnc() */
 
 /* ==================================== */
@@ -376,11 +399,15 @@ int32_t IsAnc(
 /* tests if a ancestor of x */
 /* ==================================== */
 {
-  if (a == x) return 1;
+  if (a == x) {
+    return 1;
+  }
   while (arbre[x].father != NIL)
   {
     x = arbre[x].father;
-    if (a == x) return 1;
+    if (a == x) {
+      return 1;
+    }
   }
   return 0;
 } /* IsAnc() */
@@ -402,7 +429,9 @@ printf(") -> ");
 #endif
 
   /* met le label 3 a toutes les cellules de argv */
-  for (i = 0; i < argc; i++) arbre[argv[i]].label = 3;
+for (i = 0; i < argc; i++) {
+  arbre[argv[i]].label = 3;
+}
 
   for (i = 0; i < argc; i++)
   {
@@ -413,9 +442,12 @@ printf(") -> ");
       {
         if (arbre[x].label == 3) 
         {
-          arbre[x].label = 0; 
-          for (j = 0; j < argc; j++) 
-            if (argv[j] == x) argv[j] = NIL;
+          arbre[x].label = 0;
+          for (j = 0; j < argc; j++) {
+            if (argv[j] == x) {
+              argv[j] = NIL;
+            }
+          }
         }
         x = arbre[x].father;
       }  /* while (x != NIL) */
@@ -423,7 +455,9 @@ printf(") -> ");
   } /* for i */
 
   /* remet le label 0 a toutes les cellules de argv */
-  for (i = 0; i < argc; i++) arbre[argv[i]].label = 0;
+  for (i = 0; i < argc; i++) {
+    arbre[argv[i]].label = 0;
+  }
 
   j = i = 0;           /* compacte le tableau en eliminant les NIL */
   while (i < argc)
@@ -491,20 +525,24 @@ printf("Regularise()");
       exit(0);
     }
 #endif
-    if (arbre[a].data == arbre[c].data)   /* qui ont un pere au meme niveau */
+    if (arbre[a].data == arbre[c].data) { /* qui ont un pere au meme niveau */
       T[c - nbleaf] = a;                  /* enregistre le 'nouveau pere' */
+    }
   } /* for c */
 
-  for (c = nbcell - 2; c >= nbleaf; c--)
-    if ((T[c - nbleaf] != 0) && (T[T[c - nbleaf] - nbleaf] != 0))
+  for (c = nbcell - 2; c >= nbleaf; c--) {
+    if ((T[c - nbleaf] != 0) && (T[T[c - nbleaf] - nbleaf] != 0)) {
       T[c - nbleaf] = T[T[c - nbleaf] - nbleaf];
+    }
+  }
 
-  for (c = 1; c < nbcell - 1; c++)
+  for (c = 1; c < nbcell - 1; c++) {
     if (T[arbre[c].father - nbleaf] != 0) 
     {
       a = T[arbre[c].father - nbleaf];
       arbre[c].father = a;
     }
+  }
 
   return T;
 } /* Regularise() */
@@ -608,8 +646,9 @@ printf("InverseCBT()");
   
   /*     2eme ETAPE : ATTRIBUTION DES POINTEURS firstson    */
 
-  for (c = 1; c < nbleaf; c++)   /* pour toutes les feuilles */
+  for (c = 1; c < nbleaf; c++) { /* pour toutes les feuilles */
     arbre[c].firstson = NIL;
+  }
   i = 0;
   for (c = nbleaf; c < nbcell; c++)   /* pour toutes les non - feuilles */
   {

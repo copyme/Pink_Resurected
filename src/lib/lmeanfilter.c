@@ -120,7 +120,9 @@ int32_t lmeanfilter(
   F = FLOATDATA(image);
   G = FLOATDATA(auximage);
   R = UCHARDATA(roi);
-  if (inhib != NULL) I = UCHARDATA(inhib);
+  if (inhib != NULL) {
+    I = UCHARDATA(inhib);
+  }
 
   while (niter > 0)
   {

@@ -154,13 +154,17 @@ int32_t largepdestr4(uint8_t *img,          /* pointeur base image */
 /* ==================================== */
 {   
     int32_t t4mm,t8p,b,n;
-    
-    if ((p%rs==rs-1) || (p<rs) || (p%rs==0) || (p>=N-rs)) /* point de bord */
-        return 0;
+
+    if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+        (p >= N - rs)) { /* point de bord */
+      return 0;
+    }
 
     nbtopo(img, p, rs, N, &t4mm, &b, &t8p, &n);
-    if ((t4mmmin <= t4mm) && (t4mm <= t4mmmax) && (t8pmin <= t8p) && (t8p <= t8pmax))
-        return 1;
+    if ((t4mmmin <= t4mm) && (t4mm <= t4mmmax) && (t8pmin <= t8p) &&
+        (t8p <= t8pmax)) {
+      return 1;
+    }
     return 0;
 } /* largepdestr4() */
 
@@ -180,13 +184,17 @@ int32_t largepdestr8(uint8_t *img,          /* pointeur base image */
 /* ==================================== */
 {   
     int32_t t8mm,t4p,b,n;
-    
-    if ((p%rs==rs-1)||(p<rs)||(p%rs==0)||(p>=N-rs)) /* point de bord */
-        return 0;
+
+    if ((p % rs == rs - 1) || (p < rs) || (p % rs == 0) ||
+        (p >= N - rs)) { /* point de bord */
+      return 0;
+    }
 
     nbtopo2(img, p, rs, N, &t8mm, &b, &t4p, &n);
-    if ((t8mmmin <= t8mm) && (t8mm <= t8mmmax) && (t4pmin <= t4p) && (t4p <= t4pmax))
-        return 1;
+    if ((t8mmmin <= t8mm) && (t8mm <= t8mmmax) && (t4pmin <= t4p) &&
+        (t4p <= t4pmax)) {
+      return 1;
+    }
     return 0;
 } /* largepdestr8() */
 

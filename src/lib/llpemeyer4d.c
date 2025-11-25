@@ -67,8 +67,11 @@ int32_t llpemeyer4d_NotIn(int32_t e, int32_t *list, int32_t n)
 /* e : l'element a rechercher */
 /* list : la liste (tableau d'entiers) */
 /* n : le nombre d'elements dans la liste */
-  while (n > 0)
-    if (list[--n] == e) return 0;
+while (n > 0) {
+  if (list[--n] == e) {
+    return 0;
+  }
+}
   return 1;
 } /* llpemeyer4d_NotIn() */
 
@@ -309,7 +312,11 @@ int32_t llpemeyer4d(
 
   for (x = 0; x < Nt; x++)
   {
-    if ((M[x] == nlabels) || (M[x] == 0)) F[x/N][x%N] = 255; else F[x/N][x%N] = 0;
+    if ((M[x] == nlabels) || (M[x] == 0)) {
+      F[x / N][x % N] = 255;
+    } else {
+      F[x / N][x % N] = 0;
+    }
   }
 
   /* ================================================ */
@@ -320,10 +327,12 @@ int32_t llpemeyer4d(
   FahTermine(FAH);
   free(M);
   free(F);
-  if (marqueursfond)
+  if (marqueursfond) {
     free(BF);
-  if (masque)
+  }
+  if (masque) {
     free(MA);
+  }
   return(1);
 } /* llpemeyer4d() */
 

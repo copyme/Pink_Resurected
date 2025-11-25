@@ -87,7 +87,11 @@ int main(int argc, char **argv)
     cs = colsize(image);
     ds = depth(image);
     valmax = atoi(argv[2]);
-    if (argc == 5) srand(atoi(argv[3])); else srand(time(NULL));
+    if (argc == 5) {
+      srand(atoi(argv[3]));
+    } else {
+      srand(time(NULL));
+    }
     freeimage(image);
   }
   else // 6 or 7
@@ -96,7 +100,11 @@ int main(int argc, char **argv)
     cs = atoi(argv[2]);
     ds = atoi(argv[3]);
     valmax = atoi(argv[4]);
-    if (argc == 7) srand(atoi(argv[5])); else srand(time(NULL));
+    if (argc == 7) {
+      srand(atoi(argv[5]));
+    } else {
+      srand(time(NULL));
+    }
   }
 
   if (valmax <= 255)

@@ -131,8 +131,12 @@ int main(int argc, char **argv)
   }
   img = UCHARDATA(image);
 
-  for (i = 0; i < N1; i++) img[i] = img1[i];    
-  for (i = 0; i < N2; i++) img[N1+i] = img2[i];    
+  for (i = 0; i < N1; i++) {
+    img[i] = img1[i];
+  }
+  for (i = 0; i < N2; i++) {
+    img[N1 + i] = img2[i];
+  }
 
   image->name = NULL;
   writeimage(image, argv[3]);

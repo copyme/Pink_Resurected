@@ -78,10 +78,13 @@ GrapheBasic *initGrapheBasic(int32_t nsom, int32_t nmaxarc)
     fprintf(stderr, "%s: calloc gamma failed\n", F_NAME);
     exit(0);
   }
-  for(i = 0; i < nsom; i++)g->gamma[i] = NULL;
+  for (i = 0; i < nsom; i++) {
+    g->gamma[i] = NULL;
+  }
   /* construit la liste initiale de cellules libres */
-  for (i = 0; i < nmaxarc - 1; i++)
-    (g->reserve+i)->next = g->reserve+i+1;
+  for (i = 0; i < nmaxarc - 1; i++) {
+    (g->reserve + i)->next = g->reserve + i + 1;
+  }
   (g->reserve+i)->next = NULL;
   g->libre = g->reserve;    
   return g;
@@ -91,7 +94,9 @@ void termineGrapheBasic(GrapheBasic *g)
 /* ====================================================================== */
 {
   free(g->reserve);
-  if (g->gamma) free(g->gamma);
+  if (g->gamma) {
+    free(g->gamma);
+  }
   free(g);
 } /* TermineGraphe() */   
 
@@ -156,13 +161,14 @@ int32_t updateArcValue(GrapheValue *gv, int32_t i, int32_t s, uint8_t val)
   uint8_t *F = gv->F;
 
   /* Pour tout successeur de la region i */
-  for (p = g->gamma[i]; p != NULL; p = p->next)
+  for (p = g->gamma[i]; p != NULL; p = p->next) {
     /* Si la region s est deja adjacente a i */
     if (p->vertex == s){
       F[p->edge] = mcmin(F[p->edge],val);
       return 1;
     }
-  
+  }
+
   /* On a trouve un nouvel arc */
   if(g->narc < g->nmaxarc) { 
     if((index = ajouteGrapheBasicSymArc(g,i,s)) < 0){
@@ -238,12 +244,13 @@ int32_t updateRAGArc(RAG *rag, int32_t i, int32_t s, uint8_t val)
   uint32_t *queue = rag->queue;
   
   /* Pour tout successeur de la region i */
-  for (p = g->gamma[i]; p != NULL; p = p->next)
+  for (p = g->gamma[i]; p != NULL; p = p->next) {
     /* Si la region s est deja adjacente a i */
     if (p->vertex == s){ 
       F[p->edge] = mcmin(val,F[p->edge]);
       return 1; 
-    }    
+    }
+  }
   /* On a trouve un nouvel arc */
   if(g->narc < g->nmaxarc)
   { 

@@ -89,8 +89,9 @@ static int32_t IndexPileGrilles2d;
 void InitPileGrilles2d()
 /* ========================================== */
 {
-  for (int32_t i = 0; i < NBGRILLES2D; i++)
+  for (int32_t i = 0; i < NBGRILLES2D; i++) {
     PileGrilles2d[i] = allocimage(NULL, GRS2D, GCS2D, 1, VFF_TYP_1_BYTE);
+  }
   IndexPileGrilles2d = 0;
 } /* InitPileGrilles2d() */
 
@@ -98,8 +99,9 @@ void InitPileGrilles2d()
 void TerminePileGrilles2d()
 /* ========================================== */
 {
-  for (int32_t i = 0; i < NBGRILLES2D; i++)
+  for (int32_t i = 0; i < NBGRILLES2D; i++) {
     freeimage(PileGrilles2d[i]);
+  }
 } /* TerminePileGrilles2d() */
 
 /* ========================================== */
@@ -159,10 +161,13 @@ struct xvimage * Khalimskize2d(const struct xvimage *o)
 
   memset(K, VAL_NULLE, kN); /* init a VAL_NULLE */
 
-  for (index_t j = 0; j < ocs; j++)
-    for (index_t i = 0; i < ors; i++)
-      if (O[j * ors + i])
-        K[(2*j+1) * krs + (2*i+1)] = VAL_OBJET;
+  for (index_t j = 0; j < ocs; j++) {
+    for (index_t i = 0; i < ors; i++) {
+      if (O[j * ors + i]) {
+        K[(2 * j + 1) * krs + (2 * i + 1)] = VAL_OBJET;
+      }
+    }
+  }
 
   return k;
 } /* Khalimskize2d() */
@@ -200,27 +205,33 @@ struct xvimage * KhalimskizeNDG2d(struct xvimage *o)
     uint8_t *O = UCHARDATA(o);
     uint8_t *B = UCHARDATA(b);
     memset(B, 0, bN*sizeof(uint8_t));
-    for (j = 0; j < ocs; j++)
-      for (i = 0; i < ors; i++)
-	B[(2*j+1) * brs + (2*i+1)] = O[j * ors + i];
+    for (j = 0; j < ocs; j++) {
+      for (i = 0; i < ors; i++) {
+        B[(2 * j + 1) * brs + (2 * i + 1)] = O[j * ors + i];
+      }
+    }
   }
   else if (datatype(b) == VFF_TYP_4_BYTE)
   {
     int32_t *O = SLONGDATA(o);
     int32_t *B = SLONGDATA(b);
     memset(B, 0, bN*sizeof(uint32_t));
-    for (j = 0; j < ocs; j++)
-      for (i = 0; i < ors; i++)
-	B[(2*j+1) * brs + (2*i+1)] = O[j * ors + i];
+    for (j = 0; j < ocs; j++) {
+      for (i = 0; i < ors; i++) {
+        B[(2 * j + 1) * brs + (2 * i + 1)] = O[j * ors + i];
+      }
+    }
   }
   else if (datatype(b) == VFF_TYP_FLOAT)
   {
     float *O = FLOATDATA(o);
     float *B = FLOATDATA(b);
     memset(B, 0, bN*sizeof(float));
-    for (j = 0; j < ocs; j++)
-      for (i = 0; i < ors; i++)
-	B[(2*j+1) * brs + (2*i+1)] = O[j * ors + i];
+    for (j = 0; j < ocs; j++) {
+      for (i = 0; i < ors; i++) {
+        B[(2 * j + 1) * brs + (2 * i + 1)] = O[j * ors + i];
+      }
+    }
   }
   else 
   {
@@ -260,9 +271,11 @@ struct xvimage * DeKhalimskize2d(struct xvimage *o)
 
   memset(R, VAL_NULLE, rN); /* init a VAL_NULLE */
 
-  for (j = 1; j < ocs; j += 2)
-    for (i = 1; i < ors; i += 2)
-      R[(j/2) * rrs + (i/2)] = O[j * ors + i];
+  for (j = 1; j < ocs; j += 2) {
+    for (i = 1; i < ors; i += 2) {
+      R[(j / 2) * rrs + (i / 2)] = O[j * ors + i];
+    }
+  }
   // version "binaire":
       //      if (O[j * ors + i])
       //        R[(j/2) * rrs + (i/2)] = VAL_OBJET;
@@ -293,10 +306,13 @@ void Khalimskize2d_noalloc(struct xvimage *o, struct xvimage * k)
 
   memset(K, VAL_NULLE, kN); /* init a VAL_NULLE */
 
-  for (j = 0; j < ocs; j++)
-    for (i = 0; i < ors; i++)
-      if (O[j * ors + i])
-        K[(2*j+1) * krs + (2*i+1)] = VAL_OBJET;
+  for (j = 0; j < ocs; j++) {
+    for (i = 0; i < ors; i++) {
+      if (O[j * ors + i]) {
+        K[(2 * j + 1) * krs + (2 * i + 1)] = VAL_OBJET;
+      }
+    }
+  }
 } /* Khalimskize2d_noalloc() */
 
 /* ==================================== */
@@ -324,9 +340,11 @@ void KhalimskizeNDG2d_noalloc(struct xvimage *o, struct xvimage * k)
 
   memset(K, VAL_NULLE, kN); /* init a VAL_NULLE */
 
-  for (j = 0; j < ocs; j++)
-    for (i = 0; i < ors; i++)
-      K[(2*j+1) * krs + (2*i+1)] = O[j * ors + i];
+  for (j = 0; j < ocs; j++) {
+    for (i = 0; i < ors; i++) {
+      K[(2 * j + 1) * krs + (2 * i + 1)] = O[j * ors + i];
+    }
+  }
 } /* KhalimskizeNDG2d_noalloc() */
 
 /* ==================================== */
@@ -352,9 +370,11 @@ void DeKhalimskize2d_noalloc(struct xvimage *o, struct xvimage * r)
 
   memset(R, VAL_NULLE, rN); /* init a VAL_NULLE */
 
-  for (j = 1; j < ocs; j += 2)
-    for (i = 1; i < ors; i += 2)
-      R[(j/2) * rrs + (i/2)] = O[j * ors + i];
+  for (j = 1; j < ocs; j += 2) {
+    for (i = 1; i < ors; i += 2) {
+      R[(j / 2) * rrs + (i / 2)] = O[j * ors + i];
+    }
+  }
   // version "binaire":
       //      if (O[j * ors + i])
       //        R[(j/2) * rrs + (i/2)] = VAL_OBJET;
@@ -379,8 +399,8 @@ void Connex4Obj2d(struct xvimage *k)
   int32_t n;
   index_t tab[GRS2D*GCS2D];
 
-  for (j = 1; j < cs-1; j++)
-    for (i = 1; i < rs-1; i++)
+  for (j = 1; j < cs - 1; j++) {
+    for (i = 1; i < rs - 1; i++) {
       if (!CARRE(i,j))
       {
         Betacarre2d(rs, cs, i, j, tab, &n);
@@ -388,11 +408,15 @@ void Connex4Obj2d(struct xvimage *k)
         {
           x = tab[u] % rs;
           y = tab[u] / rs;
-          if ((CARRE(x,y)) && !K[tab[u]]) goto skip;
-	}
+          if ((CARRE(x, y)) && !K[tab[u]]) {
+            goto skip;
+          }
+        }
         K[j*rs+i] = VAL_OBJET;
 skip: ;
-      }
+}
+    }
+  }
 } /* Connex4Obj2d() */
 
 /* ==================================== */
@@ -418,13 +442,16 @@ void ndgmin2d(struct xvimage *b)
     BP = UCHARDATA(bp);
     memset(BP, NDG_MAX, N);
 
-    for (j = 1; j < cs; j += 2)
+    for (j = 1; j < cs; j += 2) {
       for (i = 1; i < rs; i += 2)
       {
 	BP[j * rs + i] = B[j * rs + i];
 	Alphacarre2d(rs, cs, i, j, tab, &n);
-	for (u = 0; u < n; u++) BP[tab[u]] = mcmin(BP[tab[u]],B[j * rs + i]);
+        for (u = 0; u < n; u++) {
+          BP[tab[u]] = mcmin(BP[tab[u]], B[j * rs + i]);
+        }
       }
+    }
     memcpy(B, BP, N*sizeof(uint8_t));
     freeimage(bp);
   }
@@ -435,15 +462,20 @@ void ndgmin2d(struct xvimage *b)
     B = SLONGDATA(b);
     bp = copyimage(b);
     BP = SLONGDATA(bp);
-    for (j = 1; j < N; j += 1) BP[j] = INT32_MAX;
+    for (j = 1; j < N; j += 1) {
+      BP[j] = INT32_MAX;
+    }
 
-    for (j = 1; j < cs; j += 2)
+    for (j = 1; j < cs; j += 2) {
       for (i = 1; i < rs; i += 2)
       {
 	BP[j * rs + i] = B[j * rs + i];
 	Alphacarre2d(rs, cs, i, j, tab, &n);
-	for (u = 0; u < n; u++) BP[tab[u]] = mcmin(BP[tab[u]],B[j * rs + i]);
+        for (u = 0; u < n; u++) {
+          BP[tab[u]] = mcmin(BP[tab[u]], B[j * rs + i]);
+        }
       }
+    }
     memcpy(B, BP, N*sizeof(uint32_t));
     freeimage(bp);
   }
@@ -454,15 +486,20 @@ void ndgmin2d(struct xvimage *b)
     B = FLOATDATA(b);
     bp = copyimage(b);
     BP = FLOATDATA(bp);
-    for (j = 1; j < N; j += 1) BP[j] = FLT_MAX;
+    for (j = 1; j < N; j += 1) {
+      BP[j] = FLT_MAX;
+    }
 
-    for (j = 1; j < cs; j += 2)
+    for (j = 1; j < cs; j += 2) {
       for (i = 1; i < rs; i += 2)
       {
 	BP[j * rs + i] = B[j * rs + i];
 	Alphacarre2d(rs, cs, i, j, tab, &n);
-	for (u = 0; u < n; u++) BP[tab[u]] = mcmin(BP[tab[u]],B[j * rs + i]);
+        for (u = 0; u < n; u++) {
+          BP[tab[u]] = mcmin(BP[tab[u]], B[j * rs + i]);
+        }
       }
+    }
     memcpy(B, BP, N*sizeof(float));
     freeimage(bp);
   }
@@ -498,13 +535,16 @@ void ndgminbeta2d(struct xvimage *k)
   KP = UCHARDATA(kp);
   memset(KP, NDG_MAX, rs*cs);
 
-  for (j = 0; j < cs; j += 2)
+  for (j = 0; j < cs; j += 2) {
     for (i = 0; i < rs; i += 2)
     {
       KP[j * rs + i] = K[j * rs + i];
       Betacarre2d(rs, cs, i, j, tab, &n);
-      for (u = 0; u < n; u++) KP[tab[u]] = mcmin(KP[tab[u]],K[j * rs + i]);
+      for (u = 0; u < n; u++) {
+        KP[tab[u]] = mcmin(KP[tab[u]], K[j * rs + i]);
+      }
     }
+  }
   memcpy(K, KP, rs*cs);
   freeimage(kp);
 } /* ndgminbeta2d() */
@@ -532,13 +572,16 @@ void ndgmax2d(struct xvimage *b)
     BP = UCHARDATA(bp);
     memset(BP, NDG_MIN, N);
 
-    for (j = 1; j < cs; j += 2)
+    for (j = 1; j < cs; j += 2) {
       for (i = 1; i < rs; i += 2)
       {
 	BP[j * rs + i] = B[j * rs + i];
 	Alphacarre2d(rs, cs, i, j, tab, &n);
-	for (u = 0; u < n; u++) BP[tab[u]] = mcmax(BP[tab[u]],B[j * rs + i]);
+        for (u = 0; u < n; u++) {
+          BP[tab[u]] = mcmax(BP[tab[u]], B[j * rs + i]);
+        }
       }
+    }
     memcpy(B, BP, N*sizeof(uint8_t));
     freeimage(bp);
   }
@@ -549,15 +592,20 @@ void ndgmax2d(struct xvimage *b)
     B = SLONGDATA(b);
     bp = copyimage(b);
     BP = SLONGDATA(bp);
-    for (j = 1; j < N; j += 1) BP[j] = 0;
+    for (j = 1; j < N; j += 1) {
+      BP[j] = 0;
+    }
 
-    for (j = 1; j < cs; j += 2)
+    for (j = 1; j < cs; j += 2) {
       for (i = 1; i < rs; i += 2)
       {
 	BP[j * rs + i] = B[j * rs + i];
 	Alphacarre2d(rs, cs, i, j, tab, &n);
-	for (u = 0; u < n; u++) BP[tab[u]] = mcmax(BP[tab[u]],B[j * rs + i]);
+        for (u = 0; u < n; u++) {
+          BP[tab[u]] = mcmax(BP[tab[u]], B[j * rs + i]);
+        }
       }
+    }
     memcpy(B, BP, N*sizeof(uint32_t));
     freeimage(bp);
   }
@@ -568,15 +616,20 @@ void ndgmax2d(struct xvimage *b)
     B = FLOATDATA(b);
     bp = copyimage(b);
     BP = FLOATDATA(bp);
-    for (j = 1; j < N; j += 1) BP[j] = 0.0f;
+    for (j = 1; j < N; j += 1) {
+      BP[j] = 0.0f;
+    }
 
-    for (j = 1; j < cs; j += 2)
+    for (j = 1; j < cs; j += 2) {
       for (i = 1; i < rs; i += 2)
       {
 	BP[j * rs + i] = B[j * rs + i];
 	Alphacarre2d(rs, cs, i, j, tab, &n);
-	for (u = 0; u < n; u++) BP[tab[u]] = mcmax(BP[tab[u]],B[j * rs + i]);
+        for (u = 0; u < n; u++) {
+          BP[tab[u]] = mcmax(BP[tab[u]], B[j * rs + i]);
+        }
       }
+    }
     memcpy(B, BP, N*sizeof(float));
     freeimage(bp);
   }
@@ -612,13 +665,16 @@ void ndgmaxbeta2d(struct xvimage *k)
   KP = UCHARDATA(kp);
   memset(KP, NDG_MIN, rs*cs);
 
-  for (j = 0; j < cs; j += 2)
+  for (j = 0; j < cs; j += 2) {
     for (i = 0; i < rs; i += 2)
     {
       KP[j * rs + i] = K[j * rs + i];
       Betacarre2d(rs, cs, i, j, tab, &n);
-      for (u = 0; u < n; u++) KP[tab[u]] = mcmax(KP[tab[u]],K[j * rs + i]);
+      for (u = 0; u < n; u++) {
+        KP[tab[u]] = mcmax(KP[tab[u]], K[j * rs + i]);
+      }
     }
+  }
   memcpy(K, KP, rs*cs);
   freeimage(kp);
 } /* ndgmaxbeta2d() */
@@ -648,20 +704,21 @@ void ndgmoy2d(struct xvimage *b)
     uint32_t sum;
     B = UCHARDATA(b);
 
-    for (j = 0; j < cs; j++)
-    for (i = 0; i < rs; i++)
-      if (!CARRE(i,j))
-      {
-        nb = sum = 0;
-        Betacarre2d(rs, cs, i, j, tab, &n);
-        for (u = 0; u < n; u++) 
-          if (CARRE((tab[u]%rs),(tab[u]/rs)))
-          {
-            sum += B[tab[u]];
-            nb++;
-	  }
-        B[j * rs + i] = (uint8_t)(sum/nb);
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        if (!CARRE(i, j)) {
+          nb = sum = 0;
+          Betacarre2d(rs, cs, i, j, tab, &n);
+          for (u = 0; u < n; u++) {
+            if (CARRE((tab[u] % rs), (tab[u] / rs))) {
+              sum += B[tab[u]];
+              nb++;
+            }
+          }
+          B[j * rs + i] = (uint8_t)(sum / nb);
+        }
       }
+    }
   }
   else if (datatype(b) == VFF_TYP_4_BYTE)
   {
@@ -669,20 +726,21 @@ void ndgmoy2d(struct xvimage *b)
     int32_t sum;
     B = SLONGDATA(b);
 
-    for (j = 0; j < cs; j++)
-    for (i = 0; i < rs; i++)
-      if (!CARRE(i,j))
-      {
-        nb = sum = 0;
-        Betacarre2d(rs, cs, i, j, tab, &n);
-        for (u = 0; u < n; u++) 
-          if (CARRE((tab[u]%rs),(tab[u]/rs)))
-          {
-            sum += B[tab[u]];
-            nb++;
-	  }
-        B[j * rs + i] = sum / nb;
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        if (!CARRE(i, j)) {
+          nb = sum = 0;
+          Betacarre2d(rs, cs, i, j, tab, &n);
+          for (u = 0; u < n; u++) {
+            if (CARRE((tab[u] % rs), (tab[u] / rs))) {
+              sum += B[tab[u]];
+              nb++;
+            }
+          }
+          B[j * rs + i] = sum / nb;
+        }
       }
+    }
   }
   else if (datatype(b) == VFF_TYP_FLOAT)
   {
@@ -690,20 +748,21 @@ void ndgmoy2d(struct xvimage *b)
     float sum;
     B = FLOATDATA(b);
 
-    for (j = 0; j < cs; j++)
-    for (i = 0; i < rs; i++)
-      if (!CARRE(i,j))
-      {
-        nb = sum = 0;
-        Betacarre2d(rs, cs, i, j, tab, &n);
-        for (u = 0; u < n; u++) 
-          if (CARRE((tab[u]%rs),(tab[u]/rs)))
-          {
-            sum += B[tab[u]];
-            nb++;
-	  }
-        B[j * rs + i] = sum / nb;
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        if (!CARRE(i, j)) {
+          nb = sum = 0;
+          Betacarre2d(rs, cs, i, j, tab, &n);
+          for (u = 0; u < n; u++) {
+            if (CARRE((tab[u] % rs), (tab[u] / rs))) {
+              sum += B[tab[u]];
+              nb++;
+            }
+          }
+          B[j * rs + i] = sum / nb;
+        }
       }
+    }
   }
   else 
   {
@@ -738,7 +797,7 @@ void ndg2grad2d(struct xvimage *k)
   KP = UCHARDATA(kp);
   memset(KP, NDG_MIN, rs*cs);
 
-  for (j = 0; j < cs; j++)
+  for (j = 0; j < cs; j++) {
     for (i = 0; i < rs; i++)
     {
       if (CARRE(i,j))
@@ -757,9 +816,12 @@ void ndg2grad2d(struct xvimage *k)
           KP[j * rs + i] = K[tab[0]]; /* hyp. bord a 0 */
         }
         Alphacarre2d(rs, cs, i, j, tab, &n);
-        for (u = 0; u < n; u++) KP[tab[u]] = mcmax(KP[tab[u]],KP[j*rs+i]);
+        for (u = 0; u < n; u++) {
+          KP[tab[u]] = mcmax(KP[tab[u]], KP[j * rs + i]);
+        }
       }
     }
+  }
   memcpy(K, KP, rs*cs);
   freeimage(kp);
 
@@ -790,7 +852,7 @@ void ndg4grad2d(struct xvimage *k)
   KP = UCHARDATA(kp);
   memset(KP, NDG_MIN, rs*cs);
 
-  for (j = 0; j < cs; j++)
+  for (j = 0; j < cs; j++) {
     for (i = 0; i < rs; i++)
     {
       if (SINGL(i,j))
@@ -804,13 +866,18 @@ void ndg4grad2d(struct xvimage *k)
           if (CARRE(ui,uj))
 	  {
             tmp = K[tab[u]];
-            if (tmp > sup) sup = tmp; 
-            if (tmp < inf) inf = tmp;
-	  }
+            if (tmp > sup) {
+              sup = tmp;
+            }
+            if (tmp < inf) {
+              inf = tmp;
+            }
+          }
 	}
         KP[j * rs + i] = sup  - inf;
       }
     }
+  }
   memcpy(K, KP, rs*cs);
   freeimage(kp);
 
@@ -833,23 +900,39 @@ void Betapoint2d(index_t rs, index_t cs, index_t i, index_t j, index_t *tab, int
     }
     else
     {          /* i impair, j pair : intervalle */
-      if (j > 0)      tab[(*n)++] = (j-1) * rs + i;      
-      if ((j+1) < cs) tab[(*n)++] = (j+1) * rs + i;      
+      if (j > 0) {
+        tab[(*n)++] = (j - 1) * rs + i;
+      }
+      if ((j + 1) < cs) {
+        tab[(*n)++] = (j + 1) * rs + i;
+      }
     }
   }
   else
   {
     if (j % 2)
     {          /* i pair, j impair : intervalle */
-      if (i > 0)      tab[(*n)++] = j * rs + i - 1;      
-      if ((i+1) < rs) tab[(*n)++] = j * rs + i + 1;      
+      if (i > 0) {
+        tab[(*n)++] = j * rs + i - 1;
+      }
+      if ((i + 1) < rs) {
+        tab[(*n)++] = j * rs + i + 1;
+      }
     }
     else
     {          /* i pair, j pair : singleton */
-      if (i > 0)      tab[(*n)++] = j * rs + i - 1;      
-      if ((i+1) < rs) tab[(*n)++] = j * rs + i + 1;      
-      if (j > 0)      tab[(*n)++] = (j-1) * rs + i;      
-      if ((j+1) < cs) tab[(*n)++] = (j+1) * rs + i;      
+      if (i > 0) {
+        tab[(*n)++] = j * rs + i - 1;
+      }
+      if ((i + 1) < rs) {
+        tab[(*n)++] = j * rs + i + 1;
+      }
+      if (j > 0) {
+        tab[(*n)++] = (j - 1) * rs + i;
+      }
+      if ((j + 1) < cs) {
+        tab[(*n)++] = (j + 1) * rs + i;
+      }
     }
   }
 } /* Betapoint2d() */
@@ -868,23 +951,39 @@ void Alphapoint2d(index_t rs, index_t cs, index_t i, index_t j, index_t *tab, in
   {
     if (j % 2)
     {          /* i impair, j impair : carre */
-      if (i > 0)      tab[(*n)++] = j * rs + i - 1;
-      if ((i+1) < rs) tab[(*n)++] = j * rs + i + 1;
-      if (j > 0)      tab[(*n)++] = (j-1) * rs + i;      
-      if ((j+1) < cs) tab[(*n)++] = (j+1) * rs + i;      
+      if (i > 0) {
+        tab[(*n)++] = j * rs + i - 1;
+      }
+      if ((i + 1) < rs) {
+        tab[(*n)++] = j * rs + i + 1;
+      }
+      if (j > 0) {
+        tab[(*n)++] = (j - 1) * rs + i;
+      }
+      if ((j + 1) < cs) {
+        tab[(*n)++] = (j + 1) * rs + i;
+      }
     }
     else
     {          /* i impair, j pair : intervalle */
-      if (i > 0)      tab[(*n)++] = j * rs + i - 1;
-      if ((i+1) < rs) tab[(*n)++] = j * rs + i + 1;
+      if (i > 0) {
+        tab[(*n)++] = j * rs + i - 1;
+      }
+      if ((i + 1) < rs) {
+        tab[(*n)++] = j * rs + i + 1;
+      }
     }
   }
   else
   {
     if (j % 2)
     {          /* i pair, j impair : intervalle */
-      if (j > 0)      tab[(*n)++] = (j-1) * rs + i;      
-      if ((j+1) < cs) tab[(*n)++] = (j+1) * rs + i;      
+      if (j > 0) {
+        tab[(*n)++] = (j - 1) * rs + i;
+      }
+      if ((j + 1) < cs) {
+        tab[(*n)++] = (j + 1) * rs + i;
+      }
     }
     else
     {          /* i pair, j pair : singleton */
@@ -909,27 +1008,51 @@ void Betacarre2d(index_t rs, index_t cs, index_t i, index_t j, index_t *tab, int
     }
     else
     {          /* i impair, j pair : intervalle */
-      if (j > 0)      tab[(*n)++] = (j-1) * rs + i;      
-      if ((j+1) < cs) tab[(*n)++] = (j+1) * rs + i;      
+      if (j > 0) {
+        tab[(*n)++] = (j - 1) * rs + i;
+      }
+      if ((j + 1) < cs) {
+        tab[(*n)++] = (j + 1) * rs + i;
+      }
     }
   }
   else
   {
     if (j % 2)
     {          /* i pair, j impair : intervalle */
-      if (i > 0)      tab[(*n)++] = j * rs + i - 1;      
-      if ((i+1) < rs) tab[(*n)++] = j * rs + i + 1;      
+      if (i > 0) {
+        tab[(*n)++] = j * rs + i - 1;
+      }
+      if ((i + 1) < rs) {
+        tab[(*n)++] = j * rs + i + 1;
+      }
     }
     else
     {          /* i pair, j pair : singleton */
-      if (i > 0)      tab[(*n)++] = j * rs + i - 1;      
-      if ((i+1) < rs) tab[(*n)++] = j * rs + i + 1;      
-      if (j > 0)      tab[(*n)++] = (j-1) * rs + i;      
-      if ((j+1) < cs) tab[(*n)++] = (j+1) * rs + i;      
-      if ((i > 0) && (j > 0))           tab[(*n)++] = (j-1) * rs + i - 1;      
-      if (((i+1) < rs) && (j > 0))      tab[(*n)++] = (j-1) * rs + i + 1;      
-      if ((i > 0) && ((j+1) < cs))      tab[(*n)++] = (j+1) * rs + i - 1;      
-      if (((i+1) < rs) && ((j+1) < cs)) tab[(*n)++] = (j+1) * rs + i + 1;      
+      if (i > 0) {
+        tab[(*n)++] = j * rs + i - 1;
+      }
+      if ((i + 1) < rs) {
+        tab[(*n)++] = j * rs + i + 1;
+      }
+      if (j > 0) {
+        tab[(*n)++] = (j - 1) * rs + i;
+      }
+      if ((j + 1) < cs) {
+        tab[(*n)++] = (j + 1) * rs + i;
+      }
+      if ((i > 0) && (j > 0)) {
+        tab[(*n)++] = (j - 1) * rs + i - 1;
+      }
+      if (((i + 1) < rs) && (j > 0)) {
+        tab[(*n)++] = (j - 1) * rs + i + 1;
+      }
+      if ((i > 0) && ((j + 1) < cs)) {
+        tab[(*n)++] = (j + 1) * rs + i - 1;
+      }
+      if (((i + 1) < rs) && ((j + 1) < cs)) {
+        tab[(*n)++] = (j + 1) * rs + i + 1;
+      }
     }
   }
 } /* Betacarre2d() */
@@ -948,27 +1071,51 @@ void Alphacarre2d(index_t rs, index_t cs, index_t i, index_t j, index_t *tab, in
   {
     if (j % 2)
     {          /* i impair, j impair : carre */
-      if (i > 0)      tab[(*n)++] = j * rs + i - 1;      
-      if ((i+1) < rs) tab[(*n)++] = j * rs + i + 1;      
-      if (j > 0)      tab[(*n)++] = (j-1) * rs + i;      
-      if ((j+1) < cs) tab[(*n)++] = (j+1) * rs + i;      
-      if ((i > 0) && (j > 0))           tab[(*n)++] = (j-1) * rs + i - 1;      
-      if (((i+1) < rs) && (j > 0))      tab[(*n)++] = (j-1) * rs + i + 1;      
-      if ((i > 0) && ((j+1) < cs))      tab[(*n)++] = (j+1) * rs + i - 1;      
-      if (((i+1) < rs) && ((j+1) < cs)) tab[(*n)++] = (j+1) * rs + i + 1;      
+      if (i > 0) {
+        tab[(*n)++] = j * rs + i - 1;
+      }
+      if ((i + 1) < rs) {
+        tab[(*n)++] = j * rs + i + 1;
+      }
+      if (j > 0) {
+        tab[(*n)++] = (j - 1) * rs + i;
+      }
+      if ((j + 1) < cs) {
+        tab[(*n)++] = (j + 1) * rs + i;
+      }
+      if ((i > 0) && (j > 0)) {
+        tab[(*n)++] = (j - 1) * rs + i - 1;
+      }
+      if (((i + 1) < rs) && (j > 0)) {
+        tab[(*n)++] = (j - 1) * rs + i + 1;
+      }
+      if ((i > 0) && ((j + 1) < cs)) {
+        tab[(*n)++] = (j + 1) * rs + i - 1;
+      }
+      if (((i + 1) < rs) && ((j + 1) < cs)) {
+        tab[(*n)++] = (j + 1) * rs + i + 1;
+      }
     }
     else
     {          /* i impair, j pair : intervalle */
-      if (i > 0)      tab[(*n)++] = j * rs + i - 1;      
-      if ((i+1) < rs) tab[(*n)++] = j * rs + i + 1;      
+      if (i > 0) {
+        tab[(*n)++] = j * rs + i - 1;
+      }
+      if ((i + 1) < rs) {
+        tab[(*n)++] = j * rs + i + 1;
+      }
     }
   }
   else
   {
     if (j % 2)
     {          /* i pair, j impair : intervalle */
-      if (j > 0)      tab[(*n)++] = (j-1) * rs + i;      
-      if ((j+1) < cs) tab[(*n)++] = (j+1) * rs + i;      
+      if (j > 0) {
+        tab[(*n)++] = (j - 1) * rs + i;
+      }
+      if ((j + 1) < cs) {
+        tab[(*n)++] = (j + 1) * rs + i;
+      }
     }
     else
     {          /* i pair, j pair : singleton */
@@ -993,27 +1140,51 @@ void Thetacarre2d(index_t rs, index_t cs, index_t i, index_t j, index_t *tab, in
     }
     else
     {          /* i impair, j pair : intervalle */
-      if (j > 0)      tab[(*n)++] = (j-1) * rs + i;      
-      if ((j+1) < cs) tab[(*n)++] = (j+1) * rs + i;      
+      if (j > 0) {
+        tab[(*n)++] = (j - 1) * rs + i;
+      }
+      if ((j + 1) < cs) {
+        tab[(*n)++] = (j + 1) * rs + i;
+      }
     }
   }
   else
   {
     if (j % 2)
     {          /* i pair, j impair : intervalle */
-      if (i > 0)      tab[(*n)++] = j * rs + i - 1;      
-      if ((i+1) < rs) tab[(*n)++] = j * rs + i + 1;      
+      if (i > 0) {
+        tab[(*n)++] = j * rs + i - 1;
+      }
+      if ((i + 1) < rs) {
+        tab[(*n)++] = j * rs + i + 1;
+      }
     }
     else
     {          /* i pair, j pair : singleton */
-      if (i > 0)      tab[(*n)++] = j * rs + i - 1;      
-      if ((i+1) < rs) tab[(*n)++] = j * rs + i + 1;      
-      if (j > 0)      tab[(*n)++] = (j-1) * rs + i;      
-      if ((j+1) < cs) tab[(*n)++] = (j+1) * rs + i;      
-      if ((i > 0) && (j > 0))           tab[(*n)++] = (j-1) * rs + i - 1;      
-      if (((i+1) < rs) && (j > 0))      tab[(*n)++] = (j-1) * rs + i + 1;      
-      if ((i > 0) && ((j+1) < cs))      tab[(*n)++] = (j+1) * rs + i - 1;      
-      if (((i+1) < rs) && ((j+1) < cs)) tab[(*n)++] = (j+1) * rs + i + 1;      
+      if (i > 0) {
+        tab[(*n)++] = j * rs + i - 1;
+      }
+      if ((i + 1) < rs) {
+        tab[(*n)++] = j * rs + i + 1;
+      }
+      if (j > 0) {
+        tab[(*n)++] = (j - 1) * rs + i;
+      }
+      if ((j + 1) < cs) {
+        tab[(*n)++] = (j + 1) * rs + i;
+      }
+      if ((i > 0) && (j > 0)) {
+        tab[(*n)++] = (j - 1) * rs + i - 1;
+      }
+      if (((i + 1) < rs) && (j > 0)) {
+        tab[(*n)++] = (j - 1) * rs + i + 1;
+      }
+      if ((i > 0) && ((j + 1) < cs)) {
+        tab[(*n)++] = (j + 1) * rs + i - 1;
+      }
+      if (((i + 1) < rs) && ((j + 1) < cs)) {
+        tab[(*n)++] = (j + 1) * rs + i + 1;
+      }
     }
   }
 
@@ -1021,27 +1192,51 @@ void Thetacarre2d(index_t rs, index_t cs, index_t i, index_t j, index_t *tab, in
   {
     if (j % 2)
     {          /* i impair, j impair : carre */
-      if (i > 0)      tab[(*n)++] = j * rs + i - 1;      
-      if ((i+1) < rs) tab[(*n)++] = j * rs + i + 1;      
-      if (j > 0)      tab[(*n)++] = (j-1) * rs + i;      
-      if ((j+1) < cs) tab[(*n)++] = (j+1) * rs + i;      
-      if ((i > 0) && (j > 0))           tab[(*n)++] = (j-1) * rs + i - 1;      
-      if (((i+1) < rs) && (j > 0))      tab[(*n)++] = (j-1) * rs + i + 1;      
-      if ((i > 0) && ((j+1) < cs))      tab[(*n)++] = (j+1) * rs + i - 1;      
-      if (((i+1) < rs) && ((j+1) < cs)) tab[(*n)++] = (j+1) * rs + i + 1;      
+      if (i > 0) {
+        tab[(*n)++] = j * rs + i - 1;
+      }
+      if ((i + 1) < rs) {
+        tab[(*n)++] = j * rs + i + 1;
+      }
+      if (j > 0) {
+        tab[(*n)++] = (j - 1) * rs + i;
+      }
+      if ((j + 1) < cs) {
+        tab[(*n)++] = (j + 1) * rs + i;
+      }
+      if ((i > 0) && (j > 0)) {
+        tab[(*n)++] = (j - 1) * rs + i - 1;
+      }
+      if (((i + 1) < rs) && (j > 0)) {
+        tab[(*n)++] = (j - 1) * rs + i + 1;
+      }
+      if ((i > 0) && ((j + 1) < cs)) {
+        tab[(*n)++] = (j + 1) * rs + i - 1;
+      }
+      if (((i + 1) < rs) && ((j + 1) < cs)) {
+        tab[(*n)++] = (j + 1) * rs + i + 1;
+      }
     }
     else
     {          /* i impair, j pair : intervalle */
-      if (i > 0)      tab[(*n)++] = j * rs + i - 1;      
-      if ((i+1) < rs) tab[(*n)++] = j * rs + i + 1;      
+      if (i > 0) {
+        tab[(*n)++] = j * rs + i - 1;
+      }
+      if ((i + 1) < rs) {
+        tab[(*n)++] = j * rs + i + 1;
+      }
     }
   }
   else
   {
     if (j % 2)
     {          /* i pair, j impair : intervalle */
-      if (j > 0)      tab[(*n)++] = (j-1) * rs + i;      
-      if ((j+1) < cs) tab[(*n)++] = (j+1) * rs + i;      
+      if (j > 0) {
+        tab[(*n)++] = (j - 1) * rs + i;
+      }
+      if ((j + 1) < cs) {
+        tab[(*n)++] = (j + 1) * rs + i;
+      }
     }
     else
     {          /* i pair, j pair : singleton */
@@ -1061,28 +1256,56 @@ int32_t CardBetapoint2d(const uint8_t *K, const index_t rs, const index_t cs, co
     }
     else
     {          /* i impair, j pair : intervalle */
-      if ((j > 0) && K[(j-1) * rs + i]) n++;      
-      if (((j+1) < cs) && K[(j+1) * rs + i]) n++;      
+      if ((j > 0) && K[(j - 1) * rs + i]) {
+        n++;
+      }
+      if (((j + 1) < cs) && K[(j + 1) * rs + i]) {
+        n++;
+      }
     }
   }
   else
   {
     if (j % 2)
     {          /* i pair, j impair : intervalle */
-      if ((i > 0) && K[j * rs + i - 1]) n++;      
-      if (((i+1) < rs) && K[j * rs + i + 1]) n++;      
+      if ((i > 0) && K[j * rs + i - 1]) {
+        n++;
+      }
+      if (((i + 1) < rs) && K[j * rs + i + 1]) {
+        n++;
+      }
     }
     else
     {          /* i pair, j pair : singleton */
-      if ((i > 0) && K[j * rs + i - 1]) n++;
-      if (((i+1) < rs) && K[j * rs + i + 1]) n++;      
-      if ((j > 0) && K[(j-1) * rs + i]) n++;      
-      if (((j+1) < cs) && K[(j+1) * rs + i]) n++;      
+      if ((i > 0) && K[j * rs + i - 1]) {
+        n++;
+      }
+      if (((i + 1) < rs) && K[j * rs + i + 1]) {
+        n++;
+      }
+      if ((j > 0) && K[(j - 1) * rs + i]) {
+        n++;
+      }
+      if (((j + 1) < cs) && K[(j + 1) * rs + i]) {
+        n++;
+      }
 
-      if ((i > 0) && (j > 0) && !K[j*rs+i-1] && !K[(j-1)*rs+i] && K[(j-1)*rs+i-1]) n++;
-      if (((i+1) < rs) && (j > 0) && !K[j*rs+i+1] && !K[(j-1)*rs+i] && K[(j-1)*rs+i+1]) n++;
-      if ((i > 0) && ((j+1) < cs) && !K[j*rs+i-1] && !K[(j+1)*rs+i] && K[(j+1)*rs+i-1]) n++;
-      if (((i+1) < rs) && ((j+1) < cs) && !K[j*rs+i+1] && !K[(j+1)*rs+i] && K[(j+1)*rs+i+1]) n++;
+      if ((i > 0) && (j > 0) && !K[j * rs + i - 1] && !K[(j - 1) * rs + i] &&
+          K[(j - 1) * rs + i - 1]) {
+        n++;
+      }
+      if (((i + 1) < rs) && (j > 0) && !K[j * rs + i + 1] &&
+          !K[(j - 1) * rs + i] && K[(j - 1) * rs + i + 1]) {
+        n++;
+      }
+      if ((i > 0) && ((j + 1) < cs) && !K[j * rs + i - 1] &&
+          !K[(j + 1) * rs + i] && K[(j + 1) * rs + i - 1]) {
+        n++;
+      }
+      if (((i + 1) < rs) && ((j + 1) < cs) && !K[j * rs + i + 1] &&
+          !K[(j + 1) * rs + i] && K[(j + 1) * rs + i + 1]) {
+        n++;
+      }
     }
   }  
   return n;
@@ -1103,9 +1326,17 @@ int32_t CardThetacarre2d(struct xvimage *k, index_t i, index_t j)
   if (K[j * rs + i])
   {
     Alphacarre2d(rs, cs, i, j, tab, &n);
-    for (u = 0; u < n; u++) if (K[tab[u]]) card++;
+    for (u = 0; u < n; u++) {
+      if (K[tab[u]]) {
+        card++;
+      }
+    }
     Betacarre2d(rs, cs, i, j, tab, &n);
-    for (u = 0; u < n; u++) if (K[tab[u]]) card++;
+    for (u = 0; u < n; u++) {
+      if (K[tab[u]]) {
+        card++;
+      }
+    }
   }
   return card;
 } /* CardThetacarre2d() */
@@ -1128,9 +1359,17 @@ int32_t CardThetaCarre2d(struct xvimage *k, index_t i, index_t j, uint8_t val)
   if (K[j * rs + i])
   {
     Alphacarre2d(rs, cs, i, j, tab, &n);
-    for (u = 0; u < n; u++) if (K[tab[u]] == val) card++;
+    for (u = 0; u < n; u++) {
+      if (K[tab[u]] == val) {
+        card++;
+      }
+    }
     Betacarre2d(rs, cs, i, j, tab, &n);
-    for (u = 0; u < n; u++) if (K[tab[u]] == val) card++;
+    for (u = 0; u < n; u++) {
+      if (K[tab[u]] == val) {
+        card++;
+      }
+    }
   }
   return card;
 } /* CardThetaCarre2d() */
@@ -1146,28 +1385,52 @@ int32_t BetaTerminal2d(uint8_t *K, index_t rs, index_t cs, index_t i, index_t j)
       return 1;
     }
     {          /* i impair, j pair : intervalle */
-      if ((j > 0) && K[(j-1) * rs + i]) return 0;
-      if (((j+1) < cs) && K[(j+1) * rs + i]) return 0;      
+      if ((j > 0) && K[(j - 1) * rs + i]) {
+        return 0;
+      }
+      if (((j + 1) < cs) && K[(j + 1) * rs + i]) {
+        return 0;
+      }
     }
   }
   else
   {
     if (j % 2)
     {          /* i pair, j impair : intervalle */
-      if ((i > 0) && K[j * rs + i - 1]) return 0;
-      if (((i+1) < rs) && K[j * rs + i + 1]) return 0;
+      if ((i > 0) && K[j * rs + i - 1]) {
+        return 0;
+      }
+      if (((i + 1) < rs) && K[j * rs + i + 1]) {
+        return 0;
+      }
     }
     else
     {          /* i pair, j pair : singleton */
-      if ((i > 0) && K[j * rs + i - 1]) return 0;
-      if (((i+1) < rs) && K[j * rs + i + 1]) return 0;      
-      if ((j > 0) && K[(j-1) * rs + i]) return 0;
-      if (((j+1) < cs) && K[(j+1) * rs + i]) return 0;
+      if ((i > 0) && K[j * rs + i - 1]) {
+        return 0;
+      }
+      if (((i + 1) < rs) && K[j * rs + i + 1]) {
+        return 0;
+      }
+      if ((j > 0) && K[(j - 1) * rs + i]) {
+        return 0;
+      }
+      if (((j + 1) < cs) && K[(j + 1) * rs + i]) {
+        return 0;
+      }
 
-      if ((i > 0) && (j > 0) && K[(j-1)*rs+i-1]) return 0;
-      if (((i+1) < rs) && (j > 0) && K[(j-1)*rs+i+1]) return 0;
-      if ((i > 0) && ((j+1) < cs) && K[(j+1)*rs+i-1]) return 0;
-      if (((i+1) < rs) && ((j+1) < cs) && K[(j+1)*rs+i+1]) return 0;
+      if ((i > 0) && (j > 0) && K[(j - 1) * rs + i - 1]) {
+        return 0;
+      }
+      if (((i + 1) < rs) && (j > 0) && K[(j - 1) * rs + i + 1]) {
+        return 0;
+      }
+      if ((i > 0) && ((j + 1) < cs) && K[(j + 1) * rs + i - 1]) {
+        return 0;
+      }
+      if (((i + 1) < rs) && ((j + 1) < cs) && K[(j + 1) * rs + i + 1]) {
+        return 0;
+      }
     }
   }
   return 1;
@@ -1180,10 +1443,18 @@ int32_t ExactementUnBetaTerminal2d(uint8_t *K, index_t rs, index_t cs)
   index_t i, N = rs * cs;
   int32_t n = 0;
 
-  for (i = 0; i < N; i++)
-    if ((K[i]) && BetaTerminal2d(K, rs, cs, i % rs, i / rs))
-      if (++n > 1) return 0;
-  if (n < 1) return 0; else return 1;
+  for (i = 0; i < N; i++) {
+    if ((K[i]) && BetaTerminal2d(K, rs, cs, i % rs, i / rs)) {
+      if (++n > 1) {
+        return 0;
+      }
+    }
+  }
+  if (n < 1) {
+    return 0;
+  } else {
+    return 1;
+  }
 } /* ExactementUnBetaTerminal2d() */
 
 /* ==================================== */
@@ -1201,13 +1472,17 @@ void SatureAlphacarre2d(struct xvimage *k)
   int32_t u, n;
   index_t tab[GRS2D*GCS2D];
 
-  for (j = 1; j < cs; j += 2)
-    for (i = 1; i < rs; i += 2)
+  for (j = 1; j < cs; j += 2) {
+    for (i = 1; i < rs; i += 2) {
       if (K[j * rs + i])
       {
         Alphacarre2d(rs, cs, i, j, tab, &n);
-        for (u = 0; u < n; u++) K[tab[u]] = VAL_OBJET;
+        for (u = 0; u < n; u++) {
+          K[tab[u]] = VAL_OBJET;
+        }
       }
+    }
+  }
 } /* SatureAlphacarre2d() */
 
 /* ==================================== */
@@ -1224,13 +1499,17 @@ void AjouteAlphacarre2d(struct xvimage *k)
   int32_t u, n;
   index_t tab[GRS2D*GCS2D];
 
-  for (j = 0; j < cs; j += 1)
-    for (i = 0; i < rs; i += 1)
+  for (j = 0; j < cs; j += 1) {
+    for (i = 0; i < rs; i += 1) {
       if (K[j * rs + i])
       {
         Alphacarre2d(rs, cs, i, j, tab, &n);
-        for (u = 0; u < n; u++) K[tab[u]] = VAL_OBJET;
+        for (u = 0; u < n; u++) {
+          K[tab[u]] = VAL_OBJET;
+        }
       }
+    }
+  }
 } /* AjouteAlphacarre2d() */
 
 /* ==================================== */
@@ -1247,13 +1526,17 @@ void AjouteBetacarre2d(struct xvimage *k)
   int32_t u, n;
   index_t tab[GRS2D*GCS2D];
 
-  for (j = 0; j < cs; j += 1)
-    for (i = 0; i < rs; i += 1)
+  for (j = 0; j < cs; j += 1) {
+    for (i = 0; i < rs; i += 1) {
       if (K[j * rs + i])
       {
         Betacarre2d(rs, cs, i, j, tab, &n);
-        for (u = 0; u < n; u++) K[tab[u]] = VAL_OBJET;
+        for (u = 0; u < n; u++) {
+          K[tab[u]] = VAL_OBJET;
+        }
       }
+    }
+  }
 } /* AjouteBetacarre2d() */
 
 /* ==================================== */
@@ -1275,43 +1558,55 @@ void MaxAlpha2d(struct xvimage *k)
   {
     uint8_t *K = UCHARDATA(k);
     uint8_t M;
-    for (j = 0; j < cs; j += 1)
+    for (j = 0; j < cs; j += 1) {
       for (i = 0; i < rs; i += 1)
       {
 	M = K[j * rs + i];
         Alphacarre2d(rs, cs, i, j, tab, &n);
-        for (u = 0; u < n; u++) 
-	  if (K[tab[u]] > M) M = K[tab[u]];
-	K[j * rs + i] = M;
+        for (u = 0; u < n; u++) {
+          if (K[tab[u]] > M) {
+            M = K[tab[u]];
+          }
+        }
+        K[j * rs + i] = M;
       }
+    }
   }
   else if (datatype(k) == VFF_TYP_4_BYTE)
   {
     int32_t *K = SLONGDATA(k);
     int32_t M;
-    for (j = 0; j < cs; j += 1)
+    for (j = 0; j < cs; j += 1) {
       for (i = 0; i < rs; i += 1)
       {
 	M = K[j * rs + i];
         Alphacarre2d(rs, cs, i, j, tab, &n);
-        for (u = 0; u < n; u++) 
-	  if (K[tab[u]] > M) M = K[tab[u]];
-	K[j * rs + i] = M;
+        for (u = 0; u < n; u++) {
+          if (K[tab[u]] > M) {
+            M = K[tab[u]];
+          }
+        }
+        K[j * rs + i] = M;
       }
+    }
   }
   else if (datatype(k) == VFF_TYP_FLOAT)
   {
     float *K = FLOATDATA(k);
     float M;
-    for (j = 0; j < cs; j += 1)
+    for (j = 0; j < cs; j += 1) {
       for (i = 0; i < rs; i += 1)
       {
 	M = K[j * rs + i];
         Alphacarre2d(rs, cs, i, j, tab, &n);
-        for (u = 0; u < n; u++) 
-	  if (K[tab[u]] > M) M = K[tab[u]];
-	K[j * rs + i] = M;
+        for (u = 0; u < n; u++) {
+          if (K[tab[u]] > M) {
+            M = K[tab[u]];
+          }
+        }
+        K[j * rs + i] = M;
       }
+    }
   }
   else
   {
@@ -1339,43 +1634,55 @@ void MaxBeta2d(struct xvimage *k)
   {
     uint8_t *K = UCHARDATA(k);
     uint8_t M;
-    for (j = 0; j < cs; j += 1)
+    for (j = 0; j < cs; j += 1) {
       for (i = 0; i < rs; i += 1)
       {
 	M = K[j * rs + i];
         Betacarre2d(rs, cs, i, j, tab, &n);
-        for (u = 0; u < n; u++) 
-	  if (K[tab[u]] > M) M = K[tab[u]];
-	K[j * rs + i] = M;
+        for (u = 0; u < n; u++) {
+          if (K[tab[u]] > M) {
+            M = K[tab[u]];
+          }
+        }
+        K[j * rs + i] = M;
       }
+    }
   }
   else if (datatype(k) == VFF_TYP_4_BYTE)
   {
     int32_t *K = SLONGDATA(k);
     int32_t M;
-    for (j = 0; j < cs; j += 1)
+    for (j = 0; j < cs; j += 1) {
       for (i = 0; i < rs; i += 1)
       {
 	M = K[j * rs + i];
         Betacarre2d(rs, cs, i, j, tab, &n);
-        for (u = 0; u < n; u++) 
-	  if (K[tab[u]] > M) M = K[tab[u]];
-	K[j * rs + i] = M;
+        for (u = 0; u < n; u++) {
+          if (K[tab[u]] > M) {
+            M = K[tab[u]];
+          }
+        }
+        K[j * rs + i] = M;
       }
+    }
   }
   else if (datatype(k) == VFF_TYP_FLOAT)
   {
     float *K = FLOATDATA(k);
     float M;
-    for (j = 0; j < cs; j += 1)
+    for (j = 0; j < cs; j += 1) {
       for (i = 0; i < rs; i += 1)
       {
 	M = K[j * rs + i];
         Betacarre2d(rs, cs, i, j, tab, &n);
-        for (u = 0; u < n; u++) 
-	  if (K[tab[u]] > M) M = K[tab[u]];
-	K[j * rs + i] = M;
+        for (u = 0; u < n; u++) {
+          if (K[tab[u]] > M) {
+            M = K[tab[u]];
+          }
+        }
+        K[j * rs + i] = M;
       }
+    }
   }
   else
   {
@@ -1393,12 +1700,22 @@ void EffaceLiensLibres2d(struct xvimage *k)
   uint8_t *K = UCHARDATA(k);
   index_t i, j;
 
-  for (j = 0; j < cs; j += 1)
-    for (i = 0; i < rs; i += 1)
-      if (K[j * rs + i] && INTER(i,j) && (CardBetapoint2d(K, rs, cs, i, j) == 1)) K[j * rs + i] = 0;
-  for (j = 0; j < cs; j += 1)
-    for (i = 0; i < rs; i += 1)
-      if (K[j * rs + i] && SINGL(i,j) && (CardBetapoint2d(K, rs, cs, i, j) == 1)) K[j * rs + i] = 0;
+  for (j = 0; j < cs; j += 1) {
+    for (i = 0; i < rs; i += 1) {
+      if (K[j * rs + i] && INTER(i, j) &&
+          (CardBetapoint2d(K, rs, cs, i, j) == 1)) {
+        K[j * rs + i] = 0;
+      }
+    }
+  }
+  for (j = 0; j < cs; j += 1) {
+    for (i = 0; i < rs; i += 1) {
+      if (K[j * rs + i] && SINGL(i, j) &&
+          (CardBetapoint2d(K, rs, cs, i, j) == 1)) {
+        K[j * rs + i] = 0;
+      }
+    }
+  }
 } /* EffaceLiensLibres2d() */
 
 /* ==================================== */
@@ -1409,14 +1726,22 @@ void ColorieKh2d(struct xvimage *k)
   index_t cs = colsize(k);
   uint8_t *K = UCHARDATA(k);
   index_t i, j;
-  for (j = 0; j < cs; j += 1)
-    for (i = 0; i < rs; i += 1)
+  for (j = 0; j < cs; j += 1) {
+    for (i = 0; i < rs; i += 1) {
       if (K[j * rs + i])
       {
-        if (CARRE(i,j)) K[j * rs + i] = NDG_CARRE;
-        if (INTER(i,j)) K[j * rs + i] = NDG_INTER;
-        if (SINGL(i,j)) K[j * rs + i] = NDG_SINGL;
+        if (CARRE(i, j)) {
+          K[j * rs + i] = NDG_CARRE;
+        }
+        if (INTER(i, j)) {
+          K[j * rs + i] = NDG_INTER;
+        }
+        if (SINGL(i, j)) {
+          K[j * rs + i] = NDG_SINGL;
+        }
       }
+    }
+  }
 } /* ColorieKh2d() */
  
 /* =============================================================== */
@@ -1448,8 +1773,16 @@ int Alphacarretriang2d(index_t rs, index_t cs, index_t i, index_t j, index_t *ta
   {
     if (i % 2 == 1)
     {
-      if (i > 0)      tab[(*n)++] = j*rs + i-1; else ret = 0;
-      if ((i+1) < rs) tab[(*n)++] = j*rs + i+1; else ret = 0;
+      if (i > 0) {
+        tab[(*n)++] = j * rs + i - 1;
+      } else {
+        ret = 0;
+      }
+      if ((i + 1) < rs) {
+        tab[(*n)++] = j * rs + i + 1;
+      } else {
+        ret = 0;
+      }
     }
     else
     { // singleton
@@ -1460,34 +1793,98 @@ int Alphacarretriang2d(index_t rs, index_t cs, index_t i, index_t j, index_t *ta
   {
     if (i % 2 == 0)
     {
-      if (j > 0)      tab[(*n)++] = (j-1) * rs + i; else ret = 0;
-      if ((j+2) < cs) tab[(*n)++] = (j+2) * rs + i; else ret = 0;
+      if (j > 0) {
+        tab[(*n)++] = (j - 1) * rs + i;
+      } else {
+        ret = 0;
+      }
+      if ((j + 2) < cs) {
+        tab[(*n)++] = (j + 2) * rs + i;
+      } else {
+        ret = 0;
+      }
     }
     else // (i % 2 == 1)
     {
-      if ((j > 0) && ((i+1) < rs)) tab[(*n)++] = (j-1) * rs + i+1; else ret = 0;
-      if (((j+2) < cs) && (i > 0)) tab[(*n)++] = (j+2) * rs + i-1; else ret = 0;
+      if ((j > 0) && ((i + 1) < rs)) {
+        tab[(*n)++] = (j - 1) * rs + i + 1;
+      } else {
+        ret = 0;
+      }
+      if (((j + 2) < cs) && (i > 0)) {
+        tab[(*n)++] = (j + 2) * rs + i - 1;
+      } else {
+        ret = 0;
+      }
     }
   }
   else // (j % 3 == 2)
   {
     if (i % 2 == 0)
     {
-      if (j > 1)                   tab[(*n)++] = (j-2) * rs + i; else ret = 0;
-      if ((j > 1) && ((i+1) < rs)) tab[(*n)++] = (j-2) * rs + i+1; else ret = 0;
-      if ((j > 1) && ((i+2) < rs)) tab[(*n)++] = (j-2) * rs + i+2; else ret = 0;
-      if (j > 0)                   tab[(*n)++] = (j-1) * rs + i; else ret = 0;
-      if ((j > 0) && ((i+1) < rs)) tab[(*n)++] = (j-1) * rs + i+1; else ret = 0;
-      if ((j+1) < cs)              tab[(*n)++] = (j+1) * rs + i; else ret = 0;
+      if (j > 1) {
+        tab[(*n)++] = (j - 2) * rs + i;
+      } else {
+        ret = 0;
+      }
+      if ((j > 1) && ((i + 1) < rs)) {
+        tab[(*n)++] = (j - 2) * rs + i + 1;
+      } else {
+        ret = 0;
+      }
+      if ((j > 1) && ((i + 2) < rs)) {
+        tab[(*n)++] = (j - 2) * rs + i + 2;
+      } else {
+        ret = 0;
+      }
+      if (j > 0) {
+        tab[(*n)++] = (j - 1) * rs + i;
+      } else {
+        ret = 0;
+      }
+      if ((j > 0) && ((i + 1) < rs)) {
+        tab[(*n)++] = (j - 1) * rs + i + 1;
+      } else {
+        ret = 0;
+      }
+      if ((j + 1) < cs) {
+        tab[(*n)++] = (j + 1) * rs + i;
+      } else {
+        ret = 0;
+      }
     }
     else // (i % 2 == 1)
     {
-      if ((j > 1) && ((i+1) < rs))      tab[(*n)++] = (j-2) * rs + i+1; else ret = 0;
-      if (j > 0)                        tab[(*n)++] = (j-1) * rs + i; else ret = 0;
-      if ((j > 0) && ((i+1) < rs))      tab[(*n)++] = (j-1) * rs + i+1; else ret = 0;
-      if (((j+1) < cs) && (i > 0))      tab[(*n)++] = (j+1) * rs + i-1; else ret = 0;
-      if ((j+1) < cs)                   tab[(*n)++] = (j+1) * rs + i; else ret = 0;
-      if (((j+1) < cs) && ((i+1) < rs)) tab[(*n)++] = (j+1) * rs + i+1; else ret = 0;
+      if ((j > 1) && ((i + 1) < rs)) {
+        tab[(*n)++] = (j - 2) * rs + i + 1;
+      } else {
+        ret = 0;
+      }
+      if (j > 0) {
+        tab[(*n)++] = (j - 1) * rs + i;
+      } else {
+        ret = 0;
+      }
+      if ((j > 0) && ((i + 1) < rs)) {
+        tab[(*n)++] = (j - 1) * rs + i + 1;
+      } else {
+        ret = 0;
+      }
+      if (((j + 1) < cs) && (i > 0)) {
+        tab[(*n)++] = (j + 1) * rs + i - 1;
+      } else {
+        ret = 0;
+      }
+      if ((j + 1) < cs) {
+        tab[(*n)++] = (j + 1) * rs + i;
+      } else {
+        ret = 0;
+      }
+      if (((j + 1) < cs) && ((i + 1) < rs)) {
+        tab[(*n)++] = (j + 1) * rs + i + 1;
+      } else {
+        ret = 0;
+      }
     }
   }
   return ret;
@@ -1507,13 +1904,17 @@ void AjouteAlphacarretriang2d(struct xvimage *k)
   int32_t u, n;
   index_t tab[GRS2D*GCS2D];
 
-  for (j = 0; j < cs; j += 1)
-    for (i = 0; i < rs; i += 1)
+  for (j = 0; j < cs; j += 1) {
+    for (i = 0; i < rs; i += 1) {
       if (K[j * rs + i])
       {
         Alphacarretriang2d(rs, cs, i, j, tab, &n);
-        for (u = 0; u < n; u++) K[tab[u]] = VAL_OBJET;
+        for (u = 0; u < n; u++) {
+          K[tab[u]] = VAL_OBJET;
+        }
       }
+    }
+  }
 } /* AjouteAlphacarretriang2d() */
 
 /* ========================================================================== */
@@ -1534,27 +1935,51 @@ void CopieAlphacarre2d(uint8_t *G, uint8_t *K, index_t rs, index_t cs, index_t i
   {
     if (j % 2)
     {          /* i impair, j impair : carre */
-      if ((i > 0) && K[j * rs + i - 1]) G[y*GRS2D+x-1] = VAL_OBJET;
-      if (((i+1) < rs) && K[j * rs + i + 1]) G[y*GRS2D+x+1] = VAL_OBJET;      
-      if ((j > 0) && K[(j-1) * rs + i]) G[(y-1)*GRS2D+x] = VAL_OBJET;      
-      if (((j+1) < cs) && K[(j+1) * rs + i]) G[(y+1)*GRS2D+x] = VAL_OBJET;      
-      if (((i > 0) && (j > 0)) && K[(j-1) * rs + i - 1]) G[(y-1)*GRS2D+x-1] = VAL_OBJET;      
-      if ((((i+1) < rs) && (j > 0)) && K[(j-1) * rs + i + 1]) G[(y-1)*GRS2D+x+1] = VAL_OBJET;      
-      if (((i > 0) && ((j+1) < cs)) && K[(j+1) * rs + i - 1]) G[(y+1)*GRS2D+x-1] = VAL_OBJET;      
-      if ((((i+1) < rs) && ((j+1) < cs)) && K[(j+1) * rs + i + 1]) G[(y+1)*GRS2D+x+1] = VAL_OBJET;      
+      if ((i > 0) && K[j * rs + i - 1]) {
+        G[y * GRS2D + x - 1] = VAL_OBJET;
+      }
+      if (((i + 1) < rs) && K[j * rs + i + 1]) {
+        G[y * GRS2D + x + 1] = VAL_OBJET;
+      }
+      if ((j > 0) && K[(j - 1) * rs + i]) {
+        G[(y - 1) * GRS2D + x] = VAL_OBJET;
+      }
+      if (((j + 1) < cs) && K[(j + 1) * rs + i]) {
+        G[(y + 1) * GRS2D + x] = VAL_OBJET;
+      }
+      if (((i > 0) && (j > 0)) && K[(j - 1) * rs + i - 1]) {
+        G[(y - 1) * GRS2D + x - 1] = VAL_OBJET;
+      }
+      if ((((i + 1) < rs) && (j > 0)) && K[(j - 1) * rs + i + 1]) {
+        G[(y - 1) * GRS2D + x + 1] = VAL_OBJET;
+      }
+      if (((i > 0) && ((j + 1) < cs)) && K[(j + 1) * rs + i - 1]) {
+        G[(y + 1) * GRS2D + x - 1] = VAL_OBJET;
+      }
+      if ((((i + 1) < rs) && ((j + 1) < cs)) && K[(j + 1) * rs + i + 1]) {
+        G[(y + 1) * GRS2D + x + 1] = VAL_OBJET;
+      }
     }
     else
     {          /* i impair, j pair : intervalle */
-      if ((i > 0) && K[j * rs + i - 1]) G[y*GRS2D+x-1] = VAL_OBJET;
-      if (((i+1) < rs) && K[j * rs + i + 1]) G[y*GRS2D+x+1] = VAL_OBJET;      
+      if ((i > 0) && K[j * rs + i - 1]) {
+        G[y * GRS2D + x - 1] = VAL_OBJET;
+      }
+      if (((i + 1) < rs) && K[j * rs + i + 1]) {
+        G[y * GRS2D + x + 1] = VAL_OBJET;
+      }
     }
   }
   else
   {
     if (j % 2)
     {          /* i pair, j impair : intervalle */
-      if ((j > 0) && K[(j-1) * rs + i]) G[(y-1)*GRS2D+x] = VAL_OBJET;      
-      if (((j+1) < cs) && K[(j+1) * rs + i]) G[(y+1)*GRS2D+x] = VAL_OBJET;      
+      if ((j > 0) && K[(j - 1) * rs + i]) {
+        G[(y - 1) * GRS2D + x] = VAL_OBJET;
+      }
+      if (((j + 1) < cs) && K[(j + 1) * rs + i]) {
+        G[(y + 1) * GRS2D + x] = VAL_OBJET;
+      }
     }
     else
     {          /* i pair, j pair : singleton */
@@ -1574,27 +1999,51 @@ void CopieBetacarreDual2d(uint8_t *G, uint8_t *K, index_t rs, index_t cs, index_
   {
     if ((j+1) % 2)
     {
-      if ((i > 0) && K[j * rs + i - 1]) G[y*GRS2D+x-1] = VAL_OBJET;
-      if (((i+1) < rs) && K[j * rs + i + 1]) G[y*GRS2D+x+1] = VAL_OBJET;      
-      if ((j > 0) && K[(j-1) * rs + i]) G[(y-1)*GRS2D+x] = VAL_OBJET;      
-      if (((j+1) < cs) && K[(j+1) * rs + i]) G[(y+1)*GRS2D+x] = VAL_OBJET;      
-      if (((i > 0) && (j > 0)) && K[(j-1) * rs + i - 1]) G[(y-1)*GRS2D+x-1] = VAL_OBJET;      
-      if ((((i+1) < rs) && (j > 0)) && K[(j-1) * rs + i + 1]) G[(y-1)*GRS2D+x+1] = VAL_OBJET;      
-      if (((i > 0) && ((j+1) < cs)) && K[(j+1) * rs + i - 1]) G[(y+1)*GRS2D+x-1] = VAL_OBJET;      
-      if ((((i+1) < rs) && ((j+1) < cs)) && K[(j+1) * rs + i + 1]) G[(y+1)*GRS2D+x+1] = VAL_OBJET;      
+      if ((i > 0) && K[j * rs + i - 1]) {
+        G[y * GRS2D + x - 1] = VAL_OBJET;
+      }
+      if (((i + 1) < rs) && K[j * rs + i + 1]) {
+        G[y * GRS2D + x + 1] = VAL_OBJET;
+      }
+      if ((j > 0) && K[(j - 1) * rs + i]) {
+        G[(y - 1) * GRS2D + x] = VAL_OBJET;
+      }
+      if (((j + 1) < cs) && K[(j + 1) * rs + i]) {
+        G[(y + 1) * GRS2D + x] = VAL_OBJET;
+      }
+      if (((i > 0) && (j > 0)) && K[(j - 1) * rs + i - 1]) {
+        G[(y - 1) * GRS2D + x - 1] = VAL_OBJET;
+      }
+      if ((((i + 1) < rs) && (j > 0)) && K[(j - 1) * rs + i + 1]) {
+        G[(y - 1) * GRS2D + x + 1] = VAL_OBJET;
+      }
+      if (((i > 0) && ((j + 1) < cs)) && K[(j + 1) * rs + i - 1]) {
+        G[(y + 1) * GRS2D + x - 1] = VAL_OBJET;
+      }
+      if ((((i + 1) < rs) && ((j + 1) < cs)) && K[(j + 1) * rs + i + 1]) {
+        G[(y + 1) * GRS2D + x + 1] = VAL_OBJET;
+      }
     }
     else
     {
-      if ((i > 0) && K[j * rs + i - 1]) G[y*GRS2D+x-1] = VAL_OBJET;
-      if (((i+1) < rs) && K[j * rs + i + 1]) G[y*GRS2D+x+1] = VAL_OBJET;      
+      if ((i > 0) && K[j * rs + i - 1]) {
+        G[y * GRS2D + x - 1] = VAL_OBJET;
+      }
+      if (((i + 1) < rs) && K[j * rs + i + 1]) {
+        G[y * GRS2D + x + 1] = VAL_OBJET;
+      }
     }
   }
   else
   {
     if ((j+1) % 2)
     {          /* i pair, j impair : intervalle */
-      if ((j > 0) && K[(j-1) * rs + i]) G[(y-1)*GRS2D+x] = VAL_OBJET;      
-      if (((j+1) < cs) && K[(j+1) * rs + i]) G[(y+1)*GRS2D+x] = VAL_OBJET;      
+      if ((j > 0) && K[(j - 1) * rs + i]) {
+        G[(y - 1) * GRS2D + x] = VAL_OBJET;
+      }
+      if (((j + 1) < cs) && K[(j + 1) * rs + i]) {
+        G[(y + 1) * GRS2D + x] = VAL_OBJET;
+      }
     }
     else
     {
@@ -1620,11 +2069,10 @@ index_t EffaceBetaTerminauxSimples2d(struct xvimage *k)
 #ifdef DEBUG
 printf("EffaceBetaTerminauxSimples2d : niveau %d\n", IndexPileGrilles2d);
 #endif
-  for (j = 0; j < cs; j += 1)
-    for (i = 0; i < rs; i += 1)
-      if ((K[j*rs+i]) && BetaTerminal2d(K, rs, cs, i, j))
-      {
-        CopieAlphacarre2d(G, K, rs, cs, i, j);
+for (j = 0; j < cs; j += 1) {
+  for (i = 0; i < rs; i += 1) {
+    if ((K[j * rs + i]) && BetaTerminal2d(K, rs, cs, i, j)) {
+      CopieAlphacarre2d(G, K, rs, cs, i, j);
 #ifdef DEBUG
 printf("EffaceBetaTerminauxSimples2d : teste clique %d,%d\n", i,j);
 #endif
@@ -1636,7 +2084,9 @@ printf("EffaceBetaTerminauxSimples2d : teste clique %d,%d\n", i,j);
 printf("EffaceBetaTerminauxSimples2d : efface clique %d,%d\n", i,j);
 #endif
         }
-      }
+    }
+  }
+}
   FreeGrille2d();
   return n;
 } /* EffaceBetaTerminauxSimples2d() */
@@ -1649,8 +2099,12 @@ int32_t EnsembleSimple2d(struct xvimage *k)
 printf("EnsembleSimple : \n");
 printimage(k);
 #endif
-  if (ExactementUnBetaTerminal2d(UCHARDATA(k), rowsize(k), colsize(k))) return 1;
-  if (EffaceBetaTerminauxSimples2d(k) == 0) return 0;
+if (ExactementUnBetaTerminal2d(UCHARDATA(k), rowsize(k), colsize(k))) {
+  return 1;
+}
+if (EffaceBetaTerminauxSimples2d(k) == 0) {
+  return 0;
+}
   EffaceLiensLibres2d(k);
   return EnsembleSimple2d(k);
 } /* EnsembleSimple2d() */
@@ -1669,7 +2123,14 @@ int32_t ContientUnSeulElement2d(struct xvimage *b)
   uint8_t *B = UCHARDATA(b);
   index_t i;
   int32_t n = 0;
-  for (i = 0; i < N; i++) if (B[i]) { n++; if (n > 1) return 0; }
+  for (i = 0; i < N; i++) {
+    if (B[i]) {
+      n++;
+      if (n > 1) {
+        return 0;
+      }
+    }
+  }
   return (n == 1);
 } /* ContientUnSeulElement() */
 
@@ -1688,9 +2149,15 @@ printf("Alpha1Simple2d : %d %d", i, j);
 printimage(b);
 #endif
 
-  if (!B[j*rs+i]) return 0;
+if (!B[j * rs + i]) {
+  return 0;
+}
   Alphacarre2d(rs, cs, i, j, tab, &n);
-  for (u = 0; u < n; u++) if (B[tab[u]]) nn++;
+  for (u = 0; u < n; u++) {
+    if (B[tab[u]]) {
+      nn++;
+    }
+  }
 
 #ifdef DEBUGNEW
 printf("Alpha1Simple2d : nn = %d\n\n", n);
@@ -1714,9 +2181,15 @@ printf("Beta1Simple2d : %d %d", i, j);
 printimage(b);
 #endif
 
-  if (!B[j*rs+i]) return 0;
+if (!B[j * rs + i]) {
+  return 0;
+}
   Betacarre2d(rs, cs, i, j, tab, &n);
-  for (u = 0; u < n; u++) if (B[tab[u]]) nn++;
+  for (u = 0; u < n; u++) {
+    if (B[tab[u]]) {
+      nn++;
+    }
+  }
 
 #ifdef DEBUGNEW
 printf("Beta1Simple2d : nn = %d\n\n", n);
@@ -1735,11 +2208,21 @@ index_t EffaceAlpha1Simples2d(struct xvimage *b)
   uint8_t *B = UCHARDATA(b);
   index_t i, j, nbsimples = 0;
 
-  for (j = 0; j < cs; j++)
-    for (i = 0; i < rs; i++)
-      if (B[j*rs+i])
-        if (Alpha1Simple2d(b, i, j)) B[j*rs+i] = VAL_MARQUE;
-  for (i = 0; i < N; i++) if (B[i] == VAL_MARQUE) { B[i] = VAL_NULLE; nbsimples++; }
+  for (j = 0; j < cs; j++) {
+    for (i = 0; i < rs; i++) {
+      if (B[j * rs + i]) {
+        if (Alpha1Simple2d(b, i, j)) {
+          B[j * rs + i] = VAL_MARQUE;
+        }
+      }
+    }
+  }
+  for (i = 0; i < N; i++) {
+    if (B[i] == VAL_MARQUE) {
+      B[i] = VAL_NULLE;
+      nbsimples++;
+    }
+  }
   return nbsimples;
 } /* EffaceAlpha1Simples2d() */
 
@@ -1753,11 +2236,21 @@ index_t EffaceBeta1Simples2d(struct xvimage *b)
   uint8_t *B = UCHARDATA(b);
   index_t i, j, nbsimples = 0;
 
-  for (j = 0; j < cs; j++)
-    for (i = 0; i < rs; i++)
-      if (B[j*rs+i])
-        if (Beta1Simple2d(b, i, j)) B[j*rs+i] = VAL_MARQUE;
-  for (i = 0; i < N; i++) if (B[i] == VAL_MARQUE) { B[i] = VAL_NULLE; nbsimples++; }
+  for (j = 0; j < cs; j++) {
+    for (i = 0; i < rs; i++) {
+      if (B[j * rs + i]) {
+        if (Beta1Simple2d(b, i, j)) {
+          B[j * rs + i] = VAL_MARQUE;
+        }
+      }
+    }
+  }
+  for (i = 0; i < N; i++) {
+    if (B[i] == VAL_MARQUE) {
+      B[i] = VAL_NULLE;
+      nbsimples++;
+    }
+  }
   return nbsimples;
 } /* EffaceBeta1Simples2d() */
 
@@ -1779,8 +2272,12 @@ printimage(b);
     if (EffaceBeta1Simples2d(b)) stabilite = 0;
     if (EffaceAlpha1Simples2d(b)) stabilite = 0;
 #else
-    if (EffaceAlpha1Simples2d(b)) stabilite = 0;
-    if (EffaceBeta1Simples2d(b)) stabilite = 0;
+    if (EffaceAlpha1Simples2d(b)) {
+      stabilite = 0;
+    }
+    if (EffaceBeta1Simples2d(b)) {
+      stabilite = 0;
+    }
 #endif
   } while (!stabilite);
 
@@ -1808,7 +2305,9 @@ printf("Alpha2Simple2d : %d %d\n", i, j);
 printimage(b);
 #endif
 
-  if (!B[j*rs+i]) return 0;
+if (!B[j * rs + i]) {
+  return 0;
+}
   g = AllocGrille2d();
   G = UCHARDATA(g);
   CopieAlphacarre2d(G, B, rs, cs, i, j);
@@ -1838,7 +2337,9 @@ printf("Beta2Simple2d : %d %d\n", i, j);
 printimage(b);
 #endif
 
-  if (!B[j*rs+i]) return 0;
+if (!B[j * rs + i]) {
+  return 0;
+}
   g = AllocGrille2d();
   G = UCHARDATA(g);
   CopieBetacarreDual2d(G, B, rs, cs, i, j);
@@ -1862,11 +2363,21 @@ index_t EffaceAlpha2Simples2d(struct xvimage *b)
   uint8_t *B = UCHARDATA(b);
   index_t i, j, nbsimples = 0;
 
-  for (j = 0; j < cs; j++)
-    for (i = 0; i < rs; i++)
-      if (B[j*rs+i])
-        if (Alpha2Simple2d(b, i, j)) B[j*rs+i] = VAL_MARQUE;
-  for (i = 0; i < N; i++) if (B[i] == VAL_MARQUE) { B[i] = VAL_NULLE; nbsimples++; }
+  for (j = 0; j < cs; j++) {
+    for (i = 0; i < rs; i++) {
+      if (B[j * rs + i]) {
+        if (Alpha2Simple2d(b, i, j)) {
+          B[j * rs + i] = VAL_MARQUE;
+        }
+      }
+    }
+  }
+  for (i = 0; i < N; i++) {
+    if (B[i] == VAL_MARQUE) {
+      B[i] = VAL_NULLE;
+      nbsimples++;
+    }
+  }
   return nbsimples;
 } /* EffaceAlpha2Simples2d() */
 
@@ -1880,12 +2391,21 @@ index_t EffaceAlpha2SimplesNonExtr2d(struct xvimage *b)
   uint8_t *B = UCHARDATA(b);
   index_t i, j, nbsimples = 0;
 
-  for (j = 0; j < cs; j++)
-    for (i = 0; i < rs; i++)
-      if (B[j*rs+i])
-        if (Alpha2Simple2d(b, i, j) && (CardThetacarre2d(b, i, j) != 1))
-          B[j*rs+i] = VAL_MARQUE;
-  for (i = 0; i < N; i++) if (B[i] == VAL_MARQUE) { B[i] = VAL_NULLE; nbsimples++; }
+  for (j = 0; j < cs; j++) {
+    for (i = 0; i < rs; i++) {
+      if (B[j * rs + i]) {
+        if (Alpha2Simple2d(b, i, j) && (CardThetacarre2d(b, i, j) != 1)) {
+          B[j * rs + i] = VAL_MARQUE;
+        }
+      }
+    }
+  }
+  for (i = 0; i < N; i++) {
+    if (B[i] == VAL_MARQUE) {
+      B[i] = VAL_NULLE;
+      nbsimples++;
+    }
+  }
   return nbsimples;
 } /* EffaceAlpha2SimplesNonExtr2d() */
 
@@ -1899,11 +2419,21 @@ index_t EffaceBeta2Simples2d(struct xvimage *b)
   uint8_t *B = UCHARDATA(b);
   index_t i, j, nbsimples = 0;
 
-  for (j = 0; j < cs; j++)
-    for (i = 0; i < rs; i++)
-      if (B[j*rs+i])
-        if (Beta2Simple2d(b, i, j)) B[j*rs+i] = VAL_MARQUE;
-  for (i = 0; i < N; i++) if (B[i] == VAL_MARQUE) { B[i] = VAL_NULLE; nbsimples++; }
+  for (j = 0; j < cs; j++) {
+    for (i = 0; i < rs; i++) {
+      if (B[j * rs + i]) {
+        if (Beta2Simple2d(b, i, j)) {
+          B[j * rs + i] = VAL_MARQUE;
+        }
+      }
+    }
+  }
+  for (i = 0; i < N; i++) {
+    if (B[i] == VAL_MARQUE) {
+      B[i] = VAL_NULLE;
+      nbsimples++;
+    }
+  }
   return nbsimples;
 } /* EffaceBeta2Simples2d() */
 
@@ -1917,12 +2447,21 @@ index_t EffaceBeta2SimplesNonExtr2d(struct xvimage *b)
   uint8_t *B = UCHARDATA(b);
   index_t i, j, nbsimples = 0;
 
-  for (j = 0; j < cs; j++)
-    for (i = 0; i < rs; i++)
-      if (B[j*rs+i])
-        if (Beta2Simple2d(b, i, j) && (CardThetacarre2d(b, i, j) != 1))
-          B[j*rs+i] = VAL_MARQUE;
-  for (i = 0; i < N; i++) if (B[i] == VAL_MARQUE) { B[i] = VAL_NULLE; nbsimples++; }
+  for (j = 0; j < cs; j++) {
+    for (i = 0; i < rs; i++) {
+      if (B[j * rs + i]) {
+        if (Beta2Simple2d(b, i, j) && (CardThetacarre2d(b, i, j) != 1)) {
+          B[j * rs + i] = VAL_MARQUE;
+        }
+      }
+    }
+  }
+  for (i = 0; i < N; i++) {
+    if (B[i] == VAL_MARQUE) {
+      B[i] = VAL_NULLE;
+      nbsimples++;
+    }
+  }
   return nbsimples;
 } /* EffaceBeta2SimplesNonExtr2d() */
 
@@ -1944,8 +2483,12 @@ printimage(b);
     if (EffaceBeta2Simples2d(b)) stabilite = 0;
     if (EffaceAlpha2Simples2d(b)) stabilite = 0;
 #else
-    if (EffaceAlpha2Simples2d(b)) stabilite = 0;
-    if (EffaceBeta2Simples2d(b)) stabilite = 0;
+    if (EffaceAlpha2Simples2d(b)) {
+      stabilite = 0;
+    }
+    if (EffaceBeta2Simples2d(b)) {
+      stabilite = 0;
+    }
 #endif
   } while (!stabilite);
 
@@ -1967,35 +2510,46 @@ void Htkern2d(struct xvimage *b, int32_t n)
 {
   int32_t stabilite;
 
-  if (n == 0)
-  do
-  {
-    stabilite = 1;
+  if (n == 0) {
+    do {
+      stabilite = 1;
 #ifdef BETAALPHA
     if (EffaceBeta2SimplesNonExtr2d(b)) stabilite = 0;
     if (EffaceAlpha2SimplesNonExtr2d(b)) stabilite = 0;
 #else
-    if (EffaceAlpha2SimplesNonExtr2d(b)) stabilite = 0;
-    if (EffaceBeta2SimplesNonExtr2d(b)) stabilite = 0;
+      if (EffaceAlpha2SimplesNonExtr2d(b)) {
+        stabilite = 0;
+      }
+      if (EffaceBeta2SimplesNonExtr2d(b)) {
+        stabilite = 0;
+      }
 #endif
   } while (!stabilite);
-  else
-  do
-  {
-    stabilite = 1;
+  } else {
+    do {
+      stabilite = 1;
 #ifdef BETAALPHA
     if (EffaceBeta2SimplesNonExtr2d(b)) stabilite = 0;
     n--; 
     if (n == 0) break;
     if (EffaceAlpha2SimplesNonExtr2d(b)) stabilite = 0;
 #else
-    if (EffaceAlpha2SimplesNonExtr2d(b)) stabilite = 0;
-    n--; 
-    if (n == 0) break;
-    if (EffaceBeta2SimplesNonExtr2d(b)) stabilite = 0;
+      if (EffaceAlpha2SimplesNonExtr2d(b)) {
+        stabilite = 0;
+      }
+    n--;
+    if (n == 0) {
+      break;
+    }
+    if (EffaceBeta2SimplesNonExtr2d(b)) {
+      stabilite = 0;
+    }
 #endif
-    if (stabilite == 1) break;
-  } while (n > 0);
+    if (stabilite == 1) {
+      break;
+    }
+    } while (n > 0);
+  }
 
 } /* Htkern2d() */
 
@@ -2011,18 +2565,40 @@ int32_t AlphaSimple2d(struct xvimage *b, index_t i, index_t j)
   uint8_t *B = UCHARDATA(b);
   int32_t n; /* pour compter les transitions dans l'alpha d'un carre */
 
-  if (SINGL(i,j)) return 0;
-  if (INTERH(i,j)) return (B[j*rs + i-1] != B[j*rs + i+1]);
-  if (INTERV(i,j)) return (B[(j-1)*rs + i] != B[(j+1)*rs + i]);
+  if (SINGL(i, j)) {
+    return 0;
+  }
+  if (INTERH(i, j)) {
+    return (B[j * rs + i - 1] != B[j * rs + i + 1]);
+  }
+  if (INTERV(i, j)) {
+    return (B[(j - 1) * rs + i] != B[(j + 1) * rs + i]);
+  }
   n = 0;
-  if (B[(j)  *rs + i+1] != B[(j-1)*rs + i+1]) n++;
-  if (B[(j-1)*rs + i+1] != B[(j-1)*rs + i  ]) n++;
-  if (B[(j-1)*rs + i  ] != B[(j-1)*rs + i-1]) n++;
-  if (B[(j-1)*rs + i-1] != B[(j)  *rs + i-1]) n++;
-  if (B[(j)  *rs + i-1] != B[(j+1)*rs + i-1]) n++;
-  if (B[(j+1)*rs + i-1] != B[(j+1)*rs + i  ]) n++;
-  if (B[(j+1)*rs + i  ] != B[(j+1)*rs + i+1]) n++;
-  if (B[(j+1)*rs + i+1] != B[(j)  *rs + i+1]) n++;
+  if (B[(j)*rs + i + 1] != B[(j - 1) * rs + i + 1]) {
+    n++;
+  }
+  if (B[(j - 1) * rs + i + 1] != B[(j - 1) * rs + i]) {
+    n++;
+  }
+  if (B[(j - 1) * rs + i] != B[(j - 1) * rs + i - 1]) {
+    n++;
+  }
+  if (B[(j - 1) * rs + i - 1] != B[(j)*rs + i - 1]) {
+    n++;
+  }
+  if (B[(j)*rs + i - 1] != B[(j + 1) * rs + i - 1]) {
+    n++;
+  }
+  if (B[(j + 1) * rs + i - 1] != B[(j + 1) * rs + i]) {
+    n++;
+  }
+  if (B[(j + 1) * rs + i] != B[(j + 1) * rs + i + 1]) {
+    n++;
+  }
+  if (B[(j + 1) * rs + i + 1] != B[(j)*rs + i + 1]) {
+    n++;
+  }
   return (n == 2);
 } /* AlphaSimple2d() */
 
@@ -2038,18 +2614,40 @@ int32_t BetaSimple2d(struct xvimage *b, index_t i, index_t j)
   uint8_t *B = UCHARDATA(b);
   int32_t n; /* pour compter les transitions dans le beta d'un singleton */
 
-  if (CARRE(i,j)) return 0;
-  if (INTERV(i,j)) return (B[j*rs + i-1] != B[j*rs + i+1]);
-  if (INTERH(i,j)) return (B[(j-1)*rs + i] != B[(j+1)*rs + i]);
+  if (CARRE(i, j)) {
+    return 0;
+  }
+  if (INTERV(i, j)) {
+    return (B[j * rs + i - 1] != B[j * rs + i + 1]);
+  }
+  if (INTERH(i, j)) {
+    return (B[(j - 1) * rs + i] != B[(j + 1) * rs + i]);
+  }
   n = 0;
-  if (B[(j)  *rs + i+1] != B[(j-1)*rs + i+1]) n++;
-  if (B[(j-1)*rs + i+1] != B[(j-1)*rs + i  ]) n++;
-  if (B[(j-1)*rs + i  ] != B[(j-1)*rs + i-1]) n++;
-  if (B[(j-1)*rs + i-1] != B[(j)  *rs + i-1]) n++;
-  if (B[(j)  *rs + i-1] != B[(j+1)*rs + i-1]) n++;
-  if (B[(j+1)*rs + i-1] != B[(j+1)*rs + i  ]) n++;
-  if (B[(j+1)*rs + i  ] != B[(j+1)*rs + i+1]) n++;
-  if (B[(j+1)*rs + i+1] != B[(j)  *rs + i+1]) n++;
+  if (B[(j)*rs + i + 1] != B[(j - 1) * rs + i + 1]) {
+    n++;
+  }
+  if (B[(j - 1) * rs + i + 1] != B[(j - 1) * rs + i]) {
+    n++;
+  }
+  if (B[(j - 1) * rs + i] != B[(j - 1) * rs + i - 1]) {
+    n++;
+  }
+  if (B[(j - 1) * rs + i - 1] != B[(j)*rs + i - 1]) {
+    n++;
+  }
+  if (B[(j)*rs + i - 1] != B[(j + 1) * rs + i - 1]) {
+    n++;
+  }
+  if (B[(j + 1) * rs + i - 1] != B[(j + 1) * rs + i]) {
+    n++;
+  }
+  if (B[(j + 1) * rs + i] != B[(j + 1) * rs + i + 1]) {
+    n++;
+  }
+  if (B[(j + 1) * rs + i + 1] != B[(j)*rs + i + 1]) {
+    n++;
+  }
   return (n == 2);
 } /* BetaSimple2d() */
 
@@ -2063,14 +2661,19 @@ index_t EulerKh2d(struct xvimage *b)
   index_t i, j;
   index_t n2=0, n1=0, n0=0;
 
-    for (j = 0; j < cs; j += 1)
-      for (i = 0; i < rs; i += 1)
-        if (B[j*rs + i])
-        {
-          if (CARRE(i,j)) n2++;
-          else if (INTER(i,j)) n1++;
-          else if (SINGL(i,j)) n0++;
+  for (j = 0; j < cs; j += 1) {
+    for (i = 0; i < rs; i += 1) {
+      if (B[j * rs + i]) {
+        if (CARRE(i, j)) {
+          n2++;
+        } else if (INTER(i, j)) {
+          n1++;
+        } else if (SINGL(i, j)) {
+          n0++;
         }
+      }
+    }
+  }
   return n0 - n1 + n2;
 } /* EulerKh2d() */
 
@@ -2092,9 +2695,15 @@ int32_t FaceLibre2d(struct xvimage *b, index_t i, index_t j)
   index_t tab[GCS2D*GRS2D];
   int32_t u, n, nn = 0;
 
-  if (!B[j*rs+i]) return 0;
+  if (!B[j * rs + i]) {
+    return 0;
+  }
   Betacarre2d(rs, cs, i, j, tab, &n);
-  for (u = 0; u < n; u++) if (B[tab[u]]) nn++;
+  for (u = 0; u < n; u++) {
+    if (B[tab[u]]) {
+      nn++;
+    }
+  }
 
   return (nn == 1);
 } /* FaceLibre2d() */
@@ -2113,10 +2722,19 @@ int32_t PaireLibre2d(struct xvimage *b, index_t i, index_t j)
   index_t tab[GCS2D*GRS2D];
   int32_t u, uu, n, nn = 0;
 
-  if (!B[j*rs+i]) return -1;
+  if (!B[j * rs + i]) {
+    return -1;
+  }
   Betacarre2d(rs, cs, i, j, tab, &n);
-  for (u = 0; u < n; u++) if (B[tab[u]]) { nn++; uu = u; }
-  if (nn != 1) return -1;
+  for (u = 0; u < n; u++) {
+    if (B[tab[u]]) {
+      nn++;
+      uu = u;
+    }
+  }
+  if (nn != 1) {
+    return -1;
+  }
   return tab[uu];
 } /* PaireLibre2d() */
 
@@ -2136,16 +2754,20 @@ int32_t Collapse2d(struct xvimage *b, index_t i, index_t j)
   index_t tab[GCS2D*GRS2D];
   int32_t uu = 0, n, nn = 0;
 
-  if (!B[j*rs+i])
+  if (!B[j * rs + i]) {
     return -1;
+  }
   Betacarre2d(rs, cs, i, j, tab, &n);
   for (int32_t u = 0; u < n; u++)
   {
-    if (B[tab[u]])
-      nn++; uu = u;
+    if (B[tab[u]]) {
+      nn++;
+    }
+    uu = u;
   }
-  if (nn != 1)
+  if (nn != 1) {
     return -1;
+  }
   B[tab[uu]] = B[j*rs+i] = VAL_NULLE;
   return (int32_t)tab[uu];
 } /* Collapse2d() */

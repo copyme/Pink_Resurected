@@ -71,14 +71,21 @@ int32_t lhisto(struct xvimage *image, struct xvimage *mask, index_t *histo)
   uint8_t *SOURCE = UCHARDATA(image);      /* l'image de depart */
   uint8_t *M;
 
-  for (i = 0; i <= NDG_MAX; i++) histo[i] = 0;
+  for (i = 0; i <= NDG_MAX; i++) {
+    histo[i] = 0;
+  }
 
-  if (mask == NULL)
-    for (x = 0; x < N; x++) histo[SOURCE[x]] += 1;
-  else
-  {
+  if (mask == NULL) {
+    for (x = 0; x < N; x++) {
+      histo[SOURCE[x]] += 1;
+    }
+  } else {
     M = UCHARDATA(mask);
-    for (x = 0; x < N; x++) if (M[x]) histo[SOURCE[x]] += 1;
+    for (x = 0; x < N; x++) {
+      if (M[x]) {
+        histo[SOURCE[x]] += 1;
+      }
+    }
   }
   return(1);
 } /* lhisto() */
@@ -97,8 +104,12 @@ int32_t lhisto1(struct xvimage *image, index_t *histo)
   index_t N = rs * cs * ds * nb;   /* taille image */
   uint8_t *SOURCE = UCHARDATA(image);      /* l'image de depart */
 
-  for (i = 0; i <= NDG_MAX; i++) histo[i] = 0;
-  for (x = 0; x < N; x++) histo[SOURCE[x]] += 1;
+  for (i = 0; i <= NDG_MAX; i++) {
+    histo[i] = 0;
+  }
+  for (x = 0; x < N; x++) {
+    histo[SOURCE[x]] += 1;
+  }
   return(1);
 } /* lhisto1() */
 
@@ -134,14 +145,21 @@ int32_t lhisto2(struct xvimage *image1, struct xvimage *image2,
     return 0;
   }
 
-  for (i = 0; i < nh; i++) H[i] = 0;
+  for (i = 0; i < nh; i++) {
+    H[i] = 0;
+  }
 
-  if (mask == NULL)
-    for (x = 0; x < N; x++) H[SOURCE2[x] * rsh + SOURCE1[x]] += 1;
-  else
-  {
+  if (mask == NULL) {
+    for (x = 0; x < N; x++) {
+      H[SOURCE2[x] * rsh + SOURCE1[x]] += 1;
+    }
+  } else {
     M = UCHARDATA(mask);
-    for (x = 0; x < N; x++) if (M[x]) H[SOURCE2[x] * rsh + SOURCE1[x]] += 1;
+    for (x = 0; x < N; x++) {
+      if (M[x]) {
+        H[SOURCE2[x] * rsh + SOURCE1[x]] += 1;
+      }
+    }
   }
   return(1);
 }  /* lhisto2() */
@@ -163,9 +181,11 @@ int32_t lhistolong(struct xvimage *image, struct xvimage *mask, index_t **histo,
   int32_t s;
 
   s = F[0];
-  for (x = 1; x < N; x++) 
-    if ((int32_t)(F[x]) > s) 
+  for (x = 1; x < N; x++) {
+    if ((int32_t)(F[x]) > s) {
       s = (int32_t)(F[x]);
+    }
+  }
   s += 1;      /* pour la valeur 0 */
   *size = s;
 
@@ -178,12 +198,18 @@ int32_t lhistolong(struct xvimage *image, struct xvimage *mask, index_t **histo,
 
   if (mask == NULL)
   {
-    for (x = 0; x < N; x++) (*histo)[F[x]] += 1;
+    for (x = 0; x < N; x++) {
+      (*histo)[F[x]] += 1;
+    }
   }
   else
   {
     M = UCHARDATA(mask);
-    for (x = 0; x < N; x++) if (M[x]) (*histo)[F[x]] += 1;
+    for (x = 0; x < N; x++) {
+      if (M[x]) {
+        (*histo)[F[x]] += 1;
+      }
+    }
   }
 
   return(1);
@@ -211,22 +237,32 @@ int32_t lhistofloat(struct xvimage *image, struct xvimage *mask, index_t **histo
   if (mask == NULL)
   {
     smin = smax = F[0];
-    for (x = 1; x < N; x++) 
-      if (F[x] > smax) smax = F[x]; else
-	if (F[x] < smin) smin = F[x];
+    for (x = 1; x < N; x++) {
+      if (F[x] > smax) {
+        smax = F[x];
+      } else if (F[x] < smin) {
+        smin = F[x];
+      }
+    }
   }
   else
   {
     M = UCHARDATA(mask);
-    for (x = 0; x < N; x++) 
+    for (x = 0; x < N; x++) {
       if (M[x])
-      { smin = smax = F[x]; break; }
-    for (; x < N; x++) 
+      { smin = smax = F[x]; break;
+      }
+    }
+    for (; x < N; x++) {
       if (M[x])
       {
-	if (F[x] > smax) smax = F[x]; else
-	  if (F[x] < smin) smin = F[x];
+        if (F[x] > smax) {
+          smax = F[x];
+        } else if (F[x] < smin) {
+          smin = F[x];
+        }
       }
+    }
   } // else mask == NULL
 
 #ifdef VERBOSE
@@ -245,23 +281,28 @@ int32_t lhistofloat(struct xvimage *image, struct xvimage *mask, index_t **histo
     return 0;
   }
 
-  if (mask == NULL)
+  if (mask == NULL) {
     for (x = 0; x < N; x++)
     {
-      for (s = smin, i = 0; i < NBINS; s += sincr, i++)
-	if (F[x] < s) break;
+      for (s = smin, i = 0; i < NBINS; s += sincr, i++) {
+        if (F[x] < s) {
+          break;
+        }
+      }
       (*histo)[i-1] += 1;
     }
-  else
-  {
+  } else {
     M = UCHARDATA(mask);
     for (x = 0; x < N; x++)
     {
       if (M[x])
       {
-	for (s = smin, i = 0; i < NBINS; s += sincr, i++)
-	  if (F[x] < s) break;
-	(*histo)[i-1] += 1;
+        for (s = smin, i = 0; i < NBINS; s += sincr, i++) {
+          if (F[x] < s) {
+            break;
+          }
+        }
+        (*histo)[i-1] += 1;
       }
     }
   }
@@ -279,17 +320,21 @@ void lhistcompact(index_t *histo, int32_t n)
   for (i = NDG_MIN; i <= NDG_MAX; i++) 
   {
     if ((i % n) == 0) 
-    { 
-      if (i0 != -1) histo[i0] = t; 
+    {
+      if (i0 != -1) {
+        histo[i0] = t;
+      }
       t = histo[i]; 
       i0++; 
       histo[i0] = 0;
-    } 
-    else
-      t += histo[i]; 
+    } else {
+      t += histo[i];
+    }
   }
   histo[i0] += t;
-  for (i = i0 + 1; i <= NDG_MAX; i++) histo[i] = 0;
+  for (i = i0 + 1; i <= NDG_MAX; i++) {
+    histo[i] = 0;
+  }
 }
 
 /* ==================================== */
@@ -299,7 +344,9 @@ int32_t lhistsum(index_t *histo)
   int32_t i, t;
 
   t = 0;
-  for (i = NDG_MIN; i <= NDG_MAX; i++) t += histo[i]; 
+  for (i = NDG_MIN; i <= NDG_MAX; i++) {
+    t += histo[i];
+  }
   return t;
 }
 
@@ -314,17 +361,29 @@ void labelextr1d(int32_t *F, int32_t n, uint8_t *E)
 */
 {
   int32_t i;
-  for (i = 0; i < n; i++) E[i] = 0;
+  for (i = 0; i < n; i++) {
+    E[i] = 0;
+  }
   E[0] = NONMIN | NONMAX;
-  for (i = 1; i < n; i++) 
-    if (F[i] < F[i-1])      E[i] |= NONMAX;
-    else if (F[i] > F[i-1]) E[i] |= NONMIN;
-    else                    E[i] |= E[i-1];
+  for (i = 1; i < n; i++) {
+    if (F[i] < F[i - 1]) {
+      E[i] |= NONMAX;
+    } else if (F[i] > F[i - 1]) {
+      E[i] |= NONMIN;
+    } else {
+      E[i] |= E[i - 1];
+    }
+  }
   E[n-1] = NONMIN | NONMAX;
-  for (i = n-2; i >= 0; i--)
-    if (F[i] < F[i+1])      E[i] |= NONMAX;
-    else if (F[i] > F[i+1]) E[i] |= NONMIN;
-    else                    E[i] |= E[i+1];
+  for (i = n - 2; i >= 0; i--) {
+    if (F[i] < F[i + 1]) {
+      E[i] |= NONMAX;
+    } else if (F[i] > F[i + 1]) {
+      E[i] |= NONMIN;
+    } else {
+      E[i] |= E[i + 1];
+    }
+  }
 } /* labelextr1d() */
 
 /* ==================================== */
@@ -346,10 +405,11 @@ int32_t lhisto2image(index_t *histo, int32_t size, struct xvimage **image)
   const int32_t SizeY=256;
 
   // Creation d'une image pour l'histogramme
-  if (size<SizeX)
+  if (size < SizeX) {
     rs = size;
-  else
+  } else {
     rs = SizeX;
+  }
   cs = SizeY;
   *image = allocimage(NULL, rs, cs, 1, VFF_TYP_1_BYTE);
   if (*image == NULL)
@@ -373,25 +433,35 @@ int32_t lhisto2image(index_t *histo, int32_t size, struct xvimage **image)
 
   // calcule la hauteur max d'un bin
   hmax = 0;
-  for (i = 0; i < size; i++) if (histo[i] > hmax) hmax = histo[i];
-  if (hmax <= 50000) interbar = 1000;
-  else if (hmax <= 500000) interbar = 10000;
-  else interbar = 100000;
+  for (i = 0; i < size; i++) {
+    if (histo[i] > hmax) {
+      hmax = histo[i];
+    }
+  }
+  if (hmax <= 50000) {
+    interbar = 1000;
+  } else if (hmax <= 500000) {
+    interbar = 10000;
+  } else {
+    interbar = 100000;
+  }
 
   for (i = 0; i < size; i++) // trace les bins
   {
     hbin = (int32_t)(((double)histo[i] * (double)(SizeY-6)) / (double)hmax);
 
-    for (j = 0; j < hbin; j++)
-      I[(cs-j-1)*rs + i] = NDG_MIN;
+    for (j = 0; j < hbin; j++) {
+      I[(cs - j - 1) * rs + i] = NDG_MIN;
+    }
   } // for (i = 0; i <= NDG_MAX; i++)
   
   i = 1;
   hbin = (int32_t)(((double)interbar * (double)i * (double)(SizeY-6)) / (double)hmax);
   while (hbin < SizeY)
   {
-    for (j = 0; j <size; j++)
-    I[(cs-hbin-1)*rs + j] = NDG_MIN;
+    for (j = 0; j < size; j++) {
+      I[(cs - hbin - 1) * rs + j] = NDG_MIN;
+    }
     i++;
     hbin = (int32_t)(((double)interbar * (double)i * (double)(SizeY-6)) / (double)hmax);
   }
@@ -420,17 +490,15 @@ static double azimuth(double x, double y)
 // résultat : angle en degrés entre 0 et 180 (ou -1 si vecteur trop petit)
 {
   double phi, cosphi;
-	
-  if ((mcabs(x) < ORIENT_EPS) && (mcabs(y) < ORIENT_EPS))
+
+  if ((mcabs(x) < ORIENT_EPS) && (mcabs(y) < ORIENT_EPS)) {
     return -1;
-  else
-  {
+  } else {
     cosphi=(x / sqrt(x*x+y*y));
     phi= acos (cosphi);
     //    printf("azimmmm: %f\n", (180*phi/M_PI));
     return (180*phi/M_PI);
   }
-	
 }
 
 /* ==================================== */
@@ -440,16 +508,16 @@ static double elevation(double x, double y, double z)
 // résultat : angle en degrés entre 0 et 180 (ou -1 si vecteur trop petit)
 {
   double theta, sintheta;
-	
-  if ((mcabs(x) < ORIENT_EPS) && (mcabs(y) < ORIENT_EPS) && (mcabs(z) < ORIENT_EPS))
+
+  if ((mcabs(x) < ORIENT_EPS) && (mcabs(y) < ORIENT_EPS) &&
+      (mcabs(z) < ORIENT_EPS)) {
     return -1;
-  else
-  {
+  } else {
     sintheta=(z / sqrt( x*x + y*y + z*z ));	
     theta= asin(sintheta);
     //printf("elevvv: %f\n", (180*theta/M_PI)+90);
     return (180*theta/M_PI+90);
-  } 
+  }
 }
 
 /* ==================================== */
@@ -476,31 +544,34 @@ int32_t lhistoazimuth(struct xvimage * field, int32_t nbins, index_t **histo)
   if (ds == 1)
   {
     assert(nbands(field) == 2);
-    for (y=0; y<cs; y++)
-    for (x=0; x<rs; x++)
-    {   
-      az = azimuth(F[y*rs+x], F[y*rs+x+N]);
-      if (az >= 0)
-      {
-	bin = (int32_t)floor(az/wbin);
-	if (bin >= nbins) bin = nbins-1;
-	(*histo)[bin] = (*histo)[bin] + 1;
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        az = azimuth(F[y * rs + x], F[y * rs + x + N]);
+        if (az >= 0) {
+          bin = (int32_t)floor(az / wbin);
+          if (bin >= nbins) {
+            bin = nbins - 1;
+          }
+          (*histo)[bin] = (*histo)[bin] + 1;
+        }
       }
     }
   }
   else
   {
     assert(nbands(field) == 3);
-    for (z=0; z<ds; z++)
-    for (y=0; y<cs; y++)
-    for (x=0; x<rs; x++)
-    {   
-      az = azimuth(F[z*ps+y*rs+x], F[z*ps+y*rs+x+N]);
-      if (az >= 0)
-      {
-	bin = (int32_t)floor(az/wbin);
-	if (bin >= nbins) bin = nbins-1;
-	(*histo)[bin] = (*histo)[bin] + 1;
+    for (z = 0; z < ds; z++) {
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++) {
+          az = azimuth(F[z * ps + y * rs + x], F[z * ps + y * rs + x + N]);
+          if (az >= 0) {
+            bin = (int32_t)floor(az / wbin);
+            if (bin >= nbins) {
+              bin = nbins - 1;
+            }
+            (*histo)[bin] = (*histo)[bin] + 1;
+          }
+        }
       }
     }
   }
@@ -523,8 +594,10 @@ int32_t lhistoazimuthlist(int32_t nvec, double *Vx, double *Vy, int32_t nbins, i
     az = azimuth(Vx[i], Vy[i]);
     if (az >= 0)
     {
-      bin = (int32_t)floor(az/wbin); 
-      if (bin >= nbins) bin = nbins-1;
+      bin = (int32_t)floor(az/wbin);
+      if (bin >= nbins) {
+        bin = nbins - 1;
+      }
       (*histo)[bin] = (*histo)[bin] + 1;
     }
   }
@@ -554,16 +627,19 @@ int32_t lhistoelevation(struct xvimage * field, int32_t nbins, index_t **histo)
   *histo = (index_t *)calloc(nbins, sizeof(index_t));
   assert(*histo != NULL);
 
-  for (z=0; z<ds; z++)
-  for (y=0; y<cs; y++)
-  for (x=0; x<rs; x++)
-  {   
-    ev = elevation(F[z*ps+y*rs+x], F[z*ps+y*rs+x+N], F[z*ps+y*rs+x+N+N]);
-    if (ev >= 0)
-    {
-      bin = (int32_t)floor(ev/wbin);
-      if (bin >= nbins) bin = nbins-1;
-      (*histo)[bin] = (*histo)[bin] + 1;
+  for (z = 0; z < ds; z++) {
+    for (y = 0; y < cs; y++) {
+      for (x = 0; x < rs; x++) {
+        ev = elevation(F[z * ps + y * rs + x], F[z * ps + y * rs + x + N],
+                       F[z * ps + y * rs + x + N + N]);
+        if (ev >= 0) {
+          bin = (int32_t)floor(ev / wbin);
+          if (bin >= nbins) {
+            bin = nbins - 1;
+          }
+          (*histo)[bin] = (*histo)[bin] + 1;
+        }
+      }
     }
   }
   return(1);
@@ -586,7 +662,9 @@ int32_t lhistoelevationlist(int32_t nvec, double *Vx, double *Vy, double *Vz, in
     if (ev >= 0)
     {
       bin = (int32_t)floor(ev/wbin);
-      if (bin >= nbins) bin = nbins-1;
+      if (bin >= nbins) {
+        bin = nbins - 1;
+      }
       (*histo)[bin] = (*histo)[bin] + 1;
     }
   }
@@ -616,11 +694,15 @@ int32_t lhisto_distance_modulo_raw (index_t * A, index_t * B, int32_t n)
   for (;;)
   {
     d = 0;
-    for (j=0; j<n; j++)
-      if (prefixsum[j] > 0) { d = prefixsum[j]; break; }
-    for (; j<n; j++)
-      if ((prefixsum[j] > 0) && (prefixsum[j] < d))
-	d = prefixsum[j];
+    for (j = 0; j < n; j++) {
+      if (prefixsum[j] > 0) { d = prefixsum[j]; break;
+      }
+    }
+    for (; j < n; j++) {
+      if ((prefixsum[j] > 0) && (prefixsum[j] < d)) {
+        d = prefixsum[j];
+      }
+    }
     h_dist2 = 0;
     for (j=0; j<n; j++)
     {
@@ -630,8 +712,9 @@ int32_t lhisto_distance_modulo_raw (index_t * A, index_t * B, int32_t n)
     if (h_dist2 < h_dist)
     {
       h_dist = h_dist2 ;
-      for(j=0; j<n; j++)
-	prefixsum[j]=temp[j];
+      for (j = 0; j < n; j++) {
+        prefixsum[j] = temp[j];
+      }
     }
     else{break;}
   }
@@ -639,11 +722,15 @@ int32_t lhisto_distance_modulo_raw (index_t * A, index_t * B, int32_t n)
   for (;;)
   {
     d = 0;
-    for (j=0; j<n; j++)
-      if (prefixsum[j] < 0) { d = prefixsum[j]; break; }
-    for (; j<n; j++)
-      if ((prefixsum[j] < 0) && (prefixsum[j] > d))
-	d= prefixsum[j];
+    for (j = 0; j < n; j++) {
+      if (prefixsum[j] < 0) { d = prefixsum[j]; break;
+      }
+    }
+    for (; j < n; j++) {
+      if ((prefixsum[j] < 0) && (prefixsum[j] > d)) {
+        d = prefixsum[j];
+      }
+    }
     h_dist2 = 0;
     for (j=0; j<n; j++)
     {
@@ -653,8 +740,9 @@ int32_t lhisto_distance_modulo_raw (index_t * A, index_t * B, int32_t n)
     if (h_dist2 < h_dist)
     {
       h_dist = h_dist2 ;
-      for(j=0; j<n; j++)
-	prefixsum[j]=temp[j];
+      for (j = 0; j < n; j++) {
+        prefixsum[j] = temp[j];
+      }
     }
     else{break;}
   }
@@ -712,11 +800,15 @@ double lhisto_distance_modulo (index_t * A, index_t * B, int32_t n)
   for (;;)
   {
     d = 0;
-    for (j=0; j<n; j++)
-      if (prefixsum[j] > 0) { d = prefixsum[j]; break; }
-    for (; j<n; j++)
-      if ((prefixsum[j] > 0) && (prefixsum[j] < d))
-	d = prefixsum[j];
+    for (j = 0; j < n; j++) {
+      if (prefixsum[j] > 0) { d = prefixsum[j]; break;
+      }
+    }
+    for (; j < n; j++) {
+      if ((prefixsum[j] > 0) && (prefixsum[j] < d)) {
+        d = prefixsum[j];
+      }
+    }
     h_dist2 = 0;
     for (j=0; j<n; j++)
     {
@@ -726,8 +818,9 @@ double lhisto_distance_modulo (index_t * A, index_t * B, int32_t n)
     if (h_dist2 < h_dist)
     {
       h_dist = h_dist2 ;
-      for(j=0; j<n; j++)
-	prefixsum[j]=temp[j];
+      for (j = 0; j < n; j++) {
+        prefixsum[j] = temp[j];
+      }
     }
     else{break;}
   }
@@ -735,11 +828,15 @@ double lhisto_distance_modulo (index_t * A, index_t * B, int32_t n)
   for (;;)
   {
     d = 0;
-    for (j=0; j<n; j++)
-      if (prefixsum[j] < 0) { d = prefixsum[j]; break; }
-    for (; j<n; j++)
-      if ((prefixsum[j] < 0) && (prefixsum[j] > d))
-	d= prefixsum[j];
+    for (j = 0; j < n; j++) {
+      if (prefixsum[j] < 0) { d = prefixsum[j]; break;
+      }
+    }
+    for (; j < n; j++) {
+      if ((prefixsum[j] < 0) && (prefixsum[j] > d)) {
+        d = prefixsum[j];
+      }
+    }
     h_dist2 = 0;
     for (j=0; j<n; j++)
     {
@@ -749,8 +846,9 @@ double lhisto_distance_modulo (index_t * A, index_t * B, int32_t n)
     if (h_dist2 < h_dist)
     {
       h_dist = h_dist2 ;
-      for(j=0; j<n; j++)
-	prefixsum[j]=temp[j];
+      for (j = 0; j < n; j++) {
+        prefixsum[j] = temp[j];
+      }
     }
     else{break;}
   }
@@ -809,11 +907,18 @@ int32_t lseuilhisto (struct xvimage *image, struct xvimage *masque, double p)
   {
     M = UCHARDATA(masque);
     nbpts = 0;
-    for (i = 0; i < N; i++) if (M[i]) { histo[I[i]]++; nbpts++; }
+    for (i = 0; i < N; i++) {
+      if (M[i]) {
+        histo[I[i]]++;
+        nbpts++;
+      }
+    }
   }
   else
   {
-    for (i = 0; i < N; i++) histo[I[i]]++;
+    for (i = 0; i < N; i++) {
+      histo[I[i]]++;
+    }
     nbpts = N;
   }
   
@@ -825,7 +930,13 @@ int32_t lseuilhisto (struct xvimage *image, struct xvimage *masque, double p)
     if (n >= nbpts) { seuil = i; break; }
   }
 
-  for (i = 0; i < N; i++) if (I[i] >= seuil) I[i] = NDG_MAX; else I[i] = NDG_MIN;
+  for (i = 0; i < N; i++) {
+    if (I[i] >= seuil) {
+      I[i] = NDG_MAX;
+    } else {
+      I[i] = NDG_MIN;
+    }
+  }
   free(histo);
   return 1;
 } // lseuilhisto()
@@ -853,7 +964,11 @@ int32_t lcountvalues(struct xvimage *image, struct xvimage *mask)
       fprintf(stderr, "%s: function lhisto failed\n", F_NAME);
       return -1;
     }
-    for (i = NDG_MIN; i <= NDG_MAX; i++) if (histo[i]) count++;
+    for (i = NDG_MIN; i <= NDG_MAX; i++) {
+      if (histo[i]) {
+        count++;
+      }
+    }
     free(histo);
   }
   else if (datatype(image) == VFF_TYP_4_BYTE)
@@ -863,7 +978,11 @@ int32_t lcountvalues(struct xvimage *image, struct xvimage *mask)
       fprintf(stderr, "%s: function lhistolong failed\n", F_NAME);
       return -1;
     }
-    for (i = 0; i < s; i++) if (histo[i]) count++;
+    for (i = 0; i < s; i++) {
+      if (histo[i]) {
+        count++;
+      }
+    }
     free(histo);
   }
   return(count);
@@ -902,8 +1021,11 @@ int32_t lhistosieve(struct xvimage *image, int32_t val)
       return 0;
     }
 
-    for (x = 0; x < N; x++) 
-      if (histo[F[x]] < val) F[x] = 0;
+    for (x = 0; x < N; x++) {
+      if (histo[F[x]] < val) {
+        F[x] = 0;
+      }
+    }
   }
   else if (datatype(image) == VFF_TYP_4_BYTE)
   {
@@ -914,8 +1036,11 @@ int32_t lhistosieve(struct xvimage *image, int32_t val)
       return 0;
     }
 
-    for (x = 0; x < N; x++) 
-      if (histo[F[x]] < val) F[x] = 0;
+    for (x = 0; x < N; x++) {
+      if (histo[F[x]] < val) {
+        F[x] = 0;
+      }
+    }
   }
   else
   {
@@ -961,11 +1086,15 @@ int32_t lrelabel(struct xvimage *image)
     }
 
     newnbval = 0;
-    for (i = NDG_MIN; i <= NDG_MAX; i++)
-      if (histo[i] != 0)
-	histo[i] = (index_t)newnbval++;
+    for (i = NDG_MIN; i <= NDG_MAX; i++) {
+      if (histo[i] != 0) {
+        histo[i] = (index_t)newnbval++;
+      }
+    }
 
-    for (x = 0; x < N; x++) F[x] = histo[F[x]];
+    for (x = 0; x < N; x++) {
+      F[x] = histo[F[x]];
+    }
     free(histo);
   }
   else if (datatype(image) == VFF_TYP_4_BYTE)
@@ -978,11 +1107,15 @@ int32_t lrelabel(struct xvimage *image)
     }
 
     newnbval = 0;
-    for (i = 0; i < nbval; i++)
-      if (histo[i] != 0)
-	histo[i] = (index_t)newnbval++;
+    for (i = 0; i < nbval; i++) {
+      if (histo[i] != 0) {
+        histo[i] = (index_t)newnbval++;
+      }
+    }
 
-    for (x = 0; x < N; x++) F[x] = (int32_t)(histo[F[x]]);
+    for (x = 0; x < N; x++) {
+      F[x] = (int32_t)(histo[F[x]]);
+    }
     free(histo);
   }
   else
@@ -1012,9 +1145,9 @@ double lentropy(struct xvimage *image, struct xvimage *mask)
     COMPARE_SIZE(image, mask);
     ACCEPTED_TYPES1(mask, VFF_TYP_1_BYTE);
     N = larea(mask);
-  }
-  else
+  } else {
     N = rowsize(image) * colsize(image) * depth(image);
+  }
 
   if (datatype(image) == VFF_TYP_1_BYTE)
   {
@@ -1033,7 +1166,9 @@ double lentropy(struct xvimage *image, struct xvimage *mask)
     for (i = NDG_MIN; i <= NDG_MAX; i++) 
     {
       P_i = (double)histo[i] / N;
-      if (P_i > 0) E -= P_i * log(P_i); 
+      if (P_i > 0) {
+        E -= P_i * log(P_i);
+      }
     }
   }
   else if (datatype(image) == VFF_TYP_4_BYTE)
@@ -1046,7 +1181,9 @@ double lentropy(struct xvimage *image, struct xvimage *mask)
     for (i = 0; i < s; i++) 
     {
       P_i = (double)histo[i] / N;
-      if (P_i > 0) E -= P_i * log(P_i); 
+      if (P_i > 0) {
+        E -= P_i * log(P_i);
+      }
     }
   }
   else if (datatype(image) == VFF_TYP_FLOAT)
@@ -1060,10 +1197,14 @@ double lentropy(struct xvimage *image, struct xvimage *mask)
     for (i = 0; i < s; i++) 
     {
       P_i = (double)histo[i] / N;
-      if (P_i > 0) E -= P_i * log(P_i); 
+      if (P_i > 0) {
+        E -= P_i * log(P_i);
+      }
     }
   }
-  if (histo) free(histo);
+  if (histo) {
+    free(histo);
+  }
   return E;
 
 } // lentropy()

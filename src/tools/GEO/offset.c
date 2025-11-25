@@ -85,7 +85,9 @@ int main(int argc, char **argv)
   ox = atoi(argv[2]);
   oy = atoi(argv[3]);
   oz = atoi(argv[4]);
-  if (argc == 7) mode = atoi(argv[5]);
+  if (argc == 7) {
+    mode = atoi(argv[5]);
+  }
 
   if (! loffset(image, ox, oy, oz, mode))
   {

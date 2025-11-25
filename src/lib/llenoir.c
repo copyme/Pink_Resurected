@@ -93,12 +93,14 @@ void Lenoir(struct xvimage * image,
 	ptrpathfrom = DOUBLEDATA(pathfrom);
 	
 	/* Connexite */
-	if(connex==4||connex==8) Ndim = 2;
-	if(connex==6||connex==18||connex==26) Ndim = 3;
-	
-	
-	
-	/* Blindage, x ou y n'appartient pas a l'objet*/
+        if (connex == 4 || connex == 8) {
+          Ndim = 2;
+        }
+        if (connex == 6 || connex == 18 || connex == 26) {
+          Ndim = 3;
+        }
+
+        /* Blindage, x ou y n'appartient pas a l'objet*/
 	if(ptrimage[x]!=255||ptrimage[y]!=255) 
 	{
     		fprintf(stderr, "Lenoir: les points ne sont pas dans l'objet\n");
@@ -153,10 +155,16 @@ void Lenoir(struct xvimage * image,
 			{
 				for(direction=0; direction<26; direction=direction+1)//parcours des 26 voisins de s
 				{
-					if(connex==6) s1 = voisin6(s,direction,rs,ps,N);
-					if(connex==18) s1 = voisin18(s,direction,rs,ps,N);
-					if(connex==26) s1 = voisin26(s,direction,rs,ps,N);
-					if(ptretat[s1]==0)
+                                  if (connex == 6) {
+                                    s1 = voisin6(s, direction, rs, ps, N);
+                                  }
+                                  if (connex == 18) {
+                                    s1 = voisin18(s, direction, rs, ps, N);
+                                  }
+                                  if (connex == 26) {
+                                    s1 = voisin26(s, direction, rs, ps, N);
+                                  }
+                                        if(ptretat[s1]==0)
 					{
 						ptrdistance[s1]=(ptrdistance[s]+1);
 						ptrpath[s1]=ptrpath[s];
@@ -229,10 +237,16 @@ void Lenoir(struct xvimage * image,
 			{
 				for(direction=0; direction<26; direction=direction+1)//parcours des 26 voisins de s
 				{
-					if(connex==6) s1 = voisin6(s,direction,rs,ps,N);
-					if(connex==18) s1 = voisin18(s,direction,rs,ps,N);
-					if(connex==26) s1 = voisin26(s,direction,rs,ps,N);
-					if(ptrdistance[s1]<ptrdistance[s])
+                                  if (connex == 6) {
+                                    s1 = voisin6(s, direction, rs, ps, N);
+                                  }
+                                  if (connex == 18) {
+                                    s1 = voisin18(s, direction, rs, ps, N);
+                                  }
+                                  if (connex == 26) {
+                                    s1 = voisin26(s, direction, rs, ps, N);
+                                  }
+                                        if(ptrdistance[s1]<ptrdistance[s])
 					{
 						if(ptretat[s1]==1)
 						{
@@ -290,10 +304,16 @@ void Lenoir(struct xvimage * image,
 			{
 				for(direction=0; direction<26; direction=direction+1)//parcours des 26 voisins de s
 				{
-					if(connex==6) s1 = voisin6(s,direction,rs,ps,N);
-					if(connex==18) s1 = voisin18(s,direction,rs,ps,N);
-					if(connex==26) s1 = voisin26(s,direction,rs,ps,N);
-					if((ptrdistance[s1]<ptrdistance[s]) && (ptrpaththrough[s1]>maxi))
+                                  if (connex == 6) {
+                                    s1 = voisin6(s, direction, rs, ps, N);
+                                  }
+                                  if (connex == 18) {
+                                    s1 = voisin18(s, direction, rs, ps, N);
+                                  }
+                                  if (connex == 26) {
+                                    s1 = voisin26(s, direction, rs, ps, N);
+                                  }
+                                        if((ptrdistance[s1]<ptrdistance[s]) && (ptrpaththrough[s1]>maxi))
 					{
 						s2 = s1;
 						maxi = ptrpaththrough[s1];
@@ -319,10 +339,17 @@ void Lenoir(struct xvimage * image,
 	{
 		for (i=0; i<N; i=i+1)
 		{
-			if(ptrdistance[i] <= ptrdistance[y] && (ptrdistance[i] != 0 || x==i)) ptrout[i] = 110;
-			if(ptretat[i] == 2)  ptrout[i] = 160;
-			if(ptretat[i] == 3)  ptrout[i] = 210;
-		}
+                  if (ptrdistance[i] <= ptrdistance[y] &&
+                      (ptrdistance[i] != 0 || x == i)) {
+                    ptrout[i] = 110;
+                  }
+                  if (ptretat[i] == 2) {
+                    ptrout[i] = 160;
+                  }
+                  if (ptretat[i] == 3) {
+                    ptrout[i] = 210;
+                  }
+                }
 	}
 	
 	/* Remplir l'image de sortie (3D) */
@@ -330,9 +357,13 @@ void Lenoir(struct xvimage * image,
 	{
 		for (i=0; i<N; i=i+1)
 		{
-			if(ptrimage[i] == 255)  ptrout[i] = 110;
-			if(ptretat[i] == 3)  ptrout[i] = 255;
-		}
+                  if (ptrimage[i] == 255) {
+                    ptrout[i] = 110;
+                  }
+                  if (ptretat[i] == 3) {
+                    ptrout[i] = 255;
+                  }
+                }
 	}
 	
 	/* Libérer mémoire */

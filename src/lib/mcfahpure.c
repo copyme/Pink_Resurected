@@ -72,12 +72,14 @@ Fahp * CreeFahpVide(
   L->Util = 0;
   L->Maxutil = 0;
   L->Niv = 0;
-  for (i = 0; i < taillemax - 1; i++)
-    L->Elts[i].Next = &(L->Elts[i+1]);
+  for (i = 0; i < taillemax - 1; i++) {
+    L->Elts[i].Next = &(L->Elts[i + 1]);
+  }
   L->Elts[taillemax - 1].Next = NULL;
   L->Libre = &(L->Elts[0]);
-  for (i = 0; i < FAHP_NPRIO; i++)
-    L->Tete[i]= NULL;
+  for (i = 0; i < FAHP_NPRIO; i++) {
+    L->Tete[i] = NULL;
+  }
   L->Queue = NULL;
   return L;
 } /* CreeFahpVide() */
@@ -90,12 +92,14 @@ void FahpFlush(
   index_t i;
   L->Niv = 0;
   L->Util = 0;
-  for (i = 0; i < L->Max - 1; i++)
-    L->Elts[i].Next = &(L->Elts[i+1]);
+  for (i = 0; i < L->Max - 1; i++) {
+    L->Elts[i].Next = &(L->Elts[i + 1]);
+  }
   L->Elts[L->Max - 1].Next = NULL;
   L->Libre = &(L->Elts[0]);
-  for (i = 0; i < FAHP_NPRIO; i++)
-    L->Tete[i]= NULL;
+  for (i = 0; i < FAHP_NPRIO; i++) {
+    L->Tete[i] = NULL;
+  }
   L->Queue = NULL;
 } /* FahpFlush() */
 
@@ -113,8 +117,12 @@ int32_t FahpVideNiveau(
   int32_t niv)
 /* ==================================== */
 {
-  if (L->Queue == NULL) return 1;
-  if (L->Niv > niv) return 1;
+  if (L->Queue == NULL) {
+    return 1;
+  }
+  if (L->Niv > niv) {
+    return 1;
+  }
   return 0;
 } /* FahpVideNiveau() */
 
@@ -149,9 +157,9 @@ index_t FahpPop(
   if (L->Queue == L->Tete[L->Niv]) /* on se prepare a effacer le dernier */
   {                                /* element du niveau courant: il faut */
     L->Tete[L->Niv] = NULL;        /* annuler le pointeur de tete */
-    do (L->Niv)++;                 /* et incrementer le niveau */
-    while ((L->Niv < FAHP_NPRIO)          
-            && (L->Tete[L->Niv] == NULL));
+    do {
+      (L->Niv)++; /* et incrementer le niveau */
+    } while ((L->Niv < FAHP_NPRIO) && (L->Tete[L->Niv] == NULL));
   }
   V = L->Queue->Point;
   FE = L->Queue->Next;
@@ -193,7 +201,9 @@ void FahpPush(
   }
 
   L->Util++;
-  if (L->Util > L->Maxutil) L->Maxutil = L->Util;
+  if (L->Util > L->Maxutil) {
+    L->Maxutil = L->Util;
+  }
   if (L->Queue == NULL)    /* insertion dans une Fahp vide */
   {
     L->Queue = L->Libre;
@@ -216,7 +226,9 @@ void FahpPush(
   {
     FahpElt * FE = NULL;
     int32_t NiPrec = Ni;
-    while ((NiPrec >= 0) && (L->Tete[NiPrec] == NULL)) NiPrec--; 
+    while ((NiPrec >= 0) && (L->Tete[NiPrec] == NULL)) {
+      NiPrec--;
+    }
     if (NiPrec < 0)              /* creation d'un niveau inferieur au niveau courant */
     {
       FE = L->Queue;
@@ -259,13 +271,14 @@ void FahpPrint(
   FahpElt * FE = NULL;
   if (FahpVide(L)) {printf("[]\n"); return;}
   FE = L->Queue;
-  for (i = L->Niv; i < FAHP_NPRIO; i++)
+  for (i = L->Niv; i < FAHP_NPRIO; i++) {
     if (L->Tete[i] != NULL) 
     {
       printf("%d [ ", i);
-      for (;FE != L->Tete[i]; FE = FE->Next)
+      for (; FE != L->Tete[i]; FE = FE->Next) {
 #ifdef MC_64_BITS
         printf("%ld ", FE->Point);
+      }
 #else
         printf("%d ", FE->Point);
 #endif
@@ -276,6 +289,7 @@ void FahpPrint(
 #endif
       FE = FE->Next;
     }
+  }
 } /* FahpPrint() */
 
 #ifdef TESTFahp

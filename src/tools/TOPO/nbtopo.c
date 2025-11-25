@@ -82,11 +82,15 @@ int main(int argc, char **argv)
 
   connex = atoi(argv[2]);
 
-  if (strcmp(argv[3], "PP") == 0) function = PP; else
-  if (strcmp(argv[3], "P") == 0) function = P; else
-  if (strcmp(argv[3], "M") == 0) function = M; else
-  if (strcmp(argv[3], "MM") == 0) function = MM; else
-  {
+  if (strcmp(argv[3], "PP") == 0) {
+    function = PP;
+  } else if (strcmp(argv[3], "P") == 0) {
+    function = P;
+  } else if (strcmp(argv[3], "M") == 0) {
+    function = M;
+  } else if (strcmp(argv[3], "MM") == 0) {
+    function = MM;
+  } else {
     fprintf(stderr, "usage: %s filein.pgm connex {PP|P|M|MM} fileout.pgm\n", argv[0]);
     exit(1);
   }

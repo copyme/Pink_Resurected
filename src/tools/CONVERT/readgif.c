@@ -121,7 +121,9 @@ void read_header(FILE *fd)
   char signature[7];
   int32_t i;
   signature[6] = '\0';
-  for (i = 0; i < 6; i++) signature[i] = (char)getc(fd);
+  for (i = 0; i < 6; i++) {
+    signature[i] = (char)getc(fd);
+  }
   printf("signature = %s\n", signature);
 } /* read_header() */
 
@@ -244,7 +246,9 @@ void read_application_extension(FILE *fd)
       exit(1);
     }
     printf("application specific data : \n");
-    for (i = 0; i < c; i++) printf("%x\n", buf[i]);
+    for (i = 0; i < c; i++) {
+      printf("%x\n", buf[i]);
+    }
     c = getc(fd); /* get next block size */
   }
   
@@ -262,16 +266,15 @@ void read_extension(FILE *fd)
 /* =============================================================== */
 {
   int32_t c = getc(fd);
-  if (c == 0xF9)
+  if (c == 0xF9) {
     read_graphic_extension(fd);
-  else if (c == 0xFE)
+  } else if (c == 0xFE) {
     read_comment_extension(fd);
-  else if (c == 0xFF)
+  } else if (c == 0xFF) {
     read_application_extension(fd);
-  else if (c == 0x01)
+  } else if (c == 0x01) {
     read_plain_text_extension(fd);
-  else 
-  {
+  } else {
     fprintf(stderr, "FORMAT ERROR 1\n");
     exit(1);
   }

@@ -137,10 +137,10 @@ int main(int argc, char **argv)
 					   x_units );
 		    	C_err_msg( tmp_msg );
 			done = 0;
-	    	}
-		else	
-			done = 1;
-	} while ( !done );
+                } else {
+                  done = 1;
+                }
+        } while ( !done );
 
 	do
 	{
@@ -155,10 +155,10 @@ int main(int argc, char **argv)
 					   y_units );
 		    	C_err_msg( tmp_msg );
 			done = 0;
-	    	}
-		else	
-			done = 1;
-	} while ( !done );
+                } else {
+                  done = 1;
+                }
+        } while ( !done );
 
 	do
 	{
@@ -173,10 +173,10 @@ int main(int argc, char **argv)
 					   z_units );
 		    	C_err_msg( tmp_msg );
 			done = 0;
-	    	}
-		else	
-			done = 1;
-	} while ( !done );
+                } else {
+                  done = 1;
+                }
+        } while ( !done );
 
 	do
 	{
@@ -195,10 +195,10 @@ int main(int argc, char **argv)
 					   unit_type );
 		    	C_err_msg( tmp_msg );
 			done = 0;
-	    	}
-		else	
-			done = 1;
-	} while ( !done );
+                } else {
+                  done = 1;
+                }
+        } while ( !done );
 
 	do
 	{
@@ -220,10 +220,10 @@ int main(int argc, char **argv)
 					   data_origin );
 		    	C_err_msg( tmp_msg );
 			done = 0;
-	    	}
-		else	
-			done = 1;
-	} while ( !done );
+                } else {
+                  done = 1;
+                }
+        } while ( !done );
 
 	do
 	{
@@ -244,10 +244,10 @@ int main(int argc, char **argv)
 				 data_modification );
 		    	C_err_msg( tmp_msg );
 			done = 0;
-	    	}
-		else	
-			done = 1;
-	} while ( !done );
+                } else {
+                  done = 1;
+                }
+        } while ( !done );
   } /* if (argc == 4) */
   else
   {

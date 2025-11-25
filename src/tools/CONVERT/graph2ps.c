@@ -77,9 +77,9 @@ int main(int argc, char **argv)
   if (argc == 3) 
   {
     scale = 1;
-  }
-  else
+  } else {
     scale = atof(argv[2]);
+  }
 
   for (i = 0; i < g->nsom; i++)
   {

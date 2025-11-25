@@ -73,9 +73,10 @@ int32_t ldrawline(struct xvimage * image1, int32_t x1, int32_t y1, int32_t x2, i
   cs = colsize(image1);
   F = UCHARDATA(image1);
 
-  if ((x1 < 0) || (x1 >= rs) ||  (y1 < 0) || (y1 >= cs) ||
-      (x2 < 0) || (x2 >= rs) ||  (y2 < 0) || (y2 >= cs)) 
+  if ((x1 < 0) || (x1 >= rs) || (y1 < 0) || (y1 >= cs) || (x2 < 0) ||
+      (x2 >= rs) || (y2 < 0) || (y2 >= cs)) {
     return 1; // do nothing
+  }
 
   lbresen(F, rs, x1, y1, x2, y2);
 
@@ -105,16 +106,24 @@ int32_t ldrawhorline(struct xvimage * image1, int32_t x1, int32_t y1, int32_t x2
   F = UCHARDATA(image1);
 
   assert(y1 == y2);
-  if (x1 > x2) swap(&x1, &x2);
+  if (x1 > x2) {
+    swap(&x1, &x2);
+  }
 
-  if ((y1 < 0) || (y1 >= cs) || (x1 >= rs) || (x2 < 0))
+  if ((y1 < 0) || (y1 >= cs) || (x1 >= rs) || (x2 < 0)) {
     return 1; // do nothing
+  }
 
-  if (x1 < 0) x1 = 0;
-  if (x2 >= rs) x2 = rs-1;
+  if (x1 < 0) {
+    x1 = 0;
+  }
+  if (x2 >= rs) {
+    x2 = rs - 1;
+  }
 
-  for (x = x1; x <= x2; x++)
-    F[y1*rs + x] = NDG_MAX;
+  for (x = x1; x <= x2; x++) {
+    F[y1 * rs + x] = NDG_MAX;
+  }
 
   return 1;
 } // ldrawline()
@@ -196,10 +205,12 @@ int32_t ldrawfilledquadrangle(struct xvimage * image1, int32_t v1x, int32_t v1y,
 #undef F_NAME
 #define F_NAME "ldrawfilledquadrangle"
 {
-  if (ldrawfilledtriangle(image1, v1x, v1y, v2x, v2y, v3x, v3y) && ldrawfilledtriangle(image1, v1x, v1y, v4x, v4y, v3x, v3y))
+  if (ldrawfilledtriangle(image1, v1x, v1y, v2x, v2y, v3x, v3y) &&
+      ldrawfilledtriangle(image1, v1x, v1y, v4x, v4y, v3x, v3y)) {
     return 1;
-  else
+  } else {
     return 0;
+  }
 
 } // ldrawfilledquadrangle()
 
@@ -314,7 +325,9 @@ int32_t ldrawline3dlist(int32_t *lx, int32_t *ly, int32_t *lz, int32_t *npoints,
   int32_t i, nmaxpoints = *npoints, np = 0, x, y, z;
   double len =  dist3(x1, y1, z1, x2, y2, z2);
   int32_t NBSAMPLES = (int32_t)(10 * len);
-  if (NBSAMPLES > nmaxpoints-1) NBSAMPLES = nmaxpoints-1;
+  if (NBSAMPLES > nmaxpoints - 1) {
+    NBSAMPLES = nmaxpoints - 1;
+  }
 
 #ifdef DEBUG_DL3
   printf("%s: %d %d %d   %d %d %d\n", F_NAME, x1, y1, z1, x2, y2, z2);
@@ -355,10 +368,9 @@ int32_t ldrawline2(struct xvimage * image1)
   {
     if (F[i])
     {
-      if (first == -1)
+      if (first == -1) {
         first = i;
-      else
-      {
+      } else {
         last = i;
         break;
       }
@@ -387,11 +399,13 @@ void ldrawfilledellipse(struct xvimage * image, double R, double S, double T, do
   F = UCHARDATA(image);
   
   memset(F, 0, N);
-  for (j = 0; j < cs; j++)
-  for (i = 0; i < rs; i++)
-  {
-    if (R*i*i + S*j*j + 2*T*i*j + 2*U*i + 2*V*j + Z <= 0)
-      F[j * rs + i] = NDG_MAX;
+  for (j = 0; j < cs; j++) {
+    for (i = 0; i < rs; i++) {
+      if (R * i * i + S * j * j + 2 * T * i * j + 2 * U * i + 2 * V * j + Z <=
+          0) {
+        F[j * rs + i] = NDG_MAX;
+      }
+    }
   }
 
 } // ldrawfilledellipse()
@@ -782,14 +796,16 @@ struct xvimage *ldrawfield2d(struct xvimage *field, double len)
   image = allocimage(NULL, rs, cs, 1, VFF_TYP_1_BYTE);
   assert(image != NULL);
 
-  for (y1 = 0; y1 < cs; y1++)
-  for (x1 = 0; x1 < rs; x1++)
-  {
-    X = F[y1*rs+x1];
-    Y = F[y1*rs+x1+N];
-    t = sqrt(X*X + Y*Y);
-    if (t > EPS_DRAWVECT)
-      ldrawline(image, x1, y1, arrondi((x1+(len*X))), arrondi((y1+(len*Y))));
+  for (y1 = 0; y1 < cs; y1++) {
+    for (x1 = 0; x1 < rs; x1++) {
+      X = F[y1 * rs + x1];
+      Y = F[y1 * rs + x1 + N];
+      t = sqrt(X * X + Y * Y);
+      if (t > EPS_DRAWVECT) {
+        ldrawline(image, x1, y1, arrondi((x1 + (len * X))),
+                  arrondi((y1 + (len * Y))));
+      }
+    }
   }
   return image;
 } // ldrawfield2d()
@@ -809,8 +825,10 @@ void ldrawfield2dlist(int32_t npoints, int32_t *X, int32_t *Y, double *tx, doubl
     x = tx[i];
     y = ty[i];
     t = sqrt(x*x + y*y);
-    if (t > EPS_DRAWVECT)
-      ldrawline(image, X[i], Y[i], arrondi((X[i]+(len*x))), arrondi((Y[i]+(len*y))));
+    if (t > EPS_DRAWVECT) {
+      ldrawline(image, X[i], Y[i], arrondi((X[i] + (len * x))),
+                arrondi((Y[i] + (len * y))));
+    }
   }
 } // ldrawfield2dlist()
 
@@ -839,16 +857,19 @@ struct xvimage *ldrawfield3d(struct xvimage *field, double len)
   image = allocimage(NULL, rs, cs, ds, VFF_TYP_1_BYTE);
   assert(image != NULL);
 
-  for (z1 = 0; z1 < ds; z1++)
-  for (y1 = 0; y1 < cs; y1++)
-  for (x1 = 0; x1 < rs; x1++)
-  {
-    X = F[z1*ps+y1*rs+x1];
-    Y = F[z1*ps+y1*rs+x1+N];
-    Z = F[z1*ps+y1*rs+x1+N+N];
-    t = sqrt(X*X + Y*Y + Z*Z);
-    if (t > EPS_DRAWVECT)
-      ldrawline3d(image, x1, y1, z1, arrondi((x1+(len*X))), arrondi((y1+(len*Y))), arrondi((z1+(len*Z))));
+  for (z1 = 0; z1 < ds; z1++) {
+    for (y1 = 0; y1 < cs; y1++) {
+      for (x1 = 0; x1 < rs; x1++) {
+        X = F[z1 * ps + y1 * rs + x1];
+        Y = F[z1 * ps + y1 * rs + x1 + N];
+        Z = F[z1 * ps + y1 * rs + x1 + N + N];
+        t = sqrt(X * X + Y * Y + Z * Z);
+        if (t > EPS_DRAWVECT) {
+          ldrawline3d(image, x1, y1, z1, arrondi((x1 + (len * X))),
+                      arrondi((y1 + (len * Y))), arrondi((z1 + (len * Z))));
+        }
+      }
+    }
   }
   return image;
 } // ldrawfield3d()
@@ -896,15 +917,17 @@ int32_t ldrawball(struct xvimage * image1, double r, double xc, double yc, doubl
   F = UCHARDATA(image1);
   
   r2 = r * r;
-  for (k = 0; k < ds; k++)
-  for (j = 0; j < cs; j++)
-  for (i = 0; i < rs; i++)
-  {
-    x = xc - i; 
-    y = yc - j; 
-    z = zc - k; 
-    if (x * x + y * y + z * z <= r2)
-      F[k * ps + j * rs + i] = NDG_MAX;
+  for (k = 0; k < ds; k++) {
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        x = xc - i;
+        y = yc - j;
+        z = zc - k;
+        if (x * x + y * y + z * z <= r2) {
+          F[k * ps + j * rs + i] = NDG_MAX;
+        }
+      }
+    }
   }
 
   return 1;
@@ -926,13 +949,14 @@ void ldrawdisc(struct xvimage * image1, double r, double xc, double yc)
   F = UCHARDATA(image1);
   
   r2 = r * r;
-  for (j = 0; j < cs; j++)
-  for (i = 0; i < rs; i++)
-  {
-    x = xc - i; 
-    y = yc - j; 
-    if (x * x + y * y <= r2)
-      F[j * rs + i] = NDG_MAX;
+  for (j = 0; j < cs; j++) {
+    for (i = 0; i < rs; i++) {
+      x = xc - i;
+      y = yc - j;
+      if (x * x + y * y <= r2) {
+        F[j * rs + i] = NDG_MAX;
+      }
+    }
   }
 } // ldrawdisc()
 
@@ -954,16 +978,18 @@ int32_t ldrawtorus(struct xvimage * image1, double c, double a, double xc, doubl
   F = UCHARDATA(image1);
   
   a2 = a * a;
-  for (k = 0; k < ds; k++)
-  for (j = 0; j < cs; j++)
-  for (i = 0; i < rs; i++)
-  {
-    x = xc - i; 
-    y = yc - j; 
-    z = zc - k;
-    t = c - sqrt(x*x + y*y);
-    if (t*t + z*z <= a2)
-      F[k * ps + j * rs + i] = NDG_MAX;
+  for (k = 0; k < ds; k++) {
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        x = xc - i;
+        y = yc - j;
+        z = zc - k;
+        t = c - sqrt(x * x + y * y);
+        if (t * t + z * z <= a2) {
+          F[k * ps + j * rs + i] = NDG_MAX;
+        }
+      }
+    }
   }
 
   return 1;
@@ -998,9 +1024,11 @@ int isincylinder(
   cx = (xM-xA)*ub[0]+(yM-yA)*ub[1]+(zM-zA)*ub[2];
   cy = (xM-xA)*vb[0]+(yM-yA)*vb[1]+(zM-zA)*vb[2];
 	
-  //on doit avoir AM.z<=e/2 et sqrt(cx*cx + cy*cy))<=r 
-  if ((cz <= (e/2)) && (cz >= -(e/2)) && ((sqrt(cx*cx + cy*cy))<=r)) return 1;
-  
+  //on doit avoir AM.z<=e/2 et sqrt(cx*cx + cy*cy))<=r
+  if ((cz <= (e / 2)) && (cz >= -(e / 2)) && ((sqrt(cx * cx + cy * cy)) <= r)) {
+    return 1;
+  }
+
   return 0;
 } // isincylinder()
 

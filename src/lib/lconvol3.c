@@ -80,12 +80,16 @@ int32_t lconvol3(struct xvimage * image, struct xvimage * mask, int32_t normalis
   /* ---------------------------------------------------------- */
   msk = (char *)(UCHARDATA(mask));
   img = UCHARDATA(image);
-  for (i = 0; i < N; i++) trv[i] = img[i];
+  for (i = 0; i < N; i++) {
+    trv[i] = img[i];
+  }
 
   sum = 0;
-  for (i = 0; i < 9; i++) sum += msk[i];
+  for (i = 0; i < 9; i++) {
+    sum += msk[i];
+  }
 
-  for (y = 1; y < cs-1; y++)
+  for (y = 1; y < cs - 1; y++) {
     for (x = 1; x < rs-1; x++)
     {
       int32_t tmp = *(trv + y*rs + x) * msk[4];
@@ -97,10 +101,17 @@ int32_t lconvol3(struct xvimage * image, struct xvimage * mask, int32_t normalis
       tmp += *(trv + (y+1)*rs + x-1) * msk[6];
       tmp += *(trv + (y+1)*rs + x)   * msk[7];
       tmp += *(trv + (y+1)*rs + x+1) * msk[8];
-      if (normalise) tmp = tmp / sum;
-      if (tmp < 0) tmp = 0; else if (tmp > 255) tmp = 255;
+      if (normalise) {
+        tmp = tmp / sum;
+      }
+      if (tmp < 0) {
+        tmp = 0;
+      } else if (tmp > 255) {
+        tmp = 255;
+      }
       *(img + y*rs + x) = (uint8_t)tmp;
     }
+  }
 
   free(trv);
   return 1;

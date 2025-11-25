@@ -65,11 +65,12 @@ int32_t ldistgeo(struct xvimage *imgx,   /* donnee: image binaire */
 /* ==================================== */
 #undef F_NAME
 #define F_NAME "ldistgeo"
-{ 
-  if ((connex == 4) || (connex == 8))
+{
+  if ((connex == 4) || (connex == 8)) {
     return ldistgeo2d(imgx, imgy, connex, res);
-  else
+  } else {
     return ldistgeo3d(imgx, imgy, connex, res);
+  }
 } // ldistgeo
 
 /* ==================================== */
@@ -128,16 +129,15 @@ int32_t ldistgeo2d(struct xvimage *imgx,   /* donnee: image binaire */
 
   for (i = 0; i < N; i++) 
   {
-    if (X[i] || !Y[i]) 
-      D[i] = 0; 
-    else
-    { /* X[i] == 0 et Y[i] != 0 */
+    if (X[i] || !Y[i]) {
+      D[i] = 0;
+    } else { /* X[i] == 0 et Y[i] != 0 */
       D[i] = -1; 
       for (k = 0; k < 8; k += incr_vois)
       {
         j = voisin(i, k, rs, N);
         if ((j != -1) && X[j] && Y[j]) { D[i] = 1; LifoPush(LIFO1, i); break; }
-      }    
+      }
     }
   } /* for (i = 0; i < N; i++) */
 
@@ -215,16 +215,15 @@ int32_t ldistgeo3d(struct xvimage *imgx,   /* donnee: image binaire */
   {
     for (i = 0; i < N; i++) 
     {
-      if (X[i] || !Y[i]) 
-        D[i] = 0; 
-      else
-      { /* X[i] == 0 et Y[i] != 0 */
+      if (X[i] || !Y[i]) {
+        D[i] = 0;
+      } else { /* X[i] == 0 et Y[i] != 0 */
         D[i] = -1; 
         for (k = 0; k <= 10; k += 2) /* parcourt les 6 voisins */
         {
           j = voisin6(i, k, rs, ps, N);
           if ((j != -1) && X[j] && Y[j]) { D[i] = 1; LifoPush(LIFO1, i); break; }
-        }    
+        }
       }
     } /* for (i = 0; i < N; i++) */
 
@@ -250,16 +249,15 @@ int32_t ldistgeo3d(struct xvimage *imgx,   /* donnee: image binaire */
   {
     for (i = 0; i < N; i++) 
     {
-      if (X[i] || !Y[i]) 
-        D[i] = 0; 
-      else
-      { /* X[i] == 0 et Y[i] != 0 */
+      if (X[i] || !Y[i]) {
+        D[i] = 0;
+      } else { /* X[i] == 0 et Y[i] != 0 */
         D[i] = -1; 
         for (k = 0; k < 18; k += 1) /* parcourt les 18 voisins */
         {
           j = voisin18(i, k, rs, ps, N);
           if ((j != -1) && X[j] && Y[j]) { D[i] = 1; LifoPush(LIFO1, i); break; }
-        }    
+        }
       }
     } /* for (i = 0; i < N; i++) */
 
@@ -285,16 +283,15 @@ int32_t ldistgeo3d(struct xvimage *imgx,   /* donnee: image binaire */
   {
     for (i = 0; i < N; i++) 
     {
-      if (X[i] || !Y[i]) 
-        D[i] = 0; 
-      else
-      { /* X[i] == 0 et Y[i] != 0 */
+      if (X[i] || !Y[i]) {
+        D[i] = 0;
+      } else { /* X[i] == 0 et Y[i] != 0 */
         D[i] = -1; 
         for (k = 0; k < 26; k += 1) /* parcourt les 26 voisins */
         {
           j = voisin26(i, k, rs, ps, N);
           if ((j != -1) && X[j] && Y[j]) { D[i] = 1; LifoPush(LIFO1, i); break; }
-        }    
+        }
       }
     } /* for (i = 0; i < N; i++) */
 

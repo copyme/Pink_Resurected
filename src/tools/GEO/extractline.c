@@ -127,7 +127,9 @@ int main(int argc, char **argv)
 #endif
   imgres = allocimage(NULL, n, 1, 1, datatype(image));
   R = UCHARDATA(imgres);
-  for (i = 0; i < n; i++) R[i] = I[ly[i]*rs + lx[i]];    
+  for (i = 0; i < n; i++) {
+    R[i] = I[ly[i] * rs + lx[i]];
+  }
 
   writeimage(imgres, argv[argc-1]);
   freeimage(imgres);

@@ -73,55 +73,60 @@ int32_t lsym(struct xvimage * image1, char mode)
       switch (mode)
       {
         case 'v': 
-        case 'y': 
-          for (j = 0, jp = cs - 1; j < jp; j++, jp--)
+        case 'y':
+          for (j = 0, jp = cs - 1; j < jp; j++, jp--) {
             for (i = 0; i < rs; i++)
             {
               tmp = pt1[k * ps + j * rs + i];
               pt1[k * ps + j * rs + i] = pt1[k * ps + jp * rs + i];
               pt1[k * ps + jp * rs + i] = tmp;
             }
+          }
           break;
         case 'h': 
-        case 'x': 
-          for (j = 0; j < cs; j++)
+        case 'x':
+          for (j = 0; j < cs; j++) {
             for (i = 0, ip = rs - 1; i < ip; i++, ip--)
             {
               tmp = pt1[k * ps + j * rs + i];
               pt1[k * ps + j * rs + i] = pt1[k * ps + j * rs + ip];
               pt1[k * ps + j * rs + ip] = tmp;
             }
+          }
           break;
-        case 'c': 
-          for (j = 0, jp = cs - 1; j < jp; j++, jp--)
+        case 'c':
+          for (j = 0, jp = cs - 1; j < jp; j++, jp--) {
             for (i = 0; i < rs; i++)
             {
               tmp = pt1[k * ps + j * rs + i];
               pt1[k * ps + j * rs + i] = pt1[k * ps + jp * rs + i];
               pt1[k * ps + jp * rs + i] = tmp;
             }
-          for (j = 0; j < cs; j++)
+          }
+          for (j = 0; j < cs; j++) {
             for (i = 0, ip = rs - 1; i < ip; i++, ip--)
             {
               tmp = pt1[k * ps + j * rs + i];
               pt1[k * ps + j * rs + i] = pt1[k * ps + j * rs + ip];
               pt1[k * ps + j * rs + ip] = tmp;
             }
+          }
           break;
       } /* switch (mode) */
     } /* for (k = 0; k < d; k++) */
   }
   else
   {
-    for (k = 0, kp = ds - 1; k < kp; k++, kp--)
-      for (j = 0; j < cs; j++)
+    for (k = 0, kp = ds - 1; k < kp; k++, kp--) {
+      for (j = 0; j < cs; j++) {
         for (i = 0; i < rs; i++)
         {
           tmp = pt1[k * ps + j * rs + i];
           pt1[k * ps + j * rs + i] = pt1[kp * ps + j * rs + i];
           pt1[kp * ps + j * rs + i] = tmp;
         }
-
+      }
+    }
   }
   return 1;
 }

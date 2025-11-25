@@ -86,27 +86,31 @@ int32_t lremspnoise(
     n = 0;
     nv = 0;
     m = 0;
-    for (v = 0; v < 8; v++)  /* 8-voisins */
+    for (v = 0; v < 8; v++) { /* 8-voisins */
       if ((j = voisin(i, v, rs, N)) != -1)
       {
-        if (mcabs(((int32_t)pt[i] - (int32_t)pt[j]) >= g)) n++;
+        if (mcabs(((int32_t)pt[i] - (int32_t)pt[j]) >= g)) {
+          n++;
+        }
         nv++;        /* compte les voisins */
         m += pt[j];  /* pour le calcul de la moyenne */
       }
-    
+    }
+
     if (n >= k)
     {
       /* moyennage : remplace la valeur du point par la moyenne de ses
          8 voisins 
       */
       imagetmp[i] = (uint8_t)(m / nv);
-    }
-    else
+    } else {
       imagetmp[i] = pt[i];
+    }
   }
 
-  for (i = 0; i < N; i++)
+  for (i = 0; i < N; i++) {
     pt[i] = imagetmp[i];
+  }
 
   free(imagetmp);
   return 1;

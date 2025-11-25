@@ -161,10 +161,9 @@ int main(int argc, char **argv)
   free(x);
   free(y);
 
-  if (!filled)
+  if (!filled) {
     lellipse(Im, rs, cs, arrondi((xa-x0)), arrondi((ya-y0)), arrondi((xb-x0)), arrondi((yb-y0)), arrondi(x0), arrondi(y0));
-  else
-  {
+  } else {
     ellipse *ell = AllocEllipseList(rs, cs);
     lellipselist(ell, rs, cs, arrondi((xa-x0)), arrondi((ya-y0)), arrondi((xb-x0)), arrondi((yb-y0)), arrondi(x0), arrondi(y0));
     lplotfilledellipse(ell, Im);

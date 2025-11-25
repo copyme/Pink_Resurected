@@ -167,7 +167,9 @@ int main(int32_t argc, char **argv)
         exit(1);
       }
       L = SLONGDATA(prio);
-      for (x = 0; x < N; x++) L[x] = (int32_t)B[x];
+      for (x = 0; x < N; x++) {
+        L[x] = (int32_t)B[x];
+      }
       freeimage(prio2);
     }
     else if (datatype(prio2) == VFF_TYP_4_BYTE)
@@ -192,9 +194,14 @@ int main(int32_t argc, char **argv)
     }
     N = rowsize(image) * colsize(image) * depth(image);
     F = UCHARDATA(image);;
-    for (i = 0; i < N; i++) // inverse l'image
-      if (F[i]) F[i] = 0; else F[i] = NDG_MAX;
-  
+    for (i = 0; i < N; i++) { // inverse l'image
+      if (F[i]) {
+        F[i] = 0;
+      } else {
+        F[i] = NDG_MAX;
+      }
+    }
+
     if (priovalue == 0)
     {
       if (! ldisteuc3d(image, prio))
@@ -238,8 +245,13 @@ int main(int32_t argc, char **argv)
         exit(1);
       }
     }
-    for (i = 0; i < N; i++) // re-inverse l'image
-      if (F[i]) F[i] = 0; else F[i] = NDG_MAX;
+    for (i = 0; i < N; i++) { // re-inverse l'image
+      if (F[i]) {
+        F[i] = 0;
+      } else {
+        F[i] = NDG_MAX;
+      }
+    }
   }
 
   connex = atoi(argv[3]);

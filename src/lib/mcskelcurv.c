@@ -73,7 +73,9 @@ static int32_t tailleptliste(SKC_pt_pcell p)
 /* ====================================================================== */
 {
   int32_t n = 0;
-  for (; p != NULL; p = p->next) n++;
+  for (; p != NULL; p = p->next) {
+    n++;
+  }
   return n;
 } /* tailleptliste() */
 
@@ -82,7 +84,9 @@ static int32_t tailleadjliste(SKC_adj_pcell p)
 /* ====================================================================== */
 {
   int32_t n = 0;
-  for (; p != NULL; p = p->next) n++;
+  for (; p != NULL; p = p->next) {
+    n++;
+  }
   return n;
 } /* tailleadjliste() */
 
@@ -90,16 +94,18 @@ static int32_t tailleadjliste(SKC_adj_pcell p)
 static void printadjliste(SKC_adj_pcell p)
 /* ====================================================================== */
 {
-  for (; p != NULL; p = p->next)
+  for (; p != NULL; p = p->next) {
     printf("%d ", p->val);
+  }
 } /* printadjliste() */
 
 /* ====================================================================== */
 static void printptsliste(SKC_pt_pcell p, int32_t rs)
 /* ====================================================================== */
 {
-  for (; p != NULL; p = p->next)
-    printf("%d,%d ; ", (int)p->val%rs, (int)p->val/rs);
+  for (; p != NULL; p = p->next) {
+    printf("%d,%d ; ", (int)p->val % rs, (int)p->val / rs);
+  }
 } /* printptsliste() */
 
 /* ====================================================================== */
@@ -111,28 +117,36 @@ void printskel(skel * S)
   printf("isol:\n");
   for (i = 0; i < S->e_isol; i++)
   {
-    if (SK_DELETED(i)) printf("DELETED ");
+    if (SK_DELETED(i)) {
+      printf("DELETED ");
+    }
     printf("[%d] ", i); printf("adj: "); printadjliste(S->tskel[i].adj);
     printf("pts: "); printptsliste(S->tskel[i].pts, S->rs); printf("\n");
   }
   printf("end:\n");
   for (i = S->e_isol; i < S->e_end; i++)
   {
-    if (SK_DELETED(i)) printf("DELETED ");
+    if (SK_DELETED(i)) {
+      printf("DELETED ");
+    }
     printf("[%d] ", i); printf("adj: "); printadjliste(S->tskel[i].adj);
     printf("pts: "); printptsliste(S->tskel[i].pts, S->rs); printf("\n");
   }
   printf("curv:\n");
   for (i = S->e_end; i < S->e_curv; i++)
   {
-    if (SK_DELETED(i)) printf("DELETED ");
+    if (SK_DELETED(i)) {
+      printf("DELETED ");
+    }
     printf("[%d] ", i); printf("adj: "); printadjliste(S->tskel[i].adj);
     printf("pts: "); printptsliste(S->tskel[i].pts, S->rs); printf("\n");
   }
   printf("junc:\n");
   for (i = S->e_curv; i < S->e_junc; i++)
   {
-    if (SK_DELETED(i)) printf("DELETED ");
+    if (SK_DELETED(i)) {
+      printf("DELETED ");
+    }
     printf("[%d] ", i); printf("adj: "); printadjliste(S->tskel[i].adj);
     printf("pts: "); printptsliste(S->tskel[i].pts, S->rs); printf("\n");
   }
@@ -172,7 +186,9 @@ void fprintadjliste(FILE *fd, SKC_adj_pcell p)
 {
   int32_t n = tailleadjliste(p);
   fprintf(fd, "%d ", n);
-  for (; p != NULL; p = p->next) fprintf(fd, "%d ", p->val);
+  for (; p != NULL; p = p->next) {
+    fprintf(fd, "%d ", p->val);
+  }
 } /* fprintadjliste() */
 
 /* ====================================================================== */
@@ -181,7 +197,9 @@ void fprintptliste(FILE *fd, SKC_pt_pcell p)
 {
   int32_t n = tailleptliste(p);
   fprintf(fd, "%d ", n);
-  for (; p != NULL; p = p->next) fprintf(fd, "%d ", (int)p->val);
+  for (; p != NULL; p = p->next) {
+    fprintf(fd, "%d ", (int)p->val);
+  }
 } /* fprintptliste() */
 
 /* ====================================================================== */
@@ -190,7 +208,9 @@ void fprintptvliste(FILE *fd, SKC_pt_pcell p, float *V)
 {
   int32_t n = tailleptliste(p);
   fprintf(fd, "%d ", n);
-  for (; p != NULL; p = p->next) fprintf(fd, "%d %g ", (int)p->val, V[p->val]);
+  for (; p != NULL; p = p->next) {
+    fprintf(fd, "%d %g ", (int)p->val, V[p->val]);
+  }
 } /* fprintptvliste() */
 
 /* ====================================================================== */
@@ -304,7 +324,11 @@ void writeskel(skel * S, const char *filename)
     exit(0);
   }
 
-  if (S->ds == 1) fprintf(fd, "2Dskel "); else fprintf(fd, "3Dskel ");
+  if (S->ds == 1) {
+    fprintf(fd, "2Dskel ");
+  } else {
+    fprintf(fd, "3Dskel ");
+  }
 
   fprintf(fd, "%d %d %d %d %d %d %d\n", S->connex, S->e_junc, S->freeptcell, S->freeadjcell, S->rs, S->cs, S->ds);
 
@@ -371,7 +395,11 @@ void writevskel(skel * S, const char *filename, struct xvimage *val)
     exit(0);
   }
 
-  if (S->ds == 1) fprintf(fd, "2Dvskel "); else fprintf(fd, "3Dvskel ");
+  if (S->ds == 1) {
+    fprintf(fd, "2Dvskel ");
+  } else {
+    fprintf(fd, "3Dvskel ");
+  }
 
   fprintf(fd, "%d %d %d %d %d %d %d\n", S->connex, S->e_junc, S->freeptcell, S->freeadjcell, S->rs, S->cs, S->ds);
 
@@ -431,9 +459,11 @@ skel * readskel(const char *filename)
   }
 
   fscanf(fd, "%s", buf);
-  if (strncmp(buf, "3Dskel", 6) == 0) dim = 3; else
-  if (strncmp(buf, "2Dskel", 6) == 0) dim = 2; else
-  {
+  if (strncmp(buf, "3Dskel", 6) == 0) {
+    dim = 3;
+  } else if (strncmp(buf, "2Dskel", 6) == 0) {
+    dim = 2;
+  } else {
     fprintf(stderr, "%s: bad file format : %s\n", F_NAME, buf);
     return NULL;
   }
@@ -726,7 +756,9 @@ uint32_t nb_adjacent_elts(skel * S, uint32_t i)
 {
   SKC_adj_pcell p;
   uint32_t nadj = 0;
-  for (p = S->tskel[i].adj; p != NULL; p = p->next) nadj++;
+  for (p = S->tskel[i].adj; p != NULL; p = p->next) {
+    nadj++;
+  }
   return nadj;
 } // nb_adjacent_elts()
 
@@ -789,8 +821,12 @@ void skeldelete(skel * S, uint32_t i)
       printf("%s: curv i=%d, e1=%d(t=%d), e2=%d(t=%d)\n", F_NAME, i, e1, S->tskel[e1].tag, e2, S->tskel[e2].tag);
 #endif
       SK_REMOVE(i);
-      if (IS_END(e1)) SK_REMOVE(e1);
-      if (IS_END(e2)) SK_REMOVE(e2);
+      if (IS_END(e1)) {
+        SK_REMOVE(e1);
+      }
+      if (IS_END(e2)) {
+        SK_REMOVE(e2);
+      }
     }
   }
   else // IS_JUNC(i)
@@ -817,24 +853,38 @@ void skeldelete(skel * S, uint32_t i)
       // transfer all points from a2 and i to a1
       pt = S->tskel[a1].pts;
       assert(pt != NULL);
-      while (pt->next != NULL) pt = pt->next;
+      while (pt->next != NULL) {
+        pt = pt->next;
+      }
       pt->next = S->tskel[i].pts;
-      while (pt->next != NULL) pt = pt->next;
+      while (pt->next != NULL) {
+        pt = pt->next;
+      }
       pt->next = S->tskel[a2].pts;
 
       // update adjacencies
       pp = S->tskel[a2].adj;
       assert(pp != NULL); assert(pp->next != NULL);
       assert((pp->val == i) || (pp->next->val == i));
-      if (pp->val == i) v2 = pp->next->val; else v2 = pp->val;
-      for (pp = S->tskel[v2].adj; pp != NULL; pp = pp->next)
-	if (pp->val == a2) { pp->val = a1; break; }
+      if (pp->val == i) {
+        v2 = pp->next->val;
+      } else {
+        v2 = pp->val;
+      }
+      for (pp = S->tskel[v2].adj; pp != NULL; pp = pp->next) {
+        if (pp->val == a2) { pp->val = a1; break;
+        }
+      }
       assert(pp != NULL);
 
       pp = S->tskel[a1].adj;
       assert(pp != NULL); assert(pp->next != NULL);
       assert((pp->val == i) || (pp->next->val == i));
-      if (pp->val == i) pp->val = v2; else pp->next->val = v2;
+      if (pp->val == i) {
+        pp->val = v2;
+      } else {
+        pp->next->val = v2;
+      }
 
       // remove a2 and i
       SK_REMOVE(a2);

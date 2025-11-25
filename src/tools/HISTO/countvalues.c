@@ -105,7 +105,9 @@ int main(int argc, char **argv)
   fprintf(fd, "e %d\n", 1);
   fprintf(fd, "%d\n", nbdiff);
   freeimage(image);
-  if (mask) freeimage(mask);
+  if (mask) {
+    freeimage(mask);
+  }
 
   return 0;
 } /* main */

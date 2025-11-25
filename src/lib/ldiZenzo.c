@@ -163,12 +163,12 @@ printf("alpha = %g , e_a = %g , e_2a = %g , k = %g\n", alpha, e_a, e_2a, k);
 	t = ImRx[i]*ImRy[i] + ImVx[i]*ImVy[i] + ImBx[i]*ImBy[i];
 	
 	g = sqrt(0.5*(p+q+sqrt((p+q)*(p+q)-4.0*(p*q-t*t))));
-	if (g<256.0)
-	  imaR[i] = (uint8_t)g;
-	else {
-	  fprintf(stderr, "ldiZenzo: Gradient greater than 255 (= %lg)\n", g);
+        if (g < 256.0) {
+          imaR[i] = (uint8_t)g;
+        } else {
+          fprintf(stderr, "ldiZenzo: Gradient greater than 255 (= %lg)\n", g);
 	  imaR[i] = g;
-	}
+        }
       }
 
   free(ImRx);
@@ -313,8 +313,9 @@ printf("alpha = %g , e_a = %g , e_2a = %g , k = %g\n", alpha, e_a, e_2a, k);
 	if (p!=q) {
 	  dir[i] = (int32_t) (180.0/3.1415927*(.5*atan2(2.0*t, (p-q)))+180.);
 	  //printf("%d\n", dir[i]);
-	}
-	else dir[i] = 361;
+        } else {
+          dir[i] = 361;
+        }
       }
 
   free(ImRx);

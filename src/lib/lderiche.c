@@ -113,8 +113,10 @@ void derichegen(double *x,               /* image a traiter */
     y1[0] = ((a1 + a2) / (1.0 - b1 - b2)) * x[m+M*0];
     y1[1] = a1 * x[m+M*1] + a2 * x[m+M*0] + (b1 + b2) * y1[0];
 #endif
-    for (n = 2; n < N; n++)
-      y1[n] = a1*x[m+M*n] + a2*x[m+M*(n-1)] + b1*y1[n-1] + b2*y1[n-2];
+    for (n = 2; n < N; n++) {
+      y1[n] = a1 * x[m + M * n] + a2 * x[m + M * (n - 1)] + b1 * y1[n - 1] +
+              b2 * y1[n - 2];
+    }
 
     /* filtre anticausal vertical */
 #ifdef BORD_ZERO
@@ -124,11 +126,14 @@ void derichegen(double *x,               /* image a traiter */
     y2[N-1] = ((a3 + a4) / (1.0 - b1 - b2)) * x[m+M*(N-1)];
     y2[N-2] = (a3 + a4) * x[m+M*(N-1)] + (b1 + b2) * y2[N-1];
 #endif
-    for (n = N-3; n >= 0; n--)
-      y2[n] = a3*x[m+M*(n+1)] + a4*x[m+M*(n+2)] + b1*y2[n+1] + b2*y2[n+2];
+    for (n = N - 3; n >= 0; n--) {
+      y2[n] = a3 * x[m + M * (n + 1)] + a4 * x[m + M * (n + 2)] +
+              b1 * y2[n + 1] + b2 * y2[n + 2];
+    }
 
-    for (n = 0; n < N; n++)
-      y[m+M*n] = y1[n] + y2[n];
+    for (n = 0; n < N; n++) {
+      y[m + M * n] = y1[n] + y2[n];
+    }
   }
 
   for (n = 0; n < N; n++)     /* filtrage horizontal sur toutes les lignes */
@@ -141,8 +146,10 @@ void derichegen(double *x,               /* image a traiter */
     y1[0] = ((a5 + a6) / (1.0 - b3 - b4)) * y[0+M*n];
     y1[1] = a5 * y[1+M*n] + a6 * y[0+M*n] + (b3 + b4) * y1[0];
 #endif
-    for (m = 2; m < M; m++)
-      y1[m] = a5 * y[m+M*n] + a6 * y[m-1+M*n] + b3 * y1[m-1] + b4 * y1[m-2];
+    for (m = 2; m < M; m++) {
+      y1[m] = a5 * y[m + M * n] + a6 * y[m - 1 + M * n] + b3 * y1[m - 1] +
+              b4 * y1[m - 2];
+    }
 
     /* filtre anticausal horizontal */
 #ifdef BORD_ZERO
@@ -152,11 +159,14 @@ void derichegen(double *x,               /* image a traiter */
     y2[M-1] = ((a7 + a8) / (1.0 - b3 - b4)) * y[M-1+M*n];
     y2[M-2] = (a7 + a8) * y[M-1+M*n] + (b3 + b4) * y2[M-1];
 #endif
-    for (m = M-3; m >= 0; m--)
-      y2[m] = a7 * y[m+1+M*n] + a8 * y[m+2+M*n] + b3 * y2[m+1] + b4 * y2[m+2];
+    for (m = M - 3; m >= 0; m--) {
+      y2[m] = a7 * y[m + 1 + M * n] + a8 * y[m + 2 + M * n] + b3 * y2[m + 1] +
+              b4 * y2[m + 2];
+    }
 
-    for (m = 0; m < M; m++)
-      y[m+M*n] = y1[m] + y2[m];
+    for (m = 0; m < M; m++) {
+      y[m + M * n] = y1[m] + y2[m];
+    }
   }
 
 } /* derichegen() */
@@ -215,17 +225,23 @@ int32_t lderiche(struct xvimage *image, double alpha, int32_t function, double l
   if (datatype(image) == VFF_TYP_1_BYTE)
   {
     uint8_t *ima = UCHARDATA(image);
-    for (i = 0; i < N; i++) Imd[i] = (double)ima[i];
+    for (i = 0; i < N; i++) {
+      Imd[i] = (double)ima[i];
+    }
   }
   else if (datatype(image) == VFF_TYP_4_BYTE)
   {
     int32_t *ima = SLONGDATA(image);
-    for (i = 0; i < N; i++) Imd[i] = (double)ima[i];
+    for (i = 0; i < N; i++) {
+      Imd[i] = (double)ima[i];
+    }
   }
   else if (datatype(image) == VFF_TYP_FLOAT)
   {
     float *ima = FLOATDATA(image);
-    for (i = 0; i < N; i++) Imd[i] = (double)ima[i];
+    for (i = 0; i < N; i++) {
+      Imd[i] = (double)ima[i];
+    }
   }
   else
   {
@@ -275,11 +291,12 @@ printf("alpha = %g , e_a = %g , e_2a = %g , k = %g\n", alpha, e_a, e_2a, k);
 	{
 	  t1 = Im1[i]; t2 = Im2[i];
 	  t2 = sqrt((t1 * t1) + (t2 * t2));
-	  if (t2 <= 255.0)
-	    ima[i] = (uint8_t)t2;
-	  else
-	    ima[i] = 255;
-	}
+          if (t2 <= 255.0) {
+            ima[i] = (uint8_t)t2;
+          } else {
+            ima[i] = 255;
+          }
+        }
       }
       else if (datatype(image) == VFF_TYP_4_BYTE)
       {
@@ -328,11 +345,12 @@ printf("alpha = %g , e_a = %g , e_2a = %g , k = %g\n", alpha, e_a, e_2a, k);
 	for (i = 0; i < N; i++)      
 	{
 	  t1 = Im1[i]; t2 = Im2[i];
-	  if (mcabs(t1) >= EPSILON)
-	    ima[i] = (uint8_t)((DIRMAX * (atan(t2/t1) + M_PI_2)) / M_PI);
-	  else
-	    ima[i] = DIRMAX;
-	}
+          if (mcabs(t1) >= EPSILON) {
+            ima[i] = (uint8_t)((DIRMAX * (atan(t2/t1) + M_PI_2)) / M_PI);
+          } else {
+            ima[i] = DIRMAX;
+          }
+        }
       }
       else if (datatype(image) == VFF_TYP_4_BYTE)
       {
@@ -340,11 +358,12 @@ printf("alpha = %g , e_a = %g , e_2a = %g , k = %g\n", alpha, e_a, e_2a, k);
 	for (i = 0; i < N; i++)      
 	{
 	  t1 = Im1[i]; t2 = Im2[i];
-	  if (mcabs(t1) >= EPSILON)
-	    ima[i] = (int32_t)((DIRMAX * (atan(t2/t1) + M_PI_2)) / M_PI);
-	  else
-	    ima[i] = DIRMAX;
-	}
+          if (mcabs(t1) >= EPSILON) {
+            ima[i] = (int32_t)((DIRMAX * (atan(t2/t1) + M_PI_2)) / M_PI);
+          } else {
+            ima[i] = DIRMAX;
+          }
+        }
       }
       else if (datatype(image) == VFF_TYP_FLOAT)
       {
@@ -352,11 +371,12 @@ printf("alpha = %g , e_a = %g , e_2a = %g , k = %g\n", alpha, e_a, e_2a, k);
 	for (i = 0; i < N; i++)      
 	{
 	  t1 = Im1[i]; t2 = Im2[i];
-	  if (mcabs(t1) >= EPSILON)
-	    ima[i] = (float)((DIRMAX * (atan(t2/t1) + M_PI_2)) / M_PI);
-	  else
-	    ima[i] = DIRMAX;
-	}
+          if (mcabs(t1) >= EPSILON) {
+            ima[i] = (float)((DIRMAX * (atan(t2/t1) + M_PI_2)) / M_PI);
+          } else {
+            ima[i] = DIRMAX;
+          }
+        }
       }
       break;
 
@@ -386,12 +406,17 @@ printf("alpha = %g , e_a = %g , e_2a = %g , k = %g\n", alpha, e_a, e_2a, k);
 	for (i = 0; i < N; i++)
 	  {
 	    Im1[i] = t2 = - (Im1[i] + Im2[i]);
-	    if (t2 > lmax) lmax = t2;
-	    if (t2 < lmin) lmin = t2;
-	  }        
+            if (t2 > lmax) {
+              lmax = t2;
+            }
+            if (t2 < lmin) {
+              lmin = t2;
+            }
+          }        
 	lmax = mcmax(lmax, -lmin);
-	for (i = 0; i < N; i++)      
-	  ima[i] = 127 + (uint8_t)(Im1[i] * 128.0 / lmax);
+        for (i = 0; i < N; i++) {
+          ima[i] = 127 + (uint8_t)(Im1[i] * 128.0 / lmax);
+        }
       }
       else 
       {
@@ -429,9 +454,13 @@ printf("alpha = %g , e_a = %g , e_2a = %g , k = %g\n", alpha, e_a, e_2a, k);
 	  {
 	    t1 = -(Im1[i] + Im2[i]);
 	    t2 = (double)(ima[i]) - l * t1;
-	    if (t2 < 0.0) t2 = 0.0;
-	    if (t2 > 255.0) t2 = 255.0;
-	    ima[i] = (uint8_t)floor(t2);
+            if (t2 < 0.0) {
+              t2 = 0.0;
+            }
+            if (t2 > 255.0) {
+              t2 = 255.0;
+            }
+            ima[i] = (uint8_t)floor(t2);
 	  }
       }
       else 
@@ -461,22 +490,28 @@ printf("alpha = %g , e_a = %g , e_2a = %g , k = %g\n", alpha, e_a, e_2a, k);
 	for (i = 0; i < N; i++)      
 	{
 	  t1 =  Im1[i];
-	  if (t1 < 0.0) t1 = 0.0;
-	  if (t1 > 255.0) t1 = 255.0;
-	  ima[i] = (uint8_t)floor(t1);
+          if (t1 < 0.0) {
+            t1 = 0.0;
+          }
+          if (t1 > 255.0) {
+            t1 = 255.0;
+          }
+          ima[i] = (uint8_t)floor(t1);
 	}
       }
       else if (datatype(image) == VFF_TYP_4_BYTE)
       {
 	int32_t *ima = SLONGDATA(image);
-	for (i = 0; i < N; i++)      
-	  ima[i] = (int32_t)floor(Im1[i]);
+        for (i = 0; i < N; i++) {
+          ima[i] = (int32_t)floor(Im1[i]);
+        }
       }
       else if (datatype(image) == VFF_TYP_FLOAT)
       {
 	float *ima = FLOATDATA(image);
-	for (i = 0; i < N; i++)      
-	  ima[i] = (float)Im1[i];
+        for (i = 0; i < N; i++) {
+          ima[i] = (float)Im1[i];
+        }
       }
       break;
 
@@ -508,11 +543,12 @@ printf("alpha = %g , e_a = %g , e_2a = %g , k = %g\n", alpha, e_a, e_2a, k);
 	  {
 	    t1 = Im1[i];
 	    t2 = mcabs(t1);
-	    if (t2 <= 255.0)
-	      ima[i] = (uint8_t)t2;
-	    else
-	      ima[i] = 255;
-	  }
+            if (t2 <= 255.0) {
+              ima[i] = (uint8_t)t2;
+            } else {
+              ima[i] = 255;
+            }
+          }
       }
       else 
       {
@@ -550,11 +586,12 @@ printf("alpha = %g , e_a = %g , e_2a = %g , k = %g\n", alpha, e_a, e_2a, k);
 	  {
 	    t1 = Im1[i];
 	    t2 = mcabs(t1);
-	    if (t2 <= 255.0)
-	      ima[i] = (uint8_t)t2;
-	    else
-	      ima[i] = 255;
-	  }
+            if (t2 <= 255.0) {
+              ima[i] = (uint8_t)t2;
+            } else {
+              ima[i] = 255;
+            }
+          }
       }
       else 
       {
@@ -621,7 +658,9 @@ int32_t lshencastan(struct xvimage *image, double beta)
       return(0);
   }
 
-  for (i = 0; i < N; i++) Imd[i] = (double)ima[i];
+  for (i = 0; i < N; i++) {
+    Imd[i] = (double)ima[i];
+  }
 
   e_a = exp(- beta);
   k = 1.0 - e_a;
@@ -656,10 +695,11 @@ printf("beta = %g , e_a = %g , e_2a = %g , k = %g\n", beta, e_a, e_2a, k);
     t1 = Im1[i];
     t2 = Im2[i];
     t2 = sqrt(((t1 * t1) + (t2 * t2)) / 2.0);
-    if (t2 <= 255.0)
+    if (t2 <= 255.0) {
       ima[i] = (uint8_t)t2;
-    else
+    } else {
       ima[i] = 255;
+    }
   }
 
   free(Im1);
@@ -688,10 +728,9 @@ void deriche3dgen(double *f,               /* image a traiter */
 {
   int32_t x, y, z, ps = rs * cs;
 
-  for (y = 0; y < cs; y++)     /* filtrage dans la direction z (f -> g) */
-  for (x = 0; x < rs; x++)
-  {
-    /* filtre causal en z */
+  for (y = 0; y < cs; y++) { /* filtrage dans la direction z (f -> g) */
+    for (x = 0; x < rs; x++) {
+      /* filtre causal en z */
 #ifdef BORD_ZERO
     g1[0] = a1 * f[x+rs*y+ps*0];
     g1[1] = a1 * f[x+rs*y+ps*1] + a2 * f[x+rs*y+ps*0] + b1 * g1[0];
@@ -699,8 +738,10 @@ void deriche3dgen(double *f,               /* image a traiter */
     g1[0] = ((a1 + a2) / (1.0 - b1 - b2)) * f[x+rs*y+ps*0];
     g1[1] = a1 * f[x+rs*y+ps*1] + a2 * f[x+rs*y+ps*0] + (b1 + b2) * g1[0];
 #endif
-    for (z = 2; z < ds; z++)
-      g1[z] = a1*f[x+rs*y+ps*z] + a2*f[x+rs*y+ps*(z-1)] + b1*g1[z-1] + b2*g1[z-2];
+    for (z = 2; z < ds; z++) {
+      g1[z] = a1 * f[x + rs * y + ps * z] + a2 * f[x + rs * y + ps * (z - 1)] +
+              b1 * g1[z - 1] + b2 * g1[z - 2];
+    }
 
     /* filtre anticausal en z */
 #ifdef BORD_ZERO
@@ -710,17 +751,21 @@ void deriche3dgen(double *f,               /* image a traiter */
     g2[ds-1] = ((a3 + a4) / (1.0 - b1 - b2)) * f[x+rs*y+ps*(ds-1)];
     g2[ds-2] = (a3 + a4) * f[x+rs*y+ps*(ds-1)] + (b1 + b2) * g2[ds-1];
 #endif
-    for (z = ds-3; z >= 0; z--)
-      g2[z] = a3*f[x+rs*y+ps*(z+1)] + a4*f[x+rs*y+ps*(z+2)] + b1*g2[z+1] + b2*g2[z+2];
+    for (z = ds - 3; z >= 0; z--) {
+      g2[z] = a3 * f[x + rs * y + ps * (z + 1)] +
+              a4 * f[x + rs * y + ps * (z + 2)] + b1 * g2[z + 1] +
+              b2 * g2[z + 2];
+    }
 
-    for (z = 0; z < ds; z++)
-      g[x+rs*y+ps*z] = g1[z] + g2[z];
+    for (z = 0; z < ds; z++) {
+      g[x + rs * y + ps * z] = g1[z] + g2[z];
+    }
+    }
   }
 
-  for (z = 0; z < ds; z++)     /* filtrage dans la direction y (g -> g) */
-  for (x = 0; x < rs; x++)
-  {
-    /* filtre causal en y */
+  for (z = 0; z < ds; z++) { /* filtrage dans la direction y (g -> g) */
+    for (x = 0; x < rs; x++) {
+      /* filtre causal en y */
 #ifdef BORD_ZERO
     g1[0] = a5 * g[x+rs*0+ps*z];
     g1[1] = a5 * g[x+rs*1+ps*z] + a6 * g[x+rs*0+ps*z] + b3 * g1[0];
@@ -728,8 +773,10 @@ void deriche3dgen(double *f,               /* image a traiter */
     g1[0] = ((a5 + a6) / (1.0 - b3 - b4)) * g[x+rs*0+ps*z];
     g1[1] = a5 * g[x+rs*1+ps*z] + a6 * g[x+rs*0+ps*z] + (b3 + b4) * g1[0];
 #endif
-    for (y = 2; y < cs; y++)
-      g1[y] = a5*g[x+rs*y+ps*z] + a6*g[x+rs*(y-1)+ps*z] + b3*g1[y-1] + b4*g1[y-2];
+    for (y = 2; y < cs; y++) {
+      g1[y] = a5 * g[x + rs * y + ps * z] + a6 * g[x + rs * (y - 1) + ps * z] +
+              b3 * g1[y - 1] + b4 * g1[y - 2];
+    }
 
     /* filtre anticausal en y */
 #ifdef BORD_ZERO
@@ -739,17 +786,21 @@ void deriche3dgen(double *f,               /* image a traiter */
     g2[cs-1] = ((a7 + a8) / (1.0 - b3 - b4)) * g[x+rs*(cs-1)+ps*z];
     g2[cs-2] = (a7 + a8) * g[x+rs*(cs-1)+ps*z] + (b3 + b4) * g2[cs-1];
 #endif
-    for (y = cs-3; y >= 0; y--)
-      g2[y] = a7*g[x+rs*(y+1)+ps*z] + a8*g[x+rs*(y+2)+ps*z] + b3*g2[y+1] + b4*g2[y+2];
+    for (y = cs - 3; y >= 0; y--) {
+      g2[y] = a7 * g[x + rs * (y + 1) + ps * z] +
+              a8 * g[x + rs * (y + 2) + ps * z] + b3 * g2[y + 1] +
+              b4 * g2[y + 2];
+    }
 
-    for (y = 0; y < cs; y++)
-      g[x+rs*y+ps*z] = g1[y] + g2[y];
+    for (y = 0; y < cs; y++) {
+      g[x + rs * y + ps * z] = g1[y] + g2[y];
+    }
+    }
   }
 
-  for (z = 0; z < ds; z++)     /* filtrage dans la direction x (g -> g) */
-  for (y = 0; y < cs; y++)
-  {
-    /* filtre causal en x */
+  for (z = 0; z < ds; z++) { /* filtrage dans la direction x (g -> g) */
+    for (y = 0; y < cs; y++) {
+      /* filtre causal en x */
 #ifdef BORD_ZERO
     g1[0] = a9 * g[0+rs*y+ps*z];
     g1[1] = a9 * g[1+rs*y+ps*z] + a10 * g[0+rs*y+ps*z] + b5 * g1[0];
@@ -757,8 +808,10 @@ void deriche3dgen(double *f,               /* image a traiter */
     g1[0] = ((a9 + a10) / (1.0 - b5 - b6)) * g[0+rs*y+ps*z];
     g1[1] = a9 * g[1+rs*y+ps*z] + a10 * g[0+rs*y+ps*z] + (b5 + b6) * g1[0];
 #endif
-    for (x = 2; x < rs; x++)
-      g1[x] = a9 * g[x+rs*y+ps*z] + a10 * g[x-1+rs*y+ps*z] + b5 * g1[x-1] + b6 * g1[x-2];
+    for (x = 2; x < rs; x++) {
+      g1[x] = a9 * g[x + rs * y + ps * z] + a10 * g[x - 1 + rs * y + ps * z] +
+              b5 * g1[x - 1] + b6 * g1[x - 2];
+    }
 
     /* filtre anticausal en x */
 #ifdef BORD_ZERO
@@ -768,11 +821,16 @@ void deriche3dgen(double *f,               /* image a traiter */
     g2[rs-1] = ((a11 + a12) / (1.0 - b5 - b6)) * g[rs-1+rs*y+ps*z];
     g2[rs-2] = (a11 + a12) * g[rs-1+rs*y+ps*z] + (b5 + b6) * g2[rs-1];
 #endif
-    for (x = rs-3; x >= 0; x--)
-      g2[x] = a11 * g[x+1+rs*y+ps*z] + a12 * g[x+2+rs*y+ps*z] + b5 * g2[x+1] + b6 * g2[x+2];
+    for (x = rs - 3; x >= 0; x--) {
+      g2[x] = a11 * g[x + 1 + rs * y + ps * z] +
+              a12 * g[x + 2 + rs * y + ps * z] + b5 * g2[x + 1] +
+              b6 * g2[x + 2];
+    }
 
-    for (x = 0; x < rs; x++)
-      g[x+rs*y+ps*z] = g1[x] + g2[x];
+    for (x = 0; x < rs; x++) {
+      g[x + rs * y + ps * z] = g1[x] + g2[x];
+    }
+    }
   }
 
 } /* deriche3dgen() */
@@ -842,17 +900,23 @@ int32_t lderiche3d(struct xvimage *image, double alpha, int32_t function, double
   if (datatype(image) == VFF_TYP_1_BYTE)
   {
     uint8_t *ima = UCHARDATA(image);
-    for (i = 0; i < N; i++) Imd[i] = (double)ima[i];
+    for (i = 0; i < N; i++) {
+      Imd[i] = (double)ima[i];
+    }
   }
   else if (datatype(image) == VFF_TYP_4_BYTE)
   {
     int32_t *ima = SLONGDATA(image);
-    for (i = 0; i < N; i++) Imd[i] = (double)ima[i];
+    for (i = 0; i < N; i++) {
+      Imd[i] = (double)ima[i];
+    }
   }
   else if (datatype(image) == VFF_TYP_FLOAT)
   {
     float *ima = FLOATDATA(image);
-    for (i = 0; i < N; i++) Imd[i] = (double)ima[i];
+    for (i = 0; i < N; i++) {
+      Imd[i] = (double)ima[i];
+    }
   }
   else
   {
@@ -913,11 +977,12 @@ printf("alpha = %g , e_a = %g , e_2a = %g , k = %g\n", alpha, e_a, e_2a, k);
 	{
 	  t1 = Im1[i]; t2 = Im2[i]; t3 = Im3[i];
 	  t2 = sqrt((t1 * t1) + (t2 * t2) + (t3 * t3));
-	  if (t2 <= 255.0)
-	    ima[i] = (uint8_t)t2;
-	  else
-	    ima[i] = 255;
-	}
+          if (t2 <= 255.0) {
+            ima[i] = (uint8_t)t2;
+          } else {
+            ima[i] = 255;
+          }
+        }
       }
       else if (datatype(image) == VFF_TYP_4_BYTE)
       {
@@ -1031,22 +1096,28 @@ printf("alpha = %g , e_a = %g , e_2a = %g , k = %g\n", alpha, e_a, e_2a, k);
 	for (i = 0; i < N; i++)      
 	{
 	  t1 =  Im1[i];
-	  if (t1 < 0.0) t1 = 0.0;
-	  if (t1 > 255.0) t1 = 255.0;
-	  ima[i] = (uint8_t)floor(t1);
+          if (t1 < 0.0) {
+            t1 = 0.0;
+          }
+          if (t1 > 255.0) {
+            t1 = 255.0;
+          }
+          ima[i] = (uint8_t)floor(t1);
 	}
       }
       else if (datatype(image) == VFF_TYP_4_BYTE)
       {
 	int32_t *ima = SLONGDATA(image);
-	for (i = 0; i < N; i++)      
-	  ima[i] = (int32_t)floor(Im1[i]);
+        for (i = 0; i < N; i++) {
+          ima[i] = (int32_t)floor(Im1[i]);
+        }
       }
       else if (datatype(image) == VFF_TYP_FLOAT)
       {
 	float *ima = FLOATDATA(image);
-	for (i = 0; i < N; i++)      
-	  ima[i] = (float)Im1[i];
+        for (i = 0; i < N; i++) {
+          ima[i] = (float)Im1[i];
+        }
       }
       break;
 
@@ -1090,10 +1161,9 @@ void deriche3dgenb(uint8_t *f,     /* image a traiter */
 {
   int32_t x, y, z, ps = rs * cs;
 
-  for (y = 0; y < cs; y++)     /* filtrage dans la direction z (f -> g) */
-  for (x = 0; x < rs; x++)
-  {
-    /* filtre causal en z */
+  for (y = 0; y < cs; y++) { /* filtrage dans la direction z (f -> g) */
+    for (x = 0; x < rs; x++) {
+      /* filtre causal en z */
 #ifdef BORD_ZERO
     g1[0] = a1 * (double)(f[x+rs*y+ps*0]);
     g1[1] = a1 * (double)(f[x+rs*y+ps*1]) + a2 * (double)(f[x+rs*y+ps*0]) + b1 * g1[0];
@@ -1101,8 +1171,11 @@ void deriche3dgenb(uint8_t *f,     /* image a traiter */
     g1[0] = ((a1 + a2) / (1.0 - b1 - b2)) * (double)(f[x+rs*y+ps*0]);
     g1[1] = a1 * (double)(f[x+rs*y+ps*1]) + a2 * (double)(f[x+rs*y+ps*0]) + (b1 + b2) * g1[0];
 #endif
-    for (z = 2; z < ds; z++)
-      g1[z] = a1*(double)(f[x+rs*y+ps*z]) + a2*(double)(f[x+rs*y+ps*(z-1)]) + b1*g1[z-1] + b2*g1[z-2];
+    for (z = 2; z < ds; z++) {
+      g1[z] = a1 * (double)(f[x + rs * y + ps * z]) +
+              a2 * (double)(f[x + rs * y + ps * (z - 1)]) + b1 * g1[z - 1] +
+              b2 * g1[z - 2];
+    }
 
     /* filtre anticausal en z */
 #ifdef BORD_ZERO
@@ -1112,17 +1185,21 @@ void deriche3dgenb(uint8_t *f,     /* image a traiter */
     g2[ds-1] = ((a3 + a4) / (1.0 - b1 - b2)) * (double)(f[x+rs*y+ps*(ds-1)]);
     g2[ds-2] = (a3 + a4) * (double)(f[x+rs*y+ps*(ds-1)]) + (b1 + b2) * g2[ds-1];
 #endif
-    for (z = ds-3; z >= 0; z--)
-      g2[z] = a3*(double)(f[x+rs*y+ps*(z+1)]) + a4*(double)(f[x+rs*y+ps*(z+2)]) + b1*g2[z+1] + b2*g2[z+2];
+    for (z = ds - 3; z >= 0; z--) {
+      g2[z] = a3 * (double)(f[x + rs * y + ps * (z + 1)]) +
+              a4 * (double)(f[x + rs * y + ps * (z + 2)]) + b1 * g2[z + 1] +
+              b2 * g2[z + 2];
+    }
 
-    for (z = 0; z < ds; z++)
-      g[x+rs*y+ps*z] = g1[z] + g2[z];
+    for (z = 0; z < ds; z++) {
+      g[x + rs * y + ps * z] = g1[z] + g2[z];
+    }
+    }
   }
 
-  for (z = 0; z < ds; z++)     /* filtrage dans la direction y (g -> g) */
-  for (x = 0; x < rs; x++)
-  {
-    /* filtre causal en y */
+  for (z = 0; z < ds; z++) { /* filtrage dans la direction y (g -> g) */
+    for (x = 0; x < rs; x++) {
+      /* filtre causal en y */
 #ifdef BORD_ZERO
     g1[0] = a5 * g[x+rs*0+ps*z];
     g1[1] = a5 * g[x+rs*1+ps*z] + a6 * g[x+rs*0+ps*z] + b3 * g1[0];
@@ -1130,8 +1207,10 @@ void deriche3dgenb(uint8_t *f,     /* image a traiter */
     g1[0] = ((a5 + a6) / (1.0 - b3 - b4)) * g[x+rs*0+ps*z];
     g1[1] = a5 * g[x+rs*1+ps*z] + a6 * g[x+rs*0+ps*z] + (b3 + b4) * g1[0];
 #endif
-    for (y = 2; y < cs; y++)
-      g1[y] = a5*g[x+rs*y+ps*z] + a6*g[x+rs*(y-1)+ps*z] + b3*g1[y-1] + b4*g1[y-2];
+    for (y = 2; y < cs; y++) {
+      g1[y] = a5 * g[x + rs * y + ps * z] + a6 * g[x + rs * (y - 1) + ps * z] +
+              b3 * g1[y - 1] + b4 * g1[y - 2];
+    }
 
     /* filtre anticausal en y */
 #ifdef BORD_ZERO
@@ -1141,17 +1220,21 @@ void deriche3dgenb(uint8_t *f,     /* image a traiter */
     g2[cs-1] = ((a7 + a8) / (1.0 - b3 - b4)) * g[x+rs*(cs-1)+ps*z];
     g2[cs-2] = (a7 + a8) * g[x+rs*(cs-1)+ps*z] + (b3 + b4) * g2[cs-1];
 #endif
-    for (y = cs-3; y >= 0; y--)
-      g2[y] = a7*g[x+rs*(y+1)+ps*z] + a8*g[x+rs*(y+2)+ps*z] + b3*g2[y+1] + b4*g2[y+2];
+    for (y = cs - 3; y >= 0; y--) {
+      g2[y] = a7 * g[x + rs * (y + 1) + ps * z] +
+              a8 * g[x + rs * (y + 2) + ps * z] + b3 * g2[y + 1] +
+              b4 * g2[y + 2];
+    }
 
-    for (y = 0; y < cs; y++)
-      g[x+rs*y+ps*z] = g1[y] + g2[y];
+    for (y = 0; y < cs; y++) {
+      g[x + rs * y + ps * z] = g1[y] + g2[y];
+    }
+    }
   }
 
-  for (z = 0; z < ds; z++)     /* filtrage dans la direction x (g -> g) */
-  for (y = 0; y < cs; y++)
-  {
-    /* filtre causal en x */
+  for (z = 0; z < ds; z++) { /* filtrage dans la direction x (g -> g) */
+    for (y = 0; y < cs; y++) {
+      /* filtre causal en x */
 #ifdef BORD_ZERO
     g1[0] = a9 * g[0+rs*y+ps*z];
     g1[1] = a9 * g[1+rs*y+ps*z] + a10 * g[0+rs*y+ps*z] + b5 * g1[0];
@@ -1159,8 +1242,10 @@ void deriche3dgenb(uint8_t *f,     /* image a traiter */
     g1[0] = ((a9 + a10) / (1.0 - b5 - b6)) * g[0+rs*y+ps*z];
     g1[1] = a9 * g[1+rs*y+ps*z] + a10 * g[0+rs*y+ps*z] + (b5 + b6) * g1[0];
 #endif
-    for (x = 2; x < rs; x++)
-      g1[x] = a9 * g[x+rs*y+ps*z] + a10 * g[x-1+rs*y+ps*z] + b5 * g1[x-1] + b6 * g1[x-2];
+    for (x = 2; x < rs; x++) {
+      g1[x] = a9 * g[x + rs * y + ps * z] + a10 * g[x - 1 + rs * y + ps * z] +
+              b5 * g1[x - 1] + b6 * g1[x - 2];
+    }
 
     /* filtre anticausal en x */
 #ifdef BORD_ZERO
@@ -1170,11 +1255,16 @@ void deriche3dgenb(uint8_t *f,     /* image a traiter */
     g2[rs-1] = ((a11 + a12) / (1.0 - b5 - b6)) * g[rs-1+rs*y+ps*z];
     g2[rs-2] = (a11 + a12) * g[rs-1+rs*y+ps*z] + (b5 + b6) * g2[rs-1];
 #endif
-    for (x = rs-3; x >= 0; x--)
-      g2[x] = a11 * g[x+1+rs*y+ps*z] + a12 * g[x+2+rs*y+ps*z] + b5 * g2[x+1] + b6 * g2[x+2];
+    for (x = rs - 3; x >= 0; x--) {
+      g2[x] = a11 * g[x + 1 + rs * y + ps * z] +
+              a12 * g[x + 2 + rs * y + ps * z] + b5 * g2[x + 1] +
+              b6 * g2[x + 2];
+    }
 
-    for (x = 0; x < rs; x++)
-      g[x+rs*y+ps*z] = g1[x] + g2[x];
+    for (x = 0; x < rs; x++) {
+      g[x + rs * y + ps * z] = g1[x] + g2[x];
+    }
+    }
   }
 
 } /* deriche3dgenb() */
@@ -1244,8 +1334,12 @@ printf("alpha = %g , e_a = %g , e_2a = %g , k = %g\n", alpha, e_a, e_2a, k);
   for (i = 0; i < N; i++)      
   {
     t1 =  Im1[i];
-    if (t1 < 0.0) t1 = 0.0;
-    if (t1 > 255.0) t1 = 255.0;
+    if (t1 < 0.0) {
+      t1 = 0.0;
+    }
+    if (t1 > 255.0) {
+      t1 = 255.0;
+    }
     ima[i] = (uint8_t)floor(t1);
   }
 
@@ -1262,10 +1356,11 @@ int32_t lgradientcd(struct xvimage *image, double alpha)
 #define F_NAME "lgradientcd"
 { 
   double dummy = 0.0;
-  if (depth(image) == 1)
+  if (depth(image) == 1) {
     return lderiche(image, alpha, 0, dummy);
-  else
+  } else {
     return lderiche3d(image, alpha, 0, dummy);
+  }
 } // lgradientcd()
 
 /* ==================================== */
@@ -1275,8 +1370,9 @@ int32_t lgaussianfilter(struct xvimage *image, double alpha)
 #define F_NAME "lgaussianfilter"
 { 
   double dummy = 0.0;
-  if (depth(image) == 1)
+  if (depth(image) == 1) {
     return lderiche(image, alpha, 4, dummy);
-  else
+  } else {
     return lderiche3d(image, alpha, 4, dummy);
+  }
 } // lgaussianfilter()

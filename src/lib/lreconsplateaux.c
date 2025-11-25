@@ -102,7 +102,11 @@ int32_t lreconsplateaux(
       return(0);
   }
 
-  for (x = 0; x < N; x++) if (G[x]) G[x] = MARQUE_ORIG;
+  for (x = 0; x < N; x++) {
+    if (G[x]) {
+      G[x] = MARQUE_ORIG;
+    }
+  }
 
   for (x = 0; x < N; x++)
   {
@@ -137,8 +141,11 @@ int32_t lreconsplateaux(
   /* elimine les plateaux non marques */
   /* ============================================================== */
 
-  for (x = 0; x < N; x++)
-    if (G[x] != MARQUE_FIN) F[x] = 0;      
+  for (x = 0; x < N; x++) {
+    if (G[x] != MARQUE_FIN) {
+      F[x] = 0;
+    }
+  }
   return 1;
 }
 

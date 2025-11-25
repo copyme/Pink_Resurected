@@ -205,8 +205,9 @@ void InitPileGrilles3d()
 /* ========================================== */
 {
   int32_t i;
-  for (i = 0; i < NBGRILLES3D; i++)
+  for (i = 0; i < NBGRILLES3D; i++) {
     PileGrilles3d[i] = allocimage(NULL, GRS3D, GCS3D, GDS3D, VFF_TYP_1_BYTE);
+  }
   IndexPileGrilles3d = 0;
 } /* InitPileGrilles3d() */
 
@@ -215,8 +216,9 @@ void TerminePileGrilles3d()
 /* ========================================== */
 {
   int32_t i;
-  for (i = 0; i < NBGRILLES3D; i++)
+  for (i = 0; i < NBGRILLES3D; i++) {
     freeimage(PileGrilles3d[i]);
+  }
 } /* TerminePileGrilles3d() */
 
 /* ========================================== */
@@ -283,11 +285,15 @@ struct xvimage * Khalimskize3d(struct xvimage *o)
 
   memset(B, VAL_NULLE, bN); /* init a VAL_NULLE */
 
-  for (k = 0; k < ods; k++)
-    for (j = 0; j < ocs; j++)
-      for (i = 0; i < ors; i++)
-        if (O[k * ops + j * ors + i])
-          B[(2*k+1) * bps + (2*j+1) * brs + (2*i+1)] = VAL_OBJET;
+  for (k = 0; k < ods; k++) {
+    for (j = 0; j < ocs; j++) {
+      for (i = 0; i < ors; i++) {
+        if (O[k * ops + j * ors + i]) {
+          B[(2 * k + 1) * bps + (2 * j + 1) * brs + (2 * i + 1)] = VAL_OBJET;
+        }
+      }
+    }
+  }
 
   return b;
 } /* Khalimskize3d() */
@@ -329,30 +335,42 @@ struct xvimage * KhalimskizeNDG3d(struct xvimage *o)
     uint8_t *O = UCHARDATA(o);
     uint8_t *B = UCHARDATA(b);
     memset(B, 0, bN*sizeof(uint8_t));
-    for (k = 0; k < ods; k++)
-      for (j = 0; j < ocs; j++)
-	for (i = 0; i < ors; i++)
-	  B[(2*k+1) * bps + (2*j+1) * brs + (2*i+1)] = O[k * ops + j * ors + i];
+    for (k = 0; k < ods; k++) {
+      for (j = 0; j < ocs; j++) {
+        for (i = 0; i < ors; i++) {
+          B[(2 * k + 1) * bps + (2 * j + 1) * brs + (2 * i + 1)] =
+              O[k * ops + j * ors + i];
+        }
+      }
+    }
   }
   else if (datatype(b) == VFF_TYP_4_BYTE)
   {
     int32_t *O = SLONGDATA(o);
     int32_t *B = SLONGDATA(b);
     memset(B, 0, bN*sizeof(uint32_t));
-    for (k = 0; k < ods; k++)
-      for (j = 0; j < ocs; j++)
-	for (i = 0; i < ors; i++)
-	  B[(2*k+1) * bps + (2*j+1) * brs + (2*i+1)] = O[k * ops + j * ors + i];
+    for (k = 0; k < ods; k++) {
+      for (j = 0; j < ocs; j++) {
+        for (i = 0; i < ors; i++) {
+          B[(2 * k + 1) * bps + (2 * j + 1) * brs + (2 * i + 1)] =
+              O[k * ops + j * ors + i];
+        }
+      }
+    }
   }
   else if (datatype(b) == VFF_TYP_FLOAT)
   {
     float *O = FLOATDATA(o);
     float *B = FLOATDATA(b);
     memset(B, 0, bN*sizeof(float));
-    for (k = 0; k < ods; k++)
-      for (j = 0; j < ocs; j++)
-	for (i = 0; i < ors; i++)
-	  B[(2*k+1) * bps + (2*j+1) * brs + (2*i+1)] = O[k * ops + j * ors + i];
+    for (k = 0; k < ods; k++) {
+      for (j = 0; j < ocs; j++) {
+        for (i = 0; i < ors; i++) {
+          B[(2 * k + 1) * bps + (2 * j + 1) * brs + (2 * i + 1)] =
+              O[k * ops + j * ors + i];
+        }
+      }
+    }
   }
   else 
   {
@@ -387,14 +405,18 @@ void ndgmin3d(struct xvimage *b)
     BP = UCHARDATA(bp);
     memset(BP, NDG_MAX, N);
 
-    for (k = 1; k < ds; k += 2)
-      for (j = 1; j < cs; j += 2)
-	for (i = 1; i < rs; i += 2)
+    for (k = 1; k < ds; k += 2) {
+      for (j = 1; j < cs; j += 2) {
+        for (i = 1; i < rs; i += 2)
 	{
 	  BP[k * ps + j * rs + i] = B[k * ps + j * rs + i];
 	  Alphacarre3d(rs, cs, ds, i, j, k, tab, &n);
-	  for (u = 0; u < n; u++) BP[tab[u]] = mcmin(BP[tab[u]],B[k * ps + j * rs + i]);
-	}
+          for (u = 0; u < n; u++) {
+            BP[tab[u]] = mcmin(BP[tab[u]], B[k * ps + j * rs + i]);
+          }
+        }
+      }
+    }
     memcpy(B, BP, N*sizeof(uint8_t));
     freeimage(bp);
   }
@@ -405,16 +427,22 @@ void ndgmin3d(struct xvimage *b)
     B = SLONGDATA(b);
     bp = copyimage(b);
     BP = SLONGDATA(bp);
-    for (k = 1; k < N; k += 1) BP[k] = INT32_MAX;
+    for (k = 1; k < N; k += 1) {
+      BP[k] = INT32_MAX;
+    }
 
-    for (k = 1; k < ds; k += 2)
-      for (j = 1; j < cs; j += 2)
-	for (i = 1; i < rs; i += 2)
+    for (k = 1; k < ds; k += 2) {
+      for (j = 1; j < cs; j += 2) {
+        for (i = 1; i < rs; i += 2)
 	{
 	  BP[k * ps + j * rs + i] = B[k * ps + j * rs + i];
 	  Alphacarre3d(rs, cs, ds, i, j, k, tab, &n);
-	  for (u = 0; u < n; u++) BP[tab[u]] = mcmin(BP[tab[u]],B[k * ps + j * rs + i]);
-	}
+          for (u = 0; u < n; u++) {
+            BP[tab[u]] = mcmin(BP[tab[u]], B[k * ps + j * rs + i]);
+          }
+        }
+      }
+    }
     memcpy(B, BP, N*sizeof(uint32_t));
     freeimage(bp);
   }
@@ -425,16 +453,22 @@ void ndgmin3d(struct xvimage *b)
     B = FLOATDATA(b);
     bp = copyimage(b);
     BP = FLOATDATA(bp);
-    for (k = 1; k < N; k += 1) BP[k] = FLT_MAX;
+    for (k = 1; k < N; k += 1) {
+      BP[k] = FLT_MAX;
+    }
 
-    for (k = 1; k < ds; k += 2)
-      for (j = 1; j < cs; j += 2)
-	for (i = 1; i < rs; i += 2)
+    for (k = 1; k < ds; k += 2) {
+      for (j = 1; j < cs; j += 2) {
+        for (i = 1; i < rs; i += 2)
 	{
 	  BP[k * ps + j * rs + i] = B[k * ps + j * rs + i];
 	  Alphacarre3d(rs, cs, ds, i, j, k, tab, &n);
-	  for (u = 0; u < n; u++) BP[tab[u]] = mcmin(BP[tab[u]],B[k * ps + j * rs + i]);
-	}
+          for (u = 0; u < n; u++) {
+            BP[tab[u]] = mcmin(BP[tab[u]], B[k * ps + j * rs + i]);
+          }
+        }
+      }
+    }
     memcpy(B, BP, N*sizeof(float));
     freeimage(bp);
   }
@@ -471,14 +505,18 @@ void ndgmax3d(struct xvimage *b)
     BP = UCHARDATA(bp);
     memset(BP, NDG_MIN, N);
 
-    for (k = 1; k < ds; k += 2)
-      for (j = 1; j < cs; j += 2)
-	for (i = 1; i < rs; i += 2)
+    for (k = 1; k < ds; k += 2) {
+      for (j = 1; j < cs; j += 2) {
+        for (i = 1; i < rs; i += 2)
 	{
 	  BP[k * ps + j * rs + i] = B[k * ps + j * rs + i];
 	  Alphacarre3d(rs, cs, ds, i, j, k, tab, &n);
-	  for (u = 0; u < n; u++) BP[tab[u]] = mcmax(BP[tab[u]],B[k * ps + j * rs + i]);
-	}
+          for (u = 0; u < n; u++) {
+            BP[tab[u]] = mcmax(BP[tab[u]], B[k * ps + j * rs + i]);
+          }
+        }
+      }
+    }
     memcpy(B, BP, N*sizeof(uint8_t));
     freeimage(bp);
   }
@@ -489,16 +527,22 @@ void ndgmax3d(struct xvimage *b)
     B = SLONGDATA(b);
     bp = copyimage(b);
     BP = SLONGDATA(bp);
-    for (k = 1; k < N; k += 1) BP[k] = 0;
+    for (k = 1; k < N; k += 1) {
+      BP[k] = 0;
+    }
 
-    for (k = 1; k < ds; k += 2)
-      for (j = 1; j < cs; j += 2)
-	for (i = 1; i < rs; i += 2)
+    for (k = 1; k < ds; k += 2) {
+      for (j = 1; j < cs; j += 2) {
+        for (i = 1; i < rs; i += 2)
 	{
 	  BP[k * ps + j * rs + i] = B[k * ps + j * rs + i];
 	  Alphacarre3d(rs, cs, ds, i, j, k, tab, &n);
-	  for (u = 0; u < n; u++) BP[tab[u]] = mcmax(BP[tab[u]],B[k * ps + j * rs + i]);
-	}
+          for (u = 0; u < n; u++) {
+            BP[tab[u]] = mcmax(BP[tab[u]], B[k * ps + j * rs + i]);
+          }
+        }
+      }
+    }
     memcpy(B, BP, N*sizeof(uint32_t));
     freeimage(bp);
   }
@@ -509,16 +553,22 @@ void ndgmax3d(struct xvimage *b)
     B = FLOATDATA(b);
     bp = copyimage(b);
     BP = FLOATDATA(bp);
-    for (k = 1; k < N; k += 1) BP[k] = 0.0;
+    for (k = 1; k < N; k += 1) {
+      BP[k] = 0.0;
+    }
 
-    for (k = 1; k < ds; k += 2)
-      for (j = 1; j < cs; j += 2)
-	for (i = 1; i < rs; i += 2)
+    for (k = 1; k < ds; k += 2) {
+      for (j = 1; j < cs; j += 2) {
+        for (i = 1; i < rs; i += 2)
 	{
 	  BP[k * ps + j * rs + i] = B[k * ps + j * rs + i];
 	  Alphacarre3d(rs, cs, ds, i, j, k, tab, &n);
-	  for (u = 0; u < n; u++) BP[tab[u]] = mcmax(BP[tab[u]],B[k * ps + j * rs + i]);
-	}
+          for (u = 0; u < n; u++) {
+            BP[tab[u]] = mcmax(BP[tab[u]], B[k * ps + j * rs + i]);
+          }
+        }
+      }
+    }
     memcpy(B, BP, N*sizeof(float));
     freeimage(bp);
   }
@@ -556,21 +606,25 @@ void ndgmoy3d(struct xvimage *k)
     uint32_t nb;
     uint32_t sum;
 
-    for (z = 0; z < ds; z++)
-      for (y = 0; y < cs; y++)
-	for (x = 0; x < rs; x++)
-	  if (!CUBE3D(x,y,z))
+    for (z = 0; z < ds; z++) {
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++) {
+          if (!CUBE3D(x,y,z))
 	  {
 	    nb = sum = 0;
 	    Betacarre3d(rs, cs, ds, x, y, z, tab, &n);
-	    for (u = 0; u < n; u++) 
-	      if (CUBE3D((tab[u]%rs),((tab[u]%ps)/rs),(tab[u]/ps)))
+            for (u = 0; u < n; u++) {
+              if (CUBE3D((tab[u]%rs),((tab[u]%ps)/rs),(tab[u]/ps)))
 	      {
 		sum += K[tab[u]];
 		nb++;
-	      }
-	    K[z * ps + y * rs + x] = (uint8_t)(sum/nb);
-	  }
+              }
+            }
+            K[z * ps + y * rs + x] = (uint8_t)(sum/nb);
+          }
+        }
+      }
+    }
   }
   else if (datatype(k) == VFF_TYP_4_BYTE)
   {
@@ -578,21 +632,25 @@ void ndgmoy3d(struct xvimage *k)
     int32_t nb;
     int32_t sum;
 
-    for (z = 0; z < ds; z++)
-      for (y = 0; y < cs; y++)
-	for (x = 0; x < rs; x++)
-	  if (!CUBE3D(x,y,z))
+    for (z = 0; z < ds; z++) {
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++) {
+          if (!CUBE3D(x,y,z))
 	  {
 	    nb = sum = 0;
 	    Betacarre3d(rs, cs, ds, x, y, z, tab, &n);
-	    for (u = 0; u < n; u++) 
-	      if (CUBE3D((tab[u]%rs),((tab[u]%ps)/rs),(tab[u]/ps)))
+            for (u = 0; u < n; u++) {
+              if (CUBE3D((tab[u]%rs),((tab[u]%ps)/rs),(tab[u]/ps)))
 	      {
 		sum += K[tab[u]];
 		nb++;
-	      }
-	    K[z * ps + y * rs + x] = (uint32_t)(sum/nb);
-	  }
+              }
+            }
+            K[z * ps + y * rs + x] = (uint32_t)(sum/nb);
+          }
+        }
+      }
+    }
   }
   else if (datatype(k) == VFF_TYP_FLOAT)
   {
@@ -600,21 +658,25 @@ void ndgmoy3d(struct xvimage *k)
     uint32_t nb;
     float sum;
 
-    for (z = 0; z < ds; z++)
-      for (y = 0; y < cs; y++)
-	for (x = 0; x < rs; x++)
-	  if (!CUBE3D(x,y,z))
+    for (z = 0; z < ds; z++) {
+      for (y = 0; y < cs; y++) {
+        for (x = 0; x < rs; x++) {
+          if (!CUBE3D(x,y,z))
 	  {
 	    nb = sum = 0;
 	    Betacarre3d(rs, cs, ds, x, y, z, tab, &n);
-	    for (u = 0; u < n; u++) 
-	      if (CUBE3D((tab[u]%rs),((tab[u]%ps)/rs),(tab[u]/ps)))
+            for (u = 0; u < n; u++) {
+              if (CUBE3D((tab[u]%rs),((tab[u]%ps)/rs),(tab[u]/ps)))
 	      {
 		sum += K[tab[u]];
 		nb++;
-	      }
-	    K[z * ps + y * rs + x] = (float)(sum/nb);
-	  }
+              }
+            }
+            K[z * ps + y * rs + x] = (float)(sum/nb);
+          }
+        }
+      }
+    }
   }
   else 
   {
@@ -657,10 +719,13 @@ struct xvimage * DeKhalimskize3d(struct xvimage *o)
 
   memset(R, VAL_NULLE, rN); /* init a VAL_NULLE */
 
-  for (k = 1; k < ods; k += 2)
-    for (j = 1; j < ocs; j += 2)
-      for (i = 1; i < ors; i += 2)
-	R[(k/2) * rps + (j/2) * rrs + (i/2)] = O[k*ops + j*ors + i];
+  for (k = 1; k < ods; k += 2) {
+    for (j = 1; j < ocs; j += 2) {
+      for (i = 1; i < ors; i += 2) {
+        R[(k / 2) * rps + (j / 2) * rrs + (i / 2)] = O[k * ops + j * ors + i];
+      }
+    }
+  }
   // version "binaire":
       //      if (O[j * ors + i])
       //        R[(j/2) * rrs + (i/2)] = VAL_OBJET;
@@ -693,10 +758,13 @@ void Dual3d(struct xvimage *bd, struct xvimage *b)
 
   memset(BD, VAL_NULLE, (rs+1)*(cs+1)*(ds+1)); /* init a VAL_NULLE */
 
-  for (k = 0; k < ds; k++)
-    for (j = 0; j < cs; j++)
-      for (i = 0; i < rs; i++)
-        BD[(k+1) * bdps + (j+1) * bdrs + (i+1)] = B[k*ps + j*rs + i];
+  for (k = 0; k < ds; k++) {
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        BD[(k + 1) * bdps + (j + 1) * bdrs + (i + 1)] = B[k * ps + j * rs + i];
+      }
+    }
+  }
 } /* Dual3d() */
 
 /* ==================================== */
@@ -747,50 +815,102 @@ printf("Alphacarre3d\n");
   *n = 0;
   if (i % 2)
   {
-    if (i>0)      tab[(*n)++] = k*ps + j*rs + i-1;      
-    if ((i+1)<rs) tab[(*n)++] = k*ps + j*rs + i+1;      
+    if (i > 0) {
+      tab[(*n)++] = k * ps + j * rs + i - 1;
+    }
+    if ((i + 1) < rs) {
+      tab[(*n)++] = k * ps + j * rs + i + 1;
+    }
   }
   if (j % 2)
   {
-    if (j>0)      tab[(*n)++] = k*ps + (j-1)*rs + i;      
-    if ((j+1)<cs) tab[(*n)++] = k*ps + (j+1)*rs + i;      
+    if (j > 0) {
+      tab[(*n)++] = k * ps + (j - 1) * rs + i;
+    }
+    if ((j + 1) < cs) {
+      tab[(*n)++] = k * ps + (j + 1) * rs + i;
+    }
   }
   if (k % 2)
   {
-    if (k>0)      tab[(*n)++] = (k-1)*ps + j*rs + i;      
-    if ((k+1)<ds) tab[(*n)++] = (k+1)*ps + j*rs + i;      
+    if (k > 0) {
+      tab[(*n)++] = (k - 1) * ps + j * rs + i;
+    }
+    if ((k + 1) < ds) {
+      tab[(*n)++] = (k + 1) * ps + j * rs + i;
+    }
   }
   if ((i%2) + (j%2) == 2)
   {
-    if ((i>0)&&(j>0))           tab[(*n)++] = k*ps + (j-1)*rs + i-1;      
-    if ((i>0)&&((j+1)<cs))      tab[(*n)++] = k*ps + (j+1)*rs + i-1;      
-    if (((i+1)<rs)&&(j>0))      tab[(*n)++] = k*ps + (j-1)*rs + i+1;
-    if (((i+1)<rs)&&((j+1)<cs)) tab[(*n)++] = k*ps + (j+1)*rs + i+1;
+    if ((i > 0) && (j > 0)) {
+      tab[(*n)++] = k * ps + (j - 1) * rs + i - 1;
+    }
+    if ((i > 0) && ((j + 1) < cs)) {
+      tab[(*n)++] = k * ps + (j + 1) * rs + i - 1;
+    }
+    if (((i + 1) < rs) && (j > 0)) {
+      tab[(*n)++] = k * ps + (j - 1) * rs + i + 1;
+    }
+    if (((i + 1) < rs) && ((j + 1) < cs)) {
+      tab[(*n)++] = k * ps + (j + 1) * rs + i + 1;
+    }
   }
   if ((i%2) + (k%2) == 2)
   {
-    if ((i>0)&&(k>0))           tab[(*n)++] = (k-1)*ps + j*rs + i-1;      
-    if ((i>0)&&((k+1)<ds))      tab[(*n)++] = (k+1)*ps + j*rs + i-1;      
-    if (((i+1)<rs)&&(k>0))      tab[(*n)++] = (k-1)*ps + j*rs + i+1;
-    if (((i+1)<rs)&&((k+1)<ds)) tab[(*n)++] = (k+1)*ps + j*rs + i+1;
+    if ((i > 0) && (k > 0)) {
+      tab[(*n)++] = (k - 1) * ps + j * rs + i - 1;
+    }
+    if ((i > 0) && ((k + 1) < ds)) {
+      tab[(*n)++] = (k + 1) * ps + j * rs + i - 1;
+    }
+    if (((i + 1) < rs) && (k > 0)) {
+      tab[(*n)++] = (k - 1) * ps + j * rs + i + 1;
+    }
+    if (((i + 1) < rs) && ((k + 1) < ds)) {
+      tab[(*n)++] = (k + 1) * ps + j * rs + i + 1;
+    }
   }
   if ((k%2) + (j%2) == 2)
   {
-    if ((k>0)&&(j>0))           tab[(*n)++] = (k-1)*ps + (j-1)*rs + i;      
-    if ((k>0)&&((j+1)<cs))      tab[(*n)++] = (k-1)*ps + (j+1)*rs + i;      
-    if (((k+1)<ds)&&(j>0))      tab[(*n)++] = (k+1)*ps + (j-1)*rs + i;
-    if (((k+1)<ds)&&((j+1)<cs)) tab[(*n)++] = (k+1)*ps + (j+1)*rs + i;
+    if ((k > 0) && (j > 0)) {
+      tab[(*n)++] = (k - 1) * ps + (j - 1) * rs + i;
+    }
+    if ((k > 0) && ((j + 1) < cs)) {
+      tab[(*n)++] = (k - 1) * ps + (j + 1) * rs + i;
+    }
+    if (((k + 1) < ds) && (j > 0)) {
+      tab[(*n)++] = (k + 1) * ps + (j - 1) * rs + i;
+    }
+    if (((k + 1) < ds) && ((j + 1) < cs)) {
+      tab[(*n)++] = (k + 1) * ps + (j + 1) * rs + i;
+    }
   }
   if ((i%2) + (j%2) + (k%2) == 3)
   {
-    if ((i>0)&&(j>0)&&(k>0))                tab[(*n)++] = (k-1)*ps + (j-1)*rs + i-1;
-    if ((i>0)&&((j+1)<cs)&&(k>0))           tab[(*n)++] = (k-1)*ps + (j+1)*rs + i-1;
-    if (((i+1)<rs)&&(j>0)&&(k>0))           tab[(*n)++] = (k-1)*ps + (j-1)*rs + i+1;
-    if (((i+1)<rs)&&((j+1)<cs)&&(k>0))      tab[(*n)++] = (k-1)*ps + (j+1)*rs + i+1;
-    if ((i>0)&&(j>0)&&((k+1)<ds))           tab[(*n)++] = (k+1)*ps + (j-1)*rs + i-1;
-    if ((i>0)&&((j+1)<cs)&&((k+1)<ds))      tab[(*n)++] = (k+1)*ps + (j+1)*rs + i-1;
-    if (((i+1)<rs)&&(j>0)&&((k+1)<ds))      tab[(*n)++] = (k+1)*ps + (j-1)*rs + i+1;
-    if (((i+1)<rs)&&((j+1)<cs)&&((k+1)<ds)) tab[(*n)++] = (k+1)*ps + (j+1)*rs + i+1;
+    if ((i > 0) && (j > 0) && (k > 0)) {
+      tab[(*n)++] = (k - 1) * ps + (j - 1) * rs + i - 1;
+    }
+    if ((i > 0) && ((j + 1) < cs) && (k > 0)) {
+      tab[(*n)++] = (k - 1) * ps + (j + 1) * rs + i - 1;
+    }
+    if (((i + 1) < rs) && (j > 0) && (k > 0)) {
+      tab[(*n)++] = (k - 1) * ps + (j - 1) * rs + i + 1;
+    }
+    if (((i + 1) < rs) && ((j + 1) < cs) && (k > 0)) {
+      tab[(*n)++] = (k - 1) * ps + (j + 1) * rs + i + 1;
+    }
+    if ((i > 0) && (j > 0) && ((k + 1) < ds)) {
+      tab[(*n)++] = (k + 1) * ps + (j - 1) * rs + i - 1;
+    }
+    if ((i > 0) && ((j + 1) < cs) && ((k + 1) < ds)) {
+      tab[(*n)++] = (k + 1) * ps + (j + 1) * rs + i - 1;
+    }
+    if (((i + 1) < rs) && (j > 0) && ((k + 1) < ds)) {
+      tab[(*n)++] = (k + 1) * ps + (j - 1) * rs + i + 1;
+    }
+    if (((i + 1) < rs) && ((j + 1) < cs) && ((k + 1) < ds)) {
+      tab[(*n)++] = (k + 1) * ps + (j + 1) * rs + i + 1;
+    }
   }
 } /* Alphacarre3d() */
 
@@ -810,50 +930,102 @@ printf("Betacarre3d\n");
   *n = 0;
   if (i % 2 == 0)
   {
-    if (i>0)      tab[(*n)++] = k*ps + j*rs + i-1;      
-    if ((i+1)<rs) tab[(*n)++] = k*ps + j*rs + i+1;      
+    if (i > 0) {
+      tab[(*n)++] = k * ps + j * rs + i - 1;
+    }
+    if ((i + 1) < rs) {
+      tab[(*n)++] = k * ps + j * rs + i + 1;
+    }
   }
   if (j % 2 == 0)
   {
-    if (j>0)      tab[(*n)++] = k*ps + (j-1)*rs + i;      
-    if ((j+1)<cs) tab[(*n)++] = k*ps + (j+1)*rs + i;      
+    if (j > 0) {
+      tab[(*n)++] = k * ps + (j - 1) * rs + i;
+    }
+    if ((j + 1) < cs) {
+      tab[(*n)++] = k * ps + (j + 1) * rs + i;
+    }
   }
   if (k % 2 == 0)
   {
-    if (k>0)      tab[(*n)++] = (k-1)*ps + j*rs + i;      
-    if ((k+1)<ds) tab[(*n)++] = (k+1)*ps + j*rs + i;      
+    if (k > 0) {
+      tab[(*n)++] = (k - 1) * ps + j * rs + i;
+    }
+    if ((k + 1) < ds) {
+      tab[(*n)++] = (k + 1) * ps + j * rs + i;
+    }
   }
   if ((i%2) + (j%2) == 0)
   {
-    if ((i>0)&&(j>0))           tab[(*n)++] = k*ps + (j-1)*rs + i-1;      
-    if ((i>0)&&((j+1)<cs))      tab[(*n)++] = k*ps + (j+1)*rs + i-1;      
-    if (((i+1)<rs)&&(j>0))      tab[(*n)++] = k*ps + (j-1)*rs + i+1;
-    if (((i+1)<rs)&&((j+1)<cs)) tab[(*n)++] = k*ps + (j+1)*rs + i+1;
+    if ((i > 0) && (j > 0)) {
+      tab[(*n)++] = k * ps + (j - 1) * rs + i - 1;
+    }
+    if ((i > 0) && ((j + 1) < cs)) {
+      tab[(*n)++] = k * ps + (j + 1) * rs + i - 1;
+    }
+    if (((i + 1) < rs) && (j > 0)) {
+      tab[(*n)++] = k * ps + (j - 1) * rs + i + 1;
+    }
+    if (((i + 1) < rs) && ((j + 1) < cs)) {
+      tab[(*n)++] = k * ps + (j + 1) * rs + i + 1;
+    }
   }
   if ((i%2) + (k%2) == 0)
   {
-    if ((i>0)&&(k>0))           tab[(*n)++] = (k-1)*ps + j*rs + i-1;      
-    if ((i>0)&&((k+1)<ds))      tab[(*n)++] = (k+1)*ps + j*rs + i-1;      
-    if (((i+1)<rs)&&(k>0))      tab[(*n)++] = (k-1)*ps + j*rs + i+1;
-    if (((i+1)<rs)&&((k+1)<ds)) tab[(*n)++] = (k+1)*ps + j*rs + i+1;
+    if ((i > 0) && (k > 0)) {
+      tab[(*n)++] = (k - 1) * ps + j * rs + i - 1;
+    }
+    if ((i > 0) && ((k + 1) < ds)) {
+      tab[(*n)++] = (k + 1) * ps + j * rs + i - 1;
+    }
+    if (((i + 1) < rs) && (k > 0)) {
+      tab[(*n)++] = (k - 1) * ps + j * rs + i + 1;
+    }
+    if (((i + 1) < rs) && ((k + 1) < ds)) {
+      tab[(*n)++] = (k + 1) * ps + j * rs + i + 1;
+    }
   }
   if ((k%2) + (j%2) == 0)
   {
-    if ((k>0)&&(j>0))           tab[(*n)++] = (k-1)*ps + (j-1)*rs + i;      
-    if ((k>0)&&((j+1)<cs))      tab[(*n)++] = (k-1)*ps + (j+1)*rs + i;      
-    if (((k+1)<ds)&&(j>0))      tab[(*n)++] = (k+1)*ps + (j-1)*rs + i;
-    if (((k+1)<ds)&&((j+1)<cs)) tab[(*n)++] = (k+1)*ps + (j+1)*rs + i;
+    if ((k > 0) && (j > 0)) {
+      tab[(*n)++] = (k - 1) * ps + (j - 1) * rs + i;
+    }
+    if ((k > 0) && ((j + 1) < cs)) {
+      tab[(*n)++] = (k - 1) * ps + (j + 1) * rs + i;
+    }
+    if (((k + 1) < ds) && (j > 0)) {
+      tab[(*n)++] = (k + 1) * ps + (j - 1) * rs + i;
+    }
+    if (((k + 1) < ds) && ((j + 1) < cs)) {
+      tab[(*n)++] = (k + 1) * ps + (j + 1) * rs + i;
+    }
   }
   if ((i%2) + (j%2) + (k%2) == 0)
   {
-    if ((i>0)&&(j>0)&&(k>0))                tab[(*n)++] = (k-1)*ps + (j-1)*rs + i-1;
-    if ((i>0)&&((j+1)<cs)&&(k>0))           tab[(*n)++] = (k-1)*ps + (j+1)*rs + i-1;
-    if (((i+1)<rs)&&(j>0)&&(k>0))           tab[(*n)++] = (k-1)*ps + (j-1)*rs + i+1;
-    if (((i+1)<rs)&&((j+1)<cs)&&(k>0))      tab[(*n)++] = (k-1)*ps + (j+1)*rs + i+1;
-    if ((i>0)&&(j>0)&&((k+1)<ds))           tab[(*n)++] = (k+1)*ps + (j-1)*rs + i-1;
-    if ((i>0)&&((j+1)<cs)&&((k+1)<ds))      tab[(*n)++] = (k+1)*ps + (j+1)*rs + i-1;
-    if (((i+1)<rs)&&(j>0)&&((k+1)<ds))      tab[(*n)++] = (k+1)*ps + (j-1)*rs + i+1;
-    if (((i+1)<rs)&&((j+1)<cs)&&((k+1)<ds)) tab[(*n)++] = (k+1)*ps + (j+1)*rs + i+1;
+    if ((i > 0) && (j > 0) && (k > 0)) {
+      tab[(*n)++] = (k - 1) * ps + (j - 1) * rs + i - 1;
+    }
+    if ((i > 0) && ((j + 1) < cs) && (k > 0)) {
+      tab[(*n)++] = (k - 1) * ps + (j + 1) * rs + i - 1;
+    }
+    if (((i + 1) < rs) && (j > 0) && (k > 0)) {
+      tab[(*n)++] = (k - 1) * ps + (j - 1) * rs + i + 1;
+    }
+    if (((i + 1) < rs) && ((j + 1) < cs) && (k > 0)) {
+      tab[(*n)++] = (k - 1) * ps + (j + 1) * rs + i + 1;
+    }
+    if ((i > 0) && (j > 0) && ((k + 1) < ds)) {
+      tab[(*n)++] = (k + 1) * ps + (j - 1) * rs + i - 1;
+    }
+    if ((i > 0) && ((j + 1) < cs) && ((k + 1) < ds)) {
+      tab[(*n)++] = (k + 1) * ps + (j + 1) * rs + i - 1;
+    }
+    if (((i + 1) < rs) && (j > 0) && ((k + 1) < ds)) {
+      tab[(*n)++] = (k + 1) * ps + (j - 1) * rs + i + 1;
+    }
+    if (((i + 1) < rs) && ((j + 1) < cs) && ((k + 1) < ds)) {
+      tab[(*n)++] = (k + 1) * ps + (j + 1) * rs + i + 1;
+    }
   }
 } /* Betacarre3d() */
 
@@ -869,7 +1041,9 @@ void Thetacarre3d(index_t rs, index_t cs, index_t ds, index_t i, index_t j, inde
   index_t tab2[26]; int32_t n2, l;
   Alphacarre3d(rs, cs, ds, i, j, k, tab, n);
   Betacarre3d(rs, cs, ds, i, j, k, tab2, &n2);
-  for (l = 0; l < n2; l++) tab[*n+l] = tab2[l];
+  for (l = 0; l < n2; l++) {
+    tab[*n + l] = tab2[l];
+  }
   *n = *n + n2;
 } /* Thetacarre3d() */
 
@@ -891,50 +1065,139 @@ uint32_t XAlphacarre3d(uint8_t *X, index_t rs, index_t cs, index_t ds, index_t i
 
   if (i % 2)
   {
-    if ((i>0)      && X[k*ps + j*rs + i-1]) b |= b1; b1 = b1 << 1;
-    if (((i+1)<rs) && X[k*ps + j*rs + i+1]) b |= b1; b1 = b1 << 1;
+    if ((i > 0) && X[k * ps + j * rs + i - 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i + 1) < rs) && X[k * ps + j * rs + i + 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if (j % 2)
   {
-    if ((j>0)      && X[k*ps + (j-1)*rs + i]) b |= b1; b1 = b1 << 1;
-    if (((j+1)<cs) && X[k*ps + (j+1)*rs + i]) b |= b1; b1 = b1 << 1;
+    if ((j > 0) && X[k * ps + (j - 1) * rs + i]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((j + 1) < cs) && X[k * ps + (j + 1) * rs + i]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if (k % 2)
   {
-    if ((k>0)      && X[(k-1)*ps + j*rs + i]) b |= b1; b1 = b1 << 1;
-    if (((k+1)<ds) && X[(k+1)*ps + j*rs + i]) b |= b1; b1 = b1 << 1;
+    if ((k > 0) && X[(k - 1) * ps + j * rs + i]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((k + 1) < ds) && X[(k + 1) * ps + j * rs + i]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if ((i%2) + (j%2) == 2)
   {
-    if (((i>0)&&(j>0))           && X[k*ps + (j-1)*rs + i-1]) b |= b1; b1 = b1 << 1;
-    if (((i>0)&&((j+1)<cs))      && X[k*ps + (j+1)*rs + i-1]) b |= b1; b1 = b1 << 1;
-    if ((((i+1)<rs)&&(j>0))      && X[k*ps + (j-1)*rs + i+1]) b |= b1; b1 = b1 << 1;
-    if ((((i+1)<rs)&&((j+1)<cs)) && X[k*ps + (j+1)*rs + i+1]) b |= b1; b1 = b1 << 1;
+    if (((i > 0) && (j > 0)) && X[k * ps + (j - 1) * rs + i - 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i > 0) && ((j + 1) < cs)) && X[k * ps + (j + 1) * rs + i - 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && (j > 0)) && X[k * ps + (j - 1) * rs + i + 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && ((j + 1) < cs)) &&
+        X[k * ps + (j + 1) * rs + i + 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if ((i%2) + (k%2) == 2)
   {
-    if (((i>0)&&(k>0))           && X[(k-1)*ps + j*rs + i-1]) b |= b1; b1 = b1 << 1;
-    if (((i>0)&&((k+1)<ds))      && X[(k+1)*ps + j*rs + i-1]) b |= b1; b1 = b1 << 1;
-    if ((((i+1)<rs)&&(k>0))      && X[(k-1)*ps + j*rs + i+1]) b |= b1; b1 = b1 << 1;
-    if ((((i+1)<rs)&&((k+1)<ds)) && X[(k+1)*ps + j*rs + i+1]) b |= b1; b1 = b1 << 1;
+    if (((i > 0) && (k > 0)) && X[(k - 1) * ps + j * rs + i - 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i > 0) && ((k + 1) < ds)) && X[(k + 1) * ps + j * rs + i - 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && (k > 0)) && X[(k - 1) * ps + j * rs + i + 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && ((k + 1) < ds)) &&
+        X[(k + 1) * ps + j * rs + i + 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if ((k%2) + (j%2) == 2)
   {
-    if (((k>0)&&(j>0))           && X[(k-1)*ps + (j-1)*rs + i]) b |= b1; b1 = b1 << 1;
-    if (((k>0)&&((j+1)<cs))      && X[(k-1)*ps + (j+1)*rs + i]) b |= b1; b1 = b1 << 1;
-    if ((((k+1)<ds)&&(j>0))      && X[(k+1)*ps + (j-1)*rs + i]) b |= b1; b1 = b1 << 1;
-    if ((((k+1)<ds)&&((j+1)<cs)) && X[(k+1)*ps + (j+1)*rs + i]) b |= b1; b1 = b1 << 1;
+    if (((k > 0) && (j > 0)) && X[(k - 1) * ps + (j - 1) * rs + i]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((k > 0) && ((j + 1) < cs)) && X[(k - 1) * ps + (j + 1) * rs + i]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((k + 1) < ds) && (j > 0)) && X[(k + 1) * ps + (j - 1) * rs + i]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((k + 1) < ds) && ((j + 1) < cs)) &&
+        X[(k + 1) * ps + (j + 1) * rs + i]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if ((i%2) + (j%2) + (k%2) == 3)
   {
-    if (((i>0)&&(j>0)&&(k>0))                && X[(k-1)*ps + (j-1)*rs + i-1]) b |= b1; b1 = b1<<1;
-    if (((i>0)&&((j+1)<cs)&&(k>0))           && X[(k-1)*ps + (j+1)*rs + i-1]) b |= b1; b1 = b1<<1;
-    if ((((i+1)<rs)&&(j>0)&&(k>0))           && X[(k-1)*ps + (j-1)*rs + i+1]) b |= b1; b1 = b1<<1;
-    if ((((i+1)<rs)&&((j+1)<cs)&&(k>0))      && X[(k-1)*ps + (j+1)*rs + i+1]) b |= b1; b1 = b1<<1;
-    if (((i>0)&&(j>0)&&((k+1)<ds))           && X[(k+1)*ps + (j-1)*rs + i-1]) b |= b1; b1 = b1<<1;
-    if (((i>0)&&((j+1)<cs)&&((k+1)<ds))      && X[(k+1)*ps + (j+1)*rs + i-1]) b |= b1; b1 = b1<<1;
-    if ((((i+1)<rs)&&(j>0)&&((k+1)<ds))      && X[(k+1)*ps + (j-1)*rs + i+1]) b |= b1; b1 = b1<<1;
-    if ((((i+1)<rs)&&((j+1)<cs)&&((k+1)<ds)) && X[(k+1)*ps + (j+1)*rs + i+1]) b |= b1; b1 = b1<<1;
+    if (((i > 0) && (j > 0) && (k > 0)) &&
+        X[(k - 1) * ps + (j - 1) * rs + i - 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i > 0) && ((j + 1) < cs) && (k > 0)) &&
+        X[(k - 1) * ps + (j + 1) * rs + i - 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && (j > 0) && (k > 0)) &&
+        X[(k - 1) * ps + (j - 1) * rs + i + 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && ((j + 1) < cs) && (k > 0)) &&
+        X[(k - 1) * ps + (j + 1) * rs + i + 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i > 0) && (j > 0) && ((k + 1) < ds)) &&
+        X[(k + 1) * ps + (j - 1) * rs + i - 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i > 0) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        X[(k + 1) * ps + (j + 1) * rs + i - 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && (j > 0) && ((k + 1) < ds)) &&
+        X[(k + 1) * ps + (j - 1) * rs + i + 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        X[(k + 1) * ps + (j + 1) * rs + i + 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   return b;
 } /* XAlphacarre3d() */
@@ -957,50 +1220,139 @@ uint32_t XBetacarre3d(uint8_t *X, index_t rs, index_t cs, index_t ds, index_t i,
 
   if (i % 2 == 0)
   {
-    if ((i>0)      && X[k*ps + j*rs + i-1]) b |= b1; b1 = b1 << 1;
-    if (((i+1)<rs) && X[k*ps + j*rs + i+1]) b |= b1; b1 = b1 << 1;
+    if ((i > 0) && X[k * ps + j * rs + i - 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i + 1) < rs) && X[k * ps + j * rs + i + 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if (j % 2 == 0)
   {
-    if ((j>0)      && X[k*ps + (j-1)*rs + i]) b |= b1; b1 = b1 << 1;
-    if (((j+1)<cs) && X[k*ps + (j+1)*rs + i]) b |= b1; b1 = b1 << 1;
+    if ((j > 0) && X[k * ps + (j - 1) * rs + i]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((j + 1) < cs) && X[k * ps + (j + 1) * rs + i]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if (k % 2 == 0)
   {
-    if ((k>0)      && X[(k-1)*ps + j*rs + i]) b |= b1; b1 = b1 << 1;
-    if (((k+1)<ds) && X[(k+1)*ps + j*rs + i]) b |= b1; b1 = b1 << 1;
+    if ((k > 0) && X[(k - 1) * ps + j * rs + i]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((k + 1) < ds) && X[(k + 1) * ps + j * rs + i]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if ((i%2) + (j%2) == 0)
   {
-    if (((i>0)&&(j>0))           && X[k*ps + (j-1)*rs + i-1]) b |= b1; b1 = b1 << 1;
-    if (((i>0)&&((j+1)<cs))      && X[k*ps + (j+1)*rs + i-1]) b |= b1; b1 = b1 << 1;
-    if ((((i+1)<rs)&&(j>0))      && X[k*ps + (j-1)*rs + i+1]) b |= b1; b1 = b1 << 1;
-    if ((((i+1)<rs)&&((j+1)<cs)) && X[k*ps + (j+1)*rs + i+1]) b |= b1; b1 = b1 << 1;
+    if (((i > 0) && (j > 0)) && X[k * ps + (j - 1) * rs + i - 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i > 0) && ((j + 1) < cs)) && X[k * ps + (j + 1) * rs + i - 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && (j > 0)) && X[k * ps + (j - 1) * rs + i + 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && ((j + 1) < cs)) &&
+        X[k * ps + (j + 1) * rs + i + 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if ((i%2) + (k%2) == 0)
   {
-    if (((i>0)&&(k>0))           && X[(k-1)*ps + j*rs + i-1]) b |= b1; b1 = b1 << 1;
-    if (((i>0)&&((k+1)<ds))      && X[(k+1)*ps + j*rs + i-1]) b |= b1; b1 = b1 << 1;
-    if ((((i+1)<rs)&&(k>0))      && X[(k-1)*ps + j*rs + i+1]) b |= b1; b1 = b1 << 1;
-    if ((((i+1)<rs)&&((k+1)<ds)) && X[(k+1)*ps + j*rs + i+1]) b |= b1; b1 = b1 << 1;
+    if (((i > 0) && (k > 0)) && X[(k - 1) * ps + j * rs + i - 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i > 0) && ((k + 1) < ds)) && X[(k + 1) * ps + j * rs + i - 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && (k > 0)) && X[(k - 1) * ps + j * rs + i + 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && ((k + 1) < ds)) &&
+        X[(k + 1) * ps + j * rs + i + 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if ((k%2) + (j%2) == 0)
   {
-    if (((k>0)&&(j>0))           && X[(k-1)*ps + (j-1)*rs + i]) b |= b1; b1 = b1 << 1;
-    if (((k>0)&&((j+1)<cs))      && X[(k-1)*ps + (j+1)*rs + i]) b |= b1; b1 = b1 << 1;
-    if ((((k+1)<ds)&&(j>0))      && X[(k+1)*ps + (j-1)*rs + i]) b |= b1; b1 = b1 << 1;
-    if ((((k+1)<ds)&&((j+1)<cs)) && X[(k+1)*ps + (j+1)*rs + i]) b |= b1; b1 = b1 << 1;
+    if (((k > 0) && (j > 0)) && X[(k - 1) * ps + (j - 1) * rs + i]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((k > 0) && ((j + 1) < cs)) && X[(k - 1) * ps + (j + 1) * rs + i]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((k + 1) < ds) && (j > 0)) && X[(k + 1) * ps + (j - 1) * rs + i]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((k + 1) < ds) && ((j + 1) < cs)) &&
+        X[(k + 1) * ps + (j + 1) * rs + i]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if ((i%2) + (j%2) + (k%2) == 0)
   {
-    if (((i>0)&&(j>0)&&(k>0))                && X[(k-1)*ps + (j-1)*rs + i-1]) b |= b1; b1 = b1<<1;
-    if (((i>0)&&((j+1)<cs)&&(k>0))           && X[(k-1)*ps + (j+1)*rs + i-1]) b |= b1; b1 = b1<<1;
-    if ((((i+1)<rs)&&(j>0)&&(k>0))           && X[(k-1)*ps + (j-1)*rs + i+1]) b |= b1; b1 = b1<<1;
-    if ((((i+1)<rs)&&((j+1)<cs)&&(k>0))      && X[(k-1)*ps + (j+1)*rs + i+1]) b |= b1; b1 = b1<<1;
-    if (((i>0)&&(j>0)&&((k+1)<ds))           && X[(k+1)*ps + (j-1)*rs + i-1]) b |= b1; b1 = b1<<1;
-    if (((i>0)&&((j+1)<cs)&&((k+1)<ds))      && X[(k+1)*ps + (j+1)*rs + i-1]) b |= b1; b1 = b1<<1;
-    if ((((i+1)<rs)&&(j>0)&&((k+1)<ds))      && X[(k+1)*ps + (j-1)*rs + i+1]) b |= b1; b1 = b1<<1;
-    if ((((i+1)<rs)&&((j+1)<cs)&&((k+1)<ds)) && X[(k+1)*ps + (j+1)*rs + i+1]) b |= b1; b1 = b1<<1;
+    if (((i > 0) && (j > 0) && (k > 0)) &&
+        X[(k - 1) * ps + (j - 1) * rs + i - 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i > 0) && ((j + 1) < cs) && (k > 0)) &&
+        X[(k - 1) * ps + (j + 1) * rs + i - 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && (j > 0) && (k > 0)) &&
+        X[(k - 1) * ps + (j - 1) * rs + i + 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && ((j + 1) < cs) && (k > 0)) &&
+        X[(k - 1) * ps + (j + 1) * rs + i + 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i > 0) && (j > 0) && ((k + 1) < ds)) &&
+        X[(k + 1) * ps + (j - 1) * rs + i - 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i > 0) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        X[(k + 1) * ps + (j + 1) * rs + i - 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && (j > 0) && ((k + 1) < ds)) &&
+        X[(k + 1) * ps + (j - 1) * rs + i + 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        X[(k + 1) * ps + (j + 1) * rs + i + 1]) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   return b;
 } /* XBetacarre3d() */
@@ -1023,50 +1375,145 @@ uint32_t XhAlphacarre3d(uint8_t *X, index_t rs, index_t cs, index_t ds, index_t 
 
   if (i % 2)
   {
-    if ((i>0)      && (X[k*ps + j*rs + i-1]>=h)) b |= b1; b1 = b1 << 1;
-    if (((i+1)<rs) && (X[k*ps + j*rs + i+1]>=h)) b |= b1; b1 = b1 << 1;
+    if ((i > 0) && (X[k * ps + j * rs + i - 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i + 1) < rs) && (X[k * ps + j * rs + i + 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if (j % 2)
   {
-    if ((j>0)      && (X[k*ps + (j-1)*rs + i]>=h)) b |= b1; b1 = b1 << 1;
-    if (((j+1)<cs) && (X[k*ps + (j+1)*rs + i]>=h)) b |= b1; b1 = b1 << 1;
+    if ((j > 0) && (X[k * ps + (j - 1) * rs + i] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((j + 1) < cs) && (X[k * ps + (j + 1) * rs + i] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if (k % 2)
   {
-    if ((k>0)      && (X[(k-1)*ps + j*rs + i]>=h)) b |= b1; b1 = b1 << 1;
-    if (((k+1)<ds) && (X[(k+1)*ps + j*rs + i]>=h)) b |= b1; b1 = b1 << 1;
+    if ((k > 0) && (X[(k - 1) * ps + j * rs + i] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((k + 1) < ds) && (X[(k + 1) * ps + j * rs + i] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if ((i%2) + (j%2) == 2)
   {
-    if (((i>0)&&(j>0))           && (X[k*ps + (j-1)*rs + i-1]>=h)) b |= b1; b1 = b1 << 1;
-    if (((i>0)&&((j+1)<cs))      && (X[k*ps + (j+1)*rs + i-1]>=h)) b |= b1; b1 = b1 << 1;
-    if ((((i+1)<rs)&&(j>0))      && (X[k*ps + (j-1)*rs + i+1]>=h)) b |= b1; b1 = b1 << 1;
-    if ((((i+1)<rs)&&((j+1)<cs)) && (X[k*ps + (j+1)*rs + i+1]>=h)) b |= b1; b1 = b1 << 1;
+    if (((i > 0) && (j > 0)) && (X[k * ps + (j - 1) * rs + i - 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i > 0) && ((j + 1) < cs)) &&
+        (X[k * ps + (j + 1) * rs + i - 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && (j > 0)) &&
+        (X[k * ps + (j - 1) * rs + i + 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && ((j + 1) < cs)) &&
+        (X[k * ps + (j + 1) * rs + i + 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if ((i%2) + (k%2) == 2)
   {
-    if (((i>0)&&(k>0))           && (X[(k-1)*ps + j*rs + i-1]>=h)) b |= b1; b1 = b1 << 1;
-    if (((i>0)&&((k+1)<ds))      && (X[(k+1)*ps + j*rs + i-1]>=h)) b |= b1; b1 = b1 << 1;
-    if ((((i+1)<rs)&&(k>0))      && (X[(k-1)*ps + j*rs + i+1]>=h)) b |= b1; b1 = b1 << 1;
-    if ((((i+1)<rs)&&((k+1)<ds)) && (X[(k+1)*ps + j*rs + i+1]>=h)) b |= b1; b1 = b1 << 1;
+    if (((i > 0) && (k > 0)) && (X[(k - 1) * ps + j * rs + i - 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i > 0) && ((k + 1) < ds)) &&
+        (X[(k + 1) * ps + j * rs + i - 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && (k > 0)) &&
+        (X[(k - 1) * ps + j * rs + i + 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && ((k + 1) < ds)) &&
+        (X[(k + 1) * ps + j * rs + i + 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if ((k%2) + (j%2) == 2)
   {
-    if (((k>0)&&(j>0))           && (X[(k-1)*ps + (j-1)*rs + i]>=h)) b |= b1; b1 = b1 << 1;
-    if (((k>0)&&((j+1)<cs))      && (X[(k-1)*ps + (j+1)*rs + i]>=h)) b |= b1; b1 = b1 << 1;
-    if ((((k+1)<ds)&&(j>0))      && (X[(k+1)*ps + (j-1)*rs + i]>=h)) b |= b1; b1 = b1 << 1;
-    if ((((k+1)<ds)&&((j+1)<cs)) && (X[(k+1)*ps + (j+1)*rs + i]>=h)) b |= b1; b1 = b1 << 1;
+    if (((k > 0) && (j > 0)) && (X[(k - 1) * ps + (j - 1) * rs + i] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((k > 0) && ((j + 1) < cs)) &&
+        (X[(k - 1) * ps + (j + 1) * rs + i] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((k + 1) < ds) && (j > 0)) &&
+        (X[(k + 1) * ps + (j - 1) * rs + i] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((k + 1) < ds) && ((j + 1) < cs)) &&
+        (X[(k + 1) * ps + (j + 1) * rs + i] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if ((i%2) + (j%2) + (k%2) == 3)
   {
-    if (((i>0)&&(j>0)&&(k>0))                && (X[(k-1)*ps + (j-1)*rs + i-1]>=h)) b |= b1; b1 = b1<<1;
-    if (((i>0)&&((j+1)<cs)&&(k>0))           && (X[(k-1)*ps + (j+1)*rs + i-1]>=h)) b |= b1; b1 = b1<<1;
-    if ((((i+1)<rs)&&(j>0)&&(k>0))           && (X[(k-1)*ps + (j-1)*rs + i+1]>=h)) b |= b1; b1 = b1<<1;
-    if ((((i+1)<rs)&&((j+1)<cs)&&(k>0))      && (X[(k-1)*ps + (j+1)*rs + i+1]>=h)) b |= b1; b1 = b1<<1;
-    if (((i>0)&&(j>0)&&((k+1)<ds))           && (X[(k+1)*ps + (j-1)*rs + i-1]>=h)) b |= b1; b1 = b1<<1;
-    if (((i>0)&&((j+1)<cs)&&((k+1)<ds))      && (X[(k+1)*ps + (j+1)*rs + i-1]>=h)) b |= b1; b1 = b1<<1;
-    if ((((i+1)<rs)&&(j>0)&&((k+1)<ds))      && (X[(k+1)*ps + (j-1)*rs + i+1]>=h)) b |= b1; b1 = b1<<1;
-    if ((((i+1)<rs)&&((j+1)<cs)&&((k+1)<ds)) && (X[(k+1)*ps + (j+1)*rs + i+1]>=h)) b |= b1; b1 = b1<<1;
+    if (((i > 0) && (j > 0) && (k > 0)) &&
+        (X[(k - 1) * ps + (j - 1) * rs + i - 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i > 0) && ((j + 1) < cs) && (k > 0)) &&
+        (X[(k - 1) * ps + (j + 1) * rs + i - 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && (j > 0) && (k > 0)) &&
+        (X[(k - 1) * ps + (j - 1) * rs + i + 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && ((j + 1) < cs) && (k > 0)) &&
+        (X[(k - 1) * ps + (j + 1) * rs + i + 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i > 0) && (j > 0) && ((k + 1) < ds)) &&
+        (X[(k + 1) * ps + (j - 1) * rs + i - 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i > 0) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        (X[(k + 1) * ps + (j + 1) * rs + i - 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && (j > 0) && ((k + 1) < ds)) &&
+        (X[(k + 1) * ps + (j - 1) * rs + i + 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        (X[(k + 1) * ps + (j + 1) * rs + i + 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   return b;
 } /* XhAlphacarre3d() */
@@ -1089,50 +1536,145 @@ uint32_t XhBetacarre3d(uint8_t *X, index_t rs, index_t cs, index_t ds, index_t i
 
   if (i % 2 == 0)
   {
-    if ((i>0)      && (X[k*ps + j*rs + i-1]>=h)) b |= b1; b1 = b1 << 1;
-    if (((i+1)<rs) && (X[k*ps + j*rs + i+1]>=h)) b |= b1; b1 = b1 << 1;
+    if ((i > 0) && (X[k * ps + j * rs + i - 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i + 1) < rs) && (X[k * ps + j * rs + i + 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if (j % 2 == 0)
   {
-    if ((j>0)      && (X[k*ps + (j-1)*rs + i]>=h)) b |= b1; b1 = b1 << 1;
-    if (((j+1)<cs) && (X[k*ps + (j+1)*rs + i]>=h)) b |= b1; b1 = b1 << 1;
+    if ((j > 0) && (X[k * ps + (j - 1) * rs + i] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((j + 1) < cs) && (X[k * ps + (j + 1) * rs + i] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if (k % 2 == 0)
   {
-    if ((k>0)      && (X[(k-1)*ps + j*rs + i]>=h)) b |= b1; b1 = b1 << 1;
-    if (((k+1)<ds) && (X[(k+1)*ps + j*rs + i]>=h)) b |= b1; b1 = b1 << 1;
+    if ((k > 0) && (X[(k - 1) * ps + j * rs + i] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((k + 1) < ds) && (X[(k + 1) * ps + j * rs + i] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if ((i%2) + (j%2) == 0)
   {
-    if (((i>0)&&(j>0))           && (X[k*ps + (j-1)*rs + i-1]>=h)) b |= b1; b1 = b1 << 1;
-    if (((i>0)&&((j+1)<cs))      && (X[k*ps + (j+1)*rs + i-1]>=h)) b |= b1; b1 = b1 << 1;
-    if ((((i+1)<rs)&&(j>0))      && (X[k*ps + (j-1)*rs + i+1]>=h)) b |= b1; b1 = b1 << 1;
-    if ((((i+1)<rs)&&((j+1)<cs)) && (X[k*ps + (j+1)*rs + i+1]>=h)) b |= b1; b1 = b1 << 1;
+    if (((i > 0) && (j > 0)) && (X[k * ps + (j - 1) * rs + i - 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i > 0) && ((j + 1) < cs)) &&
+        (X[k * ps + (j + 1) * rs + i - 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && (j > 0)) &&
+        (X[k * ps + (j - 1) * rs + i + 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && ((j + 1) < cs)) &&
+        (X[k * ps + (j + 1) * rs + i + 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if ((i%2) + (k%2) == 0)
   {
-    if (((i>0)&&(k>0))           && (X[(k-1)*ps + j*rs + i-1]>=h)) b |= b1; b1 = b1 << 1;
-    if (((i>0)&&((k+1)<ds))      && (X[(k+1)*ps + j*rs + i-1]>=h)) b |= b1; b1 = b1 << 1;
-    if ((((i+1)<rs)&&(k>0))      && (X[(k-1)*ps + j*rs + i+1]>=h)) b |= b1; b1 = b1 << 1;
-    if ((((i+1)<rs)&&((k+1)<ds)) && (X[(k+1)*ps + j*rs + i+1]>=h)) b |= b1; b1 = b1 << 1;
+    if (((i > 0) && (k > 0)) && (X[(k - 1) * ps + j * rs + i - 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i > 0) && ((k + 1) < ds)) &&
+        (X[(k + 1) * ps + j * rs + i - 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && (k > 0)) &&
+        (X[(k - 1) * ps + j * rs + i + 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && ((k + 1) < ds)) &&
+        (X[(k + 1) * ps + j * rs + i + 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if ((k%2) + (j%2) == 0)
   {
-    if (((k>0)&&(j>0))           && (X[(k-1)*ps + (j-1)*rs + i]>=h)) b |= b1; b1 = b1 << 1;
-    if (((k>0)&&((j+1)<cs))      && (X[(k-1)*ps + (j+1)*rs + i]>=h)) b |= b1; b1 = b1 << 1;
-    if ((((k+1)<ds)&&(j>0))      && (X[(k+1)*ps + (j-1)*rs + i]>=h)) b |= b1; b1 = b1 << 1;
-    if ((((k+1)<ds)&&((j+1)<cs)) && (X[(k+1)*ps + (j+1)*rs + i]>=h)) b |= b1; b1 = b1 << 1;
+    if (((k > 0) && (j > 0)) && (X[(k - 1) * ps + (j - 1) * rs + i] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((k > 0) && ((j + 1) < cs)) &&
+        (X[(k - 1) * ps + (j + 1) * rs + i] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((k + 1) < ds) && (j > 0)) &&
+        (X[(k + 1) * ps + (j - 1) * rs + i] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((k + 1) < ds) && ((j + 1) < cs)) &&
+        (X[(k + 1) * ps + (j + 1) * rs + i] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   if ((i%2) + (j%2) + (k%2) == 0)
   {
-    if (((i>0)&&(j>0)&&(k>0))                && (X[(k-1)*ps + (j-1)*rs + i-1]>=h)) b |= b1; b1 = b1<<1;
-    if (((i>0)&&((j+1)<cs)&&(k>0))           && (X[(k-1)*ps + (j+1)*rs + i-1]>=h)) b |= b1; b1 = b1<<1;
-    if ((((i+1)<rs)&&(j>0)&&(k>0))           && (X[(k-1)*ps + (j-1)*rs + i+1]>=h)) b |= b1; b1 = b1<<1;
-    if ((((i+1)<rs)&&((j+1)<cs)&&(k>0))      && (X[(k-1)*ps + (j+1)*rs + i+1]>=h)) b |= b1; b1 = b1<<1;
-    if (((i>0)&&(j>0)&&((k+1)<ds))           && (X[(k+1)*ps + (j-1)*rs + i-1]>=h)) b |= b1; b1 = b1<<1;
-    if (((i>0)&&((j+1)<cs)&&((k+1)<ds))      && (X[(k+1)*ps + (j+1)*rs + i-1]>=h)) b |= b1; b1 = b1<<1;
-    if ((((i+1)<rs)&&(j>0)&&((k+1)<ds))      && (X[(k+1)*ps + (j-1)*rs + i+1]>=h)) b |= b1; b1 = b1<<1;
-    if ((((i+1)<rs)&&((j+1)<cs)&&((k+1)<ds)) && (X[(k+1)*ps + (j+1)*rs + i+1]>=h)) b |= b1; b1 = b1<<1;
+    if (((i > 0) && (j > 0) && (k > 0)) &&
+        (X[(k - 1) * ps + (j - 1) * rs + i - 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i > 0) && ((j + 1) < cs) && (k > 0)) &&
+        (X[(k - 1) * ps + (j + 1) * rs + i - 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && (j > 0) && (k > 0)) &&
+        (X[(k - 1) * ps + (j - 1) * rs + i + 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && ((j + 1) < cs) && (k > 0)) &&
+        (X[(k - 1) * ps + (j + 1) * rs + i + 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i > 0) && (j > 0) && ((k + 1) < ds)) &&
+        (X[(k + 1) * ps + (j - 1) * rs + i - 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if (((i > 0) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        (X[(k + 1) * ps + (j + 1) * rs + i - 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && (j > 0) && ((k + 1) < ds)) &&
+        (X[(k + 1) * ps + (j - 1) * rs + i + 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
+    if ((((i + 1) < rs) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        (X[(k + 1) * ps + (j + 1) * rs + i + 1] >= h)) {
+      b |= b1;
+    }
+    b1 = b1 << 1;
   }
   return b;
 } /* XhBetacarre3d() */
@@ -1150,50 +1692,102 @@ void SetXAlphacarre3d(uint32_t b, uint8_t *X, index_t rs, index_t cs, index_t ds
 
   if (i % 2)
   {
-    if ((i>0)      && (b & (1<<0))) X[k*ps + j*rs + i-1] = VAL_OBJET;
-    if (((i+1)<rs) && (b & (1<<1))) X[k*ps + j*rs + i+1] = VAL_OBJET;
+    if ((i > 0) && (b & (1 << 0))) {
+      X[k * ps + j * rs + i - 1] = VAL_OBJET;
+    }
+    if (((i + 1) < rs) && (b & (1 << 1))) {
+      X[k * ps + j * rs + i + 1] = VAL_OBJET;
+    }
   }
   if (j % 2)
   {
-    if ((j>0)      && (b & (1<<2))) X[k*ps + (j-1)*rs + i] = VAL_OBJET;
-    if (((j+1)<cs) && (b & (1<<3))) X[k*ps + (j+1)*rs + i] = VAL_OBJET;
+    if ((j > 0) && (b & (1 << 2))) {
+      X[k * ps + (j - 1) * rs + i] = VAL_OBJET;
+    }
+    if (((j + 1) < cs) && (b & (1 << 3))) {
+      X[k * ps + (j + 1) * rs + i] = VAL_OBJET;
+    }
   }
   if (k % 2)
   {
-    if ((k>0)      && (b & (1<<4))) X[(k-1)*ps + j*rs + i] = VAL_OBJET;
-    if (((k+1)<ds) && (b & (1<<5))) X[(k+1)*ps + j*rs + i] = VAL_OBJET;
+    if ((k > 0) && (b & (1 << 4))) {
+      X[(k - 1) * ps + j * rs + i] = VAL_OBJET;
+    }
+    if (((k + 1) < ds) && (b & (1 << 5))) {
+      X[(k + 1) * ps + j * rs + i] = VAL_OBJET;
+    }
   }
   if ((i%2) + (j%2) == 2)
   {
-    if ((i>0)&&(j>0)           && (b&(1<<6))) X[k*ps + (j-1)*rs + i-1]=VAL_OBJET;
-    if ((i>0)&&((j+1)<cs)      && (b&(1<<7))) X[k*ps + (j+1)*rs + i-1]=VAL_OBJET;
-    if (((i+1)<rs)&&(j>0)      && (b&(1<<8))) X[k*ps + (j-1)*rs + i+1]=VAL_OBJET;
-    if (((i+1)<rs)&&((j+1)<cs) && (b&(1<<9))) X[k*ps + (j+1)*rs + i+1]=VAL_OBJET;
+    if ((i > 0) && (j > 0) && (b & (1 << 6))) {
+      X[k * ps + (j - 1) * rs + i - 1] = VAL_OBJET;
+    }
+    if ((i > 0) && ((j + 1) < cs) && (b & (1 << 7))) {
+      X[k * ps + (j + 1) * rs + i - 1] = VAL_OBJET;
+    }
+    if (((i + 1) < rs) && (j > 0) && (b & (1 << 8))) {
+      X[k * ps + (j - 1) * rs + i + 1] = VAL_OBJET;
+    }
+    if (((i + 1) < rs) && ((j + 1) < cs) && (b & (1 << 9))) {
+      X[k * ps + (j + 1) * rs + i + 1] = VAL_OBJET;
+    }
   }
   if ((i%2) + (k%2) == 2)
   {
-    if ((i>0)&&(k>0)           && (b&(1<<10))) X[(k-1)*ps + j*rs + i-1]=VAL_OBJET;
-    if ((i>0)&&((k+1)<ds)      && (b&(1<<11))) X[(k+1)*ps + j*rs + i-1]=VAL_OBJET;
-    if (((i+1)<rs)&&(k>0)      && (b&(1<<12))) X[(k-1)*ps + j*rs + i+1]=VAL_OBJET;
-    if (((i+1)<rs)&&((k+1)<ds) && (b&(1<<13))) X[(k+1)*ps + j*rs + i+1]=VAL_OBJET;
+    if ((i > 0) && (k > 0) && (b & (1 << 10))) {
+      X[(k - 1) * ps + j * rs + i - 1] = VAL_OBJET;
+    }
+    if ((i > 0) && ((k + 1) < ds) && (b & (1 << 11))) {
+      X[(k + 1) * ps + j * rs + i - 1] = VAL_OBJET;
+    }
+    if (((i + 1) < rs) && (k > 0) && (b & (1 << 12))) {
+      X[(k - 1) * ps + j * rs + i + 1] = VAL_OBJET;
+    }
+    if (((i + 1) < rs) && ((k + 1) < ds) && (b & (1 << 13))) {
+      X[(k + 1) * ps + j * rs + i + 1] = VAL_OBJET;
+    }
   }
   if ((k%2) + (j%2) == 2)
   {
-    if ((k>0)&&(j>0)           && (b&(1<<14))) X[(k-1)*ps + (j-1)*rs + i]=VAL_OBJET;
-    if ((k>0)&&((j+1)<cs)      && (b&(1<<15))) X[(k-1)*ps + (j+1)*rs + i]=VAL_OBJET;
-    if (((k+1)<ds)&&(j>0)      && (b&(1<<16))) X[(k+1)*ps + (j-1)*rs + i]=VAL_OBJET;
-    if (((k+1)<ds)&&((j+1)<cs) && (b&(1<<17))) X[(k+1)*ps + (j+1)*rs + i]=VAL_OBJET;
+    if ((k > 0) && (j > 0) && (b & (1 << 14))) {
+      X[(k - 1) * ps + (j - 1) * rs + i] = VAL_OBJET;
+    }
+    if ((k > 0) && ((j + 1) < cs) && (b & (1 << 15))) {
+      X[(k - 1) * ps + (j + 1) * rs + i] = VAL_OBJET;
+    }
+    if (((k + 1) < ds) && (j > 0) && (b & (1 << 16))) {
+      X[(k + 1) * ps + (j - 1) * rs + i] = VAL_OBJET;
+    }
+    if (((k + 1) < ds) && ((j + 1) < cs) && (b & (1 << 17))) {
+      X[(k + 1) * ps + (j + 1) * rs + i] = VAL_OBJET;
+    }
   }
   if ((i%2) + (j%2) + (k%2) == 3)
   {
-    if ((i>0)&&(j>0)&&(k>0)           && (b&(1<<18))) X[(k-1)*ps+(j-1)*rs+i-1]=VAL_OBJET;
-    if ((i>0)&&((j+1)<cs)&&(k>0)      && (b&(1<<19))) X[(k-1)*ps+(j+1)*rs+i-1]=VAL_OBJET;
-    if (((i+1)<rs)&&(j>0)&&(k>0)      && (b&(1<<20))) X[(k-1)*ps+(j-1)*rs+i+1]=VAL_OBJET;
-    if (((i+1)<rs)&&((j+1)<cs)&&(k>0) && (b&(1<<21))) X[(k-1)*ps+(j+1)*rs+i+1]=VAL_OBJET;
-    if ((i>0)&&(j>0)&&((k+1)<ds)      && (b&(1<<22))) X[(k+1)*ps+(j-1)*rs+i-1]=VAL_OBJET;
-    if ((i>0)&&((j+1)<cs)&&((k+1)<ds) && (b&(1<<23))) X[(k+1)*ps+(j+1)*rs+i-1]=VAL_OBJET;
-    if (((i+1)<rs)&&(j>0)&&((k+1)<ds) && (b&(1<<24))) X[(k+1)*ps+(j-1)*rs+i+1]=VAL_OBJET;
-    if (((i+1)<rs)&&((j+1)<cs)&&((k+1)<ds)&&(b&(1<<25)))X[(k+1)*ps+(j+1)*rs+i+1]=VAL_OBJET;
+    if ((i > 0) && (j > 0) && (k > 0) && (b & (1 << 18))) {
+      X[(k - 1) * ps + (j - 1) * rs + i - 1] = VAL_OBJET;
+    }
+    if ((i > 0) && ((j + 1) < cs) && (k > 0) && (b & (1 << 19))) {
+      X[(k - 1) * ps + (j + 1) * rs + i - 1] = VAL_OBJET;
+    }
+    if (((i + 1) < rs) && (j > 0) && (k > 0) && (b & (1 << 20))) {
+      X[(k - 1) * ps + (j - 1) * rs + i + 1] = VAL_OBJET;
+    }
+    if (((i + 1) < rs) && ((j + 1) < cs) && (k > 0) && (b & (1 << 21))) {
+      X[(k - 1) * ps + (j + 1) * rs + i + 1] = VAL_OBJET;
+    }
+    if ((i > 0) && (j > 0) && ((k + 1) < ds) && (b & (1 << 22))) {
+      X[(k + 1) * ps + (j - 1) * rs + i - 1] = VAL_OBJET;
+    }
+    if ((i > 0) && ((j + 1) < cs) && ((k + 1) < ds) && (b & (1 << 23))) {
+      X[(k + 1) * ps + (j + 1) * rs + i - 1] = VAL_OBJET;
+    }
+    if (((i + 1) < rs) && (j > 0) && ((k + 1) < ds) && (b & (1 << 24))) {
+      X[(k + 1) * ps + (j - 1) * rs + i + 1] = VAL_OBJET;
+    }
+    if (((i + 1) < rs) && ((j + 1) < cs) && ((k + 1) < ds) && (b & (1 << 25))) {
+      X[(k + 1) * ps + (j + 1) * rs + i + 1] = VAL_OBJET;
+    }
   }
 } /* SetXAlphacarre3d() */
 
@@ -1210,50 +1804,102 @@ void SetXBetacarre3d(uint32_t b, uint8_t *X, index_t rs, index_t cs, index_t ds,
 
   if (i % 2 == 0)
   {
-    if ((i>0)      && (b & (1<<0))) X[k*ps + j*rs + i-1] = VAL_OBJET;
-    if (((i+1)<rs) && (b & (1<<1))) X[k*ps + j*rs + i+1] = VAL_OBJET;
+    if ((i > 0) && (b & (1 << 0))) {
+      X[k * ps + j * rs + i - 1] = VAL_OBJET;
+    }
+    if (((i + 1) < rs) && (b & (1 << 1))) {
+      X[k * ps + j * rs + i + 1] = VAL_OBJET;
+    }
   }
   if (j % 2 == 0)
   {
-    if ((j>0)      && (b & (1<<2))) X[k*ps + (j-1)*rs + i] = VAL_OBJET;
-    if (((j+1)<cs) && (b & (1<<3))) X[k*ps + (j+1)*rs + i] = VAL_OBJET;
+    if ((j > 0) && (b & (1 << 2))) {
+      X[k * ps + (j - 1) * rs + i] = VAL_OBJET;
+    }
+    if (((j + 1) < cs) && (b & (1 << 3))) {
+      X[k * ps + (j + 1) * rs + i] = VAL_OBJET;
+    }
   }
   if (k % 2 == 0)
   {
-    if ((k>0)      && (b & (1<<4))) X[(k-1)*ps + j*rs + i] = VAL_OBJET;
-    if (((k+1)<ds) && (b & (1<<5))) X[(k+1)*ps + j*rs + i] = VAL_OBJET;
+    if ((k > 0) && (b & (1 << 4))) {
+      X[(k - 1) * ps + j * rs + i] = VAL_OBJET;
+    }
+    if (((k + 1) < ds) && (b & (1 << 5))) {
+      X[(k + 1) * ps + j * rs + i] = VAL_OBJET;
+    }
   }
   if ((i%2) + (j%2) == 0)
   {
-    if ((i>0)&&(j>0)           && (b&(1<<6))) X[k*ps + (j-1)*rs + i-1]=VAL_OBJET;
-    if ((i>0)&&((j+1)<cs)      && (b&(1<<7))) X[k*ps + (j+1)*rs + i-1]=VAL_OBJET;
-    if (((i+1)<rs)&&(j>0)      && (b&(1<<8))) X[k*ps + (j-1)*rs + i+1]=VAL_OBJET;
-    if (((i+1)<rs)&&((j+1)<cs) && (b&(1<<9))) X[k*ps + (j+1)*rs + i+1]=VAL_OBJET;
+    if ((i > 0) && (j > 0) && (b & (1 << 6))) {
+      X[k * ps + (j - 1) * rs + i - 1] = VAL_OBJET;
+    }
+    if ((i > 0) && ((j + 1) < cs) && (b & (1 << 7))) {
+      X[k * ps + (j + 1) * rs + i - 1] = VAL_OBJET;
+    }
+    if (((i + 1) < rs) && (j > 0) && (b & (1 << 8))) {
+      X[k * ps + (j - 1) * rs + i + 1] = VAL_OBJET;
+    }
+    if (((i + 1) < rs) && ((j + 1) < cs) && (b & (1 << 9))) {
+      X[k * ps + (j + 1) * rs + i + 1] = VAL_OBJET;
+    }
   }
   if ((i%2) + (k%2) == 0)
   {
-    if ((i>0)&&(k>0)           && (b&(1<<10))) X[(k-1)*ps + j*rs + i-1]=VAL_OBJET;
-    if ((i>0)&&((k+1)<ds)      && (b&(1<<11))) X[(k+1)*ps + j*rs + i-1]=VAL_OBJET;
-    if (((i+1)<rs)&&(k>0)      && (b&(1<<12))) X[(k-1)*ps + j*rs + i+1]=VAL_OBJET;
-    if (((i+1)<rs)&&((k+1)<ds) && (b&(1<<13))) X[(k+1)*ps + j*rs + i+1]=VAL_OBJET;
+    if ((i > 0) && (k > 0) && (b & (1 << 10))) {
+      X[(k - 1) * ps + j * rs + i - 1] = VAL_OBJET;
+    }
+    if ((i > 0) && ((k + 1) < ds) && (b & (1 << 11))) {
+      X[(k + 1) * ps + j * rs + i - 1] = VAL_OBJET;
+    }
+    if (((i + 1) < rs) && (k > 0) && (b & (1 << 12))) {
+      X[(k - 1) * ps + j * rs + i + 1] = VAL_OBJET;
+    }
+    if (((i + 1) < rs) && ((k + 1) < ds) && (b & (1 << 13))) {
+      X[(k + 1) * ps + j * rs + i + 1] = VAL_OBJET;
+    }
   }
   if ((k%2) + (j%2) == 0)
   {
-    if ((k>0)&&(j>0)           && (b&(1<<14))) X[(k-1)*ps + (j-1)*rs + i]=VAL_OBJET;
-    if ((k>0)&&((j+1)<cs)      && (b&(1<<15))) X[(k-1)*ps + (j+1)*rs + i]=VAL_OBJET;
-    if (((k+1)<ds)&&(j>0)      && (b&(1<<16))) X[(k+1)*ps + (j-1)*rs + i]=VAL_OBJET;
-    if (((k+1)<ds)&&((j+1)<cs) && (b&(1<<17))) X[(k+1)*ps + (j+1)*rs + i]=VAL_OBJET;
+    if ((k > 0) && (j > 0) && (b & (1 << 14))) {
+      X[(k - 1) * ps + (j - 1) * rs + i] = VAL_OBJET;
+    }
+    if ((k > 0) && ((j + 1) < cs) && (b & (1 << 15))) {
+      X[(k - 1) * ps + (j + 1) * rs + i] = VAL_OBJET;
+    }
+    if (((k + 1) < ds) && (j > 0) && (b & (1 << 16))) {
+      X[(k + 1) * ps + (j - 1) * rs + i] = VAL_OBJET;
+    }
+    if (((k + 1) < ds) && ((j + 1) < cs) && (b & (1 << 17))) {
+      X[(k + 1) * ps + (j + 1) * rs + i] = VAL_OBJET;
+    }
   }
   if ((i%2) + (j%2) + (k%2) == 0)
   {
-    if ((i>0)&&(j>0)&&(k>0)           && (b&(1<<18))) X[(k-1)*ps+(j-1)*rs+i-1]=VAL_OBJET;
-    if ((i>0)&&((j+1)<cs)&&(k>0)      && (b&(1<<19))) X[(k-1)*ps+(j+1)*rs+i-1]=VAL_OBJET;
-    if (((i+1)<rs)&&(j>0)&&(k>0)      && (b&(1<<20))) X[(k-1)*ps+(j-1)*rs+i+1]=VAL_OBJET;
-    if (((i+1)<rs)&&((j+1)<cs)&&(k>0) && (b&(1<<21))) X[(k-1)*ps+(j+1)*rs+i+1]=VAL_OBJET;
-    if ((i>0)&&(j>0)&&((k+1)<ds)      && (b&(1<<22))) X[(k+1)*ps+(j-1)*rs+i-1]=VAL_OBJET;
-    if ((i>0)&&((j+1)<cs)&&((k+1)<ds) && (b&(1<<23))) X[(k+1)*ps+(j+1)*rs+i-1]=VAL_OBJET;
-    if (((i+1)<rs)&&(j>0)&&((k+1)<ds) && (b&(1<<24))) X[(k+1)*ps+(j-1)*rs+i+1]=VAL_OBJET;
-    if (((i+1)<rs)&&((j+1)<cs)&&((k+1)<ds)&&(b&(1<<25)))X[(k+1)*ps+(j+1)*rs+i+1]=VAL_OBJET;
+    if ((i > 0) && (j > 0) && (k > 0) && (b & (1 << 18))) {
+      X[(k - 1) * ps + (j - 1) * rs + i - 1] = VAL_OBJET;
+    }
+    if ((i > 0) && ((j + 1) < cs) && (k > 0) && (b & (1 << 19))) {
+      X[(k - 1) * ps + (j + 1) * rs + i - 1] = VAL_OBJET;
+    }
+    if (((i + 1) < rs) && (j > 0) && (k > 0) && (b & (1 << 20))) {
+      X[(k - 1) * ps + (j - 1) * rs + i + 1] = VAL_OBJET;
+    }
+    if (((i + 1) < rs) && ((j + 1) < cs) && (k > 0) && (b & (1 << 21))) {
+      X[(k - 1) * ps + (j + 1) * rs + i + 1] = VAL_OBJET;
+    }
+    if ((i > 0) && (j > 0) && ((k + 1) < ds) && (b & (1 << 22))) {
+      X[(k + 1) * ps + (j - 1) * rs + i - 1] = VAL_OBJET;
+    }
+    if ((i > 0) && ((j + 1) < cs) && ((k + 1) < ds) && (b & (1 << 23))) {
+      X[(k + 1) * ps + (j + 1) * rs + i - 1] = VAL_OBJET;
+    }
+    if (((i + 1) < rs) && (j > 0) && ((k + 1) < ds) && (b & (1 << 24))) {
+      X[(k + 1) * ps + (j - 1) * rs + i + 1] = VAL_OBJET;
+    }
+    if (((i + 1) < rs) && ((j + 1) < cs) && ((k + 1) < ds) && (b & (1 << 25))) {
+      X[(k + 1) * ps + (j + 1) * rs + i + 1] = VAL_OBJET;
+    }
   }
 } /* SetXBetacarre3d() */
 
@@ -1261,12 +1907,24 @@ void SetXBetacarre3d(uint32_t b, uint8_t *X, index_t rs, index_t cs, index_t ds,
 int32_t Precede3d(index_t i, index_t j, index_t k, index_t x, index_t y, index_t z)
 /* ==================================== */
 {
-  if (mcabs(i-x)>1) return 0;
-  if (mcabs(j-y)>1) return 0;
-  if (mcabs(k-z)>1) return 0;
-  if ((i != x) && (i%2==1)) return 0;
-  if ((j != y) && (j%2==1)) return 0;
-  if ((k != z) && (k%2==1)) return 0;
+  if (mcabs(i - x) > 1) {
+    return 0;
+  }
+  if (mcabs(j - y) > 1) {
+    return 0;
+  }
+  if (mcabs(k - z) > 1) {
+    return 0;
+  }
+  if ((i != x) && (i % 2 == 1)) {
+    return 0;
+  }
+  if ((j != y) && (j % 2 == 1)) {
+    return 0;
+  }
+  if ((k != z) && (k % 2 == 1)) {
+    return 0;
+  }
   return 1;
 } /* Precede3d() */
 
@@ -1294,8 +1952,8 @@ printf("\n");
   {
     tu = tab[u];
     if ((tu != -1) && !B[tu])
-    { tab[u] = -1;  nn--; }
-    else if (tu != -1)
+    { tab[u] = -1;  nn--;
+    } else if (tu != -1) {
       for (v = u+1; v < n; v++) /* elimine les pred. non minimaux */
       {
         tv = tab[v];
@@ -1305,6 +1963,7 @@ printf("\n");
           if (Precede3d(tu%rs,(tu%ps)/rs,tu/ps,tv%rs,(tv%ps)/rs,tv/ps)) {tab[v] = -1; nn--;}
         }
       }
+    }
   }
 #ifdef DEBUGNP
 printf("NbPred3d (%d %d %d) n = %d ; nn = %d  :  ",i,j,k,n,nn);
@@ -1319,12 +1978,24 @@ printf("\n");
 int32_t Succede3d(index_t i, index_t j, index_t k, index_t x, index_t y, index_t z)
 /* ==================================== */
 {
-  if (mcabs(i-x)>1) return 0;
-  if (mcabs(j-y)>1) return 0;
-  if (mcabs(k-z)>1) return 0;
-  if ((i != x) && (i%2==0)) return 0;
-  if ((j != y) && (j%2==0)) return 0;
-  if ((k != z) && (k%2==0)) return 0;
+  if (mcabs(i - x) > 1) {
+    return 0;
+  }
+  if (mcabs(j - y) > 1) {
+    return 0;
+  }
+  if (mcabs(k - z) > 1) {
+    return 0;
+  }
+  if ((i != x) && (i % 2 == 0)) {
+    return 0;
+  }
+  if ((j != y) && (j % 2 == 0)) {
+    return 0;
+  }
+  if ((k != z) && (k % 2 == 0)) {
+    return 0;
+  }
   return 1;
 } /* Succede3d() */
 
@@ -1345,9 +2016,9 @@ int32_t NbSucc3d(uint8_t *B, index_t rs, index_t cs, index_t ds, index_t i, inde
   for (u = 0; u < n; u++)
   {
     tu = tab[u];
-    if ((tu != -1) && !B[tu])
+    if ((tu != -1) && !B[tu]) {
       nn--;
-    else
+    } else {
       for (v = u+1; v < n; v++) /* elimine les succ. non maximaux */
       {
         tv = tab[v];
@@ -1357,6 +2028,7 @@ int32_t NbSucc3d(uint8_t *B, index_t rs, index_t cs, index_t ds, index_t i, inde
           if (Succede3d(tu%rs,(tu%ps)/rs,tu/ps,tv%rs,(tv%ps)/rs,tv/ps)) {tab[v] = -1; nn--;}
 	}
       }
+    }
   }
 #ifdef DEBUGNS
 printf("NbSucc3d (%d %d %d) n = %d ; nn = %d\n",i,j,k,n,nn);
@@ -1372,9 +2044,15 @@ int32_t BetaTerminal3d(uint8_t *B, index_t rs, index_t cs, index_t ds, index_t i
   int32_t u, n;
   index_t tab[GRS3D*GCS3D*GDS3D];
 
-  if (!B[k*rs*cs + j*rs + i]) return 0;
+  if (!B[k * rs * cs + j * rs + i]) {
+    return 0;
+  }
   Betacarre3d(rs, cs, ds, i, j, k, tab, &n);
-  for (u = 0; u < n; u++) if (B[tab[u]]) return 0;
+  for (u = 0; u < n; u++) {
+    if (B[tab[u]]) {
+      return 0;
+    }
+  }
   return 1;
 } /* BetaTerminal3d() */
 
@@ -1385,9 +2063,15 @@ int32_t AlphaTerminal3d(uint8_t *B, index_t rs, index_t cs, index_t ds, index_t 
   int32_t u, n;
   index_t tab[GRS3D*GCS3D*GDS3D];
 
-  if (!B[k*rs*cs + j*rs + i]) return 0;
+  if (!B[k * rs * cs + j * rs + i]) {
+    return 0;
+  }
   Alphacarre3d(rs, cs, ds, i, j, k, tab, &n);
-  for (u = 0; u < n; u++) if (B[tab[u]]) return 0;
+  for (u = 0; u < n; u++) {
+    if (B[tab[u]]) {
+      return 0;
+    }
+  }
   return 1;
 } /* AlphaTerminal3d() */
 
@@ -1398,10 +2082,19 @@ int32_t ExactementUnBetaTerminal3d(uint8_t *B, index_t rs, index_t cs, index_t d
   index_t i, ps = rs * cs, N = ps * ds;
   int32_t n = 0;
 
-  for (i = 0; i < N; i++)
-    if ((B[i]) && BetaTerminal3d(B, rs, cs, ds, i%rs, (i%ps)/rs, i/ps))
-      if (++n > 1) return 0;
-  if (n < 1) return 0; else return 1;
+  for (i = 0; i < N; i++) {
+    if ((B[i]) &&
+        BetaTerminal3d(B, rs, cs, ds, i % rs, (i % ps) / rs, i / ps)) {
+      if (++n > 1) {
+        return 0;
+      }
+    }
+  }
+  if (n < 1) {
+    return 0;
+  } else {
+    return 1;
+  }
 } /* ExactementUnBetaTerminal3d() */
 
 /* ==================================== */
@@ -1425,14 +2118,18 @@ void SatureAlphacarre3d(struct xvimage *b)
 #ifdef DEBUGSD
 printf("SatureAlphacarre3d \n");
 #endif
-  for (k = 1; k < ds; k += 2)
-    for (j = 1; j < cs; j += 2)
-      for (i = 1; i < rs; i += 2)
-        if (B[k*ps + j*rs + i])
-        {
-          Alphacarre3d(rs, cs, ds, i, j, k, tab, &n);
-          for (u = 0; u < n; u++) B[tab[u]] = VAL_OBJET;
+for (k = 1; k < ds; k += 2) {
+  for (j = 1; j < cs; j += 2) {
+    for (i = 1; i < rs; i += 2) {
+      if (B[k * ps + j * rs + i]) {
+        Alphacarre3d(rs, cs, ds, i, j, k, tab, &n);
+        for (u = 0; u < n; u++) {
+          B[tab[u]] = VAL_OBJET;
         }
+      }
+    }
+  }
+}
 } /* SatureAlphacarre3d() */
 
 /* ==================================== */
@@ -1451,14 +2148,19 @@ void AjouteAlphacarre3d(struct xvimage *b)
   int32_t u, n;
   index_t tab[GRS3D*GCS3D*GDS3D];
 
-  for (k = 0; k < ds; k += 1)
-    for (j = 0; j < cs; j += 1)
-      for (i = 0; i < rs; i += 1)
-	if (B[k*ps + j*rs + i])
+  for (k = 0; k < ds; k += 1) {
+    for (j = 0; j < cs; j += 1) {
+      for (i = 0; i < rs; i += 1) {
+        if (B[k*ps + j*rs + i])
 	{
 	  Alphacarre3d(rs, cs, ds, i, j, k, tab, &n);
-	  for (u = 0; u < n; u++) B[tab[u]] = VAL_OBJET;
-	}
+          for (u = 0; u < n; u++) {
+            B[tab[u]] = VAL_OBJET;
+          }
+        }
+      }
+    }
+  }
 } /* AjouteAlphacarre3d() */
 
 /* ==================================== */
@@ -1477,14 +2179,19 @@ void AjouteBetacarre3d(struct xvimage *b)
   int32_t u, n;
   index_t tab[GRS3D*GCS3D*GDS3D];
 
-  for (k = 0; k < ds; k += 1)
-    for (j = 0; j < cs; j += 1)
-      for (i = 0; i < rs; i += 1)
-	if (B[k*ps + j*rs + i])
+  for (k = 0; k < ds; k += 1) {
+    for (j = 0; j < cs; j += 1) {
+      for (i = 0; i < rs; i += 1) {
+        if (B[k*ps + j*rs + i])
 	{
 	  Betacarre3d(rs, cs, ds, i, j, k, tab, &n);
-	  for (u = 0; u < n; u++) B[tab[u]] = VAL_OBJET;
-	}
+          for (u = 0; u < n; u++) {
+            B[tab[u]] = VAL_OBJET;
+          }
+        }
+      }
+    }
+  }
 } /* AjouteBetacarre3d() */
 
 /* ==================================== */
@@ -1502,14 +2209,17 @@ void EffaceLiensBetaLibres3d(struct xvimage *b)
   do 
   {
     n = 0;
-    for (k = 0; k < ds; k += 1)
-      for (j = 0; j < cs; j += 1)
-        for (i = 0; i < rs; i += 1)
+    for (k = 0; k < ds; k += 1) {
+      for (j = 0; j < cs; j += 1) {
+        for (i = 0; i < rs; i += 1) {
           if (B[k*ps + j*rs + i] && (NbPred3d(B, rs, cs, ds, i, j, k) == 1))
 	  {
             B[k*ps + j*rs + i] = 0;
             n++;
-	  }
+          }
+        }
+      }
+    }
   } while (n > 0);
 } /* EffaceLiensBetaLibres3d() */
 
@@ -1534,46 +2244,61 @@ void MaxAlpha3d(struct xvimage *k)
   {
     uint8_t *K = UCHARDATA(k);
     uint8_t M;
-    for (z = 0; z < ds; z += 1)
-      for (y = 0; y < cs; y += 1)
-	for (x = 0; x < rs; x += 1)
+    for (z = 0; z < ds; z += 1) {
+      for (y = 0; y < cs; y += 1) {
+        for (x = 0; x < rs; x += 1)
 	{
 	  M = K[z * ps + y * rs + x];
 	  Alphacarre3d(rs, cs, ds, x, y, z, tab, &n);
-	  for (u = 0; u < n; u++) 
-	    if (K[tab[u]] > M) M = K[tab[u]];
-	  K[z * ps + y * rs + x] = M;
-	}
+          for (u = 0; u < n; u++) {
+            if (K[tab[u]] > M) {
+              M = K[tab[u]];
+            }
+          }
+          K[z * ps + y * rs + x] = M;
+        }
+      }
+    }
   }
   else if (datatype(k) == VFF_TYP_4_BYTE)
   {
     int32_t *K = SLONGDATA(k);
     int32_t M;
-    for (z = 0; z < ds; z += 1)
-      for (y = 0; y < cs; y += 1)
-	for (x = 0; x < rs; x += 1)
+    for (z = 0; z < ds; z += 1) {
+      for (y = 0; y < cs; y += 1) {
+        for (x = 0; x < rs; x += 1)
 	{
 	  M = K[z * ps + y * rs + x];
 	  Alphacarre3d(rs, cs, ds, x, y, z, tab, &n);
-	  for (u = 0; u < n; u++) 
-	    if (K[tab[u]] > M) M = K[tab[u]];
-	  K[z * ps + y * rs + x] = M;
-	}
+          for (u = 0; u < n; u++) {
+            if (K[tab[u]] > M) {
+              M = K[tab[u]];
+            }
+          }
+          K[z * ps + y * rs + x] = M;
+        }
+      }
+    }
   }
   else if (datatype(k) == VFF_TYP_FLOAT)
   {
     float *K = FLOATDATA(k);
     float M;
-    for (z = 0; z < ds; z += 1)
-      for (y = 0; y < cs; y += 1)
-	for (x = 0; x < rs; x += 1)
+    for (z = 0; z < ds; z += 1) {
+      for (y = 0; y < cs; y += 1) {
+        for (x = 0; x < rs; x += 1)
         {
 	  M = K[z * ps + y * rs + x];
 	  Alphacarre3d(rs, cs, ds, x, y, z, tab, &n);
-	  for (u = 0; u < n; u++) 
-	    if (K[tab[u]] > M) M = K[tab[u]];
-	  K[z * ps + y * rs + x] = M;
-	}
+          for (u = 0; u < n; u++) {
+            if (K[tab[u]] > M) {
+              M = K[tab[u]];
+            }
+          }
+          K[z * ps + y * rs + x] = M;
+        }
+      }
+    }
   }
   else
   {
@@ -1603,46 +2328,61 @@ void MaxBeta3d(struct xvimage *k)
   {
     uint8_t *K = UCHARDATA(k);
     uint8_t M;
-    for (z = 0; z < ds; z += 1)
-      for (y = 0; y < cs; y += 1)
-	for (x = 0; x < rs; x += 1)
+    for (z = 0; z < ds; z += 1) {
+      for (y = 0; y < cs; y += 1) {
+        for (x = 0; x < rs; x += 1)
 	{
 	  M = K[z * ps + y * rs + x];
 	  Betacarre3d(rs, cs, ds, x, y, z, tab, &n);
-	  for (u = 0; u < n; u++) 
-	    if (K[tab[u]] > M) M = K[tab[u]];
-	  K[z * ps + y * rs + x] = M;
-	}
+          for (u = 0; u < n; u++) {
+            if (K[tab[u]] > M) {
+              M = K[tab[u]];
+            }
+          }
+          K[z * ps + y * rs + x] = M;
+        }
+      }
+    }
   }
   else if (datatype(k) == VFF_TYP_4_BYTE)
   {
     int32_t *K = SLONGDATA(k);
     int32_t M;
-    for (z = 0; z < ds; z += 1)
-      for (y = 0; y < cs; y += 1)
-	for (x = 0; x < rs; x += 1)
+    for (z = 0; z < ds; z += 1) {
+      for (y = 0; y < cs; y += 1) {
+        for (x = 0; x < rs; x += 1)
 	{
 	  M = K[z * ps + y * rs + x];
 	  Betacarre3d(rs, cs, ds, x, y, z, tab, &n);
-	  for (u = 0; u < n; u++) 
-	    if (K[tab[u]] > M) M = K[tab[u]];
-	  K[z * ps + y * rs + x] = M;
-	}
+          for (u = 0; u < n; u++) {
+            if (K[tab[u]] > M) {
+              M = K[tab[u]];
+            }
+          }
+          K[z * ps + y * rs + x] = M;
+        }
+      }
+    }
   }
   else if (datatype(k) == VFF_TYP_FLOAT)
   {
     float *K = FLOATDATA(k);
     float M;
-    for (z = 0; z < ds; z += 1)
-      for (y = 0; y < cs; y += 1)
-	for (x = 0; x < rs; x += 1)
+    for (z = 0; z < ds; z += 1) {
+      for (y = 0; y < cs; y += 1) {
+        for (x = 0; x < rs; x += 1)
         {
 	  M = K[z * ps + y * rs + x];
 	  Betacarre3d(rs, cs, ds, x, y, z, tab, &n);
-	  for (u = 0; u < n; u++) 
-	    if (K[tab[u]] > M) M = K[tab[u]];
-	  K[z * ps + y * rs + x] = M;
-	}
+          for (u = 0; u < n; u++) {
+            if (K[tab[u]] > M) {
+              M = K[tab[u]];
+            }
+          }
+          K[z * ps + y * rs + x] = M;
+        }
+      }
+    }
   }
   else
   {
@@ -1666,14 +2406,17 @@ void EffaceLiensAlphaLibres3d(struct xvimage *b)
   do 
   {
     n = 0;
-    for (k = 0; k < ds; k += 1)
-      for (j = 0; j < cs; j += 1)
-        for (i = 0; i < rs; i += 1)
+    for (k = 0; k < ds; k += 1) {
+      for (j = 0; j < cs; j += 1) {
+        for (i = 0; i < rs; i += 1) {
           if (B[k*ps + j*rs + i] && (NbSucc3d(B, rs, cs, ds, i, j, k) == 1))
 	  {
             B[k*ps + j*rs + i] = 0;
             n++;
-	  }
+          }
+        }
+      }
+    }
   } while (n > 0);
 } /* EffaceLiensAlphaLibres3d() */
 
@@ -1692,9 +2435,9 @@ void EffaceLiensBiLibres3d(struct xvimage *b)
   do 
   {
     n = 0;
-    for (k = 0; k < ds; k += 1)
-      for (j = 0; j < cs; j += 1)
-        for (i = 0; i < rs; i += 1)
+    for (k = 0; k < ds; k += 1) {
+      for (j = 0; j < cs; j += 1) {
+        for (i = 0; i < rs; i += 1) {
           if (B[k*ps + j*rs + i] && 
                ((NbPred3d(B, rs, cs, ds, i, j, k) == 1) ||
                 (NbSucc3d(B, rs, cs, ds, i, j, k) == 1)
@@ -1703,7 +2446,10 @@ void EffaceLiensBiLibres3d(struct xvimage *b)
 	  {
             B[k*ps + j*rs + i] = 0;
             n++;
-	  }
+          }
+        }
+      }
+    }
   } while (n > 0);
 } /* EffaceLiensBiLibres3d() */
 
@@ -1723,14 +2469,17 @@ index_t EffaceLiensBetaLibresNonMarques3d(struct xvimage *b)
   do 
   {
     n = 0;
-    for (k = 0; k < ds; k += 1)
-      for (j = 0; j < cs; j += 1)
-        for (i = 0; i < rs; i += 1)
+    for (k = 0; k < ds; k += 1) {
+      for (j = 0; j < cs; j += 1) {
+        for (i = 0; i < rs; i += 1) {
           if ((B[k*ps + j*rs + i] == VAL_OBJET) && (NbPred3d(B, rs, cs, ds, i, j, k) == 1))
 	  {
             B[k*ps + j*rs + i] = 0;
             n++;
-	  }
+          }
+        }
+      }
+    }
     m += n;
   } while (n > 0);
   return m;
@@ -1752,14 +2501,17 @@ index_t EffaceLiensAlphaLibresNonMarques3d(struct xvimage *b)
   do 
   {
     n = 0;
-    for (k = 0; k < ds; k += 1)
-      for (j = 0; j < cs; j += 1)
-        for (i = 0; i < rs; i += 1)
+    for (k = 0; k < ds; k += 1) {
+      for (j = 0; j < cs; j += 1) {
+        for (i = 0; i < rs; i += 1) {
           if ((B[k*ps + j*rs + i] == VAL_OBJET) && (NbSucc3d(B, rs, cs, ds, i, j, k) == 1))
 	  {
             B[k*ps + j*rs + i] = 0;
             n++;
-	  }
+          }
+        }
+      }
+    }
     m += n;
   } while (n > 0);
   return m;
@@ -1799,9 +2551,9 @@ void Connex6Obj3d(struct xvimage *b)
   int32_t u, n;
   index_t tab[GRS3D*GCS3D*GDS3D];
 
-  for (k = 0; k < ds; k++)
-    for (j = 0; j < cs; j++)
-      for (i = 0; i < rs; i++)
+  for (k = 0; k < ds; k++) {
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
         if (!CUBE3D(i,j,k))
         {
           Betacarre3d(rs, cs, ds, i, j, k, tab, &n);
@@ -1810,11 +2562,16 @@ void Connex6Obj3d(struct xvimage *b)
             x = tab[u] % rs;
             y = (tab[u] % ps) / rs;
             z = tab[u] / ps;
-            if ((CUBE3D(x,y,z)) && !B[tab[u]]) goto skip;
+            if ((CUBE3D(x, y, z)) && !B[tab[u]]) {
+              goto skip;
+            }
           }
           B[k*ps+j*rs+i] = VAL_OBJET;
 skip: ;
-        }
+}
+      }
+    }
+  }
 } /* Connex6Obj3d() */
 
 /* ==================================== */
@@ -1828,20 +2585,32 @@ void ColorieKh3d(struct xvimage *b)
   uint8_t *B = UCHARDATA(b);
   index_t i, j, k;
 
-  for (k = 0; k < ds; k += 1)
-    for (j = 0; j < cs; j += 1)
-      for (i = 0; i < rs; i += 1)
+  for (k = 0; k < ds; k += 1) {
+    for (j = 0; j < cs; j += 1) {
+      for (i = 0; i < rs; i += 1) {
         if (B[k*ps + j*rs + i])
         {
-          if (CUBE3D (i,j,k)) B[k*ps + j*rs + i] = NDG_CUBE3D;
-          else if (CARRE3DXY(i,j,k)) B[k*ps + j*rs + i] = NDG_CARRE3DXY;
-          else if (CARRE3DYZ(i,j,k)) B[k*ps + j*rs + i] = NDG_CARRE3DYZ;
-          else if (CARRE3DXZ(i,j,k)) B[k*ps + j*rs + i] = NDG_CARRE3DXZ;
-          else if (INTER3DX(i,j,k)) B[k*ps + j*rs + i] = NDG_INTER3DX;
-          else if (INTER3DY(i,j,k)) B[k*ps + j*rs + i] = NDG_INTER3DY;
-          else if (INTER3DZ(i,j,k)) B[k*ps + j*rs + i] = NDG_INTER3DZ;
-          else if (SINGL3D(i,j,k)) B[k*ps + j*rs + i] = NDG_SINGL3D;
+          if (CUBE3D(i, j, k)) {
+            B[k * ps + j * rs + i] = NDG_CUBE3D;
+          } else if (CARRE3DXY(i, j, k)) {
+            B[k * ps + j * rs + i] = NDG_CARRE3DXY;
+          } else if (CARRE3DYZ(i, j, k)) {
+            B[k * ps + j * rs + i] = NDG_CARRE3DYZ;
+          } else if (CARRE3DXZ(i, j, k)) {
+            B[k * ps + j * rs + i] = NDG_CARRE3DXZ;
+          } else if (INTER3DX(i, j, k)) {
+            B[k * ps + j * rs + i] = NDG_INTER3DX;
+          } else if (INTER3DY(i, j, k)) {
+            B[k * ps + j * rs + i] = NDG_INTER3DY;
+          } else if (INTER3DZ(i, j, k)) {
+            B[k * ps + j * rs + i] = NDG_INTER3DZ;
+          } else if (SINGL3D(i, j, k)) {
+            B[k * ps + j * rs + i] = NDG_SINGL3D;
+          }
         }
+      }
+    }
+  }
 } /* ColorieKh3d() */
 
 /* ==================================== */
@@ -1856,16 +2625,24 @@ index_t EulerKh3d(struct xvimage *b)
   index_t i, j, k;
   index_t n3=0, n2=0, n1=0, n0=0;
 
-  for (k = 0; k < ds; k += 1)
-    for (j = 0; j < cs; j += 1)
-      for (i = 0; i < rs; i += 1)
+  for (k = 0; k < ds; k += 1) {
+    for (j = 0; j < cs; j += 1) {
+      for (i = 0; i < rs; i += 1) {
         if (B[k*ps + j*rs + i])
         {
-          if (CUBE3D (i,j,k)) n3++;
-          else if (CARRE3D(i,j,k)) n2++;
-          else if (INTER3D(i,j,k)) n1++;
-          else if (SINGL3D(i,j,k)) n0++;
+          if (CUBE3D(i, j, k)) {
+            n3++;
+          } else if (CARRE3D(i, j, k)) {
+            n2++;
+          } else if (INTER3D(i, j, k)) {
+            n1++;
+          } else if (SINGL3D(i, j, k)) {
+            n0++;
+          }
         }
+      }
+    }
+  }
   return n0 - n1 + n2 - n3;
 } /* EulerKh3d() */
 
@@ -1881,16 +2658,24 @@ index_t EulerKh3dVal(struct xvimage *b, uint8_t Val)
   index_t i, j, k;
   index_t n3=0, n2=0, n1=0, n0=0;
 
-  for (k = 0; k < ds; k += 1)
-    for (j = 0; j < cs; j += 1)
-      for (i = 0; i < rs; i += 1)
+  for (k = 0; k < ds; k += 1) {
+    for (j = 0; j < cs; j += 1) {
+      for (i = 0; i < rs; i += 1) {
         if (B[k*ps + j*rs + i] == Val)
         {
-          if (CUBE3D (i,j,k)) n3++;
-          else if (CARRE3D(i,j,k)) n2++;
-          else if (INTER3D(i,j,k)) n1++;
-          else if (SINGL3D(i,j,k)) n0++;
+          if (CUBE3D(i, j, k)) {
+            n3++;
+          } else if (CARRE3D(i, j, k)) {
+            n2++;
+          } else if (INTER3D(i, j, k)) {
+            n1++;
+          } else if (SINGL3D(i, j, k)) {
+            n0++;
+          }
         }
+      }
+    }
+  }
   return n0 - n1 + n2 - n3;
 } /* EulerKh3dVal() */
 
@@ -1912,50 +2697,113 @@ printf("CopieAlphacarre3d\n");
   memset(G, VAL_NULLE, GRS3D*GCS3D*GDS3D); /* init a VAL_NULLE */
   if (i % 2)
   {
-    if ((i>0)&&B[k*ps+j*rs+i-1]) G[z*gps+y*grs+x-1] = VAL_OBJET;
-    if (((i+1)<rs)&&B[k*ps+j*rs+i+1]) G[z*gps+y*grs+x+1] = VAL_OBJET;
+    if ((i > 0) && B[k * ps + j * rs + i - 1]) {
+      G[z * gps + y * grs + x - 1] = VAL_OBJET;
+    }
+    if (((i + 1) < rs) && B[k * ps + j * rs + i + 1]) {
+      G[z * gps + y * grs + x + 1] = VAL_OBJET;
+    }
   }
   if (j % 2)
   {
-    if ((j>0)&&B[k*ps+(j-1)*rs+i]) G[z*gps+(y-1)*grs+x] = VAL_OBJET;
-    if (((j+1)<cs)&&B[k*ps+(j+1)*rs+i]) G[z*gps+(y+1)*grs+x] = VAL_OBJET;
+    if ((j > 0) && B[k * ps + (j - 1) * rs + i]) {
+      G[z * gps + (y - 1) * grs + x] = VAL_OBJET;
+    }
+    if (((j + 1) < cs) && B[k * ps + (j + 1) * rs + i]) {
+      G[z * gps + (y + 1) * grs + x] = VAL_OBJET;
+    }
   }
   if (k % 2)
   {
-    if ((k>0)&&B[(k-1)*ps+j*rs+i]) G[(z-1)*gps+y*grs+x] = VAL_OBJET;
-    if (((k+1)<ds)&&B[(k+1)*ps+j*rs+i]) G[(z+1)*gps+y*grs+x] = VAL_OBJET;
+    if ((k > 0) && B[(k - 1) * ps + j * rs + i]) {
+      G[(z - 1) * gps + y * grs + x] = VAL_OBJET;
+    }
+    if (((k + 1) < ds) && B[(k + 1) * ps + j * rs + i]) {
+      G[(z + 1) * gps + y * grs + x] = VAL_OBJET;
+    }
   }
   if ((i%2) + (j%2) == 2)
   {
-    if (((i>0)&&(j>0))&&B[k*ps+(j-1)*rs+i-1]) G[z*gps+(y-1)*grs+x-1] = VAL_OBJET;
-    if (((i>0)&&((j+1)<cs))&&B[k*ps+(j+1)*rs+i-1]) G[z*gps+(y+1)*grs+x-1] = VAL_OBJET;
-    if ((((i+1)<rs)&&(j>0))&&B[k*ps+(j-1)*rs+i+1]) G[z*gps+(y-1)*grs+x+1] = VAL_OBJET;
-    if ((((i+1)<rs)&&((j+1)<cs))&&B[k*ps+(j+1)*rs+i+1]) G[z*gps+(y+1)*grs+x+1] = VAL_OBJET;
+    if (((i > 0) && (j > 0)) && B[k * ps + (j - 1) * rs + i - 1]) {
+      G[z * gps + (y - 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (((i > 0) && ((j + 1) < cs)) && B[k * ps + (j + 1) * rs + i - 1]) {
+      G[z * gps + (y + 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && (j > 0)) && B[k * ps + (j - 1) * rs + i + 1]) {
+      G[z * gps + (y - 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs)) &&
+        B[k * ps + (j + 1) * rs + i + 1]) {
+      G[z * gps + (y + 1) * grs + x + 1] = VAL_OBJET;
+    }
   }
   if ((i%2) + (k%2) == 2)
   {
-    if (((i>0)&&(k>0))&&B[(k-1)*ps+j*rs+i-1]) G[(z-1)*gps+y*grs+x-1] = VAL_OBJET;
-    if (((i>0)&&((k+1)<ds))&&B[(k+1)*ps+j*rs+i-1]) G[(z+1)*gps+y*grs+x-1] = VAL_OBJET;
-    if ((((i+1)<rs)&&(k>0))&&B[(k-1)*ps+j*rs+i+1]) G[(z-1)*gps+y*grs+x+1] = VAL_OBJET;
-    if ((((i+1)<rs)&&((k+1)<ds))&&B[(k+1)*ps+j*rs+i+1]) G[(z+1)*gps+y*grs+x+1] = VAL_OBJET;
+    if (((i > 0) && (k > 0)) && B[(k - 1) * ps + j * rs + i - 1]) {
+      G[(z - 1) * gps + y * grs + x - 1] = VAL_OBJET;
+    }
+    if (((i > 0) && ((k + 1) < ds)) && B[(k + 1) * ps + j * rs + i - 1]) {
+      G[(z + 1) * gps + y * grs + x - 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && (k > 0)) && B[(k - 1) * ps + j * rs + i + 1]) {
+      G[(z - 1) * gps + y * grs + x + 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + j * rs + i + 1]) {
+      G[(z + 1) * gps + y * grs + x + 1] = VAL_OBJET;
+    }
   }
   if ((k%2) + (j%2) == 2)
   {
-    if (((k>0)&&(j>0))&&B[(k-1)*ps+(j-1)*rs+i]) G[(z-1)*gps+(y-1)*grs+x] = VAL_OBJET;
-    if (((k>0)&&((j+1)<cs))&&B[(k-1)*ps+(j+1)*rs+i]) G[(z-1)*gps+(y+1)*grs+x] = VAL_OBJET;
-    if ((((k+1)<ds)&&(j>0))&&B[(k+1)*ps+(j-1)*rs+i]) G[(z+1)*gps+(y-1)*grs+x] = VAL_OBJET;
-    if ((((k+1)<ds)&&((j+1)<cs))&&B[(k+1)*ps+(j+1)*rs+i]) G[(z+1)*gps+(y+1)*grs+x] = VAL_OBJET;
+    if (((k > 0) && (j > 0)) && B[(k - 1) * ps + (j - 1) * rs + i]) {
+      G[(z - 1) * gps + (y - 1) * grs + x] = VAL_OBJET;
+    }
+    if (((k > 0) && ((j + 1) < cs)) && B[(k - 1) * ps + (j + 1) * rs + i]) {
+      G[(z - 1) * gps + (y + 1) * grs + x] = VAL_OBJET;
+    }
+    if ((((k + 1) < ds) && (j > 0)) && B[(k + 1) * ps + (j - 1) * rs + i]) {
+      G[(z + 1) * gps + (y - 1) * grs + x] = VAL_OBJET;
+    }
+    if ((((k + 1) < ds) && ((j + 1) < cs)) &&
+        B[(k + 1) * ps + (j + 1) * rs + i]) {
+      G[(z + 1) * gps + (y + 1) * grs + x] = VAL_OBJET;
+    }
   }
   if ((i%2) + (j%2) + (k%2) == 3)
   {
-    if (((i>0)&&(j>0)&&(k>0))&&B[(k-1)*ps+(j-1)*rs+i-1]) G[(z-1)*gps+(y-1)*grs+x-1] = VAL_OBJET;
-    if (((i>0)&&((j+1)<cs)&&(k>0))&&B[(k-1)*ps+(j+1)*rs+i-1]) G[(z-1)*gps+(y+1)*grs+x-1] = VAL_OBJET;
-    if ((((i+1)<rs)&&(j>0)&&(k>0))&&B[(k-1)*ps+(j-1)*rs+i+1]) G[(z-1)*gps+(y-1)*grs+x+1] = VAL_OBJET;
-    if ((((i+1)<rs)&&((j+1)<cs)&&(k>0))&&B[(k-1)*ps+(j+1)*rs+i+1]) G[(z-1)*gps+(y+1)*grs+x+1] = VAL_OBJET;
-    if (((i>0)&&(j>0)&&((k+1)<ds))&&B[(k+1)*ps+(j-1)*rs+i-1]) G[(z+1)*gps+(y-1)*grs+x-1] = VAL_OBJET;
-    if (((i>0)&&((j+1)<cs)&&((k+1)<ds))&&B[(k+1)*ps+(j+1)*rs+i-1]) G[(z+1)*gps+(y+1)*grs+x-1] = VAL_OBJET;
-    if ((((i+1)<rs)&&(j>0)&&((k+1)<ds))&&B[(k+1)*ps+(j-1)*rs+i+1]) G[(z+1)*gps+(y-1)*grs+x+1] = VAL_OBJET;
-    if ((((i+1)<rs)&&((j+1)<cs)&&((k+1)<ds))&&B[(k+1)*ps+(j+1)*rs+i+1]) G[(z+1)*gps+(y+1)*grs+x+1] = VAL_OBJET;
+    if (((i > 0) && (j > 0) && (k > 0)) &&
+        B[(k - 1) * ps + (j - 1) * rs + i - 1]) {
+      G[(z - 1) * gps + (y - 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (((i > 0) && ((j + 1) < cs) && (k > 0)) &&
+        B[(k - 1) * ps + (j + 1) * rs + i - 1]) {
+      G[(z - 1) * gps + (y + 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && (j > 0) && (k > 0)) &&
+        B[(k - 1) * ps + (j - 1) * rs + i + 1]) {
+      G[(z - 1) * gps + (y - 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs) && (k > 0)) &&
+        B[(k - 1) * ps + (j + 1) * rs + i + 1]) {
+      G[(z - 1) * gps + (y + 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if (((i > 0) && (j > 0) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j - 1) * rs + i - 1]) {
+      G[(z + 1) * gps + (y - 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (((i > 0) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j + 1) * rs + i - 1]) {
+      G[(z + 1) * gps + (y + 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && (j > 0) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j - 1) * rs + i + 1]) {
+      G[(z + 1) * gps + (y - 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j + 1) * rs + i + 1]) {
+      G[(z + 1) * gps + (y + 1) * grs + x + 1] = VAL_OBJET;
+    }
   }
 } /* CopieAlphacarre3d() */
 
@@ -1984,99 +2832,225 @@ printf("CopieThetacarre3d(rs=%d cs=%d ds=%d i=%d j=%d k=%d)\n", rs, cs, ds, i, j
   /* copie le Alphacarre */
   if (i % 2)
   {
-    if ((i>0)&&B[k*ps+j*rs+i-1]) G[z*gps+y*grs+x-1] = VAL_OBJET;
-    if (((i+1)<rs)&&B[k*ps+j*rs+i+1]) G[z*gps+y*grs+x+1] = VAL_OBJET;
+    if ((i > 0) && B[k * ps + j * rs + i - 1]) {
+      G[z * gps + y * grs + x - 1] = VAL_OBJET;
+    }
+    if (((i + 1) < rs) && B[k * ps + j * rs + i + 1]) {
+      G[z * gps + y * grs + x + 1] = VAL_OBJET;
+    }
   }
   if (j % 2)
   {
-    if ((j>0)&&B[k*ps+(j-1)*rs+i]) G[z*gps+(y-1)*grs+x] = VAL_OBJET;
-    if (((j+1)<cs)&&B[k*ps+(j+1)*rs+i]) G[z*gps+(y+1)*grs+x] = VAL_OBJET;
+    if ((j > 0) && B[k * ps + (j - 1) * rs + i]) {
+      G[z * gps + (y - 1) * grs + x] = VAL_OBJET;
+    }
+    if (((j + 1) < cs) && B[k * ps + (j + 1) * rs + i]) {
+      G[z * gps + (y + 1) * grs + x] = VAL_OBJET;
+    }
   }
   if (k % 2)
   {
-    if ((k>0)&&B[(k-1)*ps+j*rs+i]) G[(z-1)*gps+y*grs+x] = VAL_OBJET;
-    if (((k+1)<ds)&&B[(k+1)*ps+j*rs+i]) G[(z+1)*gps+y*grs+x] = VAL_OBJET;
+    if ((k > 0) && B[(k - 1) * ps + j * rs + i]) {
+      G[(z - 1) * gps + y * grs + x] = VAL_OBJET;
+    }
+    if (((k + 1) < ds) && B[(k + 1) * ps + j * rs + i]) {
+      G[(z + 1) * gps + y * grs + x] = VAL_OBJET;
+    }
   }
   if ((i%2) + (j%2) == 2)
   {
-    if (((i>0)&&(j>0))&&B[k*ps+(j-1)*rs+i-1]) G[z*gps+(y-1)*grs+x-1] = VAL_OBJET;
-    if (((i>0)&&((j+1)<cs))&&B[k*ps+(j+1)*rs+i-1]) G[z*gps+(y+1)*grs+x-1] = VAL_OBJET;
-    if ((((i+1)<rs)&&(j>0))&&B[k*ps+(j-1)*rs+i+1]) G[z*gps+(y-1)*grs+x+1] = VAL_OBJET;
-    if ((((i+1)<rs)&&((j+1)<cs))&&B[k*ps+(j+1)*rs+i+1]) G[z*gps+(y+1)*grs+x+1] = VAL_OBJET;
+    if (((i > 0) && (j > 0)) && B[k * ps + (j - 1) * rs + i - 1]) {
+      G[z * gps + (y - 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (((i > 0) && ((j + 1) < cs)) && B[k * ps + (j + 1) * rs + i - 1]) {
+      G[z * gps + (y + 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && (j > 0)) && B[k * ps + (j - 1) * rs + i + 1]) {
+      G[z * gps + (y - 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs)) &&
+        B[k * ps + (j + 1) * rs + i + 1]) {
+      G[z * gps + (y + 1) * grs + x + 1] = VAL_OBJET;
+    }
   }
   if ((i%2) + (k%2) == 2)
   {
-    if (((i>0)&&(k>0))&&B[(k-1)*ps+j*rs+i-1]) G[(z-1)*gps+y*grs+x-1] = VAL_OBJET;
-    if (((i>0)&&((k+1)<ds))&&B[(k+1)*ps+j*rs+i-1]) G[(z+1)*gps+y*grs+x-1] = VAL_OBJET;
-    if ((((i+1)<rs)&&(k>0))&&B[(k-1)*ps+j*rs+i+1]) G[(z-1)*gps+y*grs+x+1] = VAL_OBJET;
-    if ((((i+1)<rs)&&((k+1)<ds))&&B[(k+1)*ps+j*rs+i+1]) G[(z+1)*gps+y*grs+x+1] = VAL_OBJET;
+    if (((i > 0) && (k > 0)) && B[(k - 1) * ps + j * rs + i - 1]) {
+      G[(z - 1) * gps + y * grs + x - 1] = VAL_OBJET;
+    }
+    if (((i > 0) && ((k + 1) < ds)) && B[(k + 1) * ps + j * rs + i - 1]) {
+      G[(z + 1) * gps + y * grs + x - 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && (k > 0)) && B[(k - 1) * ps + j * rs + i + 1]) {
+      G[(z - 1) * gps + y * grs + x + 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + j * rs + i + 1]) {
+      G[(z + 1) * gps + y * grs + x + 1] = VAL_OBJET;
+    }
   }
   if ((k%2) + (j%2) == 2)
   {
-    if (((k>0)&&(j>0))&&B[(k-1)*ps+(j-1)*rs+i]) G[(z-1)*gps+(y-1)*grs+x] = VAL_OBJET;
-    if (((k>0)&&((j+1)<cs))&&B[(k-1)*ps+(j+1)*rs+i]) G[(z-1)*gps+(y+1)*grs+x] = VAL_OBJET;
-    if ((((k+1)<ds)&&(j>0))&&B[(k+1)*ps+(j-1)*rs+i]) G[(z+1)*gps+(y-1)*grs+x] = VAL_OBJET;
-    if ((((k+1)<ds)&&((j+1)<cs))&&B[(k+1)*ps+(j+1)*rs+i]) G[(z+1)*gps+(y+1)*grs+x] = VAL_OBJET;
+    if (((k > 0) && (j > 0)) && B[(k - 1) * ps + (j - 1) * rs + i]) {
+      G[(z - 1) * gps + (y - 1) * grs + x] = VAL_OBJET;
+    }
+    if (((k > 0) && ((j + 1) < cs)) && B[(k - 1) * ps + (j + 1) * rs + i]) {
+      G[(z - 1) * gps + (y + 1) * grs + x] = VAL_OBJET;
+    }
+    if ((((k + 1) < ds) && (j > 0)) && B[(k + 1) * ps + (j - 1) * rs + i]) {
+      G[(z + 1) * gps + (y - 1) * grs + x] = VAL_OBJET;
+    }
+    if ((((k + 1) < ds) && ((j + 1) < cs)) &&
+        B[(k + 1) * ps + (j + 1) * rs + i]) {
+      G[(z + 1) * gps + (y + 1) * grs + x] = VAL_OBJET;
+    }
   }
   if ((i%2) + (j%2) + (k%2) == 3)
   {
-    if (((i>0)&&(j>0)&&(k>0))&&B[(k-1)*ps+(j-1)*rs+i-1]) G[(z-1)*gps+(y-1)*grs+x-1] = VAL_OBJET;
-    if (((i>0)&&((j+1)<cs)&&(k>0))&&B[(k-1)*ps+(j+1)*rs+i-1]) G[(z-1)*gps+(y+1)*grs+x-1] = VAL_OBJET;
-    if ((((i+1)<rs)&&(j>0)&&(k>0))&&B[(k-1)*ps+(j-1)*rs+i+1]) G[(z-1)*gps+(y-1)*grs+x+1] = VAL_OBJET;
-    if ((((i+1)<rs)&&((j+1)<cs)&&(k>0))&&B[(k-1)*ps+(j+1)*rs+i+1]) G[(z-1)*gps+(y+1)*grs+x+1] = VAL_OBJET;
-    if (((i>0)&&(j>0)&&((k+1)<ds))&&B[(k+1)*ps+(j-1)*rs+i-1]) G[(z+1)*gps+(y-1)*grs+x-1] = VAL_OBJET;
-    if (((i>0)&&((j+1)<cs)&&((k+1)<ds))&&B[(k+1)*ps+(j+1)*rs+i-1]) G[(z+1)*gps+(y+1)*grs+x-1] = VAL_OBJET;
-    if ((((i+1)<rs)&&(j>0)&&((k+1)<ds))&&B[(k+1)*ps+(j-1)*rs+i+1]) G[(z+1)*gps+(y-1)*grs+x+1] = VAL_OBJET;
-    if ((((i+1)<rs)&&((j+1)<cs)&&((k+1)<ds))&&B[(k+1)*ps+(j+1)*rs+i+1]) G[(z+1)*gps+(y+1)*grs+x+1] = VAL_OBJET;
+    if (((i > 0) && (j > 0) && (k > 0)) &&
+        B[(k - 1) * ps + (j - 1) * rs + i - 1]) {
+      G[(z - 1) * gps + (y - 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (((i > 0) && ((j + 1) < cs) && (k > 0)) &&
+        B[(k - 1) * ps + (j + 1) * rs + i - 1]) {
+      G[(z - 1) * gps + (y + 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && (j > 0) && (k > 0)) &&
+        B[(k - 1) * ps + (j - 1) * rs + i + 1]) {
+      G[(z - 1) * gps + (y - 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs) && (k > 0)) &&
+        B[(k - 1) * ps + (j + 1) * rs + i + 1]) {
+      G[(z - 1) * gps + (y + 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if (((i > 0) && (j > 0) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j - 1) * rs + i - 1]) {
+      G[(z + 1) * gps + (y - 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (((i > 0) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j + 1) * rs + i - 1]) {
+      G[(z + 1) * gps + (y + 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && (j > 0) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j - 1) * rs + i + 1]) {
+      G[(z + 1) * gps + (y - 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j + 1) * rs + i + 1]) {
+      G[(z + 1) * gps + (y + 1) * grs + x + 1] = VAL_OBJET;
+    }
   }
 
   /* copie le Betacarre */
   if ((i+1) % 2)
   {
-    if ((i>0)&&B[k*ps+j*rs+i-1]) G[z*gps+y*grs+x-1] = VAL_OBJET;
-    if (((i+1)<rs)&&B[k*ps+j*rs+i+1]) G[z*gps+y*grs+x+1] = VAL_OBJET;
+    if ((i > 0) && B[k * ps + j * rs + i - 1]) {
+      G[z * gps + y * grs + x - 1] = VAL_OBJET;
+    }
+    if (((i + 1) < rs) && B[k * ps + j * rs + i + 1]) {
+      G[z * gps + y * grs + x + 1] = VAL_OBJET;
+    }
   }
   if ((j+1) % 2)
   {
-    if ((j>0)&&B[k*ps+(j-1)*rs+i]) G[z*gps+(y-1)*grs+x] = VAL_OBJET;
-    if (((j+1)<cs)&&B[k*ps+(j+1)*rs+i]) G[z*gps+(y+1)*grs+x] = VAL_OBJET;
+    if ((j > 0) && B[k * ps + (j - 1) * rs + i]) {
+      G[z * gps + (y - 1) * grs + x] = VAL_OBJET;
+    }
+    if (((j + 1) < cs) && B[k * ps + (j + 1) * rs + i]) {
+      G[z * gps + (y + 1) * grs + x] = VAL_OBJET;
+    }
   }
   if ((k+1) % 2)
   {
-    if ((k>0)&&B[(k-1)*ps+j*rs+i]) G[(z-1)*gps+y*grs+x] = VAL_OBJET;
-    if (((k+1)<ds)&&B[(k+1)*ps+j*rs+i]) G[(z+1)*gps+y*grs+x] = VAL_OBJET;
+    if ((k > 0) && B[(k - 1) * ps + j * rs + i]) {
+      G[(z - 1) * gps + y * grs + x] = VAL_OBJET;
+    }
+    if (((k + 1) < ds) && B[(k + 1) * ps + j * rs + i]) {
+      G[(z + 1) * gps + y * grs + x] = VAL_OBJET;
+    }
   }
   if (((i+1)%2) + ((j+1)%2) == 2)
   {
-    if (((i>0)&&(j>0))&&B[k*ps+(j-1)*rs+i-1]) G[z*gps+(y-1)*grs+x-1] = VAL_OBJET;
-    if (((i>0)&&((j+1)<cs))&&B[k*ps+(j+1)*rs+i-1]) G[z*gps+(y+1)*grs+x-1] = VAL_OBJET;
-    if ((((i+1)<rs)&&(j>0))&&B[k*ps+(j-1)*rs+i+1]) G[z*gps+(y-1)*grs+x+1] = VAL_OBJET;
-    if ((((i+1)<rs)&&((j+1)<cs))&&B[k*ps+(j+1)*rs+i+1]) G[z*gps+(y+1)*grs+x+1] = VAL_OBJET;
+    if (((i > 0) && (j > 0)) && B[k * ps + (j - 1) * rs + i - 1]) {
+      G[z * gps + (y - 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (((i > 0) && ((j + 1) < cs)) && B[k * ps + (j + 1) * rs + i - 1]) {
+      G[z * gps + (y + 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && (j > 0)) && B[k * ps + (j - 1) * rs + i + 1]) {
+      G[z * gps + (y - 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs)) &&
+        B[k * ps + (j + 1) * rs + i + 1]) {
+      G[z * gps + (y + 1) * grs + x + 1] = VAL_OBJET;
+    }
   }
   if (((i+1)%2) + ((k+1)%2) == 2)
   {
-    if (((i>0)&&(k>0))&&B[(k-1)*ps+j*rs+i-1]) G[(z-1)*gps+y*grs+x-1] = VAL_OBJET;
-    if (((i>0)&&((k+1)<ds))&&B[(k+1)*ps+j*rs+i-1]) G[(z+1)*gps+y*grs+x-1] = VAL_OBJET;
-    if ((((i+1)<rs)&&(k>0))&&B[(k-1)*ps+j*rs+i+1]) G[(z-1)*gps+y*grs+x+1] = VAL_OBJET;
-    if ((((i+1)<rs)&&((k+1)<ds))&&B[(k+1)*ps+j*rs+i+1]) G[(z+1)*gps+y*grs+x+1] = VAL_OBJET;
+    if (((i > 0) && (k > 0)) && B[(k - 1) * ps + j * rs + i - 1]) {
+      G[(z - 1) * gps + y * grs + x - 1] = VAL_OBJET;
+    }
+    if (((i > 0) && ((k + 1) < ds)) && B[(k + 1) * ps + j * rs + i - 1]) {
+      G[(z + 1) * gps + y * grs + x - 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && (k > 0)) && B[(k - 1) * ps + j * rs + i + 1]) {
+      G[(z - 1) * gps + y * grs + x + 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + j * rs + i + 1]) {
+      G[(z + 1) * gps + y * grs + x + 1] = VAL_OBJET;
+    }
   }
   if (((k+1)%2) + ((j+1)%2) == 2)
   {
-    if (((k>0)&&(j>0))&&B[(k-1)*ps+(j-1)*rs+i]) G[(z-1)*gps+(y-1)*grs+x] = VAL_OBJET;
-    if (((k>0)&&((j+1)<cs))&&B[(k-1)*ps+(j+1)*rs+i]) G[(z-1)*gps+(y+1)*grs+x] = VAL_OBJET;
-    if ((((k+1)<ds)&&(j>0))&&B[(k+1)*ps+(j-1)*rs+i]) G[(z+1)*gps+(y-1)*grs+x] = VAL_OBJET;
-    if ((((k+1)<ds)&&((j+1)<cs))&&B[(k+1)*ps+(j+1)*rs+i]) G[(z+1)*gps+(y+1)*grs+x] = VAL_OBJET;
+    if (((k > 0) && (j > 0)) && B[(k - 1) * ps + (j - 1) * rs + i]) {
+      G[(z - 1) * gps + (y - 1) * grs + x] = VAL_OBJET;
+    }
+    if (((k > 0) && ((j + 1) < cs)) && B[(k - 1) * ps + (j + 1) * rs + i]) {
+      G[(z - 1) * gps + (y + 1) * grs + x] = VAL_OBJET;
+    }
+    if ((((k + 1) < ds) && (j > 0)) && B[(k + 1) * ps + (j - 1) * rs + i]) {
+      G[(z + 1) * gps + (y - 1) * grs + x] = VAL_OBJET;
+    }
+    if ((((k + 1) < ds) && ((j + 1) < cs)) &&
+        B[(k + 1) * ps + (j + 1) * rs + i]) {
+      G[(z + 1) * gps + (y + 1) * grs + x] = VAL_OBJET;
+    }
   }
   if (((i+1)%2) + ((j+1)%2) + ((k+1)%2) == 3)
   {
-    if (((i>0)&&(j>0)&&(k>0))&&B[(k-1)*ps+(j-1)*rs+i-1]) G[(z-1)*gps+(y-1)*grs+x-1] = VAL_OBJET;
-    if (((i>0)&&((j+1)<cs)&&(k>0))&&B[(k-1)*ps+(j+1)*rs+i-1]) G[(z-1)*gps+(y+1)*grs+x-1] = VAL_OBJET;
-    if ((((i+1)<rs)&&(j>0)&&(k>0))&&B[(k-1)*ps+(j-1)*rs+i+1]) G[(z-1)*gps+(y-1)*grs+x+1] = VAL_OBJET;
-    if ((((i+1)<rs)&&((j+1)<cs)&&(k>0))&&B[(k-1)*ps+(j+1)*rs+i+1]) G[(z-1)*gps+(y+1)*grs+x+1] = VAL_OBJET;
-    if (((i>0)&&(j>0)&&((k+1)<ds))&&B[(k+1)*ps+(j-1)*rs+i-1]) G[(z+1)*gps+(y-1)*grs+x-1] = VAL_OBJET;
-    if (((i>0)&&((j+1)<cs)&&((k+1)<ds))&&B[(k+1)*ps+(j+1)*rs+i-1]) G[(z+1)*gps+(y+1)*grs+x-1] = VAL_OBJET;
-    if ((((i+1)<rs)&&(j>0)&&((k+1)<ds))&&B[(k+1)*ps+(j-1)*rs+i+1]) G[(z+1)*gps+(y-1)*grs+x+1] = VAL_OBJET;
-    if ((((i+1)<rs)&&((j+1)<cs)&&((k+1)<ds))&&B[(k+1)*ps+(j+1)*rs+i+1]) G[(z+1)*gps+(y+1)*grs+x+1] = VAL_OBJET;
+    if (((i > 0) && (j > 0) && (k > 0)) &&
+        B[(k - 1) * ps + (j - 1) * rs + i - 1]) {
+      G[(z - 1) * gps + (y - 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (((i > 0) && ((j + 1) < cs) && (k > 0)) &&
+        B[(k - 1) * ps + (j + 1) * rs + i - 1]) {
+      G[(z - 1) * gps + (y + 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && (j > 0) && (k > 0)) &&
+        B[(k - 1) * ps + (j - 1) * rs + i + 1]) {
+      G[(z - 1) * gps + (y - 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs) && (k > 0)) &&
+        B[(k - 1) * ps + (j + 1) * rs + i + 1]) {
+      G[(z - 1) * gps + (y + 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if (((i > 0) && (j > 0) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j - 1) * rs + i - 1]) {
+      G[(z + 1) * gps + (y - 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (((i > 0) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j + 1) * rs + i - 1]) {
+      G[(z + 1) * gps + (y + 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && (j > 0) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j - 1) * rs + i + 1]) {
+      G[(z + 1) * gps + (y - 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j + 1) * rs + i + 1]) {
+      G[(z + 1) * gps + (y + 1) * grs + x + 1] = VAL_OBJET;
+    }
   }
 } /* CopieThetacarre3d() */
 
@@ -2105,99 +3079,225 @@ printf("CopieThetacarre3d(rs=%d cs=%d ds=%d i=%d j=%d k=%d)\n", rs, cs, ds, i, j
   /* copie le Alphacarre */
   if (i % 2)
   {
-    if (!(i>0)||!B[k*ps+j*rs+i-1]) G[z*gps+y*grs+x-1] = VAL_OBJET;
-    if (!((i+1)<rs)||!B[k*ps+j*rs+i+1]) G[z*gps+y*grs+x+1] = VAL_OBJET;
+    if (!(i > 0) || !B[k * ps + j * rs + i - 1]) {
+      G[z * gps + y * grs + x - 1] = VAL_OBJET;
+    }
+    if (!((i + 1) < rs) || !B[k * ps + j * rs + i + 1]) {
+      G[z * gps + y * grs + x + 1] = VAL_OBJET;
+    }
   }
   if (j % 2)
   {
-    if (!(j>0)||!B[k*ps+(j-1)*rs+i]) G[z*gps+(y-1)*grs+x] = VAL_OBJET;
-    if (!((j+1)<cs)||!B[k*ps+(j+1)*rs+i]) G[z*gps+(y+1)*grs+x] = VAL_OBJET;
+    if (!(j > 0) || !B[k * ps + (j - 1) * rs + i]) {
+      G[z * gps + (y - 1) * grs + x] = VAL_OBJET;
+    }
+    if (!((j + 1) < cs) || !B[k * ps + (j + 1) * rs + i]) {
+      G[z * gps + (y + 1) * grs + x] = VAL_OBJET;
+    }
   }
   if (k % 2)
   {
-    if (!(k>0)||!B[(k-1)*ps+j*rs+i]) G[(z-1)*gps+y*grs+x] = VAL_OBJET;
-    if (!((k+1)<ds)||!B[(k+1)*ps+j*rs+i]) G[(z+1)*gps+y*grs+x] = VAL_OBJET;
+    if (!(k > 0) || !B[(k - 1) * ps + j * rs + i]) {
+      G[(z - 1) * gps + y * grs + x] = VAL_OBJET;
+    }
+    if (!((k + 1) < ds) || !B[(k + 1) * ps + j * rs + i]) {
+      G[(z + 1) * gps + y * grs + x] = VAL_OBJET;
+    }
   }
   if ((i%2) + (j%2) == 2)
   {
-    if (!((i>0)&&(j>0))||!B[k*ps+(j-1)*rs+i-1]) G[z*gps+(y-1)*grs+x-1] = VAL_OBJET;
-    if (!((i>0)&&((j+1)<cs))||!B[k*ps+(j+1)*rs+i-1]) G[z*gps+(y+1)*grs+x-1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&(j>0))||!B[k*ps+(j-1)*rs+i+1]) G[z*gps+(y-1)*grs+x+1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&((j+1)<cs))||!B[k*ps+(j+1)*rs+i+1]) G[z*gps+(y+1)*grs+x+1] = VAL_OBJET;
+    if (!((i > 0) && (j > 0)) || !B[k * ps + (j - 1) * rs + i - 1]) {
+      G[z * gps + (y - 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (!((i > 0) && ((j + 1) < cs)) || !B[k * ps + (j + 1) * rs + i - 1]) {
+      G[z * gps + (y + 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && (j > 0)) || !B[k * ps + (j - 1) * rs + i + 1]) {
+      G[z * gps + (y - 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && ((j + 1) < cs)) ||
+        !B[k * ps + (j + 1) * rs + i + 1]) {
+      G[z * gps + (y + 1) * grs + x + 1] = VAL_OBJET;
+    }
   }
   if ((i%2) + (k%2) == 2)
   {
-    if (!((i>0)&&(k>0))||!B[(k-1)*ps+j*rs+i-1]) G[(z-1)*gps+y*grs+x-1] = VAL_OBJET;
-    if (!((i>0)&&((k+1)<ds))||!B[(k+1)*ps+j*rs+i-1]) G[(z+1)*gps+y*grs+x-1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&(k>0))||!B[(k-1)*ps+j*rs+i+1]) G[(z-1)*gps+y*grs+x+1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&((k+1)<ds))||!B[(k+1)*ps+j*rs+i+1]) G[(z+1)*gps+y*grs+x+1] = VAL_OBJET;
+    if (!((i > 0) && (k > 0)) || !B[(k - 1) * ps + j * rs + i - 1]) {
+      G[(z - 1) * gps + y * grs + x - 1] = VAL_OBJET;
+    }
+    if (!((i > 0) && ((k + 1) < ds)) || !B[(k + 1) * ps + j * rs + i - 1]) {
+      G[(z + 1) * gps + y * grs + x - 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && (k > 0)) || !B[(k - 1) * ps + j * rs + i + 1]) {
+      G[(z - 1) * gps + y * grs + x + 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && ((k + 1) < ds)) ||
+        !B[(k + 1) * ps + j * rs + i + 1]) {
+      G[(z + 1) * gps + y * grs + x + 1] = VAL_OBJET;
+    }
   }
   if ((k%2) + (j%2) == 2)
   {
-    if (!((k>0)&&(j>0))||!B[(k-1)*ps+(j-1)*rs+i]) G[(z-1)*gps+(y-1)*grs+x] = VAL_OBJET;
-    if (!((k>0)&&((j+1)<cs))||!B[(k-1)*ps+(j+1)*rs+i]) G[(z-1)*gps+(y+1)*grs+x] = VAL_OBJET;
-    if (!(((k+1)<ds)&&(j>0))||!B[(k+1)*ps+(j-1)*rs+i]) G[(z+1)*gps+(y-1)*grs+x] = VAL_OBJET;
-    if (!(((k+1)<ds)&&((j+1)<cs))||!B[(k+1)*ps+(j+1)*rs+i]) G[(z+1)*gps+(y+1)*grs+x] = VAL_OBJET;
+    if (!((k > 0) && (j > 0)) || !B[(k - 1) * ps + (j - 1) * rs + i]) {
+      G[(z - 1) * gps + (y - 1) * grs + x] = VAL_OBJET;
+    }
+    if (!((k > 0) && ((j + 1) < cs)) || !B[(k - 1) * ps + (j + 1) * rs + i]) {
+      G[(z - 1) * gps + (y + 1) * grs + x] = VAL_OBJET;
+    }
+    if (!(((k + 1) < ds) && (j > 0)) || !B[(k + 1) * ps + (j - 1) * rs + i]) {
+      G[(z + 1) * gps + (y - 1) * grs + x] = VAL_OBJET;
+    }
+    if (!(((k + 1) < ds) && ((j + 1) < cs)) ||
+        !B[(k + 1) * ps + (j + 1) * rs + i]) {
+      G[(z + 1) * gps + (y + 1) * grs + x] = VAL_OBJET;
+    }
   }
   if ((i%2) + (j%2) + (k%2) == 3)
   {
-    if (!((i>0)&&(j>0)&&(k>0))||!B[(k-1)*ps+(j-1)*rs+i-1]) G[(z-1)*gps+(y-1)*grs+x-1] = VAL_OBJET;
-    if (!((i>0)&&((j+1)<cs)&&(k>0))||!B[(k-1)*ps+(j+1)*rs+i-1]) G[(z-1)*gps+(y+1)*grs+x-1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&(j>0)&&(k>0))||!B[(k-1)*ps+(j-1)*rs+i+1]) G[(z-1)*gps+(y-1)*grs+x+1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&((j+1)<cs)&&(k>0))||!B[(k-1)*ps+(j+1)*rs+i+1]) G[(z-1)*gps+(y+1)*grs+x+1] = VAL_OBJET;
-    if (!((i>0)&&(j>0)&&((k+1)<ds))||!B[(k+1)*ps+(j-1)*rs+i-1]) G[(z+1)*gps+(y-1)*grs+x-1] = VAL_OBJET;
-    if (!((i>0)&&((j+1)<cs)&&((k+1)<ds))||!B[(k+1)*ps+(j+1)*rs+i-1]) G[(z+1)*gps+(y+1)*grs+x-1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&(j>0)&&((k+1)<ds))||!B[(k+1)*ps+(j-1)*rs+i+1]) G[(z+1)*gps+(y-1)*grs+x+1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&((j+1)<cs)&&((k+1)<ds))||!B[(k+1)*ps+(j+1)*rs+i+1]) G[(z+1)*gps+(y+1)*grs+x+1] = VAL_OBJET;
+    if (!((i > 0) && (j > 0) && (k > 0)) ||
+        !B[(k - 1) * ps + (j - 1) * rs + i - 1]) {
+      G[(z - 1) * gps + (y - 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (!((i > 0) && ((j + 1) < cs) && (k > 0)) ||
+        !B[(k - 1) * ps + (j + 1) * rs + i - 1]) {
+      G[(z - 1) * gps + (y + 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && (j > 0) && (k > 0)) ||
+        !B[(k - 1) * ps + (j - 1) * rs + i + 1]) {
+      G[(z - 1) * gps + (y - 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && ((j + 1) < cs) && (k > 0)) ||
+        !B[(k - 1) * ps + (j + 1) * rs + i + 1]) {
+      G[(z - 1) * gps + (y + 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if (!((i > 0) && (j > 0) && ((k + 1) < ds)) ||
+        !B[(k + 1) * ps + (j - 1) * rs + i - 1]) {
+      G[(z + 1) * gps + (y - 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (!((i > 0) && ((j + 1) < cs) && ((k + 1) < ds)) ||
+        !B[(k + 1) * ps + (j + 1) * rs + i - 1]) {
+      G[(z + 1) * gps + (y + 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && (j > 0) && ((k + 1) < ds)) ||
+        !B[(k + 1) * ps + (j - 1) * rs + i + 1]) {
+      G[(z + 1) * gps + (y - 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && ((j + 1) < cs) && ((k + 1) < ds)) ||
+        !B[(k + 1) * ps + (j + 1) * rs + i + 1]) {
+      G[(z + 1) * gps + (y + 1) * grs + x + 1] = VAL_OBJET;
+    }
   }
 
   /* copie le Betacarre */
   if ((i+1) % 2)
   {
-    if (!(i>0)||!B[k*ps+j*rs+i-1]) G[z*gps+y*grs+x-1] = VAL_OBJET;
-    if (!((i+1)<rs)||!B[k*ps+j*rs+i+1]) G[z*gps+y*grs+x+1] = VAL_OBJET;
+    if (!(i > 0) || !B[k * ps + j * rs + i - 1]) {
+      G[z * gps + y * grs + x - 1] = VAL_OBJET;
+    }
+    if (!((i + 1) < rs) || !B[k * ps + j * rs + i + 1]) {
+      G[z * gps + y * grs + x + 1] = VAL_OBJET;
+    }
   }
   if ((j+1) % 2)
   {
-    if (!(j>0)||!B[k*ps+(j-1)*rs+i]) G[z*gps+(y-1)*grs+x] = VAL_OBJET;
-    if (!((j+1)<cs)||!B[k*ps+(j+1)*rs+i]) G[z*gps+(y+1)*grs+x] = VAL_OBJET;
+    if (!(j > 0) || !B[k * ps + (j - 1) * rs + i]) {
+      G[z * gps + (y - 1) * grs + x] = VAL_OBJET;
+    }
+    if (!((j + 1) < cs) || !B[k * ps + (j + 1) * rs + i]) {
+      G[z * gps + (y + 1) * grs + x] = VAL_OBJET;
+    }
   }
   if ((k+1) % 2)
   {
-    if (!(k>0)||!B[(k-1)*ps+j*rs+i]) G[(z-1)*gps+y*grs+x] = VAL_OBJET;
-    if (!((k+1)<ds)||!B[(k+1)*ps+j*rs+i]) G[(z+1)*gps+y*grs+x] = VAL_OBJET;
+    if (!(k > 0) || !B[(k - 1) * ps + j * rs + i]) {
+      G[(z - 1) * gps + y * grs + x] = VAL_OBJET;
+    }
+    if (!((k + 1) < ds) || !B[(k + 1) * ps + j * rs + i]) {
+      G[(z + 1) * gps + y * grs + x] = VAL_OBJET;
+    }
   }
   if (((i+1)%2) + ((j+1)%2) == 2)
   {
-    if (!((i>0)&&(j>0))||!B[k*ps+(j-1)*rs+i-1]) G[z*gps+(y-1)*grs+x-1] = VAL_OBJET;
-    if (!((i>0)&&((j+1)<cs))||!B[k*ps+(j+1)*rs+i-1]) G[z*gps+(y+1)*grs+x-1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&(j>0))||!B[k*ps+(j-1)*rs+i+1]) G[z*gps+(y-1)*grs+x+1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&((j+1)<cs))||!B[k*ps+(j+1)*rs+i+1]) G[z*gps+(y+1)*grs+x+1] = VAL_OBJET;
+    if (!((i > 0) && (j > 0)) || !B[k * ps + (j - 1) * rs + i - 1]) {
+      G[z * gps + (y - 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (!((i > 0) && ((j + 1) < cs)) || !B[k * ps + (j + 1) * rs + i - 1]) {
+      G[z * gps + (y + 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && (j > 0)) || !B[k * ps + (j - 1) * rs + i + 1]) {
+      G[z * gps + (y - 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && ((j + 1) < cs)) ||
+        !B[k * ps + (j + 1) * rs + i + 1]) {
+      G[z * gps + (y + 1) * grs + x + 1] = VAL_OBJET;
+    }
   }
   if (((i+1)%2) + ((k+1)%2) == 2)
   {
-    if (!((i>0)&&(k>0))||!B[(k-1)*ps+j*rs+i-1]) G[(z-1)*gps+y*grs+x-1] = VAL_OBJET;
-    if (!((i>0)&&((k+1)<ds))||!B[(k+1)*ps+j*rs+i-1]) G[(z+1)*gps+y*grs+x-1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&(k>0))||!B[(k-1)*ps+j*rs+i+1]) G[(z-1)*gps+y*grs+x+1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&((k+1)<ds))||!B[(k+1)*ps+j*rs+i+1]) G[(z+1)*gps+y*grs+x+1] = VAL_OBJET;
+    if (!((i > 0) && (k > 0)) || !B[(k - 1) * ps + j * rs + i - 1]) {
+      G[(z - 1) * gps + y * grs + x - 1] = VAL_OBJET;
+    }
+    if (!((i > 0) && ((k + 1) < ds)) || !B[(k + 1) * ps + j * rs + i - 1]) {
+      G[(z + 1) * gps + y * grs + x - 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && (k > 0)) || !B[(k - 1) * ps + j * rs + i + 1]) {
+      G[(z - 1) * gps + y * grs + x + 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && ((k + 1) < ds)) ||
+        !B[(k + 1) * ps + j * rs + i + 1]) {
+      G[(z + 1) * gps + y * grs + x + 1] = VAL_OBJET;
+    }
   }
   if (((k+1)%2) + ((j+1)%2) == 2)
   {
-    if (!((k>0)&&(j>0))||!B[(k-1)*ps+(j-1)*rs+i]) G[(z-1)*gps+(y-1)*grs+x] = VAL_OBJET;
-    if (!((k>0)&&((j+1)<cs))||!B[(k-1)*ps+(j+1)*rs+i]) G[(z-1)*gps+(y+1)*grs+x] = VAL_OBJET;
-    if (!(((k+1)<ds)&&(j>0))||!B[(k+1)*ps+(j-1)*rs+i]) G[(z+1)*gps+(y-1)*grs+x] = VAL_OBJET;
-    if (!(((k+1)<ds)&&((j+1)<cs))||!B[(k+1)*ps+(j+1)*rs+i]) G[(z+1)*gps+(y+1)*grs+x] = VAL_OBJET;
+    if (!((k > 0) && (j > 0)) || !B[(k - 1) * ps + (j - 1) * rs + i]) {
+      G[(z - 1) * gps + (y - 1) * grs + x] = VAL_OBJET;
+    }
+    if (!((k > 0) && ((j + 1) < cs)) || !B[(k - 1) * ps + (j + 1) * rs + i]) {
+      G[(z - 1) * gps + (y + 1) * grs + x] = VAL_OBJET;
+    }
+    if (!(((k + 1) < ds) && (j > 0)) || !B[(k + 1) * ps + (j - 1) * rs + i]) {
+      G[(z + 1) * gps + (y - 1) * grs + x] = VAL_OBJET;
+    }
+    if (!(((k + 1) < ds) && ((j + 1) < cs)) ||
+        !B[(k + 1) * ps + (j + 1) * rs + i]) {
+      G[(z + 1) * gps + (y + 1) * grs + x] = VAL_OBJET;
+    }
   }
   if (((i+1)%2) + ((j+1)%2) + ((k+1)%2) == 3)
   {
-    if (!((i>0)&&(j>0)&&(k>0))||!B[(k-1)*ps+(j-1)*rs+i-1]) G[(z-1)*gps+(y-1)*grs+x-1] = VAL_OBJET;
-    if (!((i>0)&&((j+1)<cs)&&(k>0))||!B[(k-1)*ps+(j+1)*rs+i-1]) G[(z-1)*gps+(y+1)*grs+x-1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&(j>0)&&(k>0))||!B[(k-1)*ps+(j-1)*rs+i+1]) G[(z-1)*gps+(y-1)*grs+x+1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&((j+1)<cs)&&(k>0))||!B[(k-1)*ps+(j+1)*rs+i+1]) G[(z-1)*gps+(y+1)*grs+x+1] = VAL_OBJET;
-    if (!((i>0)&&(j>0)&&((k+1)<ds))||!B[(k+1)*ps+(j-1)*rs+i-1]) G[(z+1)*gps+(y-1)*grs+x-1] = VAL_OBJET;
-    if (!((i>0)&&((j+1)<cs)&&((k+1)<ds))||!B[(k+1)*ps+(j+1)*rs+i-1]) G[(z+1)*gps+(y+1)*grs+x-1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&(j>0)&&((k+1)<ds))||!B[(k+1)*ps+(j-1)*rs+i+1]) G[(z+1)*gps+(y-1)*grs+x+1] = VAL_OBJET;
-    if (!(((i+1)<rs)&&((j+1)<cs)&&((k+1)<ds))||!B[(k+1)*ps+(j+1)*rs+i+1]) G[(z+1)*gps+(y+1)*grs+x+1] = VAL_OBJET;
+    if (!((i > 0) && (j > 0) && (k > 0)) ||
+        !B[(k - 1) * ps + (j - 1) * rs + i - 1]) {
+      G[(z - 1) * gps + (y - 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (!((i > 0) && ((j + 1) < cs) && (k > 0)) ||
+        !B[(k - 1) * ps + (j + 1) * rs + i - 1]) {
+      G[(z - 1) * gps + (y + 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && (j > 0) && (k > 0)) ||
+        !B[(k - 1) * ps + (j - 1) * rs + i + 1]) {
+      G[(z - 1) * gps + (y - 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && ((j + 1) < cs) && (k > 0)) ||
+        !B[(k - 1) * ps + (j + 1) * rs + i + 1]) {
+      G[(z - 1) * gps + (y + 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if (!((i > 0) && (j > 0) && ((k + 1) < ds)) ||
+        !B[(k + 1) * ps + (j - 1) * rs + i - 1]) {
+      G[(z + 1) * gps + (y - 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (!((i > 0) && ((j + 1) < cs) && ((k + 1) < ds)) ||
+        !B[(k + 1) * ps + (j + 1) * rs + i - 1]) {
+      G[(z + 1) * gps + (y + 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && (j > 0) && ((k + 1) < ds)) ||
+        !B[(k + 1) * ps + (j - 1) * rs + i + 1]) {
+      G[(z + 1) * gps + (y - 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if (!(((i + 1) < rs) && ((j + 1) < cs) && ((k + 1) < ds)) ||
+        !B[(k + 1) * ps + (j + 1) * rs + i + 1]) {
+      G[(z + 1) * gps + (y + 1) * grs + x + 1] = VAL_OBJET;
+    }
   }
 } /* CopieThetacarreCompl3d() */
 
@@ -2219,50 +3319,113 @@ printf("CopieBetacarreDual3d\n");
   memset(G, VAL_NULLE, GRS3D*GCS3D*GDS3D); /* init a VAL_NULLE */
   if ((i+1) % 2)
   {
-    if ((i>0)&&B[k*ps+j*rs+i-1]) G[z*gps+y*grs+x-1] = VAL_OBJET;
-    if (((i+1)<rs)&&B[k*ps+j*rs+i+1]) G[z*gps+y*grs+x+1] = VAL_OBJET;
+    if ((i > 0) && B[k * ps + j * rs + i - 1]) {
+      G[z * gps + y * grs + x - 1] = VAL_OBJET;
+    }
+    if (((i + 1) < rs) && B[k * ps + j * rs + i + 1]) {
+      G[z * gps + y * grs + x + 1] = VAL_OBJET;
+    }
   }
   if ((j+1) % 2)
   {
-    if ((j>0)&&B[k*ps+(j-1)*rs+i]) G[z*gps+(y-1)*grs+x] = VAL_OBJET;
-    if (((j+1)<cs)&&B[k*ps+(j+1)*rs+i]) G[z*gps+(y+1)*grs+x] = VAL_OBJET;
+    if ((j > 0) && B[k * ps + (j - 1) * rs + i]) {
+      G[z * gps + (y - 1) * grs + x] = VAL_OBJET;
+    }
+    if (((j + 1) < cs) && B[k * ps + (j + 1) * rs + i]) {
+      G[z * gps + (y + 1) * grs + x] = VAL_OBJET;
+    }
   }
   if ((k+1) % 2)
   {
-    if ((k>0)&&B[(k-1)*ps+j*rs+i]) G[(z-1)*gps+y*grs+x] = VAL_OBJET;
-    if (((k+1)<ds)&&B[(k+1)*ps+j*rs+i]) G[(z+1)*gps+y*grs+x] = VAL_OBJET;
+    if ((k > 0) && B[(k - 1) * ps + j * rs + i]) {
+      G[(z - 1) * gps + y * grs + x] = VAL_OBJET;
+    }
+    if (((k + 1) < ds) && B[(k + 1) * ps + j * rs + i]) {
+      G[(z + 1) * gps + y * grs + x] = VAL_OBJET;
+    }
   }
   if (((i+1)%2) + ((j+1)%2) == 2)
   {
-    if (((i>0)&&(j>0))&&B[k*ps+(j-1)*rs+i-1]) G[z*gps+(y-1)*grs+x-1] = VAL_OBJET;
-    if (((i>0)&&((j+1)<cs))&&B[k*ps+(j+1)*rs+i-1]) G[z*gps+(y+1)*grs+x-1] = VAL_OBJET;
-    if ((((i+1)<rs)&&(j>0))&&B[k*ps+(j-1)*rs+i+1]) G[z*gps+(y-1)*grs+x+1] = VAL_OBJET;
-    if ((((i+1)<rs)&&((j+1)<cs))&&B[k*ps+(j+1)*rs+i+1]) G[z*gps+(y+1)*grs+x+1] = VAL_OBJET;
+    if (((i > 0) && (j > 0)) && B[k * ps + (j - 1) * rs + i - 1]) {
+      G[z * gps + (y - 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (((i > 0) && ((j + 1) < cs)) && B[k * ps + (j + 1) * rs + i - 1]) {
+      G[z * gps + (y + 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && (j > 0)) && B[k * ps + (j - 1) * rs + i + 1]) {
+      G[z * gps + (y - 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs)) &&
+        B[k * ps + (j + 1) * rs + i + 1]) {
+      G[z * gps + (y + 1) * grs + x + 1] = VAL_OBJET;
+    }
   }
   if (((i+1)%2) + ((k+1)%2) == 2)
   {
-    if (((i>0)&&(k>0))&&B[(k-1)*ps+j*rs+i-1]) G[(z-1)*gps+y*grs+x-1] = VAL_OBJET;
-    if (((i>0)&&((k+1)<ds))&&B[(k+1)*ps+j*rs+i-1]) G[(z+1)*gps+y*grs+x-1] = VAL_OBJET;
-    if ((((i+1)<rs)&&(k>0))&&B[(k-1)*ps+j*rs+i+1]) G[(z-1)*gps+y*grs+x+1] = VAL_OBJET;
-    if ((((i+1)<rs)&&((k+1)<ds))&&B[(k+1)*ps+j*rs+i+1]) G[(z+1)*gps+y*grs+x+1] = VAL_OBJET;
+    if (((i > 0) && (k > 0)) && B[(k - 1) * ps + j * rs + i - 1]) {
+      G[(z - 1) * gps + y * grs + x - 1] = VAL_OBJET;
+    }
+    if (((i > 0) && ((k + 1) < ds)) && B[(k + 1) * ps + j * rs + i - 1]) {
+      G[(z + 1) * gps + y * grs + x - 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && (k > 0)) && B[(k - 1) * ps + j * rs + i + 1]) {
+      G[(z - 1) * gps + y * grs + x + 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + j * rs + i + 1]) {
+      G[(z + 1) * gps + y * grs + x + 1] = VAL_OBJET;
+    }
   }
   if (((k+1)%2) + ((j+1)%2) == 2)
   {
-    if (((k>0)&&(j>0))&&B[(k-1)*ps+(j-1)*rs+i]) G[(z-1)*gps+(y-1)*grs+x] = VAL_OBJET;
-    if (((k>0)&&((j+1)<cs))&&B[(k-1)*ps+(j+1)*rs+i]) G[(z-1)*gps+(y+1)*grs+x] = VAL_OBJET;
-    if ((((k+1)<ds)&&(j>0))&&B[(k+1)*ps+(j-1)*rs+i]) G[(z+1)*gps+(y-1)*grs+x] = VAL_OBJET;
-    if ((((k+1)<ds)&&((j+1)<cs))&&B[(k+1)*ps+(j+1)*rs+i]) G[(z+1)*gps+(y+1)*grs+x] = VAL_OBJET;
+    if (((k > 0) && (j > 0)) && B[(k - 1) * ps + (j - 1) * rs + i]) {
+      G[(z - 1) * gps + (y - 1) * grs + x] = VAL_OBJET;
+    }
+    if (((k > 0) && ((j + 1) < cs)) && B[(k - 1) * ps + (j + 1) * rs + i]) {
+      G[(z - 1) * gps + (y + 1) * grs + x] = VAL_OBJET;
+    }
+    if ((((k + 1) < ds) && (j > 0)) && B[(k + 1) * ps + (j - 1) * rs + i]) {
+      G[(z + 1) * gps + (y - 1) * grs + x] = VAL_OBJET;
+    }
+    if ((((k + 1) < ds) && ((j + 1) < cs)) &&
+        B[(k + 1) * ps + (j + 1) * rs + i]) {
+      G[(z + 1) * gps + (y + 1) * grs + x] = VAL_OBJET;
+    }
   }
   if (((i+1)%2) + ((j+1)%2) + ((k+1)%2) == 3)
   {
-    if (((i>0)&&(j>0)&&(k>0))&&B[(k-1)*ps+(j-1)*rs+i-1]) G[(z-1)*gps+(y-1)*grs+x-1] = VAL_OBJET;
-    if (((i>0)&&((j+1)<cs)&&(k>0))&&B[(k-1)*ps+(j+1)*rs+i-1]) G[(z-1)*gps+(y+1)*grs+x-1] = VAL_OBJET;
-    if ((((i+1)<rs)&&(j>0)&&(k>0))&&B[(k-1)*ps+(j-1)*rs+i+1]) G[(z-1)*gps+(y-1)*grs+x+1] = VAL_OBJET;
-    if ((((i+1)<rs)&&((j+1)<cs)&&(k>0))&&B[(k-1)*ps+(j+1)*rs+i+1]) G[(z-1)*gps+(y+1)*grs+x+1] = VAL_OBJET;
-    if (((i>0)&&(j>0)&&((k+1)<ds))&&B[(k+1)*ps+(j-1)*rs+i-1]) G[(z+1)*gps+(y-1)*grs+x-1] = VAL_OBJET;
-    if (((i>0)&&((j+1)<cs)&&((k+1)<ds))&&B[(k+1)*ps+(j+1)*rs+i-1]) G[(z+1)*gps+(y+1)*grs+x-1] = VAL_OBJET;
-    if ((((i+1)<rs)&&(j>0)&&((k+1)<ds))&&B[(k+1)*ps+(j-1)*rs+i+1]) G[(z+1)*gps+(y-1)*grs+x+1] = VAL_OBJET;
-    if ((((i+1)<rs)&&((j+1)<cs)&&((k+1)<ds))&&B[(k+1)*ps+(j+1)*rs+i+1]) G[(z+1)*gps+(y+1)*grs+x+1] = VAL_OBJET;
+    if (((i > 0) && (j > 0) && (k > 0)) &&
+        B[(k - 1) * ps + (j - 1) * rs + i - 1]) {
+      G[(z - 1) * gps + (y - 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (((i > 0) && ((j + 1) < cs) && (k > 0)) &&
+        B[(k - 1) * ps + (j + 1) * rs + i - 1]) {
+      G[(z - 1) * gps + (y + 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && (j > 0) && (k > 0)) &&
+        B[(k - 1) * ps + (j - 1) * rs + i + 1]) {
+      G[(z - 1) * gps + (y - 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs) && (k > 0)) &&
+        B[(k - 1) * ps + (j + 1) * rs + i + 1]) {
+      G[(z - 1) * gps + (y + 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if (((i > 0) && (j > 0) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j - 1) * rs + i - 1]) {
+      G[(z + 1) * gps + (y - 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if (((i > 0) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j + 1) * rs + i - 1]) {
+      G[(z + 1) * gps + (y + 1) * grs + x - 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && (j > 0) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j - 1) * rs + i + 1]) {
+      G[(z + 1) * gps + (y - 1) * grs + x + 1] = VAL_OBJET;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j + 1) * rs + i + 1]) {
+      G[(z + 1) * gps + (y + 1) * grs + x + 1] = VAL_OBJET;
+    }
   }
 } /* CopieBetacarreDual3d() */
 
@@ -2279,99 +3442,225 @@ void MarqueThetacarre3d(uint8_t *B,
   /* marque le Alphacarre */
   if (i % 2)
   {
-    if ((i>0)&&B[k*ps+j*rs+i-1]) B[k*ps+j*rs+i-1] = VAL_MARQUE;
-    if (((i+1)<rs)&&B[k*ps+j*rs+i+1]) B[k*ps+j*rs+i+1] = VAL_MARQUE;
+    if ((i > 0) && B[k * ps + j * rs + i - 1]) {
+      B[k * ps + j * rs + i - 1] = VAL_MARQUE;
+    }
+    if (((i + 1) < rs) && B[k * ps + j * rs + i + 1]) {
+      B[k * ps + j * rs + i + 1] = VAL_MARQUE;
+    }
   }
   if (j % 2)
   {
-    if ((j>0)&&B[k*ps+(j-1)*rs+i]) B[k*ps+(j-1)*rs+i] = VAL_MARQUE;
-    if (((j+1)<cs)&&B[k*ps+(j+1)*rs+i]) B[k*ps+(j+1)*rs+i] = VAL_MARQUE;
+    if ((j > 0) && B[k * ps + (j - 1) * rs + i]) {
+      B[k * ps + (j - 1) * rs + i] = VAL_MARQUE;
+    }
+    if (((j + 1) < cs) && B[k * ps + (j + 1) * rs + i]) {
+      B[k * ps + (j + 1) * rs + i] = VAL_MARQUE;
+    }
   }
   if (k % 2)
   {
-    if ((k>0)&&B[(k-1)*ps+j*rs+i]) B[(k-1)*ps+j*rs+i] = VAL_MARQUE;
-    if (((k+1)<ds)&&B[(k+1)*ps+j*rs+i]) B[(k+1)*ps+j*rs+i] = VAL_MARQUE;
+    if ((k > 0) && B[(k - 1) * ps + j * rs + i]) {
+      B[(k - 1) * ps + j * rs + i] = VAL_MARQUE;
+    }
+    if (((k + 1) < ds) && B[(k + 1) * ps + j * rs + i]) {
+      B[(k + 1) * ps + j * rs + i] = VAL_MARQUE;
+    }
   }
   if ((i%2) + (j%2) == 2)
   {
-    if (((i>0)&&(j>0))&&B[k*ps+(j-1)*rs+i-1]) B[k*ps+(j-1)*rs+i-1] = VAL_MARQUE;
-    if (((i>0)&&((j+1)<cs))&&B[k*ps+(j+1)*rs+i-1]) B[k*ps+(j+1)*rs+i-1] = VAL_MARQUE;
-    if ((((i+1)<rs)&&(j>0))&&B[k*ps+(j-1)*rs+i+1]) B[k*ps+(j-1)*rs+i+1] = VAL_MARQUE;
-    if ((((i+1)<rs)&&((j+1)<cs))&&B[k*ps+(j+1)*rs+i+1]) B[k*ps+(j+1)*rs+i+1] = VAL_MARQUE;
+    if (((i > 0) && (j > 0)) && B[k * ps + (j - 1) * rs + i - 1]) {
+      B[k * ps + (j - 1) * rs + i - 1] = VAL_MARQUE;
+    }
+    if (((i > 0) && ((j + 1) < cs)) && B[k * ps + (j + 1) * rs + i - 1]) {
+      B[k * ps + (j + 1) * rs + i - 1] = VAL_MARQUE;
+    }
+    if ((((i + 1) < rs) && (j > 0)) && B[k * ps + (j - 1) * rs + i + 1]) {
+      B[k * ps + (j - 1) * rs + i + 1] = VAL_MARQUE;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs)) &&
+        B[k * ps + (j + 1) * rs + i + 1]) {
+      B[k * ps + (j + 1) * rs + i + 1] = VAL_MARQUE;
+    }
   }
   if ((i%2) + (k%2) == 2)
   {
-    if (((i>0)&&(k>0))&&B[(k-1)*ps+j*rs+i-1]) B[(k-1)*ps+j*rs+i-1] = VAL_MARQUE;
-    if (((i>0)&&((k+1)<ds))&&B[(k+1)*ps+j*rs+i-1]) B[(k+1)*ps+j*rs+i-1] = VAL_MARQUE;
-    if ((((i+1)<rs)&&(k>0))&&B[(k-1)*ps+j*rs+i+1]) B[(k-1)*ps+j*rs+i+1] = VAL_MARQUE;
-    if ((((i+1)<rs)&&((k+1)<ds))&&B[(k+1)*ps+j*rs+i+1]) B[(k+1)*ps+j*rs+i+1] = VAL_MARQUE;
+    if (((i > 0) && (k > 0)) && B[(k - 1) * ps + j * rs + i - 1]) {
+      B[(k - 1) * ps + j * rs + i - 1] = VAL_MARQUE;
+    }
+    if (((i > 0) && ((k + 1) < ds)) && B[(k + 1) * ps + j * rs + i - 1]) {
+      B[(k + 1) * ps + j * rs + i - 1] = VAL_MARQUE;
+    }
+    if ((((i + 1) < rs) && (k > 0)) && B[(k - 1) * ps + j * rs + i + 1]) {
+      B[(k - 1) * ps + j * rs + i + 1] = VAL_MARQUE;
+    }
+    if ((((i + 1) < rs) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + j * rs + i + 1]) {
+      B[(k + 1) * ps + j * rs + i + 1] = VAL_MARQUE;
+    }
   }
   if ((k%2) + (j%2) == 2)
   {
-    if (((k>0)&&(j>0))&&B[(k-1)*ps+(j-1)*rs+i]) B[(k-1)*ps+(j-1)*rs+i] = VAL_MARQUE;
-    if (((k>0)&&((j+1)<cs))&&B[(k-1)*ps+(j+1)*rs+i]) B[(k-1)*ps+(j+1)*rs+i] = VAL_MARQUE;
-    if ((((k+1)<ds)&&(j>0))&&B[(k+1)*ps+(j-1)*rs+i]) B[(k+1)*ps+(j-1)*rs+i] = VAL_MARQUE;
-    if ((((k+1)<ds)&&((j+1)<cs))&&B[(k+1)*ps+(j+1)*rs+i]) B[(k+1)*ps+(j+1)*rs+i] = VAL_MARQUE;
+    if (((k > 0) && (j > 0)) && B[(k - 1) * ps + (j - 1) * rs + i]) {
+      B[(k - 1) * ps + (j - 1) * rs + i] = VAL_MARQUE;
+    }
+    if (((k > 0) && ((j + 1) < cs)) && B[(k - 1) * ps + (j + 1) * rs + i]) {
+      B[(k - 1) * ps + (j + 1) * rs + i] = VAL_MARQUE;
+    }
+    if ((((k + 1) < ds) && (j > 0)) && B[(k + 1) * ps + (j - 1) * rs + i]) {
+      B[(k + 1) * ps + (j - 1) * rs + i] = VAL_MARQUE;
+    }
+    if ((((k + 1) < ds) && ((j + 1) < cs)) &&
+        B[(k + 1) * ps + (j + 1) * rs + i]) {
+      B[(k + 1) * ps + (j + 1) * rs + i] = VAL_MARQUE;
+    }
   }
   if ((i%2) + (j%2) + (k%2) == 3)
   {
-    if (((i>0)&&(j>0)&&(k>0))&&B[(k-1)*ps+(j-1)*rs+i-1]) B[(k-1)*ps+(j-1)*rs+i-1] = VAL_MARQUE;
-    if (((i>0)&&((j+1)<cs)&&(k>0))&&B[(k-1)*ps+(j+1)*rs+i-1]) B[(k-1)*ps+(j+1)*rs+i-1] = VAL_MARQUE;
-    if ((((i+1)<rs)&&(j>0)&&(k>0))&&B[(k-1)*ps+(j-1)*rs+i+1]) B[(k-1)*ps+(j-1)*rs+i+1] = VAL_MARQUE;
-    if ((((i+1)<rs)&&((j+1)<cs)&&(k>0))&&B[(k-1)*ps+(j+1)*rs+i+1]) B[(k-1)*ps+(j+1)*rs+i+1] = VAL_MARQUE;
-    if (((i>0)&&(j>0)&&((k+1)<ds))&&B[(k+1)*ps+(j-1)*rs+i-1]) B[(k+1)*ps+(j-1)*rs+i-1] = VAL_MARQUE;
-    if (((i>0)&&((j+1)<cs)&&((k+1)<ds))&&B[(k+1)*ps+(j+1)*rs+i-1]) B[(k+1)*ps+(j+1)*rs+i-1] = VAL_MARQUE;
-    if ((((i+1)<rs)&&(j>0)&&((k+1)<ds))&&B[(k+1)*ps+(j-1)*rs+i+1]) B[(k+1)*ps+(j-1)*rs+i+1] = VAL_MARQUE;
-    if ((((i+1)<rs)&&((j+1)<cs)&&((k+1)<ds))&&B[(k+1)*ps+(j+1)*rs+i+1]) B[(k+1)*ps+(j+1)*rs+i+1] = VAL_MARQUE;
+    if (((i > 0) && (j > 0) && (k > 0)) &&
+        B[(k - 1) * ps + (j - 1) * rs + i - 1]) {
+      B[(k - 1) * ps + (j - 1) * rs + i - 1] = VAL_MARQUE;
+    }
+    if (((i > 0) && ((j + 1) < cs) && (k > 0)) &&
+        B[(k - 1) * ps + (j + 1) * rs + i - 1]) {
+      B[(k - 1) * ps + (j + 1) * rs + i - 1] = VAL_MARQUE;
+    }
+    if ((((i + 1) < rs) && (j > 0) && (k > 0)) &&
+        B[(k - 1) * ps + (j - 1) * rs + i + 1]) {
+      B[(k - 1) * ps + (j - 1) * rs + i + 1] = VAL_MARQUE;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs) && (k > 0)) &&
+        B[(k - 1) * ps + (j + 1) * rs + i + 1]) {
+      B[(k - 1) * ps + (j + 1) * rs + i + 1] = VAL_MARQUE;
+    }
+    if (((i > 0) && (j > 0) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j - 1) * rs + i - 1]) {
+      B[(k + 1) * ps + (j - 1) * rs + i - 1] = VAL_MARQUE;
+    }
+    if (((i > 0) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j + 1) * rs + i - 1]) {
+      B[(k + 1) * ps + (j + 1) * rs + i - 1] = VAL_MARQUE;
+    }
+    if ((((i + 1) < rs) && (j > 0) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j - 1) * rs + i + 1]) {
+      B[(k + 1) * ps + (j - 1) * rs + i + 1] = VAL_MARQUE;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j + 1) * rs + i + 1]) {
+      B[(k + 1) * ps + (j + 1) * rs + i + 1] = VAL_MARQUE;
+    }
   }
 
   /* marque le Betacarre */
   if ((i+1) % 2)
   {
-    if ((i>0)&&B[k*ps+j*rs+i-1]) B[k*ps+j*rs+i-1] = VAL_MARQUE;
-    if (((i+1)<rs)&&B[k*ps+j*rs+i+1]) B[k*ps+j*rs+i+1] = VAL_MARQUE;
+    if ((i > 0) && B[k * ps + j * rs + i - 1]) {
+      B[k * ps + j * rs + i - 1] = VAL_MARQUE;
+    }
+    if (((i + 1) < rs) && B[k * ps + j * rs + i + 1]) {
+      B[k * ps + j * rs + i + 1] = VAL_MARQUE;
+    }
   }
   if ((j+1) % 2)
   {
-    if ((j>0)&&B[k*ps+(j-1)*rs+i]) B[k*ps+(j-1)*rs+i] = VAL_MARQUE;
-    if (((j+1)<cs)&&B[k*ps+(j+1)*rs+i]) B[k*ps+(j+1)*rs+i] = VAL_MARQUE;
+    if ((j > 0) && B[k * ps + (j - 1) * rs + i]) {
+      B[k * ps + (j - 1) * rs + i] = VAL_MARQUE;
+    }
+    if (((j + 1) < cs) && B[k * ps + (j + 1) * rs + i]) {
+      B[k * ps + (j + 1) * rs + i] = VAL_MARQUE;
+    }
   }
   if ((k+1) % 2)
   {
-    if ((k>0)&&B[(k-1)*ps+j*rs+i]) B[(k-1)*ps+j*rs+i] = VAL_MARQUE;
-    if (((k+1)<ds)&&B[(k+1)*ps+j*rs+i]) B[(k+1)*ps+j*rs+i] = VAL_MARQUE;
+    if ((k > 0) && B[(k - 1) * ps + j * rs + i]) {
+      B[(k - 1) * ps + j * rs + i] = VAL_MARQUE;
+    }
+    if (((k + 1) < ds) && B[(k + 1) * ps + j * rs + i]) {
+      B[(k + 1) * ps + j * rs + i] = VAL_MARQUE;
+    }
   }
   if (((i+1)%2) + ((j+1)%2) == 2)
   {
-    if (((i>0)&&(j>0))&&B[k*ps+(j-1)*rs+i-1]) B[k*ps+(j-1)*rs+i-1] = VAL_MARQUE;
-    if (((i>0)&&((j+1)<cs))&&B[k*ps+(j+1)*rs+i-1]) B[k*ps+(j+1)*rs+i-1] = VAL_MARQUE;
-    if ((((i+1)<rs)&&(j>0))&&B[k*ps+(j-1)*rs+i+1]) B[k*ps+(j-1)*rs+i+1] = VAL_MARQUE;
-    if ((((i+1)<rs)&&((j+1)<cs))&&B[k*ps+(j+1)*rs+i+1]) B[k*ps+(j+1)*rs+i+1] = VAL_MARQUE;
+    if (((i > 0) && (j > 0)) && B[k * ps + (j - 1) * rs + i - 1]) {
+      B[k * ps + (j - 1) * rs + i - 1] = VAL_MARQUE;
+    }
+    if (((i > 0) && ((j + 1) < cs)) && B[k * ps + (j + 1) * rs + i - 1]) {
+      B[k * ps + (j + 1) * rs + i - 1] = VAL_MARQUE;
+    }
+    if ((((i + 1) < rs) && (j > 0)) && B[k * ps + (j - 1) * rs + i + 1]) {
+      B[k * ps + (j - 1) * rs + i + 1] = VAL_MARQUE;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs)) &&
+        B[k * ps + (j + 1) * rs + i + 1]) {
+      B[k * ps + (j + 1) * rs + i + 1] = VAL_MARQUE;
+    }
   }
   if (((i+1)%2) + ((k+1)%2) == 2)
   {
-    if (((i>0)&&(k>0))&&B[(k-1)*ps+j*rs+i-1]) B[(k-1)*ps+j*rs+i-1] = VAL_MARQUE;
-    if (((i>0)&&((k+1)<ds))&&B[(k+1)*ps+j*rs+i-1]) B[(k+1)*ps+j*rs+i-1] = VAL_MARQUE;
-    if ((((i+1)<rs)&&(k>0))&&B[(k-1)*ps+j*rs+i+1]) B[(k-1)*ps+j*rs+i+1] = VAL_MARQUE;
-    if ((((i+1)<rs)&&((k+1)<ds))&&B[(k+1)*ps+j*rs+i+1]) B[(k+1)*ps+j*rs+i+1] = VAL_MARQUE;
+    if (((i > 0) && (k > 0)) && B[(k - 1) * ps + j * rs + i - 1]) {
+      B[(k - 1) * ps + j * rs + i - 1] = VAL_MARQUE;
+    }
+    if (((i > 0) && ((k + 1) < ds)) && B[(k + 1) * ps + j * rs + i - 1]) {
+      B[(k + 1) * ps + j * rs + i - 1] = VAL_MARQUE;
+    }
+    if ((((i + 1) < rs) && (k > 0)) && B[(k - 1) * ps + j * rs + i + 1]) {
+      B[(k - 1) * ps + j * rs + i + 1] = VAL_MARQUE;
+    }
+    if ((((i + 1) < rs) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + j * rs + i + 1]) {
+      B[(k + 1) * ps + j * rs + i + 1] = VAL_MARQUE;
+    }
   }
   if (((k+1)%2) + ((j+1)%2) == 2)
   {
-    if (((k>0)&&(j>0))&&B[(k-1)*ps+(j-1)*rs+i]) B[(k-1)*ps+(j-1)*rs+i] = VAL_MARQUE;
-    if (((k>0)&&((j+1)<cs))&&B[(k-1)*ps+(j+1)*rs+i]) B[(k-1)*ps+(j+1)*rs+i] = VAL_MARQUE;
-    if ((((k+1)<ds)&&(j>0))&&B[(k+1)*ps+(j-1)*rs+i]) B[(k+1)*ps+(j-1)*rs+i] = VAL_MARQUE;
-    if ((((k+1)<ds)&&((j+1)<cs))&&B[(k+1)*ps+(j+1)*rs+i]) B[(k+1)*ps+(j+1)*rs+i] = VAL_MARQUE;
+    if (((k > 0) && (j > 0)) && B[(k - 1) * ps + (j - 1) * rs + i]) {
+      B[(k - 1) * ps + (j - 1) * rs + i] = VAL_MARQUE;
+    }
+    if (((k > 0) && ((j + 1) < cs)) && B[(k - 1) * ps + (j + 1) * rs + i]) {
+      B[(k - 1) * ps + (j + 1) * rs + i] = VAL_MARQUE;
+    }
+    if ((((k + 1) < ds) && (j > 0)) && B[(k + 1) * ps + (j - 1) * rs + i]) {
+      B[(k + 1) * ps + (j - 1) * rs + i] = VAL_MARQUE;
+    }
+    if ((((k + 1) < ds) && ((j + 1) < cs)) &&
+        B[(k + 1) * ps + (j + 1) * rs + i]) {
+      B[(k + 1) * ps + (j + 1) * rs + i] = VAL_MARQUE;
+    }
   }
   if (((i+1)%2) + ((j+1)%2) + ((k+1)%2) == 3)
   {
-    if (((i>0)&&(j>0)&&(k>0))&&B[(k-1)*ps+(j-1)*rs+i-1]) B[(k-1)*ps+(j-1)*rs+i-1] = VAL_MARQUE;
-    if (((i>0)&&((j+1)<cs)&&(k>0))&&B[(k-1)*ps+(j+1)*rs+i-1]) B[(k-1)*ps+(j+1)*rs+i-1] = VAL_MARQUE;
-    if ((((i+1)<rs)&&(j>0)&&(k>0))&&B[(k-1)*ps+(j-1)*rs+i+1]) B[(k-1)*ps+(j-1)*rs+i+1] = VAL_MARQUE;
-    if ((((i+1)<rs)&&((j+1)<cs)&&(k>0))&&B[(k-1)*ps+(j+1)*rs+i+1]) B[(k-1)*ps+(j+1)*rs+i+1] = VAL_MARQUE;
-    if (((i>0)&&(j>0)&&((k+1)<ds))&&B[(k+1)*ps+(j-1)*rs+i-1]) B[(k+1)*ps+(j-1)*rs+i-1] = VAL_MARQUE;
-    if (((i>0)&&((j+1)<cs)&&((k+1)<ds))&&B[(k+1)*ps+(j+1)*rs+i-1]) B[(k+1)*ps+(j+1)*rs+i-1] = VAL_MARQUE;
-    if ((((i+1)<rs)&&(j>0)&&((k+1)<ds))&&B[(k+1)*ps+(j-1)*rs+i+1]) B[(k+1)*ps+(j-1)*rs+i+1] = VAL_MARQUE;
-    if ((((i+1)<rs)&&((j+1)<cs)&&((k+1)<ds))&&B[(k+1)*ps+(j+1)*rs+i+1]) B[(k+1)*ps+(j+1)*rs+i+1] = VAL_MARQUE;
+    if (((i > 0) && (j > 0) && (k > 0)) &&
+        B[(k - 1) * ps + (j - 1) * rs + i - 1]) {
+      B[(k - 1) * ps + (j - 1) * rs + i - 1] = VAL_MARQUE;
+    }
+    if (((i > 0) && ((j + 1) < cs) && (k > 0)) &&
+        B[(k - 1) * ps + (j + 1) * rs + i - 1]) {
+      B[(k - 1) * ps + (j + 1) * rs + i - 1] = VAL_MARQUE;
+    }
+    if ((((i + 1) < rs) && (j > 0) && (k > 0)) &&
+        B[(k - 1) * ps + (j - 1) * rs + i + 1]) {
+      B[(k - 1) * ps + (j - 1) * rs + i + 1] = VAL_MARQUE;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs) && (k > 0)) &&
+        B[(k - 1) * ps + (j + 1) * rs + i + 1]) {
+      B[(k - 1) * ps + (j + 1) * rs + i + 1] = VAL_MARQUE;
+    }
+    if (((i > 0) && (j > 0) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j - 1) * rs + i - 1]) {
+      B[(k + 1) * ps + (j - 1) * rs + i - 1] = VAL_MARQUE;
+    }
+    if (((i > 0) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j + 1) * rs + i - 1]) {
+      B[(k + 1) * ps + (j + 1) * rs + i - 1] = VAL_MARQUE;
+    }
+    if ((((i + 1) < rs) && (j > 0) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j - 1) * rs + i + 1]) {
+      B[(k + 1) * ps + (j - 1) * rs + i + 1] = VAL_MARQUE;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j + 1) * rs + i + 1]) {
+      B[(k + 1) * ps + (j + 1) * rs + i + 1] = VAL_MARQUE;
+    }
   }
 } /* MarqueThetacarre3d() */
 
@@ -2390,99 +3679,225 @@ int32_t CardThetacarre3d(uint8_t *B,
   /* Alphacarre */
   if (i % 2)
   {
-    if ((i>0)&&B[k*ps+j*rs+i-1]) n++;
-    if (((i+1)<rs)&&B[k*ps+j*rs+i+1]) n++;
+    if ((i > 0) && B[k * ps + j * rs + i - 1]) {
+      n++;
+    }
+    if (((i + 1) < rs) && B[k * ps + j * rs + i + 1]) {
+      n++;
+    }
   }
   if (j % 2)
   {
-    if ((j>0)&&B[k*ps+(j-1)*rs+i]) n++;
-    if (((j+1)<cs)&&B[k*ps+(j+1)*rs+i]) n++;
+    if ((j > 0) && B[k * ps + (j - 1) * rs + i]) {
+      n++;
+    }
+    if (((j + 1) < cs) && B[k * ps + (j + 1) * rs + i]) {
+      n++;
+    }
   }
   if (k % 2)
   {
-    if ((k>0)&&B[(k-1)*ps+j*rs+i]) n++;
-    if (((k+1)<ds)&&B[(k+1)*ps+j*rs+i]) n++;
+    if ((k > 0) && B[(k - 1) * ps + j * rs + i]) {
+      n++;
+    }
+    if (((k + 1) < ds) && B[(k + 1) * ps + j * rs + i]) {
+      n++;
+    }
   }
   if ((i%2) + (j%2) == 2)
   {
-    if (((i>0)&&(j>0))&&B[k*ps+(j-1)*rs+i-1]) n++;
-    if (((i>0)&&((j+1)<cs))&&B[k*ps+(j+1)*rs+i-1]) n++;
-    if ((((i+1)<rs)&&(j>0))&&B[k*ps+(j-1)*rs+i+1]) n++;
-    if ((((i+1)<rs)&&((j+1)<cs))&&B[k*ps+(j+1)*rs+i+1]) n++;
+    if (((i > 0) && (j > 0)) && B[k * ps + (j - 1) * rs + i - 1]) {
+      n++;
+    }
+    if (((i > 0) && ((j + 1) < cs)) && B[k * ps + (j + 1) * rs + i - 1]) {
+      n++;
+    }
+    if ((((i + 1) < rs) && (j > 0)) && B[k * ps + (j - 1) * rs + i + 1]) {
+      n++;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs)) &&
+        B[k * ps + (j + 1) * rs + i + 1]) {
+      n++;
+    }
   }
   if ((i%2) + (k%2) == 2)
   {
-    if (((i>0)&&(k>0))&&B[(k-1)*ps+j*rs+i-1]) n++;
-    if (((i>0)&&((k+1)<ds))&&B[(k+1)*ps+j*rs+i-1]) n++;
-    if ((((i+1)<rs)&&(k>0))&&B[(k-1)*ps+j*rs+i+1]) n++;
-    if ((((i+1)<rs)&&((k+1)<ds))&&B[(k+1)*ps+j*rs+i+1]) n++;
+    if (((i > 0) && (k > 0)) && B[(k - 1) * ps + j * rs + i - 1]) {
+      n++;
+    }
+    if (((i > 0) && ((k + 1) < ds)) && B[(k + 1) * ps + j * rs + i - 1]) {
+      n++;
+    }
+    if ((((i + 1) < rs) && (k > 0)) && B[(k - 1) * ps + j * rs + i + 1]) {
+      n++;
+    }
+    if ((((i + 1) < rs) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + j * rs + i + 1]) {
+      n++;
+    }
   }
   if ((k%2) + (j%2) == 2)
   {
-    if (((k>0)&&(j>0))&&B[(k-1)*ps+(j-1)*rs+i]) n++;
-    if (((k>0)&&((j+1)<cs))&&B[(k-1)*ps+(j+1)*rs+i]) n++;
-    if ((((k+1)<ds)&&(j>0))&&B[(k+1)*ps+(j-1)*rs+i]) n++;
-    if ((((k+1)<ds)&&((j+1)<cs))&&B[(k+1)*ps+(j+1)*rs+i]) n++;
+    if (((k > 0) && (j > 0)) && B[(k - 1) * ps + (j - 1) * rs + i]) {
+      n++;
+    }
+    if (((k > 0) && ((j + 1) < cs)) && B[(k - 1) * ps + (j + 1) * rs + i]) {
+      n++;
+    }
+    if ((((k + 1) < ds) && (j > 0)) && B[(k + 1) * ps + (j - 1) * rs + i]) {
+      n++;
+    }
+    if ((((k + 1) < ds) && ((j + 1) < cs)) &&
+        B[(k + 1) * ps + (j + 1) * rs + i]) {
+      n++;
+    }
   }
   if ((i%2) + (j%2) + (k%2) == 3)
   {
-    if (((i>0)&&(j>0)&&(k>0))&&B[(k-1)*ps+(j-1)*rs+i-1]) n++;
-    if (((i>0)&&((j+1)<cs)&&(k>0))&&B[(k-1)*ps+(j+1)*rs+i-1]) n++;
-    if ((((i+1)<rs)&&(j>0)&&(k>0))&&B[(k-1)*ps+(j-1)*rs+i+1]) n++;
-    if ((((i+1)<rs)&&((j+1)<cs)&&(k>0))&&B[(k-1)*ps+(j+1)*rs+i+1]) n++;
-    if (((i>0)&&(j>0)&&((k+1)<ds))&&B[(k+1)*ps+(j-1)*rs+i-1]) n++;
-    if (((i>0)&&((j+1)<cs)&&((k+1)<ds))&&B[(k+1)*ps+(j+1)*rs+i-1]) n++;
-    if ((((i+1)<rs)&&(j>0)&&((k+1)<ds))&&B[(k+1)*ps+(j-1)*rs+i+1]) n++;
-    if ((((i+1)<rs)&&((j+1)<cs)&&((k+1)<ds))&&B[(k+1)*ps+(j+1)*rs+i+1]) n++;
+    if (((i > 0) && (j > 0) && (k > 0)) &&
+        B[(k - 1) * ps + (j - 1) * rs + i - 1]) {
+      n++;
+    }
+    if (((i > 0) && ((j + 1) < cs) && (k > 0)) &&
+        B[(k - 1) * ps + (j + 1) * rs + i - 1]) {
+      n++;
+    }
+    if ((((i + 1) < rs) && (j > 0) && (k > 0)) &&
+        B[(k - 1) * ps + (j - 1) * rs + i + 1]) {
+      n++;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs) && (k > 0)) &&
+        B[(k - 1) * ps + (j + 1) * rs + i + 1]) {
+      n++;
+    }
+    if (((i > 0) && (j > 0) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j - 1) * rs + i - 1]) {
+      n++;
+    }
+    if (((i > 0) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j + 1) * rs + i - 1]) {
+      n++;
+    }
+    if ((((i + 1) < rs) && (j > 0) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j - 1) * rs + i + 1]) {
+      n++;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j + 1) * rs + i + 1]) {
+      n++;
+    }
   }
 
   /* Betacarre */
   if ((i+1) % 2)
   {
-    if ((i>0)&&B[k*ps+j*rs+i-1]) n++;
-    if (((i+1)<rs)&&B[k*ps+j*rs+i+1]) n++;
+    if ((i > 0) && B[k * ps + j * rs + i - 1]) {
+      n++;
+    }
+    if (((i + 1) < rs) && B[k * ps + j * rs + i + 1]) {
+      n++;
+    }
   }
   if ((j+1) % 2)
   {
-    if ((j>0)&&B[k*ps+(j-1)*rs+i]) n++;
-    if (((j+1)<cs)&&B[k*ps+(j+1)*rs+i]) n++;
+    if ((j > 0) && B[k * ps + (j - 1) * rs + i]) {
+      n++;
+    }
+    if (((j + 1) < cs) && B[k * ps + (j + 1) * rs + i]) {
+      n++;
+    }
   }
   if ((k+1) % 2)
   {
-    if ((k>0)&&B[(k-1)*ps+j*rs+i]) n++;
-    if (((k+1)<ds)&&B[(k+1)*ps+j*rs+i]) n++;
+    if ((k > 0) && B[(k - 1) * ps + j * rs + i]) {
+      n++;
+    }
+    if (((k + 1) < ds) && B[(k + 1) * ps + j * rs + i]) {
+      n++;
+    }
   }
   if (((i+1)%2) + ((j+1)%2) == 2)
   {
-    if (((i>0)&&(j>0))&&B[k*ps+(j-1)*rs+i-1]) n++;
-    if (((i>0)&&((j+1)<cs))&&B[k*ps+(j+1)*rs+i-1]) n++;
-    if ((((i+1)<rs)&&(j>0))&&B[k*ps+(j-1)*rs+i+1]) n++;
-    if ((((i+1)<rs)&&((j+1)<cs))&&B[k*ps+(j+1)*rs+i+1]) n++;
+    if (((i > 0) && (j > 0)) && B[k * ps + (j - 1) * rs + i - 1]) {
+      n++;
+    }
+    if (((i > 0) && ((j + 1) < cs)) && B[k * ps + (j + 1) * rs + i - 1]) {
+      n++;
+    }
+    if ((((i + 1) < rs) && (j > 0)) && B[k * ps + (j - 1) * rs + i + 1]) {
+      n++;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs)) &&
+        B[k * ps + (j + 1) * rs + i + 1]) {
+      n++;
+    }
   }
   if (((i+1)%2) + ((k+1)%2) == 2)
   {
-    if (((i>0)&&(k>0))&&B[(k-1)*ps+j*rs+i-1]) n++;
-    if (((i>0)&&((k+1)<ds))&&B[(k+1)*ps+j*rs+i-1]) n++;
-    if ((((i+1)<rs)&&(k>0))&&B[(k-1)*ps+j*rs+i+1]) n++;
-    if ((((i+1)<rs)&&((k+1)<ds))&&B[(k+1)*ps+j*rs+i+1]) n++;
+    if (((i > 0) && (k > 0)) && B[(k - 1) * ps + j * rs + i - 1]) {
+      n++;
+    }
+    if (((i > 0) && ((k + 1) < ds)) && B[(k + 1) * ps + j * rs + i - 1]) {
+      n++;
+    }
+    if ((((i + 1) < rs) && (k > 0)) && B[(k - 1) * ps + j * rs + i + 1]) {
+      n++;
+    }
+    if ((((i + 1) < rs) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + j * rs + i + 1]) {
+      n++;
+    }
   }
   if (((k+1)%2) + ((j+1)%2) == 2)
   {
-    if (((k>0)&&(j>0))&&B[(k-1)*ps+(j-1)*rs+i]) n++;
-    if (((k>0)&&((j+1)<cs))&&B[(k-1)*ps+(j+1)*rs+i]) n++;
-    if ((((k+1)<ds)&&(j>0))&&B[(k+1)*ps+(j-1)*rs+i]) n++;
-    if ((((k+1)<ds)&&((j+1)<cs))&&B[(k+1)*ps+(j+1)*rs+i]) n++;
+    if (((k > 0) && (j > 0)) && B[(k - 1) * ps + (j - 1) * rs + i]) {
+      n++;
+    }
+    if (((k > 0) && ((j + 1) < cs)) && B[(k - 1) * ps + (j + 1) * rs + i]) {
+      n++;
+    }
+    if ((((k + 1) < ds) && (j > 0)) && B[(k + 1) * ps + (j - 1) * rs + i]) {
+      n++;
+    }
+    if ((((k + 1) < ds) && ((j + 1) < cs)) &&
+        B[(k + 1) * ps + (j + 1) * rs + i]) {
+      n++;
+    }
   }
   if (((i+1)%2) + ((j+1)%2) + ((k+1)%2) == 3)
   {
-    if (((i>0)&&(j>0)&&(k>0))&&B[(k-1)*ps+(j-1)*rs+i-1]) n++;
-    if (((i>0)&&((j+1)<cs)&&(k>0))&&B[(k-1)*ps+(j+1)*rs+i-1]) n++;
-    if ((((i+1)<rs)&&(j>0)&&(k>0))&&B[(k-1)*ps+(j-1)*rs+i+1]) n++;
-    if ((((i+1)<rs)&&((j+1)<cs)&&(k>0))&&B[(k-1)*ps+(j+1)*rs+i+1]) n++;
-    if (((i>0)&&(j>0)&&((k+1)<ds))&&B[(k+1)*ps+(j-1)*rs+i-1]) n++;
-    if (((i>0)&&((j+1)<cs)&&((k+1)<ds))&&B[(k+1)*ps+(j+1)*rs+i-1]) n++;
-    if ((((i+1)<rs)&&(j>0)&&((k+1)<ds))&&B[(k+1)*ps+(j-1)*rs+i+1]) n++;
-    if ((((i+1)<rs)&&((j+1)<cs)&&((k+1)<ds))&&B[(k+1)*ps+(j+1)*rs+i+1]) n++;
+    if (((i > 0) && (j > 0) && (k > 0)) &&
+        B[(k - 1) * ps + (j - 1) * rs + i - 1]) {
+      n++;
+    }
+    if (((i > 0) && ((j + 1) < cs) && (k > 0)) &&
+        B[(k - 1) * ps + (j + 1) * rs + i - 1]) {
+      n++;
+    }
+    if ((((i + 1) < rs) && (j > 0) && (k > 0)) &&
+        B[(k - 1) * ps + (j - 1) * rs + i + 1]) {
+      n++;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs) && (k > 0)) &&
+        B[(k - 1) * ps + (j + 1) * rs + i + 1]) {
+      n++;
+    }
+    if (((i > 0) && (j > 0) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j - 1) * rs + i - 1]) {
+      n++;
+    }
+    if (((i > 0) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j + 1) * rs + i - 1]) {
+      n++;
+    }
+    if ((((i + 1) < rs) && (j > 0) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j - 1) * rs + i + 1]) {
+      n++;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        B[(k + 1) * ps + (j + 1) * rs + i + 1]) {
+      n++;
+    }
   }
   return n;
 } /* CardThetacarre3d() */
@@ -2503,99 +3918,237 @@ int32_t CardThetaCarre3d(uint8_t *B,
   /* Alphacarre */
   if (i % 2)
   {
-    if ((i>0)&&(B[k*ps+j*rs+i-1]==v)) n++;
-    if (((i+1)<rs)&&(B[k*ps+j*rs+i+1]==v)) n++;
+    if ((i > 0) && (B[k * ps + j * rs + i - 1] == v)) {
+      n++;
+    }
+    if (((i + 1) < rs) && (B[k * ps + j * rs + i + 1] == v)) {
+      n++;
+    }
   }
   if (j % 2)
   {
-    if ((j>0)&&(B[k*ps+(j-1)*rs+i]==v)) n++;
-    if (((j+1)<cs)&&(B[k*ps+(j+1)*rs+i]==v)) n++;
+    if ((j > 0) && (B[k * ps + (j - 1) * rs + i] == v)) {
+      n++;
+    }
+    if (((j + 1) < cs) && (B[k * ps + (j + 1) * rs + i] == v)) {
+      n++;
+    }
   }
   if (k % 2)
   {
-    if ((k>0)&&(B[(k-1)*ps+j*rs+i]==v)) n++;
-    if (((k+1)<ds)&&(B[(k+1)*ps+j*rs+i]==v)) n++;
+    if ((k > 0) && (B[(k - 1) * ps + j * rs + i] == v)) {
+      n++;
+    }
+    if (((k + 1) < ds) && (B[(k + 1) * ps + j * rs + i] == v)) {
+      n++;
+    }
   }
   if ((i%2) + (j%2) == 2)
   {
-    if (((i>0)&&(j>0))&&(B[k*ps+(j-1)*rs+i-1]==v)) n++;
-    if (((i>0)&&((j+1)<cs))&&(B[k*ps+(j+1)*rs+i-1]==v)) n++;
-    if ((((i+1)<rs)&&(j>0))&&(B[k*ps+(j-1)*rs+i+1]==v)) n++;
-    if ((((i+1)<rs)&&((j+1)<cs))&&(B[k*ps+(j+1)*rs+i+1]==v)) n++;
+    if (((i > 0) && (j > 0)) && (B[k * ps + (j - 1) * rs + i - 1] == v)) {
+      n++;
+    }
+    if (((i > 0) && ((j + 1) < cs)) &&
+        (B[k * ps + (j + 1) * rs + i - 1] == v)) {
+      n++;
+    }
+    if ((((i + 1) < rs) && (j > 0)) &&
+        (B[k * ps + (j - 1) * rs + i + 1] == v)) {
+      n++;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs)) &&
+        (B[k * ps + (j + 1) * rs + i + 1] == v)) {
+      n++;
+    }
   }
   if ((i%2) + (k%2) == 2)
   {
-    if (((i>0)&&(k>0))&&(B[(k-1)*ps+j*rs+i-1]==v)) n++;
-    if (((i>0)&&((k+1)<ds))&&(B[(k+1)*ps+j*rs+i-1]==v)) n++;
-    if ((((i+1)<rs)&&(k>0))&&(B[(k-1)*ps+j*rs+i+1]==v)) n++;
-    if ((((i+1)<rs)&&((k+1)<ds))&&(B[(k+1)*ps+j*rs+i+1]==v)) n++;
+    if (((i > 0) && (k > 0)) && (B[(k - 1) * ps + j * rs + i - 1] == v)) {
+      n++;
+    }
+    if (((i > 0) && ((k + 1) < ds)) &&
+        (B[(k + 1) * ps + j * rs + i - 1] == v)) {
+      n++;
+    }
+    if ((((i + 1) < rs) && (k > 0)) &&
+        (B[(k - 1) * ps + j * rs + i + 1] == v)) {
+      n++;
+    }
+    if ((((i + 1) < rs) && ((k + 1) < ds)) &&
+        (B[(k + 1) * ps + j * rs + i + 1] == v)) {
+      n++;
+    }
   }
   if ((k%2) + (j%2) == 2)
   {
-    if (((k>0)&&(j>0))&&(B[(k-1)*ps+(j-1)*rs+i]==v)) n++;
-    if (((k>0)&&((j+1)<cs))&&(B[(k-1)*ps+(j+1)*rs+i]==v)) n++;
-    if ((((k+1)<ds)&&(j>0))&&(B[(k+1)*ps+(j-1)*rs+i]==v)) n++;
-    if ((((k+1)<ds)&&((j+1)<cs))&&(B[(k+1)*ps+(j+1)*rs+i]==v)) n++;
+    if (((k > 0) && (j > 0)) && (B[(k - 1) * ps + (j - 1) * rs + i] == v)) {
+      n++;
+    }
+    if (((k > 0) && ((j + 1) < cs)) &&
+        (B[(k - 1) * ps + (j + 1) * rs + i] == v)) {
+      n++;
+    }
+    if ((((k + 1) < ds) && (j > 0)) &&
+        (B[(k + 1) * ps + (j - 1) * rs + i] == v)) {
+      n++;
+    }
+    if ((((k + 1) < ds) && ((j + 1) < cs)) &&
+        (B[(k + 1) * ps + (j + 1) * rs + i] == v)) {
+      n++;
+    }
   }
   if ((i%2) + (j%2) + (k%2) == 3)
   {
-    if (((i>0)&&(j>0)&&(k>0))&&(B[(k-1)*ps+(j-1)*rs+i-1]==v)) n++;
-    if (((i>0)&&((j+1)<cs)&&(k>0))&&(B[(k-1)*ps+(j+1)*rs+i-1]==v)) n++;
-    if ((((i+1)<rs)&&(j>0)&&(k>0))&&(B[(k-1)*ps+(j-1)*rs+i+1]==v)) n++;
-    if ((((i+1)<rs)&&((j+1)<cs)&&(k>0))&&(B[(k-1)*ps+(j+1)*rs+i+1]==v)) n++;
-    if (((i>0)&&(j>0)&&((k+1)<ds))&&(B[(k+1)*ps+(j-1)*rs+i-1]==v)) n++;
-    if (((i>0)&&((j+1)<cs)&&((k+1)<ds))&&(B[(k+1)*ps+(j+1)*rs+i-1]==v)) n++;
-    if ((((i+1)<rs)&&(j>0)&&((k+1)<ds))&&(B[(k+1)*ps+(j-1)*rs+i+1]==v)) n++;
-    if ((((i+1)<rs)&&((j+1)<cs)&&((k+1)<ds))&&(B[(k+1)*ps+(j+1)*rs+i+1]==v)) n++;
+    if (((i > 0) && (j > 0) && (k > 0)) &&
+        (B[(k - 1) * ps + (j - 1) * rs + i - 1] == v)) {
+      n++;
+    }
+    if (((i > 0) && ((j + 1) < cs) && (k > 0)) &&
+        (B[(k - 1) * ps + (j + 1) * rs + i - 1] == v)) {
+      n++;
+    }
+    if ((((i + 1) < rs) && (j > 0) && (k > 0)) &&
+        (B[(k - 1) * ps + (j - 1) * rs + i + 1] == v)) {
+      n++;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs) && (k > 0)) &&
+        (B[(k - 1) * ps + (j + 1) * rs + i + 1] == v)) {
+      n++;
+    }
+    if (((i > 0) && (j > 0) && ((k + 1) < ds)) &&
+        (B[(k + 1) * ps + (j - 1) * rs + i - 1] == v)) {
+      n++;
+    }
+    if (((i > 0) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        (B[(k + 1) * ps + (j + 1) * rs + i - 1] == v)) {
+      n++;
+    }
+    if ((((i + 1) < rs) && (j > 0) && ((k + 1) < ds)) &&
+        (B[(k + 1) * ps + (j - 1) * rs + i + 1] == v)) {
+      n++;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        (B[(k + 1) * ps + (j + 1) * rs + i + 1] == v)) {
+      n++;
+    }
   }
 
   /* Betacarre */
   if ((i+1) % 2)
   {
-    if ((i>0)&&(B[k*ps+j*rs+i-1]==v)) n++;
-    if (((i+1)<rs)&&(B[k*ps+j*rs+i+1]==v)) n++;
+    if ((i > 0) && (B[k * ps + j * rs + i - 1] == v)) {
+      n++;
+    }
+    if (((i + 1) < rs) && (B[k * ps + j * rs + i + 1] == v)) {
+      n++;
+    }
   }
   if ((j+1) % 2)
   {
-    if ((j>0)&&(B[k*ps+(j-1)*rs+i]==v)) n++;
-    if (((j+1)<cs)&&(B[k*ps+(j+1)*rs+i]==v)) n++;
+    if ((j > 0) && (B[k * ps + (j - 1) * rs + i] == v)) {
+      n++;
+    }
+    if (((j + 1) < cs) && (B[k * ps + (j + 1) * rs + i] == v)) {
+      n++;
+    }
   }
   if ((k+1) % 2)
   {
-    if ((k>0)&&(B[(k-1)*ps+j*rs+i]==v)) n++;
-    if (((k+1)<ds)&&(B[(k+1)*ps+j*rs+i]==v)) n++;
+    if ((k > 0) && (B[(k - 1) * ps + j * rs + i] == v)) {
+      n++;
+    }
+    if (((k + 1) < ds) && (B[(k + 1) * ps + j * rs + i] == v)) {
+      n++;
+    }
   }
   if (((i+1)%2) + ((j+1)%2) == 2)
   {
-    if (((i>0)&&(j>0))&&(B[k*ps+(j-1)*rs+i-1]==v)) n++;
-    if (((i>0)&&((j+1)<cs))&&(B[k*ps+(j+1)*rs+i-1]==v)) n++;
-    if ((((i+1)<rs)&&(j>0))&&(B[k*ps+(j-1)*rs+i+1]==v)) n++;
-    if ((((i+1)<rs)&&((j+1)<cs))&&(B[k*ps+(j+1)*rs+i+1]==v)) n++;
+    if (((i > 0) && (j > 0)) && (B[k * ps + (j - 1) * rs + i - 1] == v)) {
+      n++;
+    }
+    if (((i > 0) && ((j + 1) < cs)) &&
+        (B[k * ps + (j + 1) * rs + i - 1] == v)) {
+      n++;
+    }
+    if ((((i + 1) < rs) && (j > 0)) &&
+        (B[k * ps + (j - 1) * rs + i + 1] == v)) {
+      n++;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs)) &&
+        (B[k * ps + (j + 1) * rs + i + 1] == v)) {
+      n++;
+    }
   }
   if (((i+1)%2) + ((k+1)%2) == 2)
   {
-    if (((i>0)&&(k>0))&&(B[(k-1)*ps+j*rs+i-1]==v)) n++;
-    if (((i>0)&&((k+1)<ds))&&(B[(k+1)*ps+j*rs+i-1]==v)) n++;
-    if ((((i+1)<rs)&&(k>0))&&(B[(k-1)*ps+j*rs+i+1]==v)) n++;
-    if ((((i+1)<rs)&&((k+1)<ds))&&(B[(k+1)*ps+j*rs+i+1]==v)) n++;
+    if (((i > 0) && (k > 0)) && (B[(k - 1) * ps + j * rs + i - 1] == v)) {
+      n++;
+    }
+    if (((i > 0) && ((k + 1) < ds)) &&
+        (B[(k + 1) * ps + j * rs + i - 1] == v)) {
+      n++;
+    }
+    if ((((i + 1) < rs) && (k > 0)) &&
+        (B[(k - 1) * ps + j * rs + i + 1] == v)) {
+      n++;
+    }
+    if ((((i + 1) < rs) && ((k + 1) < ds)) &&
+        (B[(k + 1) * ps + j * rs + i + 1] == v)) {
+      n++;
+    }
   }
   if (((k+1)%2) + ((j+1)%2) == 2)
   {
-    if (((k>0)&&(j>0))&&(B[(k-1)*ps+(j-1)*rs+i]==v)) n++;
-    if (((k>0)&&((j+1)<cs))&&(B[(k-1)*ps+(j+1)*rs+i]==v)) n++;
-    if ((((k+1)<ds)&&(j>0))&&(B[(k+1)*ps+(j-1)*rs+i]==v)) n++;
-    if ((((k+1)<ds)&&((j+1)<cs))&&(B[(k+1)*ps+(j+1)*rs+i]==v)) n++;
+    if (((k > 0) && (j > 0)) && (B[(k - 1) * ps + (j - 1) * rs + i] == v)) {
+      n++;
+    }
+    if (((k > 0) && ((j + 1) < cs)) &&
+        (B[(k - 1) * ps + (j + 1) * rs + i] == v)) {
+      n++;
+    }
+    if ((((k + 1) < ds) && (j > 0)) &&
+        (B[(k + 1) * ps + (j - 1) * rs + i] == v)) {
+      n++;
+    }
+    if ((((k + 1) < ds) && ((j + 1) < cs)) &&
+        (B[(k + 1) * ps + (j + 1) * rs + i] == v)) {
+      n++;
+    }
   }
   if (((i+1)%2) + ((j+1)%2) + ((k+1)%2) == 3)
   {
-    if (((i>0)&&(j>0)&&(k>0))&&(B[(k-1)*ps+(j-1)*rs+i-1]==v)) n++;
-    if (((i>0)&&((j+1)<cs)&&(k>0))&&(B[(k-1)*ps+(j+1)*rs+i-1]==v)) n++;
-    if ((((i+1)<rs)&&(j>0)&&(k>0))&&(B[(k-1)*ps+(j-1)*rs+i+1]==v)) n++;
-    if ((((i+1)<rs)&&((j+1)<cs)&&(k>0))&&(B[(k-1)*ps+(j+1)*rs+i+1]==v)) n++;
-    if (((i>0)&&(j>0)&&((k+1)<ds))&&(B[(k+1)*ps+(j-1)*rs+i-1]==v)) n++;
-    if (((i>0)&&((j+1)<cs)&&((k+1)<ds))&&(B[(k+1)*ps+(j+1)*rs+i-1]==v)) n++;
-    if ((((i+1)<rs)&&(j>0)&&((k+1)<ds))&&(B[(k+1)*ps+(j-1)*rs+i+1]==v)) n++;
-    if ((((i+1)<rs)&&((j+1)<cs)&&((k+1)<ds))&&(B[(k+1)*ps+(j+1)*rs+i+1]==v)) n++;
+    if (((i > 0) && (j > 0) && (k > 0)) &&
+        (B[(k - 1) * ps + (j - 1) * rs + i - 1] == v)) {
+      n++;
+    }
+    if (((i > 0) && ((j + 1) < cs) && (k > 0)) &&
+        (B[(k - 1) * ps + (j + 1) * rs + i - 1] == v)) {
+      n++;
+    }
+    if ((((i + 1) < rs) && (j > 0) && (k > 0)) &&
+        (B[(k - 1) * ps + (j - 1) * rs + i + 1] == v)) {
+      n++;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs) && (k > 0)) &&
+        (B[(k - 1) * ps + (j + 1) * rs + i + 1] == v)) {
+      n++;
+    }
+    if (((i > 0) && (j > 0) && ((k + 1) < ds)) &&
+        (B[(k + 1) * ps + (j - 1) * rs + i - 1] == v)) {
+      n++;
+    }
+    if (((i > 0) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        (B[(k + 1) * ps + (j + 1) * rs + i - 1] == v)) {
+      n++;
+    }
+    if ((((i + 1) < rs) && (j > 0) && ((k + 1) < ds)) &&
+        (B[(k + 1) * ps + (j - 1) * rs + i + 1] == v)) {
+      n++;
+    }
+    if ((((i + 1) < rs) && ((j + 1) < cs) && ((k + 1) < ds)) &&
+        (B[(k + 1) * ps + (j + 1) * rs + i + 1] == v)) {
+      n++;
+    }
   }
   return n;
 } /* CardThetaCarre3d() */
@@ -2625,11 +4178,10 @@ index_t EffaceBetaTerminauxSimples3d(struct xvimage *b)
 #ifdef DEBUGECS
 printf("EffaceBetaTerminauxSimples3d : niveau %d\n", IndexPileGrilles3d);
 #endif
-  for (k = 0; k < ds; k += 1)
-    for (j = 0; j < cs; j += 1)
-      for (i = 0; i < rs; i += 1)
-        if ((B[k*ps+j*rs+i]) && BetaTerminal3d(B, rs, cs, ds, i, j, k))
-        {
+for (k = 0; k < ds; k += 1) {
+  for (j = 0; j < cs; j += 1) {
+    for (i = 0; i < rs; i += 1) {
+      if ((B[k * ps + j * rs + i]) && BetaTerminal3d(B, rs, cs, ds, i, j, k)) {
 #ifdef DEBUGCD
 printf("Avant CopieAlphacarre : %d,%d,%d\n", rowsize(g), colsize(g), depth(g));
 #endif
@@ -2648,7 +4200,10 @@ printf("EffaceBetaTerminauxSimples3d(%d) : teste %d,%d,%d\n", IndexPileGrilles3d
 printf("EffaceBetaTerminauxSimples3d(%d) : efface %d,%d,%d\n", IndexPileGrilles3d, i, j, k);
 #endif
           }
-        }
+      }
+    }
+  }
+}
   FreeGrille3d();
   return n;
 } /* EffaceBetaTerminauxSimples3d() */
@@ -2661,8 +4216,13 @@ int32_t EnsembleSimple3d(struct xvimage *b)
 printf("EnsembleSimple3d :\n");
 printimage(b);
 #endif
-  if (ExactementUnBetaTerminal3d(UCHARDATA(b), rowsize(b), colsize(b), depth(b))) return 1;
-  if (EffaceBetaTerminauxSimples3d(b) == 0) return 0;
+if (ExactementUnBetaTerminal3d(UCHARDATA(b), rowsize(b), colsize(b),
+                               depth(b))) {
+  return 1;
+}
+if (EffaceBetaTerminauxSimples3d(b) == 0) {
+  return 0;
+}
   EffaceLiensBetaLibres3d(b);
   return EnsembleSimple3d(b);
 } /* EnsembleSimple3d() */
@@ -2680,8 +4240,12 @@ int32_t BetaTerminalSimple3d(struct xvimage *b, index_t i, index_t j, index_t k)
   uint8_t *G;  
   int32_t ret;
 
-  if (!B[k*ps+j*rs+i]) return 0;
-  if (!BetaTerminal3d(B, rs, cs, ds, i, j, k)) return 0;
+  if (!B[k * ps + j * rs + i]) {
+    return 0;
+  }
+  if (!BetaTerminal3d(B, rs, cs, ds, i, j, k)) {
+    return 0;
+  }
   g = AllocGrille3d();
   G = UCHARDATA(g);
   CopieAlphacarre3d(G, B, rs, cs, ds, i, j, k);
@@ -2704,7 +4268,14 @@ int32_t ContientUnSeulElement3d(struct xvimage *b)
   index_t N = rowsize(b) * colsize(b) * depth(b);
   uint8_t *B = UCHARDATA(b);
   index_t i, n = 0;
-  for (i = 0; i < N; i++) if (B[i]) { n++; if (n > 1) return 0; }
+  for (i = 0; i < N; i++) {
+    if (B[i]) {
+      n++;
+      if (n > 1) {
+        return 0;
+      }
+    }
+  }
   return (n == 1);
 } /* ContientUnSeulElement3d() */
 
@@ -2725,9 +4296,15 @@ printf("Alpha1Simple3d : %d %d %d", i, j, k);
 if (rowsize(b) == 3) printimage(b);
 #endif
 
-  if (!B[k*ps+j*rs+i]) return 0;
+if (!B[k * ps + j * rs + i]) {
+  return 0;
+}
   Alphacarre3d(rs, cs, ds, i, j, k, tab, &n);
-  for (u = 0; u < n; u++) if (B[tab[u]]) nn++;
+  for (u = 0; u < n; u++) {
+    if (B[tab[u]]) {
+      nn++;
+    }
+  }
 
 #ifdef DEBUGNEW
 printf("Alpha1Simple3d : nn = %d\n\n", n);
@@ -2753,9 +4330,15 @@ printf("Beta1Simple3d : %d %d %d", i, j, k);
 if (rowsize(b) == 3) printimage(b);
 #endif
 
-  if (!B[k*ps+j*rs+i]) return 0;
+if (!B[k * ps + j * rs + i]) {
+  return 0;
+}
   Betacarre3d(rs, cs, ds, i, j, k, tab, &n);
-  for (u = 0; u < n; u++) if (B[tab[u]]) nn++;
+  for (u = 0; u < n; u++) {
+    if (B[tab[u]]) {
+      nn++;
+    }
+  }
 
 #ifdef DEBUGNEW
 printf("Beta1Simple3d : nn = %d\n\n", n);
@@ -2776,12 +4359,23 @@ index_t EffaceAlpha1Simples3d(struct xvimage *b)
   uint8_t *B = UCHARDATA(b);
   index_t i, j, k, nbsimples = 0;
 
-  for (k = 0; k < ds; k++)
-    for (j = 0; j < cs; j++)
-      for (i = 0; i < rs; i++)
-        if (B[k*ps+j*rs+i])
-          if (Alpha1Simple3d(b, i, j, k)) B[k*ps+j*rs+i] = VAL_MARQUE;
-  for (i = 0; i < N; i++) if (B[i] == VAL_MARQUE) { B[i] = VAL_NULLE; nbsimples++; }
+  for (k = 0; k < ds; k++) {
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        if (B[k * ps + j * rs + i]) {
+          if (Alpha1Simple3d(b, i, j, k)) {
+            B[k * ps + j * rs + i] = VAL_MARQUE;
+          }
+        }
+      }
+    }
+  }
+  for (i = 0; i < N; i++) {
+    if (B[i] == VAL_MARQUE) {
+      B[i] = VAL_NULLE;
+      nbsimples++;
+    }
+  }
   return nbsimples;
 } /* EffaceAlpha1Simples3d() */
 
@@ -2797,12 +4391,23 @@ index_t EffaceBeta1Simples3d(struct xvimage *b)
   uint8_t *B = UCHARDATA(b);
   index_t i, j, k, nbsimples = 0;
 
-  for (k = 0; k < ds; k++)
-    for (j = 0; j < cs; j++)
-      for (i = 0; i < rs; i++)
-        if (B[k*ps+j*rs+i])
-          if (Beta1Simple3d(b, i, j, k)) B[k*ps+j*rs+i] = VAL_MARQUE;
-  for (i = 0; i < N; i++) if (B[i] == VAL_MARQUE) { B[i] = VAL_NULLE; nbsimples++; }
+  for (k = 0; k < ds; k++) {
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        if (B[k * ps + j * rs + i]) {
+          if (Beta1Simple3d(b, i, j, k)) {
+            B[k * ps + j * rs + i] = VAL_MARQUE;
+          }
+        }
+      }
+    }
+  }
+  for (i = 0; i < N; i++) {
+    if (B[i] == VAL_MARQUE) {
+      B[i] = VAL_NULLE;
+      nbsimples++;
+    }
+  }
   return nbsimples;
 } /* EffaceBeta1Simples3d() */
 
@@ -2820,8 +4425,12 @@ if (rowsize(b) == 3) printimage(b);
   do
   {
     stabilite = 1;
-    if (EffaceBeta1Simples3d(b)) stabilite = 0;
-    if (EffaceAlpha1Simples3d(b)) stabilite = 0;
+    if (EffaceBeta1Simples3d(b)) {
+      stabilite = 0;
+    }
+    if (EffaceAlpha1Simples3d(b)) {
+      stabilite = 0;
+    }
   } while (!stabilite);
 
 #ifdef DEBUGNEW
@@ -2857,7 +4466,9 @@ printf("Alpha2Simple3d : %d %d %d\n", i, j, k);
 if (rowsize(b) == 3) printimage(b);
 #endif
 
-  if (!B[k*ps+j*rs+i]) return 0;
+if (!B[k * ps + j * rs + i]) {
+  return 0;
+}
 
 #ifdef TEST_SIMPLICITE_RECURSIF
   g = AllocGrille3d();
@@ -2976,7 +4587,9 @@ printf("Beta2Simple3d : %d %d %d\n", i, j, k);
 if (rowsize(b) == 3) printimage(b);
 #endif
 
-  if (!B[k*ps+j*rs+i]) return 0;
+if (!B[k * ps + j * rs + i]) {
+  return 0;
+}
 
 #ifdef TEST_SIMPLICITE_RECURSIF
 
@@ -3083,12 +4696,23 @@ index_t EffaceAlpha2Simples3d(struct xvimage *b)
   uint8_t *B = UCHARDATA(b);
   index_t i, j, k, nbsimples = 0;
 
-  for (k = 0; k < ds; k++)
-    for (j = 0; j < cs; j++)
-      for (i = 0; i < rs; i++)
-        if (B[k*ps+j*rs+i])
-          if (Alpha2Simple3d(b, i, j, k)) B[k*ps+j*rs+i] = VAL_MARQUE;
-  for (i = 0; i < N; i++) if (B[i] == VAL_MARQUE) { B[i] = VAL_NULLE; nbsimples++; }
+  for (k = 0; k < ds; k++) {
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        if (B[k * ps + j * rs + i]) {
+          if (Alpha2Simple3d(b, i, j, k)) {
+            B[k * ps + j * rs + i] = VAL_MARQUE;
+          }
+        }
+      }
+    }
+  }
+  for (i = 0; i < N; i++) {
+    if (B[i] == VAL_MARQUE) {
+      B[i] = VAL_NULLE;
+      nbsimples++;
+    }
+  }
   return nbsimples;
 } /* EffaceAlpha2Simples3d() */
 
@@ -3104,12 +4728,23 @@ index_t EffaceBeta2Simples3d(struct xvimage *b)
   uint8_t *B = UCHARDATA(b);
   index_t i, j, k, nbsimples = 0;
 
-  for (k = 0; k < ds; k++)
-    for (j = 0; j < cs; j++)
-      for (i = 0; i < rs; i++)
-        if (B[k*ps+j*rs+i])
-          if (Beta2Simple3d(b, i, j, k)) B[k*ps+j*rs+i] = VAL_MARQUE;
-  for (i = 0; i < N; i++) if (B[i] == VAL_MARQUE) { B[i] = VAL_NULLE; nbsimples++; }
+  for (k = 0; k < ds; k++) {
+    for (j = 0; j < cs; j++) {
+      for (i = 0; i < rs; i++) {
+        if (B[k * ps + j * rs + i]) {
+          if (Beta2Simple3d(b, i, j, k)) {
+            B[k * ps + j * rs + i] = VAL_MARQUE;
+          }
+        }
+      }
+    }
+  }
+  for (i = 0; i < N; i++) {
+    if (B[i] == VAL_MARQUE) {
+      B[i] = VAL_NULLE;
+      nbsimples++;
+    }
+  }
   return nbsimples;
 } /* EffaceBeta2Simples3d() */
 
@@ -3127,8 +4762,12 @@ if (rowsize(b) == 3) printimage(b);
   do
   {
     stabilite = 1;
-    if (EffaceBeta2Simples3d(b)) stabilite = 0;
-    if (EffaceAlpha2Simples3d(b)) stabilite = 0;
+    if (EffaceBeta2Simples3d(b)) {
+      stabilite = 0;
+    }
+    if (EffaceAlpha2Simples3d(b)) {
+      stabilite = 0;
+    }
   } while (!stabilite);
 
 #ifdef DEBUGNEW
@@ -3326,13 +4965,17 @@ static void PropageRec(uint8_t *B, index_t rs, index_t cs, index_t ds, index_t i
 
   B[k * rs * cs + j * rs + i] = VAL_MARQUE;
   Alphacarre3d(rs, cs, ds, i, j, k, tab, &n);
-  for (u = 0; u < n; u++) 
-    if (B[tab[u]] == VAL_OBJET) 
-      PropageRec(B, rs, cs, ds, tab[u] % rs, (tab[u] % ps) / rs, tab[u] / ps);  
+  for (u = 0; u < n; u++) {
+    if (B[tab[u]] == VAL_OBJET) {
+      PropageRec(B, rs, cs, ds, tab[u] % rs, (tab[u] % ps) / rs, tab[u] / ps);
+    }
+  }
   Betacarre3d(rs, cs, ds, i, j, k, tab, &n);
-  for (u = 0; u < n; u++) 
-    if (B[tab[u]] == VAL_OBJET) 
-      PropageRec(B, rs, cs, ds, tab[u] % rs, (tab[u] % ps) / rs, tab[u] / ps);  
+  for (u = 0; u < n; u++) {
+    if (B[tab[u]] == VAL_OBJET) {
+      PropageRec(B, rs, cs, ds, tab[u] % rs, (tab[u] % ps) / rs, tab[u] / ps);
+    }
+  }
 } // PropageRec()
 
 /* ==================================== */
@@ -3357,16 +5000,22 @@ int32_t Connexe3d(struct xvimage *b)
   uint8_t *B = UCHARDATA(b);
   index_t i;
 
-  for (i = 0; i < N; i++)
+  for (i = 0; i < N; i++) {
     if (B[i] == VAL_OBJET)
     {
       PropageRec(B, rs, cs, ds, i % rs, (i % ps) / rs, i / ps);
       break;
     }
-  if (i == N) return 1; /* ens. vide connexe */
+  }
+  if (i == N) {
+    return 1; /* ens. vide connexe */
+  }
 
-  for (i = 0; i < N; i++) 
-    if ((B[i] != VAL_MARQUE) && (B[i] != VAL_NULLE)) return 0;
+  for (i = 0; i < N; i++) {
+    if ((B[i] != VAL_MARQUE) && (B[i] != VAL_NULLE)) {
+      return 0;
+    }
+  }
   return 1;
 } /* Connexe3d() */
 
@@ -3380,13 +5029,17 @@ static void PropageRecVal(uint8_t *B, index_t rs, index_t cs, index_t ds, index_
 
   B[k * rs * cs + j * rs + i] = VAL_MARQUE;
   Alphacarre3d(rs, cs, ds, i, j, k, tab, &n);
-  for (u = 0; u < n; u++) 
-    if (B[tab[u]] == Val) 
-      PropageRecVal(B, rs, cs, ds, tab[u] % rs, (tab[u] % ps) / rs, tab[u] / ps, Val);  
+  for (u = 0; u < n; u++) {
+    if (B[tab[u]] == Val) {
+      PropageRecVal(B, rs, cs, ds, tab[u] % rs, (tab[u] % ps) / rs, tab[u] / ps, Val);
+    }
+  }
   Betacarre3d(rs, cs, ds, i, j, k, tab, &n);
-  for (u = 0; u < n; u++) 
-    if (B[tab[u]] == Val) 
-      PropageRecVal(B, rs, cs, ds, tab[u] % rs, (tab[u] % ps) / rs, tab[u] / ps, Val);  
+  for (u = 0; u < n; u++) {
+    if (B[tab[u]] == Val) {
+      PropageRecVal(B, rs, cs, ds, tab[u] % rs, (tab[u] % ps) / rs, tab[u] / ps, Val);
+    }
+  }
 } // PropageRecVal()
 
 /* ==================================== */
@@ -3411,16 +5064,22 @@ int32_t Connexe3dVal(struct xvimage *b, uint8_t Val)
   uint8_t *B = UCHARDATA(b);
   index_t i;
 
-  for (i = 0; i < N; i++)
+  for (i = 0; i < N; i++) {
     if (B[i] == Val)
     {
       PropageRecVal(B, rs, cs, ds, i % rs, (i % ps) / rs, i / ps, Val);
       break;
     }
-  if (i == N) return 1; /* ens. vide connexe */
+  }
+  if (i == N) {
+    return 1; /* ens. vide connexe */
+  }
 
-  for (i = 0; i < N; i++) 
-    if (B[i] == Val) return 0;
+  for (i = 0; i < N; i++) {
+    if (B[i] == Val) {
+      return 0;
+    }
+  }
   return 1;
 } /* Connexe3dVal() */
 
@@ -3437,32 +5096,48 @@ int32_t Prop0CycleBetaTerminal3d(uint8_t *B, index_t rs, index_t cs, index_t ds,
   index_t tab[GRS3D*GCS3D*GDS3D];
 
   Alphacarre3d(rs, cs, ds, i, j, k, tab, &n);
-  if (n < 2) return 0;
+  if (n < 2) {
+    return 0;
+  }
   nn = n;
 
   for (u = 0; u < n; u++)
   {
     tu = tab[u];
     if ((tu != -1) && !B[tu])
-    { tab[u] = -1; if (--nn < 2) return 0; }
-    else
+    { tab[u] = -1;
+      if (--nn < 2) {
+        return 0;
+      }
+    } else {
       for (v = u+1; v < n; v++) /* elimine les succ. non maximaux */
       {
         tv = tab[v];
         if ((tv != -1) && B[tv])
         {
           if (Succede3d(tv%rs,(tv%ps)/rs,tv/ps,tu%rs,(tu%ps)/rs,tu/ps)) 
-          { tab[u] = -1; if(--nn<2) return 0; break; }
+          { tab[u] = -1;
+            if (--nn < 2) {
+              return 0;
+            }
+            break;
+          }
           if (Succede3d(tu%rs,(tu%ps)/rs,tu/ps,tv%rs,(tv%ps)/rs,tv/ps)) 
           { tab[v] = -1; nn--; }
 	}
       }
+    }
   }
-  if (nn > 2) return 0;
+  if (nn > 2) {
+    return 0;
+  }
   for (u = 0; u < n; u++)
   {
     tu = tab[u];
-    if ((tu != -1) && !AlphaTerminal3d(B, rs, cs, ds, tu%rs, (tu%ps)/rs, tu/ps)) return 0;
+    if ((tu != -1) &&
+        !AlphaTerminal3d(B, rs, cs, ds, tu % rs, (tu % ps) / rs, tu / ps)) {
+      return 0;
+    }
   }
   return 1;
 } /* Prop0CycleBetaTerminal3d() */
@@ -3483,24 +5158,35 @@ int32_t Prop0CycleAlphaTerminal3d(uint8_t *B, index_t rs, index_t cs, index_t ds
 #ifdef DEBUGP0CA
 printf("Prop0CycleAlphaTerminal3d (%d %d %d) n = %d \n",i,j,k,n);
 #endif
-  if (n < 2) return 0;
+if (n < 2) {
+  return 0;
+}
   nn = n;
 
   for (u = 0; u < n; u++)
   {
     tu = tab[u];
     if ((tu != -1) && !B[tu])
-    { tab[u] = -1; if (--nn < 2) return 0; }
-    else
+    { tab[u] = -1;
+      if (--nn < 2) {
+        return 0;
+      }
+    } else {
       for (v = u+1; v < n; v++) /* elimine les pred. non minimaux */
       {
         tv = tab[v];
         if ((tv != -1) && B[tv])
         {
-          if (Precede3d(tv%rs,(tv%ps)/rs,tv/ps,tu%rs,(tu%ps)/rs,tu/ps)) {tab[u]=-1;if(--nn<2)return 0;break;}
+          if (Precede3d(tv%rs,(tv%ps)/rs,tv/ps,tu%rs,(tu%ps)/rs,tu/ps)) {tab[u]=-1;
+            if (--nn < 2) {
+              return 0;
+            }
+            break;
+          }
           if (Precede3d(tu%rs,(tu%ps)/rs,tu/ps,tv%rs,(tv%ps)/rs,tv/ps)) {tab[v] = -1; nn--;}
 	}
       }
+    }
   }
 #ifdef DEBUGP0CA
 printf("Prop0CycleAlphaTerminal3d (%d %d %d) nn = %d  : ",i,j,k,nn);
@@ -3511,11 +5197,16 @@ for (u = 0; u < n; u++)
 }
 printf("\n");
 #endif
-  if (nn > 2) return 0;
+if (nn > 2) {
+  return 0;
+}
   for (u = 0; u < n; u++)
   {
     tu = tab[u];
-    if ((tu != -1) && !BetaTerminal3d(B, rs, cs, ds, tu%rs, (tu%ps)/rs, tu/ps)) return 0;
+    if ((tu != -1) &&
+        !BetaTerminal3d(B, rs, cs, ds, tu % rs, (tu % ps) / rs, tu / ps)) {
+      return 0;
+    }
   }
   return 1;
 } /* Prop0CycleAlphaTerminal3d() */
@@ -3543,21 +5234,29 @@ printf("CourbeSimple3d :\n");
 printimage(b);
 #endif
 
-  if (!Connexe3d(b)) return 0;
+if (!Connexe3d(b)) {
+  return 0;
+}
 
 #ifdef DEBUGCS
 printf("CourbeSimple3d : connexite ok\n");
 #endif
 
-  for (k = 0; k < ds; k += 1)
-    for (j = 0; j < cs; j += 1)
-      for (i = 0; i < rs; i += 1)
-        if (B[k * ps + j * rs + i])
-        {
-          n++;
-          if (CardThetacarre3d(B, rs, cs, ds, i, j, k) != 2) return 0;
-        } 
-  if (n == 0) return 0;
+for (k = 0; k < ds; k += 1) {
+  for (j = 0; j < cs; j += 1) {
+    for (i = 0; i < rs; i += 1) {
+      if (B[k * ps + j * rs + i]) {
+        n++;
+        if (CardThetacarre3d(B, rs, cs, ds, i, j, k) != 2) {
+          return 0;
+        }
+      }
+    }
+  }
+}
+if (n == 0) {
+  return 0;
+}
   return 1;
 }  /* CourbeSimple3d() */
 
@@ -3582,15 +5281,19 @@ int32_t Arbre3d(struct xvimage *b)
   do
   {
     stabilite = 1;
-    for (k = 0; k < ds; k += 1)
-      for (j = 0; j < cs; j += 1)
-        for (i = 0; i < rs; i += 1)
-          if (B[k * ps + j * rs + i])
+    for (k = 0; k < ds; k += 1) {
+      for (j = 0; j < cs; j += 1) {
+        for (i = 0; i < rs; i += 1) {
+          if (B[k * ps + j * rs + i]) {
             if (CardThetacarre3d(B, rs, cs, ds, i, j, k) == 1)
 	    {
               B[k * ps + j * rs + i] = 0;
               stabilite = 0;
-	    }
+            }
+          }
+        }
+      }
+    }
   } while (!stabilite);
 
   return ContientUnSeulElement3d(b);
@@ -3623,12 +5326,13 @@ int32_t NbCompConnexe3d(struct xvimage *b)
   uint8_t *B = UCHARDATA(b);
   int32_t i, nbcomp = 0;
 
-  for (i = 0; i < N; i++)
+  for (i = 0; i < N; i++) {
     if (B[i] == VAL_OBJET)
     {
       PropageRec(B, rs, cs, ds, i % rs, (i % ps) / rs, i / ps);
       nbcomp++;
     }
+  }
   return nbcomp;
 } /* NbCompConnexe3d() */
 
@@ -3800,9 +5504,15 @@ int32_t FaceLibre3d(struct xvimage *b, index_t i, index_t j, index_t k)
   index_t tab[GRS3D*GCS3D*GDS3D];
   int32_t u, n, nn = 0;
 
-  if (!B[k*ps+j*rs+i]) return 0;
+  if (!B[k * ps + j * rs + i]) {
+    return 0;
+  }
   Betacarre3d(rs, cs, ds, i, j, k, tab, &n);
-  for (u = 0; u < n; u++) if (B[tab[u]]) nn++;
+  for (u = 0; u < n; u++) {
+    if (B[tab[u]]) {
+      nn++;
+    }
+  }
 
   return (nn == 1);
 } /* FaceLibre3d() */
@@ -3823,10 +5533,19 @@ int32_t PaireLibre3d(struct xvimage *b, index_t i, index_t j, index_t k)
   index_t tab[GRS3D*GCS3D*GDS3D];
   int32_t u, uu, n, nn = 0;
 
-  if (!B[k*ps+j*rs+i]) return -1;
+  if (!B[k * ps + j * rs + i]) {
+    return -1;
+  }
   Betacarre3d(rs, cs, ds, i, j, k, tab, &n);
-  for (u = 0; u < n; u++) if (B[tab[u]]) { nn++; uu = u; }
-  if (nn != 1) return -1;
+  for (u = 0; u < n; u++) {
+    if (B[tab[u]]) {
+      nn++;
+      uu = u;
+    }
+  }
+  if (nn != 1) {
+    return -1;
+  }
   return tab[uu];
 } /* PaireLibre3d() */
 
@@ -3848,10 +5567,19 @@ int32_t Collapse3d(struct xvimage *b, index_t i, index_t j, index_t k)
   index_t tab[GRS3D*GCS3D*GDS3D];
   int32_t u, uu, n, nn = 0;
 
-  if (!B[k*ps+j*rs+i]) return -1;
+  if (!B[k * ps + j * rs + i]) {
+    return -1;
+  }
   Betacarre3d(rs, cs, ds, i, j, k, tab, &n);
-  for (u = 0; u < n; u++) if (B[tab[u]]) { nn++; uu = u; }
-  if (nn != 1) return -1;
+  for (u = 0; u < n; u++) {
+    if (B[tab[u]]) {
+      nn++;
+      uu = u;
+    }
+  }
+  if (nn != 1) {
+    return -1;
+  }
   B[tab[uu]] = B[k*ps+j*rs+i] = VAL_NULLE;
   return tab[uu];
 } /* Collapse3d() */
@@ -3866,9 +5594,15 @@ int32_t FaceLibre3d_1(uint8_t *B, index_t rs, index_t cs, index_t ds, index_t i,
   index_t tab[GRS3D*GCS3D*GDS3D];
   int32_t u, n, nn = 0;
 
-  if (!B[k*ps+j*rs+i]) return 0;
+  if (!B[k * ps + j * rs + i]) {
+    return 0;
+  }
   Betacarre3d(rs, cs, ds, i, j, k, tab, &n);
-  for (u = 0; u < n; u++) if (B[tab[u]]) nn++;
+  for (u = 0; u < n; u++) {
+    if (B[tab[u]]) {
+      nn++;
+    }
+  }
 
   return (nn == 1);
 } /* FaceLibre3d_1() */
@@ -3883,10 +5617,19 @@ int32_t Collapse3d_1(uint8_t *B, index_t rs, index_t cs, index_t ds, index_t i, 
   index_t tab[GRS3D*GCS3D*GDS3D];
   int32_t u, uu, n, nn = 0;
 
-  if (!B[k*ps+j*rs+i]) return -1;
+  if (!B[k * ps + j * rs + i]) {
+    return -1;
+  }
   Betacarre3d(rs, cs, ds, i, j, k, tab, &n);
-  for (u = 0; u < n; u++) if (B[tab[u]]) { nn++; uu = u; }
-  if (nn != 1) return -1;
+  for (u = 0; u < n; u++) {
+    if (B[tab[u]]) {
+      nn++;
+      uu = u;
+    }
+  }
+  if (nn != 1) {
+    return -1;
+  }
   B[tab[uu]] = B[k*ps+j*rs+i] = VAL_NULLE;
   return tab[uu];
 } /* Collapse3d_1() */
@@ -3918,34 +5661,47 @@ int32_t simple_26_att(   /* pour un objet en 26-connexite */
   int32_t lifo[GRS3D*GCS3D*GDS3D];
   int32_t lp;
 
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs == rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs == rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
 
   // calcule l'attachement du voxel p - resultat dans BB
   memset(BB, 0, NN);
   Alphacarre3d(RS, CS, DS, RS/2, CS/2, DS/2, tab, &n);
-  for (u = 0; u < n; u++) BB[tab[u]] = MASK_MRK;
+  for (u = 0; u < n; u++) {
+    BB[tab[u]] = MASK_MRK;
+  }
 
   ii = p % rs; jj = (p % ps) / rs; kk = p / ps;
-  for (k = 0; k < 3; k++)
-    for (j = 0; j < 3; j++)
-      for (i = 0; i < 3; i++)
-	if (img[(kk+k-1) * ps + (jj+j-1) * rs + ii+i-1])
-	  if ((k != 1) || (j != 1) || (i != 1))
+  for (k = 0; k < 3; k++) {
+    for (j = 0; j < 3; j++) {
+      for (i = 0; i < 3; i++) {
+        if (img[(kk + k - 1) * ps + (jj + j - 1) * rs + ii + i - 1]) {
+          if ((k != 1) || (j != 1) || (i != 1))
 	  {
 	    Alphacarre3d(RS, CS, DS, 2*i+1, 2*j+1, 2*k+1, tab, &n);
-	    for (u = 0; u < n; u++) 
-	      if (BB[tab[u]] == MASK_MRK)
-		BB[tab[u]] = MASK_OBJ;
-	  }  
+            for (u = 0; u < n; u++) {
+              if (BB[tab[u]] == MASK_MRK) {
+                BB[tab[u]] = MASK_OBJ;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 
   na = 0; // pour taille attachement
   Alphacarre3d(RS, CS, DS, RS/2, CS/2, DS/2, tab, &n);
-  for (u = 0; u < n; u++) 
-    if (BB[tab[u]] == MASK_MRK) BB[tab[u]] = 0; 
-    else if (BB[tab[u]] == MASK_OBJ) na++;
+  for (u = 0; u < n; u++) {
+    if (BB[tab[u]] == MASK_MRK) {
+      BB[tab[u]] = 0;
+    } else if (BB[tab[u]] == MASK_OBJ) {
+      na++;
+    }
+  }
 
   // collapse de l'attachement
   lp = 0; // pointeur de lifo
@@ -3986,7 +5742,9 @@ int32_t simple_26_att(   /* pour un objet en 26-connexite */
     }
   } // while lp
 
-  if (na == 1) return 1;
+  if (na == 1) {
+    return 1;
+  }
   return 0;
 
 } /* simple_26_att() */
@@ -4020,40 +5778,64 @@ int32_t pairesimple_26_x(
   int32_t lifo[GRS3D*GCS3D*5];
   int32_t lp;
 
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs >= rs-2))     /* premiere ou (avant-)derniere ligne */
+  if ((p < ps) || (p >= N - ps) ||            /* premier ou dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) ||
+      (p % rs >= rs - 2)) { /* premiere ou (avant-)derniere ligne */
     return 0;
+  }
 
   // calcule l'attachement de la paire p/px+1 - resultat dans B
 
   memset(B, 0, NN);
   // marque les attachements des 2 voxels
   Alphacarre3d(RS, CS, DS, 3, 3, 3, tab, &n);
-  for (u = 0; u < n; u++) B[tab[u]] = MASK_MRK;
+  for (u = 0; u < n; u++) {
+    B[tab[u]] = MASK_MRK;
+  }
   Alphacarre3d(RS, CS, DS, 5, 3, 3, tab, &n);
-  for (u = 0; u < n; u++) B[tab[u]] = MASK_MRK;
+  for (u = 0; u < n; u++) {
+    B[tab[u]] = MASK_MRK;
+  }
   B[3*PS + 3*RS + 4] = 0;
 
   ii = p % rs; jj = (p % ps) / rs; kk = p / ps;
-  for (k = 0; k < 3; k++)
-    for (j = 0; j < 3; j++)
-      for (i = 0; i < 4; i++)
-	if (img[(kk+k-1) * ps + (jj+j-1) * rs + ii+i-1])
-	  if ((k != 1) || (j != 1) || ((i != 1) && (i != 2)))
+  for (k = 0; k < 3; k++) {
+    for (j = 0; j < 3; j++) {
+      for (i = 0; i < 4; i++) {
+        if (img[(kk + k - 1) * ps + (jj + j - 1) * rs + ii + i - 1]) {
+          if ((k != 1) || (j != 1) || ((i != 1) && (i != 2)))
 	  {
 	    Alphacarre3d(RS, CS, DS, 2*i+1, 2*j+1, 2*k+1, tab, &n);
-	    for (u = 0; u < n; u++) 
-	      if (B[tab[u]] == MASK_MRK)
-		B[tab[u]] = MASK_OBJ;
-	  }  
+            for (u = 0; u < n; u++) {
+              if (B[tab[u]] == MASK_MRK) {
+                B[tab[u]] = MASK_OBJ;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 
   Alphacarre3d(RS, CS, DS, 3, 3, 3, tab, &n);
-  for (u = 0; u < n; u++) if (B[tab[u]] == MASK_MRK) B[tab[u]] = 0; 
+  for (u = 0; u < n; u++) {
+    if (B[tab[u]] == MASK_MRK) {
+      B[tab[u]] = 0;
+    }
+  }
   Alphacarre3d(RS, CS, DS, 5, 3, 3, tab, &n);
-  for (u = 0; u < n; u++) if (B[tab[u]] == MASK_MRK) B[tab[u]] = 0; 
+  for (u = 0; u < n; u++) {
+    if (B[tab[u]] == MASK_MRK) {
+      B[tab[u]] = 0;
+    }
+  }
   na = 0; // pour taille attachement
-  for (i = 0; i < NN; i++) if (B[i]) tab[na++] = i;
+  for (i = 0; i < NN; i++) {
+    if (B[i]) {
+      tab[na++] = i;
+    }
+  }
 
   // collapse de l'attachement
   lp = 0; // pointeur de lifo
@@ -4094,7 +5876,9 @@ int32_t pairesimple_26_x(
     }
   } // while lp
 
-  if (na == 1) return 1;
+  if (na == 1) {
+    return 1;
+  }
   return 0;
 
 } /* pairesimple_26_x() */
@@ -4119,40 +5903,64 @@ int32_t pairesimple_26_y(
   int32_t lifo[GRS3D*GCS3D*5];
   int32_t lp;
 
-  if ((p < ps) || (p >= N-ps) ||         /* premier ou dernier plan */
-      (p%ps < rs) || (p%ps >= ps-(2*rs)) ||  /* premiere ou (avant-)derniere colonne */
-      (p%rs == 0) || (p%rs >= rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - ps) || /* premier ou dernier plan */
+      (p % ps < rs) ||
+      (p % ps >= ps - (2 * rs)) || /* premiere ou (avant-)derniere colonne */
+      (p % rs == 0) || (p % rs >= rs - 1)) { /* premiere ou derniere ligne */
     return 0;
+  }
 
   // calcule l'attachement de la paire p/py+1 - resultat dans B
 
   memset(B, 0, NN);
   // marque les attachements des 2 voxels
   Alphacarre3d(RS, CS, DS, 3, 3, 3, tab, &n);
-  for (u = 0; u < n; u++) B[tab[u]] = MASK_MRK;
+  for (u = 0; u < n; u++) {
+    B[tab[u]] = MASK_MRK;
+  }
   Alphacarre3d(RS, CS, DS, 3, 5, 3, tab, &n);
-  for (u = 0; u < n; u++) B[tab[u]] = MASK_MRK;
+  for (u = 0; u < n; u++) {
+    B[tab[u]] = MASK_MRK;
+  }
   B[3*PS + 4*RS + 3] = 0;
 
   ii = p % rs; jj = (p % ps) / rs; kk = p / ps;
-  for (k = 0; k < 3; k++)
-    for (j = 0; j < 4; j++)
-      for (i = 0; i < 3; i++)
-	if (img[(kk+k-1) * ps + (jj+j-1) * rs + ii+i-1])
-	  if ((k != 1) || (i != 1) || ((j != 1) && (j != 2)))
+  for (k = 0; k < 3; k++) {
+    for (j = 0; j < 4; j++) {
+      for (i = 0; i < 3; i++) {
+        if (img[(kk + k - 1) * ps + (jj + j - 1) * rs + ii + i - 1]) {
+          if ((k != 1) || (i != 1) || ((j != 1) && (j != 2)))
 	  {
 	    Alphacarre3d(RS, CS, DS, 2*i+1, 2*j+1, 2*k+1, tab, &n);
-	    for (u = 0; u < n; u++) 
-	      if (B[tab[u]] == MASK_MRK)
-		B[tab[u]] = MASK_OBJ;
-	  }  
+            for (u = 0; u < n; u++) {
+              if (B[tab[u]] == MASK_MRK) {
+                B[tab[u]] = MASK_OBJ;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 
   Alphacarre3d(RS, CS, DS, 3, 3, 3, tab, &n);
-  for (u = 0; u < n; u++) if (B[tab[u]] == MASK_MRK) B[tab[u]] = 0; 
+  for (u = 0; u < n; u++) {
+    if (B[tab[u]] == MASK_MRK) {
+      B[tab[u]] = 0;
+    }
+  }
   Alphacarre3d(RS, CS, DS, 3, 5, 3, tab, &n);
-  for (u = 0; u < n; u++) if (B[tab[u]] == MASK_MRK) B[tab[u]] = 0; 
+  for (u = 0; u < n; u++) {
+    if (B[tab[u]] == MASK_MRK) {
+      B[tab[u]] = 0;
+    }
+  }
   na = 0; // pour taille attachement
-  for (i = 0; i < NN; i++) if (B[i]) tab[na++] = i;
+  for (i = 0; i < NN; i++) {
+    if (B[i]) {
+      tab[na++] = i;
+    }
+  }
 
   // collapse de l'attachement
   lp = 0; // pointeur de lifo
@@ -4193,7 +6001,9 @@ int32_t pairesimple_26_y(
     }
   } // while lp
 
-  if (na == 1) return 1;
+  if (na == 1) {
+    return 1;
+  }
   return 0;
 
 } /* pairesimple_26_y() */
@@ -4220,40 +6030,63 @@ int32_t pairesimple_26_z(
   int32_t lifo[GRS3D*GCS3D*5];
   int32_t lp;
 
-  if ((p < ps) || (p >= N-(2*ps)) ||     /* premier ou (avant-)dernier plan */
-      (p%ps < rs) || (p%ps >= ps-rs) ||  /* premiere ou derniere colonne */
-      (p%rs == 0) || (p%rs >= rs-1))     /* premiere ou derniere ligne */
+  if ((p < ps) || (p >= N - (2 * ps)) || /* premier ou (avant-)dernier plan */
+      (p % ps < rs) || (p % ps >= ps - rs) || /* premiere ou derniere colonne */
+      (p % rs == 0) || (p % rs >= rs - 1)) {  /* premiere ou derniere ligne */
     return 0;
+  }
 
   // calcule l'attachement de la paire p/pz+1 - resultat dans B
 
   memset(B, 0, NN);
   // marque les attachements des 2 voxels
   Alphacarre3d(RS, CS, DS, 3, 3, 3, tab, &n);
-  for (u = 0; u < n; u++) B[tab[u]] = MASK_MRK;
+  for (u = 0; u < n; u++) {
+    B[tab[u]] = MASK_MRK;
+  }
   Alphacarre3d(RS, CS, DS, 3, 3, 5, tab, &n);
-  for (u = 0; u < n; u++) B[tab[u]] = MASK_MRK;
+  for (u = 0; u < n; u++) {
+    B[tab[u]] = MASK_MRK;
+  }
   B[4*PS + 3*RS + 3] = 0;
 
   ii = p % rs; jj = (p % ps) / rs; kk = p / ps;
-  for (k = 0; k < 4; k++)
-    for (j = 0; j < 3; j++)
-      for (i = 0; i < 3; i++)
-	if (img[(kk+k-1) * ps + (jj+j-1) * rs + ii+i-1])
-	  if ((i != 1) || (j != 1) || ((k != 1) && (k != 2)))
+  for (k = 0; k < 4; k++) {
+    for (j = 0; j < 3; j++) {
+      for (i = 0; i < 3; i++) {
+        if (img[(kk + k - 1) * ps + (jj + j - 1) * rs + ii + i - 1]) {
+          if ((i != 1) || (j != 1) || ((k != 1) && (k != 2)))
 	  {
 	    Alphacarre3d(RS, CS, DS, 2*i+1, 2*j+1, 2*k+1, tab, &n);
-	    for (u = 0; u < n; u++) 
-	      if (B[tab[u]] == MASK_MRK)
-		B[tab[u]] = MASK_OBJ;
-	  }  
+            for (u = 0; u < n; u++) {
+              if (B[tab[u]] == MASK_MRK) {
+                B[tab[u]] = MASK_OBJ;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 
   Alphacarre3d(RS, CS, DS, 3, 3, 3, tab, &n);
-  for (u = 0; u < n; u++) if (B[tab[u]] == MASK_MRK) B[tab[u]] = 0; 
+  for (u = 0; u < n; u++) {
+    if (B[tab[u]] == MASK_MRK) {
+      B[tab[u]] = 0;
+    }
+  }
   Alphacarre3d(RS, CS, DS, 3, 3, 5, tab, &n);
-  for (u = 0; u < n; u++) if (B[tab[u]] == MASK_MRK) B[tab[u]] = 0; 
+  for (u = 0; u < n; u++) {
+    if (B[tab[u]] == MASK_MRK) {
+      B[tab[u]] = 0;
+    }
+  }
   na = 0; // pour taille attachement
-  for (i = 0; i < NN; i++) if (B[i]) tab[na++] = i;
+  for (i = 0; i < NN; i++) {
+    if (B[i]) {
+      tab[na++] = i;
+    }
+  }
 
   // collapse de l'attachement
   lp = 0; // pointeur de lifo
@@ -4294,7 +6127,9 @@ int32_t pairesimple_26_z(
     }
   } // while lp
 
-  if (na == 1) return 1;
+  if (na == 1) {
+    return 1;
+  }
   return 0;
 
 } /* pairesimple_26_z() */

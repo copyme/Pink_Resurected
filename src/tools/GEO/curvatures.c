@@ -126,8 +126,9 @@ int main(int argc, char **argv)
       exit(1);
     }
 //    fprintf(fd, "%d\n", nsamples-1);
-    for (j = 1; j < nsamples; j++)
+    for (j = 1; j < nsamples; j++) {
       fprintf(fd, "%lf %lf\n", sk[j], rhok[j]);
+    }
     fclose(fd);
 
     free(x); free(y);
@@ -153,8 +154,9 @@ int main(int argc, char **argv)
       exit(1);
     }
 //    fprintf(fd, "%d\n", nsamples-1);
-    for (j = 1; j < nsamples; j++)
+    for (j = 1; j < nsamples; j++) {
       fprintf(fd, "%lf %lf\n", sk[j], rhok[j]);
+    }
     fclose(fd);
 
     free(x); free(y); free(z); 
