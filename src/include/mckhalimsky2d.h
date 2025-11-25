@@ -69,7 +69,7 @@ extern "C" {
 
 extern void InitPileGrilles2d();
 extern void TerminePileGrilles2d();
-extern struct xvimage * Khalimskize2d(struct xvimage *o);
+extern struct xvimage * Khalimskize2d(const struct xvimage *o);
 extern struct xvimage * KhalimskizeNDG2d(struct xvimage *o);
 extern struct xvimage * DeKhalimskize2d(struct xvimage *o);
 extern void Khalimskize2d_noalloc(struct xvimage *o, struct xvimage *k);
@@ -90,7 +90,7 @@ extern void Betacarre2d(index_t rs, index_t cs, index_t i, index_t j, index_t *t
 extern void Alphacarre2d(index_t rs, index_t cs, index_t i, index_t j, index_t *tab, int32_t *n);
 extern int Alphacarretriang2d(index_t rs, index_t cs, index_t i, index_t j, index_t *tab, int32_t *n);
 extern void Thetacarre2d(index_t rs, index_t cs, index_t i, index_t j, index_t *tab, int32_t *n);
-extern int32_t CardBetapoint2d(uint8_t *K, index_t rs, index_t cs, index_t i, index_t j);
+extern int32_t CardBetapoint2d(const uint8_t *K, index_t rs, index_t cs, index_t i, index_t j);
 extern int32_t CardThetaCarre2d(struct xvimage *k, index_t i, index_t j, uint8_t val);
 extern int32_t BetaTerminal2d(uint8_t *K, index_t rs, index_t cs, index_t i, index_t j);
 extern int32_t ExactementUnBetaTerminal2d(uint8_t *K, index_t rs, index_t cs);

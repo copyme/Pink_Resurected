@@ -89,8 +89,7 @@ static int32_t IndexPileGrilles2d;
 void InitPileGrilles2d()
 /* ========================================== */
 {
-  int32_t i;
-  for (i = 0; i < NBGRILLES2D; i++)
+  for (int32_t i = 0; i < NBGRILLES2D; i++)
     PileGrilles2d[i] = allocimage(NULL, GRS2D, GCS2D, 1, VFF_TYP_1_BYTE);
   IndexPileGrilles2d = 0;
 } /* InitPileGrilles2d() */
@@ -99,8 +98,7 @@ void InitPileGrilles2d()
 void TerminePileGrilles2d()
 /* ========================================== */
 {
-  int32_t i;
-  for (i = 0; i < NBGRILLES2D; i++)
+  for (int32_t i = 0; i < NBGRILLES2D; i++)
     freeimage(PileGrilles2d[i]);
 } /* TerminePileGrilles2d() */
 
@@ -108,13 +106,12 @@ void TerminePileGrilles2d()
 struct xvimage * AllocGrille2d()
 /* ========================================== */
 {
-  struct xvimage * g;
   if (IndexPileGrilles2d >= NBGRILLES2D)
   {   
     fprintf(stderr, "AllocGrille2d() : pile pleine\n");
     exit(0);
   }
-  g = PileGrilles2d[IndexPileGrilles2d];
+  struct xvimage* g = PileGrilles2d[IndexPileGrilles2d];
   IndexPileGrilles2d++;
   return g;
 } /* AllocGrille2d() */
@@ -136,38 +133,34 @@ void FreeGrille2d()
 /* ========================================================================== */
 
 /* ==================================== */
-struct xvimage * Khalimskize2d(struct xvimage *o)
+struct xvimage * Khalimskize2d(const struct xvimage *o)
 /* ==================================== */
 /*            
    o: image originale
    k: resultat - chaque pixel de o est devenu un beta-terminal de k
 */
 {
-  index_t ors = rowsize(o);
-  index_t ocs = colsize(o);
-  uint8_t *O = UCHARDATA(o);
-  struct xvimage *k;
-  index_t krs, kcs, kN;
-  uint8_t *K;
-  index_t i, j;  
+  const index_t ors = rowsize(o);
+  const index_t ocs = colsize(o);
+  const uint8_t *O = UCHARDATA(o);
 
   assert(datatype(o) == VFF_TYP_1_BYTE);
 
-  krs = 2 * ors + 1;
-  kcs = 2 * ocs + 1;
-  kN = krs * kcs;
+  const index_t krs = 2 * ors + 1;
+  const index_t kcs = 2 * ocs + 1;
+  const index_t kN = krs * kcs;
   
-  k = allocimage(NULL, krs, kcs, 1, VFF_TYP_1_BYTE);
+  struct xvimage* k = allocimage(NULL, krs, kcs, 1, VFF_TYP_1_BYTE);
   if (k == NULL)
   {   fprintf(stderr,"Khalimskize2d() : allocimage failed\n");
       return NULL;
   }
-  K = UCHARDATA(k);
+  uint8_t* K = UCHARDATA(k);
 
   memset(K, VAL_NULLE, kN); /* init a VAL_NULLE */
 
-  for (j = 0; j < ocs; j++)
-    for (i = 0; i < ors; i++)
+  for (index_t j = 0; j < ocs; j++)
+    for (index_t i = 0; i < ors; i++)
       if (O[j * ors + i])
         K[(2*j+1) * krs + (2*i+1)] = VAL_OBJET;
 
@@ -551,8 +544,8 @@ void ndgmax2d(struct xvimage *b)
   }
   else if (datatype(b) == VFF_TYP_4_BYTE)
   {
-    int32_t *B;
-    int32_t *BP;
+    int32_t *B = NULL;
+    int32_t *BP = NULL;
     B = SLONGDATA(b);
     bp = copyimage(b);
     BP = SLONGDATA(bp);
@@ -570,12 +563,12 @@ void ndgmax2d(struct xvimage *b)
   }
   else if (datatype(b) == VFF_TYP_FLOAT)
   {
-    float *B;
-    float *BP;
+    float *B = NULL;
+    float *BP = NULL;
     B = FLOATDATA(b);
     bp = copyimage(b);
     BP = FLOATDATA(bp);
-    for (j = 1; j < N; j += 1) BP[j] = 0.0;
+    for (j = 1; j < N; j += 1) BP[j] = 0.0f;
 
     for (j = 1; j < cs; j += 2)
       for (i = 1; i < rs; i += 2)
@@ -1057,7 +1050,7 @@ void Thetacarre2d(index_t rs, index_t cs, index_t i, index_t j, index_t *tab, in
 } /* Thetacarre2d() */
 
 /* ==================================== */
-int32_t CardBetapoint2d(uint8_t *K, index_t rs, index_t cs, index_t i, index_t j)
+int32_t CardBetapoint2d(const uint8_t *K, const index_t rs, const index_t cs, const index_t i, const index_t j)
 /* ==================================== */
 {
   int32_t n = 0;
@@ -2137,18 +2130,24 @@ int32_t Collapse2d(struct xvimage *b, index_t i, index_t j)
 // If it is, it forms a free pair with a face f which contains it. 
 // These two faces are removed from b, and the face f is returned.
 {
-  index_t rs = rowsize(b);
-  index_t cs = colsize(b);
+  const index_t rs = rowsize(b);
+  const index_t cs = colsize(b);
   uint8_t *B = UCHARDATA(b);
   index_t tab[GCS2D*GRS2D];
-  int32_t u, uu, n, nn = 0;
+  int32_t uu = 0, n, nn = 0;
 
-  if (!B[j*rs+i]) return -1;
+  if (!B[j*rs+i])
+    return -1;
   Betacarre2d(rs, cs, i, j, tab, &n);
-  for (u = 0; u < n; u++) if (B[tab[u]]) { nn++; uu = u; }
-  if (nn != 1) return -1;
+  for (int32_t u = 0; u < n; u++)
+  {
+    if (B[tab[u]])
+      nn++; uu = u;
+  }
+  if (nn != 1)
+    return -1;
   B[tab[uu]] = B[j*rs+i] = VAL_NULLE;
-  return tab[uu];
+  return (int32_t)tab[uu];
 } /* Collapse2d() */
 
 /* ========================================================================== */
