@@ -131,7 +131,7 @@ void LifoPrint(Lifo * L)
   printf("[ ");
   for (i = 0; i < L->Sp; i++)
 #ifdef MC_64_BITS
-    printf("%lld ", L->Pts[i]);
+    printf("%ld ", L->Pts[i]);
 #else
     printf("%d ", L->Pts[i]);
 #endif
@@ -147,7 +147,7 @@ void LifoPrintLine(Lifo * L)
   printf("[ ");
   for (i = 0; i < L->Sp; i++)
 #ifdef MC_64_BITS
-    printf("%lld ", L->Pts[i]);
+    printf("%ld ", L->Pts[i]);
 #else
     printf("%d ", L->Pts[i]);
 #endif

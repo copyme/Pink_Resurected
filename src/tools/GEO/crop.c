@@ -97,7 +97,7 @@ int main(int argc, char **argv)
       fprintf(stderr, "%s: cannot open file: %s\n", argv[0], argv[2]);
       exit(1);
     }
-    n = fscanf(fd, "%d %d %d %d %d %d\n", &x, &y, &z, &w, &h, &d);
+    n = fscanf(fd, "%ld %ld %ld %ld %ld %ld\n", &x, &y, &z, &w, &h, &d);
     if (n == 4)
       out = lcrop(in, x, y, z, w);
     else

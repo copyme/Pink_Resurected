@@ -64,7 +64,7 @@ uint32_t read_size_on_disk(FILE *fd, uint64_t *rs, uint64_t *cs, uint64_t *d)
     }
 	fgets(&buffer[1], 100, fd);
 	/* Sauvegarde des longueurs (rs,cs,depth) de l'image */
-	c=sscanf(buffer, "%lld %lld %lld", rs, cs, d);
+	c=sscanf(buffer, "%ld %ld %ld", rs, cs, d);
 	if (c == 2) *d = 1;
 	else if (c != 3)
     {
@@ -136,7 +136,7 @@ uint32_t crop_on_disk(FILE *fd, struct xvimage** image_decoupee, uint64_t cx, ui
     }
 	fgets(&buffer[1], 100, fd);
 	/* Sauvegarde des longueurs (rs,cs,depth) de l'image */
-	c = sscanf(buffer, "%lld %lld %lld", &rs, &cs, &d);
+	c = sscanf(buffer, "%ld %ld %ld", &rs, &cs, &d);
 	if (c == 2) d = 1;
 	else if (c != 3)
     {
@@ -147,7 +147,7 @@ uint32_t crop_on_disk(FILE *fd, struct xvimage** image_decoupee, uint64_t cx, ui
 
 	/* On lit le nombre maximum que peut prendre un voxel (255 pour une image en niveau de gris)*/
 	fgets(buffer,100, fd);
-	sscanf(buffer, "%lld", &ndgmax);
+	sscanf(buffer, "%ld", &ndgmax);
 
 	/* Nombre total de voxel (ou pixel) dans l'image */
 	N = rs * cs * d;

@@ -116,7 +116,7 @@ int32_t ldilatnum( struct xvimage *f,
     float *H = NULL;                     /* image de travail */
     float sup;
     float t;
-    printf("rsm=%d csm=%d\n", rsm, csm);
+    printf("rsm=%ld csm=%ld\n", rsm, csm);
     H = (float *)calloc(1,N*sizeof(float));
     if (H == NULL)
     {   fprintf(stderr,"%s() : malloc failed for H\n", F_NAME);

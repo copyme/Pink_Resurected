@@ -166,7 +166,7 @@ int32_t lmedialaxis_lmedax_talbot(struct xvimage *img,   /* donnee: image binair
   M = ULONGDATA(res);
   for (i = 0; i < N; i++) if (F[i])
   {
-    printf("i=(%d,%d); L[i]=(%d,%d)\n", i%rs, i/rs, L[i].x, L[i].y);
+    printf("i=(%ld,%ld); L[i]=(%d,%d)\n", i%rs, i/rs, L[i].x, L[i].y);
     norm_i = norm(L[i]);
     // trouver j, le voisin de i dans la direction la plus proche de L[i]
     // (aval de i)
@@ -193,7 +193,7 @@ int32_t lmedialaxis_lmedax_talbot(struct xvimage *img,   /* donnee: image binair
     j = (j + 4) % 8; // cherche l'amont dans la direction opposee
     j = voisin(i, j, rs, N);
     norm_j = norm(L[j]);
-    printf("j=(%d,%d); norm_j = %g  norm_i = %g  cosmax = %g; dij = %g; d*c = %g\n", 
+    printf("j=(%ld,%ld); norm_j = %g  norm_i = %g  cosmax = %g; dij = %g; d*c = %g\n", 
         j%rs, j/rs, norm_j, norm_i, cosmax, dij, dij*cosB);
     if ((double)(norm_j - norm_i) < ((double)(dij) * cosB)) 
       //M[i] = L[i].x * L[i].x + L[i].y * L[i].y;

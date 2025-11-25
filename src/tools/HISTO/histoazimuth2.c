@@ -128,7 +128,7 @@ int main(int argc, char **argv)
   fprintf(fdout, "s %d\n", nbins);
   for (i = 0; i < nbins; i++) 
 #ifdef MC_64_BITS
-    fprintf(fdout, "%4d %lld\n", i, histo[i]);
+    fprintf(fdout, "%4d %ld\n", i, histo[i]);
 #else
     fprintf(fdout, "%4d %d\n", i, histo[i]);
 #endif

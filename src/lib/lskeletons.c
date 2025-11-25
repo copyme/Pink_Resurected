@@ -4579,7 +4579,7 @@ Implémentation non optimisée (NBDIR scans de la liste des points de bord)
       nbiter++;
 
 #ifdef VERBOSE
-      printf("%s: nbiter %d ; nb simple points %d\n", F_NAME, nbiter, n);
+      printf("%s: nbiter %d ; nb simple points %ld\n", F_NAME, nbiter, n);
 #endif
       for (dir = 0; dir <= NBDIR; dir++)
       {
@@ -4738,7 +4738,7 @@ Implémentation non optimisée (NBDIR scans de la liste des points de bord)
       nbiter++;
 
 #ifdef VERBOSE
-      printf("%s: nbiter %d ; nb simple points %d\n", F_NAME, nbiter, n);
+      printf("%s: nbiter %d ; nb simple points %ld\n", F_NAME, nbiter, n);
 #endif
       for (dir = 0; dir <= NBDIR; dir++)
       {
@@ -4935,7 +4935,7 @@ int32_t lskelPSG2(struct xvimage *image,
     {
       x = RbtPopMin(RBT);
 #ifdef DEBUG_lskelPSG2
-      printf("pop: %d\n", x);
+      printf("pop: %ld\n", x);
 #endif
       UnSet(x, EN_RBT);
       if (simple8(F, x, rs, N))
@@ -4951,7 +4951,7 @@ int32_t lskelPSG2(struct xvimage *image,
       if (P_simple8(F, C, x, rs, N))
       {
 #ifdef DEBUG_lskelPSG2
-	printf("P_simple: %d\n", x);
+	printf("P_simple: %ld\n", x);
 #endif
 	Set(x, PSIMPLE); // marque le point pour effacement ulterieur
         for (k = 0; k < 8; k += 1) // parcourt les voisins en 8-connexite
@@ -4967,7 +4967,7 @@ int32_t lskelPSG2(struct xvimage *image,
 	      case VFF_TYP_DOUBLE: mcrbt_RbtInsert(&RBT, PD[y], y); break;
 	    }
 #ifdef DEBUG_lskelPSG2
-	    printf("push: %d\n", y);
+	    printf("push: %ld\n", y);
 #endif
             Set(y, EN_RBT);
           } // if y
@@ -5132,7 +5132,7 @@ int32_t lskelPSG3(struct xvimage *image,
       {
 	Set(x, PSIMPLE); // marque le point pour effacement ultérieur
 #ifdef DEBUG_lskelPSG3
-	printf("P_simple: %d\n", x);
+	printf("P_simple: %ld\n", x);
 #endif
         for (k = 0; k < 26; k += 1)        /* parcourt les voisins en 26-connexite */
         {                                              /* pour empiler les voisins */
@@ -10405,7 +10405,7 @@ repeter
       if (F[x] && !Y[x])
       {
 	if (IsSet(x,CONTRAINTE))	
-	  printf("BUG deleting constraint point %d %d %d\n", x%rs, (x%ps)/rs, x/ps);
+	  printf("BUG deleting constraint point %ld %ld %ld\n", x%rs, (x%ps)/rs, x/ps);
 	F[x] = 0;
 	stab = 0;
       }
@@ -10854,7 +10854,7 @@ repeter jusqu'a stabilite
   {
     nbiter++;
 #ifdef VERBOSE
-    printf("%s: nbiter %ld over %ld\n", F_NAME, nbiter, nsteps);
+    printf("%s: nbiter %d over %d\n", F_NAME, nbiter, nsteps);
 #endif
     stab = 1;
 

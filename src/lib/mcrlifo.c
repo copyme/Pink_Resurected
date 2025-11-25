@@ -126,7 +126,7 @@ void RlifoPush(Rlifo ** L, index_t V)
     if ((*L) == NULL)
     {
 #ifdef MC_64_BITS
-      fprintf(stderr, "%s: realloc failed : %lld bytes\n", F_NAME, sizeof(Rlifo) + sizeof(index_t) * (newsize-1));
+      fprintf(stderr, "%s: realloc failed : %lu bytes\n", F_NAME, sizeof(Rlifo) + sizeof(index_t) * (newsize-1));
 #else
       fprintf(stderr, "%s: realloc failed : %d bytes\n", F_NAME, sizeof(Rlifo) + sizeof(index_t) * (newsize-1));
 #endif
@@ -146,7 +146,7 @@ void RlifoPrint(Rlifo * L)
   printf("[ ");
   for (i = 0; i < L->Sp; i++)
 #ifdef MC_64_BITS
-    printf("%lld ", L->Pts[i]);
+    printf("%ld ", L->Pts[i]);
 #else
     printf("%d ", L->Pts[i]);
 #endif
@@ -162,7 +162,7 @@ void RlifoPrintLine(Rlifo * L)
   printf("[ ");
   for (i = 0; i < L->Sp; i++)
 #ifdef MC_64_BITS
-    printf("%lld ", L->Pts[i]);
+    printf("%ld ", L->Pts[i]);
 #else
     printf("%d ", L->Pts[i]);
 #endif

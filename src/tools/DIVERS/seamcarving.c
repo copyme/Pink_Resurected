@@ -95,7 +95,7 @@ int main(int argc, char **argv)
   if (h != colsize(in))
   {
     h = colsize(in);
-    printf("WARNING: change of h not yet implemented, h forced to %d\n", h);
+    printf("WARNING: change of h not yet implemented, h forced to %ld\n", h);
   }
   if (w >= rowsize(in))
   {

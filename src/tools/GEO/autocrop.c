@@ -121,7 +121,7 @@ int main(int argc, char **argv)
       fprintf(stderr, "%s: cannot open file: %s\n", argv[0], argv[4]);
       exit(1);
     }
-    fprintf(fd,"%d %d %d %d %d %d\n", xmin, ymin, zmin, w, h, p);
+    fprintf(fd,"%ld %ld %ld %ld %ld %ld\n", xmin, ymin, zmin, w, h, p);
     fclose(fd);
   }
 

@@ -191,7 +191,7 @@ int main(int argc, char* argv[])
 
 		if(crop_raw_on_disk(f, crop, i_d, j_d, k_d, sid, sid, sid, rs, cs, d, h, b, 0)==0)
 		{
-			fprintf(stderr, "%s: Error in crop_on_disk (%lld %lld %lld)\n", argv[0], i_d, j_d, k_d);
+			fprintf(stderr, "%s: Error in crop_on_disk (%lu %lu %lu)\n", argv[0], i_d, j_d, k_d);
 			exit(1);
 		}
 

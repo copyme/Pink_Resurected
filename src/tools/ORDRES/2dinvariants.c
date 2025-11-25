@@ -100,16 +100,16 @@ int main(int argc, char **argv)
       exit(1);
     }
     fprintf(fd, "e %d\n", 2); 
-    fprintf(fd, "%d\n", nbcc); 
-    fprintf(fd, "%d\n", nbcav); 
+    fprintf(fd, "%ld\n", nbcc); 
+    fprintf(fd, "%ld\n", nbcav); 
     fclose(fd);
   }
   else 
   {
 #ifdef MC_64_BITS
-    printf("car. Euler = %lld\n", euler);
-    printf("%lld composantes connexes, ", nbcc);
-    printf("%lld trous\n", nbcav);
+    printf("car. Euler = %ld\n", euler);
+    printf("%ld composantes connexes, ", nbcc);
+    printf("%ld trous\n", nbcav);
 #else
     printf("car. Euler = %d\n", euler);
     printf("%d composantes connexes, ", nbcc);

@@ -265,12 +265,12 @@ void FahpPrint(
       printf("%d [ ", i);
       for (;FE != L->Tete[i]; FE = FE->Next)
 #ifdef MC_64_BITS
-        printf("%lld ", FE->Point);
+        printf("%ld ", FE->Point);
 #else
         printf("%d ", FE->Point);
 #endif
 #ifdef MC_64_BITS
-      printf("%lld ]\n", FE->Point);
+      printf("%ld ]\n", FE->Point);
 #else
       printf("%d ]\n", FE->Point);
 #endif

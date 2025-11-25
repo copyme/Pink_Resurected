@@ -330,7 +330,7 @@ int32_t lseuilOtsu(
     }
 
 #ifdef VERBOSE
-    printf("%s optimal threshold = %d\n", F_NAME, s_star);
+    printf("%s optimal threshold = %ld\n", F_NAME, s_star);
 #endif    
     return lseuil(f, s_star+1);  
   }

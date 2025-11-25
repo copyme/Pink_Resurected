@@ -119,7 +119,7 @@ int main(int argc, char **argv)
         k += 1;
 #ifdef INDEX_FIRST
 #ifdef MC_64_BITS
-        printf("%3d:%lld ", i, histo[i]);
+        printf("%3d:%ld ", i, histo[i]);
 #else
         printf("%3d:%4d ", i, histo[i]);
 #endif
@@ -152,7 +152,7 @@ int main(int argc, char **argv)
         k += 1;
 #ifdef INDEX_FIRST
 #ifdef MC_64_BITS
-        printf("%3d:%lld ", i, histo[i]);
+        printf("%3d:%ld ", i, histo[i]);
 #else
         printf("%3d:%4d ", i, histo[i]);
 #endif
@@ -186,7 +186,7 @@ int main(int argc, char **argv)
         k += 1;
 #ifdef INDEX_FIRST
 #ifdef MC_64_BITS
-        printf("%3d:%lld ", i, histo[i]);
+        printf("%3d:%ld ", i, histo[i]);
 #else
         printf("%3d:%4d ", i, histo[i]);
 #endif

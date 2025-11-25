@@ -56,7 +56,7 @@ Fifo * CreeFifoVide(
   if (L == NULL)
   {   
 #ifdef MC_64_BITS
-    fprintf(stderr, "CreeFifoVide() : malloc failed : %lld bytes\n", sizeof(Fifo) + sizeof(index_t) * taillemax);
+    fprintf(stderr, "CreeFifoVide() : malloc failed : %lu bytes\n", sizeof(Fifo) + sizeof(index_t) * taillemax);
 #else
     fprintf(stderr, "CreeFifoVide() : malloc failed : %d bytes\n", sizeof(Fifo) + sizeof(index_t) * taillemax);
 #endif
@@ -139,19 +139,19 @@ void FifoPrint(
   index_t i;
   if (FifoVide(L)) {printf("[]\n"); return;}
 #ifdef MC_64_BITS
-  printf("Taille Fifo: %lld \n",FifoTaille(L));
+  printf("Taille Fifo: %ld \n",FifoTaille(L));
 #else
   printf("Taille Fifo: %d \n",FifoTaille(L));
 #endif
 #ifdef MC_64_BITS
-  printf("Max = %lld ; Out = %lld ; In = %lld\n", L->Max, L->Out, L->In);
+  printf("Max = %ld ; Out = %ld ; In = %ld\n", L->Max, L->Out, L->In);
 #else
   printf("Max = %d ; Out = %d ; In = %d\n", L->Max, L->Out, L->In);
 #endif
   printf("[ ");
   for (i = L->Out; i != L->In; i = (i+1) % L->Max)
 #ifdef MC_64_BITS
-  printf("%lld ", L->Pts[i]);
+  printf("%ld ", L->Pts[i]);
 #else
   printf("%d ", L->Pts[i]);
 #endif

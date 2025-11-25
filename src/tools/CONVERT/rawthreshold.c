@@ -148,13 +148,13 @@ int main(int argc, char **argv)
   
   if (ds > 1) 
 #ifdef MC_64_BITS
-    fprintf(fdo, "%lld %lld %lld\n", rs, cs, ds); 
+    fprintf(fdo, "%ld %ld %ld\n", rs, cs, ds); 
 #else
     fprintf(fdo, "%d %d %d\n", rs, cs, ds); 
 #endif
   else 
 #ifdef MC_64_BITS
-    fprintf(fdo, "%lld %lld\n", rs, cs);
+    fprintf(fdo, "%ld %ld\n", rs, cs);
 #else
     fprintf(fdo, "%d %d\n", rs, cs);
 #endif
@@ -173,7 +173,7 @@ int main(int argc, char **argv)
 #ifdef VERBOSE
       if ((i % 100000000) == 0) 
 #ifdef MC_64_BITS
-	printf("%lld written elements\n", i);
+	printf("%ld written elements\n", i);
 #else
 	printf("%d written elements\n", i);
 #endif

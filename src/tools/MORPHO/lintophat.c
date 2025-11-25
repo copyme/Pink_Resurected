@@ -135,8 +135,8 @@ void max(struct xvimage * img1, struct xvimage * img2)
 	uint8_t * img2_data;
 	if(rowsize(img1)!=rowsize(img2) || colsize(img1)!=colsize(img2)){
 #ifdef MC_64_BITS
-		printf ("Image1: %lld x %lld\n", rowsize(img1), colsize(img1));
-		printf ("Image2: %lld x %lld\n", rowsize(img2), colsize(img2));
+		printf ("Image1: %ld x %ld\n", rowsize(img1), colsize(img1));
+		printf ("Image2: %ld x %ld\n", rowsize(img2), colsize(img2));
 #else
 		printf ("Image1: %d x %d\n", rowsize(img1), colsize(img1));
 		printf ("Image2: %d x %d\n", rowsize(img2), colsize(img2));
@@ -166,8 +166,8 @@ void sub(struct xvimage * img1, struct xvimage * img2)
 	uint8_t * img2_data;
 	if(rowsize(img1)!=rowsize(img2) || colsize(img1)!=colsize(img2)){
 #ifdef MC_64_BITS
-		printf ("Image1: %lld x %lld\n", rowsize(img1), colsize(img1));
-		printf ("Image2: %lld x %lld\n", rowsize(img2), colsize(img2));
+		printf ("Image1: %ld x %ld\n", rowsize(img1), colsize(img1));
+		printf ("Image2: %ld x %ld\n", rowsize(img2), colsize(img2));
 #else
 		printf ("Image1: %d x %d\n", rowsize(img1), colsize(img1));
 		printf ("Image2: %d x %d\n", rowsize(img2), colsize(img2));
@@ -257,7 +257,7 @@ int main(int argc, char **argv)
  length = atoi(argv[2]);	// length of structuring element
  length = (length/2) * 2 +1; 	// has to be 2*x+1 (ungerade)
 #ifdef MC_64_BITS
- printf("Length is: %lld\n", length);
+ printf("Length is: %ld\n", length);
 #else
  printf("Length is: %d\n", length);
 #endif

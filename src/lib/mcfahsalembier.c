@@ -231,7 +231,7 @@ void FahsPrint(
       printf("%d [ ", i);
       for (FE = L->Tete[i]; FE != NULL; FE = FE->Next)
 #ifdef MC_64_BITS
-        printf("%lld ", FE->Point);
+        printf("%ld ", FE->Point);
 #else
         printf("%d ", FE->Point);
 #endif

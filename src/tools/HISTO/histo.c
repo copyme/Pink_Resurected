@@ -118,7 +118,7 @@ int main(int argc, char **argv)
     fprintf(fd, "s %d\n", NDG_MAX-NDG_MIN+1);
     for (i = NDG_MIN; i <= NDG_MAX; i++) 
 #ifdef MC_64_BITS
-      fprintf(fd, "%4d %lld\n", i, histo[i]);
+      fprintf(fd, "%4d %ld\n", i, histo[i]);
 #else
       fprintf(fd, "%4d %d\n", i, histo[i]);
 #endif
@@ -134,7 +134,7 @@ int main(int argc, char **argv)
     fprintf(fd, "s %d\n", s);
     for (i = 0; i < s; i++) 
 #ifdef MC_64_BITS
-      fprintf(fd, "%4d %lld\n", i, histo[i]);
+      fprintf(fd, "%4d %ld\n", i, histo[i]);
 #else
       fprintf(fd, "%4d %d\n", i, histo[i]);
 #endif
@@ -151,7 +151,7 @@ int main(int argc, char **argv)
     fprintf(fd, "s %d\n", s);
     for (i = 0; i < s; i++) 
 #ifdef MC_64_BITS
-      fprintf(fd, "%4d %lld\n", i, histo[i]);
+      fprintf(fd, "%4d %ld\n", i, histo[i]);
 #else
       fprintf(fd, "%4d %d\n", i, histo[i]);
 #endif

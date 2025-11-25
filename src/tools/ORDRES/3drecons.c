@@ -126,7 +126,7 @@ int main(int argc, char **argv)
     else
     {      
 #ifdef MC_64_BITS
-      fprintf(stderr, "%s: point outside image: %lld %lld %lld\n", argv[0], x, y, z);
+      fprintf(stderr, "%s: point outside image: %ld %ld %ld\n", argv[0], x, y, z);
 #else
       fprintf(stderr, "%s: point outside image: %d %d %d\n", argv[0], x, y, z);
 #endif

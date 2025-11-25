@@ -158,7 +158,7 @@ int main(int argc, char **argv)
   gaout = SeparatingEdge(watershed);
   printf("%s (devrait etre _gaout)\n", argv[2]);
   writerawGAimage(gaout, argv[4]);
-  printf("Super totosizeofdouble %d \n", sizeof(double));  
+  printf("Super totosizeofdouble %lu \n", sizeof(double));  
   if(!gaout) free(gaout);
   free(watershed); free(ga);
   return 0;
