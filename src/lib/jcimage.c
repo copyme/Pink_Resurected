@@ -347,7 +347,7 @@ struct xvimage4D *allocimage4D(
 #undef F_NAME
 #define F_NAME "allocimage4D"
 {
-  struct xvimage4D *g;
+  struct xvimage4D *g = NULL;
   if (ss < 1)
   {
     fprintf(stderr, "%s: bad sequence size\n", F_NAME);
@@ -356,6 +356,7 @@ struct xvimage4D *allocimage4D(
   g = (struct xvimage4D*)malloc(sizeof(struct xvimage4D));
   if(g == NULL)
   {
+    free(g);
     fprintf(stderr, "%s: Erreur de malloc \n", F_NAME);
     return(NULL);
   }
@@ -363,6 +364,7 @@ struct xvimage4D *allocimage4D(
   g->frame = (struct xvimage**)malloc(sizeof(struct xvimage*) * ss);
   if(g->frame == NULL)
   {
+    free(g);
     fprintf(stderr, "%s: Erreur de malloc \n", F_NAME);
     return(NULL);
   }
