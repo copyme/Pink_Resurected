@@ -1,5 +1,5 @@
 /*
-Copyright ESIEE (2009) 
+Copyright ESIEE (2009)
 
 m.couprie@esiee.fr
 
@@ -7,16 +7,16 @@ This software is an image processing library whose purpose is to be
 used primarily for research and teaching.
 
 This software is governed by the CeCILL  license under French law and
-abiding by the rules of distribution of free software. You can  use, 
+abiding by the rules of distribution of free software. You can  use,
 modify and/ or redistribute the software under the terms of the CeCILL
 license as circulated by CEA, CNRS and INRIA at the following URL
-"http://www.cecill.info". 
+"http://www.cecill.info".
 
 As a counterpart to the access to the source code and  rights to copy,
 modify and redistribute granted by the license, users are provided only
 with a limited warranty  and the software's author,  the holder of the
 economic rights,  and the successive licensors  have only  limited
-liability. 
+liability.
 
 In this respect, the user's attention is drawn to the risks associated
 with loading,  using,  modifying and/or developing or reproducing the
@@ -25,16 +25,16 @@ that may mean  that it is complicated to manipulate,  and  that  also
 therefore means  that it is reserved for developers  and  experienced
 professionals having in-depth computer knowledge. Users are therefore
 encouraged to load and test the software's suitability as regards their
-requirements in conditions enabling the security of their systems and/or 
-data to be ensured and,  more generally, to use and operate it in the 
-same conditions as regards security. 
+requirements in conditions enabling the security of their systems and/or
+data to be ensured and,  more generally, to use and operate it in the
+same conditions as regards security.
 
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
 /* \file histoazimuth2.c
 
-\brief 
+\brief
 
 <B>Usage:</B> histoazimuth2 in.list nbins fileout
 
@@ -54,8 +54,8 @@ Azimuth angles (in degrees between 0 and 180) are computed and their histogram, 
 
 <B>Types supported:</B> 3D vector list
 
-<B>Category:</B> 
-\ingroup  
+<B>Category:</B>
+\ingroup
 
 \author Michel Couprie
 */
@@ -72,73 +72,70 @@ Azimuth angles (in degrees between 0 and 180) are computed and their histogram, 
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  index_t * histo = NULL;
-  int32_t i, nbins, nvec;
-  FILE *fdin = NULL;
-  FILE *fdout = NULL;
-  double *Vx = NULL, *Vy = NULL, *Vz = NULL;
-  char type;
+    index_t * histo = NULL;
+    int32_t i, nbins, nvec;
+    FILE *fdin = NULL;
+    FILE *fdout = NULL;
+    double *Vx = NULL, *Vy = NULL, *Vz = NULL;
+    char type;
 
-  if (argc != 4)
-  {
-    fprintf(stderr, "usage: %s in.list nbins fileout\n", argv[0]);
-    exit(1);
-  }
+    if (argc != 4) {
+        fprintf(stderr, "usage: %s in.list nbins fileout\n", argv[0]);
+        exit(1);
+    }
 
-  fdin = fopen(argv[1],"r");
-  if (!fdin)
-  {
-    fprintf(stderr, "%s: cannot open file: %s\n", argv[0], argv[1]);
-    exit(1);
-  }
+    fdin = fopen(argv[1],"r");
+    if (!fdin) {
+        fprintf(stderr, "%s: cannot open file: %s\n", argv[0], argv[1]);
+        exit(1);
+    }
 
-  fscanf(fdin, "%c", &type);
-  if (type != 'V')
-  {
-    fprintf(stderr, "usage: %s: bad file format : %c \n", argv[0], type);
-    exit(1);
-  }
+    fscanf(fdin, "%c", &type);
+    if (type != 'V') {
+        fprintf(stderr, "usage: %s: bad file format : %c \n", argv[0], type);
+        exit(1);
+    }
 
-  fscanf(fdin, "%d\n", &nvec);
-  Vx = (double *)malloc(nvec * sizeof(double)); assert(Vx != NULL);
-  Vy = (double *)malloc(nvec * sizeof(double)); assert(Vy != NULL);
-  Vz = (double *)malloc(nvec * sizeof(double)); assert(Vz != NULL);
-  for (i = 0; i < nvec; i++)
-  {
-    fscanf(fdin, "%lf %lf %lf\n", &(Vx[i]), &(Vy[i]), &(Vz[i]));
-  }
-  fclose(fdin);
+    fscanf(fdin, "%d\n", &nvec);
+    Vx = (double *)malloc(nvec * sizeof(double));
+    assert(Vx != NULL);
+    Vy = (double *)malloc(nvec * sizeof(double));
+    assert(Vy != NULL);
+    Vz = (double *)malloc(nvec * sizeof(double));
+    assert(Vz != NULL);
+    for (i = 0; i < nvec; i++) {
+        fscanf(fdin, "%lf %lf %lf\n", &(Vx[i]), &(Vy[i]), &(Vz[i]));
+    }
+    fclose(fdin);
 
-  nbins = atoi(argv[2]);
+    nbins = atoi(argv[2]);
 
-  if (! lhistoazimuthlist(nvec, Vx, Vy, nbins, &histo))
-  {
-    fprintf(stderr, "%s: function lhistoazimuth failed\n", argv[0]);
-    exit(1);
-  }
+    if (! lhistoazimuthlist(nvec, Vx, Vy, nbins, &histo)) {
+        fprintf(stderr, "%s: function lhistoazimuth failed\n", argv[0]);
+        exit(1);
+    }
 
 
-  fdout = fopen(argv[argc-1],"w");
-  if (!fdout)
-  {
-    fprintf(stderr, "%s: cannot open file: %s\n", argv[0], argv[argc-1]);
-    exit(1);
-  }
- 
-  fprintf(fdout, "s %d\n", nbins);
-  for (i = 0; i < nbins; i++) {
+    fdout = fopen(argv[argc-1],"w");
+    if (!fdout) {
+        fprintf(stderr, "%s: cannot open file: %s\n", argv[0], argv[argc-1]);
+        exit(1);
+    }
+
+    fprintf(fdout, "s %d\n", nbins);
+    for (i = 0; i < nbins; i++) {
 #ifdef MC_64_BITS
-    fprintf(fdout, "%4d %ld\n", i, histo[i]);
-  }
+        fprintf(fdout, "%4d %ld\n", i, histo[i]);
+    }
 #else
-    fprintf(fdout, "%4d %d\n", i, histo[i]);
+        fprintf(fdout, "%4d %d\n", i, histo[i]);
 #endif
 
-  fclose(fdout);
-  free(histo);
-  free(Vx);
-  free(Vy);
-  free(Vz);
+    fclose(fdout);
+    free(histo);
+    free(Vx);
+    free(Vy);
+    free(Vz);
 
-  return 0;
+    return 0;
 } /* main */

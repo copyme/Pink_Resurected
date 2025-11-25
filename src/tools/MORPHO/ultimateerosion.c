@@ -1,5 +1,5 @@
 /*
-Copyright ESIEE (2009) 
+Copyright ESIEE (2009)
 
 m.couprie@esiee.fr
 
@@ -7,16 +7,16 @@ This software is an image processing library whose purpose is to be
 used primarily for research and teaching.
 
 This software is governed by the CeCILL  license under French law and
-abiding by the rules of distribution of free software. You can  use, 
+abiding by the rules of distribution of free software. You can  use,
 modify and/ or redistribute the software under the terms of the CeCILL
 license as circulated by CEA, CNRS and INRIA at the following URL
-"http://www.cecill.info". 
+"http://www.cecill.info".
 
 As a counterpart to the access to the source code and  rights to copy,
 modify and redistribute granted by the license, users are provided only
 with a limited warranty  and the software's author,  the holder of the
 economic rights,  and the successive licensors  have only  limited
-liability. 
+liability.
 
 In this respect, the user's attention is drawn to the risks associated
 with loading,  using,  modifying and/or developing or reproducing the
@@ -25,9 +25,9 @@ that may mean  that it is complicated to manipulate,  and  that  also
 therefore means  that it is reserved for developers  and  experienced
 professionals having in-depth computer knowledge. Users are therefore
 encouraged to load and test the software's suitability as regards their
-requirements in conditions enabling the security of their systems and/or 
-data to be ensured and,  more generally, to use and operate it in the 
-same conditions as regards security. 
+requirements in conditions enabling the security of their systems and/or
+data to be ensured and,  more generally, to use and operate it in the
+same conditions as regards security.
 
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
@@ -41,7 +41,7 @@ knowledge of the CeCILL license and that you accept its terms.
 <B>Description:</B>
 Let X be the set in \b in.pgm .
 The result is union{Ui(X), i in N} where
-Ui(X) = erosball(X,i) \ reconsgeo(erosball(X,i+1), erosball(X,i)). 
+Ui(X) = erosball(X,i) \ reconsgeo(erosball(X,i+1), erosball(X,i)).
 Structuring elements are balls defined after a distance.
 The distance used depends on the optional parameter \b dist (default is 0) :
 \li 0: approximate euclidean distance (truncated)
@@ -81,13 +81,13 @@ The distance used depends on the optional parameter \b dist (default is 0) :
 
 /* ==================================== */
 int32_t lultimateerosion(
-  struct xvimage *img,   /* donnee/résultat: image binaire */
-  int32_t mode
+    struct xvimage *img,   /* donnee/résultat: image binaire */
+    int32_t mode
 )
 /* ==================================== */
-/* 
+/*
 The result is union{Ui(X), r in N} where
-Ur(X) = erosball(X,r) \ reconsgeo(erosball(X,r+1), erosball(X,r)). 
+Ur(X) = erosball(X,r) \ reconsgeo(erosball(X,r+1), erosball(X,r)).
 
 The distance used depends on the optional parameter \b dist (default is 0) :
 \li 0: approximate euclidean distance
@@ -102,109 +102,111 @@ The distance used depends on the optional parameter \b dist (default is 0) :
 */
 #undef F_NAME
 #define F_NAME "lultimateerosion"
-{ 
-  int32_t rs = rowsize(img);
-  int32_t cs = colsize(img);
-  int32_t ds = depth(img); 
-  int32_t N = rs*cs*ds;
-  struct xvimage *ori;
-  struct xvimage *tmp;
-  struct xvimage *tmp1;
-  struct xvimage *tmp2;
-  uint8_t *T, *T2, *R;
-  uint32_t r, i, ok, connex, rmax;
+{
+    int32_t rs = rowsize(img);
+    int32_t cs = colsize(img);
+    int32_t ds = depth(img);
+    int32_t N = rs*cs*ds;
+    struct xvimage *ori;
+    struct xvimage *tmp;
+    struct xvimage *tmp1;
+    struct xvimage *tmp2;
+    uint8_t *T, *T2, *R;
+    uint32_t r, i, ok, connex, rmax;
 
 #ifdef VERBOSE
     printf("%s: mode = %d\n", F_NAME, mode);
 #endif
 
     if (ds == 1) {
-      connex = 4;
+        connex = 4;
     } else {
-      connex = 6;
+        connex = 6;
     }
     if (ds == 1) {
-      rmax = mcmin((rs / 2), (cs / 2));
+        rmax = mcmin((rs / 2), (cs / 2));
     } else {
-      rmax = mcmin((ds / 2), mcmin((rs / 2), (cs / 2)));
+        rmax = mcmin((ds / 2), mcmin((rs / 2), (cs / 2)));
     }
 
-  ori = copyimage(img); assert(ori != NULL);
-  tmp = copyimage(img); assert(tmp != NULL);
-  tmp1 = copyimage(img); assert(tmp1 != NULL);
-  tmp2 = copyimage(img); assert(tmp2 != NULL);
-  T = UCHARDATA(tmp);
-  T2 = UCHARDATA(tmp2);
-  R = UCHARDATA(img);
-  razimage(img);
-  
-  r = 0;
-  do 
-  {
+    ori = copyimage(img);
+    assert(ori != NULL);
+    tmp = copyimage(img);
+    assert(tmp != NULL);
+    tmp1 = copyimage(img);
+    assert(tmp1 != NULL);
+    tmp2 = copyimage(img);
+    assert(tmp2 != NULL);
+    T = UCHARDATA(tmp);
+    T2 = UCHARDATA(tmp2);
+    R = UCHARDATA(img);
+    razimage(img);
+
+    r = 0;
+    do {
 #ifdef VERBOSE
-    printf("%s: r = %d\n", F_NAME, r);
+        printf("%s: r = %d\n", F_NAME, r);
 #endif
-    copy2image(tmp1, ori);
-    ok = lerosball(tmp1, r+1, mode); assert(ok);
-    copy2image(tmp2, tmp1);
-    ok = lgeodilat(tmp2, tmp, connex, -1); assert(ok);
-    /*
-writeimage(tmp, "_tmp");
-writeimage(tmp1, "_tmp1");
-writeimage(tmp2, "_tmp2");
-    */
-    for (i = 0; i < N; i++) {
-      if (T[i] && !T2[i]) {
-        R[i] = 255;
-      }
-    }
-    copy2image(tmp, tmp1);
-    r++;
-  } while (r <= rmax);
+        copy2image(tmp1, ori);
+        ok = lerosball(tmp1, r+1, mode);
+        assert(ok);
+        copy2image(tmp2, tmp1);
+        ok = lgeodilat(tmp2, tmp, connex, -1);
+        assert(ok);
+        /*
+        writeimage(tmp, "_tmp");
+        writeimage(tmp1, "_tmp1");
+        writeimage(tmp2, "_tmp2");
+        */
+        for (i = 0; i < N; i++) {
+            if (T[i] && !T2[i]) {
+                R[i] = 255;
+            }
+        }
+        copy2image(tmp, tmp1);
+        r++;
+    } while (r <= rmax);
 
-  freeimage(ori);
-  freeimage(tmp);
-  freeimage(tmp1);
-  freeimage(tmp2);
-  return 1;
+    freeimage(ori);
+    freeimage(tmp);
+    freeimage(tmp1);
+    freeimage(tmp2);
+    return 1;
 } // lultimateerosion()
 
 /* =============================================================== */
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image = NULL;
-  int32_t mode;
+    struct xvimage * image = NULL;
+    int32_t mode;
 
-  if ((argc != 3) && (argc != 4))
-  {
-    fprintf(stderr, "usage: %s f.pgm [dist] out.pgm \n", argv[0]);
-    exit(1);
-  }
+    if ((argc != 3) && (argc != 4)) {
+        fprintf(stderr, "usage: %s f.pgm [dist] out.pgm \n", argv[0]);
+        exit(1);
+    }
 
-  image = readimage(argv[1]);
-  if (image == NULL)
-  {
-    fprintf(stderr, "%s: readimage failed\n", argv[0]);
-    exit(1);
-  }
+    image = readimage(argv[1]);
+    if (image == NULL) {
+        fprintf(stderr, "%s: readimage failed\n", argv[0]);
+        exit(1);
+    }
 
-  if (argc == 4) {
-    mode = atoi(argv[2]);
-  } else {
-    mode = 0;
-  }
-  if ((mode != 0) && (mode != 2) && (mode != 4) && 
-      (mode != 8) && (mode != 6) && (mode != 18) && (mode != 26))
-  {
-    fprintf(stderr, "%s: dist = [0|2|4|8|6|18|26] \n", argv[0]);
-    exit(1);
-  }
+    if (argc == 4) {
+        mode = atoi(argv[2]);
+    } else {
+        mode = 0;
+    }
+    if ((mode != 0) && (mode != 2) && (mode != 4) &&
+            (mode != 8) && (mode != 6) && (mode != 18) && (mode != 26)) {
+        fprintf(stderr, "%s: dist = [0|2|4|8|6|18|26] \n", argv[0]);
+        exit(1);
+    }
 
-  lultimateerosion(image, mode);
+    lultimateerosion(image, mode);
 
-  writeimage(image, argv[argc-1]);
-  freeimage(image);
+    writeimage(image, argv[argc-1]);
+    freeimage(image);
 
-  return 0;
+    return 0;
 } /* main */

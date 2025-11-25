@@ -1,5 +1,5 @@
 /*
-Copyright ESIEE (2009) 
+Copyright ESIEE (2009)
 
 m.couprie@esiee.fr
 
@@ -7,16 +7,16 @@ This software is an image processing library whose purpose is to be
 used primarily for research and teaching.
 
 This software is governed by the CeCILL  license under French law and
-abiding by the rules of distribution of free software. You can  use, 
+abiding by the rules of distribution of free software. You can  use,
 modify and/ or redistribute the software under the terms of the CeCILL
 license as circulated by CEA, CNRS and INRIA at the following URL
-"http://www.cecill.info". 
+"http://www.cecill.info".
 
 As a counterpart to the access to the source code and  rights to copy,
 modify and redistribute granted by the license, users are provided only
 with a limited warranty  and the software's author,  the holder of the
 economic rights,  and the successive licensors  have only  limited
-liability. 
+liability.
 
 In this respect, the user's attention is drawn to the risks associated
 with loading,  using,  modifying and/or developing or reproducing the
@@ -25,9 +25,9 @@ that may mean  that it is complicated to manipulate,  and  that  also
 therefore means  that it is reserved for developers  and  experienced
 professionals having in-depth computer knowledge. Users are therefore
 encouraged to load and test the software's suitability as regards their
-requirements in conditions enabling the security of their systems and/or 
-data to be ensured and,  more generally, to use and operate it in the 
-same conditions as regards security. 
+requirements in conditions enabling the security of their systems and/or
+data to be ensured and,  more generally, to use and operate it in the
+same conditions as regards security.
 
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
@@ -76,76 +76,70 @@ Types supported: int32_t 2D (hue), byte 2D (others)
 #include <mcutil.h>
 #include <mccolors.h>
 
-int main(int argc, char **argv)
-{
-  struct xvimage * R = NULL;
-  struct xvimage * G = NULL;
-  struct xvimage * B = NULL;
-  struct xvimage * H = NULL;
-  struct xvimage * L = NULL;
-  struct xvimage * S = NULL;
-  uint8_t *r = NULL, *g = NULL, *b = NULL;
-  int32_t * h = NULL;
-  uint8_t *l = NULL, *s = NULL;
-  int32_t rs, cs, N;
-  int32_t x;
-  double tr, tg, tb;
+int main(int argc, char **argv) {
+    struct xvimage * R = NULL;
+    struct xvimage * G = NULL;
+    struct xvimage * B = NULL;
+    struct xvimage * H = NULL;
+    struct xvimage * L = NULL;
+    struct xvimage * S = NULL;
+    uint8_t *r = NULL, *g = NULL, *b = NULL;
+    int32_t * h = NULL;
+    uint8_t *l = NULL, *s = NULL;
+    int32_t rs, cs, N;
+    int32_t x;
+    double tr, tg, tb;
 
-  if (argc != 5)
-  {
-    fprintf(stderr, "usage: %s h.pgm l.pgm s.pgm out.ppm\n", argv[0]);
-    exit(1);
-  }
+    if (argc != 5) {
+        fprintf(stderr, "usage: %s h.pgm l.pgm s.pgm out.ppm\n", argv[0]);
+        exit(1);
+    }
 
-  H = readimage(argv[1]);
-  L = readimage(argv[2]);
-  S = readimage(argv[3]);
-  if ((H == NULL) || (L == NULL) || (S == NULL))
-  {
-    fprintf(stderr, "hls2rgb: readrgbimage failed\n");
-    exit(1);
-  }
-  if (datatype(H) != VFF_TYP_4_BYTE)
-  {
-    fprintf(stderr, "hls2rgb: h must be int32_t\n");
-    exit(1);
-  }
+    H = readimage(argv[1]);
+    L = readimage(argv[2]);
+    S = readimage(argv[3]);
+    if ((H == NULL) || (L == NULL) || (S == NULL)) {
+        fprintf(stderr, "hls2rgb: readrgbimage failed\n");
+        exit(1);
+    }
+    if (datatype(H) != VFF_TYP_4_BYTE) {
+        fprintf(stderr, "hls2rgb: h must be int32_t\n");
+        exit(1);
+    }
 
-  rs = rowsize(H);
-  cs = colsize(H);
-  N = rs * cs;
+    rs = rowsize(H);
+    cs = colsize(H);
+    N = rs * cs;
 
-  R = allocimage(NULL, rs, cs, 1, VFF_TYP_1_BYTE);
-  G = allocimage(NULL, rs, cs, 1, VFF_TYP_1_BYTE);
-  B = allocimage(NULL, rs, cs, 1, VFF_TYP_1_BYTE);
-  if ((R == NULL) || (G == NULL) || (B == NULL))
-  {
-    fprintf(stderr, "hls2rgb: allocimage failed\n");
-    exit(1);
-  }
+    R = allocimage(NULL, rs, cs, 1, VFF_TYP_1_BYTE);
+    G = allocimage(NULL, rs, cs, 1, VFF_TYP_1_BYTE);
+    B = allocimage(NULL, rs, cs, 1, VFF_TYP_1_BYTE);
+    if ((R == NULL) || (G == NULL) || (B == NULL)) {
+        fprintf(stderr, "hls2rgb: allocimage failed\n");
+        exit(1);
+    }
 
-  r = UCHARDATA(R);
-  g = UCHARDATA(G);
-  b = UCHARDATA(B);
-  h = SLONGDATA(H);
-  l = UCHARDATA(L);
-  s = UCHARDATA(S);
+    r = UCHARDATA(R);
+    g = UCHARDATA(G);
+    b = UCHARDATA(B);
+    h = SLONGDATA(H);
+    l = UCHARDATA(L);
+    s = UCHARDATA(S);
 
-  for (x = 0; x < N; x++) 
-  {
-    hls2rgb(&tr, &tg, &tb, (double)h[x], ((double)l[x])/255, ((double)s[x])/255);
-    r[x] = (uint8_t)(tr * 255);
-    g[x] = (uint8_t)(tg * 255);
-    b[x] = (uint8_t)(tb * 255);
-  }
+    for (x = 0; x < N; x++) {
+        hls2rgb(&tr, &tg, &tb, (double)h[x], ((double)l[x])/255, ((double)s[x])/255);
+        r[x] = (uint8_t)(tr * 255);
+        g[x] = (uint8_t)(tg * 255);
+        b[x] = (uint8_t)(tb * 255);
+    }
 
-  writergbimage(R, G, B, argv[4]);
+    writergbimage(R, G, B, argv[4]);
 
-  freeimage(R);
-  freeimage(G);
-  freeimage(B);
-  freeimage(H);
-  freeimage(L);
-  freeimage(S);
-  return 0;
+    freeimage(R);
+    freeimage(G);
+    freeimage(B);
+    freeimage(H);
+    freeimage(L);
+    freeimage(S);
+    return 0;
 }

@@ -1,5 +1,5 @@
 /*
-Copyright ESIEE (2009) 
+Copyright ESIEE (2009)
 
 m.couprie@esiee.fr
 
@@ -7,16 +7,16 @@ This software is an image processing library whose purpose is to be
 used primarily for research and teaching.
 
 This software is governed by the CeCILL  license under French law and
-abiding by the rules of distribution of free software. You can  use, 
+abiding by the rules of distribution of free software. You can  use,
 modify and/ or redistribute the software under the terms of the CeCILL
 license as circulated by CEA, CNRS and INRIA at the following URL
-"http://www.cecill.info". 
+"http://www.cecill.info".
 
 As a counterpart to the access to the source code and  rights to copy,
 modify and redistribute granted by the license, users are provided only
 with a limited warranty  and the software's author,  the holder of the
 economic rights,  and the successive licensors  have only  limited
-liability. 
+liability.
 
 In this respect, the user's attention is drawn to the risks associated
 with loading,  using,  modifying and/or developing or reproducing the
@@ -25,9 +25,9 @@ that may mean  that it is complicated to manipulate,  and  that  also
 therefore means  that it is reserved for developers  and  experienced
 professionals having in-depth computer knowledge. Users are therefore
 encouraged to load and test the software's suitability as regards their
-requirements in conditions enabling the security of their systems and/or 
-data to be ensured and,  more generally, to use and operate it in the 
-same conditions as regards security. 
+requirements in conditions enabling the security of their systems and/or
+data to be ensured and,  more generally, to use and operate it in the
+same conditions as regards security.
 
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
@@ -40,7 +40,7 @@ knowledge of the CeCILL license and that you accept its terms.
 
 <B>Description:</B>
 Converts a color ppm image \b in.ppm into 3 grayscale pgm images
-<B>r.pgm</B>, <B>g.pgm</B> and <B>b.pgm</B> which are the red, 
+<B>r.pgm</B>, <B>g.pgm</B> and <B>b.pgm</B> which are the red,
 green and blue color planes of the original color image.
 
 <B>Types supported:</B> byte color 2d
@@ -64,54 +64,56 @@ green and blue color planes of the original color image.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image = NULL;
-  struct xvimage * r = NULL;
-  struct xvimage * g = NULL;
-  struct xvimage * b = NULL;
-  index_t i, rs, cs, N;
-  uint8_t *I = NULL, *R = NULL, *G = NULL, *B = NULL;
+    struct xvimage * image = NULL;
+    struct xvimage * r = NULL;
+    struct xvimage * g = NULL;
+    struct xvimage * b = NULL;
+    index_t i, rs, cs, N;
+    uint8_t *I = NULL, *R = NULL, *G = NULL, *B = NULL;
 
-  if (argc != 5)
-  {
-    fprintf(stderr, "usage: %s in.ppm r.pgm g.pgm b.pgm\n", argv[0]);
-    exit(1);
-  }
+    if (argc != 5) {
+        fprintf(stderr, "usage: %s in.ppm r.pgm g.pgm b.pgm\n", argv[0]);
+        exit(1);
+    }
 
-  /*
-  if (readrgbimage(argv[1], &r, &g, &b) == 0)
-  {
-    fprintf(stderr, "%s: readrgbimage failed\n", argv[0]);
-    exit(1);
-  }
-  */
+    /*
+    if (readrgbimage(argv[1], &r, &g, &b) == 0)
+    {
+      fprintf(stderr, "%s: readrgbimage failed\n", argv[0]);
+      exit(1);
+    }
+    */
 
-  image = readimage(argv[1]); assert(image != NULL);
-  rs = rowsize(image);
-  cs = colsize(image);
-  N = rs * cs;
-  I = UCHARDATA(image);
-  
-  r = allocimage(NULL, rs, cs, 1, VFF_TYP_1_BYTE); assert(r != NULL);
-  g = allocimage(NULL, rs, cs, 1, VFF_TYP_1_BYTE); assert(g != NULL);
-  b = allocimage(NULL, rs, cs, 1, VFF_TYP_1_BYTE); assert(b != NULL);
-  R = UCHARDATA(r);
-  G = UCHARDATA(g);
-  B = UCHARDATA(b);
+    image = readimage(argv[1]);
+    assert(image != NULL);
+    rs = rowsize(image);
+    cs = colsize(image);
+    N = rs * cs;
+    I = UCHARDATA(image);
 
-  for (i = 0; i < N; i++)
-  {
-    R[i] = I[i]; 
-    G[i] = I[N+i]; 
-    B[i] = I[N+N+i]; 
-  }
+    r = allocimage(NULL, rs, cs, 1, VFF_TYP_1_BYTE);
+    assert(r != NULL);
+    g = allocimage(NULL, rs, cs, 1, VFF_TYP_1_BYTE);
+    assert(g != NULL);
+    b = allocimage(NULL, rs, cs, 1, VFF_TYP_1_BYTE);
+    assert(b != NULL);
+    R = UCHARDATA(r);
+    G = UCHARDATA(g);
+    B = UCHARDATA(b);
 
-  writeimage(r, argv[2]);
-  writeimage(g, argv[3]);
-  writeimage(b, argv[4]);
-  freeimage(r);
-  freeimage(g);
-  freeimage(b);
-  freeimage(image);
+    for (i = 0; i < N; i++) {
+        R[i] = I[i];
+        G[i] = I[N+i];
+        B[i] = I[N+N+i];
+    }
 
-  return 0;
+    writeimage(r, argv[2]);
+    writeimage(g, argv[3]);
+    writeimage(b, argv[4]);
+    freeimage(r);
+    freeimage(g);
+    freeimage(b);
+    freeimage(image);
+
+    return 0;
 } /* main */

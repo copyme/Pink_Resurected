@@ -1,5 +1,5 @@
 /*
-Copyright ESIEE (2009) 
+Copyright ESIEE (2009)
 
 m.couprie@esiee.fr
 
@@ -7,16 +7,16 @@ This software is an image processing library whose purpose is to be
 used primarily for research and teaching.
 
 This software is governed by the CeCILL  license under French law and
-abiding by the rules of distribution of free software. You can  use, 
+abiding by the rules of distribution of free software. You can  use,
 modify and/ or redistribute the software under the terms of the CeCILL
 license as circulated by CEA, CNRS and INRIA at the following URL
-"http://www.cecill.info". 
+"http://www.cecill.info".
 
 As a counterpart to the access to the source code and  rights to copy,
 modify and redistribute granted by the license, users are provided only
 with a limited warranty  and the software's author,  the holder of the
 economic rights,  and the successive licensors  have only  limited
-liability. 
+liability.
 
 In this respect, the user's attention is drawn to the risks associated
 with loading,  using,  modifying and/or developing or reproducing the
@@ -25,9 +25,9 @@ that may mean  that it is complicated to manipulate,  and  that  also
 therefore means  that it is reserved for developers  and  experienced
 professionals having in-depth computer knowledge. Users are therefore
 encouraged to load and test the software's suitability as regards their
-requirements in conditions enabling the security of their systems and/or 
-data to be ensured and,  more generally, to use and operate it in the 
-same conditions as regards security. 
+requirements in conditions enabling the security of their systems and/or
+data to be ensured and,  more generally, to use and operate it in the
+same conditions as regards security.
 
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
@@ -47,90 +47,82 @@ knowledge of the CeCILL license and that you accept its terms.
 int32_t linterpolate(struct xvimage * image1, int32_t factor, struct xvimage ** res)
 /* ==================================== */
 {
-  int32_t x, y, z, i;
-  uint8_t *p;
-  uint8_t *r;
-  int32_t rs, cs, ps, ds, N;
-  uint8_t t1, t2;
+    int32_t x, y, z, i;
+    uint8_t *p;
+    uint8_t *r;
+    int32_t rs, cs, ps, ds, N;
+    uint8_t t1, t2;
 
-  rs = rowsize(image1);
-  cs = colsize(image1);
-  ps = rs * cs;
-  ds = depth(image1);
-  N = ps * ds;
-  
-  *res = allocimage(NULL, rs, cs, factor*(ds-1) + 1, VFF_TYP_1_BYTE);
-  if (*res == NULL)
-  {   fprintf(stderr,"linterpolate() : allocimage failed\n");
-      return 0;
-  }
+    rs = rowsize(image1);
+    cs = colsize(image1);
+    ps = rs * cs;
+    ds = depth(image1);
+    N = ps * ds;
 
-  /* ---------------------------------------------------------- */
-  /* calcul du resultat */
-  /* ---------------------------------------------------------- */
-  p = UCHARDATA(image1);
-  r = UCHARDATA((*res));
-  for (z = 0; z < ds-1; z++)
-  {
-    for (y = 0; y < cs; y++) {
-      for (x = 0; x < rs; x++) {
-        t1 = p[z * ps + y * rs + x];
-        t2 = p[(z + 1) * ps + y * rs + x];
-        for (i = 0; i < factor; i++) {
-          r[(z * factor + i) * ps + y * rs + x] = t1 + ((t2 - t1) * i) / factor;
+    *res = allocimage(NULL, rs, cs, factor*(ds-1) + 1, VFF_TYP_1_BYTE);
+    if (*res == NULL) {
+        fprintf(stderr,"linterpolate() : allocimage failed\n");
+        return 0;
+    }
+
+    /* ---------------------------------------------------------- */
+    /* calcul du resultat */
+    /* ---------------------------------------------------------- */
+    p = UCHARDATA(image1);
+    r = UCHARDATA((*res));
+    for (z = 0; z < ds-1; z++) {
+        for (y = 0; y < cs; y++) {
+            for (x = 0; x < rs; x++) {
+                t1 = p[z * ps + y * rs + x];
+                t2 = p[(z + 1) * ps + y * rs + x];
+                for (i = 0; i < factor; i++) {
+                    r[(z * factor + i) * ps + y * rs + x] = t1 + ((t2 - t1) * i) / factor;
+                }
+            }
         }
-      }
+        for (y = 0; y < cs; y++) {
+            for (x = 0; x < rs; x++) {
+                r[(ds - 1) * factor * ps + y * rs + x] = p[(ds - 1) * ps + y * rs + x];
+            }
+        }
     }
-    for (y = 0; y < cs; y++) {
-      for (x = 0; x < rs; x++) {
-        r[(ds - 1) * factor * ps + y * rs + x] = p[(ds - 1) * ps + y * rs + x];
-      }
-    }
-  }
 
-  /* ---------------------------------------------------------- */
-  /* fabrique le nom de l'image resultat */
-  /* ---------------------------------------------------------- */
+    /* ---------------------------------------------------------- */
+    /* fabrique le nom de l'image resultat */
+    /* ---------------------------------------------------------- */
 
-  return 1;
+    return 1;
 }
 
 /* =============================================================== */
-int main(int argc, char **argv) 
+int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * f = NULL;
-  struct xvimage * r = NULL;
-  int32_t factor;
-  
-  if (argc != 4)
-  {
-    fprintf(stderr, "usage: %s in.pgm factor out.pgm \n", argv[0]);
-    exit(0);
-  }
+    struct xvimage * f = NULL;
+    struct xvimage * r = NULL;
+    int32_t factor;
 
-  f = readimage(argv[1]);  
-  if (f == NULL)
-  {
-    fprintf(stderr, "%s: readimage failed\n", argv[0]);
-    exit(0);
-  }
+    if (argc != 4) {
+        fprintf(stderr, "usage: %s in.pgm factor out.pgm \n", argv[0]);
+        exit(0);
+    }
 
-  factor = atoi(argv[2]);
+    f = readimage(argv[1]);
+    if (f == NULL) {
+        fprintf(stderr, "%s: readimage failed\n", argv[0]);
+        exit(0);
+    }
 
-  if (! linterpolate(f, factor, &r))
-  {
-    fprintf(stderr, "%s: function linterpolate failed\n", argv[0]);
-    exit(0);
-  } 
+    factor = atoi(argv[2]);
 
-  writeimage(r, argv[argc-1]);
-  freeimage(r);
-  freeimage(f);
-  return 0;
+    if (! linterpolate(f, factor, &r)) {
+        fprintf(stderr, "%s: function linterpolate failed\n", argv[0]);
+        exit(0);
+    }
+
+    writeimage(r, argv[argc-1]);
+    freeimage(r);
+    freeimage(f);
+    return 0;
 } /* main */
-
-
-
-
 

@@ -71,63 +71,54 @@ Mathematical Morphology: 40 Years On, Springer, 2005, pp. 259-268
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image = NULL;
-  struct xvimage * resf = NULL;
-  double gamma;
-  uint32_t i, N;
+    struct xvimage * image = NULL;
+    struct xvimage * resf = NULL;
+    double gamma;
+    uint32_t i, N;
 
-  if ((argc != 3) && (argc != 4))
-  {
-    fprintf(stderr, "usage: %s filein.pgm [gamma] fileout.pgm\n", argv[0]);
-    exit(1);
-  }
+    if ((argc != 3) && (argc != 4)) {
+        fprintf(stderr, "usage: %s filein.pgm [gamma] fileout.pgm\n", argv[0]);
+        exit(1);
+    }
 
-  image = readimage(argv[1]);
-  if (image == NULL)
-  {
-    fprintf(stderr, "%s: readimage failed\n", argv[0]);
-    exit(1);
-  }
+    image = readimage(argv[1]);
+    if (image == NULL) {
+        fprintf(stderr, "%s: readimage failed\n", argv[0]);
+        exit(1);
+    }
 
-  resf = allocimage(NULL, rowsize(image), colsize(image), depth(image), VFF_TYP_FLOAT);
-  if (resf == NULL)
-  {
-    fprintf(stderr, "%s: allocimage failed\n", argv[0]);
-    exit(1);
-  }
+    resf = allocimage(NULL, rowsize(image), colsize(image), depth(image), VFF_TYP_FLOAT);
+    if (resf == NULL) {
+        fprintf(stderr, "%s: allocimage failed\n", argv[0]);
+        exit(1);
+    }
 
-  if (!lmedax_Hesselink(image, resf))
-  {
-    fprintf(stderr, "%s: lmedialaxis failed\n", argv[0]);
-    exit(1);
-  }
+    if (!lmedax_Hesselink(image, resf)) {
+        fprintf(stderr, "%s: lmedialaxis failed\n", argv[0]);
+        exit(1);
+    }
 
-  if(argc==3)
-  {
-  	writeimage(resf, argv[argc - 1]);
-  }
-  else
-  {
-  	gamma = atof(argv[2]);
-	if (gamma < 1)
-	{
-		fprintf(stderr, "%s: gamma must be greater than 1\n", argv[0]);
-		exit(1);
-	}
-
-	N = rowsize(image) * colsize(image) * depth(image);
-	for(i=0; i<N; i++)
-	{
-          if (FLOATDATA(resf)[i] < gamma) {
-            UCHARDATA(image)[i] = NDG_MIN;
-          }
+    if(argc==3) {
+        writeimage(resf, argv[argc - 1]);
+    } else {
+        gamma = atof(argv[2]);
+        if (gamma < 1) {
+            fprintf(stderr, "%s: gamma must be greater than 1\n", argv[0]);
+            exit(1);
         }
 
-	writeimage(image, argv[argc - 1]);
-  }
+        N = rowsize(image) * colsize(image) * depth(image);
+        for(i=0; i<N; i++) {
+            if (FLOATDATA(resf)[i] < gamma) {
+                UCHARDATA(image)[i] = NDG_MIN;
+            }
+        }
 
-  freeimage(image);
-  freeimage(resf);
+        writeimage(image, argv[argc - 1]);
+    }
 
-  return 0;
+    freeimage(image);
+    freeimage(resf);
+
+    return 0;
 } /* main */

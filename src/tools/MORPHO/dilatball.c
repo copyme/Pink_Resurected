@@ -1,5 +1,5 @@
 /*
-Copyright ESIEE (2009) 
+Copyright ESIEE (2009)
 
 m.couprie@esiee.fr
 
@@ -7,16 +7,16 @@ This software is an image processing library whose purpose is to be
 used primarily for research and teaching.
 
 This software is governed by the CeCILL  license under French law and
-abiding by the rules of distribution of free software. You can  use, 
+abiding by the rules of distribution of free software. You can  use,
 modify and/ or redistribute the software under the terms of the CeCILL
 license as circulated by CEA, CNRS and INRIA at the following URL
-"http://www.cecill.info". 
+"http://www.cecill.info".
 
 As a counterpart to the access to the source code and  rights to copy,
 modify and redistribute granted by the license, users are provided only
 with a limited warranty  and the software's author,  the holder of the
 economic rights,  and the successive licensors  have only  limited
-liability. 
+liability.
 
 In this respect, the user's attention is drawn to the risks associated
 with loading,  using,  modifying and/or developing or reproducing the
@@ -25,9 +25,9 @@ that may mean  that it is complicated to manipulate,  and  that  also
 therefore means  that it is reserved for developers  and  experienced
 professionals having in-depth computer knowledge. Users are therefore
 encouraged to load and test the software's suitability as regards their
-requirements in conditions enabling the security of their systems and/or 
-data to be ensured and,  more generally, to use and operate it in the 
-same conditions as regards security. 
+requirements in conditions enabling the security of their systems and/or
+data to be ensured and,  more generally, to use and operate it in the
+same conditions as regards security.
 
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
@@ -44,7 +44,7 @@ If the parameter \b r is a positive integer, then
 the structuring element for this dilation is a ball (or a disc) of radius \b r.
 In this case the result of the dilation is defined by Y = {x; d(x,X) <= r} where X
 represents the original point set (non-null pixels in the original image).
-If the parameter \b r is -1, then 
+If the parameter \b r is -1, then
 the structuring element for each point x is a ball (or a disc) of radius \b F(x),
 where F is the greyscale image \b in.pgm .
 
@@ -119,98 +119,77 @@ dilatball cells 4 cells_dilatball
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image = NULL;
-  struct xvimage * res = NULL;
-  int32_t r;
-  int32_t mode;
+    struct xvimage * image = NULL;
+    struct xvimage * res = NULL;
+    int32_t r;
+    int32_t mode;
 
-  if ((argc != 4) && (argc != 5))
-  {
-    fprintf(stderr, "usage: %s f.pgm r [dist] out.pgm \n", argv[0]);
-    fprintf(stderr, "dist = [0|2|3|4|8|6|18|26]\n");
-    exit(1);
-  }
-
-  image = readimage(argv[1]);
-  if (image == NULL)
-  {
-    fprintf(stderr, "%s: readimage failed\n", argv[0]);
-    exit(1);
-  }
-
-  r = atoi(argv[2]);
-
-  if (argc == 5) {
-    mode = atoi(argv[3]);
-  } else {
-    mode = 0;
-  }
-  if ((mode != 0) && (mode != 1) && (mode != 2) && (mode != 3) && (mode != 4) && 
-      (mode != 8) && (mode != 6) && (mode != 18) && (mode != 26))
-  {
-    fprintf(stderr, "%s: dist = [0|1|2|3|4|8|6|18|26] \n", argv[0]);
-    exit(1);
-  }
-
-  if (r >= 0)
-  {
-    if (! ldilatball(image, r, mode))
-    {
-      fprintf(stderr, "%s: function ldilatball failed\n", argv[0]);
-      exit(1);
+    if ((argc != 4) && (argc != 5)) {
+        fprintf(stderr, "usage: %s f.pgm r [dist] out.pgm \n", argv[0]);
+        fprintf(stderr, "dist = [0|2|3|4|8|6|18|26]\n");
+        exit(1);
     }
-  }
-  else
-  {
-    res = allocimage(NULL, rowsize(image), colsize(image), depth(image), VFF_TYP_1_BYTE);
-    if (res == NULL)
-    {
-      fprintf(stderr, "%s: allocimage failed\n", argv[0]);
-      exit(1);
-    }
-    if (mode == 3)
-    {
-      if (!convertlong(&image))
-      {
-	fprintf(stderr, "%s: function convertlong failed\n", argv[0]);
-	exit(1);
-      }
-      if (depth(image) == 1)
-      {
-	if (!lredt2d(image, res))
-	{
-	  fprintf(stderr, "%s: function lredt2d failed\n", argv[0]);
-	  exit(1);
-	}
-      }
-      else
-      {
-	if (!lredt3d(image, res))
-	{
-	  fprintf(stderr, "%s: function lredt3d failed\n", argv[0]);
-	  exit(1);
-	}
-      }
-    }
-    else
-    {
-      if (!ldilatballloc(image, res, mode))
-      {
-	fprintf(stderr, "%s: function ldilatballloc failed\n", argv[0]);
-	exit(1);
-      }
-    }
-  }
 
-  if (r >= 0) 
-  { 
-    writeimage(image, argv[argc-1]); 
-  }
-  else 
-  { 
-    writeimage(res, argv[argc-1]);
-    freeimage(res);
-  }
-  freeimage(image);
-  return 0;
+    image = readimage(argv[1]);
+    if (image == NULL) {
+        fprintf(stderr, "%s: readimage failed\n", argv[0]);
+        exit(1);
+    }
+
+    r = atoi(argv[2]);
+
+    if (argc == 5) {
+        mode = atoi(argv[3]);
+    } else {
+        mode = 0;
+    }
+    if ((mode != 0) && (mode != 1) && (mode != 2) && (mode != 3) && (mode != 4) &&
+            (mode != 8) && (mode != 6) && (mode != 18) && (mode != 26)) {
+        fprintf(stderr, "%s: dist = [0|1|2|3|4|8|6|18|26] \n", argv[0]);
+        exit(1);
+    }
+
+    if (r >= 0) {
+        if (! ldilatball(image, r, mode)) {
+            fprintf(stderr, "%s: function ldilatball failed\n", argv[0]);
+            exit(1);
+        }
+    } else {
+        res = allocimage(NULL, rowsize(image), colsize(image), depth(image), VFF_TYP_1_BYTE);
+        if (res == NULL) {
+            fprintf(stderr, "%s: allocimage failed\n", argv[0]);
+            exit(1);
+        }
+        if (mode == 3) {
+            if (!convertlong(&image)) {
+                fprintf(stderr, "%s: function convertlong failed\n", argv[0]);
+                exit(1);
+            }
+            if (depth(image) == 1) {
+                if (!lredt2d(image, res)) {
+                    fprintf(stderr, "%s: function lredt2d failed\n", argv[0]);
+                    exit(1);
+                }
+            } else {
+                if (!lredt3d(image, res)) {
+                    fprintf(stderr, "%s: function lredt3d failed\n", argv[0]);
+                    exit(1);
+                }
+            }
+        } else {
+            if (!ldilatballloc(image, res, mode)) {
+                fprintf(stderr, "%s: function ldilatballloc failed\n", argv[0]);
+                exit(1);
+            }
+        }
+    }
+
+    if (r >= 0) {
+        writeimage(image, argv[argc-1]);
+    } else {
+        writeimage(res, argv[argc-1]);
+        freeimage(res);
+    }
+    freeimage(image);
+    return 0;
 } /* main */

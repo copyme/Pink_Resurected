@@ -1,5 +1,5 @@
 /*
-Copyright ESIEE (2009) 
+Copyright ESIEE (2009)
 
 m.couprie@esiee.fr
 
@@ -7,16 +7,16 @@ This software is an image processing library whose purpose is to be
 used primarily for research and teaching.
 
 This software is governed by the CeCILL  license under French law and
-abiding by the rules of distribution of free software. You can  use, 
+abiding by the rules of distribution of free software. You can  use,
 modify and/ or redistribute the software under the terms of the CeCILL
 license as circulated by CEA, CNRS and INRIA at the following URL
-"http://www.cecill.info". 
+"http://www.cecill.info".
 
 As a counterpart to the access to the source code and  rights to copy,
 modify and redistribute granted by the license, users are provided only
 with a limited warranty  and the software's author,  the holder of the
 economic rights,  and the successive licensors  have only  limited
-liability. 
+liability.
 
 In this respect, the user's attention is drawn to the risks associated
 with loading,  using,  modifying and/or developing or reproducing the
@@ -25,9 +25,9 @@ that may mean  that it is complicated to manipulate,  and  that  also
 therefore means  that it is reserved for developers  and  experienced
 professionals having in-depth computer knowledge. Users are therefore
 encouraged to load and test the software's suitability as regards their
-requirements in conditions enabling the security of their systems and/or 
-data to be ensured and,  more generally, to use and operate it in the 
-same conditions as regards security. 
+requirements in conditions enabling the security of their systems and/or
+data to be ensured and,  more generally, to use and operate it in the
+same conditions as regards security.
 
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
@@ -82,7 +82,7 @@ speed must be float, seeds must be integer.
 #include "lfmm.h"
 
 /* =============================================================== */
-int main(int argc, char **argv) 
+int main(int argc, char **argv)
 /* =============================================================== */
 {
     struct xvimage  *seeds = NULL, *speed = NULL ;
@@ -92,43 +92,38 @@ int main(int argc, char **argv)
     float    *SpeedIn = NULL, *SpeedOut = NULL, threshold;
     int      error = 0, stop=0;
 
-    if (argc != 7)
-    {
+    if (argc != 7) {
         fprintf(stderr, "usage: %s seeds.pgm speed.pgm stop threshold seedout.pgm distanceout.pgm \n", argv[0]);
         exit(1);
     }
 
-    seeds = readimage(argv[1]);  
-    if (seeds == NULL)
-    {
+    seeds = readimage(argv[1]);
+    if (seeds == NULL) {
         fprintf(stderr, "%s: readimage failed\n", argv[0]);
         exit(1);
     }
     speed = readimage(argv[2]);
-    if (speed == NULL)
-    {
+    if (speed == NULL) {
         fprintf(stderr, "%s: readimage faild\n", argv[0]);
     }
-    
+
     stop = atoi(argv[3]);
     threshold = (float)atof(argv[4]);
-    
+
     SeedIn = SLONGDATA(seeds);
     SpeedIn = FLOATDATA(speed);
-    
+
     voronoi = copyimage(seeds);
-    if (voronoi == NULL)
-    {
+    if (voronoi == NULL) {
         fprintf(stderr, "%s: copyimage failed\n", argv[0]);
         exit(1);
     }
     distance = copyimage(speed);
-    if (distance == NULL)
-    {
+    if (distance == NULL) {
         fprintf(stderr, "%s: copyimage failed\n", argv[0]);
         exit(1);
     }
-    
+
     SeedOut = SLONGDATA(voronoi);
     SpeedOut = FLOATDATA(distance);
 
@@ -137,26 +132,27 @@ int main(int argc, char **argv)
     cs = colsize(seeds);
     ss = depth(seeds);
 
-#ifdef DEBUG 
+#ifdef DEBUG
     fprintf(stderr, "dimensions: [%d x %d x %d]\n", rs, cs, ss);
 #endif
-    
+
     ndim = 2;
     if (ss > 1) {
-      ++ndim;
+        ++ndim;
     }
 
-    dim[0] = rs ; dim[1] = cs ; dim[2] = ss;
-    
-    if ((error = lfmmdist(SeedIn, SeedOut, dim, ndim, SpeedIn, stop, threshold, SpeedOut)) != 0)
-    {
+    dim[0] = rs ;
+    dim[1] = cs ;
+    dim[2] = ss;
+
+    if ((error = lfmmdist(SeedIn, SeedOut, dim, ndim, SpeedIn, stop, threshold, SpeedOut)) != 0) {
         fprintf(stderr, "%s: function lfmmdist failed with error code %d\n", argv[0], error);
         exit(1);
     }
 
     writeimage(voronoi, argv[5]);
     writeimage(distance, argv[6]);
-        
+
     freeimage(seeds);
     freeimage(speed);
     freeimage(voronoi);
@@ -164,5 +160,4 @@ int main(int argc, char **argv)
 
     return 0;
 } /* main */
-
 

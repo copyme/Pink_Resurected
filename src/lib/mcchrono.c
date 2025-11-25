@@ -1,5 +1,5 @@
 /*
-Copyright ESIEE (2009) 
+Copyright ESIEE (2009)
 
 m.couprie@esiee.fr
 
@@ -7,16 +7,16 @@ This software is an image processing library whose purpose is to be
 used primarily for research and teaching.
 
 This software is governed by the CeCILL  license under French law and
-abiding by the rules of distribution of free software. You can  use, 
+abiding by the rules of distribution of free software. You can  use,
 modify and/ or redistribute the software under the terms of the CeCILL
 license as circulated by CEA, CNRS and INRIA at the following URL
-"http://www.cecill.info". 
+"http://www.cecill.info".
 
 As a counterpart to the access to the source code and  rights to copy,
 modify and redistribute granted by the license, users are provided only
 with a limited warranty  and the software's author,  the holder of the
 economic rights,  and the successive licensors  have only  limited
-liability. 
+liability.
 
 In this respect, the user's attention is drawn to the risks associated
 with loading,  using,  modifying and/or developing or reproducing the
@@ -25,9 +25,9 @@ that may mean  that it is complicated to manipulate,  and  that  also
 therefore means  that it is reserved for developers  and  experienced
 professionals having in-depth computer knowledge. Users are therefore
 encouraged to load and test the software's suitability as regards their
-requirements in conditions enabling the security of their systems and/or 
-data to be ensured and,  more generally, to use and operate it in the 
-same conditions as regards security. 
+requirements in conditions enabling the security of their systems and/or
+data to be ensured and,  more generally, to use and operate it in the
+same conditions as regards security.
 
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
@@ -47,46 +47,42 @@ knowledge of the CeCILL license and that you accept its terms.
 // http://social.msdn.microsoft.com/Forums/en/vcgeneral/thread/430449b3-f6dd-4e18-84de-eebd26a8d668
 // Note: it is only used in the Microsoft Windows port
 
-#  include <windows.h> 
+#  include <windows.h>
 #  if defined(_MSC_VER) || defined(_MSC_EXTENSIONS)
 #    define DELTA_EPOCH_IN_MICROSECS  11644473600000000Ui64
 #  else
 #    define DELTA_EPOCH_IN_MICROSECS  11644473600000000ULL
 #  endif
- 
-int gettimeofday(struct timeval *tv, struct timezone *tz)
-{
-  FILETIME ft;
-  unsigned __int64 tmpres = 0;
-  static int tzflag;
- 
-  if (NULL != tv)
-  {
-    GetSystemTimeAsFileTime(&ft);
- 
-    tmpres |= ft.dwHighDateTime;
-    tmpres <<= 32;
-    tmpres |= ft.dwLowDateTime;
- 
-    /*converting file time to unix epoch*/
-    tmpres -= DELTA_EPOCH_IN_MICROSECS; 
-    tmpres /= 10;  /*convert into microseconds*/
-    tv->tv_sec = (long)(tmpres / 1000000UL);
-    tv->tv_usec = (long)(tmpres % 1000000UL);
-  }
- 
-  if (NULL != tz)
-  {
-    if (!tzflag)
-    {
-      _tzset();
-      tzflag++;
+
+int gettimeofday(struct timeval *tv, struct timezone *tz) {
+    FILETIME ft;
+    unsigned __int64 tmpres = 0;
+    static int tzflag;
+
+    if (NULL != tv) {
+        GetSystemTimeAsFileTime(&ft);
+
+        tmpres |= ft.dwHighDateTime;
+        tmpres <<= 32;
+        tmpres |= ft.dwLowDateTime;
+
+        /*converting file time to unix epoch*/
+        tmpres -= DELTA_EPOCH_IN_MICROSECS;
+        tmpres /= 10;  /*convert into microseconds*/
+        tv->tv_sec = (long)(tmpres / 1000000UL);
+        tv->tv_usec = (long)(tmpres % 1000000UL);
     }
-    tz->tz_minuteswest = _timezone / 60;
-    tz->tz_dsttime = _daylight;
-  }
- 
-  return 0;
+
+    if (NULL != tz) {
+        if (!tzflag) {
+            _tzset();
+            tzflag++;
+        }
+        tz->tz_minuteswest = _timezone / 60;
+        tz->tz_dsttime = _daylight;
+    }
+
+    return 0;
 }
 
 #endif /* NOT UNIXIO */
@@ -94,7 +90,7 @@ int gettimeofday(struct timeval *tv, struct timezone *tz)
 #include <stdlib.h>
 
 /*************************************************
-	Fonctions de mesure de temps 
+	Fonctions de mesure de temps
 	----------------------------
         resolution: 4 microsecondes
 
@@ -106,155 +102,148 @@ int gettimeofday(struct timeval *tv, struct timezone *tz)
 int32_t usecs()
 /* ==================================== */
 {
-   struct timeval tp;
-   struct timezone tzp;
+    struct timeval tp;
+    struct timezone tzp;
 
-   if (gettimeofday(&tp, &tzp) != 0) { /* code en retour: 0=Ok, -1=erreur */
-     fprintf(stderr, "usecs() : gettimeofday failed\n");
-   }
-   return(tp.tv_usec);
+    if (gettimeofday(&tp, &tzp) != 0) { /* code en retour: 0=Ok, -1=erreur */
+        fprintf(stderr, "usecs() : gettimeofday failed\n");
+    }
+    return(tp.tv_usec);
 }
 
 /*---------- demarrage chronometrage -------------------*/
 /* ==================================== */
 void start_chrono(
-		 chrono *tp)
+    chrono *tp)
 /* ==================================== */
 {
-   struct timezone tzp;
+    struct timezone tzp;
 
-   if (gettimeofday(tp, &tzp) != 0) { /* code en retour: 0=Ok, -1=erreur */
-     fprintf(stderr, "start_chrono() : gettimeofday failed\n");
-   }
+    if (gettimeofday(tp, &tzp) != 0) { /* code en retour: 0=Ok, -1=erreur */
+        fprintf(stderr, "start_chrono() : gettimeofday failed\n");
+    }
 }
 
 /*----------- Lecture chronometrage : retourne en entier le nb de microsecondes */
 /* ==================================== */
 int32_t read_chrono(
-		chrono *tp)
+    chrono *tp)
 /* ==================================== */
 {
-   struct timeval tp2;
-   struct timezone tzp;
+    struct timeval tp2;
+    struct timezone tzp;
 
-   if (gettimeofday(&tp2, &tzp) != 0) { /* code en retour: 0=Ok, -1=erreur */
-     fprintf(stderr, "read_chrono() : gettimeofday failed\n");
-   }
-   if (tp->tv_usec >  tp2.tv_usec)
-   {
-      tp2.tv_usec += 1000000;
-      tp2.tv_sec--;
-   }
-   return( (tp2.tv_sec - tp->tv_sec)*1000000 + (tp2.tv_usec - tp->tv_usec));
+    if (gettimeofday(&tp2, &tzp) != 0) { /* code en retour: 0=Ok, -1=erreur */
+        fprintf(stderr, "read_chrono() : gettimeofday failed\n");
+    }
+    if (tp->tv_usec >  tp2.tv_usec) {
+        tp2.tv_usec += 1000000;
+        tp2.tv_sec--;
+    }
+    return( (tp2.tv_sec - tp->tv_sec)*1000000 + (tp2.tv_usec - tp->tv_usec));
 }
 
 /*----------------------------------------------------------------*/
 /* ==================================== */
 void save_time(
-  int32_t n,
-  int32_t t,
-  char *funcname,
-  char *imagename)
+    int32_t n,
+    int32_t t,
+    char *funcname,
+    char *imagename)
 /* ==================================== */
 {
-  char filename[256];
-  char * pinkdir = NULL;
-  FILE *fd = NULL;
+    char filename[256];
+    char * pinkdir = NULL;
+    FILE *fd = NULL;
 
-  pinkdir = getenv("PINK");
-  if (!pinkdir)
-  {
-    fprintf(stderr, "save_time: environment variable PINK not set\n");
-    return;
-  }
-  strcpy(filename, pinkdir);
-  strcat(filename, PERF_DIR);
-  strcat(filename, funcname);
-  strcat(filename, PERF_EXT);
-  fd = fopen(filename,"a");
-  if (!fd)
-  {
-    fprintf(stderr, "save_time: cannot open file: %s\n", filename);
-    return;
-  }
-  /* fprintf(fd, "%9d %9d %s\n", n, t, imagename); */
-  fprintf(fd, "%9d\t%9d\n", n, t);
-  fclose(fd);
+    pinkdir = getenv("PINK");
+    if (!pinkdir) {
+        fprintf(stderr, "save_time: environment variable PINK not set\n");
+        return;
+    }
+    strcpy(filename, pinkdir);
+    strcat(filename, PERF_DIR);
+    strcat(filename, funcname);
+    strcat(filename, PERF_EXT);
+    fd = fopen(filename,"a");
+    if (!fd) {
+        fprintf(stderr, "save_time: cannot open file: %s\n", filename);
+        return;
+    }
+    /* fprintf(fd, "%9d %9d %s\n", n, t, imagename); */
+    fprintf(fd, "%9d\t%9d\n", n, t);
+    fclose(fd);
 }
 
 /*----------------------------------------------------------------*/
 /* ==================================== */
 void save_time2(
-  int32_t n,
-  int32_t n2,
-  int32_t t,
-  char *funcname,
-  char *imagename)
+    int32_t n,
+    int32_t n2,
+    int32_t t,
+    char *funcname,
+    char *imagename)
 /* ==================================== */
 {
-  char filename[256];
-  char * pinkdir = NULL;
-  FILE *fd = NULL;
+    char filename[256];
+    char * pinkdir = NULL;
+    FILE *fd = NULL;
 
-  pinkdir = getenv("PINK");
-  if (!pinkdir)
-  {
-    fprintf(stderr, "save_time: environment variable PINK not set\n");
-    return;
-  }
-  strcpy(filename, pinkdir);
-  strcat(filename, PERF_DIR);
-  strcat(filename, funcname);
-  strcat(filename, PERF_EXT);
-  fd = fopen(filename,"a");
-  if (!fd)
-  {
-    fprintf(stderr, "save_time: cannot open file: %s\n", filename);
-    return;
-  }
-  /* fprintf(fd, "%9d %9d %9d %s\n", n, n2, t, imagename); */
-  fprintf(fd, "%9d\t%9d\t%9d\n", n, n2, t);
-  fclose(fd);
+    pinkdir = getenv("PINK");
+    if (!pinkdir) {
+        fprintf(stderr, "save_time: environment variable PINK not set\n");
+        return;
+    }
+    strcpy(filename, pinkdir);
+    strcat(filename, PERF_DIR);
+    strcat(filename, funcname);
+    strcat(filename, PERF_EXT);
+    fd = fopen(filename,"a");
+    if (!fd) {
+        fprintf(stderr, "save_time: cannot open file: %s\n", filename);
+        return;
+    }
+    /* fprintf(fd, "%9d %9d %9d %s\n", n, n2, t, imagename); */
+    fprintf(fd, "%9d\t%9d\t%9d\n", n, n2, t);
+    fclose(fd);
 }
 
 /*----------------------------------------------------------------*/
 /* ==================================== */
 void save_time4(
-  int32_t n,
-  int32_t n2,
-  int32_t na,
-  int32_t na2,
-  int32_t t,
-  char *funcname,
-  char *imagename)
+    int32_t n,
+    int32_t n2,
+    int32_t na,
+    int32_t na2,
+    int32_t t,
+    char *funcname,
+    char *imagename)
 /* ==================================== */
 {
-  char filename[256];
-  char * pinkdir = NULL;
-  FILE *fd = NULL;
+    char filename[256];
+    char * pinkdir = NULL;
+    FILE *fd = NULL;
 
-  pinkdir = getenv("PINK");
-  if (!pinkdir)
-  {
-    fprintf(stderr, "save_time: environment variable PINK not set\n");
-    return;
-  }
-  strcpy(filename, pinkdir);
-  strcat(filename, PERF_DIR);
-  strcat(filename, funcname);
-  strcat(filename, PERF_EXT);
-  fd = fopen(filename,"a");
-  if (!fd)
-  {
-    fprintf(stderr, "save_time: cannot open file: %s\n", filename);
-    return;
-  }
-  /* fprintf(fd, "%9d %9d %9d %9d %9d %s\n", n, n2, na, na2, t, imagename); */
-  fprintf(fd, "%9d\t%9d\t%9d\t%9d\t%9d\n", n, n2, na, na2, t);
-  fclose(fd);
+    pinkdir = getenv("PINK");
+    if (!pinkdir) {
+        fprintf(stderr, "save_time: environment variable PINK not set\n");
+        return;
+    }
+    strcpy(filename, pinkdir);
+    strcat(filename, PERF_DIR);
+    strcat(filename, funcname);
+    strcat(filename, PERF_EXT);
+    fd = fopen(filename,"a");
+    if (!fd) {
+        fprintf(stderr, "save_time: cannot open file: %s\n", filename);
+        return;
+    }
+    /* fprintf(fd, "%9d %9d %9d %9d %9d %s\n", n, n2, na, na2, t, imagename); */
+    fprintf(fd, "%9d\t%9d\t%9d\t%9d\t%9d\n", n, n2, na, na2, t);
+    fclose(fd);
 }
 
-/*----------- Exemple d'utilisation : 
+/*----------- Exemple d'utilisation :
 void main()
 {
   chrono Chrono1;

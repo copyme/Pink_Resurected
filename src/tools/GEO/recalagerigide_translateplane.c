@@ -1,5 +1,5 @@
 /*
-Copyright ESIEE (2009) 
+Copyright ESIEE (2009)
 
 m.couprie@esiee.fr
 
@@ -7,16 +7,16 @@ This software is an image processing library whose purpose is to be
 used primarily for research and teaching.
 
 This software is governed by the CeCILL  license under French law and
-abiding by the rules of distribution of free software. You can  use, 
+abiding by the rules of distribution of free software. You can  use,
 modify and/ or redistribute the software under the terms of the CeCILL
 license as circulated by CEA, CNRS and INRIA at the following URL
-"http://www.cecill.info". 
+"http://www.cecill.info".
 
 As a counterpart to the access to the source code and  rights to copy,
 modify and redistribute granted by the license, users are provided only
 with a limited warranty  and the software's author,  the holder of the
 economic rights,  and the successive licensors  have only  limited
-liability. 
+liability.
 
 In this respect, the user's attention is drawn to the risks associated
 with loading,  using,  modifying and/or developing or reproducing the
@@ -25,9 +25,9 @@ that may mean  that it is complicated to manipulate,  and  that  also
 therefore means  that it is reserved for developers  and  experienced
 professionals having in-depth computer knowledge. Users are therefore
 encouraged to load and test the software's suitability as regards their
-requirements in conditions enabling the security of their systems and/or 
-data to be ensured and,  more generally, to use and operate it in the 
-same conditions as regards security. 
+requirements in conditions enabling the security of their systems and/or
+data to be ensured and,  more generally, to use and operate it in the
+same conditions as regards security.
 
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
@@ -42,7 +42,7 @@ knowledge of the CeCILL license and that you accept its terms.
 
 <B>Description:</B>
 
-Rigid registration of two closed contours. 
+Rigid registration of two closed contours.
 Let X and Y be two point sets, given respectively by \b in1 and \b in2.
 This procedure identifies the parameters of a rigid deformation R such that
 the "distance" between R(X) and Y is a local minimum.
@@ -54,8 +54,8 @@ d2(z,Y) = min { d2(z,y) ; for all y in Y }
 
 d2(z,y) = (z - y)^2 ; i.e., the square or the Euclidean distance between z and y.
 
-The rigid deformation R is defined as the composition (in this order) 
-of scalings, rotations and translations. 
+The rigid deformation R is defined as the composition (in this order)
+of scalings, rotations and translations.
 
 In 2d, the parameters are:
 \li sx : parameter for the scaling in direction x
@@ -97,61 +97,53 @@ In 3d, the parameters are:
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image1 = NULL;
-  struct xvimage * image2 = NULL;
-  index_t n1, n2;
-  double * P1 = NULL, * P2 = NULL, *Gamma = NULL;
-  FILE * fd = NULL;
-  if (argc != 4)
-  {
-    fprintf(stderr, "usage: %s in1.pgm in2.pgm out.pgm \n", argv[0]);
-    exit(1);
-  }
+    struct xvimage * image1 = NULL;
+    struct xvimage * image2 = NULL;
+    index_t n1, n2;
+    double * P1 = NULL, * P2 = NULL, *Gamma = NULL;
+    FILE * fd = NULL;
+    if (argc != 4) {
+        fprintf(stderr, "usage: %s in1.pgm in2.pgm out.pgm \n", argv[0]);
+        exit(1);
+    }
 
-  image1 = readimage(argv[1]);
-  image2 = readimage(argv[2]);
-  if ((image1 == NULL) || (image2 == NULL))
-  {
-    fprintf(stderr, "%s: readimage failed\n", argv[0]);
-    exit(1);
-  }
-  
-  if ((datatype(image1) != VFF_TYP_1_BYTE) || (datatype(image2) != VFF_TYP_1_BYTE))
-  {
-    fprintf(stderr, "%s: incompatible data types\n", argv[0]);
-    exit(1);
-  }
+    image1 = readimage(argv[1]);
+    image2 = readimage(argv[2]);
+    if ((image1 == NULL) || (image2 == NULL)) {
+        fprintf(stderr, "%s: readimage failed\n", argv[0]);
+        exit(1);
+    }
 
-  P1 = image2list(image1, &n1);
-  P2 = image2list(image2, &n2);
-  //  printf("n1 et n2 : %d %d \n", n1, n2);
+    if ((datatype(image1) != VFF_TYP_1_BYTE) || (datatype(image2) != VFF_TYP_1_BYTE)) {
+        fprintf(stderr, "%s: incompatible data types\n", argv[0]);
+        exit(1);
+    }
 
-  if (depth(image1) == 1) // 2D
-  {
-    Gamma = lrecalagerigide2d_translateplane(P1, n1, P2, n2);
-    printf("sx = %g\n", Gamma[0]);
-    printf("sy = %g\n", Gamma[1]);
-    printf("theta = %g = %g deg\n", Gamma[2], (Gamma[2]*180)/M_PI);
-    printf("tx = %g\n", Gamma[3]);
-    printf("ty = %g\n", Gamma[4]);
-    razimage(image1);
-    list2image(image1, P1, n1);
-    writeimage(image1, argv[argc-1]);
-  }
-  else // 3D
-  {
-    Gamma = lrecalagerigide3d_translateplane(P1, n1, P2, n2);
-    fd = fopen(argv[argc-1],"w");
-    fprintf(fd, "Parametre de translation\n");
-    fprintf(fd, "%d %d\n", -(int)(Gamma[0]+0.5), -(int)(Gamma[1] + 0.5));    
-  }
-  freeimage(image1);
-  freeimage(image2);
-  free(P1);
-  free(P2);
-  free(Gamma);
-  return 0;
+    P1 = image2list(image1, &n1);
+    P2 = image2list(image2, &n2);
+    //  printf("n1 et n2 : %d %d \n", n1, n2);
+
+    if (depth(image1) == 1) { // 2D
+        Gamma = lrecalagerigide2d_translateplane(P1, n1, P2, n2);
+        printf("sx = %g\n", Gamma[0]);
+        printf("sy = %g\n", Gamma[1]);
+        printf("theta = %g = %g deg\n", Gamma[2], (Gamma[2]*180)/M_PI);
+        printf("tx = %g\n", Gamma[3]);
+        printf("ty = %g\n", Gamma[4]);
+        razimage(image1);
+        list2image(image1, P1, n1);
+        writeimage(image1, argv[argc-1]);
+    } else { // 3D
+        Gamma = lrecalagerigide3d_translateplane(P1, n1, P2, n2);
+        fd = fopen(argv[argc-1],"w");
+        fprintf(fd, "Parametre de translation\n");
+        fprintf(fd, "%d %d\n", -(int)(Gamma[0]+0.5), -(int)(Gamma[1] + 0.5));
+    }
+    freeimage(image1);
+    freeimage(image2);
+    free(P1);
+    free(P2);
+    free(Gamma);
+    return 0;
 } /* main */
-
-
 

@@ -1,5 +1,5 @@
 /*
-Copyright ESIEE (2009) 
+Copyright ESIEE (2009)
 
 m.couprie@esiee.fr
 
@@ -7,16 +7,16 @@ This software is an image processing library whose purpose is to be
 used primarily for research and teaching.
 
 This software is governed by the CeCILL  license under French law and
-abiding by the rules of distribution of free software. You can  use, 
+abiding by the rules of distribution of free software. You can  use,
 modify and/ or redistribute the software under the terms of the CeCILL
 license as circulated by CEA, CNRS and INRIA at the following URL
-"http://www.cecill.info". 
+"http://www.cecill.info".
 
 As a counterpart to the access to the source code and  rights to copy,
 modify and redistribute granted by the license, users are provided only
 with a limited warranty  and the software's author,  the holder of the
 economic rights,  and the successive licensors  have only  limited
-liability. 
+liability.
 
 In self respect, the user's attention is drawn to the risks associated
 with loading,  using,  modifying and/or developing or reproducing the
@@ -25,9 +25,9 @@ that may mean  that it is complicated to manipulate,  and  that  also
 therefore means  that it is reserved for developers  and  experienced
 professionals having in-depth computer knowledge. Users are therefore
 encouraged to load and test the software's suitability as regards their
-requirements in conditions enabling the security of their systems and/or 
-data to be ensured and,  more generally, to use and operate it in the 
-same conditions as regards security. 
+requirements in conditions enabling the security of their systems and/or
+data to be ensured and,  more generally, to use and operate it in the
+same conditions as regards security.
 
 The fact that you are presently reading self means that you have had
 knowledge of the CeCILL license and that you accept its terms.
@@ -75,46 +75,43 @@ knowledge of the CeCILL license and that you accept its terms.
 #endif /* UNIXIO */
 
 
-
 /***************************************** FUNCTIONS *****************************************/
 /* HEAPSTRUCT_constructor:
 	Allocates memory for the HEAPSTRUCT
 */
 HEAPSTRUCT * HEAPSTRUCT_constructor(
-	BVECT * dim				/* The image dimensions (needed for hash table) */
-)
-{
-	int i, num_pixels;
-	HEAPSTRUCT * heapStruct = NULL;
+    BVECT * dim				/* The image dimensions (needed for hash table) */
+) {
+    int i, num_pixels;
+    HEAPSTRUCT * heapStruct = NULL;
 
-	num_pixels = BVECT_prod(dim);
+    num_pixels = BVECT_prod(dim);
 
-	heapStruct = (HEAPSTRUCT *)malloc(sizeof(HEAPSTRUCT));
-	heapStruct->heapEnd = -1;	/* Initially empty */
-	heapStruct->log2HeapSize = (int)ceil(log(num_pixels + 1)/log(2.0));
-	heapStruct->heapToImage = (int *)malloc(num_pixels * sizeof(int));
-	heapStruct->imageToHeap = (int *)malloc(num_pixels * sizeof(int));
+    heapStruct = (HEAPSTRUCT *)malloc(sizeof(HEAPSTRUCT));
+    heapStruct->heapEnd = -1;	/* Initially empty */
+    heapStruct->log2HeapSize = (int)ceil(log(num_pixels + 1)/log(2.0));
+    heapStruct->heapToImage = (int *)malloc(num_pixels * sizeof(int));
+    heapStruct->imageToHeap = (int *)malloc(num_pixels * sizeof(int));
 
-	/* Avoid duplications by labelling pixels that aren't in the heap as -1 */
-	for (i = 0; i < num_pixels; i++) {
-		heapStruct->imageToHeap[i] = -1;
-	}
+    /* Avoid duplications by labelling pixels that aren't in the heap as -1 */
+    for (i = 0; i < num_pixels; i++) {
+        heapStruct->imageToHeap[i] = -1;
+    }
 
-	return heapStruct;
+    return heapStruct;
 }
 
 /* HEAPSTRUCT_destructor:
 	Deallocates memory for the HEAPSTRUCT
 */
 int HEAPSTRUCT_destructor(
-	HEAPSTRUCT * heapStruct		/* The object to free */
-)
-{
-	free((void *)heapStruct->heapToImage);
-	free((void *)heapStruct->imageToHeap);
-	free((void *)heapStruct);
+    HEAPSTRUCT * heapStruct		/* The object to free */
+) {
+    free((void *)heapStruct->heapToImage);
+    free((void *)heapStruct->imageToHeap);
+    free((void *)heapStruct);
 
-	return 0;
+    return 0;
 }
 
 
@@ -123,27 +120,26 @@ int HEAPSTRUCT_destructor(
 	position and updating the backpointer (imageToHeap) array.
 */
 int heapAdd(
-	HEAPSTRUCT *heapStruct,		/* The encapsulation of the heap */
-	int imageIndex,				/* The image index of the point to add */
-	BIMAGE *phi)				/* The distance function */
-{
-	int index;
+    HEAPSTRUCT *heapStruct,		/* The encapsulation of the heap */
+    int imageIndex,				/* The image index of the point to add */
+    BIMAGE *phi) {			/* The distance function */
+    int index;
 
-	/* Check for duplicates */
-        if (heapStruct->imageToHeap[imageIndex] != -1) {
-          return 1;
-        }
+    /* Check for duplicates */
+    if (heapStruct->imageToHeap[imageIndex] != -1) {
+        return 1;
+    }
 
-        /* Insert it at the end of the heap */
-	heapStruct->heapEnd++;
-	heapStruct->heapToImage[heapStruct->heapEnd] = imageIndex;
-	heapStruct->imageToHeap[imageIndex] = heapStruct->heapEnd;
+    /* Insert it at the end of the heap */
+    heapStruct->heapEnd++;
+    heapStruct->heapToImage[heapStruct->heapEnd] = imageIndex;
+    heapStruct->imageToHeap[imageIndex] = heapStruct->heapEnd;
 
-	/* Now shuffle self point up the heap to where it belongs */
-	index = heapStruct->heapEnd;
-	heapShuffleUp(heapStruct, index, phi);
+    /* Now shuffle self point up the heap to where it belongs */
+    index = heapStruct->heapEnd;
+    heapShuffleUp(heapStruct, index, phi);
 
-	return 0;
+    return 0;
 }
 
 
@@ -152,32 +148,31 @@ int heapAdd(
 	it into place.
 */
 int heapPull(
-	HEAPSTRUCT *heapStruct,	/* The heap structure, containing the indexes */
-	int index,				/* The heap index of the element to remove */
-	BIMAGE *phi) 			/* The 'distance' function by which we sort */
-{
-	float old_phi, new_phi;
-	int old_image_index;
+    HEAPSTRUCT *heapStruct,	/* The heap structure, containing the indexes */
+    int index,				/* The heap index of the element to remove */
+    BIMAGE *phi) {		/* The 'distance' function by which we sort */
+    float old_phi, new_phi;
+    int old_image_index;
 
-	old_image_index = heapStruct->heapToImage[index];
-	old_phi = phi->buf[old_image_index];
+    old_image_index = heapStruct->heapToImage[index];
+    old_phi = phi->buf[old_image_index];
 
-	/* Write the end of the heap over the node to replace it */
-	heapStruct->heapToImage[index] = heapStruct->heapToImage[heapStruct->heapEnd];
-	heapStruct->imageToHeap[heapStruct->heapToImage[index]] = index;	/* Update backpointer */
-	heapStruct->heapEnd--;		/* Maintain the heapEnd offset */
-	heapStruct->imageToHeap[old_image_index] = -1;		/* Deleted point flagged: not in heap */
+    /* Write the end of the heap over the node to replace it */
+    heapStruct->heapToImage[index] = heapStruct->heapToImage[heapStruct->heapEnd];
+    heapStruct->imageToHeap[heapStruct->heapToImage[index]] = index;	/* Update backpointer */
+    heapStruct->heapEnd--;		/* Maintain the heapEnd offset */
+    heapStruct->imageToHeap[old_image_index] = -1;		/* Deleted point flagged: not in heap */
 
-	new_phi = phi->buf[heapStruct->heapToImage[index]];
+    new_phi = phi->buf[heapStruct->heapToImage[index]];
 
-	/* Shuffle self point to where it belongs */
-	if (new_phi < old_phi) {
-		heapShuffleUp(heapStruct, index, phi);
-	} else {
-		heapShuffleDown(heapStruct, index, phi);
-	}
+    /* Shuffle self point to where it belongs */
+    if (new_phi < old_phi) {
+        heapShuffleUp(heapStruct, index, phi);
+    } else {
+        heapShuffleDown(heapStruct, index, phi);
+    }
 
-	return 0;
+    return 0;
 }
 
 
@@ -186,42 +181,41 @@ int heapPull(
 	the heap property.
 */
 int heapShuffleUp(
-	HEAPSTRUCT *heapStruct,		/* The heap structure, containing the fast indices */
-	int index,					/* The index (in the heap) of the point to be shuffled */
-	BIMAGE *phi)				/* The 'distance' function */
-{
-	int newIndex, swap;
+    HEAPSTRUCT *heapStruct,		/* The heap structure, containing the fast indices */
+    int index,					/* The index (in the heap) of the point to be shuffled */
+    BIMAGE *phi) {			/* The 'distance' function */
+    int newIndex, swap;
 
-	/* Shuffle it up the tree until it's in the right place */
-	while(LSTB_TRUE) {
-          if (index == 0) {
+    /* Shuffle it up the tree until it's in the right place */
+    while(LSTB_TRUE) {
+        if (index == 0) {
             break; /* At root of tree, therefore complete */
-          }
+        }
 
-                /* Grab the parent's index */
-		newIndex = (index - 1)/2;
+        /* Grab the parent's index */
+        newIndex = (index - 1)/2;
 
-		/* If out of order, swap */
-		if ( phi->buf[heapStruct->heapToImage[index]]
-			< phi->buf[heapStruct->heapToImage[newIndex]]) {
+        /* If out of order, swap */
+        if ( phi->buf[heapStruct->heapToImage[index]]
+                < phi->buf[heapStruct->heapToImage[newIndex]]) {
 
-			swap = heapStruct->heapToImage[index];
-			heapStruct->heapToImage[index] = heapStruct->heapToImage[newIndex];
-			heapStruct->heapToImage[newIndex] = swap;
+            swap = heapStruct->heapToImage[index];
+            heapStruct->heapToImage[index] = heapStruct->heapToImage[newIndex];
+            heapStruct->heapToImage[newIndex] = swap;
 
-			/* Maintain backpointers */
-			swap = heapStruct->imageToHeap[heapStruct->heapToImage[index]];
-			heapStruct->imageToHeap[heapStruct->heapToImage[index]]
-				= heapStruct->imageToHeap[heapStruct->heapToImage[newIndex]];
-			heapStruct->imageToHeap[heapStruct->heapToImage[newIndex]] = swap;
-		} else {
-			break;
-		}
+            /* Maintain backpointers */
+            swap = heapStruct->imageToHeap[heapStruct->heapToImage[index]];
+            heapStruct->imageToHeap[heapStruct->heapToImage[index]]
+                = heapStruct->imageToHeap[heapStruct->heapToImage[newIndex]];
+            heapStruct->imageToHeap[heapStruct->heapToImage[newIndex]] = swap;
+        } else {
+            break;
+        }
 
-		/* Follow it up the tree */
-		index = newIndex;
-	}
-	return 0;
+        /* Follow it up the tree */
+        index = newIndex;
+    }
+    return 0;
 }
 
 
@@ -230,350 +224,334 @@ int heapShuffleUp(
 	heap to maintain the heap property.
 */
 int heapShuffleDown(
-	HEAPSTRUCT *heapStruct,		/* The heap structure, containing the fast indices */
-	int index,					/* The index (in the heap) of the point to be shuffled */
-	BIMAGE *phi)				/* The 'distance' function */
-{
-	int swap;
+    HEAPSTRUCT *heapStruct,		/* The heap structure, containing the fast indices */
+    int index,					/* The index (in the heap) of the point to be shuffled */
+    BIMAGE *phi) {			/* The 'distance' function */
+    int swap;
 
-	/* Shuffle it down the heap.  Path is s.t. the heap structure is maintained */
-	while(LSTB_TRUE) {
-		float leftVal, rightVal;
-		int newIndex;
+    /* Shuffle it down the heap.  Path is s.t. the heap structure is maintained */
+    while(LSTB_TRUE) {
+        float leftVal, rightVal;
+        int newIndex;
 
-                if ((2 * index + 1) > heapStruct->heapEnd) {
-                  break; /* End of heap, nothing more to do */
-                }
+        if ((2 * index + 1) > heapStruct->heapEnd) {
+            break; /* End of heap, nothing more to do */
+        }
 
-                leftVal = phi->buf[heapStruct->heapToImage[2*index+1]];
+        leftVal = phi->buf[heapStruct->heapToImage[2*index+1]];
 
-		/* Check if a right child exists */
-		if ((2*index + 2) > heapStruct->heapEnd) {
-			rightVal = FLT_MAX;
-		} else {
-			rightVal = phi->buf[heapStruct->heapToImage[2*index + 2]];
-		}
+        /* Check if a right child exists */
+        if ((2*index + 2) > heapStruct->heapEnd) {
+            rightVal = FLT_MAX;
+        } else {
+            rightVal = phi->buf[heapStruct->heapToImage[2*index + 2]];
+        }
 
-		/* Test which child is smaller, and promote the smaller of the two */
-		if (leftVal < rightVal) {
-			newIndex = 2*index + 1;
-		} else {
-			newIndex = 2*index + 2;
-		}
+        /* Test which child is smaller, and promote the smaller of the two */
+        if (leftVal < rightVal) {
+            newIndex = 2*index + 1;
+        } else {
+            newIndex = 2*index + 2;
+        }
 
-		/* If each child is larger than the current node, shuffling is complete */
-                if (phi->buf[heapStruct->heapToImage[index]] <
-                    phi->buf[heapStruct->heapToImage[newIndex]]) {
-                  break;
-                }
+        /* If each child is larger than the current node, shuffling is complete */
+        if (phi->buf[heapStruct->heapToImage[index]] <
+                phi->buf[heapStruct->heapToImage[newIndex]]) {
+            break;
+        }
 
-                /* Swap offsets */
-		swap = heapStruct->heapToImage[index];
-		heapStruct->heapToImage[index] = heapStruct->heapToImage[newIndex];
-		heapStruct->heapToImage[newIndex] = swap;
+        /* Swap offsets */
+        swap = heapStruct->heapToImage[index];
+        heapStruct->heapToImage[index] = heapStruct->heapToImage[newIndex];
+        heapStruct->heapToImage[newIndex] = swap;
 
-		/* Maintain backpointers */
-		swap = heapStruct->imageToHeap[heapStruct->heapToImage[index]];
-		heapStruct->imageToHeap[heapStruct->heapToImage[index]]
-			= heapStruct->imageToHeap[heapStruct->heapToImage[newIndex]];
-		heapStruct->imageToHeap[heapStruct->heapToImage[newIndex]] = swap;
+        /* Maintain backpointers */
+        swap = heapStruct->imageToHeap[heapStruct->heapToImage[index]];
+        heapStruct->imageToHeap[heapStruct->heapToImage[index]]
+            = heapStruct->imageToHeap[heapStruct->heapToImage[newIndex]];
+        heapStruct->imageToHeap[heapStruct->heapToImage[newIndex]] = swap;
 
-		/* Update the index and repeat */
-		index = newIndex;
-	}
+        /* Update the index and repeat */
+        index = newIndex;
+    }
 
-	return 0;
+    return 0;
 }
 
 /* Constructors and destructors for vectors and matrices */
 FLOATVECT * FLOATVECT_constructor(
-	int length					/* The length of the vector to create */
-)
-{
-	FLOATVECT * vect = NULL;
+    int length					/* The length of the vector to create */
+) {
+    FLOATVECT * vect = NULL;
 
-	vect = (FLOATVECT *)malloc(sizeof(FLOATVECT));
-	vect->length = length;
-	vect->buf = (float *)malloc(length * sizeof(float));
+    vect = (FLOATVECT *)malloc(sizeof(FLOATVECT));
+    vect->length = length;
+    vect->buf = (float *)malloc(length * sizeof(float));
 
-	return vect;
+    return vect;
 }
 void FLOATVECT_destructor(
-	FLOATVECT * vect
-)
-{
-	free((void *)vect->buf);
-	free((void *)vect);
+    FLOATVECT * vect
+) {
+    free((void *)vect->buf);
+    free((void *)vect);
 }
 
 FLOATMATRIX * FLOATMATRIX_constructor(
-	int rows,					/* How many rows and columns in the matrix to create */
-	int cols
-)
-{
-	FLOATMATRIX * matrix = NULL;
+    int rows,					/* How many rows and columns in the matrix to create */
+    int cols
+) {
+    FLOATMATRIX * matrix = NULL;
 
-	matrix = (FLOATMATRIX *)malloc(sizeof(FLOATMATRIX));
-	matrix->rows = rows;
-	matrix->cols = cols;
-	matrix->buf = (float *)malloc(rows*cols*sizeof(float));
+    matrix = (FLOATMATRIX *)malloc(sizeof(FLOATMATRIX));
+    matrix->rows = rows;
+    matrix->cols = cols;
+    matrix->buf = (float *)malloc(rows*cols*sizeof(float));
 
-	return matrix;
+    return matrix;
 }
 void FLOATMATRIX_destructor(
-	FLOATMATRIX * matrix
-)
-{
-	free((void *)matrix->buf);
-	free((void *)matrix);
+    FLOATMATRIX * matrix
+) {
+    free((void *)matrix->buf);
+    free((void *)matrix);
 }
 
 /* Vector and matrix functions */
 /* Multiply a vector by a scalar: dest = scale_factor * source */
 void FLOATVECT_scale(
-	FLOATVECT * dest,
-	float scale_factor,
-	FLOATVECT * source
-)
-{
-	int i;
+    FLOATVECT * dest,
+    float scale_factor,
+    FLOATVECT * source
+) {
+    int i;
 
-	for (i = 0; i < dest->length; i++) {
-		dest->buf[i] = scale_factor * source->buf[i];
-	}
+    for (i = 0; i < dest->length; i++) {
+        dest->buf[i] = scale_factor * source->buf[i];
+    }
 }
 
 /* dest = souce1 + source2 */
 void FLOATVECT_add(
-	FLOATVECT * dest,
-	FLOATVECT * source1,
-	FLOATVECT * source2
-)
-{
-	int i;
+    FLOATVECT * dest,
+    FLOATVECT * source1,
+    FLOATVECT * source2
+) {
+    int i;
 
-	for (i = 0; i < dest->length; i++) {
-		dest->buf[i] = source1->buf[i] + source2->buf[i];
-	}
+    for (i = 0; i < dest->length; i++) {
+        dest->buf[i] = source1->buf[i] + source2->buf[i];
+    }
 }
 
 /* Dot product */
 float FLOATVECT_dot(
-	FLOATVECT * source1,
-	FLOATVECT * source2
-)
-{
-	int i;
-	float dot_prod;
+    FLOATVECT * source1,
+    FLOATVECT * source2
+) {
+    int i;
+    float dot_prod;
 
-	dot_prod = 0;
-	for (i = 0; i < source1->length; i++) {
-		dot_prod += source1->buf[i] * source2->buf[i];
-	}
+    dot_prod = 0;
+    for (i = 0; i < source1->length; i++) {
+        dot_prod += source1->buf[i] * source2->buf[i];
+    }
 
-	return dot_prod;
+    return dot_prod;
 }
 
 /* Matrix by scalar: dest = scale_factor * source */
 void FLOATMATRIX_scale(
-	FLOATMATRIX * dest,
-	float scale_factor,
-	FLOATMATRIX * source
-)
-{
-	int i;
-	int num_components = dest->rows * dest->cols;
+    FLOATMATRIX * dest,
+    float scale_factor,
+    FLOATMATRIX * source
+) {
+    int i;
+    int num_components = dest->rows * dest->cols;
 
-	for (i = 0; i < num_components; i++) {
-		dest->buf[i] = scale_factor * source->buf[i];
-	}
+    for (i = 0; i < num_components; i++) {
+        dest->buf[i] = scale_factor * source->buf[i];
+    }
 }
 
 /* dest = source1 + source2 */
 void FLOATMATRIX_add(
-	FLOATMATRIX * dest,
-	FLOATMATRIX * source1,
-	FLOATMATRIX * source2
-)
-{
-	int i;
-	int num_components = dest->rows * dest->cols;
+    FLOATMATRIX * dest,
+    FLOATMATRIX * source1,
+    FLOATMATRIX * source2
+) {
+    int i;
+    int num_components = dest->rows * dest->cols;
 
-	for (i = 0; i < num_components; i++) {
-		dest->buf[i] = source1->buf[i] + source2->buf[i];
-	}
+    for (i = 0; i < num_components; i++) {
+        dest->buf[i] = source1->buf[i] + source2->buf[i];
+    }
 }
 
 /* dest = source1 * source2 */
 void FLOATMATRIX_mul(
-	FLOATMATRIX * dest,
-	FLOATMATRIX * source1,
-	FLOATMATRIX * source2
-)
-{
-	/* Multidimensional arrays are indexed :
-		A[i][j] = (A[i])[j] =  *(A + i*ni + j) = A[i*ni + j];
-	*/
-	int i, j, k;
-	FLOATMATRIX * temp = NULL;
+    FLOATMATRIX * dest,
+    FLOATMATRIX * source1,
+    FLOATMATRIX * source2
+) {
+    /* Multidimensional arrays are indexed :
+    	A[i][j] = (A[i])[j] =  *(A + i*ni + j) = A[i*ni + j];
+    */
+    int i, j, k;
+    FLOATMATRIX * temp = NULL;
 
-	temp = FLOATMATRIX_constructor(dest->rows, dest->cols);
+    temp = FLOATMATRIX_constructor(dest->rows, dest->cols);
 
-	/* Inner-product formulation of matrix multiplication */
-	for (i = 0; i < dest->rows; i++) {
-	for (j = 0; j < dest->cols; j++) {
-		temp->buf[i*2 + j] = 0;
-		for (k = 0; k < source1->cols; k++) {
-			temp->buf[i*2 + j] += source1->buf[i*2 + k] * source2->buf[k*2 + j];
-		}
-	}
-	}
+    /* Inner-product formulation of matrix multiplication */
+    for (i = 0; i < dest->rows; i++) {
+        for (j = 0; j < dest->cols; j++) {
+            temp->buf[i*2 + j] = 0;
+            for (k = 0; k < source1->cols; k++) {
+                temp->buf[i*2 + j] += source1->buf[i*2 + k] * source2->buf[k*2 + j];
+            }
+        }
+    }
 
-	/* Now copy over output */
-	memcpy(dest->buf, temp->buf, dest->rows*dest->cols*sizeof(float));
+    /* Now copy over output */
+    memcpy(dest->buf, temp->buf, dest->rows*dest->cols*sizeof(float));
 
-	/* Clean up extra matrix */
-	FLOATMATRIX_destructor(temp);
+    /* Clean up extra matrix */
+    FLOATMATRIX_destructor(temp);
 }
 
 /* Computes the determinant of a 2x2 matrix. */
 float FLOATMATRIX_det(
-	FLOATMATRIX * source
-)
-{
-	/* Check we've been given a 2x2 matrix */
-	if (!(source->rows == 2 && source->cols == 2)) {
-		LSTB_error("FLOATMATRIX_det() is specific to 2x2 matrices for now!\n");
-		return 0.0;
-	}
+    FLOATMATRIX * source
+) {
+    /* Check we've been given a 2x2 matrix */
+    if (!(source->rows == 2 && source->cols == 2)) {
+        LSTB_error("FLOATMATRIX_det() is specific to 2x2 matrices for now!\n");
+        return 0.0;
+    }
 
-	/* Specialised determinant computation */
-	return source->buf[0*2+0]*source->buf[1*2+1] - source->buf[0*2+1]*source->buf[1*2+0];
+    /* Specialised determinant computation */
+    return source->buf[0*2+0]*source->buf[1*2+1] - source->buf[0*2+1]*source->buf[1*2+0];
 }
 
 /* dest = source^-1.  Returns determinant.  Specific to 2x2 matrices for now. */
 float FLOATMATRIX_inv(
-	FLOATMATRIX * dest,
-	FLOATMATRIX * source
-)
-{
-	FLOATMATRIX * temp = NULL;
-	float det;
+    FLOATMATRIX * dest,
+    FLOATMATRIX * source
+) {
+    FLOATMATRIX * temp = NULL;
+    float det;
 
-	/* Check we've been given a 2x2 matrix */
-	if (!(source->rows == 2 && source->cols == 2)) {
-		LSTB_error("FLOATMATRIX_inv() is specific to 2x2 matrices for now!\n");
-		return 0.0;
-	}
+    /* Check we've been given a 2x2 matrix */
+    if (!(source->rows == 2 && source->cols == 2)) {
+        LSTB_error("FLOATMATRIX_inv() is specific to 2x2 matrices for now!\n");
+        return 0.0;
+    }
 
-	temp = FLOATMATRIX_constructor(2, 2);
+    temp = FLOATMATRIX_constructor(2, 2);
 
-	det = FLOATMATRIX_det(source);
+    det = FLOATMATRIX_det(source);
 
-	/* Specialised matrix inversion for 2x2 matrices */
-	temp->buf[0*2+0] = source->buf[1*2+1] / det;
-	temp->buf[0*2+1] = -source->buf[0*2+1] / det;
-	temp->buf[1*2+0] = -source->buf[1*2+0] / det;
-	temp->buf[1*2+1] = source->buf[0*2+0] / det;
+    /* Specialised matrix inversion for 2x2 matrices */
+    temp->buf[0*2+0] = source->buf[1*2+1] / det;
+    temp->buf[0*2+1] = -source->buf[0*2+1] / det;
+    temp->buf[1*2+0] = -source->buf[1*2+0] / det;
+    temp->buf[1*2+1] = source->buf[0*2+0] / det;
 
-	/* Now copy over output */
-	memcpy(dest->buf, temp->buf, dest->rows*dest->cols*sizeof(float));
+    /* Now copy over output */
+    memcpy(dest->buf, temp->buf, dest->rows*dest->cols*sizeof(float));
 
-	/* Clean up extra matrix */
-	FLOATMATRIX_destructor(temp);
+    /* Clean up extra matrix */
+    FLOATMATRIX_destructor(temp);
 
-	return det;
+    return det;
 }
 
 /* dest = source' */
 void FLOATMATRIX_transpose(
-	FLOATMATRIX * dest,
-	FLOATMATRIX * source
-)
-{
-	int i, j;
-	FLOATMATRIX * temp = NULL;
+    FLOATMATRIX * dest,
+    FLOATMATRIX * source
+) {
+    int i, j;
+    FLOATMATRIX * temp = NULL;
 
-	temp = FLOATMATRIX_constructor(dest->rows, dest->cols);
+    temp = FLOATMATRIX_constructor(dest->rows, dest->cols);
 
-	/* Multidimensional arrays are indexed :
-		A[i][j] = (A[i])[j] =  *(A + i*ni + j) = A[i*ni + j];
-	*/
-	for (i = 0; i < dest->rows; i++) {
-	for (j = 0; j < dest->cols; j++) {
-		temp->buf[i*dest->cols + j] = source->buf[j*dest->cols + i];
-	}
-	}
+    /* Multidimensional arrays are indexed :
+    	A[i][j] = (A[i])[j] =  *(A + i*ni + j) = A[i*ni + j];
+    */
+    for (i = 0; i < dest->rows; i++) {
+        for (j = 0; j < dest->cols; j++) {
+            temp->buf[i*dest->cols + j] = source->buf[j*dest->cols + i];
+        }
+    }
 
-	/* Now copy over output */
-	memcpy(dest->buf, temp->buf, dest->rows*dest->cols*sizeof(float));
+    /* Now copy over output */
+    memcpy(dest->buf, temp->buf, dest->rows*dest->cols*sizeof(float));
 
-	/* Clean up extra matrix */
-	FLOATMATRIX_destructor(temp);
+    /* Clean up extra matrix */
+    FLOATMATRIX_destructor(temp);
 }
 
 /* Matrix-vector */
 /* dest = matrix * source */
 void FLOATVECT_premul(
-	FLOATVECT * dest,
-	FLOATMATRIX * matrix,
-	FLOATVECT * source
-)
-{
-	int i, j;
+    FLOATVECT * dest,
+    FLOATMATRIX * matrix,
+    FLOATVECT * source
+) {
+    int i, j;
 
-	FLOATVECT * temp = NULL;
+    FLOATVECT * temp = NULL;
 
-	temp = FLOATVECT_constructor(dest->length);
+    temp = FLOATVECT_constructor(dest->length);
 
-	/* Initially zero the destination vector */
-	memset(temp->buf, 0, dest->length*sizeof(float));
+    /* Initially zero the destination vector */
+    memset(temp->buf, 0, dest->length*sizeof(float));
 
-	/* Multidimensional arrays are indexed :
-		A[i][j] = (A[i])[j] =  *(A + i*ni + j) = A[i*ni + j];
-	*/
-	for (i = 0; i < matrix->rows; i++) {
-		for (j = 0; j < matrix->cols; j++) {
-			temp->buf[i] += matrix->buf[i*matrix->cols + j] * source->buf[j];
-		}
-	}
+    /* Multidimensional arrays are indexed :
+    	A[i][j] = (A[i])[j] =  *(A + i*ni + j) = A[i*ni + j];
+    */
+    for (i = 0; i < matrix->rows; i++) {
+        for (j = 0; j < matrix->cols; j++) {
+            temp->buf[i] += matrix->buf[i*matrix->cols + j] * source->buf[j];
+        }
+    }
 
-	/* Now copy over output */
-	memcpy(dest->buf, temp->buf, dest->length*sizeof(float));
+    /* Now copy over output */
+    memcpy(dest->buf, temp->buf, dest->length*sizeof(float));
 
-	/* Clean up extra matrix */
-	FLOATVECT_destructor(temp);
+    /* Clean up extra matrix */
+    FLOATVECT_destructor(temp);
 }
 /* dest = source * matrix */
 void FLOATVECT_postmul(
-	FLOATVECT * dest,
-	FLOATVECT * source,
-	FLOATMATRIX * matrix
-)
-{
-	int i, j;
+    FLOATVECT * dest,
+    FLOATVECT * source,
+    FLOATMATRIX * matrix
+) {
+    int i, j;
 
-	FLOATVECT * temp = NULL;
+    FLOATVECT * temp = NULL;
 
-	temp = FLOATVECT_constructor(dest->length);
+    temp = FLOATVECT_constructor(dest->length);
 
-	/* Initially zero the destination vector */
-	memset(temp->buf, 0, dest->length*sizeof(float));
+    /* Initially zero the destination vector */
+    memset(temp->buf, 0, dest->length*sizeof(float));
 
-	/* Multidimensional arrays are indexed :
-		A[i][j] = (A[i])[j] =  *(A + i*ni + j) = A[i*ni + j];
-	*/
-	for (i = 0; i < matrix->rows; i++) {
-		for (j = 0; j < matrix->cols; j++) {
-			temp->buf[j] += source->buf[i] * matrix->buf[i*matrix->cols + j];
-		}
-	}
+    /* Multidimensional arrays are indexed :
+    	A[i][j] = (A[i])[j] =  *(A + i*ni + j) = A[i*ni + j];
+    */
+    for (i = 0; i < matrix->rows; i++) {
+        for (j = 0; j < matrix->cols; j++) {
+            temp->buf[j] += source->buf[i] * matrix->buf[i*matrix->cols + j];
+        }
+    }
 
-	/* Now copy over output */
-	memcpy(dest->buf, temp->buf, dest->length*sizeof(float));
+    /* Now copy over output */
+    memcpy(dest->buf, temp->buf, dest->length*sizeof(float));
 
-	/* Clean up extra matrix */
-	FLOATVECT_destructor(temp);
+    /* Clean up extra matrix */
+    FLOATVECT_destructor(temp);
 }
 
 
@@ -583,11 +561,11 @@ void FLOATVECT_postmul(
 */
 RIE_INT * RIE_INT_constructor(
 ) {
-	RIE_INT * self = NULL;
+    RIE_INT * self = NULL;
 
-	self = (RIE_INT *)malloc(sizeof(RIE_INT));
+    self = (RIE_INT *)malloc(sizeof(RIE_INT));
 
-	return self;
+    return self;
 }
 
 
@@ -595,9 +573,9 @@ RIE_INT * RIE_INT_constructor(
 	A destructor for integer coordinates on the Riemann surface for ln
 */
 void RIE_INT_destructor(
-	RIE_INT * self
+    RIE_INT * self
 ) {
-	free((void *)self);
+    free((void *)self);
 }
 
 
@@ -606,11 +584,11 @@ void RIE_INT_destructor(
 */
 RIE_FLOAT * RIE_FLOAT_constructor(
 ) {
-	RIE_FLOAT * self = NULL;
+    RIE_FLOAT * self = NULL;
 
-	self = (RIE_FLOAT *)malloc(sizeof(RIE_FLOAT));
+    self = (RIE_FLOAT *)malloc(sizeof(RIE_FLOAT));
 
-	return self;
+    return self;
 }
 
 
@@ -618,9 +596,9 @@ RIE_FLOAT * RIE_FLOAT_constructor(
 	A destructor for float coordinates on the Riemann surface for ln.
 */
 void RIE_FLOAT_destructor(
-	RIE_FLOAT * self
+    RIE_FLOAT * self
 ) {
-	free((void *)self);
+    free((void *)self);
 }
 
 
@@ -629,11 +607,11 @@ void RIE_FLOAT_destructor(
 */
 RIE_SURF * RIE_SURF_constructor(
 ) {
-	RIE_SURF * self = NULL;
+    RIE_SURF * self = NULL;
 
-	self = (RIE_SURF *)malloc(sizeof(RIE_SURF));
+    self = (RIE_SURF *)malloc(sizeof(RIE_SURF));
 
-	return self;
+    return self;
 }
 
 
@@ -641,9 +619,9 @@ RIE_SURF * RIE_SURF_constructor(
 	Destructor for RIE_SURF structure.
 */
 void RIE_SURF_destructor(
-	RIE_SURF * self
+    RIE_SURF * self
 ) {
-	free((void *)self);
+    free((void *)self);
 }
 
 
@@ -651,47 +629,47 @@ void RIE_SURF_destructor(
 	Offset a coordinate on the Riemann surface for ln.
 */
 int RIE_INT_add(
-	int dx, int dy,
-	char restrict_to_surface,		/* Restrict the new_elem point to the Riemann surface? */
-	RIE_SURF * rie_surf,
-	RIE_INT * self
+    int dx, int dy,
+    char restrict_to_surface,		/* Restrict the new_elem point to the Riemann surface? */
+    RIE_SURF * rie_surf,
+    RIE_INT * self
 ) {
-	RIE_INT new_elem;
+    RIE_INT new_elem;
 
-	/* Deal with special case */
-        if (dx == 0 && dy == 0) {
-          return 0;
+    /* Deal with special case */
+    if (dx == 0 && dy == 0) {
+        return 0;
+    }
+
+    /* Offset the point */
+    new_elem.x = self->x + dx;
+    new_elem.y = self->y + dy;
+    new_elem.z = self->z;			/* Default value */
+
+    /* Check if we have to change layer */
+    /* Simplify things by an approximation */
+    if (new_elem.x < rie_surf->source_x - rie_surf->source_radius
+            && self->x < rie_surf->source_x - rie_surf->source_radius) {
+        if (new_elem.y >= rie_surf->source_y && self->y < rie_surf->source_y) {
+            new_elem.z = self->z + 1;
+        } else if (new_elem.y < rie_surf->source_y && self->y >= rie_surf->source_y) {
+            new_elem.z = self->z - 1;
+        } else {
+            new_elem.z = self->z;
         }
+    }
 
-        /* Offset the point */
-	new_elem.x = self->x + dx;
-	new_elem.y = self->y + dy;
-	new_elem.z = self->z;			/* Default value */
-
-	/* Check if we have to change layer */
-	/* Simplify things by an approximation */
-	if (new_elem.x < rie_surf->source_x - rie_surf->source_radius
-		&& self->x < rie_surf->source_x - rie_surf->source_radius) {
-		if (new_elem.y >= rie_surf->source_y && self->y < rie_surf->source_y) {
-			new_elem.z = self->z + 1;
-		} else if (new_elem.y < rie_surf->source_y && self->y >= rie_surf->source_y) {
-			new_elem.z = self->z - 1;
-		} else {
-			new_elem.z = self->z;
-		}
-	}
-
-	/* Restrict the coordinate to a valid surface point */
-        if (restrict_to_surface) {
-          if (!RIE_INT_on_surface(&new_elem, rie_surf)) {
+    /* Restrict the coordinate to a valid surface point */
+    if (restrict_to_surface) {
+        if (!RIE_INT_on_surface(&new_elem, rie_surf)) {
             return 1;
-          }
         }
+    }
 
-        /* Copy temporary coordinate to output */
-	memcpy(self, &new_elem, sizeof(RIE_INT));
+    /* Copy temporary coordinate to output */
+    memcpy(self, &new_elem, sizeof(RIE_INT));
 
-	return 0;
+    return 0;
 }
 
 
@@ -699,46 +677,46 @@ int RIE_INT_add(
 	Offset a coordinate on the Riemann surface for ln.
 */
 int RIE_FLOAT_add(
-	float dx, float dy,
-	char restrict_to_surface,		/* Restrict the new_elem point to the Riemann surface? */
-	RIE_SURF * rie_surf,
-	RIE_FLOAT * self
+    float dx, float dy,
+    char restrict_to_surface,		/* Restrict the new_elem point to the Riemann surface? */
+    RIE_SURF * rie_surf,
+    RIE_FLOAT * self
 ) {
-	RIE_FLOAT new_elem;
+    RIE_FLOAT new_elem;
 
-	/* Deal with special case */
-        if (dx == 0 && dy == 0) {
-          return 0;
+    /* Deal with special case */
+    if (dx == 0 && dy == 0) {
+        return 0;
+    }
+
+    /* Offset the point */
+    new_elem.x = self->x + dx;
+    new_elem.y = self->y + dy;
+    new_elem.z = self->z;			/* Default value */
+
+    /* Check if we have to change layer */
+    /* Simplify things by an approximation */
+    if (new_elem.x < rie_surf->source_x && self->x < rie_surf->source_x) {
+        if (new_elem.y >= rie_surf->source_y && self->y < rie_surf->source_y) {
+            new_elem.z = self->z + 1;
+        } else if (new_elem.y < rie_surf->source_y && self->y >= rie_surf->source_y) {
+            new_elem.z = self->z - 1;
+        } else {
+            new_elem.z = self->z;
         }
+    }
 
-        /* Offset the point */
-	new_elem.x = self->x + dx;
-	new_elem.y = self->y + dy;
-	new_elem.z = self->z;			/* Default value */
-
-	/* Check if we have to change layer */
-	/* Simplify things by an approximation */
-	if (new_elem.x < rie_surf->source_x && self->x < rie_surf->source_x) {
-		if (new_elem.y >= rie_surf->source_y && self->y < rie_surf->source_y) {
-			new_elem.z = self->z + 1;
-		} else if (new_elem.y < rie_surf->source_y && self->y >= rie_surf->source_y) {
-			new_elem.z = self->z - 1;
-		} else {
-			new_elem.z = self->z;
-		}
-	}
-
-	/* Restrict the coordinate to a valid surface point */
-        if (restrict_to_surface) {
-          if (!RIE_FLOAT_on_surface(&new_elem, rie_surf)) {
+    /* Restrict the coordinate to a valid surface point */
+    if (restrict_to_surface) {
+        if (!RIE_FLOAT_on_surface(&new_elem, rie_surf)) {
             return 1;
-          }
         }
+    }
 
-        /* Copy temporary coordinate to output */
-	memcpy(self, &new_elem, sizeof(RIE_FLOAT));
+    /* Copy temporary coordinate to output */
+    memcpy(self, &new_elem, sizeof(RIE_FLOAT));
 
-	return 0;
+    return 0;
 }
 
 
@@ -747,14 +725,14 @@ int RIE_FLOAT_add(
 	Must be a valid coordinate!
 */
 int RIE_INT_to_index(
-	RIE_INT * self,
-	RIE_SURF * rie_surf
+    RIE_INT * self,
+    RIE_SURF * rie_surf
 ) {
-	int index;
+    int index;
 
-	index = self->x + rie_surf->nx*(self->y + rie_surf->ny*self->z);
+    index = self->x + rie_surf->nx*(self->y + rie_surf->ny*self->z);
 
-	return index;
+    return index;
 }
 
 /* index_to_RIE_INT:
@@ -762,70 +740,69 @@ int RIE_INT_to_index(
 	on the Riemann surface.
 */
 int index_to_RIE_INT(
-	int index,
-	RIE_INT * coord,
-	RIE_SURF * rie_surf
-)
-{
-	coord->x = index % rie_surf->nx;
-	index /= rie_surf->nx;
-	coord->y = index % rie_surf->ny;
-	index /= rie_surf->ny;
-	coord->z = index % rie_surf->num_revs;
+    int index,
+    RIE_INT * coord,
+    RIE_SURF * rie_surf
+) {
+    coord->x = index % rie_surf->nx;
+    index /= rie_surf->nx;
+    coord->y = index % rie_surf->ny;
+    index /= rie_surf->ny;
+    coord->z = index % rie_surf->num_revs;
 
-	return 0;
+    return 0;
 }
 
 /* RIE_INT_on_surface:
 	Check if a given point lies on the Riemann surface (else out of bounds)
 */
 char RIE_INT_on_surface(
-	RIE_INT * self,
-	RIE_SURF * rie_surf
+    RIE_INT * self,
+    RIE_SURF * rie_surf
 ) {
-	/* Check outer bounds */
-	if (self->x < 0 || self->x > rie_surf->nx - 1) {
-		return LSTB_FALSE;
-	}
-	if (self->y < 0 || self->y > rie_surf->ny - 1) {
-		return LSTB_FALSE;
-	}
-	if (self->z < 0 || self->z > rie_surf->num_revs - 1) {
-		return LSTB_FALSE;
-	}
+    /* Check outer bounds */
+    if (self->x < 0 || self->x > rie_surf->nx - 1) {
+        return LSTB_FALSE;
+    }
+    if (self->y < 0 || self->y > rie_surf->ny - 1) {
+        return LSTB_FALSE;
+    }
+    if (self->z < 0 || self->z > rie_surf->num_revs - 1) {
+        return LSTB_FALSE;
+    }
 
-	/* Check it doesn't clash with the seed point */
-	if (LSTB_ABS(self->x - rie_surf->source_x) <= rie_surf->source_radius
-		&& LSTB_ABS(self->y - rie_surf->source_y) <= rie_surf->source_radius) {
-		return LSTB_FALSE;
-	}
+    /* Check it doesn't clash with the seed point */
+    if (LSTB_ABS(self->x - rie_surf->source_x) <= rie_surf->source_radius
+            && LSTB_ABS(self->y - rie_surf->source_y) <= rie_surf->source_radius) {
+        return LSTB_FALSE;
+    }
 
-	return LSTB_TRUE;
+    return LSTB_TRUE;
 }
 
 /* RIE_FLOAT_on_surface:
 	Check if a given point lies on the Riemann surface (else out of bounds)
 */
 char RIE_FLOAT_on_surface(
-	RIE_FLOAT * self,
-	RIE_SURF * rie_surf
+    RIE_FLOAT * self,
+    RIE_SURF * rie_surf
 ) {
-	/* Check outer bounds */
-	if (self->x < 0 || self->x > rie_surf->nx - 1) {
-		return LSTB_FALSE;
-	}
-	if (self->y < 0 || self->y > rie_surf->ny - 1) {
-		return LSTB_FALSE;
-	}
-	if (self->z < 0 || self->z > rie_surf->num_revs - 1) {
-		return LSTB_FALSE;
-	}
+    /* Check outer bounds */
+    if (self->x < 0 || self->x > rie_surf->nx - 1) {
+        return LSTB_FALSE;
+    }
+    if (self->y < 0 || self->y > rie_surf->ny - 1) {
+        return LSTB_FALSE;
+    }
+    if (self->z < 0 || self->z > rie_surf->num_revs - 1) {
+        return LSTB_FALSE;
+    }
 
-	/* Check it doesn't clash with the seed point */
-	if (LSTB_ABS(self->x - rie_surf->source_x) <= rie_surf->source_radius &&
-		LSTB_ABS(self->y - rie_surf->source_y) <= rie_surf->source_radius) {
-		return LSTB_FALSE;
-	}
+    /* Check it doesn't clash with the seed point */
+    if (LSTB_ABS(self->x - rie_surf->source_x) <= rie_surf->source_radius &&
+            LSTB_ABS(self->y - rie_surf->source_y) <= rie_surf->source_radius) {
+        return LSTB_FALSE;
+    }
 
-	return LSTB_TRUE;
+    return LSTB_TRUE;
 }

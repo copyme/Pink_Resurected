@@ -1,5 +1,5 @@
 /*
-Copyright ESIEE (2009) 
+Copyright ESIEE (2009)
 
 m.couprie@esiee.fr
 
@@ -7,16 +7,16 @@ This software is an image processing library whose purpose is to be
 used primarily for research and teaching.
 
 This software is governed by the CeCILL  license under French law and
-abiding by the rules of distribution of free software. You can  use, 
+abiding by the rules of distribution of free software. You can  use,
 modify and/ or redistribute the software under the terms of the CeCILL
 license as circulated by CEA, CNRS and INRIA at the following URL
-"http://www.cecill.info". 
+"http://www.cecill.info".
 
 As a counterpart to the access to the source code and  rights to copy,
 modify and redistribute granted by the license, users are provided only
 with a limited warranty  and the software's author,  the holder of the
 economic rights,  and the successive licensors  have only  limited
-liability. 
+liability.
 
 In this respect, the user's attention is drawn to the risks associated
 with loading,  using,  modifying and/or developing or reproducing the
@@ -25,29 +25,29 @@ that may mean  that it is complicated to manipulate,  and  that  also
 therefore means  that it is reserved for developers  and  experienced
 professionals having in-depth computer knowledge. Users are therefore
 encouraged to load and test the software's suitability as regards their
-requirements in conditions enabling the security of their systems and/or 
-data to be ensured and,  more generally, to use and operate it in the 
-same conditions as regards security. 
+requirements in conditions enabling the security of their systems and/or
+data to be ensured and,  more generally, to use and operate it in the
+same conditions as regards security.
 
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
 /*! \file bmp2ppm.c
 
-\brief 
+\brief
 
-<B>Usage:</B> 
+<B>Usage:</B>
 
 <B>Description:</B>
 
 <B>Types supported:</B> byte 2D
 
-<B>Category:</B> 
-\ingroup  
+<B>Category:</B>
+\ingroup
 
 \author Michel Couprie
 */
-/* 
+/*
 NAME
 
 <B>bmp2ppm</B> - converts a truecolor non-compressed BMP file into a PPM file
@@ -62,13 +62,13 @@ The input file must be non-compressed BMP with 24 bits per pixel.
 
 Types supported: bmp
 
-CLASS 
+CLASS
 
 convert
 
 */
 
-/* 
+/*
   Michel Couprie - octobre 2000
 */
 
@@ -84,22 +84,21 @@ convert
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * g1 = NULL;
-  struct xvimage * g2 = NULL;
-  struct xvimage * g3 = NULL;
+    struct xvimage * g1 = NULL;
+    struct xvimage * g2 = NULL;
+    struct xvimage * g3 = NULL;
 
-  if (argc != 3)
-  {
-    fprintf(stderr, "usage: %s in.bmp out.ppm \n", argv[0]);
-    exit(1);
-  }
+    if (argc != 3) {
+        fprintf(stderr, "usage: %s in.bmp out.ppm \n", argv[0]);
+        exit(1);
+    }
 
-  readbmp(argv[1], &g1, &g2, &g3);
-  
-  writergbimage(g1, g2, g3, argv[argc-1]);
-  freeimage(g1);
-  freeimage(g2);
-  freeimage(g3);
+    readbmp(argv[1], &g1, &g2, &g3);
 
-  return 0;
+    writergbimage(g1, g2, g3, argv[argc-1]);
+    freeimage(g1);
+    freeimage(g2);
+    freeimage(g3);
+
+    return 0;
 } /* main */

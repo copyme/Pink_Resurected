@@ -1,5 +1,5 @@
 /*
-Copyright ESIEE (2009) 
+Copyright ESIEE (2009)
 
 m.couprie@esiee.fr
 
@@ -7,16 +7,16 @@ This software is an image processing library whose purpose is to be
 used primarily for research and teaching.
 
 This software is governed by the CeCILL  license under French law and
-abiding by the rules of distribution of free software. You can  use, 
+abiding by the rules of distribution of free software. You can  use,
 modify and/ or redistribute the software under the terms of the CeCILL
 license as circulated by CEA, CNRS and INRIA at the following URL
-"http://www.cecill.info". 
+"http://www.cecill.info".
 
 As a counterpart to the access to the source code and  rights to copy,
 modify and redistribute granted by the license, users are provided only
 with a limited warranty  and the software's author,  the holder of the
 economic rights,  and the successive licensors  have only  limited
-liability. 
+liability.
 
 In this respect, the user's attention is drawn to the risks associated
 with loading,  using,  modifying and/or developing or reproducing the
@@ -25,16 +25,16 @@ that may mean  that it is complicated to manipulate,  and  that  also
 therefore means  that it is reserved for developers  and  experienced
 professionals having in-depth computer knowledge. Users are therefore
 encouraged to load and test the software's suitability as regards their
-requirements in conditions enabling the security of their systems and/or 
-data to be ensured and,  more generally, to use and operate it in the 
-same conditions as regards security. 
+requirements in conditions enabling the security of their systems and/or
+data to be ensured and,  more generally, to use and operate it in the
+same conditions as regards security.
 
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
 /* \file histoelevation.c
 
-\brief 
+\brief
 
 <B>Usage:</B> histoelevation in.pgm nbins fileout
 
@@ -47,8 +47,8 @@ knowledge of the CeCILL license and that you accept its terms.
 
 <B>Types supported:</B> 3D vector field
 
-<B>Category:</B> 
-\ingroup  
+<B>Category:</B>
+\ingroup
 
 \author Michel Couprie
 */
@@ -64,51 +64,47 @@ knowledge of the CeCILL license and that you accept its terms.
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * field = NULL;
-  index_t * histo = NULL;
-  int32_t i, nbins;
-  FILE *fd = NULL;
+    struct xvimage * field = NULL;
+    index_t * histo = NULL;
+    int32_t i, nbins;
+    FILE *fd = NULL;
 
-  if (argc != 4)
-  {
-    fprintf(stderr, "usage: %s in.pgm nbins fileout\n", argv[0]);
-    exit(1);
-  }
+    if (argc != 4) {
+        fprintf(stderr, "usage: %s in.pgm nbins fileout\n", argv[0]);
+        exit(1);
+    }
 
-  field = readimage(argv[1]);
-  if (field == NULL)
-  {
-    fprintf(stderr, "%s: readimage failed\n", argv[0]);
-    exit(1);
-  }
+    field = readimage(argv[1]);
+    if (field == NULL) {
+        fprintf(stderr, "%s: readimage failed\n", argv[0]);
+        exit(1);
+    }
 
-  nbins = atoi(argv[2]);
+    nbins = atoi(argv[2]);
 
-  fd = fopen(argv[argc-1],"w");
-  if (!fd)
-  {
-    fprintf(stderr, "%s: cannot open file: %s\n", argv[0], argv[argc-1]);
-    exit(1);
-  }
+    fd = fopen(argv[argc-1],"w");
+    if (!fd) {
+        fprintf(stderr, "%s: cannot open file: %s\n", argv[0], argv[argc-1]);
+        exit(1);
+    }
 
-  if (! lhistoelevation(field, nbins, &histo))
-  {
-    fprintf(stderr, "%s: function lhistoelevation failed\n", argv[0]);
-    exit(1);
-  }
- 
-  fprintf(fd, "s %d\n", nbins);
-  for (i = 0; i < nbins; i++) {
+    if (! lhistoelevation(field, nbins, &histo)) {
+        fprintf(stderr, "%s: function lhistoelevation failed\n", argv[0]);
+        exit(1);
+    }
+
+    fprintf(fd, "s %d\n", nbins);
+    for (i = 0; i < nbins; i++) {
 #ifdef MC_64_BITS
-    fprintf(fd, "%4d %ld\n", i, histo[i]);
-  }
+        fprintf(fd, "%4d %ld\n", i, histo[i]);
+    }
 #else
-    fprintf(fd, "%4d %d\n", i, histo[i]);
+        fprintf(fd, "%4d %d\n", i, histo[i]);
 #endif
 
-  fclose(fd);
-  free(histo);
-  freeimage(field);
+    fclose(fd);
+    free(histo);
+    freeimage(field);
 
-  return 0;
+    return 0;
 } /* main */

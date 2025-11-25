@@ -1,5 +1,5 @@
 /*
-Copyright ESIEE (2009) 
+Copyright ESIEE (2009)
 
 m.couprie@esiee.fr
 
@@ -7,16 +7,16 @@ This software is an image processing library whose purpose is to be
 used primarily for research and teaching.
 
 This software is governed by the CeCILL  license under French law and
-abiding by the rules of distribution of free software. You can  use, 
+abiding by the rules of distribution of free software. You can  use,
 modify and/ or redistribute the software under the terms of the CeCILL
 license as circulated by CEA, CNRS and INRIA at the following URL
-"http://www.cecill.info". 
+"http://www.cecill.info".
 
 As a counterpart to the access to the source code and  rights to copy,
 modify and redistribute granted by the license, users are provided only
 with a limited warranty  and the software's author,  the holder of the
 economic rights,  and the successive licensors  have only  limited
-liability. 
+liability.
 
 In this respect, the user's attention is drawn to the risks associated
 with loading,  using,  modifying and/or developing or reproducing the
@@ -25,9 +25,9 @@ that may mean  that it is complicated to manipulate,  and  that  also
 therefore means  that it is reserved for developers  and  experienced
 professionals having in-depth computer knowledge. Users are therefore
 encouraged to load and test the software's suitability as regards their
-requirements in conditions enabling the security of their systems and/or 
-data to be ensured and,  more generally, to use and operate it in the 
-same conditions as regards security. 
+requirements in conditions enabling the security of their systems and/or
+data to be ensured and,  more generally, to use and operate it in the
+same conditions as regards security.
 
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
@@ -36,7 +36,7 @@ knowledge of the CeCILL license and that you accept its terms.
 *
 * Routine Name: ldistXXX - library call for dist
 *
-* Purpose:     Calcul de la 4, 8-distance (2D), 6, 18 et 26-distance (3D) 
+* Purpose:     Calcul de la 4, 8-distance (2D), 6, 18 et 26-distance (3D)
 *              et de la distance euclidienne
 *
 * Input:       Image binaire
@@ -71,7 +71,7 @@ knowledge of the CeCILL license and that you accept its terms.
 
 //#define VERBOSE
 
-#define VOI1(p)  ( *( (p)+1)         )        
+#define VOI1(p)  ( *( (p)+1)         )
 #define VOI2(p)  ( *( (p)+1-rs) )
 #define VOI3(p)  ( *( (p)-rs)   )
 #define VOI4(p)  ( *( (p)-rs-1) )
@@ -86,680 +86,683 @@ knowledge of the CeCILL license and that you accept its terms.
 static void inverse(struct xvimage * image)
 /* ==================================== */
 {
-  index_t i, N; uint8_t *pt;
-  N = rowsize(image) * colsize(image) * depth(image);
-  for (pt = UCHARDATA(image), i = 0; i < N; i++, pt++) {
-    if (*pt) {
-      *pt = 0;
-    } else {
-      *pt = NDG_MAX;
+    index_t i, N;
+    uint8_t *pt;
+    N = rowsize(image) * colsize(image) * depth(image);
+    for (pt = UCHARDATA(image), i = 0; i < N; i++, pt++) {
+        if (*pt) {
+            *pt = 0;
+        } else {
+            *pt = NDG_MAX;
+        }
     }
-  }
 } /* inverse() */
 
 /* ==================================== */
-int32_t ldist(struct xvimage *img,   /* donnee: image binaire */       
-          int32_t mode,
-          struct xvimage *res    /* resultat: distances (image deja allouee) */
-)
+int32_t ldist(struct xvimage *img,   /* donnee: image binaire */
+              int32_t mode,
+              struct xvimage *res    /* resultat: distances (image deja allouee) */
+             )
 /* ==================================== */
-// Computes the external distance (distance to nearest object point) 
+// Computes the external distance (distance to nearest object point)
 #undef F_NAME
 #define F_NAME "ldist"
-{ 
-  index_t rs = rowsize(img);
-  index_t cs = colsize(img);
-  index_t ds = depth(img);
-  index_t ps = rs * cs;
-  index_t N = ps * ds;       /* taille de l'image */
-  uint8_t *F;                /* pointeur sur l'image */
-  uint32_t *D;               /* pointeur sur les distances */
-  index_t i, j, k, d;
-  Lifo * LIFO1;
-  Lifo * LIFO2;
-  Lifo * LIFOtmp;
+{
+    index_t rs = rowsize(img);
+    index_t cs = colsize(img);
+    index_t ds = depth(img);
+    index_t ps = rs * cs;
+    index_t N = ps * ds;       /* taille de l'image */
+    uint8_t *F;                /* pointeur sur l'image */
+    uint32_t *D;               /* pointeur sur les distances */
+    index_t i, j, k, d;
+    Lifo * LIFO1;
+    Lifo * LIFO2;
+    Lifo * LIFOtmp;
 
-  COMPARE_SIZE(res, img);
-  ACCEPTED_TYPES1(img, VFF_TYP_1_BYTE);
-  ACCEPTED_TYPES1(res, VFF_TYP_4_BYTE);
+    COMPARE_SIZE(res, img);
+    ACCEPTED_TYPES1(img, VFF_TYP_1_BYTE);
+    ACCEPTED_TYPES1(res, VFF_TYP_4_BYTE);
 
-  F = UCHARDATA(img);
-  D = ULONGDATA(res);
+    F = UCHARDATA(img);
+    D = ULONGDATA(res);
 
-  LIFO1 = CreeLifoVide(N);
-  LIFO2 = CreeLifoVide(N);
-  if ((LIFO1 == NULL) || (LIFO2 == NULL))
-  {   fprintf(stderr, "%s() : CreeLifoVide failed\n", F_NAME);
-      return(0);
-  }
+    LIFO1 = CreeLifoVide(N);
+    LIFO2 = CreeLifoVide(N);
+    if ((LIFO1 == NULL) || (LIFO2 == NULL)) {
+        fprintf(stderr, "%s() : CreeLifoVide failed\n", F_NAME);
+        return(0);
+    }
 
-  switch (mode)
-  {
+    switch (mode) {
     case 4:
-      for (i = 0; i < N; i++) /* on met en pile les n-voisins des points marques */
-      {
-        if (F[i]) {
-          D[i] = 0;
-        } else {
-          D[i] = -1; 
-          for (k = 0; k < 8; k += 2)
-          {
-            j = voisin(i, k, rs, N);
-            if ((j != -1) && (F[j])) { D[i] = 1; LifoPush(LIFO1, i); break; }
-          }
-        }
-      } /* for (i = 0; i < N; i++) */
+        for (i = 0; i < N; i++) { /* on met en pile les n-voisins des points marques */
+            if (F[i]) {
+                D[i] = 0;
+            } else {
+                D[i] = -1;
+                for (k = 0; k < 8; k += 2) {
+                    j = voisin(i, k, rs, N);
+                    if ((j != -1) && (F[j])) {
+                        D[i] = 1;
+                        LifoPush(LIFO1, i);
+                        break;
+                    }
+                }
+            }
+        } /* for (i = 0; i < N; i++) */
 
-      while (! LifoVide(LIFO1)) /* propagation en largeur */
-      {
-        while (! LifoVide(LIFO1))
-        {
-          i = LifoPop(LIFO1);
-          d = D[i];
-          for (k = 0; k < 8; k += 2)
-          {
-            j = voisin(i, k, rs, N);
-            if ((j != -1) && (D[j] == -1)) { D[j] = d + 1; LifoPush(LIFO2, j); }
-          }
+        while (! LifoVide(LIFO1)) { /* propagation en largeur */
+            while (! LifoVide(LIFO1)) {
+                i = LifoPop(LIFO1);
+                d = D[i];
+                for (k = 0; k < 8; k += 2) {
+                    j = voisin(i, k, rs, N);
+                    if ((j != -1) && (D[j] == -1)) {
+                        D[j] = d + 1;
+                        LifoPush(LIFO2, j);
+                    }
+                }
+            } /* while (! LifoVide(LIFO1)) */
+            LIFOtmp = LIFO2;
+            LIFO2 = LIFO1;
+            LIFO1 = LIFOtmp;
         } /* while (! LifoVide(LIFO1)) */
-        LIFOtmp = LIFO2;
-        LIFO2 = LIFO1;
-        LIFO1 = LIFOtmp;
-      } /* while (! LifoVide(LIFO1)) */
-      break;
+        break;
 
-    case 8: 
-      for (i = 0; i < N; i++) /* on met en pile les n-voisins des points marques */
-      {
-        if (F[i]) {
-          D[i] = 0;
-        } else {
-          D[i] = -1; 
-          for (k = 0; k < 8; k += 1)
-          {
-            j = voisin(i, k, rs, N);
-            if ((j != -1) && (F[j])) { D[i] = 1; LifoPush(LIFO1, i); break; }
-          }
-        }
-      } /* for (i = 0; i < N; i++) */
+    case 8:
+        for (i = 0; i < N; i++) { /* on met en pile les n-voisins des points marques */
+            if (F[i]) {
+                D[i] = 0;
+            } else {
+                D[i] = -1;
+                for (k = 0; k < 8; k += 1) {
+                    j = voisin(i, k, rs, N);
+                    if ((j != -1) && (F[j])) {
+                        D[i] = 1;
+                        LifoPush(LIFO1, i);
+                        break;
+                    }
+                }
+            }
+        } /* for (i = 0; i < N; i++) */
 
-      while (! LifoVide(LIFO1)) /* propagation en largeur */
-      {
-        while (! LifoVide(LIFO1))
-        {
-          i = LifoPop(LIFO1);
-          d = D[i];
-          for (k = 0; k < 8; k += 1)
-          {
-            j = voisin(i, k, rs, N);
-            if ((j != -1) && (D[j] == -1)) { D[j] = d + 1; LifoPush(LIFO2, j); }
-          }
+        while (! LifoVide(LIFO1)) { /* propagation en largeur */
+            while (! LifoVide(LIFO1)) {
+                i = LifoPop(LIFO1);
+                d = D[i];
+                for (k = 0; k < 8; k += 1) {
+                    j = voisin(i, k, rs, N);
+                    if ((j != -1) && (D[j] == -1)) {
+                        D[j] = d + 1;
+                        LifoPush(LIFO2, j);
+                    }
+                }
+            } /* while (! LifoVide(LIFO1)) */
+            LIFOtmp = LIFO2;
+            LIFO2 = LIFO1;
+            LIFO1 = LIFOtmp;
         } /* while (! LifoVide(LIFO1)) */
-        LIFOtmp = LIFO2;
-        LIFO2 = LIFO1;
-        LIFO1 = LIFOtmp;
-      } /* while (! LifoVide(LIFO1)) */
-      break;
+        break;
 
     case 6:
-      for (i = 0; i < N; i++) /* on met en pile les n-voisins des points marques */
-      {
-        if (F[i]) {
-          D[i] = 0;
-        } else {
-          D[i] = -1; 
-          for (k = 0; k <= 10; k += 2) /* parcourt les 6 voisins */
-          {
-            j = voisin6(i, k, rs, ps, N);
-            if ((j != -1) && (F[j])) { D[i] = 1; LifoPush(LIFO1, i); break; }
-          }
-        }
-      } /* for (i = 0; i < N; i++) */
+        for (i = 0; i < N; i++) { /* on met en pile les n-voisins des points marques */
+            if (F[i]) {
+                D[i] = 0;
+            } else {
+                D[i] = -1;
+                for (k = 0; k <= 10; k += 2) { /* parcourt les 6 voisins */
+                    j = voisin6(i, k, rs, ps, N);
+                    if ((j != -1) && (F[j])) {
+                        D[i] = 1;
+                        LifoPush(LIFO1, i);
+                        break;
+                    }
+                }
+            }
+        } /* for (i = 0; i < N; i++) */
 
-      while (! LifoVide(LIFO1)) /* propagation en largeur */
-      {
-        while (! LifoVide(LIFO1))
-        {
-          i = LifoPop(LIFO1);
-          d = D[i];
-          for (k = 0; k <= 10; k += 2) /* parcourt les 6 voisins */
-          {
-            j = voisin6(i, k, rs, ps, N);
-            if ((j != -1) && (D[j] == -1)) { D[j] = d + 1; LifoPush(LIFO2, j); }
-          }
+        while (! LifoVide(LIFO1)) { /* propagation en largeur */
+            while (! LifoVide(LIFO1)) {
+                i = LifoPop(LIFO1);
+                d = D[i];
+                for (k = 0; k <= 10; k += 2) { /* parcourt les 6 voisins */
+                    j = voisin6(i, k, rs, ps, N);
+                    if ((j != -1) && (D[j] == -1)) {
+                        D[j] = d + 1;
+                        LifoPush(LIFO2, j);
+                    }
+                }
+            } /* while (! LifoVide(LIFO1)) */
+            LIFOtmp = LIFO2;
+            LIFO2 = LIFO1;
+            LIFO1 = LIFOtmp;
         } /* while (! LifoVide(LIFO1)) */
-        LIFOtmp = LIFO2;
-        LIFO2 = LIFO1;
-        LIFO1 = LIFOtmp;
-      } /* while (! LifoVide(LIFO1)) */
-      break;
+        break;
 
     case 18:
-      for (i = 0; i < N; i++) /* on met en pile les n-voisins des points marques */
-      {
-        if (F[i]) {
-          D[i] = 0;
-        } else {
-          D[i] = -1; 
-          for (k = 0; k < 18; k += 1) /* parcourt les 18 voisins */
-          {
-            j = voisin18(i, k, rs, ps, N);
-            if ((j != -1) && (F[j])) { D[i] = 1; LifoPush(LIFO1, i); break; }
-          }
-        }
-      } /* for (i = 0; i < N; i++) */
+        for (i = 0; i < N; i++) { /* on met en pile les n-voisins des points marques */
+            if (F[i]) {
+                D[i] = 0;
+            } else {
+                D[i] = -1;
+                for (k = 0; k < 18; k += 1) { /* parcourt les 18 voisins */
+                    j = voisin18(i, k, rs, ps, N);
+                    if ((j != -1) && (F[j])) {
+                        D[i] = 1;
+                        LifoPush(LIFO1, i);
+                        break;
+                    }
+                }
+            }
+        } /* for (i = 0; i < N; i++) */
 
-      while (! LifoVide(LIFO1)) /* propagation en largeur */
-      {
-        while (! LifoVide(LIFO1))
-        {
-          i = LifoPop(LIFO1);
-          d = D[i];
-          for (k = 0; k < 18; k += 1) /* parcourt les 18 voisins */
-          {
-            j = voisin18(i, k, rs, ps, N);
-            if ((j != -1) && (D[j] == -1)) { D[j] = d + 1; LifoPush(LIFO2, j); }
-          }
+        while (! LifoVide(LIFO1)) { /* propagation en largeur */
+            while (! LifoVide(LIFO1)) {
+                i = LifoPop(LIFO1);
+                d = D[i];
+                for (k = 0; k < 18; k += 1) { /* parcourt les 18 voisins */
+                    j = voisin18(i, k, rs, ps, N);
+                    if ((j != -1) && (D[j] == -1)) {
+                        D[j] = d + 1;
+                        LifoPush(LIFO2, j);
+                    }
+                }
+            } /* while (! LifoVide(LIFO1)) */
+            LIFOtmp = LIFO2;
+            LIFO2 = LIFO1;
+            LIFO1 = LIFOtmp;
         } /* while (! LifoVide(LIFO1)) */
-        LIFOtmp = LIFO2;
-        LIFO2 = LIFO1;
-        LIFO1 = LIFOtmp;
-      } /* while (! LifoVide(LIFO1)) */
-      break;
+        break;
 
     case 26:
-      for (i = 0; i < N; i++) /* on met en pile les n-voisins des points marques */
-      {
-        if (F[i]) {
-          D[i] = 0;
-        } else {
-          D[i] = -1; 
-          for (k = 0; k < 26; k += 1) /* parcourt les 26 voisins */
-          {
-            j = voisin26(i, k, rs, ps, N);
-            if ((j != -1) && (F[j])) { D[i] = 1; LifoPush(LIFO1, i); break; }
-          }
-        }
-      } /* for (i = 0; i < N; i++) */
+        for (i = 0; i < N; i++) { /* on met en pile les n-voisins des points marques */
+            if (F[i]) {
+                D[i] = 0;
+            } else {
+                D[i] = -1;
+                for (k = 0; k < 26; k += 1) { /* parcourt les 26 voisins */
+                    j = voisin26(i, k, rs, ps, N);
+                    if ((j != -1) && (F[j])) {
+                        D[i] = 1;
+                        LifoPush(LIFO1, i);
+                        break;
+                    }
+                }
+            }
+        } /* for (i = 0; i < N; i++) */
 
-      while (! LifoVide(LIFO1)) /* propagation en largeur */
-      {
-        while (! LifoVide(LIFO1))
-        {
-          i = LifoPop(LIFO1);
-          d = D[i];
-          for (k = 0; k < 26; k += 1) /* parcourt les 26 voisins */
-          {
-            j = voisin26(i, k, rs, ps, N);
-            if ((j != -1) && (D[j] == -1)) { D[j] = d + 1; LifoPush(LIFO2, j); }
-          }
+        while (! LifoVide(LIFO1)) { /* propagation en largeur */
+            while (! LifoVide(LIFO1)) {
+                i = LifoPop(LIFO1);
+                d = D[i];
+                for (k = 0; k < 26; k += 1) { /* parcourt les 26 voisins */
+                    j = voisin26(i, k, rs, ps, N);
+                    if ((j != -1) && (D[j] == -1)) {
+                        D[j] = d + 1;
+                        LifoPush(LIFO2, j);
+                    }
+                }
+            } /* while (! LifoVide(LIFO1)) */
+            LIFOtmp = LIFO2;
+            LIFO2 = LIFO1;
+            LIFO1 = LIFOtmp;
         } /* while (! LifoVide(LIFO1)) */
-        LIFOtmp = LIFO2;
-        LIFO2 = LIFO1;
-        LIFO1 = LIFOtmp;
-      } /* while (! LifoVide(LIFO1)) */
-      break;
+        break;
 
-    default: 
-      fprintf(stderr, "%s(): bad mode: %d\n", F_NAME, mode);
-      return 0;
-  } /* switch (mode) */
+    default:
+        fprintf(stderr, "%s(): bad mode: %d\n", F_NAME, mode);
+        return 0;
+    } /* switch (mode) */
 
-  LifoTermine(LIFO1);
-  LifoTermine(LIFO2);
-  return(1);
+    LifoTermine(LIFO1);
+    LifoTermine(LIFO2);
+    return(1);
 } // ldist()
 
 /* ==================================== */
-int32_t ldistbyte(struct xvimage *img,   /* donnee: image binaire */       
-          int32_t mode,
-          struct xvimage *res    /* resultat: distances (image deja allouee) */
-)
+int32_t ldistbyte(struct xvimage *img,   /* donnee: image binaire */
+                  int32_t mode,
+                  struct xvimage *res    /* resultat: distances (image deja allouee) */
+                 )
 /* ==================================== */
-// Computes the external distance (distance to nearest object point) 
+// Computes the external distance (distance to nearest object point)
 #undef F_NAME
 #define F_NAME "ldistbyte"
-// le resultat est code sur 8 bits. 
+// le resultat est code sur 8 bits.
 // les distances doivent etre entre 0 et 254 (255 est reservee pour marquer)
 // test de depassement effectue
 #define MARK 255
-{ 
-  index_t rs = rowsize(img);
-  index_t cs = colsize(img);
-  index_t ds = depth(img);
-  index_t ps = rs * cs;
-  index_t N = ps * ds;           /* taille de l'image */
-  uint8_t *F;          /* pointeur sur l'image */
-  uint8_t *D;          /* pointeur sur les distances */
-  index_t i, j, k, d;
-  Lifo * LIFO1;
-  Lifo * LIFO2;
-  Lifo * LIFOtmp;
+{
+    index_t rs = rowsize(img);
+    index_t cs = colsize(img);
+    index_t ds = depth(img);
+    index_t ps = rs * cs;
+    index_t N = ps * ds;           /* taille de l'image */
+    uint8_t *F;          /* pointeur sur l'image */
+    uint8_t *D;          /* pointeur sur les distances */
+    index_t i, j, k, d;
+    Lifo * LIFO1;
+    Lifo * LIFO2;
+    Lifo * LIFOtmp;
 
-  COMPARE_SIZE(res, img);
-  ACCEPTED_TYPES1(img, VFF_TYP_1_BYTE);
-  ACCEPTED_TYPES1(res, VFF_TYP_1_BYTE);
+    COMPARE_SIZE(res, img);
+    ACCEPTED_TYPES1(img, VFF_TYP_1_BYTE);
+    ACCEPTED_TYPES1(res, VFF_TYP_1_BYTE);
 
-  F = UCHARDATA(img);
-  D = UCHARDATA(res);
+    F = UCHARDATA(img);
+    D = UCHARDATA(res);
 
-  LIFO1 = CreeLifoVide(N);
-  LIFO2 = CreeLifoVide(N);
-  if ((LIFO1 == NULL) || (LIFO2 == NULL))
-  {
-    fprintf(stderr, "%s() : CreeLifoVide failed\n", F_NAME);
-    return(0);
-  }
+    LIFO1 = CreeLifoVide(N);
+    LIFO2 = CreeLifoVide(N);
+    if ((LIFO1 == NULL) || (LIFO2 == NULL)) {
+        fprintf(stderr, "%s() : CreeLifoVide failed\n", F_NAME);
+        return(0);
+    }
 
-  switch (mode)
-  {
+    switch (mode) {
     case 40:
-      for (i = 0; i < N; i++) /* on met en pile les n-voisins des points objet */
-      {
-        if (F[i]) {
-          D[i] = 0;
-        } else {
-          D[i] = MARK; 
-          for (k = 0; k < 8; k += 2)
-          {
-            j = voisin(i, k, rs, N);
-            if ((j != -1) && (F[j])) { D[i] = 1; LifoPush(LIFO1, i); break; }
-          }
-        }
-      } /* for (i = 0; i < N; i++) */
-
-      while (! LifoVide(LIFO1)) /* propagation en largeur */
-      {
-        while (! LifoVide(LIFO1))
-        {
-          i = LifoPop(LIFO1);
-          d = D[i];
-          
-          for (k = 0; k < 8; k += 2)
-          {
-            j = voisin(i, k, rs, N);
-            if ((j != -1) && (D[j] == MARK)) 
-            {
-              if (d == MARK-1)
-	      {
-                fprintf(stderr, "%s() : distance overflow - do not use byte mode\n", F_NAME);
-                return(0);
-	      } 
-              D[j] = d + 1; 
-              LifoPush(LIFO2, j); 
+        for (i = 0; i < N; i++) { /* on met en pile les n-voisins des points objet */
+            if (F[i]) {
+                D[i] = 0;
+            } else {
+                D[i] = MARK;
+                for (k = 0; k < 8; k += 2) {
+                    j = voisin(i, k, rs, N);
+                    if ((j != -1) && (F[j])) {
+                        D[i] = 1;
+                        LifoPush(LIFO1, i);
+                        break;
+                    }
+                }
             }
-          }
+        } /* for (i = 0; i < N; i++) */
+
+        while (! LifoVide(LIFO1)) { /* propagation en largeur */
+            while (! LifoVide(LIFO1)) {
+                i = LifoPop(LIFO1);
+                d = D[i];
+
+                for (k = 0; k < 8; k += 2) {
+                    j = voisin(i, k, rs, N);
+                    if ((j != -1) && (D[j] == MARK)) {
+                        if (d == MARK-1) {
+                            fprintf(stderr, "%s() : distance overflow - do not use byte mode\n", F_NAME);
+                            return(0);
+                        }
+                        D[j] = d + 1;
+                        LifoPush(LIFO2, j);
+                    }
+                }
+            } /* while (! LifoVide(LIFO1)) */
+            LIFOtmp = LIFO2;
+            LIFO2 = LIFO1;
+            LIFO1 = LIFOtmp;
         } /* while (! LifoVide(LIFO1)) */
-        LIFOtmp = LIFO2;
-        LIFO2 = LIFO1;
-        LIFO1 = LIFOtmp;
-      } /* while (! LifoVide(LIFO1)) */
-      break;
+        break;
 
-    case 80: 
-      for (i = 0; i < N; i++) /* on met en pile les n-voisins des points objet */
-      {
-        if (F[i]) {
-          D[i] = 0;
-        } else {
-          D[i] = MARK; 
-          for (k = 0; k < 8; k += 1)
-          {
-            j = voisin(i, k, rs, N);
-            if ((j != -1) && (F[j])) { D[i] = 1; LifoPush(LIFO1, i); break; }
-          }
-        }
-      } /* for (i = 0; i < N; i++) */
-
-      while (! LifoVide(LIFO1)) /* propagation en largeur */
-      {
-        while (! LifoVide(LIFO1))
-        {
-          i = LifoPop(LIFO1);
-          d = D[i];
-          for (k = 0; k < 8; k += 1)
-          {
-            j = voisin(i, k, rs, N);
-            if ((j != -1) && (D[j] == MARK))
-            {
-              if (d == MARK-1)
-	      {
-                fprintf(stderr, "%s() : distance overflow - do not use byte mode\n", F_NAME);
-                return(0);
-	      } 
-              D[j] = d + 1; 
-              LifoPush(LIFO2, j); 
+    case 80:
+        for (i = 0; i < N; i++) { /* on met en pile les n-voisins des points objet */
+            if (F[i]) {
+                D[i] = 0;
+            } else {
+                D[i] = MARK;
+                for (k = 0; k < 8; k += 1) {
+                    j = voisin(i, k, rs, N);
+                    if ((j != -1) && (F[j])) {
+                        D[i] = 1;
+                        LifoPush(LIFO1, i);
+                        break;
+                    }
+                }
             }
-          }
+        } /* for (i = 0; i < N; i++) */
+
+        while (! LifoVide(LIFO1)) { /* propagation en largeur */
+            while (! LifoVide(LIFO1)) {
+                i = LifoPop(LIFO1);
+                d = D[i];
+                for (k = 0; k < 8; k += 1) {
+                    j = voisin(i, k, rs, N);
+                    if ((j != -1) && (D[j] == MARK)) {
+                        if (d == MARK-1) {
+                            fprintf(stderr, "%s() : distance overflow - do not use byte mode\n", F_NAME);
+                            return(0);
+                        }
+                        D[j] = d + 1;
+                        LifoPush(LIFO2, j);
+                    }
+                }
+            } /* while (! LifoVide(LIFO1)) */
+            LIFOtmp = LIFO2;
+            LIFO2 = LIFO1;
+            LIFO1 = LIFOtmp;
         } /* while (! LifoVide(LIFO1)) */
-        LIFOtmp = LIFO2;
-        LIFO2 = LIFO1;
-        LIFO1 = LIFOtmp;
-      } /* while (! LifoVide(LIFO1)) */
-      break;
+        break;
 
     case 60:
-      for (i = 0; i < N; i++) /* on met en pile les n-voisins des points objet */
-      {
-        if (F[i]) {
-          D[i] = 0;
-        } else {
-          D[i] = MARK; 
-          for (k = 0; k <= 10; k += 2) /* parcourt les 6 voisins */
-          {
-            j = voisin6(i, k, rs, ps, N);
-            if ((j != -1) && (F[j])) { D[i] = 1; LifoPush(LIFO1, i); break; }
-          }
-        }
-      } /* for (i = 0; i < N; i++) */
-
-      while (! LifoVide(LIFO1)) /* propagation en largeur */
-      {
-        while (! LifoVide(LIFO1))
-        {
-          i = LifoPop(LIFO1);
-          d = D[i];
-          for (k = 0; k <= 10; k += 2) /* parcourt les 6 voisins */
-          {
-            j = voisin6(i, k, rs, ps, N);
-            if ((j != -1) && (D[j] == MARK))
-            {
-              if (d == MARK-1)
-	      {
-                fprintf(stderr, "%s() : distance overflow - do not use byte mode\n", F_NAME);
-                return(0);
-	      } 
-              D[j] = d + 1; 
-              LifoPush(LIFO2, j); 
+        for (i = 0; i < N; i++) { /* on met en pile les n-voisins des points objet */
+            if (F[i]) {
+                D[i] = 0;
+            } else {
+                D[i] = MARK;
+                for (k = 0; k <= 10; k += 2) { /* parcourt les 6 voisins */
+                    j = voisin6(i, k, rs, ps, N);
+                    if ((j != -1) && (F[j])) {
+                        D[i] = 1;
+                        LifoPush(LIFO1, i);
+                        break;
+                    }
+                }
             }
-          }
+        } /* for (i = 0; i < N; i++) */
+
+        while (! LifoVide(LIFO1)) { /* propagation en largeur */
+            while (! LifoVide(LIFO1)) {
+                i = LifoPop(LIFO1);
+                d = D[i];
+                for (k = 0; k <= 10; k += 2) { /* parcourt les 6 voisins */
+                    j = voisin6(i, k, rs, ps, N);
+                    if ((j != -1) && (D[j] == MARK)) {
+                        if (d == MARK-1) {
+                            fprintf(stderr, "%s() : distance overflow - do not use byte mode\n", F_NAME);
+                            return(0);
+                        }
+                        D[j] = d + 1;
+                        LifoPush(LIFO2, j);
+                    }
+                }
+            } /* while (! LifoVide(LIFO1)) */
+            LIFOtmp = LIFO2;
+            LIFO2 = LIFO1;
+            LIFO1 = LIFOtmp;
         } /* while (! LifoVide(LIFO1)) */
-        LIFOtmp = LIFO2;
-        LIFO2 = LIFO1;
-        LIFO1 = LIFOtmp;
-      } /* while (! LifoVide(LIFO1)) */
-      break;
+        break;
 
     case 180:
-      for (i = 0; i < N; i++) /* on met en pile les n-voisins des points objet */
-      {
-        if (F[i]) {
-          D[i] = 0;
-        } else {
-          D[i] = MARK; 
-          for (k = 0; k < 18; k += 1) /* parcourt les 18 voisins */
-          {
-            j = voisin18(i, k, rs, ps, N);
-            if ((j != -1) && (F[j])) { D[i] = 1; LifoPush(LIFO1, i); break; }
-          }
-        }
-      } /* for (i = 0; i < N; i++) */
-
-      while (! LifoVide(LIFO1)) /* propagation en largeur */
-      {
-        while (! LifoVide(LIFO1))
-        {
-          i = LifoPop(LIFO1);
-          d = D[i];
-          for (k = 0; k < 18; k += 1) /* parcourt les 18 voisins */
-          {
-            j = voisin18(i, k, rs, ps, N);
-            if ((j != -1) && (D[j] == MARK))
-            {
-              if (d == MARK-1)
-	      {
-                fprintf(stderr, "%s() : distance overflow - do not use byte mode\n", F_NAME);
-                return(0);
-	      } 
-              D[j] = d + 1; 
-              LifoPush(LIFO2, j); 
+        for (i = 0; i < N; i++) { /* on met en pile les n-voisins des points objet */
+            if (F[i]) {
+                D[i] = 0;
+            } else {
+                D[i] = MARK;
+                for (k = 0; k < 18; k += 1) { /* parcourt les 18 voisins */
+                    j = voisin18(i, k, rs, ps, N);
+                    if ((j != -1) && (F[j])) {
+                        D[i] = 1;
+                        LifoPush(LIFO1, i);
+                        break;
+                    }
+                }
             }
-          }
+        } /* for (i = 0; i < N; i++) */
+
+        while (! LifoVide(LIFO1)) { /* propagation en largeur */
+            while (! LifoVide(LIFO1)) {
+                i = LifoPop(LIFO1);
+                d = D[i];
+                for (k = 0; k < 18; k += 1) { /* parcourt les 18 voisins */
+                    j = voisin18(i, k, rs, ps, N);
+                    if ((j != -1) && (D[j] == MARK)) {
+                        if (d == MARK-1) {
+                            fprintf(stderr, "%s() : distance overflow - do not use byte mode\n", F_NAME);
+                            return(0);
+                        }
+                        D[j] = d + 1;
+                        LifoPush(LIFO2, j);
+                    }
+                }
+            } /* while (! LifoVide(LIFO1)) */
+            LIFOtmp = LIFO2;
+            LIFO2 = LIFO1;
+            LIFO1 = LIFOtmp;
         } /* while (! LifoVide(LIFO1)) */
-        LIFOtmp = LIFO2;
-        LIFO2 = LIFO1;
-        LIFO1 = LIFOtmp;
-      } /* while (! LifoVide(LIFO1)) */
-      break;
+        break;
 
     case 260:
-      for (i = 0; i < N; i++) /* on met en pile les n-voisins des points objet */
-      {
-        if (F[i]) {
-          D[i] = 0;
-        } else {
-          D[i] = -1; 
-          for (k = 0; k < 26; k += 1) /* parcourt les 26 voisins */
-          {
-            j = voisin26(i, k, rs, ps, N);
-            if ((j != -1) && (F[j])) { D[i] = 1; LifoPush(LIFO1, i); break; }
-          }
-        }
-      } /* for (i = 0; i < N; i++) */
-
-      while (! LifoVide(LIFO1)) /* propagation en largeur */
-      {
-        while (! LifoVide(LIFO1))
-        {
-          i = LifoPop(LIFO1);
-          d = D[i];
-          for (k = 0; k < 26; k += 1) /* parcourt les 26 voisins */
-          {
-            j = voisin26(i, k, rs, ps, N);
-            if ((j != -1) && (D[j] == MARK))
-            {
-              if (d == MARK-1)
-	      {
-                fprintf(stderr, "%s() : distance overflow - do not use byte mode\n", F_NAME);
-                return(0);
-	      } 
-              D[j] = d + 1; 
-              LifoPush(LIFO2, j); 
+        for (i = 0; i < N; i++) { /* on met en pile les n-voisins des points objet */
+            if (F[i]) {
+                D[i] = 0;
+            } else {
+                D[i] = -1;
+                for (k = 0; k < 26; k += 1) { /* parcourt les 26 voisins */
+                    j = voisin26(i, k, rs, ps, N);
+                    if ((j != -1) && (F[j])) {
+                        D[i] = 1;
+                        LifoPush(LIFO1, i);
+                        break;
+                    }
+                }
             }
-          }
+        } /* for (i = 0; i < N; i++) */
+
+        while (! LifoVide(LIFO1)) { /* propagation en largeur */
+            while (! LifoVide(LIFO1)) {
+                i = LifoPop(LIFO1);
+                d = D[i];
+                for (k = 0; k < 26; k += 1) { /* parcourt les 26 voisins */
+                    j = voisin26(i, k, rs, ps, N);
+                    if ((j != -1) && (D[j] == MARK)) {
+                        if (d == MARK-1) {
+                            fprintf(stderr, "%s() : distance overflow - do not use byte mode\n", F_NAME);
+                            return(0);
+                        }
+                        D[j] = d + 1;
+                        LifoPush(LIFO2, j);
+                    }
+                }
+            } /* while (! LifoVide(LIFO1)) */
+            LIFOtmp = LIFO2;
+            LIFO2 = LIFO1;
+            LIFO1 = LIFOtmp;
         } /* while (! LifoVide(LIFO1)) */
-        LIFOtmp = LIFO2;
-        LIFO2 = LIFO1;
-        LIFO1 = LIFOtmp;
-      } /* while (! LifoVide(LIFO1)) */
-      break;
+        break;
 
-    default: 
-      fprintf(stderr, "%s(): bad mode: %d\n", F_NAME, mode);
-      return 0;
-  } /* switch (mode) */
+    default:
+        fprintf(stderr, "%s(): bad mode: %d\n", F_NAME, mode);
+        return 0;
+    } /* switch (mode) */
 
-  LifoTermine(LIFO1);
-  LifoTermine(LIFO2);
-  return(1);
+    LifoTermine(LIFO1);
+    LifoTermine(LIFO2);
+    return(1);
 } // ldistbyte()
 
 /* ==================================== */
-int32_t ldistquad(struct xvimage *img,   /* donnee: image binaire */       
-              struct xvimage *res    /* resultat: distances */
-)
+int32_t ldistquad(struct xvimage *img,   /* donnee: image binaire */
+                  struct xvimage *res    /* resultat: distances */
+                 )
 /* ==================================== */
-/* 
+/*
   Call the Danielsson 4SED algorithm (with mc-modification)
 */
-// Computes the external distance (distance to nearest object point) 
+// Computes the external distance (distance to nearest object point)
 #undef F_NAME
 #define F_NAME "ldistquad"
-{ 
-  index_t rs = img->row_size;
-  index_t cs = img->col_size;
-  index_t N= rs * cs;        /* taille de l'image */
-  uint8_t *F;                /* pointeur sur l'image */
-  uint32_t *D;               /* pointeur sur les distances */
-  vect2Dint *L;              /* tableau de vecteur associe a un point de l'image */
-  index_t i;
+{
+    index_t rs = img->row_size;
+    index_t cs = img->col_size;
+    index_t N= rs * cs;        /* taille de l'image */
+    uint8_t *F;                /* pointeur sur l'image */
+    uint32_t *D;               /* pointeur sur les distances */
+    vect2Dint *L;              /* tableau de vecteur associe a un point de l'image */
+    index_t i;
 
-  COMPARE_SIZE(res, img);
-  ACCEPTED_TYPES1(img, VFF_TYP_1_BYTE);
-  ACCEPTED_TYPES1(res, VFF_TYP_4_BYTE);
-  ONLY_2D(img);
+    COMPARE_SIZE(res, img);
+    ACCEPTED_TYPES1(img, VFF_TYP_1_BYTE);
+    ACCEPTED_TYPES1(res, VFF_TYP_4_BYTE);
+    ONLY_2D(img);
 
-  L = (vect2Dint *)calloc(1,N*sizeof(vect2Dint));
-  F = UCHARDATA(img);
+    L = (vect2Dint *)calloc(1,N*sizeof(vect2Dint));
+    F = UCHARDATA(img);
 
-  ldistvect(F, L, rs, cs);
+    ldistvect(F, L, rs, cs);
 
-  D = ULONGDATA(res);
-  for (i = 0; i < N; i++) {
-    D[i] = (int32_t)(L[i].x * L[i].x + L[i].y * L[i].y);
-  }
+    D = ULONGDATA(res);
+    for (i = 0; i < N; i++) {
+        D[i] = (int32_t)(L[i].x * L[i].x + L[i].y * L[i].y);
+    }
 
-  free(L);
-  return(1);
+    free(L);
+    return(1);
 } // ldistquad()
 
-int32_t ldistvect(uint8_t *F, vect2Dint *L, index_t rs, index_t cs) 
-/* 
+int32_t ldistvect(uint8_t *F, vect2Dint *L, index_t rs, index_t cs)
+/*
   Danielsson 4SED algorithm (with mc-modification)
   input:  - F is a pointer on the image
           - (rs, cs) is the image size
   output: - L is the vector image (should be allocated in the calling function)
 */
 {
-  uint32_t n1, n2;     /* normes des vecteurs (au carre) */
-  index_t p, N= rs * cs;            /* taille de l'image */
-  uint8_t * pt = NULL;
-  vect2Dint v1, v2;
-  int32_t i, j; // attention: index signés (parcours inverse, petite taille)
+    uint32_t n1, n2;     /* normes des vecteurs (au carre) */
+    index_t p, N= rs * cs;            /* taille de l'image */
+    uint8_t * pt = NULL;
+    vect2Dint v1, v2;
+    int32_t i, j; // attention: index signés (parcours inverse, petite taille)
 
-  pt = F;
+    pt = F;
 
-  for (p = 0; p < N; p++, pt++)
-	{
-	/*  pt de l'image a 0, fond a INFINI */
-	if (*pt)
-	        {
-		L[p].x = 0;
-		L[p].y = 0;
-		}
-		else 
-		{
-		L[p].x = INFINI;
-		L[p].y = INFINI;
-		}
+    for (p = 0; p < N; p++, pt++) {
+        /*  pt de l'image a 0, fond a INFINI */
+        if (*pt) {
+            L[p].x = 0;
+            L[p].y = 0;
+        } else {
+            L[p].x = INFINI;
+            L[p].y = INFINI;
+        }
 
-	/* cadre a INFINI */	
+        /* cadre a INFINI */
 #ifdef CADRE
-	if (bord(p,rs,N) != 0)
-		{
-		L[p].x = INFINI;
-		L[p].y = INFINI;
-		}
+        if (bord(p,rs,N) != 0) {
+            L[p].x = INFINI;
+            L[p].y = INFINI;
+        }
 #endif
-	}
+    }
 
-  // 1er parcours de haut en bas
-  for (j = 1; j < cs; j++)
-  {
-    for (i = 0; i < rs; i++)
-    {/* parcours de la ligne de la gauche vers la droite */
-      v1.x=L[i+((j-1)*rs)].x;
-      v1.y=L[i+((j-1)*rs)].y-1; // Modif mc: Danielsson dit +1
-      v2.x=L[i+(j*rs)].x;
-      v2.y=L[i+(j*rs)].y;
-      /* calcul des normes des vecteurs */
-      n1=v1.x*v1.x+v1.y*v1.y;
-      n2=v2.x*v2.x+v2.y*v2.y;
-      /* on affecte au vecteur courant le vecteur ayant la plus petite norme */
-      if (n1<n2) { L[i+(j*rs)].x=v1.x; L[i+(j*rs)].y=v1.y; }
-    }
-    for (i = 1; i < rs; i++)
-    {/* parcours de la ligne de la gauche vers la droite */
-      v1.x=L[i-1+(j*rs)].x-1; // Modif mc: Danielsson dit +1
-      v1.y=L[i-1+(j*rs)].y;
-      v2.x=L[i+(j*rs)].x;
-      v2.y=L[i+(j*rs)].y;
-      /* calcul des normes des vecteurs */
-      n1=v1.x*v1.x+v1.y*v1.y;
-      n2=v2.x*v2.x+v2.y*v2.y;
-      /* on affecte au vecteur courant le vecteur ayant la plus petite norme */
-      if (n1<n2) { L[i+(j*rs)].x=v1.x; L[i+(j*rs)].y=v1.y; }
-    }
-    for (i = rs-2; i >= 0; i--)
-    {/* parcours de la ligne de la droite vers la gauche */
-      v1.x=L[i+1+(j*rs)].x+1;
-      v1.y=L[i+1+(j*rs)].y;
-      v2.x=L[i+(j*rs)].x;
-      v2.y=L[i+(j*rs)].y;
-      /* calcul des normes des vecteurs */
-      n1=v1.x*v1.x+v1.y*v1.y;
-      n2=v2.x*v2.x+v2.y*v2.y;
-      /* on affecte au vecteur courant le vecteur ayant la plus petite norme */
-      if (n1<n2) { L[i+(j*rs)].x=v1.x; L[i+(j*rs)].y=v1.y; }
-    }
-  } // for (j = 1; j < cs; j++)
+    // 1er parcours de haut en bas
+    for (j = 1; j < cs; j++) {
+        for (i = 0; i < rs; i++) {
+            /* parcours de la ligne de la gauche vers la droite */
+            v1.x=L[i+((j-1)*rs)].x;
+            v1.y=L[i+((j-1)*rs)].y-1; // Modif mc: Danielsson dit +1
+            v2.x=L[i+(j*rs)].x;
+            v2.y=L[i+(j*rs)].y;
+            /* calcul des normes des vecteurs */
+            n1=v1.x*v1.x+v1.y*v1.y;
+            n2=v2.x*v2.x+v2.y*v2.y;
+            /* on affecte au vecteur courant le vecteur ayant la plus petite norme */
+            if (n1<n2) {
+                L[i+(j*rs)].x=v1.x;
+                L[i+(j*rs)].y=v1.y;
+            }
+        }
+        for (i = 1; i < rs; i++) {
+            /* parcours de la ligne de la gauche vers la droite */
+            v1.x=L[i-1+(j*rs)].x-1; // Modif mc: Danielsson dit +1
+            v1.y=L[i-1+(j*rs)].y;
+            v2.x=L[i+(j*rs)].x;
+            v2.y=L[i+(j*rs)].y;
+            /* calcul des normes des vecteurs */
+            n1=v1.x*v1.x+v1.y*v1.y;
+            n2=v2.x*v2.x+v2.y*v2.y;
+            /* on affecte au vecteur courant le vecteur ayant la plus petite norme */
+            if (n1<n2) {
+                L[i+(j*rs)].x=v1.x;
+                L[i+(j*rs)].y=v1.y;
+            }
+        }
+        for (i = rs-2; i >= 0; i--) {
+            /* parcours de la ligne de la droite vers la gauche */
+            v1.x=L[i+1+(j*rs)].x+1;
+            v1.y=L[i+1+(j*rs)].y;
+            v2.x=L[i+(j*rs)].x;
+            v2.y=L[i+(j*rs)].y;
+            /* calcul des normes des vecteurs */
+            n1=v1.x*v1.x+v1.y*v1.y;
+            n2=v2.x*v2.x+v2.y*v2.y;
+            /* on affecte au vecteur courant le vecteur ayant la plus petite norme */
+            if (n1<n2) {
+                L[i+(j*rs)].x=v1.x;
+                L[i+(j*rs)].y=v1.y;
+            }
+        }
+    } // for (j = 1; j < cs; j++)
 
-  // 2nd parcours de bas en haut
-  for (j = cs-2; j >= 0; j--)
-  {
-    for (i = 0; i < rs; i++)
-    {/* parcours de la ligne de la gauche vers la droite */
-      v1.x=L[i+((j+1)*rs)].x;
-      v1.y=L[i+((j+1)*rs)].y+1;
-      v2.x=L[i+(j*rs)].x;
-      v2.y=L[i+(j*rs)].y;
-      /* calcul des normes des vecteurs */
-      n1=v1.x*v1.x+v1.y*v1.y;
-      n2=v2.x*v2.x+v2.y*v2.y;
-      /* on affecte au vecteur courant le vecteur ayant la plus petite norme */
-      if (n1<n2) { L[i+(j*rs)].x=v1.x; L[i+(j*rs)].y=v1.y; }
-    }
-    for (i = 1; i < rs; i++)
-    {/* parcours de la ligne de la gauche vers la droite */
-      v1.x=L[i-1+(j*rs)].x-1; // Modif mc: Danielsson dit +1
-      v1.y=L[i-1+(j*rs)].y;
-      v2.x=L[i+(j*rs)].x;
-      v2.y=L[i+(j*rs)].y;
-      /* calcul des normes des vecteurs */
-      n1=v1.x*v1.x+v1.y*v1.y;
-      n2=v2.x*v2.x+v2.y*v2.y;
-      /* on affecte au vecteur courant le vecteur ayant la plus petite norme */
-      if (n1<n2) { L[i+(j*rs)].x=v1.x; L[i+(j*rs)].y=v1.y; }
-    }
-    for (i = rs-2; i >= 0; i--)
-    {/* parcours de la ligne de la droite vers la gauche */
-      v1.x=L[i+1+(j*rs)].x+1;
-      v1.y=L[i+1+(j*rs)].y;
-      v2.x=L[i+(j*rs)].x;
-      v2.y=L[i+(j*rs)].y;
-      /* calcul des normes des vecteurs */
-      n1=v1.x*v1.x+v1.y*v1.y;
-      n2=v2.x*v2.x+v2.y*v2.y;
-      /* on affecte au vecteur courant le vecteur ayant la plus petite norme */
-      if (n1<n2) { L[i+(j*rs)].x=v1.x; L[i+(j*rs)].y=v1.y; }
-    }
-  } // for (j = cs-2; j >= 0; j--)
-  return(1);
+    // 2nd parcours de bas en haut
+    for (j = cs-2; j >= 0; j--) {
+        for (i = 0; i < rs; i++) {
+            /* parcours de la ligne de la gauche vers la droite */
+            v1.x=L[i+((j+1)*rs)].x;
+            v1.y=L[i+((j+1)*rs)].y+1;
+            v2.x=L[i+(j*rs)].x;
+            v2.y=L[i+(j*rs)].y;
+            /* calcul des normes des vecteurs */
+            n1=v1.x*v1.x+v1.y*v1.y;
+            n2=v2.x*v2.x+v2.y*v2.y;
+            /* on affecte au vecteur courant le vecteur ayant la plus petite norme */
+            if (n1<n2) {
+                L[i+(j*rs)].x=v1.x;
+                L[i+(j*rs)].y=v1.y;
+            }
+        }
+        for (i = 1; i < rs; i++) {
+            /* parcours de la ligne de la gauche vers la droite */
+            v1.x=L[i-1+(j*rs)].x-1; // Modif mc: Danielsson dit +1
+            v1.y=L[i-1+(j*rs)].y;
+            v2.x=L[i+(j*rs)].x;
+            v2.y=L[i+(j*rs)].y;
+            /* calcul des normes des vecteurs */
+            n1=v1.x*v1.x+v1.y*v1.y;
+            n2=v2.x*v2.x+v2.y*v2.y;
+            /* on affecte au vecteur courant le vecteur ayant la plus petite norme */
+            if (n1<n2) {
+                L[i+(j*rs)].x=v1.x;
+                L[i+(j*rs)].y=v1.y;
+            }
+        }
+        for (i = rs-2; i >= 0; i--) {
+            /* parcours de la ligne de la droite vers la gauche */
+            v1.x=L[i+1+(j*rs)].x+1;
+            v1.y=L[i+1+(j*rs)].y;
+            v2.x=L[i+(j*rs)].x;
+            v2.y=L[i+(j*rs)].y;
+            /* calcul des normes des vecteurs */
+            n1=v1.x*v1.x+v1.y*v1.y;
+            n2=v2.x*v2.x+v2.y*v2.y;
+            /* on affecte au vecteur courant le vecteur ayant la plus petite norme */
+            if (n1<n2) {
+                L[i+(j*rs)].x=v1.x;
+                L[i+(j*rs)].y=v1.y;
+            }
+        }
+    } // for (j = cs-2; j >= 0; j--)
+    return(1);
 } //ldistvect
 
 /* ======================================================== */
 int32_t ldisteuc(struct xvimage* ob, struct xvimage* res)
 /* ======================================================== */
-// Computes the external distance (distance to nearest object point) 
+// Computes the external distance (distance to nearest object point)
 #undef F_NAME
 #define F_NAME "ldisteuc"
 {
- index_t rs=rowsize(ob),cs=colsize(ob),N=rs*cs;
- uint32_t *R = ULONGDATA(res);
- index_t i;
- double d;
+    index_t rs=rowsize(ob),cs=colsize(ob),N=rs*cs;
+    uint32_t *R = ULONGDATA(res);
+    index_t i;
+    double d;
 
- if (!ldistquad(ob, res)) {
-   return 0;
- }
+    if (!ldistquad(ob, res)) {
+        return 0;
+    }
 
- for (i=0; i<N; i++)
- {
-   d = sqrt((double)(R[i]));
-   R[i] = (uint32_t)arrondi(d);
- }
-    
- return 1;
+    for (i=0; i<N; i++) {
+        d = sqrt((double)(R[i]));
+        R[i] = (uint32_t)arrondi(d);
+    }
+
+    return 1;
 } // ldisteuc()
 
 #define CHAM_4 5
@@ -770,239 +773,234 @@ int32_t ldisteuc(struct xvimage* ob, struct xvimage* res)
 #define CHAM_26 6
 
 /* ==================================== */
-int32_t lchamfrein(struct xvimage *img,   /* donnee: image binaire */       
-               struct xvimage *res    /* resultat: distances (image deja allouee) */
-)
+int32_t lchamfrein(struct xvimage *img,   /* donnee: image binaire */
+                   struct xvimage *res    /* resultat: distances (image deja allouee) */
+                  )
 /* ==================================== */
-// Computes the external distance (distance to nearest object point) 
+// Computes the external distance (distance to nearest object point)
 #undef F_NAME
 #define F_NAME "lchamfrein"
-{ 
-  index_t rs = rowsize(img);
-  index_t cs = colsize(img);
-  index_t ds = depth(img);
-  index_t ps = rs * cs;
-  index_t N = ps * ds;    /* taille de l'image */
-  uint8_t *F;             /* pointeur sur l'image */
-  uint32_t *D;            /* pointeur sur les distances */
-  index_t i;
-  int32_t st, d;
+{
+    index_t rs = rowsize(img);
+    index_t cs = colsize(img);
+    index_t ds = depth(img);
+    index_t ps = rs * cs;
+    index_t N = ps * ds;    /* taille de l'image */
+    uint8_t *F;             /* pointeur sur l'image */
+    uint32_t *D;            /* pointeur sur les distances */
+    index_t i;
+    int32_t st, d;
 
-  COMPARE_SIZE(res, img);
-  ACCEPTED_TYPES1(img, VFF_TYP_1_BYTE);
-  ACCEPTED_TYPES1(res, VFF_TYP_4_BYTE);
+    COMPARE_SIZE(res, img);
+    ACCEPTED_TYPES1(img, VFF_TYP_1_BYTE);
+    ACCEPTED_TYPES1(res, VFF_TYP_4_BYTE);
 
-  F = UCHARDATA(img);
-  D = ULONGDATA(res);
+    F = UCHARDATA(img);
+    D = ULONGDATA(res);
 
-  for (i = 0; i < N; i++) {
-    if (F[i]) {
-      D[i] = 0;
-    } else {
-      D[i] = INFINI;
-    }
-  }
-
-  if (ds == 1)
-  {
-   st = 0;
-   while (!st)
-   {
-    st = 1;
-    /* parcours direct */
     for (i = 0; i < N; i++) {
-      if (!F[i]) {
-        d = D[i];
-        if ((i % rs != 0) && (D[i - 1] + CHAM_4 < d)) {
-          st = 0;
-          d = D[i - 1] + CHAM_4;
+        if (F[i]) {
+            D[i] = 0;
+        } else {
+            D[i] = INFINI;
         }
-        if ((i >= rs) && (i % rs != 0) && (D[i - rs - 1] + CHAM_8 < d)) {
-          st = 0;
-          d = D[i - rs - 1] + CHAM_8;
-        }
-        if ((i >= rs) && (D[i - rs] + CHAM_4 < d)) {
-          st = 0;
-          d = D[i - rs] + CHAM_4;
-        }
-        if ((i % rs != rs - 1) && (i >= rs) && (D[i + 1 - rs] + CHAM_8 < d)) {
-          st = 0;
-          d = D[i + 1 - rs] + CHAM_8;
-        }
-        D[i] = d;
-      }
     }
-    /* parcours retro */
-    for (i = N - 1; i >= 0; i--) {
-      if (!F[i]) {
-        d = D[i];
-        if ((i % rs != rs - 1) && (D[i + 1] + CHAM_4 < d)) {
-          st = 0;
-          d = D[i + 1] + CHAM_4;
+
+    if (ds == 1) {
+        st = 0;
+        while (!st) {
+            st = 1;
+            /* parcours direct */
+            for (i = 0; i < N; i++) {
+                if (!F[i]) {
+                    d = D[i];
+                    if ((i % rs != 0) && (D[i - 1] + CHAM_4 < d)) {
+                        st = 0;
+                        d = D[i - 1] + CHAM_4;
+                    }
+                    if ((i >= rs) && (i % rs != 0) && (D[i - rs - 1] + CHAM_8 < d)) {
+                        st = 0;
+                        d = D[i - rs - 1] + CHAM_8;
+                    }
+                    if ((i >= rs) && (D[i - rs] + CHAM_4 < d)) {
+                        st = 0;
+                        d = D[i - rs] + CHAM_4;
+                    }
+                    if ((i % rs != rs - 1) && (i >= rs) && (D[i + 1 - rs] + CHAM_8 < d)) {
+                        st = 0;
+                        d = D[i + 1 - rs] + CHAM_8;
+                    }
+                    D[i] = d;
+                }
+            }
+            /* parcours retro */
+            for (i = N - 1; i >= 0; i--) {
+                if (!F[i]) {
+                    d = D[i];
+                    if ((i % rs != rs - 1) && (D[i + 1] + CHAM_4 < d)) {
+                        st = 0;
+                        d = D[i + 1] + CHAM_4;
+                    }
+                    if ((i % rs != 0) && (i < N - rs) && (D[i - 1 + rs] + CHAM_8 < d)) {
+                        st = 0;
+                        d = D[i - 1 + rs] + CHAM_8;
+                    }
+                    if ((i < N - rs) && (D[i + rs] + CHAM_4 < d)) {
+                        st = 0;
+                        d = D[i + rs] + CHAM_4;
+                    }
+                    if ((i < N - rs) && (i % rs != rs - 1) &&
+                            (D[i + rs + 1] + CHAM_8 < d)) {
+                        st = 0;
+                        d = D[i + rs + 1] + CHAM_8;
+                    }
+                    D[i] = d;
+                }
+            }
         }
-        if ((i % rs != 0) && (i < N - rs) && (D[i - 1 + rs] + CHAM_8 < d)) {
-          st = 0;
-          d = D[i - 1 + rs] + CHAM_8;
-        }
-        if ((i < N - rs) && (D[i + rs] + CHAM_4 < d)) {
-          st = 0;
-          d = D[i + rs] + CHAM_4;
-        }
-        if ((i < N - rs) && (i % rs != rs - 1) &&
-            (D[i + rs + 1] + CHAM_8 < d)) {
-          st = 0;
-          d = D[i + rs + 1] + CHAM_8;
-        }
-        D[i] = d;
-      }
+    } else { /* image 3D */
+        st = 0;
+        while (!st) {
+            st = 1;
+            /* parcours direct */
+            for (i = 0; i < N; i++) {
+                if (!F[i]) {
+                    d = D[i];
+                    /* plan "AVANT" (-ps) */
+                    if ((i >= ps) && (i % rs != rs - 1) && (D[-ps + i + 1] + CHAM_18 < d)) {
+                        st = 0;
+                        d = D[-ps + i + 1] + CHAM_18;
+                    }
+                    if ((i >= ps) && (i % rs != rs - 1) && (i % ps >= rs) &&
+                            (D[-ps + i + 1 - rs] + CHAM_26 < d)) {
+                        st = 0;
+                        d = D[-ps + i + 1 - rs] + CHAM_26;
+                    }
+                    if ((i >= ps) && (i % ps >= rs) && (D[-ps + i - rs] + CHAM_18 < d)) {
+                        st = 0;
+                        d = D[-ps + i - rs] + CHAM_18;
+                    }
+                    if ((i >= ps) && (i % ps >= rs) && (i % rs != 0) &&
+                            (D[-ps + i - rs - 1] + CHAM_26 < d)) {
+                        st = 0;
+                        d = D[-ps + i - rs - 1] + CHAM_26;
+                    }
+                    if ((i >= ps) && (i % rs != 0) && (D[-ps + i - 1] + CHAM_18 < d)) {
+                        st = 0;
+                        d = D[-ps + i - 1] + CHAM_18;
+                    }
+                    if ((i >= ps) && (i % rs != 0) && (i % ps < ps - rs) &&
+                            (D[-ps + i - 1 + rs] + CHAM_26 < d)) {
+                        st = 0;
+                        d = D[-ps + i - 1 + rs] + CHAM_26;
+                    }
+                    if ((i >= ps) && (i % ps < ps - rs) &&
+                            (D[-ps + i + rs] + CHAM_18 < d)) {
+                        st = 0;
+                        d = D[-ps + i + rs] + CHAM_18;
+                    }
+                    if ((i >= ps) && (i % ps < ps - rs) && (i % rs != rs - 1) &&
+                            (D[-ps + i + rs + 1] + CHAM_26 < d)) {
+                        st = 0;
+                        d = D[-ps + i + rs + 1] + CHAM_26;
+                    }
+                    if ((i >= ps) && (D[-ps + i] + CHAM_6 < d)) {
+                        st = 0;
+                        d = D[-ps + i] + CHAM_6;
+                    }
+                    /* plan "COURANT" () */
+                    if ((i % rs != rs - 1) && (i % ps >= rs) &&
+                            (D[i + 1 - rs] + CHAM_18 < d)) {
+                        st = 0;
+                        d = D[i + 1 - rs] + CHAM_18;
+                    }
+                    if ((i % ps >= rs) && (D[i - rs] + CHAM_6 < d)) {
+                        st = 0;
+                        d = D[i - rs] + CHAM_6;
+                    }
+                    if ((i % ps >= rs) && (i % rs != 0) && (D[i - rs - 1] + CHAM_18 < d)) {
+                        st = 0;
+                        d = D[i - rs - 1] + CHAM_18;
+                    }
+                    if ((i % rs != 0) && (D[i - 1] + CHAM_6 < d)) {
+                        st = 0;
+                        d = D[i - 1] + CHAM_6;
+                    }
+                    D[i] = d;
+                }
+            }
+            /* parcours retro */
+            for (i = N - 1; i >= 0; i--) {
+                if (!F[i]) {
+                    d = D[i];
+                    /* plan "COURANT" () */
+                    if ((i % rs != rs - 1) && (D[i + 1] + CHAM_6 < d)) {
+                        st = 0;
+                        d = D[i + 1] + CHAM_6;
+                    }
+                    if ((i % rs != 0) && (i % ps < ps - rs) &&
+                            (D[i - 1 + rs] + CHAM_18 < d)) {
+                        st = 0;
+                        d = D[i - 1 + rs] + CHAM_18;
+                    }
+                    if ((i % ps < ps - rs) && (D[i + rs] + CHAM_6 < d)) {
+                        st = 0;
+                        d = D[i + rs] + CHAM_6;
+                    }
+                    if ((i % ps < ps - rs) && (i % rs != rs - 1) &&
+                            (D[i + rs + 1] + CHAM_18 < d)) {
+                        st = 0;
+                        d = D[i + rs + 1] + CHAM_18;
+                    }
+                    /* plan "ARRIERE" (+n) */
+                    if ((i < N - ps) && (i % rs != rs - 1) &&
+                            (D[ps + i + 1] + CHAM_18 < d)) {
+                        st = 0;
+                        d = D[ps + i + 1] + CHAM_18;
+                    }
+                    if ((i < N - ps) && (i % rs != rs - 1) && (i % ps >= rs) &&
+                            (D[ps + i + 1 - rs] + CHAM_26 < d)) {
+                        st = 0;
+                        d = D[ps + i + 1 - rs] + CHAM_26;
+                    }
+                    if ((i < N - ps) && (i % ps >= rs) && (D[ps + i - rs] + CHAM_18 < d)) {
+                        st = 0;
+                        d = D[ps + i - rs] + CHAM_18;
+                    }
+                    if ((i < N - ps) && (i % ps >= rs) && (i % rs != 0) &&
+                            (D[ps + i - rs - 1] + CHAM_26 < d)) {
+                        st = 0;
+                        d = D[ps + i - rs - 1] + CHAM_26;
+                    }
+                    if ((i < N - ps) && (i % rs != 0) && (D[ps + i - 1] + CHAM_18 < d)) {
+                        st = 0;
+                        d = D[ps + i - 1] + CHAM_18;
+                    }
+                    if ((i < N - ps) && (i % rs != 0) && (i % ps < ps - rs) &&
+                            (D[ps + i - 1 + rs] + CHAM_26 < d)) {
+                        st = 0;
+                        d = D[ps + i - 1 + rs] + CHAM_26;
+                    }
+                    if ((i < N - ps) && (i % ps < ps - rs) &&
+                            (D[ps + i + rs] + CHAM_18 < d)) {
+                        st = 0;
+                        d = D[ps + i + rs] + CHAM_18;
+                    }
+                    if ((i < N - ps) && (i % ps < ps - rs) && (i % rs != rs - 1) &&
+                            (D[ps + i + rs + 1] + CHAM_26 < d)) {
+                        st = 0;
+                        d = D[ps + i + rs + 1] + CHAM_26;
+                    }
+                    if ((i < N - ps) && (D[ps + i] + CHAM_6 < d)) {
+                        st = 0;
+                        d = D[ps + i] + CHAM_6;
+                    }
+                    D[i] = d;
+                }
+            }
+        } /* while (!st) */
     }
-   }
-  }
-  else /* image 3D */
-  {
-   st = 0;
-   while (!st)
-   {
-    st = 1;
-    /* parcours direct */
-    for (i = 0; i < N; i++) {
-      if (!F[i]) {
-        d = D[i];
-        /* plan "AVANT" (-ps) */
-        if ((i >= ps) && (i % rs != rs - 1) && (D[-ps + i + 1] + CHAM_18 < d)) {
-          st = 0;
-          d = D[-ps + i + 1] + CHAM_18;
-        }
-        if ((i >= ps) && (i % rs != rs - 1) && (i % ps >= rs) &&
-            (D[-ps + i + 1 - rs] + CHAM_26 < d)) {
-          st = 0;
-          d = D[-ps + i + 1 - rs] + CHAM_26;
-        }
-        if ((i >= ps) && (i % ps >= rs) && (D[-ps + i - rs] + CHAM_18 < d)) {
-          st = 0;
-          d = D[-ps + i - rs] + CHAM_18;
-        }
-        if ((i >= ps) && (i % ps >= rs) && (i % rs != 0) &&
-            (D[-ps + i - rs - 1] + CHAM_26 < d)) {
-          st = 0;
-          d = D[-ps + i - rs - 1] + CHAM_26;
-        }
-        if ((i >= ps) && (i % rs != 0) && (D[-ps + i - 1] + CHAM_18 < d)) {
-          st = 0;
-          d = D[-ps + i - 1] + CHAM_18;
-        }
-        if ((i >= ps) && (i % rs != 0) && (i % ps < ps - rs) &&
-            (D[-ps + i - 1 + rs] + CHAM_26 < d)) {
-          st = 0;
-          d = D[-ps + i - 1 + rs] + CHAM_26;
-        }
-        if ((i >= ps) && (i % ps < ps - rs) &&
-            (D[-ps + i + rs] + CHAM_18 < d)) {
-          st = 0;
-          d = D[-ps + i + rs] + CHAM_18;
-        }
-        if ((i >= ps) && (i % ps < ps - rs) && (i % rs != rs - 1) &&
-            (D[-ps + i + rs + 1] + CHAM_26 < d)) {
-          st = 0;
-          d = D[-ps + i + rs + 1] + CHAM_26;
-        }
-        if ((i >= ps) && (D[-ps + i] + CHAM_6 < d)) {
-          st = 0;
-          d = D[-ps + i] + CHAM_6;
-        }
-        /* plan "COURANT" () */
-        if ((i % rs != rs - 1) && (i % ps >= rs) &&
-            (D[i + 1 - rs] + CHAM_18 < d)) {
-          st = 0;
-          d = D[i + 1 - rs] + CHAM_18;
-        }
-        if ((i % ps >= rs) && (D[i - rs] + CHAM_6 < d)) {
-          st = 0;
-          d = D[i - rs] + CHAM_6;
-        }
-        if ((i % ps >= rs) && (i % rs != 0) && (D[i - rs - 1] + CHAM_18 < d)) {
-          st = 0;
-          d = D[i - rs - 1] + CHAM_18;
-        }
-        if ((i % rs != 0) && (D[i - 1] + CHAM_6 < d)) {
-          st = 0;
-          d = D[i - 1] + CHAM_6;
-        }
-        D[i] = d;
-      }
-    }
-    /* parcours retro */
-    for (i = N - 1; i >= 0; i--) {
-      if (!F[i]) {
-        d = D[i];
-        /* plan "COURANT" () */
-        if ((i % rs != rs - 1) && (D[i + 1] + CHAM_6 < d)) {
-          st = 0;
-          d = D[i + 1] + CHAM_6;
-        }
-        if ((i % rs != 0) && (i % ps < ps - rs) &&
-            (D[i - 1 + rs] + CHAM_18 < d)) {
-          st = 0;
-          d = D[i - 1 + rs] + CHAM_18;
-        }
-        if ((i % ps < ps - rs) && (D[i + rs] + CHAM_6 < d)) {
-          st = 0;
-          d = D[i + rs] + CHAM_6;
-        }
-        if ((i % ps < ps - rs) && (i % rs != rs - 1) &&
-            (D[i + rs + 1] + CHAM_18 < d)) {
-          st = 0;
-          d = D[i + rs + 1] + CHAM_18;
-        }
-        /* plan "ARRIERE" (+n) */
-        if ((i < N - ps) && (i % rs != rs - 1) &&
-            (D[ps + i + 1] + CHAM_18 < d)) {
-          st = 0;
-          d = D[ps + i + 1] + CHAM_18;
-        }
-        if ((i < N - ps) && (i % rs != rs - 1) && (i % ps >= rs) &&
-            (D[ps + i + 1 - rs] + CHAM_26 < d)) {
-          st = 0;
-          d = D[ps + i + 1 - rs] + CHAM_26;
-        }
-        if ((i < N - ps) && (i % ps >= rs) && (D[ps + i - rs] + CHAM_18 < d)) {
-          st = 0;
-          d = D[ps + i - rs] + CHAM_18;
-        }
-        if ((i < N - ps) && (i % ps >= rs) && (i % rs != 0) &&
-            (D[ps + i - rs - 1] + CHAM_26 < d)) {
-          st = 0;
-          d = D[ps + i - rs - 1] + CHAM_26;
-        }
-        if ((i < N - ps) && (i % rs != 0) && (D[ps + i - 1] + CHAM_18 < d)) {
-          st = 0;
-          d = D[ps + i - 1] + CHAM_18;
-        }
-        if ((i < N - ps) && (i % rs != 0) && (i % ps < ps - rs) &&
-            (D[ps + i - 1 + rs] + CHAM_26 < d)) {
-          st = 0;
-          d = D[ps + i - 1 + rs] + CHAM_26;
-        }
-        if ((i < N - ps) && (i % ps < ps - rs) &&
-            (D[ps + i + rs] + CHAM_18 < d)) {
-          st = 0;
-          d = D[ps + i + rs] + CHAM_18;
-        }
-        if ((i < N - ps) && (i % ps < ps - rs) && (i % rs != rs - 1) &&
-            (D[ps + i + rs + 1] + CHAM_26 < d)) {
-          st = 0;
-          d = D[ps + i + rs + 1] + CHAM_26;
-        }
-        if ((i < N - ps) && (D[ps + i] + CHAM_6 < d)) {
-          st = 0;
-          d = D[ps + i] + CHAM_6;
-        }
-        D[i] = d;
-      }
-    }
-   } /* while (!st) */
-  }
-  return(1);
+    return(1);
 } // lchamfrein()
 
 /****************************************/
@@ -1043,78 +1041,72 @@ int32_t lchamfrein(struct xvimage *img,   /* donnee: image binaire */
 /*                               TYPES                              */
 /********************************************************************/
 
-typedef struct _Doc{
-  int16_t x;
-  int16_t y;
-  int16_t z;
-  int16_t dx;
-  int16_t dy;
-  int16_t dz;
+typedef struct _Doc {
+    int16_t x;
+    int16_t y;
+    int16_t z;
+    int16_t dx;
+    int16_t dy;
+    int16_t dz;
 } Dcell; //sert pour les cellules libres ET occupees!
 
-typedef struct _Dcol{
-  int32_t nb;//nombre de cellules occupees
-  Dcell tab[DC_SZ];
-  struct _Dcol* next;
+typedef struct _Dcol {
+    int32_t nb;//nombre de cellules occupees
+    Dcell tab[DC_SZ];
+    struct _Dcol* next;
 } Dcol;
 
-typedef struct _Dbase{
-  int32_t max;
-  Dcol** cols;
-  Dcol* add;
-  Dcol* cur;
-} Drow; 
+typedef struct _Dbase {
+    int32_t max;
+    Dcol** cols;
+    Dcol* add;
+    Dcol* cur;
+} Drow;
 
 
 /********************************************************************/
 /*                      ALLOUER/DESALLOUER                          */
 /********************************************************************/
 
-Dcol* Dsetcol()
-{
-  Dcol* nw=(Dcol*)calloc(1,sizeof(Dcol));
-  nw->nb=0; 
-  nw->next=NULL;
-  return nw;
+Dcol* Dsetcol() {
+    Dcol* nw=(Dcol*)calloc(1,sizeof(Dcol));
+    nw->nb=0;
+    nw->next=NULL;
+    return nw;
 }
 
-Dcol* Dfreecol(Dcol* c)
-{
-  if(c!=NULL)
-    {
-      Dfreecol(c->next);
-      free(c);
+Dcol* Dfreecol(Dcol* c) {
+    if(c!=NULL) {
+        Dfreecol(c->next);
+        free(c);
     }
-  return NULL;
+    return NULL;
 }
 
-Dcol* Dresetcol(Dcol* tg)
-{
-  if(tg!=NULL)
-  {
-    tg->nb=0;
-    if (tg->next != NULL) {
-      tg->next = Dresetcol(tg->next);
+Dcol* Dresetcol(Dcol* tg) {
+    if(tg!=NULL) {
+        tg->nb=0;
+        if (tg->next != NULL) {
+            tg->next = Dresetcol(tg->next);
+        }
+    } else {
+        tg = Dsetcol();
     }
-  } else {
-    tg = Dsetcol();
-  }
-  return tg;
+    return tg;
 }
 
 /* alloue la table des buckets*/
-Drow* Dsetground(int32_t _max)
-{
-  int32_t i,sz=_max+1;
-  Drow* nw=(Drow*)calloc(1,sizeof(Drow));
-  nw->max=_max;
-  nw->cols=(Dcol**)calloc(1,sz*sizeof(Dcol*));
-  for (i = 0; i < sz; i++) {
-    nw->cols[i] = NULL;
-  }
-  nw->cur=NULL;
-  nw->add=Dsetcol();
-  return nw;
+Drow* Dsetground(int32_t _max) {
+    int32_t i,sz=_max+1;
+    Drow* nw=(Drow*)calloc(1,sizeof(Drow));
+    nw->max=_max;
+    nw->cols=(Dcol**)calloc(1,sz*sizeof(Dcol*));
+    for (i = 0; i < sz; i++) {
+        nw->cols[i] = NULL;
+    }
+    nw->cur=NULL;
+    nw->add=Dsetcol();
+    return nw;
 }
 
 
@@ -1123,155 +1115,135 @@ Drow* Dsetground(int32_t _max)
 /********************************************************************/
 
 /*n'est en general pas appele directement*/
-Dcol* Dadd2col(Dcol* c, int32_t x, int32_t y, int32_t z,int32_t dx, int32_t dy, int32_t dz )
-{
-  int32_t free=c->nb;
-  if(free<DC_SZ)
-    {
-      c->tab[free].x=(int16_t)x;
-      c->tab[free].y=(int16_t)y;
-      c->tab[free].z=(int16_t)z;
-      c->tab[free].dx=(int16_t)dx;
-      c->tab[free].dy=(int16_t)dy;
-      c->tab[free].dz=(int16_t)dz;
-      c->nb++;
+Dcol* Dadd2col(Dcol* c, int32_t x, int32_t y, int32_t z,int32_t dx, int32_t dy, int32_t dz ) {
+    int32_t free=c->nb;
+    if(free<DC_SZ) {
+        c->tab[free].x=(int16_t)x;
+        c->tab[free].y=(int16_t)y;
+        c->tab[free].z=(int16_t)z;
+        c->tab[free].dx=(int16_t)dx;
+        c->tab[free].dy=(int16_t)dy;
+        c->tab[free].dz=(int16_t)dz;
+        c->nb++;
+    } else {
+        if(c->next==NULL) {
+            c->next=Dsetcol();
+        }
+        Dadd2col(c->next,x,y,z,dx,dy,dz);
     }
-  else
-    {
-      if(c->next==NULL) {c->next=Dsetcol();}
-      Dadd2col(c->next,x,y,z,dx,dy,dz);
-    }
-  return c;
+    return c;
 }
 
-Dcol* Dadd(Drow* r,int32_t x, int32_t y, int32_t z, int32_t dx, int32_t dy, int32_t dz, int32_t val)
-{
-  if (val > r->max) {
-    return NULL;
-  }
-  if (r->cols[val] == NULL) {
-    r->cols[val] = Dsetcol();
-  }
-  return Dadd2col(r->cols[val],x,y,z,dx,dy,dz);
+Dcol* Dadd(Drow* r,int32_t x, int32_t y, int32_t z, int32_t dx, int32_t dy, int32_t dz, int32_t val) {
+    if (val > r->max) {
+        return NULL;
+    }
+    if (r->cols[val] == NULL) {
+        r->cols[val] = Dsetcol();
+    }
+    return Dadd2col(r->cols[val],x,y,z,dx,dy,dz);
 }
 
 /********************************************************************/
 /*                    CODE POUR LES DISTANCES                       */
 /********************************************************************/
 
-void testAndAdd(Drow* r, struct xvimage* o,Dcell* t, int32_t d)
-{
-  int32_t nd;
-  int32_t rs=rowsize(o),cs=colsize(o),ds=depth(o);
-  uint32_t* O=ULONGDATA(o);
-  if(t->dx>0 && t->x<rs-1)
-    {
-      nd=d+2*t->dx+1;
-      if(nd<O[(t->z*cs+t->y)*rs+t->x+1]) 
-	{ 
-	  O[(t->z*cs+t->y)*rs+t->x+1]=nd;
-	  Dadd(r,t->x+1,t->y,t->z,t->dx+1,t->dy,t->dz,nd);
-	}
+void testAndAdd(Drow* r, struct xvimage* o,Dcell* t, int32_t d) {
+    int32_t nd;
+    int32_t rs=rowsize(o),cs=colsize(o),ds=depth(o);
+    uint32_t* O=ULONGDATA(o);
+    if(t->dx>0 && t->x<rs-1) {
+        nd=d+2*t->dx+1;
+        if(nd<O[(t->z*cs+t->y)*rs+t->x+1]) {
+            O[(t->z*cs+t->y)*rs+t->x+1]=nd;
+            Dadd(r,t->x+1,t->y,t->z,t->dx+1,t->dy,t->dz,nd);
+        }
+    } else if(t->dx<0 && t->x>0) {
+        nd=d-2*t->dx+1;
+        if(nd<O[(t->z*cs+t->y)*rs+t->x-1]) {
+            O[(t->z*cs+t->y)*rs+t->x-1]=nd;
+            Dadd(r,t->x-1,t->y,t->z,t->dx-1,t->dy,t->dz,nd);
+        }
     }
-  else if(t->dx<0 && t->x>0)
-    {
-      nd=d-2*t->dx+1;
-      if(nd<O[(t->z*cs+t->y)*rs+t->x-1]) 
-	{ 
-	  O[(t->z*cs+t->y)*rs+t->x-1]=nd;
-	  Dadd(r,t->x-1,t->y,t->z,t->dx-1,t->dy,t->dz,nd);
-	}
+    if(t->dy>0 && t->y<cs-1) {
+        nd=d+2*t->dy+1;
+        if(nd<O[(t->z*cs+(t->y+1))*rs+t->x]) {
+            O[(t->z*cs+(t->y+1))*rs+t->x]=nd;
+            Dadd(r,t->x,t->y+1,t->z,t->dx,t->dy+1,t->dz,nd);
+        }
+    } else if(t->dy<0 && t->y>0) {
+        nd=d-2*t->dy+1;
+        if(nd<O[(t->z*cs+(t->y-1))*rs+t->x]) {
+            O[(t->z*cs+(t->y-1))*rs+t->x]=nd;
+            Dadd(r,t->x,t->y-1,t->z,t->dx,t->dy-1,t->dz,nd);
+        }
     }
-  if(t->dy>0 && t->y<cs-1)
-    {
-      nd=d+2*t->dy+1;
-      if(nd<O[(t->z*cs+(t->y+1))*rs+t->x]) 
-	{ 
-	  O[(t->z*cs+(t->y+1))*rs+t->x]=nd;
-	  Dadd(r,t->x,t->y+1,t->z,t->dx,t->dy+1,t->dz,nd);
-	}
-    }
-  else if(t->dy<0 && t->y>0)
-    {
-      nd=d-2*t->dy+1;
-      if(nd<O[(t->z*cs+(t->y-1))*rs+t->x]) 
-	{ 
-	  O[(t->z*cs+(t->y-1))*rs+t->x]=nd;
-	  Dadd(r,t->x,t->y-1,t->z,t->dx,t->dy-1,t->dz,nd);
-	}
-    }
-  if(t->dz>0 && t->z<ds-1)
-    {
-      nd=d+2*t->dz+1;
-      if(nd<O[((t->z+1)*cs+t->y)*rs+t->x]) 
-	{ 
-	  O[((t->z+1)*cs+t->y)*rs+t->x]=nd;
-	  Dadd(r,t->x,t->y,t->z+1,t->dx,t->dy,t->dz+1,nd);
-	}
-    }
-  else if(t->dz<0 && t->z>0)
-    {
-      nd=d-2*t->dz+1;
-      if(nd<O[((t->z-1)*cs+t->y)*rs+t->x]) 
-	{ 
-	  O[((t->z-1)*cs+t->y)*rs+t->x]=nd;
-	  Dadd(r,t->x,t->y,t->z-1,t->dx,t->dy,t->dz-1,nd);
-	}
+    if(t->dz>0 && t->z<ds-1) {
+        nd=d+2*t->dz+1;
+        if(nd<O[((t->z+1)*cs+t->y)*rs+t->x]) {
+            O[((t->z+1)*cs+t->y)*rs+t->x]=nd;
+            Dadd(r,t->x,t->y,t->z+1,t->dx,t->dy,t->dz+1,nd);
+        }
+    } else if(t->dz<0 && t->z>0) {
+        nd=d-2*t->dz+1;
+        if(nd<O[((t->z-1)*cs+t->y)*rs+t->x]) {
+            O[((t->z-1)*cs+t->y)*rs+t->x]=nd;
+            Dadd(r,t->x,t->y,t->z-1,t->dx,t->dy,t->dz-1,nd);
+        }
     }
 }
 
 /* ======================================================== */
 int32_t ldistquad3d(struct xvimage* ob, struct xvimage* res)
 /* ======================================================== */
-// Computes the external distance (distance to nearest object point) 
+// Computes the external distance (distance to nearest object point)
 {
- index_t rs=rowsize(ob),cs=colsize(ob),ds=depth(ob);
- index_t max=((rs-1)+(cs-1)+(ds-1))*((rs-1)+(cs-1)+(ds-1));
- uint32_t *O = ULONGDATA(res);
- index_t xi,yi,zi,xj,yj,zj,i,j,d;
- Drow* r=Dsetground(max);
+    index_t rs=rowsize(ob),cs=colsize(ob),ds=depth(ob);
+    index_t max=((rs-1)+(cs-1)+(ds-1))*((rs-1)+(cs-1)+(ds-1));
+    uint32_t *O = ULONGDATA(res);
+    index_t xi,yi,zi,xj,yj,zj,i,j,d;
+    Drow* r=Dsetground(max);
 
- for (i = 0; i < rs * cs * ds; i++) {
-   O[i] = MAXD;
- }
-  /*now process*/
-  /*step one: image scan to locate object points and set borders*/
- for (zi = 0; zi < ds; zi++) {
-   for (yi = 0; yi < cs; yi++) {
-     for (xi = 0; xi < rs; xi++) {
-       if (IsSet2(ob, xi, yi, zi)) {
-         O[(zi * cs + yi) * rs + xi] = 0;
-         for (zj = ((zi > 0) ? zi - 1 : zi);
-              zj <= ((zi < ds - 1) ? zi + 1 : zi); zj++) {
-           for (yj = ((yi > 0) ? yi - 1 : yi);
-                yj <= ((yi < cs - 1) ? yi + 1 : yi); yj++) {
-             for (xj = ((xi > 0) ? xi - 1 : xi);
-                  xj <= ((xi < rs - 1) ? xi + 1 : xi); xj++) {
-               if (!IsSet2(ob, xj, yj, zj)) {
-                 j = (zj - zi) * (zj - zi) + (yj - yi) * (yj - yi) +
-                     (xj - xi) * (xj - xi);
-                 if (O[(zj * cs + yj) * rs + xj] > j) {
-                   Dadd(r, xj, yj, zj, xj - xi, yj - yi, zj - zi, j);
-                   O[(zj * cs + yj) * rs + xj] = j;
-                 }
-               }
-             }
-           }
-         }
-       }
-     }
-   }
- }
-
-  /*step two: propagation throught the image*/
-  d=0;
-  while((++d)<=max)
-    {
-      _Drun(r->cols[d],ti,testAndAdd(r,res,ti,d));
-      Dfreecol(r->cols[d]);
+    for (i = 0; i < rs * cs * ds; i++) {
+        O[i] = MAXD;
     }
-    
- return 1;
+    /*now process*/
+    /*step one: image scan to locate object points and set borders*/
+    for (zi = 0; zi < ds; zi++) {
+        for (yi = 0; yi < cs; yi++) {
+            for (xi = 0; xi < rs; xi++) {
+                if (IsSet2(ob, xi, yi, zi)) {
+                    O[(zi * cs + yi) * rs + xi] = 0;
+                    for (zj = ((zi > 0) ? zi - 1 : zi);
+                            zj <= ((zi < ds - 1) ? zi + 1 : zi); zj++) {
+                        for (yj = ((yi > 0) ? yi - 1 : yi);
+                                yj <= ((yi < cs - 1) ? yi + 1 : yi); yj++) {
+                            for (xj = ((xi > 0) ? xi - 1 : xi);
+                                    xj <= ((xi < rs - 1) ? xi + 1 : xi); xj++) {
+                                if (!IsSet2(ob, xj, yj, zj)) {
+                                    j = (zj - zi) * (zj - zi) + (yj - yi) * (yj - yi) +
+                                        (xj - xi) * (xj - xi);
+                                    if (O[(zj * cs + yj) * rs + xj] > j) {
+                                        Dadd(r, xj, yj, zj, xj - xi, yj - yi, zj - zi, j);
+                                        O[(zj * cs + yj) * rs + xj] = j;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /*step two: propagation throught the image*/
+    d=0;
+    while((++d)<=max) {
+        _Drun(r->cols[d],ti,testAndAdd(r,res,ti,d));
+        Dfreecol(r->cols[d]);
+    }
+
+    return 1;
 } // ldistquad3d_xd()
 
 /*
@@ -1327,405 +1299,410 @@ int32_t ldistquad3d_rl(struct xvimage* imgin, struct xvimage* imgout)
 #undef F_NAME
 #define F_NAME "ldistquad3d"
 {
-  int32_t w,h,d, i, j, k, b, y, m, wh;  // attention: index signés (parcours inverse, petite taille)
-  uint32_t inf=(0x7fffffff - 2048);
-  uint8_t *pf,*pfj;
-  uint32_t *pg,*pgj, *pgi, *paux;
+    int32_t w,h,d, i, j, k, b, y, m, wh;  // attention: index signés (parcours inverse, petite taille)
+    uint32_t inf=(0x7fffffff - 2048);
+    uint8_t *pf,*pfj;
+    uint32_t *pg,*pgj, *pgi, *paux;
 
-  uint32_t *plist1_r, *plist1_l, *plist2_r, *plist2_l;
-  uint32_t ilist1_r, ilist1_rmax, ilist1_l, ilist1_lmax;
-  uint32_t ilist2_r, ilist2_l;
+    uint32_t *plist1_r, *plist1_l, *plist2_r, *plist2_l;
+    uint32_t ilist1_r, ilist1_rmax, ilist1_l, ilist1_lmax;
+    uint32_t ilist2_r, ilist2_l;
 
-  pf=UCHARDATA(imgin);
-  w=rowsize(imgin); h=colsize(imgin); d=depth(imgin);
-  wh = w * h;
+    pf=UCHARDATA(imgin);
+    w=rowsize(imgin);
+    h=colsize(imgin);
+    d=depth(imgin);
+    wh = w * h;
 
-  pg = ULONGDATA(imgout);
-  for (m = 0; m < w * h * d; m++) {
-    pg[m] = inf;
-  }
+    pg = ULONGDATA(imgout);
+    for (m = 0; m < w * h * d; m++) {
+        pg[m] = inf;
+    }
 
-  /* alocacao das filas para a segunda fase do algoritmo */
-  plist1_r = (uint32_t *) calloc(1,w*sizeof(uint32_t));
-  plist2_r = (uint32_t *) calloc(1,w*sizeof(uint32_t));
-  plist1_l = (uint32_t *) calloc(1,w*sizeof(uint32_t));
-  plist2_l = (uint32_t *) calloc(1,w*sizeof(uint32_t));
-  if ((plist1_r==NULL)||(plist2_r==NULL)||(plist1_l==NULL)||(plist2_l==NULL))
-  {
-    fprintf(stderr, "%s(): cannot allocate buffer\n", F_NAME);
-    return 0;
-  }
-  for(m=0;m<d;m++) { /* for each slice */
-    for(j=0;j<w;j++) { /* para cada coluna j */
-      pfj=&pf[j + m*wh];
-      pgj=&pg[j + m*wh];
-      i=0;
-      while (pfj[i*w] == 0) {
-	i++;
-        if (i >= h) {
-          break;
+    /* alocacao das filas para a segunda fase do algoritmo */
+    plist1_r = (uint32_t *) calloc(1,w*sizeof(uint32_t));
+    plist2_r = (uint32_t *) calloc(1,w*sizeof(uint32_t));
+    plist1_l = (uint32_t *) calloc(1,w*sizeof(uint32_t));
+    plist2_l = (uint32_t *) calloc(1,w*sizeof(uint32_t));
+    if ((plist1_r==NULL)||(plist2_r==NULL)||(plist1_l==NULL)||(plist2_l==NULL)) {
+        fprintf(stderr, "%s(): cannot allocate buffer\n", F_NAME);
+        return 0;
+    }
+    for(m=0; m<d; m++) { /* for each slice */
+        for(j=0; j<w; j++) { /* para cada coluna j */
+            pfj=&pf[j + m*wh];
+            pgj=&pg[j + m*wh];
+            i=0;
+            while (pfj[i*w] == 0) {
+                i++;
+                if (i >= h) {
+                    break;
+                }
+            }
+            if (i<=(h-1)) { /* se chegou pela primeira vez */
+                k=i;
+                pgj[k*w]=0;
+                b=1;
+                k--;
+                while (k >= 0) { /* volta subindo ate inicio da linha */
+                    pgj[k*w] = pgj[(k+1)*w] + b;
+                    b=b+2;
+                    k--;
+                }
+                i++;
+                while (i<=(h-1)) { /* Loop principal deste primeiro passo */
+                    while (pfj[i*w] != 0) {
+                        pgj[i*w]=0;
+                        i++;
+                        if (i >= h) {
+                            break;
+                        }
+                    }
+                    if (i<=(h-1)) {
+                        b=1;
+                        while (pfj[i*w] == 0) {
+                            pgj[i*w] = pgj[(i-1)*w] + b;
+                            b = b + 2;
+                            i++;
+                            if (i >= h) {
+                                break;
+                            }
+                        }
+                        if (i<=(h-1)) {
+                            k=i;
+                            pgj[k*w]=0;
+                            b=1;
+                            while (pgj[(k-1)*w] > pgj[k*w]) { /* volta subindo */
+                                pgj[(k-1)*w] = pgj[k*w] + b;
+                                b = b + 2;
+                                k--;
+                            }
+                            i++;
+                        }
+                    }
+                }
+            }
         }
-      }
-      if (i<=(h-1)) { /* se chegou pela primeira vez */
-	k=i; pgj[k*w]=0;
-	b=1; k--;
-	while (k >= 0) { /* volta subindo ate inicio da linha */
-	  pgj[k*w] = pgj[(k+1)*w] + b;
-	  b=b+2;k--;
-	}
-	i++;
-	while (i<=(h-1)) { /* Loop principal deste primeiro passo */
-	  while (pfj[i*w] != 0) {
-	    pgj[i*w]=0; i++;
-            if (i >= h) {
-              break;
-            }
-          }
-	  if (i<=(h-1)) {
-	    b=1;
-	    while (pfj[i*w] == 0) {
-	      pgj[i*w] = pgj[(i-1)*w] + b;
-	      b = b + 2; i++;
-              if (i >= h) {
-                break;
-              }
-            }
-	    if (i<=(h-1)) { 
-	      k=i; pgj[k*w]=0; b=1;
-	      while (pgj[(k-1)*w] > pgj[k*w]) { /* volta subindo */
-		pgj[(k-1)*w] = pgj[k*w] + b;
-		b = b + 2; k--;
-	      }
-	      i++;
-	    }
-	  }
-	}
-      }
     }
-  }
-  /* segunda parte, erosao por propagacao, linha por linha */
+    /* segunda parte, erosao por propagacao, linha por linha */
 
-  for (m=0; m<d; m++) { /* for each slice */
-    for (i=0; i<h; i++) { /* for each column */
-      pgi = &pg[i*w + m*wh];
-      for (j=0; j<(w-1); j++) {
-	plist1_r[j] = w-j-2; /* propagacao right, varredura a esquerda */
-	plist1_l[j] = j+1;   /* propagacao left, varredura a direita */
-      }
-      ilist1_r    = ilist1_l    = 0;
-      ilist1_rmax = ilist1_lmax = w - 1; /* n. de pontos na fronteira */
-      b = -1;
-      while (ilist1_lmax + ilist1_rmax) { /* se alguma das listas for nao vazia */
-	b = b + 2;
-	ilist2_r = ilist2_l = 0;
-	while (ilist1_r < ilist1_rmax) { /* propagacao right */
-	  j = plist1_r[ ilist1_r]; ilist1_r++; /* tira da fila */
-	  y = j + 1;
-	  if (pgi[y] > pgi[j] + b) {
-	    pgi[y] = pgi[j] + b;
-	    if (y < (w-1)) {
-	      plist2_r[ilist2_r] = y; ilist2_r++; /* poe na fila */
-	    }
-	  }
-	}
-	while (ilist1_l < ilist1_lmax) { /* propagacao left */
-	  j = plist1_l[ ilist1_l]; ilist1_l++; /* tira da fila */
-	  y = j - 1;
-	  if (pgi[y] > pgi[j] + b) {
-	    pgi[y] = pgi[j] + b;
-	    if (y > 0) {
-	      plist2_l[ilist2_l] = y; ilist2_l++; /* poe na fila */
-	    }
-	  }
-	}    
-	paux = plist1_r; plist1_r = plist2_r; plist2_r = paux;
-	paux = plist1_l; plist1_l = plist2_l; plist2_l = paux;
-	ilist1_r = ilist1_l = 0;
-	ilist1_rmax = ilist2_r;
-	ilist1_lmax = ilist2_l;
-      }
+    for (m=0; m<d; m++) { /* for each slice */
+        for (i=0; i<h; i++) { /* for each column */
+            pgi = &pg[i*w + m*wh];
+            for (j=0; j<(w-1); j++) {
+                plist1_r[j] = w-j-2; /* propagacao right, varredura a esquerda */
+                plist1_l[j] = j+1;   /* propagacao left, varredura a direita */
+            }
+            ilist1_r    = ilist1_l    = 0;
+            ilist1_rmax = ilist1_lmax = w - 1; /* n. de pontos na fronteira */
+            b = -1;
+            while (ilist1_lmax + ilist1_rmax) { /* se alguma das listas for nao vazia */
+                b = b + 2;
+                ilist2_r = ilist2_l = 0;
+                while (ilist1_r < ilist1_rmax) { /* propagacao right */
+                    j = plist1_r[ ilist1_r];
+                    ilist1_r++; /* tira da fila */
+                    y = j + 1;
+                    if (pgi[y] > pgi[j] + b) {
+                        pgi[y] = pgi[j] + b;
+                        if (y < (w-1)) {
+                            plist2_r[ilist2_r] = y;
+                            ilist2_r++; /* poe na fila */
+                        }
+                    }
+                }
+                while (ilist1_l < ilist1_lmax) { /* propagacao left */
+                    j = plist1_l[ ilist1_l];
+                    ilist1_l++; /* tira da fila */
+                    y = j - 1;
+                    if (pgi[y] > pgi[j] + b) {
+                        pgi[y] = pgi[j] + b;
+                        if (y > 0) {
+                            plist2_l[ilist2_l] = y;
+                            ilist2_l++; /* poe na fila */
+                        }
+                    }
+                }
+                paux = plist1_r;
+                plist1_r = plist2_r;
+                plist2_r = paux;
+                paux = plist1_l;
+                plist1_l = plist2_l;
+                plist2_l = paux;
+                ilist1_r = ilist1_l = 0;
+                ilist1_rmax = ilist2_r;
+                ilist1_lmax = ilist2_l;
+            }
+        }
     }
-  }
-  /* terceira parte, erosao por propagacao, depth by depth */
+    /* terceira parte, erosao por propagacao, depth by depth */
 
-  if (d > 1) { /* only if image has more than one slice */
-    for (j=0; j<w; j++) { /* for each line */
-      for (i=0; i<h; i++) { /* for each column */
-	pgi = &pg[j + i*w];
-	for (m=0; m<(d-1); m++) {
-	  plist1_r[m] = d-m-2; /* propagacao right, varredura a esquerda */
-	  plist1_l[m] = m+1;   /* propagacao left, varredura a direita */
-	}
-	ilist1_r    = ilist1_l    = 0;
-	ilist1_rmax = ilist1_lmax = d - 1; /* n. de pontos na fronteira */
-	b = -1;
-	while (ilist1_lmax + ilist1_rmax) { /* se alguma das listas for nao vazia */
-	  b = b + 2;
-	  ilist2_r = ilist2_l = 0;
-	  while (ilist1_r < ilist1_rmax) { /* propagacao right */
-	    m = plist1_r[ ilist1_r]; ilist1_r++; /* tira da fila */
-	    y = m + 1;
-	    if (pgi[y*wh] > pgi[m*wh] + b) {
-	      pgi[y*wh] = pgi[m*wh] + b;
-	      if (y < (d-1)) {
-		plist2_r[ilist2_r] = y; ilist2_r++; /* poe na fila */
-	      }
-	    }
-	  }
-	  while (ilist1_l < ilist1_lmax) { /* propagacao left */
-	    m = plist1_l[ ilist1_l]; ilist1_l++; /* tira da fila */
-	    y = m - 1;
-	    if (pgi[y*wh] > pgi[m*wh] + b) {
-	      pgi[y*wh] = pgi[m*wh] + b;
-	      if (y > 0) {
-		plist2_l[ilist2_l] = y; ilist2_l++; /* poe na fila */
-	      }
-	    }
-	  }    
-	  paux = plist1_r; plist1_r = plist2_r; plist2_r = paux;
-	  paux = plist1_l; plist1_l = plist2_l; plist2_l = paux;
-	  ilist1_r = ilist1_l = 0;
-	  ilist1_rmax = ilist2_r;
-	  ilist1_lmax = ilist2_l;
-	}
-      }
+    if (d > 1) { /* only if image has more than one slice */
+        for (j=0; j<w; j++) { /* for each line */
+            for (i=0; i<h; i++) { /* for each column */
+                pgi = &pg[j + i*w];
+                for (m=0; m<(d-1); m++) {
+                    plist1_r[m] = d-m-2; /* propagacao right, varredura a esquerda */
+                    plist1_l[m] = m+1;   /* propagacao left, varredura a direita */
+                }
+                ilist1_r    = ilist1_l    = 0;
+                ilist1_rmax = ilist1_lmax = d - 1; /* n. de pontos na fronteira */
+                b = -1;
+                while (ilist1_lmax + ilist1_rmax) { /* se alguma das listas for nao vazia */
+                    b = b + 2;
+                    ilist2_r = ilist2_l = 0;
+                    while (ilist1_r < ilist1_rmax) { /* propagacao right */
+                        m = plist1_r[ ilist1_r];
+                        ilist1_r++; /* tira da fila */
+                        y = m + 1;
+                        if (pgi[y*wh] > pgi[m*wh] + b) {
+                            pgi[y*wh] = pgi[m*wh] + b;
+                            if (y < (d-1)) {
+                                plist2_r[ilist2_r] = y;
+                                ilist2_r++; /* poe na fila */
+                            }
+                        }
+                    }
+                    while (ilist1_l < ilist1_lmax) { /* propagacao left */
+                        m = plist1_l[ ilist1_l];
+                        ilist1_l++; /* tira da fila */
+                        y = m - 1;
+                        if (pgi[y*wh] > pgi[m*wh] + b) {
+                            pgi[y*wh] = pgi[m*wh] + b;
+                            if (y > 0) {
+                                plist2_l[ilist2_l] = y;
+                                ilist2_l++; /* poe na fila */
+                            }
+                        }
+                    }
+                    paux = plist1_r;
+                    plist1_r = plist2_r;
+                    plist2_r = paux;
+                    paux = plist1_l;
+                    plist1_l = plist2_l;
+                    plist2_l = paux;
+                    ilist1_r = ilist1_l = 0;
+                    ilist1_rmax = ilist2_r;
+                    ilist1_lmax = ilist2_l;
+                }
+            }
+        }
     }
-  }
-  free(plist1_r);
-  free(plist1_l);
-  free(plist2_r);
-  free(plist2_l);
-  return 1;
+    free(plist1_r);
+    free(plist1_l);
+    free(plist2_r);
+    free(plist2_l);
+    return 1;
 } // ldistquad3d_rl
 
 /* ======================================================== */
 int32_t ldisteuc3d(struct xvimage* ob, struct xvimage* res)
 /* ======================================================== */
-// Computes the external distance (distance to nearest object point) 
+// Computes the external distance (distance to nearest object point)
 {
- index_t rs=rowsize(ob),cs=colsize(ob),ds=depth(ob);
- uint32_t *O = ULONGDATA(res);
- index_t i;
- double d;
+    index_t rs=rowsize(ob),cs=colsize(ob),ds=depth(ob);
+    uint32_t *O = ULONGDATA(res);
+    index_t i;
+    double d;
 
- if (!ldistquad3d(ob, res)) {
-   return 0;
- }
+    if (!ldistquad3d(ob, res)) {
+        return 0;
+    }
 
- for(i=0;i<rs*cs*ds;i++)
- {
-   d = sqrt((double)(O[i]));
-   O[i] = (uint32_t)arrondi(d);
- }
-    
- return 1;
+    for(i=0; i<rs*cs*ds; i++) {
+        d = sqrt((double)(O[i]));
+        O[i] = (uint32_t)arrondi(d);
+    }
+
+    return 1;
 } // ldisteuc3d()
 
 /* ==================================== */
-int32_t ldistquadSaito(struct xvimage *img,   /* donnee: image binaire */       
-              struct xvimage *res    /* resultat: distances */
-)
+int32_t ldistquadSaito(struct xvimage *img,   /* donnee: image binaire */
+                       struct xvimage *res    /* resultat: distances */
+                      )
 /* ==================================== */
-/* 
+/*
   Call the Saito-Toriwaki algorithm
 
   ATTENTION: calcule la distance au complémentaire
 */
 #undef F_NAME
 #define F_NAME "ldistquadSaito"
-{ 
-  index_t i,j,df,db,n;
-  index_t w,d,rMax,rStart,rEnd;  
-  index_t rs = img->row_size;
-  index_t cs = img->col_size;
-  index_t N= rs * cs;            /* taille de l'image */
-  uint8_t *F;                    /* pointeur sur l'image */
-  uint32_t *D;                   /* pointeur sur les distances */
-  int32_t * buff = (int32_t *)calloc(1,cs * sizeof(int32_t));
+{
+    index_t i,j,df,db,n;
+    index_t w,d,rMax,rStart,rEnd;
+    index_t rs = img->row_size;
+    index_t cs = img->col_size;
+    index_t N= rs * cs;            /* taille de l'image */
+    uint8_t *F;                    /* pointeur sur l'image */
+    uint32_t *D;                   /* pointeur sur les distances */
+    int32_t * buff = (int32_t *)calloc(1,cs * sizeof(int32_t));
 
-  COMPARE_SIZE(res, img);
-  ACCEPTED_TYPES1(img, VFF_TYP_1_BYTE);
-  ACCEPTED_TYPES1(res, VFF_TYP_4_BYTE);
+    COMPARE_SIZE(res, img);
+    ACCEPTED_TYPES1(img, VFF_TYP_1_BYTE);
+    ACCEPTED_TYPES1(res, VFF_TYP_4_BYTE);
 
-  D = ULONGDATA(res);
-  F = UCHARDATA(img);
-  for (i = 0; i < N; i++) {
-    D[i] = (uint32_t)F[i];
-  }
-
-  ////Forward scan
-  for (j=0;j<cs;j++)
-  {
-    df=rs;
-    for (i=0;i<rs;i++)
-    {
-      if (D[j * rs + i] != 0) {
-        df=df+1;
-      } else {
-        df = 0;
-      }
-      D[j*rs+i]=df*df;
+    D = ULONGDATA(res);
+    F = UCHARDATA(img);
+    for (i = 0; i < N; i++) {
+        D[i] = (uint32_t)F[i];
     }
-  }
 
-  ////Backward scan
-  for (j=0;j<cs;j++)
-  {
-    db=rs;
-    for (i=rs-1;i>=0;i--)
-    {
-      if (D[j * rs + i] != 0) {
-        db=db+1;
-      } else {
-        db = 0;
-      }
-      D[j*rs+i]=mcmin(D[j*rs+i],db*db);
-
+    ////Forward scan
+    for (j=0; j<cs; j++) {
+        df=rs;
+        for (i=0; i<rs; i++) {
+            if (D[j * rs + i] != 0) {
+                df=df+1;
+            } else {
+                df = 0;
+            }
+            D[j*rs+i]=df*df;
+        }
     }
-  }
 
-  //%%%% step 2
-  for (i=0;i<rs;i++)
-  {
-	for (j=0;j<cs;j++)
-	{
-	buff[j]=D[i+j*rs];
-	}
-	
-	for (j=0;j<cs;j++)
-	{
-		d=buff[j];
-		if(d!=0)
-		{
-			rMax=(int32_t)(sqrt(d))+1;
-			rStart=mcmin(rMax,j);
-			rEnd=mcmin(rMax,(cs-1-j));
-			
-		for (n=-rStart;n<=rEnd;n++)
-		{
-		w=buff[j+n]+n*n;
-                if (w < d) {
-                  d = w;
-                }
-                }
-		}
+    ////Backward scan
+    for (j=0; j<cs; j++) {
+        db=rs;
+        for (i=rs-1; i>=0; i--) {
+            if (D[j * rs + i] != 0) {
+                db=db+1;
+            } else {
+                db = 0;
+            }
+            D[j*rs+i]=mcmin(D[j*rs+i],db*db);
 
-		D[i+j*rs]=d;
-	
-	}
-  }
-  free(buff);
-  return(1);
+        }
+    }
+
+    //%%%% step 2
+    for (i=0; i<rs; i++) {
+        for (j=0; j<cs; j++) {
+            buff[j]=D[i+j*rs];
+        }
+
+        for (j=0; j<cs; j++) {
+            d=buff[j];
+            if(d!=0) {
+                rMax=(int32_t)(sqrt(d))+1;
+                rStart=mcmin(rMax,j);
+                rEnd=mcmin(rMax,(cs-1-j));
+
+                for (n=-rStart; n<=rEnd; n++) {
+                    w=buff[j+n]+n*n;
+                    if (w < d) {
+                        d = w;
+                    }
+                }
+            }
+
+            D[i+j*rs]=d;
+
+        }
+    }
+    free(buff);
+    return(1);
 } // ldistquadSaito()
 
 /* ==================================== */
-int32_t ldistSaito(struct xvimage *img,   /* donnee: image binaire */       
-              struct xvimage *res    /* resultat: distances */
-)
+int32_t ldistSaito(struct xvimage *img,   /* donnee: image binaire */
+                   struct xvimage *res    /* resultat: distances */
+                  )
 /* ==================================== */
-/* 
+/*
   Call the Saito-Toriwaki algorithm
 
   ATTENTION: calcule la distance au complémentaire
 */
 #undef F_NAME
 #define F_NAME "ldistSaito"
-{ 
-  index_t i,j,df,db,n;
-  index_t w,d,rMax,rStart,rEnd;  
-  index_t rs = img->row_size;
-  index_t cs = img->col_size;
-  index_t N= rs * cs;            /* taille de l'image */
-  uint8_t *F = UCHARDATA(img);   /* pointeur sur l'image */
-  uint32_t *D = NULL;                   /* pointeur sur les distances */
-  int32_t * buff = (int32_t *)calloc(1,cs * sizeof(int32_t));
-  double * R = DOUBLEDATA(res);
+{
+    index_t i,j,df,db,n;
+    index_t w,d,rMax,rStart,rEnd;
+    index_t rs = img->row_size;
+    index_t cs = img->col_size;
+    index_t N= rs * cs;            /* taille de l'image */
+    uint8_t *F = UCHARDATA(img);   /* pointeur sur l'image */
+    uint32_t *D = NULL;                   /* pointeur sur les distances */
+    int32_t * buff = (int32_t *)calloc(1,cs * sizeof(int32_t));
+    double * R = DOUBLEDATA(res);
 
-  COMPARE_SIZE(res, img);
-  ACCEPTED_TYPES1(img, VFF_TYP_1_BYTE);
-  ACCEPTED_TYPES1(res, VFF_TYP_DOUBLE);
+    COMPARE_SIZE(res, img);
+    ACCEPTED_TYPES1(img, VFF_TYP_1_BYTE);
+    ACCEPTED_TYPES1(res, VFF_TYP_DOUBLE);
 
-  D = (uint32_t *)calloc(1,N * sizeof(uint32_t));
-  if (D == NULL)
-  {
-    fprintf(stderr, "%s: malloc failed\n", F_NAME);
+    D = (uint32_t *)calloc(1,N * sizeof(uint32_t));
+    if (D == NULL) {
+        fprintf(stderr, "%s: malloc failed\n", F_NAME);
+        free(buff);
+        return(0);
+    }
+
+    for (i = 0; i < N; i++) {
+        D[i] = (uint32_t)F[i];
+    }
+
+    ////Forward scan
+    for (j=0; j<cs; j++) {
+        df=rs;
+        for (i=0; i<rs; i++) {
+            if (D[j * rs + i] != 0) {
+                df=df+1;
+            } else {
+                df = 0;
+            }
+            D[j*rs+i]=df*df;
+        }
+    }
+
+    ////Backward scan
+    for (j=0; j<cs; j++) {
+        db=rs;
+        for (i=rs-1; i>=0; i--) {
+            if (D[j * rs + i] != 0) {
+                db=db+1;
+            } else {
+                db = 0;
+            }
+            D[j*rs+i]=mcmin(D[j*rs+i],db*db);
+
+        }
+    }
+
+    //%%%% step 2
+    for (i=0; i<rs; i++) {
+        for (j=0; j<cs; j++) {
+            buff[j]=D[i+j*rs];
+        }
+
+        for (j=0; j<cs; j++) {
+            d=buff[j];
+            if(d!=0) {
+                rMax=(int32_t)(sqrt(d))+1;
+                rStart=mcmin(rMax,j);
+                rEnd=mcmin(rMax,(cs-1-j));
+
+                for (n=-rStart; n<=rEnd; n++) {
+                    w=buff[j+n]+n*n;
+                    if (w < d) {
+                        d = w;
+                    }
+                }
+            }
+
+            D[i+j*rs]=d;
+
+        }
+    }
+
+    for (i = 0; i < N; i++) {
+        R[i] = sqrt(D[i]);
+    }
+
     free(buff);
-    return(0);
-  }
-
-  for (i = 0; i < N; i++) {
-    D[i] = (uint32_t)F[i];
-  }
-
-  ////Forward scan
-  for (j=0;j<cs;j++)
-  {
-    df=rs;
-    for (i=0;i<rs;i++)
-    {
-      if (D[j * rs + i] != 0) {
-        df=df+1;
-      } else {
-        df = 0;
-      }
-      D[j*rs+i]=df*df;
-    }
-  }
-
-  ////Backward scan
-  for (j=0;j<cs;j++)
-  {
-    db=rs;
-    for (i=rs-1;i>=0;i--)
-    {
-      if (D[j * rs + i] != 0) {
-        db=db+1;
-      } else {
-        db = 0;
-      }
-      D[j*rs+i]=mcmin(D[j*rs+i],db*db);
-
-    }
-  }
-
-  //%%%% step 2
-  for (i=0;i<rs;i++)
-  {
-	for (j=0;j<cs;j++)
-	{
-	buff[j]=D[i+j*rs];
-	}
-	
-	for (j=0;j<cs;j++)
-	{
-		d=buff[j];
-		if(d!=0)
-		{
-			rMax=(int32_t)(sqrt(d))+1;
-			rStart=mcmin(rMax,j);
-			rEnd=mcmin(rMax,(cs-1-j));
-			
-		for (n=-rStart;n<=rEnd;n++)
-		{
-		w=buff[j+n]+n*n;
-                if (w < d) {
-                  d = w;
-                }
-                }
-		}
-
-		D[i+j*rs]=d;
-	
-	}
-  }
-
-  for (i = 0; i < N; i++) {
-    R[i] = sqrt(D[i]);
-  }
-
-  free(buff);
-  free(D);
-  return(1);
+    free(D);
+    return(1);
 } // ldistSaito()
 
 /* ======================================================== */
@@ -1753,220 +1730,209 @@ int32_t ldistSaito(struct xvimage *img,   /* donnee: image binaire */
 static void REDT_line(int32_t *f, int32_t *g, index_t rs, index_t cs)
 /* ======================================================== */
 {
-  int32_t j, u, q, w; // attention: index signés (parcours inverse, petite taille)
-  int32_t *s = NULL, *t = NULL; //sommets des paraboles
-  s = (int32_t *)calloc(1,rs * sizeof(int32_t));
-  t = (int32_t *)calloc(1,rs * sizeof(int32_t));
+    int32_t j, u, q, w; // attention: index signés (parcours inverse, petite taille)
+    int32_t *s = NULL, *t = NULL; //sommets des paraboles
+    s = (int32_t *)calloc(1,rs * sizeof(int32_t));
+    t = (int32_t *)calloc(1,rs * sizeof(int32_t));
 
-  for (j = 0; j < cs; j++)
-  {
-    q = 0; s[0] = 0; t[0] = 0;
-    for (u = 1; u < rs; u++)
-    {
-      while ((q >= 0) && (F1(s[q], t[q], f, j) < F1(u, t[q], f, j))) {
-        q--;
-      }
-      if (q < 0)
-      {
+    for (j = 0; j < cs; j++) {
         q = 0;
-        s[0] = u;
-      }
-      else
-      {
-        w = 1 + Sep1(s[q],u,f,j);
-        if (w < rs)
-        {
-          q++; s[q] = u; t[q] = w;
+        s[0] = 0;
+        t[0] = 0;
+        for (u = 1; u < rs; u++) {
+            while ((q >= 0) && (F1(s[q], t[q], f, j) < F1(u, t[q], f, j))) {
+                q--;
+            }
+            if (q < 0) {
+                q = 0;
+                s[0] = u;
+            } else {
+                w = 1 + Sep1(s[q],u,f,j);
+                if (w < rs) {
+                    q++;
+                    s[q] = u;
+                    t[q] = w;
+                }
+            }
         }
-      }
-    } 
-    for (u = rs-1; u >= 0; u--)
-    {
-      g[u + rs*j] = F1(s[q],u,f,j);
-      if (u == t[q]) {
-        q--;
-      }
+        for (u = rs-1; u >= 0; u--) {
+            g[u + rs*j] = F1(s[q],u,f,j);
+            if (u == t[q]) {
+                q--;
+            }
+        }
     }
-  }
-  free(s); free(t);
+    free(s);
+    free(t);
 } //  REDT_line()
 
 /* ======================================================== */
 static void REDT_column(int32_t *f, int32_t *g, index_t rs, index_t cs)
 /* ======================================================== */
 {
-  int32_t i, u, q, w; // attention: index signés (parcours inverse, petite taille)
-  int32_t *s = NULL, *t = NULL; //sommets des paraboles
-  s = (int32_t *)calloc(1,cs * sizeof(int32_t));
-  t = (int32_t *)calloc(1,cs * sizeof(int32_t));
+    int32_t i, u, q, w; // attention: index signés (parcours inverse, petite taille)
+    int32_t *s = NULL, *t = NULL; //sommets des paraboles
+    s = (int32_t *)calloc(1,cs * sizeof(int32_t));
+    t = (int32_t *)calloc(1,cs * sizeof(int32_t));
 
-  for (i = 0; i < rs; i++)
-  {
-    q = 0; s[0] = 0; t[0] = 0;
-    for (u = 1; u < cs; u++)
-    {
-      while ((q >= 0) && (F2(s[q], t[q], f, i) < F2(u, t[q], f, i))) {
-        q--;
-      }
-      if (q < 0)
-      {
+    for (i = 0; i < rs; i++) {
         q = 0;
-        s[0] = u;
-      }
-      else
-      {
-        w = 1 + Sep2(s[q],u,f,i);
-        if (w < cs)
-        {
-          q++; s[q] = u; t[q] = w;
+        s[0] = 0;
+        t[0] = 0;
+        for (u = 1; u < cs; u++) {
+            while ((q >= 0) && (F2(s[q], t[q], f, i) < F2(u, t[q], f, i))) {
+                q--;
+            }
+            if (q < 0) {
+                q = 0;
+                s[0] = u;
+            } else {
+                w = 1 + Sep2(s[q],u,f,i);
+                if (w < cs) {
+                    q++;
+                    s[q] = u;
+                    t[q] = w;
+                }
+            }
         }
-      }
-    } 
-    for (u = cs-1; u >= 0; u--)
-    {
-      g[rs*u + i] = F2(s[q],u,f,i);
-      if (u == t[q]) {
-        q--;
-      }
+        for (u = cs-1; u >= 0; u--) {
+            g[rs*u + i] = F2(s[q],u,f,i);
+            if (u == t[q]) {
+                q--;
+            }
+        }
     }
-  }
-  free(s); free(t);
+    free(s);
+    free(t);
 } //  REDT_column()
 
 /* ======================================================== */
 int32_t lredt2d(struct xvimage* f, struct xvimage* res)
 /* ======================================================== */
 // reverse euclidean distance transform
-// from: "d-Dimensional Reverse Euclidean Distance Transformation and Euclidean Medial Axis 
+// from: "d-Dimensional Reverse Euclidean Distance Transformation and Euclidean Medial Axis
 //        Extraction in Optimal Time", D. Coeurjolly, DGCI 2003, LNCS 2886, pp. 327-337, 2003.
 // Caution: original data in image f will be lost.
 #undef F_NAME
 #define F_NAME "lredt2d"
 {
-  uint8_t *R = UCHARDATA(res);
-  int32_t *F = SLONGDATA(f);
-  index_t i, rs = rowsize(f), cs = colsize(f), ds = depth(f), N = rs * cs * ds;
-  struct xvimage *tmp;
-  int32_t *T;
+    uint8_t *R = UCHARDATA(res);
+    int32_t *F = SLONGDATA(f);
+    index_t i, rs = rowsize(f), cs = colsize(f), ds = depth(f), N = rs * cs * ds;
+    struct xvimage *tmp;
+    int32_t *T;
 
-  COMPARE_SIZE(res, f);
-  ACCEPTED_TYPES1(res, VFF_TYP_1_BYTE);
-  ACCEPTED_TYPES1(f, VFF_TYP_4_BYTE);
-  ONLY_2D(f);
+    COMPARE_SIZE(res, f);
+    ACCEPTED_TYPES1(res, VFF_TYP_1_BYTE);
+    ACCEPTED_TYPES1(f, VFF_TYP_4_BYTE);
+    ONLY_2D(f);
 
-  tmp = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
-  if (tmp == NULL)
-  {
-    fprintf(stderr, "%s: allocimage failed\n", F_NAME);
-    return(0);
-  }
-  T = SLONGDATA(tmp);
-  REDT_line(F, T, rs, cs);
-  copy2image(f, tmp);
-  REDT_column(F, T, rs, cs);
-  for (i = 0; i < N; i++) {
-    if (T[i]) {
-      R[i] = NDG_MAX;
-    } else {
-      R[i] = 0;
+    tmp = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
+    if (tmp == NULL) {
+        fprintf(stderr, "%s: allocimage failed\n", F_NAME);
+        return(0);
     }
-  }
-  freeimage(tmp);
-  return(1);
+    T = SLONGDATA(tmp);
+    REDT_line(F, T, rs, cs);
+    copy2image(f, tmp);
+    REDT_column(F, T, rs, cs);
+    for (i = 0; i < N; i++) {
+        if (T[i]) {
+            R[i] = NDG_MAX;
+        } else {
+            R[i] = 0;
+        }
+    }
+    freeimage(tmp);
+    return(1);
 } // lredt2d()
 
 /* ======================================================== */
 static void REDT_line_3d(int32_t *f, int32_t *g, index_t rs, index_t cs, index_t ds)
 /* ======================================================== */
 {
-  int32_t j, u, q, k, ps, w; // attention: index signés (parcours inverse, petite taille)
-  int32_t *s = NULL, *t = NULL; //sommets des paraboles
-  s = (int32_t *)calloc(1,rs * sizeof(int32_t));
-  t = (int32_t *)calloc(1,rs * sizeof(int32_t));
-  ps = cs * rs; // taille d'un plan
-  
-  for(k = 0; k < ds; k++)
-    {
-      for (j = 0; j < cs; j++)
-	{
-	  q = 0; s[0] = 0; t[0] = 0;
-	  for (u = 1; u < rs; u++)
-	    {
-            while ((q >= 0) &&
-                   (F1_3d(s[q], t[q], f, j, k) < F1_3d(u, t[q], f, j, k))) {
-              q--;
+    int32_t j, u, q, k, ps, w; // attention: index signés (parcours inverse, petite taille)
+    int32_t *s = NULL, *t = NULL; //sommets des paraboles
+    s = (int32_t *)calloc(1,rs * sizeof(int32_t));
+    t = (int32_t *)calloc(1,rs * sizeof(int32_t));
+    ps = cs * rs; // taille d'un plan
+
+    for(k = 0; k < ds; k++) {
+        for (j = 0; j < cs; j++) {
+            q = 0;
+            s[0] = 0;
+            t[0] = 0;
+            for (u = 1; u < rs; u++) {
+                while ((q >= 0) &&
+                        (F1_3d(s[q], t[q], f, j, k) < F1_3d(u, t[q], f, j, k))) {
+                    q--;
+                }
+                if (q < 0) {
+                    q = 0;
+                    s[0] = u;
+                } else {
+                    w = 1 + Sep1_3d(s[q],u,f,j,k);
+                    if (w < rs) {
+                        q++;
+                        s[q] = u;
+                        t[q] = w;
+                    }
+                }
             }
-              if (q < 0)
-		{
-		  q = 0;
-		  s[0] = u;
-		}
-	      else
-		{
-		  w = 1 + Sep1_3d(s[q],u,f,j,k);
-		  if (w < rs)
-		    {
-		      q++; s[q] = u; t[q] = w;
-		    }
-		}
-	    } 
-	  for (u = rs-1; u >= 0; u--)
-	    {
-	      g[u + rs*j + ps*k] = F1_3d(s[q],u,f,j,k);
-              if (u == t[q]) {
-                q--;
-              }
+            for (u = rs-1; u >= 0; u--) {
+                g[u + rs*j + ps*k] = F1_3d(s[q],u,f,j,k);
+                if (u == t[q]) {
+                    q--;
+                }
             }
-	}
+        }
     }
-  free(s); free(t);
+    free(s);
+    free(t);
 } //  REDT_line_3d()
 
 /* ======================================================== */
 static void REDT_column_3d(int32_t *f, int32_t *g, index_t rs, index_t cs, index_t ds)
 /* ======================================================== */
 {
-  int32_t i, u, q, k, ps, w; // attention: index signés (parcours inverse, petite taille)
-  int32_t *s = NULL, *t = NULL; //sommets des paraboles
-  s = (int32_t *)calloc(1,cs * sizeof(int32_t));
-  t = (int32_t *)calloc(1,cs * sizeof(int32_t));
-  ps = rs * cs; // taille d'un plan
+    int32_t i, u, q, k, ps, w; // attention: index signés (parcours inverse, petite taille)
+    int32_t *s = NULL, *t = NULL; //sommets des paraboles
+    s = (int32_t *)calloc(1,cs * sizeof(int32_t));
+    t = (int32_t *)calloc(1,cs * sizeof(int32_t));
+    ps = rs * cs; // taille d'un plan
 
-  for(k = 0; k < ds; k++)
-    {
-      for (i = 0; i < rs; i++)
-	{
-	  q = 0; s[0] = 0; t[0] = 0;
-	  for (u = 1; u < cs; u++)
-	    {
-            while ((q >= 0) &&
-                   (F2_3d(s[q], t[q], f, i, k) < F2_3d(u, t[q], f, i, k))) {
-              q--;
+    for(k = 0; k < ds; k++) {
+        for (i = 0; i < rs; i++) {
+            q = 0;
+            s[0] = 0;
+            t[0] = 0;
+            for (u = 1; u < cs; u++) {
+                while ((q >= 0) &&
+                        (F2_3d(s[q], t[q], f, i, k) < F2_3d(u, t[q], f, i, k))) {
+                    q--;
+                }
+                if (q < 0) {
+                    q = 0;
+                    s[0] = u;
+                } else {
+                    w = 1 + Sep2_3d(s[q],u,f,i,k);
+                    if (w < cs) {
+                        q++;
+                        s[q] = u;
+                        t[q] = w;
+                    }
+                }
             }
-              if (q < 0)
-		{
-		  q = 0;
-		  s[0] = u;
-		}
-	      else
-		{
-		  w = 1 + Sep2_3d(s[q],u,f,i,k);
-		  if (w < cs)
-		    {
-		      q++; s[q] = u; t[q] = w;
-		    }
-		}
-	    } 
-	  for (u = cs-1; u >= 0; u--)
-	    {
-	      g[k*ps + rs*u + i] = F2_3d(s[q],u,f,i,k);
-              if (u == t[q]) {
-                q--;
-              }
+            for (u = cs-1; u >= 0; u--) {
+                g[k*ps + rs*u + i] = F2_3d(s[q],u,f,i,k);
+                if (u == t[q]) {
+                    q--;
+                }
             }
-	}
+        }
     }
-  free(s); free(t);
+    free(s);
+    free(t);
 } //  REDT_column_3d()
 
 
@@ -1974,135 +1940,129 @@ static void REDT_column_3d(int32_t *f, int32_t *g, index_t rs, index_t cs, index
 static void REDT_zaxis_3d(int32_t *f, int32_t *g, index_t rs, index_t cs, index_t ds)
 /* ======================================================== */
 {
-  int32_t i, u, q, j, ps, w; // attention: index signés (parcours inverse, petite taille)
-  int32_t *s = NULL, *t = NULL; //sommets des paraboles
-  s = (int32_t *)calloc(1,ds * sizeof(int32_t));
-  t = (int32_t *)calloc(1,ds * sizeof(int32_t));
-  ps = rs * cs; // taille d'un plan
+    int32_t i, u, q, j, ps, w; // attention: index signés (parcours inverse, petite taille)
+    int32_t *s = NULL, *t = NULL; //sommets des paraboles
+    s = (int32_t *)calloc(1,ds * sizeof(int32_t));
+    t = (int32_t *)calloc(1,ds * sizeof(int32_t));
+    ps = rs * cs; // taille d'un plan
 
-  for(j = 0; j < cs; j++)
-    {
-      for (i = 0; i < rs; i++)
-	{
-	  q = 0; s[0] = 0; t[0] = 0;
-	  for (u = 1; u < ds; u++)
-	    {
-            while ((q >= 0) &&
-                   (F3_3d(s[q], t[q], f, i, j) < F3_3d(u, t[q], f, i, j))) {
-              q--;
+    for(j = 0; j < cs; j++) {
+        for (i = 0; i < rs; i++) {
+            q = 0;
+            s[0] = 0;
+            t[0] = 0;
+            for (u = 1; u < ds; u++) {
+                while ((q >= 0) &&
+                        (F3_3d(s[q], t[q], f, i, j) < F3_3d(u, t[q], f, i, j))) {
+                    q--;
+                }
+                if (q < 0) {
+                    q = 0;
+                    s[0] = u;
+                } else {
+                    w = 1 + Sep3_3d(s[q],u,f,i,j);
+                    if (w < ds) {
+                        q++;
+                        s[q] = u;
+                        t[q] = w;
+                    }
+                }
             }
-              if (q < 0)
-		{
-		  q = 0;
-		  s[0] = u;
-		}
-	      else
-		{
-		  w = 1 + Sep3_3d(s[q],u,f,i,j);
-		  if (w < ds)
-		    {
-		      q++; s[q] = u; t[q] = w;
-		    }
-		}
-	    } 
-	  for (u = ds-1; u >= 0; u--)
-	    {
-	      g[ps*u +  rs*j + i] = F3_3d(s[q],u,f,i,j);
-              if (u == t[q]) {
-                q--;
-              }
+            for (u = ds-1; u >= 0; u--) {
+                g[ps*u +  rs*j + i] = F3_3d(s[q],u,f,i,j);
+                if (u == t[q]) {
+                    q--;
+                }
             }
-	}
+        }
     }
-  free(s); free(t);
+    free(s);
+    free(t);
 } //  REDT_zaxis_3d()
 
 /* ======================================================== */
 int32_t lredt3d(struct xvimage* f, struct xvimage* res)
 /* ======================================================== */
 // reverse euclidean distance transform
-// from: "d-Dimensional Reverse Euclidean Distance Transformation and Euclidean Medial Axis 
+// from: "d-Dimensional Reverse Euclidean Distance Transformation and Euclidean Medial Axis
 //        Extraction in Optimal Time", D. Coeurjolly, DGCI 2003, LNCS 2886, pp. 327-337, 2003.
 // Caution: original data in image f will be lost.
 #undef F_NAME
 #define F_NAME "lredt3d"
 {
-  uint8_t *R = UCHARDATA(res);
-  int32_t *F = SLONGDATA(f);
-  index_t i, rs = rowsize(f), cs = colsize(f), ds = depth(f), N = rs * cs * ds;
-  struct xvimage *tmp;
-  int32_t *T;
+    uint8_t *R = UCHARDATA(res);
+    int32_t *F = SLONGDATA(f);
+    index_t i, rs = rowsize(f), cs = colsize(f), ds = depth(f), N = rs * cs * ds;
+    struct xvimage *tmp;
+    int32_t *T;
 
-  COMPARE_SIZE(res, f);
-  ACCEPTED_TYPES1(res, VFF_TYP_1_BYTE);
-  ACCEPTED_TYPES1(f, VFF_TYP_4_BYTE);
-  ONLY_3D(f);
+    COMPARE_SIZE(res, f);
+    ACCEPTED_TYPES1(res, VFF_TYP_1_BYTE);
+    ACCEPTED_TYPES1(f, VFF_TYP_4_BYTE);
+    ONLY_3D(f);
 
-  tmp = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
-  if (tmp == NULL)
-  {
-    fprintf(stderr, "%s: allocimage failed\n", F_NAME);
-    return(0);
-  }
-  T = SLONGDATA(tmp);
-  REDT_line_3d(F, T, rs, cs, ds);
-  copy2image(f, tmp);
-  REDT_column_3d(F, T, rs, cs, ds);
-  copy2image(f, tmp);
-  REDT_zaxis_3d(F, T, rs, cs, ds);
-  for (i = 0; i < N; i++) {
-    if (T[i]) {
-      R[i] = NDG_MAX;
-    } else {
-      R[i] = 0;
+    tmp = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
+    if (tmp == NULL) {
+        fprintf(stderr, "%s: allocimage failed\n", F_NAME);
+        return(0);
     }
-  }
-  freeimage(tmp);
-  return(1);
+    T = SLONGDATA(tmp);
+    REDT_line_3d(F, T, rs, cs, ds);
+    copy2image(f, tmp);
+    REDT_column_3d(F, T, rs, cs, ds);
+    copy2image(f, tmp);
+    REDT_zaxis_3d(F, T, rs, cs, ds);
+    for (i = 0; i < N; i++) {
+        if (T[i]) {
+            R[i] = NDG_MAX;
+        } else {
+            R[i] = 0;
+        }
+    }
+    freeimage(tmp);
+    return(1);
 } // lredt3d()
 
 /* ======================================================== */
 static void ST_line(uint32_t *f, uint32_t *g, uint8_t *r, index_t rs, index_t cs)
 /* ======================================================== */
 {
-  int32_t j, u, q, w; // attention: index signés (parcours inverse, petite taille)
-  uint32_t *s = NULL, *t = NULL; //sommets des paraboles
-  s = (uint32_t *)calloc(1,rs * sizeof(uint32_t));
-  t = (uint32_t *)calloc(1,rs * sizeof(uint32_t));
+    int32_t j, u, q, w; // attention: index signés (parcours inverse, petite taille)
+    uint32_t *s = NULL, *t = NULL; //sommets des paraboles
+    s = (uint32_t *)calloc(1,rs * sizeof(uint32_t));
+    t = (uint32_t *)calloc(1,rs * sizeof(uint32_t));
 
-  memset(r, 0, rs*cs);
-  for (j = 0; j < cs; j++)
-  {
-    q = 0; s[0] = 0; t[0] = 0;
-    for (u = 1; u < rs; u++)
-    {
-      while ((q >= 0) && (F1(s[q], t[q], f, j) < F1(u, t[q], f, j))) {
-        q--;
-      }
-      if (q < 0)
-      {
+    memset(r, 0, rs*cs);
+    for (j = 0; j < cs; j++) {
         q = 0;
-        s[0] = u;
-      }
-      else
-      {
-        w = 1 + Sep1(s[q],u,f,j);
-        if (w < rs)
-        {
-          q++; s[q] = u; t[q] = w;
+        s[0] = 0;
+        t[0] = 0;
+        for (u = 1; u < rs; u++) {
+            while ((q >= 0) && (F1(s[q], t[q], f, j) < F1(u, t[q], f, j))) {
+                q--;
+            }
+            if (q < 0) {
+                q = 0;
+                s[0] = u;
+            } else {
+                w = 1 + Sep1(s[q],u,f,j);
+                if (w < rs) {
+                    q++;
+                    s[q] = u;
+                    t[q] = w;
+                }
+            }
         }
-      }
-    } 
-    for (u = rs-1; u >= 0; u--)
-    {
-      r[s[q] + rs*j] = 1;
-      g[u + rs*j] = F1(s[q],u,f,j);
-      if (u == t[q]) {
-        q--;
-      }
+        for (u = rs-1; u >= 0; u--) {
+            r[s[q] + rs*j] = 1;
+            g[u + rs*j] = F1(s[q],u,f,j);
+            if (u == t[q]) {
+                q--;
+            }
+        }
     }
-  }
-  free(s); free(t);
+    free(s);
+    free(t);
 } //  ST_line()
 
 /* ======================================================== */
@@ -2111,85 +2071,82 @@ static void ST_column(uint32_t *f, uint8_t *r, index_t rs, index_t cs)
 // input f: result of line scan
 // input/output r: binary image - positions of the skeleton points
 {
-  int32_t i, u, q, w; // attention: index signés (parcours inverse, petite taille)
-  uint32_t *s = NULL, *t = NULL; //sommets des paraboles
-  s = (uint32_t *)calloc(1,cs * sizeof(uint32_t));
-  t = (uint32_t *)calloc(1,cs * sizeof(uint32_t));
+    int32_t i, u, q, w; // attention: index signés (parcours inverse, petite taille)
+    uint32_t *s = NULL, *t = NULL; //sommets des paraboles
+    s = (uint32_t *)calloc(1,cs * sizeof(uint32_t));
+    t = (uint32_t *)calloc(1,cs * sizeof(uint32_t));
 
-  for (i = 0; i < rs; i++)
-  {
-    q = 0; s[0] = 0; t[0] = 0;
-    for (u = 1; u < cs; u++)
-    {
-      while ((q >= 0) && (F2(s[q], t[q], f, i) < F2(u, t[q], f, i))) {
-        q--;
-      }
-      if (q < 0)
-      {
+    for (i = 0; i < rs; i++) {
         q = 0;
-        s[0] = u;
-      }
-      else
-      {
-        w = 1 + Sep2(s[q],u,f,i);
-        if (w < cs)
-        {
-          q++; s[q] = u; t[q] = w;
+        s[0] = 0;
+        t[0] = 0;
+        for (u = 1; u < cs; u++) {
+            while ((q >= 0) && (F2(s[q], t[q], f, i) < F2(u, t[q], f, i))) {
+                q--;
+            }
+            if (q < 0) {
+                q = 0;
+                s[0] = u;
+            } else {
+                w = 1 + Sep2(s[q],u,f,i);
+                if (w < cs) {
+                    q++;
+                    s[q] = u;
+                    t[q] = w;
+                }
+            }
         }
-      }
-    } 
-    for (u = cs-1; u >= 0; u--)
-    {
-      r[rs*s[q] + i] = 1;
-      if (u == t[q]) {
-        q--;
-      }
+        for (u = cs-1; u >= 0; u--) {
+            r[rs*s[q] + i] = 1;
+            if (u == t[q]) {
+                q--;
+            }
+        }
     }
-  }
-  free(s); free(t);
+    free(s);
+    free(t);
 } //  ST_column()
 
 /* ======================================================== */
 int32_t lskeleton_ST(struct xvimage* f, struct xvimage* res)
 /* ======================================================== */
 // optimal algorithm for Saito-Toriwaki's skeleton
-// from: "d-Dimensional Reverse Euclidean Distance Transformation and Euclidean Medial Axis 
+// from: "d-Dimensional Reverse Euclidean Distance Transformation and Euclidean Medial Axis
 //        Extraction in Optimal Time", D. Coeurjolly, DGCI 2003, LNCS 2886, pp. 327-337, 2003.
 // Caution: original data in image f will be lost.
 #undef F_NAME
 #define F_NAME "lskeleton_ST"
 {
-  struct xvimage *tmp;
-  index_t i, rs = rowsize(f), cs = colsize(f), ds = depth(f), N = rs * cs * ds;
-  uint32_t *F = ULONGDATA(f);
-  uint32_t *R = ULONGDATA(res);
-  uint8_t *T;
+    struct xvimage *tmp;
+    index_t i, rs = rowsize(f), cs = colsize(f), ds = depth(f), N = rs * cs * ds;
+    uint32_t *F = ULONGDATA(f);
+    uint32_t *R = ULONGDATA(res);
+    uint8_t *T;
 
-  COMPARE_SIZE(res, f);
-  ACCEPTED_TYPES1(f, VFF_TYP_4_BYTE);
-  ACCEPTED_TYPES1(res, VFF_TYP_4_BYTE);
-  ONLY_2D(f);
+    COMPARE_SIZE(res, f);
+    ACCEPTED_TYPES1(f, VFF_TYP_4_BYTE);
+    ACCEPTED_TYPES1(res, VFF_TYP_4_BYTE);
+    ONLY_2D(f);
 
-  tmp = allocimage(NULL, rs, cs, ds, VFF_TYP_1_BYTE);
-  if (tmp == NULL)
-  {
-    fprintf(stderr, "%s: allocimage failed\n", F_NAME);
-    return 0;
-  }
-  T = UCHARDATA(tmp);
-
-  ST_line(F, R, T, rs, cs);
-  ST_column(R, T, rs, cs);
-  for (i = 0; i < N; i++) {
-    if (T[i]) {
-      R[i] = F[i];
-    } else {
-      R[i] = 0;
+    tmp = allocimage(NULL, rs, cs, ds, VFF_TYP_1_BYTE);
+    if (tmp == NULL) {
+        fprintf(stderr, "%s: allocimage failed\n", F_NAME);
+        return 0;
     }
-  }
+    T = UCHARDATA(tmp);
 
-  freeimage(tmp);
-  return 1;
+    ST_line(F, R, T, rs, cs);
+    ST_column(R, T, rs, cs);
+    for (i = 0; i < N; i++) {
+        if (T[i]) {
+            R[i] = F[i];
+        } else {
+            R[i] = 0;
+        }
+    }
+
+    freeimage(tmp);
+    return 1;
 } // lskeleton_ST()
 
 /* ======================================================== */
@@ -2211,312 +2168,296 @@ int32_t lskeleton_ST(struct xvimage* f, struct xvimage* res)
 void SEDT_line(uint8_t *f, uint32_t *g, index_t rs, index_t cs)
 /* ======================================================== */
 {
-  int32_t i, j; // attention: index signés (parcours inverse, petite taille)
-  for (j = 0; j < cs; j++)
-  {
-    if (f[0 + rs * j] == 0) {
-      g[0 + rs * j] = 0;
-    } else {
-      g[0 + rs * j] = rs * cs; // infinity
+    int32_t i, j; // attention: index signés (parcours inverse, petite taille)
+    for (j = 0; j < cs; j++) {
+        if (f[0 + rs * j] == 0) {
+            g[0 + rs * j] = 0;
+        } else {
+            g[0 + rs * j] = rs * cs; // infinity
+        }
+        for (i = 1; i < rs; i++) {
+            if (f[i + rs * j] == 0) {
+                g[i + rs * j] = 0;
+            } else {
+                g[i + rs * j] = 1 + g[i - 1 + rs * j];
+            }
+        }
+        for (i = rs - 2; i >= 0; i--) {
+            if (g[i + 1 + rs * j] < g[i + rs * j]) {
+                g[i + rs * j] = 1 + g[i + 1 + rs * j];
+            }
+        }
+        for (i = 0; i < rs; i++) {
+            if (g[i + rs * j] < rs * cs) { // NECESSAIRE pour éviter un overflow
+                g[i + rs * j] = g[i + rs * j] * g[i + rs * j];
+            }
+        }
     }
-    for (i = 1; i < rs; i++)
-    {
-      if (f[i + rs * j] == 0) {
-        g[i + rs * j] = 0;
-      } else {
-        g[i + rs * j] = 1 + g[i - 1 + rs * j];
-      }
-    }
-    for (i = rs - 2; i >= 0; i--) {
-      if (g[i + 1 + rs * j] < g[i + rs * j]) {
-        g[i + rs * j] = 1 + g[i + 1 + rs * j];
-      }
-    }
-    for (i = 0; i < rs; i++) 
-    {
-      if (g[i + rs * j] < rs * cs) { // NECESSAIRE pour éviter un overflow
-        g[i + rs * j] = g[i + rs * j] * g[i + rs * j];
-      }
-    }
-  }
 } //  SEDT_line()
 
 /* ======================================================== */
 void SEDT_column(uint32_t *f, uint32_t *g, index_t rs, index_t cs)
 /* ======================================================== */
 {
-  int32_t i, u, q, w; // attention: index signés (parcours inverse, petite taille)
-  uint32_t *s = NULL, *t = NULL;
-  s = (uint32_t *)calloc(1,cs * sizeof(uint32_t));
-  t = (uint32_t *)calloc(1,cs * sizeof(uint32_t));
+    int32_t i, u, q, w; // attention: index signés (parcours inverse, petite taille)
+    uint32_t *s = NULL, *t = NULL;
+    s = (uint32_t *)calloc(1,cs * sizeof(uint32_t));
+    t = (uint32_t *)calloc(1,cs * sizeof(uint32_t));
 
-  for (i = 0; i < rs; i++)
-  {
-    q = 0; s[0] = 0; t[0] = 0;
-    for (u = 1; u < cs; u++)
-    {
-      while ((q >= 0) && (F_2_2d(s[q], t[q], f, i) > F_2_2d(u, t[q], f, i))) {
-        q--;
-      }
-      if (q < 0)
-      {
+    for (i = 0; i < rs; i++) {
         q = 0;
-        s[0] = u;
-      }
-      else
-      {
-        w = 1 + Sep_2_2d(s[q],u,f,i);
-        if (w < cs)
-        {
-          q++; s[q] = u; t[q] = w;
+        s[0] = 0;
+        t[0] = 0;
+        for (u = 1; u < cs; u++) {
+            while ((q >= 0) && (F_2_2d(s[q], t[q], f, i) > F_2_2d(u, t[q], f, i))) {
+                q--;
+            }
+            if (q < 0) {
+                q = 0;
+                s[0] = u;
+            } else {
+                w = 1 + Sep_2_2d(s[q],u,f,i);
+                if (w < cs) {
+                    q++;
+                    s[q] = u;
+                    t[q] = w;
+                }
+            }
         }
-      }
-    } 
-    for (u = cs-1; u >= 0; u--)
-    {
-      g[rs*u + i] = F_2_2d(s[q],u,f,i);
-      if (u == t[q]) {
-        q--;
-      }
+        for (u = cs-1; u >= 0; u--) {
+            g[rs*u + i] = F_2_2d(s[q],u,f,i);
+            if (u == t[q]) {
+                q--;
+            }
+        }
     }
-  }
-  free(s); free(t);
+    free(s);
+    free(t);
 } //  SEDT_column()
 
 /* ======================================================== */
 void SEDT3d_line(uint8_t *f, uint32_t *g, index_t rs, index_t cs, index_t ds)
 /* ======================================================== */
 {
-  int32_t i, j, k, ps = rs*cs; // attention: index signés (parcours inverse, petite taille)
-  for (k = 0; k < ds; k++) {
-    for (j = 0; j < cs; j++)
-    {
-      if (f[0 + rs * j + ps * k] == 0) {
-        g[0 + rs*j + ps*k] = 0;
-      } else {
-        g[0 + rs * j + ps * k] = rs * cs * ds; // infinity
-      }
-      for (i = 1; i < rs; i++) {
-        if (f[i + rs * j + ps * k] == 0) {
-          g[i + rs * j + ps * k] = 0;
-        } else {
-          g[i + rs * j + ps * k] = 1 + g[i - 1 + rs * j + ps * k];
+    int32_t i, j, k, ps = rs*cs; // attention: index signés (parcours inverse, petite taille)
+    for (k = 0; k < ds; k++) {
+        for (j = 0; j < cs; j++) {
+            if (f[0 + rs * j + ps * k] == 0) {
+                g[0 + rs*j + ps*k] = 0;
+            } else {
+                g[0 + rs * j + ps * k] = rs * cs * ds; // infinity
+            }
+            for (i = 1; i < rs; i++) {
+                if (f[i + rs * j + ps * k] == 0) {
+                    g[i + rs * j + ps * k] = 0;
+                } else {
+                    g[i + rs * j + ps * k] = 1 + g[i - 1 + rs * j + ps * k];
+                }
+            }
+            for (i = rs - 2; i >= 0; i--) {
+                if (g[i + 1 + rs * j + ps * k] < g[i + rs * j + ps * k]) {
+                    g[i + rs * j + ps * k] = 1 + g[i + 1 + rs * j + ps * k];
+                }
+            }
+            for (i = 0; i < rs; i++) {
+                if (g[i + rs * j + ps * k] <
+                        rs * cs * ds) { // NECESSAIRE pour éviter un overflow
+                    g[i + rs * j + ps * k] =
+                        g[i + rs * j + ps * k] * g[i + rs * j + ps * k];
+                }
+            }
         }
-      }
-      for (i = rs - 2; i >= 0; i--) {
-        if (g[i + 1 + rs * j + ps * k] < g[i + rs * j + ps * k]) {
-          g[i + rs * j + ps * k] = 1 + g[i + 1 + rs * j + ps * k];
-        }
-      }
-      for (i = 0; i < rs; i++) {
-        if (g[i + rs * j + ps * k] <
-            rs * cs * ds) { // NECESSAIRE pour éviter un overflow
-          g[i + rs * j + ps * k] =
-              g[i + rs * j + ps * k] * g[i + rs * j + ps * k];
-        }
-      }
     }
-  }
 } //  SEDT3d_line()
 
 /* ======================================================== */
 void SEDT3d_column(uint32_t *f, uint32_t *g, index_t rs, index_t cs, index_t ds)
 /* ======================================================== */
 {
-  int32_t i, k, u, q, ps = rs*cs, w; // attention: index signés (parcours inverse, petite taille)
-  uint32_t *s = NULL, *t = NULL;
-  s = (uint32_t *)calloc(1,cs * sizeof(uint32_t));
-  t = (uint32_t *)calloc(1,cs * sizeof(uint32_t));
+    int32_t i, k, u, q, ps = rs*cs, w; // attention: index signés (parcours inverse, petite taille)
+    uint32_t *s = NULL, *t = NULL;
+    s = (uint32_t *)calloc(1,cs * sizeof(uint32_t));
+    t = (uint32_t *)calloc(1,cs * sizeof(uint32_t));
 
-  for (k = 0; k < ds; k++) {
-    for (i = 0; i < rs; i++)
-    {
-      q = 0; s[0] = 0; t[0] = 0;
-      for (u = 1; u < cs; u++)
-      {
-        while ((q >= 0) &&
-               (F_2_3d(s[q], t[q], f, i, k) > F_2_3d(u, t[q], f, i, k))) {
-          q--;
+    for (k = 0; k < ds; k++) {
+        for (i = 0; i < rs; i++) {
+            q = 0;
+            s[0] = 0;
+            t[0] = 0;
+            for (u = 1; u < cs; u++) {
+                while ((q >= 0) &&
+                        (F_2_3d(s[q], t[q], f, i, k) > F_2_3d(u, t[q], f, i, k))) {
+                    q--;
+                }
+                if (q < 0) {
+                    q = 0;
+                    s[0] = u;
+                } else {
+                    w = 1 + Sep_2_3d(s[q],u,f,i,k);
+                    if (w < cs) {
+                        q++;
+                        s[q] = u;
+                        t[q] = w;
+                    }
+                }
+            }
+            for (u = cs-1; u >= 0; u--) {
+                g[ps*k + rs*u + i] = F_2_3d(s[q],u,f,i,k);
+                if (u == t[q]) {
+                    q--;
+                }
+            }
         }
-        if (q < 0)
-        {
-	  q = 0;
-	  s[0] = u;
-	}
-	else
-        {
-	  w = 1 + Sep_2_3d(s[q],u,f,i,k);
-	  if (w < cs)
-	  {
-	    q++; s[q] = u; t[q] = w;
-	  }
-	}
-      } 
-      for (u = cs-1; u >= 0; u--)
-      {
-	g[ps*k + rs*u + i] = F_2_3d(s[q],u,f,i,k);
-        if (u == t[q]) {
-          q--;
-        }
-      }
     }
-  }
-  free(s); free(t);
+    free(s);
+    free(t);
 } //  SEDT3d_column()
 
 /* ======================================================== */
 void SEDT3d_planes(uint32_t *f, uint32_t *g, index_t rs, index_t cs, index_t ds)
 /* ======================================================== */
 {
-  int32_t i, j, u, q, ps = rs*cs, w; // attention: index signés (parcours inverse, petite taille)
-  uint32_t *s = NULL, *t = NULL;
-  s = (uint32_t *)calloc(1,ds * sizeof(uint32_t));
-  t = (uint32_t *)calloc(1,ds * sizeof(uint32_t));
+    int32_t i, j, u, q, ps = rs*cs, w; // attention: index signés (parcours inverse, petite taille)
+    uint32_t *s = NULL, *t = NULL;
+    s = (uint32_t *)calloc(1,ds * sizeof(uint32_t));
+    t = (uint32_t *)calloc(1,ds * sizeof(uint32_t));
 
-  for (j = 0; j < cs; j++) {
-    for (i = 0; i < rs; i++)
-    {
-      q = 0; s[0] = 0; t[0] = 0;
-      for (u = 1; u < ds; u++)
-      {
-        while ((q >= 0) &&
-               (F_3_3d(s[q], t[q], f, i, j) > F_3_3d(u, t[q], f, i, j))) {
-          q--;
+    for (j = 0; j < cs; j++) {
+        for (i = 0; i < rs; i++) {
+            q = 0;
+            s[0] = 0;
+            t[0] = 0;
+            for (u = 1; u < ds; u++) {
+                while ((q >= 0) &&
+                        (F_3_3d(s[q], t[q], f, i, j) > F_3_3d(u, t[q], f, i, j))) {
+                    q--;
+                }
+                if (q < 0) {
+                    q = 0;
+                    s[0] = u;
+                } else {
+                    w = 1 + Sep_3_3d(s[q],u,f,i,j);
+                    if (w < ds) {
+                        q++;
+                        s[q] = u;
+                        t[q] = w;
+                    }
+                }
+            }
+            for (u = ds-1; u >= 0; u--) {
+                g[ps*u + rs*j + i] = F_3_3d(s[q],u,f,i,j);
+                if (u == t[q]) {
+                    q--;
+                }
+            }
         }
-        if (q < 0)
-        {
-	  q = 0;
-	  s[0] = u;
-	}
-	else
-        {
-	  w = 1 + Sep_3_3d(s[q],u,f,i,j);
-	  if (w < ds)
-	  {
-	    q++; s[q] = u; t[q] = w;
-	  }
-	}
-      } 
-      for (u = ds-1; u >= 0; u--)
-      {
-	g[ps*u + rs*j + i] = F_3_3d(s[q],u,f,i,j);
-        if (u == t[q]) {
-          q--;
-        }
-      }
     }
-  }
-  free(s); free(t);
+    free(s);
+    free(t);
 } //  SEDT3d_planes()
 
 /* ==================================== */
-int32_t lsedt_meijster(struct xvimage *img,   /* donnee: image binaire */       
-		   struct xvimage *res    /* resultat: distances */
-)
+int32_t lsedt_meijster(struct xvimage *img,   /* donnee: image binaire */
+                       struct xvimage *res    /* resultat: distances */
+                      )
 /* ==================================== */
-/* 
+/*
   Call the SEDT linear algorithm (Meijster & al.)
   ATTENTION: calcule la distance au complémentaire
 */
 #undef F_NAME
 #define F_NAME "lsedt_meijster"
-{ 
-  index_t rs = rowsize(img);
-  index_t cs = colsize(img);
-  index_t ds = depth(img);
-  uint8_t *F;                /* pointeur sur l'image */
-  uint32_t *D;               /* pointeur sur les distances */
-  struct xvimage *tmp;
-  uint32_t *T;
+{
+    index_t rs = rowsize(img);
+    index_t cs = colsize(img);
+    index_t ds = depth(img);
+    uint8_t *F;                /* pointeur sur l'image */
+    uint32_t *D;               /* pointeur sur les distances */
+    struct xvimage *tmp;
+    uint32_t *T;
 
 #ifdef DEBUG_MEIJSTER
-  printf("lsedt_meijster : begin\n");
+    printf("lsedt_meijster : begin\n");
 #endif
 
-  ACCEPTED_TYPES1(img, VFF_TYP_1_BYTE);
-  ACCEPTED_TYPES1(res, VFF_TYP_4_BYTE);
-  COMPARE_SIZE(res, img);
+    ACCEPTED_TYPES1(img, VFF_TYP_1_BYTE);
+    ACCEPTED_TYPES1(res, VFF_TYP_4_BYTE);
+    COMPARE_SIZE(res, img);
 
-  tmp = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
-  if (tmp == NULL)
-  {
-    fprintf(stderr, "%s: allocimage failed\n", F_NAME);
-    return(0);
-  }
-  T = ULONGDATA(tmp);
-  D = ULONGDATA(res);
-  F = UCHARDATA(img);  
+    tmp = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
+    if (tmp == NULL) {
+        fprintf(stderr, "%s: allocimage failed\n", F_NAME);
+        return(0);
+    }
+    T = ULONGDATA(tmp);
+    D = ULONGDATA(res);
+    F = UCHARDATA(img);
 
-  if (ds == 1)
-  {
-    SEDT_line(F, T, rs, cs);
-    SEDT_column(T, D, rs, cs);
-  }
-  else
-  {
-    SEDT3d_line(F, D, rs, cs, ds);
-    SEDT3d_column(D, T, rs, cs, ds);
-    SEDT3d_planes(T, D, rs, cs, ds);
-  }
+    if (ds == 1) {
+        SEDT_line(F, T, rs, cs);
+        SEDT_column(T, D, rs, cs);
+    } else {
+        SEDT3d_line(F, D, rs, cs, ds);
+        SEDT3d_column(D, T, rs, cs, ds);
+        SEDT3d_planes(T, D, rs, cs, ds);
+    }
 
-  freeimage(tmp);
-  return(1);
+    freeimage(tmp);
+    return(1);
 } // lsedt_meijster()
 
 /* ==================================== */
-int32_t ldistMeijster(struct xvimage *img,   /* donnee: image binaire */       
-		  struct xvimage *res    /* resultat: distances */
-)
+int32_t ldistMeijster(struct xvimage *img,   /* donnee: image binaire */
+                      struct xvimage *res    /* resultat: distances */
+                     )
 /* ==================================== */
-/* 
+/*
   Call the Meijster algorithm
 
   ATTENTION: calcule la distance au complémentaire
 */
 #undef F_NAME
 #define F_NAME "ldistMeijster"
-{ 
-  index_t i, rs = rowsize(img), cs = colsize(img), ds = depth(img);
-  index_t N = rs * cs * ds;
-  double * R = DOUBLEDATA(res);
-  struct xvimage *dist;
-  uint32_t *D;
+{
+    index_t i, rs = rowsize(img), cs = colsize(img), ds = depth(img);
+    index_t N = rs * cs * ds;
+    double * R = DOUBLEDATA(res);
+    struct xvimage *dist;
+    uint32_t *D;
 
-  ACCEPTED_TYPES1(img, VFF_TYP_1_BYTE);
-  ACCEPTED_TYPES1(res, VFF_TYP_DOUBLE);
-  COMPARE_SIZE(res, img);
+    ACCEPTED_TYPES1(img, VFF_TYP_1_BYTE);
+    ACCEPTED_TYPES1(res, VFF_TYP_DOUBLE);
+    COMPARE_SIZE(res, img);
 
-  dist = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
-  if (dist == NULL)
-  {
-    fprintf(stderr, "%s: allocimage failed\n", F_NAME);
-    return(0);
-  }
-  D = ULONGDATA(dist);
+    dist = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
+    if (dist == NULL) {
+        fprintf(stderr, "%s: allocimage failed\n", F_NAME);
+        return(0);
+    }
+    D = ULONGDATA(dist);
 
-  if (!lsedt_meijster(img, dist))
-  {
-    fprintf(stderr, "%s: lsedt_meijster failed\n", F_NAME);
-    return(0);
-  }
+    if (!lsedt_meijster(img, dist)) {
+        fprintf(stderr, "%s: lsedt_meijster failed\n", F_NAME);
+        return(0);
+    }
 
-  for (i = 0; i < N; i++) {
-    R[i] = sqrt(D[i]);
-  }
+    for (i = 0; i < N; i++) {
+        R[i] = sqrt(D[i]);
+    }
 
-  freeimage(dist);
-  return(1);
+    freeimage(dist);
+    return(1);
 } // ldistMeijster()
 
 /* ==================================== */
 int32_t lopeningfunction(
-  struct xvimage *img,   /* donnee: image binaire */
-  struct xvimage *res,   /* resultat */
-  int32_t mode
+    struct xvimage *img,   /* donnee: image binaire */
+    struct xvimage *res,   /* resultat */
+    int32_t mode
 )
 /* ==================================== */
-/* 
-This operator associates, to each point x of the input object X, 
+/*
+This operator associates, to each point x of the input object X,
 the radius of the biggest ball included in X that includes x.
 The distance used depends on the optional parameter \b dist (default is 0) :
 \li 0: truncated Euclidean distance
@@ -2532,52 +2473,54 @@ The distance used depends on the optional parameter \b dist (default is 0) :
 */
 #undef F_NAME
 #define F_NAME "lopeningfunction"
-{ 
-  index_t rs = rowsize(img);
-  index_t cs = colsize(img);
-  index_t ds = depth(img); 
-  index_t i, N = rs*cs*ds;
-  struct xvimage *tmp;
-  uint8_t *T;
-  uint32_t *R, r, vide;
+{
+    index_t rs = rowsize(img);
+    index_t cs = colsize(img);
+    index_t ds = depth(img);
+    index_t i, N = rs*cs*ds;
+    struct xvimage *tmp;
+    uint8_t *T;
+    uint32_t *R, r, vide;
 
-  ACCEPTED_TYPES1(img, VFF_TYP_1_BYTE);
-  ACCEPTED_TYPES1(res, VFF_TYP_DOUBLE);
-  COMPARE_SIZE(res, img);
+    ACCEPTED_TYPES1(img, VFF_TYP_1_BYTE);
+    ACCEPTED_TYPES1(res, VFF_TYP_DOUBLE);
+    COMPARE_SIZE(res, img);
 
-  R = ULONGDATA(res);
-  razimage(res);
+    R = ULONGDATA(res);
+    razimage(res);
 
-  r = 1;
-  do
-    {
+    r = 1;
+    do {
 #ifdef VERBOSE
-      printf("%s: r = %d\n", F_NAME, r);
+        printf("%s: r = %d\n", F_NAME, r);
 #endif
-      vide = 1;
-      tmp = copyimage(img); assert(tmp != NULL);
-      T = UCHARDATA(tmp);
-      lopenball(tmp, r, mode);
-      for (i = 0; i < N; i++) {
-        if (T[i]) { R[i] = r; vide = 0;
+        vide = 1;
+        tmp = copyimage(img);
+        assert(tmp != NULL);
+        T = UCHARDATA(tmp);
+        lopenball(tmp, r, mode);
+        for (i = 0; i < N; i++) {
+            if (T[i]) {
+                R[i] = r;
+                vide = 0;
+            }
         }
-      }
-      freeimage(tmp);
-      r++;
+        freeimage(tmp);
+        r++;
     } while (!vide);
 
-  return 1;
+    return 1;
 } // lopeningfunction()
 
 /* ==================================== */
 float ldistsets(
-  struct xvimage *img1,   /* donnee: image binaire */
-  struct xvimage *img2,   /* donnee: image binaire */
-  int32_t mode,
-  float cut
+    struct xvimage *img1,   /* donnee: image binaire */
+    struct xvimage *img2,   /* donnee: image binaire */
+    int32_t mode,
+    float cut
 )
 /* ==================================== */
-/* 
+/*
 Computes the distance between the object X defined by the binary image
 img1 and the object Y defined by the binary image img2.
 
@@ -2589,156 +2532,141 @@ The definition of the set distance used depends on the parameter 'mode':
 \li 2: Baddeley, order 2
 \li 3: Dubuisson-Jain
 
-The parameter 'cut' is required only for Baddeley distances. 
+The parameter 'cut' is required only for Baddeley distances.
 
 \warning The input images img1 and img2 must be binary images. No test is done.
 */
 #undef F_NAME
 #define F_NAME "ldistsets"
-{ 
-  index_t rs = rowsize(img1);
-  index_t cs = colsize(img1);
-  index_t ds = depth(img1); 
-  index_t N = rs * cs * ds;
-  uint8_t *I1 = UCHARDATA(img1);
-  uint8_t *I2 = UCHARDATA(img2);
-  struct xvimage *dist1 = NULL;
-  struct xvimage *dist2 = NULL;
-  struct xvimage *fdist1 = NULL;
-  struct xvimage *fdist2 = NULL;
-  int32_t *D1, *D2;
-  float *FD1, *FD2;
-  float result;
-  index_t i;
+{
+    index_t rs = rowsize(img1);
+    index_t cs = colsize(img1);
+    index_t ds = depth(img1);
+    index_t N = rs * cs * ds;
+    uint8_t *I1 = UCHARDATA(img1);
+    uint8_t *I2 = UCHARDATA(img2);
+    struct xvimage *dist1 = NULL;
+    struct xvimage *dist2 = NULL;
+    struct xvimage *fdist1 = NULL;
+    struct xvimage *fdist2 = NULL;
+    int32_t *D1, *D2;
+    float *FD1, *FD2;
+    float result;
+    index_t i;
 
 #ifdef VERBOSE
-  printf("%s: mode = %d\n", F_NAME, mode);
+    printf("%s: mode = %d\n", F_NAME, mode);
 #endif
 
-  ACCEPTED_TYPES1(img1, VFF_TYP_1_BYTE);
-  ACCEPTED_TYPES1(img2, VFF_TYP_1_BYTE);
-  COMPARE_SIZE(img1, img2);
+    ACCEPTED_TYPES1(img1, VFF_TYP_1_BYTE);
+    ACCEPTED_TYPES1(img2, VFF_TYP_1_BYTE);
+    COMPARE_SIZE(img1, img2);
 
-  dist1 = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
-  dist1 = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
-  dist2 = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
-  if ((dist1 == NULL) || (dist2 == NULL))
-  {   
-    fprintf(stderr, "%s: allocimage failed\n", F_NAME);
-    return -1;
-  }
-  D1 = SLONGDATA(dist1);
-  D2 = SLONGDATA(dist2);
+    dist1 = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
+    dist1 = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
+    dist2 = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
+    if ((dist1 == NULL) || (dist2 == NULL)) {
+        fprintf(stderr, "%s: allocimage failed\n", F_NAME);
+        return -1;
+    }
+    D1 = SLONGDATA(dist1);
+    D2 = SLONGDATA(dist2);
 
-  for (i = 0; i < N; i++) {
-    I1[i] = !I1[i];
-  }
-  for (i = 0; i < N; i++) {
-    I2[i] = !I2[i];
-  }
-  // Attention : Ik représente maintenant le complémentaire de imgk
-  if (! lsedt_meijster(img1, dist1))
-  {
-    fprintf(stderr, "%s: lsedt_meijster img1 failed\n", F_NAME);
-    return -1;
-  }
-  if (! lsedt_meijster(img2, dist2))
-  {
-    fprintf(stderr, "%s: lsedt_meijster img2 failed\n", F_NAME);
-    return -1;
-  }
-
-  fdist1 = allocimage(NULL, rs, cs, ds, VFF_TYP_FLOAT);
-  fdist2 = allocimage(NULL, rs, cs, ds, VFF_TYP_FLOAT);
-  if ((fdist1 == NULL) || (fdist2 == NULL))
-  {   
-    fprintf(stderr, "%s: allocimage failed\n", F_NAME);
-    return -1;
-  }
-  FD1 = FLOATDATA(fdist1);
-  FD2 = FLOATDATA(fdist2);
-
-  for (i = 0; i < N; i++) {
-    FD1[i] = (float)sqrt(D1[i]);
-  }
-  for (i = 0; i < N; i++) {
-    FD2[i] = (float)sqrt(D2[i]);
-  }
-
-  if (mode == 0) // Hausdorff
-  {
-    float max1 = 0.0, max2 = 0.0;
     for (i = 0; i < N; i++) {
-      if (!I1[i] && (FD2[i] > max2)) {
-        max2 = FD2[i];
-      }
+        I1[i] = !I1[i];
     }
     for (i = 0; i < N; i++) {
-      if (!I2[i] && (FD1[i] > max1)) {
-        max1 = FD1[i];
-      }
+        I2[i] = !I2[i];
     }
-    result = mcmax(max1,max2);
-  }
-  else if (mode == 1) // Baddeley, order 1
-  {
-    float d, sum = 0.0;
-    for (i = 0; i < N; i++)
-    { 
-      d = mcmin(FD2[i],cut) - mcmin(FD1[i],cut);
-      sum = sum + mcabs(d);
+    // Attention : Ik représente maintenant le complémentaire de imgk
+    if (! lsedt_meijster(img1, dist1)) {
+        fprintf(stderr, "%s: lsedt_meijster img1 failed\n", F_NAME);
+        return -1;
     }
-    result = sum / N;
-  }
-  else if (mode == 2) // Baddeley, order 2
-  {
-    float d, sum = 0.0;
-    for (i = 0; i < N; i++)
-    { 
-      d = mcmin(FD2[i],cut) - mcmin(FD1[i],cut);
-      sum = sum + (d * d);
+    if (! lsedt_meijster(img2, dist2)) {
+        fprintf(stderr, "%s: lsedt_meijster img2 failed\n", F_NAME);
+        return -1;
     }
-    result = (float)sqrtf(sum / N);
-  }
-  else if (mode == 3) // Dubuisson-Jain
-  {
-    float av1 = 0.0, av2 = 0.0;
-    int32_t n1 = 0, n2 = 0;
-    for (i = 0; i < N; i++) {
-      if (!I1[i]) {
-        av2 += FD2[i];
-        n2++;
-      }
-    }
-    for (i = 0; i < N; i++) {
-      if (!I2[i]) {
-        av1 += FD1[i];
-        n1++;
-      }
-    }
-    av1 = av1 / n1;
-    av2 = av2 / n2;
-    result = mcmax(av1,av2);
-  }
-  else
-  {
-    fprintf(stderr, "%s: bad value for mode: %d\n", F_NAME, mode);
-    return -1;
-  }
 
-  if (dist1) {
-    freeimage(dist1);
-  }
-  if (dist2) {
-    freeimage(dist2);
-  }
-  if (fdist1) {
-    freeimage(fdist1);
-  }
-  if (fdist2) {
-    freeimage(fdist2);
-  }
-  return result;
+    fdist1 = allocimage(NULL, rs, cs, ds, VFF_TYP_FLOAT);
+    fdist2 = allocimage(NULL, rs, cs, ds, VFF_TYP_FLOAT);
+    if ((fdist1 == NULL) || (fdist2 == NULL)) {
+        fprintf(stderr, "%s: allocimage failed\n", F_NAME);
+        return -1;
+    }
+    FD1 = FLOATDATA(fdist1);
+    FD2 = FLOATDATA(fdist2);
+
+    for (i = 0; i < N; i++) {
+        FD1[i] = (float)sqrt(D1[i]);
+    }
+    for (i = 0; i < N; i++) {
+        FD2[i] = (float)sqrt(D2[i]);
+    }
+
+    if (mode == 0) { // Hausdorff
+        float max1 = 0.0, max2 = 0.0;
+        for (i = 0; i < N; i++) {
+            if (!I1[i] && (FD2[i] > max2)) {
+                max2 = FD2[i];
+            }
+        }
+        for (i = 0; i < N; i++) {
+            if (!I2[i] && (FD1[i] > max1)) {
+                max1 = FD1[i];
+            }
+        }
+        result = mcmax(max1,max2);
+    } else if (mode == 1) { // Baddeley, order 1
+        float d, sum = 0.0;
+        for (i = 0; i < N; i++) {
+            d = mcmin(FD2[i],cut) - mcmin(FD1[i],cut);
+            sum = sum + mcabs(d);
+        }
+        result = sum / N;
+    } else if (mode == 2) { // Baddeley, order 2
+        float d, sum = 0.0;
+        for (i = 0; i < N; i++) {
+            d = mcmin(FD2[i],cut) - mcmin(FD1[i],cut);
+            sum = sum + (d * d);
+        }
+        result = (float)sqrtf(sum / N);
+    } else if (mode == 3) { // Dubuisson-Jain
+        float av1 = 0.0, av2 = 0.0;
+        int32_t n1 = 0, n2 = 0;
+        for (i = 0; i < N; i++) {
+            if (!I1[i]) {
+                av2 += FD2[i];
+                n2++;
+            }
+        }
+        for (i = 0; i < N; i++) {
+            if (!I2[i]) {
+                av1 += FD1[i];
+                n1++;
+            }
+        }
+        av1 = av1 / n1;
+        av2 = av2 / n2;
+        result = mcmax(av1,av2);
+    } else {
+        fprintf(stderr, "%s: bad value for mode: %d\n", F_NAME, mode);
+        return -1;
+    }
+
+    if (dist1) {
+        freeimage(dist1);
+    }
+    if (dist2) {
+        freeimage(dist2);
+    }
+    if (fdist1) {
+        freeimage(fdist1);
+    }
+    if (fdist2) {
+        freeimage(fdist2);
+    }
+    return result;
 } // ldistsets()
 
 // &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
@@ -2757,103 +2685,101 @@ int32_t ldilatball(struct xvimage* ob, int32_t r, int32_t mode)
 #undef F_NAME
 #define F_NAME "ldilatball"
 {
-  index_t rs=rowsize(ob), cs=colsize(ob), ds=depth(ob), N=rs*cs*ds;
-  struct xvimage *dist;
-  uint32_t *D;
-  uint8_t *O = UCHARDATA(ob);
-  index_t i;
-  int32_t r2;
-  int32_t ret;
+    index_t rs=rowsize(ob), cs=colsize(ob), ds=depth(ob), N=rs*cs*ds;
+    struct xvimage *dist;
+    uint32_t *D;
+    uint8_t *O = UCHARDATA(ob);
+    index_t i;
+    int32_t r2;
+    int32_t ret;
 
-  dist = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
-  if (dist == NULL)
-  {   
-    fprintf(stderr, "%s: allocimage failed\n", F_NAME);
-    return 0;
-  }
-  D = ULONGDATA(dist);
- 
-  switch (mode)
-  {
+    dist = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
+    if (dist == NULL) {
+        fprintf(stderr, "%s: allocimage failed\n", F_NAME);
+        return 0;
+    }
+    D = ULONGDATA(dist);
+
+    switch (mode) {
     case 0:
-      r2 = r*r;
-      inverse(ob);
-      if (!lsedt_meijster(ob, dist)) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r2) {
-          O[i] = NDG_MIN;
-        } else {
-          O[i] = NDG_MAX;
+        r2 = r*r;
+        inverse(ob);
+        if (!lsedt_meijster(ob, dist)) {
+            return 0;
         }
-      }
-      break;
+        for (i = 0; i < N; i++) {
+            if (D[i] > r2) {
+                O[i] = NDG_MIN;
+            } else {
+                O[i] = NDG_MAX;
+            }
+        }
+        break;
     case 1:
-      if (ds == 1) {
-        ret = ldistquad(ob, dist);
-      } else {
-        ret = ldistquad3d(ob, dist);
-      }
-      if (!ret) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r) {
-          O[i] = NDG_MIN;
+        if (ds == 1) {
+            ret = ldistquad(ob, dist);
         } else {
-          O[i] = NDG_MAX;
+            ret = ldistquad3d(ob, dist);
         }
-      }
-      break;
+        if (!ret) {
+            return 0;
+        }
+        for (i = 0; i < N; i++) {
+            if (D[i] > r) {
+                O[i] = NDG_MIN;
+            } else {
+                O[i] = NDG_MAX;
+            }
+        }
+        break;
     case 2:
-      if (!lchamfrein(ob, dist)) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r) {
-          O[i] = NDG_MIN;
-        } else {
-          O[i] = NDG_MAX;
+        if (!lchamfrein(ob, dist)) {
+            return 0;
         }
-      }
-      break;
-    case 3: 
-      inverse(ob);
-      if (!lsedt_meijster(ob, dist)) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r) {
-          O[i] = NDG_MIN;
-        } else {
-          O[i] = NDG_MAX;
+        for (i = 0; i < N; i++) {
+            if (D[i] > r) {
+                O[i] = NDG_MIN;
+            } else {
+                O[i] = NDG_MAX;
+            }
         }
-      }
-      break;
+        break;
+    case 3:
+        inverse(ob);
+        if (!lsedt_meijster(ob, dist)) {
+            return 0;
+        }
+        for (i = 0; i < N; i++) {
+            if (D[i] > r) {
+                O[i] = NDG_MIN;
+            } else {
+                O[i] = NDG_MAX;
+            }
+        }
+        break;
     case 4:
     case 6:
-    case 8: 
-    case 18: 
+    case 8:
+    case 18:
     case 26:
-      if (!ldist(ob, mode, dist)) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r) {
-          O[i] = NDG_MIN;
-        } else {
-          O[i] = NDG_MAX;
+        if (!ldist(ob, mode, dist)) {
+            return 0;
         }
-      }
-      break;
-    default: 
-      fprintf(stderr, "%s: bad mode: %d\n", F_NAME, mode);
-      return 0;
-  }
+        for (i = 0; i < N; i++) {
+            if (D[i] > r) {
+                O[i] = NDG_MIN;
+            } else {
+                O[i] = NDG_MAX;
+            }
+        }
+        break;
+    default:
+        fprintf(stderr, "%s: bad mode: %d\n", F_NAME, mode);
+        return 0;
+    }
 
-  freeimage(dist);    
-  return 1;
+    freeimage(dist);
+    return 1;
 } // ldilatball()
 
 /* ======================================================== */
@@ -2863,108 +2789,106 @@ int32_t lerosball(struct xvimage* ob, int32_t r, int32_t mode)
 #undef F_NAME
 #define F_NAME "lerosball"
 {
-  index_t rs=rowsize(ob), cs=colsize(ob), ds=depth(ob), N=rs*cs*ds;
-  struct xvimage *dist;
-  uint32_t *D;
-  uint8_t *O = UCHARDATA(ob);
-  index_t i;
-  int32_t r2;
-  int32_t ret;
+    index_t rs=rowsize(ob), cs=colsize(ob), ds=depth(ob), N=rs*cs*ds;
+    struct xvimage *dist;
+    uint32_t *D;
+    uint8_t *O = UCHARDATA(ob);
+    index_t i;
+    int32_t r2;
+    int32_t ret;
 
 #ifdef VERBOSE
-  printf("%s: mode = %d, r = %d\n", F_NAME, mode, r);
+    printf("%s: mode = %d, r = %d\n", F_NAME, mode, r);
 #endif
 
-  dist = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
-  if (dist == NULL)
-  {   
-    fprintf(stderr, "%s: allocimage failed\n", F_NAME);
-    return 0;
-  }
-  D = ULONGDATA(dist);
+    dist = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
+    if (dist == NULL) {
+        fprintf(stderr, "%s: allocimage failed\n", F_NAME);
+        return 0;
+    }
+    D = ULONGDATA(dist);
 
-  switch (mode)
-  {
+    switch (mode) {
     case 0:
-      r2 = r * r;
-      if (!lsedt_meijster(ob, dist)) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r2) {
-          O[i] = NDG_MAX;
-        } else {
-          O[i] = NDG_MIN;
+        r2 = r * r;
+        if (!lsedt_meijster(ob, dist)) {
+            return 0;
         }
-      }
-      break;
-    case 1: 
-      inverse(ob);
-      if (ds == 1) {
-        ret = ldistquad(ob, dist);
-      } else {
-        ret = ldistquad3d(ob, dist);
-      }
-      if (!ret) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r) {
-          O[i] = NDG_MAX;
-        } else {
-          O[i] = NDG_MIN;
+        for (i = 0; i < N; i++) {
+            if (D[i] > r2) {
+                O[i] = NDG_MAX;
+            } else {
+                O[i] = NDG_MIN;
+            }
         }
-      }
-      break;
-    case 2: 
-      inverse(ob);
-      if (!lchamfrein(ob, dist)) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r) {
-          O[i] = NDG_MAX;
+        break;
+    case 1:
+        inverse(ob);
+        if (ds == 1) {
+            ret = ldistquad(ob, dist);
         } else {
-          O[i] = NDG_MIN;
+            ret = ldistquad3d(ob, dist);
         }
-      }
-      break;
+        if (!ret) {
+            return 0;
+        }
+        for (i = 0; i < N; i++) {
+            if (D[i] > r) {
+                O[i] = NDG_MAX;
+            } else {
+                O[i] = NDG_MIN;
+            }
+        }
+        break;
+    case 2:
+        inverse(ob);
+        if (!lchamfrein(ob, dist)) {
+            return 0;
+        }
+        for (i = 0; i < N; i++) {
+            if (D[i] > r) {
+                O[i] = NDG_MAX;
+            } else {
+                O[i] = NDG_MIN;
+            }
+        }
+        break;
     case 3:
-      if (!lsedt_meijster(ob, dist)) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r) {
-          O[i] = NDG_MAX;
-        } else {
-          O[i] = NDG_MIN;
+        if (!lsedt_meijster(ob, dist)) {
+            return 0;
         }
-      }
-      break;
+        for (i = 0; i < N; i++) {
+            if (D[i] > r) {
+                O[i] = NDG_MAX;
+            } else {
+                O[i] = NDG_MIN;
+            }
+        }
+        break;
     case 4:
     case 8:
     case 6:
     case 18:
-    case 26: 
-      inverse(ob);
-      if (!ldist(ob, mode, dist)) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r) {
-          O[i] = NDG_MAX;
-        } else {
-          O[i] = NDG_MIN;
+    case 26:
+        inverse(ob);
+        if (!ldist(ob, mode, dist)) {
+            return 0;
         }
-      }
-      break;
-    default: 
-      fprintf(stderr, "%s: bad mode: %d\n", F_NAME, mode);
-      return 0;
-  }
+        for (i = 0; i < N; i++) {
+            if (D[i] > r) {
+                O[i] = NDG_MAX;
+            } else {
+                O[i] = NDG_MIN;
+            }
+        }
+        break;
+    default:
+        fprintf(stderr, "%s: bad mode: %d\n", F_NAME, mode);
+        return 0;
+    }
 
-  freeimage(dist);    
-  return 1;
+    freeimage(dist);
+    return 1;
 } // lerosball()
 
 /* ======================================================== */
@@ -2974,184 +2898,181 @@ int32_t lopenball(struct xvimage* ob, int32_t r, int32_t mode)
 #undef F_NAME
 #define F_NAME "lopenball"
 {
-  index_t rs=rowsize(ob), cs=colsize(ob), ds=depth(ob), N=rs*cs*ds;
-  struct xvimage *dist;
-  uint32_t *D;
-  uint8_t *O = UCHARDATA(ob);
-  index_t i;
-  int32_t r2;
-  int32_t ret;
+    index_t rs=rowsize(ob), cs=colsize(ob), ds=depth(ob), N=rs*cs*ds;
+    struct xvimage *dist;
+    uint32_t *D;
+    uint8_t *O = UCHARDATA(ob);
+    index_t i;
+    int32_t r2;
+    int32_t ret;
 
-  dist = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
-  if (dist == NULL)
-  {   
-    fprintf(stderr, "%s: allocimage failed\n", F_NAME);
-    return 0;
-  }
-  D = ULONGDATA(dist);
+    dist = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
+    if (dist == NULL) {
+        fprintf(stderr, "%s: allocimage failed\n", F_NAME);
+        return 0;
+    }
+    D = ULONGDATA(dist);
 
-  // inverse + dilate + inverse
-  switch (mode)
-  {
+    // inverse + dilate + inverse
+    switch (mode) {
     case 0:
-      r2 = r * r;
-      if (!lsedt_meijster(ob, dist)) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r2) {
-          O[i] = NDG_MIN;
-        } else {
-          O[i] = NDG_MAX;
+        r2 = r * r;
+        if (!lsedt_meijster(ob, dist)) {
+            return 0;
         }
-      }
-      break;
-    case 1: 
-      inverse(ob);
-      if (ds == 1) {
-        ret = ldistquad(ob, dist);
-      } else {
-        ret = ldistquad3d(ob, dist);
-      }
-      if (!ret) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r) {
-          O[i] = NDG_MAX;
-        } else {
-          O[i] = NDG_MIN;
+        for (i = 0; i < N; i++) {
+            if (D[i] > r2) {
+                O[i] = NDG_MIN;
+            } else {
+                O[i] = NDG_MAX;
+            }
         }
-      }
-      break;
-    case 2: 
-      inverse(ob);
-      if (!lchamfrein(ob, dist)) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r) {
-          O[i] = NDG_MAX;
-        } else {
-          O[i] = NDG_MIN;
-        }
-      }
-      break;
-    case 3:
-      if (!lsedt_meijster(ob, dist)) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r) {
-          O[i] = NDG_MIN;
-        } else {
-          O[i] = NDG_MAX;
-        }
-      }
-      break;
-    case 4:
-    case 8:
-    case 6:
-    case 18:
-    case 26: 
-      inverse(ob);
-      if (!ldist(ob, mode, dist)) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r) {
-          O[i] = NDG_MAX;
-        } else {
-          O[i] = NDG_MIN;
-        }
-      }
-      break;
-    default: 
-      fprintf(stderr, "%s: bad mode: %d\n", F_NAME, mode);
-      return 0;
-  }
-
-  //dilate
-  switch (mode)
-  {
-    case 0:
-      // inversion cancelled in previous operation
-      if (!lsedt_meijster(ob, dist)) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r2) {
-          O[i] = NDG_MIN;
-        } else {
-          O[i] = NDG_MAX;
-        }
-      }
-      break;
+        break;
     case 1:
-      if (ds == 1) {
-        ret = ldistquad(ob, dist);
-      } else {
-        ret = ldistquad3d(ob, dist);
-      }
-      if (!ret) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r) {
-          O[i] = NDG_MIN;
+        inverse(ob);
+        if (ds == 1) {
+            ret = ldistquad(ob, dist);
         } else {
-          O[i] = NDG_MAX;
+            ret = ldistquad3d(ob, dist);
         }
-      }
-      break;
+        if (!ret) {
+            return 0;
+        }
+        for (i = 0; i < N; i++) {
+            if (D[i] > r) {
+                O[i] = NDG_MAX;
+            } else {
+                O[i] = NDG_MIN;
+            }
+        }
+        break;
     case 2:
-      if (!lchamfrein(ob, dist)) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r) {
-          O[i] = NDG_MIN;
-        } else {
-          O[i] = NDG_MAX;
+        inverse(ob);
+        if (!lchamfrein(ob, dist)) {
+            return 0;
         }
-      }
-      break;
-    case 3: 
-      // inversion cancelled in previous operation
-      if (!lsedt_meijster(ob, dist)) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r) {
-          O[i] = NDG_MIN;
-        } else {
-          O[i] = NDG_MAX;
+        for (i = 0; i < N; i++) {
+            if (D[i] > r) {
+                O[i] = NDG_MAX;
+            } else {
+                O[i] = NDG_MIN;
+            }
         }
-      }
-      break;
+        break;
+    case 3:
+        if (!lsedt_meijster(ob, dist)) {
+            return 0;
+        }
+        for (i = 0; i < N; i++) {
+            if (D[i] > r) {
+                O[i] = NDG_MIN;
+            } else {
+                O[i] = NDG_MAX;
+            }
+        }
+        break;
     case 4:
     case 8:
     case 6:
     case 18:
     case 26:
-      if (!ldist(ob, mode, dist)) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r) {
-          O[i] = NDG_MIN;
-        } else {
-          O[i] = NDG_MAX;
+        inverse(ob);
+        if (!ldist(ob, mode, dist)) {
+            return 0;
         }
-      }
-      break;
-    default: 
-      fprintf(stderr, "%s: bad mode: %d\n", F_NAME, mode);
-      return 0;
-  }
+        for (i = 0; i < N; i++) {
+            if (D[i] > r) {
+                O[i] = NDG_MAX;
+            } else {
+                O[i] = NDG_MIN;
+            }
+        }
+        break;
+    default:
+        fprintf(stderr, "%s: bad mode: %d\n", F_NAME, mode);
+        return 0;
+    }
 
-  freeimage(dist);    
-  return 1;
+    //dilate
+    switch (mode) {
+    case 0:
+        // inversion cancelled in previous operation
+        if (!lsedt_meijster(ob, dist)) {
+            return 0;
+        }
+        for (i = 0; i < N; i++) {
+            if (D[i] > r2) {
+                O[i] = NDG_MIN;
+            } else {
+                O[i] = NDG_MAX;
+            }
+        }
+        break;
+    case 1:
+        if (ds == 1) {
+            ret = ldistquad(ob, dist);
+        } else {
+            ret = ldistquad3d(ob, dist);
+        }
+        if (!ret) {
+            return 0;
+        }
+        for (i = 0; i < N; i++) {
+            if (D[i] > r) {
+                O[i] = NDG_MIN;
+            } else {
+                O[i] = NDG_MAX;
+            }
+        }
+        break;
+    case 2:
+        if (!lchamfrein(ob, dist)) {
+            return 0;
+        }
+        for (i = 0; i < N; i++) {
+            if (D[i] > r) {
+                O[i] = NDG_MIN;
+            } else {
+                O[i] = NDG_MAX;
+            }
+        }
+        break;
+    case 3:
+        // inversion cancelled in previous operation
+        if (!lsedt_meijster(ob, dist)) {
+            return 0;
+        }
+        for (i = 0; i < N; i++) {
+            if (D[i] > r) {
+                O[i] = NDG_MIN;
+            } else {
+                O[i] = NDG_MAX;
+            }
+        }
+        break;
+    case 4:
+    case 8:
+    case 6:
+    case 18:
+    case 26:
+        if (!ldist(ob, mode, dist)) {
+            return 0;
+        }
+        for (i = 0; i < N; i++) {
+            if (D[i] > r) {
+                O[i] = NDG_MIN;
+            } else {
+                O[i] = NDG_MAX;
+            }
+        }
+        break;
+    default:
+        fprintf(stderr, "%s: bad mode: %d\n", F_NAME, mode);
+        return 0;
+    }
+
+    freeimage(dist);
+    return 1;
 } // lopenball()
 
 /* ======================================================== */
@@ -3161,183 +3082,180 @@ int32_t lcloseball(struct xvimage* ob, int32_t r, int32_t mode)
 #undef F_NAME
 #define F_NAME "lcloseball"
 {
-  index_t rs=rowsize(ob), cs=colsize(ob), ds=depth(ob), N=rs*cs*ds;
-  struct xvimage *dist;
-  uint32_t *D;
-  uint8_t *O = UCHARDATA(ob);
-  index_t i;
-  int32_t r2;
-  int32_t ret;
+    index_t rs=rowsize(ob), cs=colsize(ob), ds=depth(ob), N=rs*cs*ds;
+    struct xvimage *dist;
+    uint32_t *D;
+    uint8_t *O = UCHARDATA(ob);
+    index_t i;
+    int32_t r2;
+    int32_t ret;
 
-  dist = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
-  if (dist == NULL)
-  {   
-    fprintf(stderr, "%s: allocimage failed\n", F_NAME);
-    return 0;
-  }
-  D = ULONGDATA(dist);
+    dist = allocimage(NULL, rs, cs, ds, VFF_TYP_4_BYTE);
+    if (dist == NULL) {
+        fprintf(stderr, "%s: allocimage failed\n", F_NAME);
+        return 0;
+    }
+    D = ULONGDATA(dist);
 
-  // dilate + inverse
-  switch (mode)
-  {
+    // dilate + inverse
+    switch (mode) {
     case 0:
-      r2 = r*r;
-      inverse(ob);
-      if (!lsedt_meijster(ob, dist)) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r2) {
-          O[i] = NDG_MIN;
-        } else {
-          O[i] = NDG_MAX;
+        r2 = r*r;
+        inverse(ob);
+        if (!lsedt_meijster(ob, dist)) {
+            return 0;
         }
-      }
-      break;
+        for (i = 0; i < N; i++) {
+            if (D[i] > r2) {
+                O[i] = NDG_MIN;
+            } else {
+                O[i] = NDG_MAX;
+            }
+        }
+        break;
     case 1:
-      if (ds == 1) {
-        ret = ldistquad(ob, dist);
-      } else {
-        ret = ldistquad3d(ob, dist);
-      }
-      if (!ret) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r) {
-          O[i] = NDG_MAX;
+        if (ds == 1) {
+            ret = ldistquad(ob, dist);
         } else {
-          O[i] = NDG_MIN;
+            ret = ldistquad3d(ob, dist);
         }
-      }
-      break;
+        if (!ret) {
+            return 0;
+        }
+        for (i = 0; i < N; i++) {
+            if (D[i] > r) {
+                O[i] = NDG_MAX;
+            } else {
+                O[i] = NDG_MIN;
+            }
+        }
+        break;
     case 2:
-      if (!lchamfrein(ob, dist)) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r) {
-          O[i] = NDG_MAX;
-        } else {
-          O[i] = NDG_MIN;
+        if (!lchamfrein(ob, dist)) {
+            return 0;
         }
-      }
-      break;
-    case 3: 
-      inverse(ob);
-      if (!lsedt_meijster(ob, dist)) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r) {
-          O[i] = NDG_MIN;
-        } else {
-          O[i] = NDG_MAX;
+        for (i = 0; i < N; i++) {
+            if (D[i] > r) {
+                O[i] = NDG_MAX;
+            } else {
+                O[i] = NDG_MIN;
+            }
         }
-      }
-      break;
+        break;
+    case 3:
+        inverse(ob);
+        if (!lsedt_meijster(ob, dist)) {
+            return 0;
+        }
+        for (i = 0; i < N; i++) {
+            if (D[i] > r) {
+                O[i] = NDG_MIN;
+            } else {
+                O[i] = NDG_MAX;
+            }
+        }
+        break;
     case 4:
     case 8:
     case 6:
     case 18:
     case 26:
-      if (!ldist(ob, mode, dist)) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r) {
-          O[i] = NDG_MAX;
-        } else {
-          O[i] = NDG_MIN;
+        if (!ldist(ob, mode, dist)) {
+            return 0;
         }
-      }
-      break;
-    default: 
-      fprintf(stderr, "%s: bad mode: %d\n", F_NAME, mode);
-      return 0;
-  }
+        for (i = 0; i < N; i++) {
+            if (D[i] > r) {
+                O[i] = NDG_MAX;
+            } else {
+                O[i] = NDG_MIN;
+            }
+        }
+        break;
+    default:
+        fprintf(stderr, "%s: bad mode: %d\n", F_NAME, mode);
+        return 0;
+    }
 
-  // dilate + inverse
-  switch (mode)
-  {
+    // dilate + inverse
+    switch (mode) {
     case 0:
-      // inversion cancelled in previous operation
-      if (!lsedt_meijster(ob, dist)) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r2) {
-          O[i] = NDG_MAX;
-        } else {
-          O[i] = NDG_MIN;
+        // inversion cancelled in previous operation
+        if (!lsedt_meijster(ob, dist)) {
+            return 0;
         }
-      }
-      break;
+        for (i = 0; i < N; i++) {
+            if (D[i] > r2) {
+                O[i] = NDG_MAX;
+            } else {
+                O[i] = NDG_MIN;
+            }
+        }
+        break;
     case 1:
-      if (ds == 1) {
-        ret = ldistquad(ob, dist);
-      } else {
-        ret = ldistquad3d(ob, dist);
-      }
-      if (!ret) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r) {
-          O[i] = NDG_MAX;
+        if (ds == 1) {
+            ret = ldistquad(ob, dist);
         } else {
-          O[i] = NDG_MIN;
+            ret = ldistquad3d(ob, dist);
         }
-      }
-      break;
+        if (!ret) {
+            return 0;
+        }
+        for (i = 0; i < N; i++) {
+            if (D[i] > r) {
+                O[i] = NDG_MAX;
+            } else {
+                O[i] = NDG_MIN;
+            }
+        }
+        break;
     case 2:
-      if (!lchamfrein(ob, dist)) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r) {
-          O[i] = NDG_MAX;
-        } else {
-          O[i] = NDG_MIN;
+        if (!lchamfrein(ob, dist)) {
+            return 0;
         }
-      }
-      break;
-    case 3: 
-      // inversion cancelled in previous operation
-      if (!lsedt_meijster(ob, dist)) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r) {
-          O[i] = NDG_MAX;
-        } else {
-          O[i] = NDG_MIN;
+        for (i = 0; i < N; i++) {
+            if (D[i] > r) {
+                O[i] = NDG_MAX;
+            } else {
+                O[i] = NDG_MIN;
+            }
         }
-      }
-      break;
+        break;
+    case 3:
+        // inversion cancelled in previous operation
+        if (!lsedt_meijster(ob, dist)) {
+            return 0;
+        }
+        for (i = 0; i < N; i++) {
+            if (D[i] > r) {
+                O[i] = NDG_MAX;
+            } else {
+                O[i] = NDG_MIN;
+            }
+        }
+        break;
     case 4:
     case 8:
     case 6:
     case 18:
     case 26:
-      if (!ldist(ob, mode, dist)) {
-        return 0;
-      }
-      for (i = 0; i < N; i++) {
-        if (D[i] > r) {
-          O[i] = NDG_MAX;
-        } else {
-          O[i] = NDG_MIN;
+        if (!ldist(ob, mode, dist)) {
+            return 0;
         }
-      }
-      break;
-    default: 
-      fprintf(stderr, "%s: bad mode: %d\n", F_NAME, mode);
-      return 0;
-  }
+        for (i = 0; i < N; i++) {
+            if (D[i] > r) {
+                O[i] = NDG_MAX;
+            } else {
+                O[i] = NDG_MIN;
+            }
+        }
+        break;
+    default:
+        fprintf(stderr, "%s: bad mode: %d\n", F_NAME, mode);
+        return 0;
+    }
 
-  freeimage(dist);    
-  return 1;
+    freeimage(dist);
+    return 1;
 } // lcloseball()
 
 /* ======================================================== */
@@ -3347,87 +3265,79 @@ int32_t ldilatballloc(struct xvimage* f, struct xvimage* res, int32_t mode)
 #undef F_NAME
 #define F_NAME "ldilatballloc"
 {
-  struct xvimage *tmp1;
-  uint8_t *T1;
-  uint8_t *R;
-  index_t rs = rowsize(f), cs = colsize(f), ds = depth(f), N = rs * cs * ds, i;
-  int32_t vmax, v;
-  int32_t go;
+    struct xvimage *tmp1;
+    uint8_t *T1;
+    uint8_t *R;
+    index_t rs = rowsize(f), cs = colsize(f), ds = depth(f), N = rs * cs * ds, i;
+    int32_t vmax, v;
+    int32_t go;
 
-  ACCEPTED_TYPES2(f, VFF_TYP_1_BYTE, VFF_TYP_4_BYTE);
-  ACCEPTED_TYPES1(res, VFF_TYP_1_BYTE);
-  COMPARE_SIZE(res, f);
+    ACCEPTED_TYPES2(f, VFF_TYP_1_BYTE, VFF_TYP_4_BYTE);
+    ACCEPTED_TYPES1(res, VFF_TYP_1_BYTE);
+    COMPARE_SIZE(res, f);
 
-  tmp1 = allocimage(NULL, rs, cs, ds, VFF_TYP_1_BYTE);
-  if (tmp1 == NULL)
-  {
-    fprintf(stderr, "%s: allocimage failed\n", F_NAME);
-    return(0);
-  }
-  T1 = UCHARDATA(tmp1);
-  R = UCHARDATA(res);
-  memset(R, 0, N);
-  if (datatype(f) == VFF_TYP_1_BYTE)
-  {
-    uint8_t *F = UCHARDATA(f);
-    vmax = F[0];
-    for (i = 0; i < N; i++) {
-      if (F[i] > vmax) {
-        vmax = F[i];
-      }
+    tmp1 = allocimage(NULL, rs, cs, ds, VFF_TYP_1_BYTE);
+    if (tmp1 == NULL) {
+        fprintf(stderr, "%s: allocimage failed\n", F_NAME);
+        return(0);
     }
-    for (v = 1; v <= vmax; v++)
-    {
-      memset(T1, 0, N);
-      go = 0;
-      for (i = 0; i < N; i++) {
-        if (F[i] == v) {
-          go = 1;
-          T1[i] = NDG_MAX;
-        }
-      }
-      if (go) 
-      { 
-        ldilatball(tmp1, v-1, mode);
+    T1 = UCHARDATA(tmp1);
+    R = UCHARDATA(res);
+    memset(R, 0, N);
+    if (datatype(f) == VFF_TYP_1_BYTE) {
+        uint8_t *F = UCHARDATA(f);
+        vmax = F[0];
         for (i = 0; i < N; i++) {
-          if (T1[i]) {
-            R[i] = NDG_MAX;
-          }
+            if (F[i] > vmax) {
+                vmax = F[i];
+            }
         }
-      }
-    } // for (v = 1; v <= vmax; v++)
-  }
-  else //if (datatype(f) == VFF_TYP_4_BYTE)
-  {
-    uint32_t *F = ULONGDATA(f);
-    vmax = F[0];
-    for (i = 0; i < N; i++) {
-      if (F[i] > vmax) {
-        vmax = F[i];
-      }
+        for (v = 1; v <= vmax; v++) {
+            memset(T1, 0, N);
+            go = 0;
+            for (i = 0; i < N; i++) {
+                if (F[i] == v) {
+                    go = 1;
+                    T1[i] = NDG_MAX;
+                }
+            }
+            if (go) {
+                ldilatball(tmp1, v-1, mode);
+                for (i = 0; i < N; i++) {
+                    if (T1[i]) {
+                        R[i] = NDG_MAX;
+                    }
+                }
+            }
+        } // for (v = 1; v <= vmax; v++)
+    } else { //if (datatype(f) == VFF_TYP_4_BYTE)
+        uint32_t *F = ULONGDATA(f);
+        vmax = F[0];
+        for (i = 0; i < N; i++) {
+            if (F[i] > vmax) {
+                vmax = F[i];
+            }
+        }
+        for (v = 1; v <= vmax; v++) {
+            memset(T1, 0, N);
+            go = 0;
+            for (i = 0; i < N; i++) {
+                if (F[i] == v) {
+                    go = 1;
+                    T1[i] = NDG_MAX;
+                }
+            }
+            if (go) {
+                ldilatball(tmp1, v-1, mode);
+                for (i = 0; i < N; i++) {
+                    if (T1[i]) {
+                        R[i] = NDG_MAX;
+                    }
+                }
+            }
+        } // for (v = 1; v <= vmax; v++)
     }
-    for (v = 1; v <= vmax; v++)
-    {
-      memset(T1, 0, N);
-      go = 0;
-      for (i = 0; i < N; i++) {
-        if (F[i] == v) {
-          go = 1;
-          T1[i] = NDG_MAX;
-        }
-      }
-      if (go) 
-      { 
-        ldilatball(tmp1, v-1, mode);
-        for (i = 0; i < N; i++) {
-          if (T1[i]) {
-            R[i] = NDG_MAX;
-          }
-        }
-      }
-    } // for (v = 1; v <= vmax; v++)
-  }
 
-  freeimage(tmp1);
-  return(1);
+    freeimage(tmp1);
+    return(1);
 } // ldilatballloc()

@@ -1,5 +1,5 @@
 /*
-Copyright ESIEE (2009) 
+Copyright ESIEE (2009)
 
 m.couprie@esiee.fr
 
@@ -7,16 +7,16 @@ This software is an image processing library whose purpose is to be
 used primarily for research and teaching.
 
 This software is governed by the CeCILL  license under French law and
-abiding by the rules of distribution of free software. You can  use, 
+abiding by the rules of distribution of free software. You can  use,
 modify and/ or redistribute the software under the terms of the CeCILL
 license as circulated by CEA, CNRS and INRIA at the following URL
-"http://www.cecill.info". 
+"http://www.cecill.info".
 
 As a counterpart to the access to the source code and  rights to copy,
 modify and redistribute granted by the license, users are provided only
 with a limited warranty  and the software's author,  the holder of the
 economic rights,  and the successive licensors  have only  limited
-liability. 
+liability.
 
 In this respect, the user's attention is drawn to the risks associated
 with loading,  using,  modifying and/or developing or reproducing the
@@ -25,9 +25,9 @@ that may mean  that it is complicated to manipulate,  and  that  also
 therefore means  that it is reserved for developers  and  experienced
 professionals having in-depth computer knowledge. Users are therefore
 encouraged to load and test the software's suitability as regards their
-requirements in conditions enabling the security of their systems and/or 
-data to be ensured and,  more generally, to use and operate it in the 
-same conditions as regards security. 
+requirements in conditions enabling the security of their systems and/or
+data to be ensured and,  more generally, to use and operate it in the
+same conditions as regards security.
 
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
@@ -39,21 +39,21 @@ knowledge of the CeCILL license and that you accept its terms.
 <B>Usage:</B> dynamiquefilter in.pgm connex value [order] out.pgm
 
 <B>Description:</B>
-Computes the ordered dynamics of the maxima, with connectivity <B>connex</B>, 
+Computes the ordered dynamics of the maxima, with connectivity <B>connex</B>,
 selects the maxima with a dynamics greater or equal to <B>value</B>,
-and find the maximal components which includes these maxima. 
-The definition of the ordered dynamics is the one given in [Ber05]. 
+and find the maximal components which includes these maxima.
+The definition of the ordered dynamics is the one given in [Ber05].
 The optional argument <B>order</B> is one of the following:
-\li 0: altitude [default] 
+\li 0: altitude [default]
 \li 1: area
 \li 2: volume
 
-References:<BR> 
+References:<BR>
 [Ber05] G. Bertrand: "A new definition of the dynamics", <I>Procs. ISMM05</I>, Springer, series Computational Imaging and Vision, Vol.&nbsp;30, pp.&nbsp;197-206, 2005.<BR>
 
 <B>Types supported:</B> byte 2D, byte 3D.
 
-<B>Category:</B> 
+<B>Category:</B>
 \ingroup connect
 
 \author Michel Couprie
@@ -72,87 +72,76 @@ References:<BR>
 int main(int argc, char **argv)
 /* =============================================================== */
 {
-  struct xvimage * image = NULL;
-  struct xvimage * order = NULL;
-  int32_t mode;
-  int32_t connex;
-  int32_t value;
-  int32_t nblabels;
+    struct xvimage * image = NULL;
+    struct xvimage * order = NULL;
+    int32_t mode;
+    int32_t connex;
+    int32_t value;
+    int32_t nblabels;
 
-  if ((argc != 5) && (argc != 6))
-  {
-    fprintf(stderr, "usage: %s filein.pgm connex value [order] fileout.pgm\n", argv[0]);
-    exit(1);
-  }
-
-  image = readimage(argv[1]);
-  if (image == NULL)
-  {
-    fprintf(stderr, "%s: readimage failed\n", argv[0]);
-    exit(1);
-  }
-
-  connex = atoi(argv[2]);
-  value = atoi(argv[3]);
-
-  if (argc == 6) {
-    mode = atoi(argv[4]);
-  } else {
-    mode = 0;
-  }
-
-  order = allocimage(NULL, rowsize(image), colsize(image), depth(image), VFF_TYP_4_BYTE);
-  if (order == NULL)
-  {   
-    fprintf(stderr, "%s: allocimage failed\n", argv[0]);
-    exit(1);
-  }
-
-  if (! llabelextrema(image, connex, LABMAX, order, &nblabels))
-  {
-    fprintf(stderr, "%s: llabelextrema failed\n", argv[0]);
-    exit(1);
-  }
-
-  switch (mode)
-  {
-  case 0:
-    if (! lordermaxima(image, order, connex, nblabels))
-    {
-      fprintf(stderr, "%s: lordermaxima failed\n", argv[0]);
-      exit(1);
+    if ((argc != 5) && (argc != 6)) {
+        fprintf(stderr, "usage: %s filein.pgm connex value [order] fileout.pgm\n", argv[0]);
+        exit(1);
     }
-    break;
-  case 1:
-    if (! lordermaximasurf(image, order, connex, nblabels))
-    {
-      fprintf(stderr, "%s: lordermaximasurf failed\n", argv[0]);
-      exit(1);
+
+    image = readimage(argv[1]);
+    if (image == NULL) {
+        fprintf(stderr, "%s: readimage failed\n", argv[0]);
+        exit(1);
     }
-    break;
-  case 2:
-    if (! lordermaximavol(image, order, connex, nblabels))
-    {
-      fprintf(stderr, "%s: lordermaximavol failed\n", argv[0]);
-      exit(1);
+
+    connex = atoi(argv[2]);
+    value = atoi(argv[3]);
+
+    if (argc == 6) {
+        mode = atoi(argv[4]);
+    } else {
+        mode = 0;
     }
-    break;
-  default:
-    fprintf(stderr, "%s: bad mode: %d\n", argv[0], mode);
-    exit(1);    
-  } // switch (mode)
 
-  if (! lfiltredynamique(image, order, connex, value))
-  {
-    fprintf(stderr, "%s: ldynamiquefilter failed\n", argv[0]);
-    exit(1);
-  }
+    order = allocimage(NULL, rowsize(image), colsize(image), depth(image), VFF_TYP_4_BYTE);
+    if (order == NULL) {
+        fprintf(stderr, "%s: allocimage failed\n", argv[0]);
+        exit(1);
+    }
 
-  writeimage(image, argv[argc - 1]);
-  freeimage(image);
+    if (! llabelextrema(image, connex, LABMAX, order, &nblabels)) {
+        fprintf(stderr, "%s: llabelextrema failed\n", argv[0]);
+        exit(1);
+    }
 
-  return 0;
+    switch (mode) {
+    case 0:
+        if (! lordermaxima(image, order, connex, nblabels)) {
+            fprintf(stderr, "%s: lordermaxima failed\n", argv[0]);
+            exit(1);
+        }
+        break;
+    case 1:
+        if (! lordermaximasurf(image, order, connex, nblabels)) {
+            fprintf(stderr, "%s: lordermaximasurf failed\n", argv[0]);
+            exit(1);
+        }
+        break;
+    case 2:
+        if (! lordermaximavol(image, order, connex, nblabels)) {
+            fprintf(stderr, "%s: lordermaximavol failed\n", argv[0]);
+            exit(1);
+        }
+        break;
+    default:
+        fprintf(stderr, "%s: bad mode: %d\n", argv[0], mode);
+        exit(1);
+    } // switch (mode)
+
+    if (! lfiltredynamique(image, order, connex, value)) {
+        fprintf(stderr, "%s: ldynamiquefilter failed\n", argv[0]);
+        exit(1);
+    }
+
+    writeimage(image, argv[argc - 1]);
+    freeimage(image);
+
+    return 0;
 } /* main */
-
-
 

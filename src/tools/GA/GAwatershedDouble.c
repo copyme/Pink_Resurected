@@ -1,5 +1,5 @@
 /*
-Copyright ESIEE (2009) 
+Copyright ESIEE (2009)
 
 m.couprie@esiee.fr
 
@@ -7,16 +7,16 @@ This software is an image processing library whose purpose is to be
 used primarily for research and teaching.
 
 This software is governed by the CeCILL  license under French law and
-abiding by the rules of distribution of free software. You can  use, 
+abiding by the rules of distribution of free software. You can  use,
 modify and/ or redistribute the software under the terms of the CeCILL
 license as circulated by CEA, CNRS and INRIA at the following URL
-"http://www.cecill.info". 
+"http://www.cecill.info".
 
 As a counterpart to the access to the source code and  rights to copy,
 modify and redistribute granted by the license, users are provided only
 with a limited warranty  and the software's author,  the holder of the
 economic rights,  and the successive licensors  have only  limited
-liability. 
+liability.
 
 In this respect, the user's attention is drawn to the risks associated
 with loading,  using,  modifying and/or developing or reproducing the
@@ -25,9 +25,9 @@ that may mean  that it is complicated to manipulate,  and  that  also
 therefore means  that it is reserved for developers  and  experienced
 professionals having in-depth computer knowledge. Users are therefore
 encouraged to load and test the software's suitability as regards their
-requirements in conditions enabling the security of their systems and/or 
-data to be ensured and,  more generally, to use and operate it in the 
-same conditions as regards security. 
+requirements in conditions enabling the security of their systems and/or
+data to be ensured and,  more generally, to use and operate it in the
+same conditions as regards security.
 
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
@@ -36,18 +36,18 @@ knowledge of the CeCILL license and that you accept its terms.
 
 \brief Compute the watershed of a 4-connected edge-weighted graph (a GA) where the weights are doubles.
 
-<B>Usage:</B> 
+<B>Usage:</B>
 
 <B>Description:</B>
 
-<B>Types supported:</B> GA byte 2D 
+<B>Types supported:</B> GA byte 2D
 
-<B>Category:</B> 
-\ingroup  
+<B>Category:</B>
+\ingroup
 
 \author Jean Cousty
 */
-/* 
+/*
 NAME
 
 <B>GAwatershed</B> - watershed of a 4-connected edge-weighted graph
@@ -74,7 +74,7 @@ image.
 
 Types supported: GA byte 2D.
 
-CLASS 
+CLASS
 
 connect
 
@@ -100,68 +100,65 @@ connect
 #include <time.h>
 #endif
 
-int main(int argc, char **argv)
-{
-  FILE *fd = NULL;
-  struct xvimage * image = NULL;
-  struct xvimage * ga = NULL;
-  struct xvimage * gaout = NULL;
-  struct xvimage * watershed = NULL;
-  double * F = NULL;
-  double TA, TB,r,rprime;
-  int32_t i,j,k,y;
+int main(int argc, char **argv) {
+    FILE *fd = NULL;
+    struct xvimage * image = NULL;
+    struct xvimage * ga = NULL;
+    struct xvimage * gaout = NULL;
+    struct xvimage * watershed = NULL;
+    double * F = NULL;
+    double TA, TB,r,rprime;
+    int32_t i,j,k,y;
 #ifdef TIME_WATERSHED_TEST
-  clock_t t1,t2;
+    clock_t t1,t2;
 #endif
-  int32_t rs;               /* taille ligne */
-  int32_t cs;               /* taille colonne */
-  int32_t * FlowMapping = NULL;
-  double max = 0;
-  double * G = NULL;
-  if (argc != 5 )
-  {
-            fprintf(stderr, "usage: %s imageRawDouble rs cs gaout\n", argv[0]); 
-	    exit(1);
-  }
-  rs = atoi(argv[2]);
-  cs = atoi(argv[3]);
-  printf("rs %d et cs %d \n",rs, cs);
+    int32_t rs;               /* taille ligne */
+    int32_t cs;               /* taille colonne */
+    int32_t * FlowMapping = NULL;
+    double max = 0;
+    double * G = NULL;
+    if (argc != 5 ) {
+        fprintf(stderr, "usage: %s imageRawDouble rs cs gaout\n", argv[0]);
+        exit(1);
+    }
+    rs = atoi(argv[2]);
+    cs = atoi(argv[3]);
+    printf("rs %d et cs %d \n",rs, cs);
 #ifdef UNIXIO
-  fd = fopen(argv[1],"r");
+    fd = fopen(argv[1],"r");
 #endif
 #ifdef DOSIO
-  fd = fopen(argv[1],"rb");
+    fd = fopen(argv[1],"rb");
 #endif
-  image = allocimage(NULL, rs, cs, 1, VFF_TYP_DOUBLE);    
-  if(fread(DOUBLEDATA(image), sizeof(double), rs * cs, fd) != rs * cs)
-  {
-    printf("Erreur de fread \n");
-    exit(0);
-  }
-  fclose(fd);
-  F = DOUBLEDATA(image);
-  ga = allocGAimage(NULL, rs, cs, 1, VFF_TYP_GADOUBLE);
-  if( lpgm2gaDouble(image,ga, 1, 18) != 1 )
-  {
-    fprintf(stderr, "%s: erreur de lppm2gadouble \n", argv[0]);
-    exit(1);
-  } 
-  if( (watershed = allocimage(NULL, rs,cs, 2, VFF_TYP_4_BYTE)) == NULL){
-    fprintf(stderr, "%s : erreur de malloc\n",argv[0]);
-    exit(0);
-  }
+    image = allocimage(NULL, rs, cs, 1, VFF_TYP_DOUBLE);
+    if(fread(DOUBLEDATA(image), sizeof(double), rs * cs, fd) != rs * cs) {
+        printf("Erreur de fread \n");
+        exit(0);
+    }
+    fclose(fd);
+    F = DOUBLEDATA(image);
+    ga = allocGAimage(NULL, rs, cs, 1, VFF_TYP_GADOUBLE);
+    if( lpgm2gaDouble(image,ga, 1, 18) != 1 ) {
+        fprintf(stderr, "%s: erreur de lppm2gadouble \n", argv[0]);
+        exit(1);
+    }
+    if( (watershed = allocimage(NULL, rs,cs, 2, VFF_TYP_4_BYTE)) == NULL) {
+        fprintf(stderr, "%s : erreur de malloc\n",argv[0]);
+        exit(0);
+    }
 
-  FlowMapping = SLONGDATA(watershed);
-  flowMappingDouble(ga, FlowMapping); 
-  printf("Je suis dans le bon type\n");
-  fflush(stdout);
-  gaout = SeparatingEdge(watershed);
-  printf("%s (devrait etre _gaout)\n", argv[2]);
-  writerawGAimage(gaout, argv[4]);
-  printf("Super totosizeofdouble %lu \n", sizeof(double));
-  if (!gaout) {
-    free(gaout);
-  }
-  free(watershed); free(ga);
-  return 0;
+    FlowMapping = SLONGDATA(watershed);
+    flowMappingDouble(ga, FlowMapping);
+    printf("Je suis dans le bon type\n");
+    fflush(stdout);
+    gaout = SeparatingEdge(watershed);
+    printf("%s (devrait etre _gaout)\n", argv[2]);
+    writerawGAimage(gaout, argv[4]);
+    printf("Super totosizeofdouble %lu \n", sizeof(double));
+    if (!gaout) {
+        free(gaout);
+    }
+    free(watershed);
+    free(ga);
+    return 0;
 }
