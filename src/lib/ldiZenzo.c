@@ -195,17 +195,17 @@ int32_t ldiZenzoDirection(struct xvimage *imageR, struct xvimage *imageV, struct
   int32_t rs = imageR->row_size;
   int32_t cs = imageR->col_size;
   int32_t N = rs * cs;
-  double *ImRx;    /* image intermediaire gradient x */
-  double *ImRy;    /* image intermediaire gradient y */
-  double *ImR;    /* image intermediaire */
-  double *ImVx;    /* image intermediaire gradient x */
-  double *ImVy;    /* image intermediaire gradient y */
-  double *ImV;    /* image intermediaire */
-  double *ImBx;    /* image intermediaire gradient x */
-  double *ImBy;    /* image intermediaire gradient y */
-  double *ImB;    /* image intermediaire */
-  double *buf1;   /* buffer ligne ou colonne */
-  double *buf2;   /* buffer ligne ou colonne */
+  double *ImRx = NULL;    /* image intermediaire gradient x */
+  double *ImRy = NULL;    /* image intermediaire gradient y */
+  double *ImR = NULL;    /* image intermediaire */
+  double *ImVx = NULL;    /* image intermediaire gradient x */
+  double *ImVy = NULL;    /* image intermediaire gradient y */
+  double *ImV = NULL;    /* image intermediaire */
+  double *ImBx = NULL;    /* image intermediaire gradient x */
+  double *ImBy = NULL;    /* image intermediaire gradient y */
+  double *ImB = NULL;    /* image intermediaire */
+  double *buf1 = NULL;   /* buffer ligne ou colonne */
+  double *buf2 = NULL;   /* buffer ligne ou colonne */
   double k;       /* constante de normalisation pour le lisseur */
   double kp;      /* constante de normalisation pour le derivateur */
   double kpp;     /* constante de normalisation pour le laplacien */
@@ -246,11 +246,17 @@ int32_t ldiZenzoDirection(struct xvimage *imageR, struct xvimage *imageV, struct
   buf1 = (double *)calloc(1,mcmax(rs, cs) * sizeof(double));
   buf2 = (double *)calloc(1,mcmax(rs, cs) * sizeof(double));
 
-  if ((ImRx==NULL) || (ImRx==NULL) || (ImR==NULL) 
-      ||(ImVx==NULL) || (ImVx==NULL) || (ImB==NULL) 
-      ||(ImBx==NULL) || (ImBx==NULL) || (ImB==NULL) 
-      || (buf1==NULL) || (buf2==NULL))
-  {   fprintf(stderr,"lderiche() : malloc failed\n");
+  if (!ImRx || !ImRy || !ImR ||
+      !ImVx || !ImVy || !ImV ||
+      !ImBx || !ImBy || !ImB ||
+      !buf1 || !buf2) {
+      fprintf(stderr,"lderiche() : malloc failed\n");
+
+      free(ImRx); free(ImRy); free(ImR);
+      free(ImVx); free(ImVy); free(ImV);
+      free(ImBx); free(ImBy); free(ImB);
+      free(buf1); free(buf2);
+
       return(0);
   }
 
@@ -309,7 +315,6 @@ printf("alpha = %g , e_a = %g , e_2a = %g , k = %g\n", alpha, e_a, e_2a, k);
 	
 	if (p!=q) {
 	  dir[i] = (int32_t) (180.0/3.1415927*(.5*atan2(2.0*t, (p-q)))+180.);
-	  //printf("%d\n", dir[i]);
         } else {
           dir[i] = 361;
         }

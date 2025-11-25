@@ -1637,7 +1637,7 @@ int32_t ldistSaito(struct xvimage *img,   /* donnee: image binaire */
   index_t cs = img->col_size;
   index_t N= rs * cs;            /* taille de l'image */
   uint8_t *F = UCHARDATA(img);   /* pointeur sur l'image */
-  uint32_t *D;                   /* pointeur sur les distances */
+  uint32_t *D = NULL;                   /* pointeur sur les distances */
   int32_t * buff = (int32_t *)calloc(1,cs * sizeof(int32_t));
   double * R = DOUBLEDATA(res);
 
@@ -1649,6 +1649,7 @@ int32_t ldistSaito(struct xvimage *img,   /* donnee: image binaire */
   if (D == NULL)
   {
     fprintf(stderr, "%s: malloc failed\n", F_NAME);
+    free(buff);
     return(0);
   }
 
