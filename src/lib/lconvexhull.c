@@ -93,16 +93,16 @@ int32_t lconvexhull(struct xvimage * image1, int32_t ** listepoints, int32_t * n
 /* ==================================== */
 {
   int32_t i, y;
-  uint8_t *F;
+  uint8_t *F = NULL;
   int32_t rs, cs, N;
-  int32_t *P;             /* la liste des points de l'objet */
+  int32_t *P = NULL;             /* la liste des points de l'objet */
   int32_t n;              /* le nombre de points de l'objet */
   int32_t p0, yp0, ip0;   /* le point initial, son ordonnee et son index dans la liste P*/
   int32_t pk, ypk, ipk;   /* le point intermediaire, son ordonnee et son index */
   int32_t p;              /* point courant */
   int32_t ips;            /* point suivant */
   int32_t ips2;           /* point suivant aux */
-  int32_t *Ph;            /* la liste des points de l'enveloppe */
+  int32_t *Ph = NULL;            /* la liste des points de l'enveloppe */
   int32_t nh;             /* le nombre de points de l'enveloppe */
 
   if (depth(image1) != 1) 
@@ -117,14 +117,17 @@ int32_t lconvexhull(struct xvimage * image1, int32_t ** listepoints, int32_t * n
   
   P = (int32_t *)calloc(1,N * sizeof(int32_t));
   if (P == NULL)
-  {   fprintf(stderr, "lconvexhull() : malloc failed for P\n");
-      return(0); 
+  {
+    fprintf(stderr, "lconvexhull() : malloc failed for P\n");
+    return(0);
   }
 
   Ph = (int32_t *)calloc(1,N * sizeof(int32_t));
   if (Ph == NULL)
-  {   fprintf(stderr, "lconvexhull() : malloc failed for Ph\n");
-      return(0);
+  {
+    free(P);
+    fprintf(stderr, "lconvexhull() : malloc failed for Ph\n");
+    return(0);
   }
 
   /* construit la liste p des points de l'objet */

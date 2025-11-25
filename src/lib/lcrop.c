@@ -1282,12 +1282,6 @@ struct xvimage * lautocrop(struct xvimage *in, double seuil)
   ymin = cs; ymax = 0; 
   zmin = ds; zmax = 0; 
 
-#ifdef VERBOSE
-  printf("Crop: xmin=%d, ymin=%d, zmin=%d, w=%d, h=%d, p=%d\n",
-	 xmin, ymin, zmin, w, h, p);
-#endif
-
-
   if (datatype(in) == VFF_TYP_1_BYTE)
   {
     uint8_t *I = UCHARDATA(in);

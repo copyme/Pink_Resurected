@@ -71,6 +71,7 @@ int32_t lconvol3(struct xvimage * image, struct xvimage * mask, int32_t normalis
 
   if ((mask->row_size != 3) || (mask->col_size != 3))
   {
+    free(trv);
     fprintf(stderr, "convol3: bad mask size\n");
     return 0;
   }

@@ -63,14 +63,14 @@ int32_t ldetectcercles(struct xvimage *f, int32_t rayon)
   int32_t rsm = 2 * rayon + 1;     /* taille ligne masque */
   int32_t csm = 2 * rayon + 1;     /* taille colonne masque */
   int32_t Nm = rsm * csm;
-  struct xvimage *m;
-  uint8_t *M;
+  struct xvimage *m  = NULL;
+  uint8_t *M = NULL;
   uint8_t *F = UCHARDATA(f);
-  uint32_t *H;            /* image de travail (accumulateur) */
+  uint32_t *H = NULL;            /* image de travail (accumulateur) */
   uint32_t tmp;
   int32_t nptb;                    /* nombre de points du cercle */
-  int32_t *tab_es_x;               /* liste des coord. x des points du cercle */
-  int32_t *tab_es_y;               /* liste des coord. y des points du cercle */
+  int32_t *tab_es_x = NULL;               /* liste des coord. x des points du cercle */
+  int32_t *tab_es_y = NULL;               /* liste des coord. y des points du cercle */
   int32_t c;
 
   if (depth(f) != 1) 
@@ -90,8 +90,9 @@ int32_t ldetectcercles(struct xvimage *f, int32_t rayon)
   m = allocimage(NULL, rsm, csm, 1, VFF_TYP_1_BYTE);
   if (m == NULL)
   {  
-     fprintf(stderr,"ldetectcercles() : allocimage failed\n");
-     return(0);
+    free(H);
+    fprintf(stderr,"ldetectcercles() : allocimage failed\n");
+    return(0);
   }
   M = UCHARDATA(m);
   memset(M, 0, Nm);
@@ -110,6 +111,8 @@ int32_t ldetectcercles(struct xvimage *f, int32_t rayon)
   tab_es_y = (int32_t *)calloc(1,nptb * sizeof(int32_t));
   if ((tab_es_x == NULL) || (tab_es_y == NULL))
   {  
+     free(H);
+     freeimage(m);
      fprintf(stderr,"ldetectcercles() : malloc failed for tab_es\n");
      return(0);
   }

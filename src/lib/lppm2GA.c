@@ -826,7 +826,12 @@ int32_t laffinitynetwork(struct xvimage *r, struct xvimage *v, struct xvimage *b
   
   sphere_points = (int16_t (**)[3])malloc((SCALE + 1) * sizeof(void *));
   if (sphere_points == NULL) 
-  { printf("laffinitynetwork: erreur de malloc\n");  exit(0);}
+  {
+    free(sphere_no_points);
+    printf("laffinitynetwork: erreur de malloc\n");
+    exit(0);
+
+  }
   tti1 = SCALE + 5; 
   anisotropy_row = 1;
   anisotropy_col = 1;
@@ -870,7 +875,6 @@ int32_t laffinitynetwork(struct xvimage *r, struct xvimage *v, struct xvimage *b
 	  sphere_points[k][tti2][1] = j;
 	  sphere_points[k][tti2][2] = l;
 	  tti2 = tti2 + 1;
-	  //	  printf("sphere point de %ds = %d \n", k, sphere_points[k][tti2-1][2]);
         }
       }
     }
@@ -1096,40 +1100,15 @@ int32_t laffinitynetwork(struct xvimage *r, struct xvimage *v, struct xvimage *b
       printf("Valeur non valide pour homogeneity map !!! %f \n",
              homogeneity_map[0][tti2]);
     }
-    //  printf("homogeneity_map %f \n", homogeneity_map[0][tti2]);
-    // scale_map[tti2] = (float)exp(-0.5*result/9);
     scale_map[tti2] = (float)exp(-0.5*result);
-    // printf("scale_map %f \n", scale_map[tti2]);
   }
   
   printf("Homogeneity_map and scale_map computation is done \n");
     
   printf("les feature thr %d %d %d\n", feature_thr[0], feature_thr[1], feature_thr[2]);
   compute_scale(image, &scale_image, scale_map, sphere_no_points, /*sphere_points,*/N,rs,cs,feature_mean,feature_thr, pow_value );
-  // printf("Re scale image de 2 vaut %d \n", scale_image[2]);
-  
-  //printf("Scale computation is done \n");
-  //  time(&t2);
-  //  printf("scale computation last:%f seconds\n",difftime(t2,t1)); 
 
-  // based on scale, computing filtering image. when it is done, free memory occupied by data array (pas necessaire ds le cas du veritable scale base case ?...)
-  /*
-    filter_image8 = (uint8_t **)malloc(3*sizeof(uint8_t*));
-    filter_image8[0] = (uint8_t *)malloc(3*N*sizeof(char));
-  if(filter_image8 ==NULL||filter_image8[0]==NULL)
-  { printf("laffinitynetwork: erreur de malloc\n"); exit(0);}
-  for (i = 0;i< FEATURES;i++)
-    filter_image8[i] =  filter_image8[0] + i*volume_size;
-  compute_filter();
-  */
-  // printf("av calcule material \n");
-  // compute_material();  
-  // compute_homogeneity(); 
-  /* le filtrage n'a servi a rien*/
-  //filter_image8 = image;
   compute_homogeneitysb(image, feature_mean, x_affinity, y_affinity, scale_image, sphere_no_points,/* sphere_points,*/ feature_thr, homogeneity_map, N, rs ,cs, pow_value);
-  //compute_material();
-  // liberer la memoire !!!
 
   for (k = 0; k < SCALE; k++) {
     free(sphere_points[k]);

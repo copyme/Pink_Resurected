@@ -219,13 +219,13 @@ int32_t lsegmentnum(
   int32_t N = rs * cs;             /* taille image */
   uint8_t *SOURCE = UCHARDATA(image);      /* l'image de depart */
   int32_t *M = SLONGDATA(result);
-  int32_t *T;                      /* table de correspondance pour regularisation */
+  int32_t *T = NULL;                      /* table de correspondance pour regularisation */
   int32_t nminima;                 /* nombre de minima differents */
-  Fah * FAH;                   /* la file d'attente hierarchique */
-  cbtcell * CBT;               /* arbre des bassins versants (Catchment Basin Tree) */
+  Fah * FAH = NULL;                   /* la file d'attente hierarchique */
+  cbtcell * CBT = NULL;               /* arbre des bassins versants (Catchment Basin Tree) */
   int32_t nbcell;
   int32_t nbmaxcell;
-  int32_t *MU;                     /* pour la mesure des regions */
+  int32_t *MU = NULL;                     /* pour la mesure des regions */
   int32_t etiqcc[4];
   int32_t ncc;
   int32_t newcell;
@@ -259,8 +259,10 @@ int32_t lsegmentnum(
 
   MU = (int32_t *)calloc(nbmaxcell, sizeof(int32_t));   /* init a 0 */
   if (MU == NULL)
-  {   fprintf(stderr, "lsegmentnum() : malloc failed for MU\n");
-      return(0);
+  {
+    free(CBT);
+    fprintf(stderr, "lsegmentnum() : malloc failed for MU\n");
+    return(0);
   }
   /* calcul des tailles des minima (histogramme des labels) */
   for (x = 0; x < N; x++) {

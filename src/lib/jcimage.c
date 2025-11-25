@@ -256,8 +256,10 @@ struct xvimage * readGAimage(const char *filename)
                                  /* PD: graphe d'arete flottant == extension JC */ 
 
   if (buffer[0] != 'P')
-  {   fprintf(stderr,"%s : invalid image format\n", F_NAME);
-      return NULL;
+  {
+    fprintf(stderr,"%s : invalid image format\n", F_NAME);
+    fclose(fd);
+    return NULL;
   }
   switch (buffer[1])
   {
@@ -265,7 +267,8 @@ struct xvimage * readGAimage(const char *filename)
   case 'D': typepixel = VFF_TYP_GAFLOAT; break;
   default: 
     fprintf(stderr,"%s : invalid image format, ne traite que les GAs\n", F_NAME);
-      return NULL;
+    fclose(fd);
+    return NULL;
   } /* switch */
 
 
@@ -286,6 +289,7 @@ struct xvimage * readGAimage(const char *filename)
     d = 1;
   } else if (c != 3) {
     fprintf(stderr, "%s : invalid image format\n", F_NAME);
+    fclose(fd);
     return NULL;
   }
 
@@ -314,6 +318,7 @@ struct xvimage * readGAimage(const char *filename)
     if (ret != ts*N)
     {
       fprintf(stderr,"%s : fread failed : %d asked ; %d read\n", F_NAME, N, ret);
+      fclose(fd);
       return(NULL);
     }
     
@@ -331,6 +336,7 @@ struct xvimage * readGAimage(const char *filename)
     if (ret != ts*N)
     {
       fprintf(stderr,"%s : fread failed : %d asked ; %d read\n", F_NAME, N, ret);
+      fclose(fd);
       return(NULL);
     }
     

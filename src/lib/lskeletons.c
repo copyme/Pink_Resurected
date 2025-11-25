@@ -4256,7 +4256,7 @@ resultat: F
   index_t N = ps * ds;             /* taille image */
   uint8_t *F = UCHARDATA(image);      /* l'image de depart */
   int32_t *P = NULL;     /* l'image de priorites (ndg) */
-  Rbt * RBT;
+  Rbt * RBT = NULL;
   index_t taillemaxrbt;
   uint32_t config;
 
@@ -4383,10 +4383,10 @@ int32_t lskelendcurv3d(struct xvimage *image,
 #undef F_NAME
 #define F_NAME "lskelendcurv3d"
 { 
-  uint8_t *endpoint;
+  uint8_t *endpoint = NULL;
   char tablefilename[128];
   int32_t tablesize, ret;
-  FILE *fd;
+  FILE *fd = NULL;
 
     tablesize = 1<<24;
     endpoint = (uint8_t *)malloc(tablesize);
@@ -4407,6 +4407,8 @@ int32_t lskelendcurv3d(struct xvimage *image,
     if (ret != tablesize)
     {
       fprintf(stderr,"%s : fread failed : %d asked ; %d read\n", F_NAME, tablesize, ret);
+      fclose(fd);
+      free(endpoint);
       return 0;
     }
     fclose(fd);
@@ -4414,6 +4416,7 @@ int32_t lskelendcurv3d(struct xvimage *image,
     if (! lskelend3d(image, connex, endpoint, niseuil))
     {
       fprintf(stderr, "%s: lskelend3d failed\n", F_NAME);
+      free(endpoint);
       return 0;
     }
     //    freeimage(prio);
@@ -4967,8 +4970,8 @@ Implémentation non optimisée (NBDIR scans de la liste des points de bord)
   index_t N = ps * ds;             /* taille image */
   index_t n;                       /* taille liste */
   uint8_t *F = UCHARDATA(image);   /* l'image de depart */
-  uint8_t *D;                      /* pour les directions */
-  Liste * LISTE1; // représentation de l'ensemble B (pts de bord) 
+  uint8_t *D = NULL;                      /* pour les directions */
+  Liste * LISTE1  = NULL; // représentation de l'ensemble B (pts de bord)
 
   ONLY_3D(image);
   ACCEPTED_TYPES1(image, VFF_TYP_1_BYTE);
@@ -4987,6 +4990,7 @@ Implémentation non optimisée (NBDIR scans de la liste des points de bord)
   if (LISTE1 == NULL)
   {
     fprintf(stderr, "%s: CreeListeVide failed\n", F_NAME);
+    free(D);
     return(0);
   }
   IndicsInit(N);
@@ -5141,7 +5145,7 @@ Implémentation non optimisée (NBDIR scans de la liste des points de bord)
   index_t N = ps * ds;             /* taille image */
   index_t n;                       /* taille liste */
   uint8_t *F = UCHARDATA(image);   /* l'image de depart */
-  uint8_t *D;                      /* pour les directions */
+  uint8_t *D = NULL;                      /* pour les directions */
   Liste * LISTE1; // représentation de l'ensemble B (pts de bord) 
 
   ONLY_3D(image);
@@ -5161,6 +5165,7 @@ Implémentation non optimisée (NBDIR scans de la liste des points de bord)
   if (LISTE1 == NULL)
   {
     fprintf(stderr, "%s: CreeListeVide failed\n", F_NAME);
+    free(D);
     return(0);
   }
   IndicsInit(N);
@@ -5168,7 +5173,7 @@ Implémentation non optimisée (NBDIR scans de la liste des points de bord)
 
   if (inhibit != NULL)
   {
-    uint8_t *I;
+    uint8_t *I = NULL;
     COMPARE_SIZE(image, inhibit);
     ACCEPTED_TYPES1(inhibit, VFF_TYP_1_BYTE);
     I = UCHARDATA(inhibit);

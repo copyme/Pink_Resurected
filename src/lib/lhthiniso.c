@@ -618,17 +618,11 @@ int32_t lhthiniso(struct xvimage *image, double dmax, int32_t connex, double pix
   int32_t cs = colsize(image);     /* taille colonne */
   int32_t N = rs * cs;             /* taille image */
   uint8_t *F = UCHARDATA(image);      /* l'image de depart */
-  uint32_t *T;            /* les pointeurs "origine de la valeur" */
-  int32_t incr_vois;
+  uint32_t *T = NULL;            /* les pointeurs "origine de la valeur" */
   Rbt * RBT;                   /* structure d'arbre equilibre (rouge et noir) */
-  RbtElt ** R;                 /* pointeurs sur les noeuds de l'arbre rouge et noir */
-  RbtElt * r;                  /* pointeur sur un noeud de l'arbre rouge et noir */
+  RbtElt ** R = NULL;                 /* pointeurs sur les noeuds de l'arbre rouge et noir */
+  RbtElt * r = NULL;                  /* pointeur sur un noeud de l'arbre rouge et noir */
 
-  if (connex == 4) {
-    incr_vois = 2;
-  } else {
-    incr_vois = 1;
-  }
 
   if (depth(image) != 1) 
   {
@@ -647,13 +641,17 @@ int32_t lhthiniso(struct xvimage *image, double dmax, int32_t connex, double pix
   if (R == NULL) 
   {
     fprintf(stderr, "lhthiniso: calloc failed\n");
+    free(T);
     return(0);
   }
 
   RBT = lhthiniso_CreeRbtVide(N);
   if (RBT == NULL)
-  {   fprintf(stderr, "lhthiniso() : lhthiniso_CreeRbtVide failed\n");
-      return(0);
+  {
+    fprintf(stderr, "lhthiniso() : lhthiniso_CreeRbtVide failed\n");
+    free(R);
+    free(T);
+    return(0);
   }
 
   /* ================================================ */

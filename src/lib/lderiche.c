@@ -855,12 +855,12 @@ int32_t lderiche3d(struct xvimage *image, double alpha, int32_t function, double
   int32_t ds = depth(image);
   int32_t ps = rs * cs;
   int32_t N = ps * ds;
-  double *Im1;    /* image intermediaire */
-  double *Im2;    /* image intermediaire */
-  double *Im3;    /* image intermediaire */
-  double *Imd;    /* image intermediaire */
-  double *buf1;   /* buffer ligne ou colonne */
-  double *buf2;   /* buffer ligne ou colonne */
+  double *Im1 = NULL;    /* image intermediaire */
+  double *Im2 = NULL;    /* image intermediaire */
+  double *Im3 = NULL;    /* image intermediaire */
+  double *Imd = NULL;    /* image intermediaire */
+  double *buf1 = NULL;   /* buffer ligne ou colonne */
+  double *buf2 = NULL;   /* buffer ligne ou colonne */
   double k;       /* constante de normalisation pour le lisseur */
   double kp;      /* constante de normalisation pour le derivateur */
   double kpp;     /* constante de normalisation pour le laplacien */
@@ -884,6 +884,10 @@ int32_t lderiche3d(struct xvimage *image, double alpha, int32_t function, double
     Im3 = (double *)calloc(1,N * sizeof(double));
     if ((Im2==NULL) || (Im3==NULL))
     {
+      free(Im1);
+      free(Imd);
+      free(Im2);
+      free(Im3);
       fprintf(stderr,"%s: malloc failed\n", F_NAME);
       return(0);
     }
@@ -892,7 +896,11 @@ int32_t lderiche3d(struct xvimage *image, double alpha, int32_t function, double
   buf1 = (double *)calloc(1,sbuf * sizeof(double));
   buf2 = (double *)calloc(1,sbuf * sizeof(double));
   if ((buf1==NULL) || (buf2==NULL))
-  {   
+  {
+    free(Im1);
+    free(Imd);
+    free(Im2);
+    free(Im3);
     fprintf(stderr,"%s: malloc failed\n", F_NAME);
     return(0);
   }
@@ -920,6 +928,12 @@ int32_t lderiche3d(struct xvimage *image, double alpha, int32_t function, double
   }
   else
   {
+    free(Im1);
+    free(Imd);
+    free(Im2);
+    free(Im3);
+    free(buf1);
+    free(buf2);
     fprintf(stderr,"%s: malloc failed\n", F_NAME);
     return(0);
   }
@@ -995,12 +1009,12 @@ printf("alpha = %g , e_a = %g , e_2a = %g , k = %g\n", alpha, e_a, e_2a, k);
       }
       else if (datatype(image) == VFF_TYP_FLOAT)
       {
-	float *ima = FLOATDATA(image);
-	for (i = 0; i < N; i++)      
-	{
-	  t1 = Im1[i]; t2 = Im2[i]; t3 = Im3[i];
-	  ima[i] = (float)sqrt((t1 * t1) + (t2 * t2) + (t3 * t3));
-	}
+        float *ima = FLOATDATA(image);
+        for (i = 0; i < N; i++)
+        {
+          t1 = Im1[i]; t2 = Im2[i]; t3 = Im3[i];
+          ima[i] = (float)sqrt((t1 * t1) + (t2 * t2) + (t3 * t3));
+        }
       }
       break;
 
@@ -1022,24 +1036,7 @@ printf("alpha = %g , e_a = %g , e_2a = %g , k = %g\n", alpha, e_a, e_2a, k);
       b1 = b3 = 2 * e_a;
       b2 = b4 = - e_2a;
       fprintf(stderr, "%s: mode 2 not yet implemented\n", F_NAME);
-      /*
-      deriche3dgen(Imd, rs, cs, buf1, buf2, Im1,
-                 a1, a2, a3, a4, a5, a6, a7, a8, b1, b2, b3, b4);
-      deriche3dgen(Imd, rs, cs, buf1, buf2, Im2,
-                 a5, a6, a7, a8, a1, a2, a3, a4, b1, b2, b3, b4);
 
-
-      lmin = lmax = 0.0;
-      for (i = 0; i < N; i++)
-      {
-        Im1[i] = t2 = - (Im1[i] + Im2[i]);
-        if (t2 > lmax) lmax = t2;
-        if (t2 < lmin) lmin = t2;
-      }        
-      lmax = mcmax(lmax, -lmin);
-      for (i = 0; i < N; i++)      
-        ima[i] = 127 + (uint8_t)(Im1[i] * 128.0 / lmax);
-      */
       break;
 
     case 3:  /* f - l * laplacien(f) */
@@ -1058,21 +1055,7 @@ printf("alpha = %g , e_a = %g , e_2a = %g , k = %g\n", alpha, e_a, e_2a, k);
       b1 = b3 = 2 * e_a;
       b2 = b4 = - e_2a;
       fprintf(stderr, "%s: mode 3 not yet implemented\n", F_NAME);
-      /*
-      deriche3dgen(Imd, rs, cs, buf1, buf2, Im1,
-                 a1, a2, a3, a4, a5, a6, a7, a8, b1, b2, b3, b4);
-      deriche3dgen(Imd, rs, cs, buf1, buf2, Im2,
-                 a5, a6, a7, a8, a1, a2, a3, a4, b1, b2, b3, b4);
 
-      for (i = 0; i < N; i++)      
-      {
-        t1 = -(Im1[i] + Im2[i]);
-        t2 = (double)(ima[i]) - l * t1;
-        if (t2 < 0.0) t2 = 0.0;
-        if (t2 > 255.0) t2 = 255.0;
-        ima[i] = (uint8_t)floor(t2);
-      }
-      */
       break;
 
     case 4:  /* lisseur */
@@ -1121,7 +1104,13 @@ printf("alpha = %g , e_a = %g , e_2a = %g , k = %g\n", alpha, e_a, e_2a, k);
       }
       break;
 
-      default: 
+      default:
+        free(Im1);
+        free(Imd);
+        free(Im2);
+        free(Im3);
+        free(buf1);
+        free(buf2);
         fprintf(stderr, "%s: fonction %d inexistante ; utiliser : \n", F_NAME, function);
         fprintf(stderr, "  0 : module du gradient lisse'\n");
         fprintf(stderr, "  1 : direction du gradient lisse'\n");
@@ -1134,11 +1123,8 @@ printf("alpha = %g , e_a = %g , e_2a = %g , k = %g\n", alpha, e_a, e_2a, k);
 
   free(Im1);
   free(Imd);
-  if (function == 1)
-  {
-    free(Im2);
-    free(Im3);
-  }
+  free(Im2);
+  free(Im3);
   free(buf1);
   free(buf2);
   return 1;
