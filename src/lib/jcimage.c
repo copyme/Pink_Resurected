@@ -35,13 +35,9 @@ knowledge of the CeCILL license and that you accept its terms.
 #include <stdio.h>
 #include <stdint.h>
 #include <sys/types.h>
-#include <sys/types.h>
-#include <sys/types.h>
-#include <sys/types.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include <mcutil.h>
 #include <mccodimage.h>
 #include <jccodimage.h>
 #include <mcimage.h>
@@ -56,17 +52,17 @@ knowledge of the CeCILL license and that you accept its terms.
 
 /* ==================================== */
 struct xvimage *allocGAimage(
-  char * name,
-  int32_t rs,   /* row size */
-  int32_t cs,   /* col size */
-  int32_t d,    /* depth */
-  int32_t t)    /* data type */
+  const char * name,
+  const int32_t rs,   /* row size */
+  const int32_t cs,   /* col size */
+  const int32_t d,    /* depth */
+  const int32_t t)    /* data type */
 /* ==================================== */
 #undef F_NAME
 #define F_NAME "allocimage"
 {
-  int32_t N = rs * cs * d;             /* taille image */
-  struct xvimage *g;
+  const int32_t N = rs * cs * d;             /* taille image */
+  struct xvimage *g = NULL;
   int32_t ts;                          /* type size */
   switch (t)
   {
@@ -80,7 +76,7 @@ struct xvimage *allocGAimage(
 
   g = (struct xvimage *)malloc(sizeof(struct xvimage));
   if (g == NULL)
-  {   fprintf(stderr,"%s: malloc failed (%d bytes)\n", F_NAME, sizeof(struct xvimage));
+  {   fprintf(stderr,"%s: malloc failed (%ld bytes)\n", F_NAME, sizeof(struct xvimage));
       return NULL;
   }
 
@@ -114,13 +110,14 @@ struct xvimage *allocGAimage(
  
 
 /* ==================================== */
-void writerawGAimage(struct xvimage * image, char *filename)
+void writerawGAimage(const struct xvimage * image, char *filename)
 /* ==================================== */
 #undef F_NAME
 #define F_NAME "writerawGAimage"
 {
   FILE *fd = NULL;
-  int32_t rs, cs, d, N, ret;
+  int32_t rs, cs, d, N;
+  size_t ret;
   int32_t ts;
 
   rs = rowsize(image);
@@ -142,7 +139,7 @@ void writerawGAimage(struct xvimage * image, char *filename)
   switch(datatype(image)){
   case VFF_TYP_GABYTE:
     if(d == 1) ts = 2; else ts =3;
-    if (d > 1) fputs("PC\n", fd); else fputs("PC\n", fd);
+    fputs("PC\n", fd);
     if ((image->xdim != 0.0) && (d > 1))
       fprintf(fd, "#xdim %g\n#ydim %g\n#zdim %g\n", image->xdim, image->ydim, image->zdim);
     if ((image->xdim != 0.0) && (d == 1))
@@ -153,13 +150,13 @@ void writerawGAimage(struct xvimage * image, char *filename)
     ret = fwrite(UCHARDATA(image), sizeof(char), ts*N, fd);
     if (ret != ts*N)
     {
-      fprintf(stderr, "%s: only %d items written\n", F_NAME, ret);
+      fprintf(stderr, "%s: only %ld items written\n", F_NAME, ret);
       exit(0);
     }
     break;
   case VFF_TYP_GAFLOAT:
     if(d == 1) ts = 2*sizeof(float); else ts = 3*sizeof(float);
-    if (d > 1) fputs("PD\n", fd); else fputs("PD\n", fd);
+    fputs("PD\n", fd);
     if ((image->xdim != 0.0) && (d > 1))
       fprintf(fd, "#xdim %g\n#ydim %g\n#zdim %g\n", image->xdim, image->ydim, image->zdim);
     if ((image->xdim != 0.0) && (d == 1))
@@ -169,7 +166,7 @@ void writerawGAimage(struct xvimage * image, char *filename)
     ret = fwrite(UCHARDATA(image), sizeof(char), ts*N, fd);
     if (ret != ts*N)
     {
-      fprintf(stderr, "%s: only %d items written\n", F_NAME, ret);
+      fprintf(stderr, "%s: only %ld items written\n", F_NAME, ret);
       exit(0);
     }
     break;
@@ -182,7 +179,7 @@ void writerawGAimage(struct xvimage * image, char *filename)
 } /* writerawGAimage() */
 
 /* ==================================== */
-struct xvimage * readGAimage(char *filename)
+struct xvimage * readGAimage(const char *filename)
 /* ==================================== */
 #undef F_NAME
 #define F_NAME "readGAimage"
@@ -191,7 +188,6 @@ struct xvimage * readGAimage(char *filename)
   FILE *fd = NULL;
   int32_t rs, cs, d, ndgmax, N;
   struct xvimage * image;
-  int32_t ascii;  
   int32_t typepixel;
   int32_t c;
   double xdim=1.0, ydim=1.0, zdim=1.0;
@@ -225,8 +221,8 @@ struct xvimage * readGAimage(char *filename)
   }
   switch (buffer[1])
   {
-  case 'C': ascii = 0; typepixel = VFF_TYP_GABYTE; break;
-  case 'D': ascii = 0; typepixel = VFF_TYP_GAFLOAT; break;
+  case 'C': typepixel = VFF_TYP_GABYTE; break;
+  case 'D': typepixel = VFF_TYP_GAFLOAT; break;
   default: 
     fprintf(stderr,"%s : invalid image format, ne traite que les GAs\n", F_NAME);
       return NULL;
@@ -335,9 +331,9 @@ void freeimage4D(struct xvimage4D * im)     /* derniere frame */
 }
 
 /* ==================================== */
-struct xvimage4D *readimage4D(char *prefix,   /* prefixe des noms d'images */
-			      int32_t first,    /* premiere frame */
-			      int32_t last)     /* derniere frame */
+struct xvimage4D *readimage4D(const char *prefix,   /* prefixe des noms d'images */
+			      const int32_t first,    /* premiere frame */
+			      const int32_t last)     /* derniere frame */
 /* ==================================== */
 #undef F_NAME
 #define F_NAME "readimage4D"
@@ -410,7 +406,7 @@ struct xvimage4D *readimage4D(char *prefix,   /* prefixe des noms d'images */
 
 
 /* ==================================== */
-void writeimage4D(struct xvimage4D * image, char *prefix, int32_t first, int32_t last)
+void writeimage4D(const struct xvimage4D* image, const char* prefix, const int32_t first)
 /* ==================================== */
 {
   char bufname[1024];
@@ -434,7 +430,7 @@ void writeimage4D(struct xvimage4D * image, char *prefix, int32_t first, int32_t
 } /* writeimage4D */
 
 /* ==================================== */
-struct GA4d * readGA4d(char *filename)
+struct GA4d * readGA4d(const char *filename)
 /* ==================================== */
 #undef F_NAME
 #define F_NAME "readGA4d"
@@ -520,11 +516,11 @@ struct GA4d * readGA4d(char *filename)
 
 /* ==================================== */
 struct GA4d *allocGA4d(
-			   char * name,
-			   int32_t rs,   /* row size */
-			   int32_t cs,   /* col size */
-			   int32_t d,    /* depth */
-			   int32_t ss)   /* sequence size */
+			   const char * name,
+			   const int32_t rs,   /* row size */
+			   const int32_t cs,   /* col size */
+			   const int32_t d,    /* depth */
+			   const int32_t ss)   /* sequence size */
 /* ==================================== */
 #undef F_NAME
 #define F_NAME "allocGA4d"
@@ -533,7 +529,7 @@ struct GA4d *allocGA4d(
   struct GA4d *g;
   g = (struct GA4d *)malloc(sizeof(struct GA4d) - 1 + (N * 4));
   if (g == NULL)
-  {   fprintf(stderr,"%s: malloc failed (%d bytes)\n", F_NAME, sizeof(struct xvimage) - 1 + (N * 4));
+  {   fprintf(stderr,"%s: malloc failed (%ld bytes)\n", F_NAME, sizeof(struct xvimage) - 1 + (N * 4));
       return NULL;
   }
   if (name != NULL)
@@ -558,7 +554,7 @@ struct GA4d *allocGA4d(
 } /* allocimage() */
 
 /* ==================================== */
-void writeGA4d(struct GA4d * image, char *filename)
+void writeGA4d(const struct GA4d * image, const char *filename)
 /* ==================================== */
 #undef F_NAME
 #define F_NAME "writeGA4d"
