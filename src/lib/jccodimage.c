@@ -33,16 +33,11 @@ The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
 #include <stdio.h>
-#include <stdint.h>
-#include <sys/types.h>
-#include <sys/types.h>
-#include <sys/types.h>
 #include <sys/types.h>
 #include <stdlib.h>
 #include <assert.h>
 #include <mccodimage.h>
 #include <jccodimage.h>
-#include <mcutil.h>
 
 #define VFF_TYP_GABYTE          12      /* graphe d'arete code sur 1 octet */
 
@@ -82,6 +77,7 @@ int32_t voisinGA(int32_t i, int32_t k, int32_t rs, int32_t nb)
     case 3: if((i < nb-rs) && (i%rs < rs-1)) return nb+i+1; else return -1;
     case 4: if(i%rs < rs-2) return i+1; else return -1;
     case 5: if((i/rs > 0) &&  (i%rs < rs-1)) return nb+i-rs+1; else return -1;
+    default:  return -1;
     }
   else                       /* sinon i est verticale */
     switch(k)
@@ -92,6 +88,7 @@ int32_t voisinGA(int32_t i, int32_t k, int32_t rs, int32_t nb)
     case 3: if( ((i-nb) < nb-rs) && (i%rs > 0)) return i-nb-1+rs; else return -1; 
     case 4: if((i-nb) < nb-2*rs) return i+rs;else return -1;
     case 5: if( ((i-nb) < nb-rs) && (i%rs < rs-1)) return i-nb+rs; else return -1;
+    default: return -1;
     }
   assert(1); exit(1);
 }
