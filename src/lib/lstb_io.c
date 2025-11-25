@@ -89,20 +89,11 @@ void LSTB_error(char *msg, ...)
     vsprintf(buf,strarg,args);
     LSTB_add_message(buf);
     va_end(args);
-    return;
 }
 
-void LSTB_enable_debug(void)
-{
-    debugLSTB = 1;
-    return;
-}
+void LSTB_enable_debug(void) { debugLSTB = 1; }
 
-void LSTB_disable_debug(void)
-{
-    debugLSTB = 0;
-    return;
-}
+void LSTB_disable_debug(void) { debugLSTB = 0; }
 
 int LSTB_is_debug_enabled(void)
 {
@@ -124,9 +115,7 @@ void LSTB_debug(char *msg, ...)
 		LSTB_add_message(buf);
 		va_end(args);
 	}
-	return;
 }
-
 
 static int NumMsgs = 0;
 static char **Msgs = NULL;

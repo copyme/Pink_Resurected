@@ -2193,10 +2193,7 @@ void writetiffimage(struct xvimage * image, const char *filename)
                 }
         }
     } while (0);
-
-    return;
 }
-
 
 #endif 
 //HAVE_TIFF_LIB

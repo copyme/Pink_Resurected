@@ -152,7 +152,6 @@ void max(struct xvimage * img1, struct xvimage * img2)
 			img1_data[i] = img2_data[i];
 		}
 	}
-	return;
 }
 
 // Subtract two images and write the result into img1 
@@ -187,7 +186,6 @@ void sub(struct xvimage * img1, struct xvimage * img2)
 				img1_data[i] = help;
 			}
 	}
-	return;
 }
 
 // close the org_image and write the result into img
@@ -214,8 +212,6 @@ void close_image(struct xvimage * img, struct xvimage * org_img, struct xvimage 
  	ldilatnum(img, mask, ce_x, ce_y);
  	//Erosion
 	lerosnum(img, mask, ce_x, ce_y);
-
-	return;
 }
 
 /* =============================================================== */

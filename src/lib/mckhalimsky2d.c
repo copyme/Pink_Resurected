@@ -617,7 +617,7 @@ void ndgmax2d(struct xvimage *b)
     bp = copyimage(b);
     BP = FLOATDATA(bp);
     for (j = 1; j < N; j += 1) {
-      BP[j] = 0.0f;
+      BP[j] = 0.0F;
     }
 
     for (j = 1; j < cs; j += 2) {

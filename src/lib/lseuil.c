@@ -297,7 +297,7 @@ int32_t lotsu(
       w+=histNormalized[I-1];
       u+=(I*histNormalized[I-1]);
       work1 = (uT * w - u);
-      work2 = (work1 * work1) / ( w * (1.0f-w) );
+      work2 = (work1 * work1) / (w * (1.0F - w));
       if (work2 > work3) {
         work3 = work2;
       }

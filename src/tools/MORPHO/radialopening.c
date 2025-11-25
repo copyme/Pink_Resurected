@@ -120,8 +120,6 @@ void open_image(struct xvimage * img, struct xvimage * org_img, struct xvimage *
 
   //Dilation
   ldilateros_ldilat(img, mask, rowsize(mask)/2, colsize(mask)/2);
-
-  return;
 }
 
 /* =============================================================== */

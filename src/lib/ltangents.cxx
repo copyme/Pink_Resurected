@@ -243,7 +243,6 @@ Reference:
   end[npoints-1] = -1;
 
   delete points;
-  return;
 } // ExtractDSSs()
 
 //--------------------------------------------------------------------------
@@ -644,7 +643,6 @@ printf("i = %d P=%g %g %g T=%g %g %g après inv\n", i, XP, YP, ZP, Xtan[i], Ytan
   delete pointsxy;
   delete pointsyz;
   delete pointsxz;
-  return;
 } // ExtractDSSs3D()
 
 //--------------------------------------------------------------------------

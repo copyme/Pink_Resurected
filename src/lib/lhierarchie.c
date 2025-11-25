@@ -316,7 +316,6 @@ void propagate1(JCctree *CT, int32_t root, int32_t *omegaCompo)
     propagate1(CT, s->son, omegaCompo);
     propagate1(CT, CT->tabnodes[root].lastson->son, omegaCompo);
   }
-  return;
 }
 
 // Valeurs extinctions
@@ -336,7 +335,6 @@ void propagate2(JCctree *CT, int32_t root, int32_t *omegaCompo, int32_t valeur)
     propagate2(CT, s->son, omegaCompo, valeur);
     propagate2(CT, CT->tabnodes[root].lastson->son, omegaCompo, tmp);
   }
-  return;
 }
 
 int32_t * omegaMergeTree(JCctree *CT, RAG *rag)

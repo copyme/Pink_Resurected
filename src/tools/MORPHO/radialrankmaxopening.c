@@ -131,8 +131,6 @@ void rankmax_open_image(struct xvimage * img, struct xvimage * org_img, struct x
   }
   
   (void)lmin(img, org_img);
-
-  return;
 }
 
 /* =============================================================== */
