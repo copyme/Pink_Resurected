@@ -121,7 +121,7 @@ int main(int32_t argc, char **argv)
   if(atoi(argv[3]) == 0)
     writeGA4d(ga,argv[4]); 
   else 
-    writeimage4D(marqueurs, argv[argc - 1], atoi(argv[3]), atoi(argv[4]));
+    writeimage4D(marqueurs, argv[argc - 1], atoi(argv[3]));
   
   freeGA4d(ga); freeimage4D(marqueurs); 
   return 0;
