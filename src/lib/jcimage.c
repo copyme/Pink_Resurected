@@ -510,6 +510,7 @@ struct GA4d * readGA4d(const char *filename)
   if (!fd)
   {
     fprintf(stderr, "%s: file not found: %s\n", F_NAME, filename);
+    fclose(fd);
     return NULL;
   }
 
@@ -523,12 +524,15 @@ struct GA4d * readGA4d(const char *filename)
                                  /* PC: graphe d'arete == extension JC                 */
                                  /* PD: graphe d'arete 4d == extension JC              */
   if (buffer[0] != 'P')
-  {   fprintf(stderr,"%s : invalid image format\n", F_NAME);
-      return NULL;
+  {
+    fprintf(stderr,"%s : invalid image format\n", F_NAME);
+    fclose(fd);
+    return NULL;
   }
   if (buffer[1] != 'D')
   {
     fprintf(stderr,"%s: not 4d weighted-edge graph", F_NAME);
+    fclose(fd);
     return NULL;
   } /* if */
 

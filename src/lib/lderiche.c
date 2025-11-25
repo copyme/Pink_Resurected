@@ -1269,9 +1269,9 @@ int32_t llisseurrec3d(struct xvimage *image, double alpha)
   int32_t ds = depth(image);
   int32_t ps = rs * cs;
   int32_t N = ps * ds;
-  double *Im1;    /* image intermediaire */
-  double *buf1;   /* buffer ligne ou colonne */
-  double *buf2;   /* buffer ligne ou colonne */
+  double *Im1 = NULL;    /* image intermediaire */
+  double *buf1 = NULL;   /* buffer ligne ou colonne */
+  double *buf2 = NULL;   /* buffer ligne ou colonne */
   double k;       /* constante de normalisation pour le lisseur */
   double kp;      /* constante de normalisation pour le derivateur */
   double kpp;     /* constante de normalisation pour le laplacien */
@@ -1283,14 +1283,19 @@ int32_t llisseurrec3d(struct xvimage *image, double alpha)
 
   Im1 = (double *)calloc(1,N * sizeof(double));
   if (Im1==NULL)
-  {   fprintf(stderr,"lderiche3d() : malloc failed\n");
-      return(0);
+  {
+    fprintf(stderr,"lderiche3d() : malloc failed\n");
+    return(0);
   }
   buf1 = (double *)calloc(1,mcmax(mcmax(rs,cs),ds) * sizeof(double));
   buf2 = (double *)calloc(1,mcmax(mcmax(rs,cs),ds) * sizeof(double));
   if ((buf1==NULL) || (buf2==NULL))
-  {   fprintf(stderr,"lderiche3d() : malloc failed\n");
-      return(0);
+  {
+    fprintf(stderr,"lderiche3d() : malloc failed\n");
+    free(Im1);
+    free(buf1);
+    free(buf2);
+    return(0);
   }
 
   e_a = exp(- alpha);
