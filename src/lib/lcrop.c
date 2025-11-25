@@ -318,22 +318,28 @@ void lsetframe(struct xvimage *image, int32_t grayval)
     for (y = 0; y < cs; y++) 
       Im[0 * ps + y * rs + x] = grayval;          /* plan z = 0 */
     for (x = 0; x < rs; x++)
-    for (y = 0; y < cs; y++) 
-      Im[(ds-1) * ps + y * rs + x] = grayval;     /* plan z = ds-1 */
+    {
+      for (y = 0; y < cs; y++)
+        Im[(ds-1) * ps + y * rs + x] = grayval; /* plan z = ds-1 */
+    }
 
     for (x = 0; x < rs; x++)
     for (z = 0; z < ds; z++) 
       Im[z * ps + 0 * rs + x] = grayval;          /* plan y = 0 */
     for (x = 0; x < rs; x++)
-    for (z = 0; z < ds; z++) 
-      Im[z * ps + (cs-1) * rs + x] = grayval;     /* plan y = cs-1 */
+    {
+      for (z = 0; z < ds; z++)
+        Im[z * ps + (cs-1) * rs + x] = grayval; /* plan y = cs-1 */
+    }
 
     for (y = 0; y < cs; y++)
     for (z = 0; z < ds; z++) 
       Im[z * ps + y * rs + 0] = grayval;          /* plan x = 0 */
     for (y = 0; y < cs; y++)
-    for (z = 0; z < ds; z++) 
-      Im[z * ps + y * rs + (rs-1)] = grayval;     /* plan x = rs-1 */
+    {
+      for (z = 0; z < ds; z++)
+        Im[z * ps + y * rs + (rs-1)] = grayval; /* plan x = rs-1 */
+    }
   }
   else
   {
