@@ -143,7 +143,7 @@ int main(int argc, char **argv)
   struct xvimage * mask = NULL;
   struct xvimage * dilatmask=NULL;
 
-  index_t i, rs, cs, ds, N, Nmask;
+  index_t i, rs, cs, ds, Nmask;
   index_t sex, sey, sez;
   int32_t length, nangles; 
   uint8_t * mask_data = NULL;
@@ -189,7 +189,6 @@ int main(int argc, char **argv)
   rs = rowsize(image);      /* taille ligne */
   cs = colsize(image);      /* taille colonne */
   ds = depth(image);        /* nombre plans */
-  N = rs * cs * ds;         /* taille image */
 
   length = (length/2) * 2 +1; 	// has to be 2*x+1 (ungerade)
   Nmask = length*length;
@@ -226,9 +225,7 @@ int main(int argc, char **argv)
   }
 
   writeimage(result_image, argv[argc-1]);
-#ifdef DEBUG
-  writeimage(mask, "/tmp/mask.pgm");
-#endif
+
   freeimage(mask);
   freeimage(opened_image);
   freeimage(result_image);
