@@ -128,7 +128,10 @@ int32_t lconvol(struct xvimage *f, struct xvimage *m, int32_t mode)
     if ((tab_m_x == NULL) || (tab_m_y == NULL) || (tab_m_val == NULL))
     {  
       fprintf(stderr,"%s : malloc failed for tab_m\n", F_NAME);
-      return(0);
+      free(tab_m_x);
+      free(tab_m_y);
+      free(tab_m_val);
+      return 0;
     }
     k = 0;
     for (j = 0; j < csm; j += 1)
