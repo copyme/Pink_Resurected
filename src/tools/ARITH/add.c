@@ -52,10 +52,7 @@ Images must be of the same dimensions.
 */
 
 #include <stdio.h>
-#include <stdint.h>
-#include <sys/types.h>
 #include <stdlib.h>
-#include <mccodimage.h>
 #include <mcimage.h>
 #include <larith.h>
 
