@@ -1,5 +1,5 @@
 /*
-Copyright ESIEE (2009) 
+Copyright ESIEE (2009)
 
 m.couprie@esiee.fr
 
@@ -7,16 +7,16 @@ This software is an image processing library whose purpose is to be
 used primarily for research and teaching.
 
 This software is governed by the CeCILL  license under French law and
-abiding by the rules of distribution of free software. You can  use, 
+abiding by the rules of distribution of free software. You can  use,
 modify and/ or redistribute the software under the terms of the CeCILL
 license as circulated by CEA, CNRS and INRIA at the following URL
-"http://www.cecill.info". 
+"http://www.cecill.info".
 
 As a counterpart to the access to the source code and  rights to copy,
 modify and redistribute granted by the license, users are provided only
 with a limited warranty  and the software's author,  the holder of the
 economic rights,  and the successive licensors  have only  limited
-liability. 
+liability.
 
 In this respect, the user's attention is drawn to the risks associated
 with loading,  using,  modifying and/or developing or reproducing the
@@ -25,9 +25,9 @@ that may mean  that it is complicated to manipulate,  and  that  also
 therefore means  that it is reserved for developers  and  experienced
 professionals having in-depth computer knowledge. Users are therefore
 encouraged to load and test the software's suitability as regards their
-requirements in conditions enabling the security of their systems and/or 
-data to be ensured and,  more generally, to use and operate it in the 
-same conditions as regards security. 
+requirements in conditions enabling the security of their systems and/or
+data to be ensured and,  more generally, to use and operate it in the
+same conditions as regards security.
 
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
@@ -42,15 +42,16 @@ knowledge of the CeCILL license and that you accept its terms.
  *
  * Copyright:		Intended for open-source distribution
  *
-*/
+ */
 
 /*********************************************************************************************
  bimage.h
  ------
 
   DESCRIPTION:
-  Definition of the BIMAGE (Ben's image) data structure.  Not particularly general, simply
-  arbitary-dimensional.  Should be trivial to wrap into image processing systems.
+  Definition of the BIMAGE (Ben's image) data structure.  Not particularly
+general, simply arbitary-dimensional.  Should be trivial to wrap into image
+processing systems.
 
   HISTORY:
   Created by Ben Appleton (5/02)
@@ -64,187 +65,178 @@ knowledge of the CeCILL license and that you accept its terms.
 extern "C" {
 #endif
 
-
-/* For simplifying some of the code, we'll fix the maximum number of dimensions */
+/* For simplifying some of the code, we'll fix the maximum number of dimensions
+ */
 #define MAXDIMS 32
 
-/********************************* Data Structures *********************************/
+/********************************* Data Structures
+ * *********************************/
 /* The structures used to represent N-D images */
 typedef struct {
-	int *buf;			/* The vector */
-	int length;			/* The length of the vector */
+  int *buf;   /* The vector */
+  int length; /* The length of the vector */
 } BVECT;
 
 typedef struct {
-	float *buf;			/* The buffer in [x + nx*(y + ny*(z + ...))] format */
-	BVECT *dim;			/* The dimensions of the image */
-	float *steps;			/* The physical size of each step in each axis */
+  float *buf;   /* The buffer in [x + nx*(y + ny*(z + ...))] format */
+  BVECT *dim;   /* The dimensions of the image */
+  float *steps; /* The physical size of each step in each axis */
 } BIMAGE;
 
 /* 2D metric tensor (spatially varying) */
 typedef struct {
-	BIMAGE * a;				/* SPD metric field in the form */
-	BIMAGE * b;				/* [a b] */
-	BIMAGE * c;				/* [b c] */
-	BIMAGE * local_aniso_ratio;		/* anisotropy ratio of this point's metric */
-	BIMAGE * regional_aniso_ratio;	/* anisotropy ratio of largest regional neighbour */
+  BIMAGE *a;                 /* SPD metric field in the form */
+  BIMAGE *b;                 /* [a b] */
+  BIMAGE *c;                 /* [b c] */
+  BIMAGE *local_aniso_ratio; /* anisotropy ratio of this point's metric */
+  BIMAGE *
+      regional_aniso_ratio; /* anisotropy ratio of largest regional neighbour */
 } METRIC2D;
 
-/********************************* Function Prototypes *********************************/
+/********************************* Function Prototypes
+ * *********************************/
 /* Constructor and destructor for BVECT 'class' */
-BVECT * BVECT_constructor(
-	int length					/* The length of the BVECT */
+BVECT *BVECT_constructor(int length /* The length of the BVECT */
 );
-void BVECT_destructor(BVECT * bvect);
+void BVECT_destructor(BVECT *bvect);
 
 /* Utility functions for BVECTs */
-int bvectToInt(
-	BVECT *coord, 					/* The coordinate to convert */
-	BVECT *dim);					/* The dimensions (conversion parameters) */
+int bvectToInt(BVECT *coord, /* The coordinate to convert */
+               BVECT *dim);  /* The dimensions (conversion parameters) */
 
-int intToBvect(
-	int index,					/* The input index */
-	BVECT *pcoord,					/* The output coordinate */
-	BVECT *dim);					/* The dimensions (conversion parameters) */
+int intToBvect(int index,     /* The input index */
+               BVECT *pcoord, /* The output coordinate */
+               BVECT *dim);   /* The dimensions (conversion parameters) */
 
-int BVECT_prod(BVECT *in);					/* Return the product of the vector */
-int prod(BVECT *in);						/* Return the product of the vector */
-int BVECT_sum(BVECT *in);					/* Return the sum of the vector */
-float BVECT_sum_sqr(BVECT * in);				/* Compute the sum of squares */
-int BVECT_add(BVECT *dest, BVECT *source);			/* dest += source */
-int BVECT_sub(BVECT *dest, BVECT *source);			/* dest -= source */
-int BVECT_inc(BVECT * in, BVECT * dim);				/* Increment image index */
-int BVECT_dec(BVECT * in, BVECT * dim);				/* Decrement image index */
-int BVECT_zero(BVECT * in);							/* Set to 0 vector */
-int BVECT_copy(BVECT * dest, BVECT * source);		/* dest = source by value */
-char BVECT_compare(BVECT * a, BVECT * b);			/* Return a > b */
-int BVECT_print(BVECT * in);					/* Print a BVECT */
-int BVECT_max(BVECT * in);						/* Return maximum component */
-int BVECT_min(BVECT * in);						/* Return minimum component */
+int BVECT_prod(BVECT *in);      /* Return the product of the vector */
+int prod(BVECT *in);            /* Return the product of the vector */
+int BVECT_sum(BVECT *in);       /* Return the sum of the vector */
+float BVECT_sum_sqr(BVECT *in); /* Compute the sum of squares */
+int BVECT_add(BVECT *dest, BVECT *source);  /* dest += source */
+int BVECT_sub(BVECT *dest, BVECT *source);  /* dest -= source */
+int BVECT_inc(BVECT *in, BVECT *dim);       /* Increment image index */
+int BVECT_dec(BVECT *in, BVECT *dim);       /* Decrement image index */
+int BVECT_zero(BVECT *in);                  /* Set to 0 vector */
+int BVECT_copy(BVECT *dest, BVECT *source); /* dest = source by value */
+char BVECT_compare(BVECT *a, BVECT *b);     /* Return a > b */
+int BVECT_print(BVECT *in);                 /* Print a BVECT */
+int BVECT_max(BVECT *in);                   /* Return maximum component */
+int BVECT_min(BVECT *in);                   /* Return minimum component */
 
 /* Constructors and destructor for BIMAGE 'class' */
-BIMAGE * BIMAGE_constructor(
-	BVECT * dim 					/* The requested dimensions */
+BIMAGE *BIMAGE_constructor(BVECT *dim /* The requested dimensions */
 );
-BIMAGE * BIMAGE_constructor_BIMAGE(
-	BIMAGE * in 					/* The requested dimensions */
+BIMAGE *BIMAGE_constructor_BIMAGE(BIMAGE *in /* The requested dimensions */
 );
-BIMAGE * BIMAGE_constructor_double(
-	double *in,					/* Input image to copy */
-	BVECT * dim 					/* The requested dimensions */
+BIMAGE *BIMAGE_constructor_double(double *in, /* Input image to copy */
+                                  BVECT *dim  /* The requested dimensions */
 );
-BIMAGE * BIMAGE_constructor_float(
-	float *in,					/* Input image to copy */
-	BVECT * dim 					/* The requested dimensions */
+BIMAGE *BIMAGE_constructor_float(float *in, /* Input image to copy */
+                                 BVECT *dim /* The requested dimensions */
 );
-BIMAGE * BIMAGE_constructor_int(
-	int *in,					/* Input image to copy */
-	BVECT * dim 					/* The requested dimensions */
+BIMAGE *BIMAGE_constructor_int(int *in,   /* Input image to copy */
+                               BVECT *dim /* The requested dimensions */
 );
-BIMAGE * BIMAGE_constructor_char(
-	char *in,					/* Input image to copy */
-	BVECT * dim 					/* The requested dimensions */
+BIMAGE *BIMAGE_constructor_char(char *in,  /* Input image to copy */
+                                BVECT *dim /* The requested dimensions */
 );
-void BIMAGE_destructor(BIMAGE * bimage);
+void BIMAGE_destructor(BIMAGE *bimage);
 
 /* Image IIR filtering with reflective boundary conditions */
 int iirsymconv(
-	double *in,						/* The image data to blur */
-	double *out,					/* The output image.  May point to in */
-	BVECT * dim,					/* Image dimensions */
-	int dimension,					/* The dimension along which to apply the filter */
-	double * numerator,				/* The symmetric, odd-length numerator coefficient vectors */
-	int numerator_length,			/* The (odd!) number of numerator coefficients */
-	char symmetric,					/* Is the numerator symmetric (true) or asymmetric (false) ? */
-	double * ldl_matrix,			/* The LDL decomposition of the denominator */
-	int denominator_length			/* The (odd!) number of denominator coefficients */
+    double *in,    /* The image data to blur */
+    double *out,   /* The output image.  May point to in */
+    BVECT *dim,    /* Image dimensions */
+    int dimension, /* The dimension along which to apply the filter */
+    double *
+        numerator, /* The symmetric, odd-length numerator coefficient vectors */
+    int numerator_length, /* The (odd!) number of numerator coefficients */
+    char symmetric, /* Is the numerator symmetric (true) or asymmetric (false) ?
+                     */
+    double *ldl_matrix,    /* The LDL decomposition of the denominator */
+    int denominator_length /* The (odd!) number of denominator coefficients */
 );
 
-/* Deriche's constant-time-per-pixel Gaussian blur, extended to reflective boundaries */
-int conderichef(
-	double * numerator,						/* The numerator of the filter */
-	double * denominator,					/* The denominator of the filter */
-	double sigma,							/* The desired scale of the Gaussian */
-	int filter_order,						/* The order of the filter approximation */
-	int derivative_order					/* The order of the derivative */
+/* Deriche's constant-time-per-pixel Gaussian blur, extended to reflective
+ * boundaries */
+int conderichef(double *numerator,   /* The numerator of the filter */
+                double *denominator, /* The denominator of the filter */
+                double sigma,        /* The desired scale of the Gaussian */
+                int filter_order,    /* The order of the filter approximation */
+                int derivative_order /* The order of the derivative */
 );
-int gaussblur(
-	double *in,						/* The image data to blur */
-	double *out,					/* The output image.  May point to in */
-	BVECT * dim,					/* The image dimensions */
-	double * sigma_vect,			/* The scale parameter for each axis */
-	int order						/* The order of Gaussian approximation [2, 4] */
+int gaussblur(double *in,         /* The image data to blur */
+              double *out,        /* The output image.  May point to in */
+              BVECT *dim,         /* The image dimensions */
+              double *sigma_vect, /* The scale parameter for each axis */
+              int order /* The order of Gaussian approximation [2, 4] */
 );
 
 #ifdef COMMENT
-int gaussblurGMP(
-	double *in,						/* The image data to blur */
-	double *out,					/* The output image.  May point to in */
-	BVECT * dim,					/* The image dimensions */
-	double * sigma_vect,			/* The scale parameter for each axis */
-	int order						/* The order of Gaussian approximation [2, 4] */
+int gaussblurGMP(double *in,         /* The image data to blur */
+                 double *out,        /* The output image.  May point to in */
+                 BVECT *dim,         /* The image dimensions */
+                 double *sigma_vect, /* The scale parameter for each axis */
+                 int order /* The order of Gaussian approximation [2, 4] */
 );
 #endif
 
 int gradgauss(
-	double *in,						/* The image data */
-	double * * out,					/* The output image.  For single-component may point to in */
-	BVECT * dim,					/* The image dimensions */
-	double * sigma_vect,			/* The scale parameter for each axis */
-	int order,						/* The order of Gaussian approximation [2, 4] */
-	char multi_comp					/* Return multi-component gradient? If not, take 2-norm of gradient vector */
+    double *in,   /* The image data */
+    double **out, /* The output image.  For single-component may point to in */
+    BVECT *dim,   /* The image dimensions */
+    double *sigma_vect, /* The scale parameter for each axis */
+    int order,          /* The order of Gaussian approximation [2, 4] */
+    char multi_comp /* Return multi-component gradient? If not, take 2-norm of
+                       gradient vector */
 );
-int lapgauss(
-	double *in,						/* The image data */
-	double *out,					/* The output image.  May point to in */
-	BVECT * dim,					/* The image dimensions */
-	double * sigma_vect,			/* The scale parameter for each axis */
-	int order						/* The order of Gaussian approximation [2, 4] */
+int lapgauss(double *in,         /* The image data */
+             double *out,        /* The output image.  May point to in */
+             BVECT *dim,         /* The image dimensions */
+             double *sigma_vect, /* The scale parameter for each axis */
+             int order /* The order of Gaussian approximation [2, 4] */
 );
 
 /** Weickert et. al.'s AOS diffusion scheme **/
 /* Constant (w.r.t. time) diffusivities */
-int aosdiffuse(
-	BIMAGE *image,					/* The image data to smooth */
-	BIMAGE *g,						/* The scalar diffusivity image */
-	float simulation_time, 			/* The time over which the PDE is run */
-	float timestep 					/* The iteration time step */
+int aosdiffuse(BIMAGE *image,         /* The image data to smooth */
+               BIMAGE *g,             /* The scalar diffusivity image */
+               float simulation_time, /* The time over which the PDE is run */
+               float timestep         /* The iteration time step */
 );
 /* Time-varying diffusivities */
-int aosdiffuse2(
-	BIMAGE *image,					/* The image data to diffuse */
-	float blurring,					/* The scale of blurring to find edges */
-	float lambda,					/* The threshold for edge significance */
-	float simulation_time, 			/* The time over which the PDE is run */
-	float timestep 					/* The iteration time step */
+int aosdiffuse2(BIMAGE *image,         /* The image data to diffuse */
+                float blurring,        /* The scale of blurring to find edges */
+                float lambda,          /* The threshold for edge significance */
+                float simulation_time, /* The time over which the PDE is run */
+                float timestep         /* The iteration time step */
 );
 
 /* General reaction-diffusion image restoration (isotropic) */
-int reactdiffuse(
-	BIMAGE *inimage,				/* The scalar field to diffuse */
-	BIMAGE *image,					/* The output scalar field */
-	BIMAGE *g,						/* The scalar diffusivity image */
-	BIMAGE *alpha,					/* The confidence image (non-negative!) */
-	float simulation_time, 			/* The time over which the PDE is run */
-	float timestep 					/* The iteration time step */
+int reactdiffuse(BIMAGE *inimage, /* The scalar field to diffuse */
+                 BIMAGE *image,   /* The output scalar field */
+                 BIMAGE *g,       /* The scalar diffusivity image */
+                 BIMAGE *alpha,   /* The confidence image (non-negative!) */
+                 float simulation_time, /* The time over which the PDE is run */
+                 float timestep         /* The iteration time step */
 );
 
 /* Stereo inpainting by a reaction-diffusion equation */
 int stereoinpaint(
-	BIMAGE *inimage,				/* The scalar field to diffuse */
-	BIMAGE *image,					/* The output scalar field */
-	BIMAGE *g,						/* The scalar diffusivity image */
-	BIMAGE *alpha,					/* The confidence image (non-negative!) */
-	float simulation_time, 			/* The time over which the PDE is run */
-	float timestep 					/* The iteration time step */
+    BIMAGE *inimage,       /* The scalar field to diffuse */
+    BIMAGE *image,         /* The output scalar field */
+    BIMAGE *g,             /* The scalar diffusivity image */
+    BIMAGE *alpha,         /* The confidence image (non-negative!) */
+    float simulation_time, /* The time over which the PDE is run */
+    float timestep         /* The iteration time step */
 );
 
 int label_image_downsample(
-	char * in,						/* Input image to downsample */
-	BVECT * in_dim,					/* Input dimensions */
-	char * out,						/* Output image (already allocated) */
-	BVECT * out_dim,				/* Output dimensions */
-	int downsampling_rate			/* Downsampling rate for each axis */
+    char *in,             /* Input image to downsample */
+    BVECT *in_dim,        /* Input dimensions */
+    char *out,            /* Output image (already allocated) */
+    BVECT *out_dim,       /* Output dimensions */
+    int downsampling_rate /* Downsampling rate for each axis */
 );
 
 #ifdef __cplusplus
@@ -252,4 +244,3 @@ int label_image_downsample(
 #endif
 
 #endif /* BIMAGE_H */
-

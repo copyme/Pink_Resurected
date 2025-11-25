@@ -39,11 +39,12 @@ knowledge of the CeCILL license and that you accept its terms.
 #ifdef __cplusplus
 extern "C" {
 #endif
-extern int32_t lvoronoilabelling(struct xvimage *img,   /* donnee: image binaire */
-			  struct xvimage *dist,  /* resultat: SEDT */
-			  struct xvimage *vor    /* resultat: labelling */
-			  );
-extern int32_t lmedax_Hesselink(struct xvimage* f, struct xvimage* res);
+extern int32_t
+lvoronoilabelling(struct xvimage *img,  /* donnee: image binaire */
+                  struct xvimage *dist, /* resultat: SEDT */
+                  struct xvimage *vor   /* resultat: labelling */
+);
+extern int32_t lmedax_Hesselink(struct xvimage *f, struct xvimage *res);
 #ifdef __cplusplus
 }
 #endif

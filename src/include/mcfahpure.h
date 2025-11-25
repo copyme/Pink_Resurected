@@ -1,5 +1,5 @@
 /*
-Copyright ESIEE (2009) 
+Copyright ESIEE (2009)
 
 m.couprie@esiee.fr
 
@@ -7,16 +7,16 @@ This software is an image processing library whose purpose is to be
 used primarily for research and teaching.
 
 This software is governed by the CeCILL  license under French law and
-abiding by the rules of distribution of free software. You can  use, 
+abiding by the rules of distribution of free software. You can  use,
 modify and/ or redistribute the software under the terms of the CeCILL
 license as circulated by CEA, CNRS and INRIA at the following URL
-"http://www.cecill.info". 
+"http://www.cecill.info".
 
 As a counterpart to the access to the source code and  rights to copy,
 modify and redistribute granted by the license, users are provided only
 with a limited warranty  and the software's author,  the holder of the
 economic rights,  and the successive licensors  have only  limited
-liability. 
+liability.
 
 In this respect, the user's attention is drawn to the risks associated
 with loading,  using,  modifying and/or developing or reproducing the
@@ -25,9 +25,9 @@ that may mean  that it is complicated to manipulate,  and  that  also
 therefore means  that it is reserved for developers  and  experienced
 professionals having in-depth computer knowledge. Users are therefore
 encouraged to load and test the software's suitability as regards their
-requirements in conditions enabling the security of their systems and/or 
-data to be ensured and,  more generally, to use and operate it in the 
-same conditions as regards security. 
+requirements in conditions enabling the security of their systems and/or
+data to be ensured and,  more generally, to use and operate it in the
+same conditions as regards security.
 
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
@@ -46,68 +46,46 @@ extern "C" {
 
 typedef struct FAHPELT {
   index_t Point;
-  struct FAHPELT * Next;
+  struct FAHPELT *Next;
 } FahpElt;
 
-#define FAHP_NPRIO 256*2
+#define FAHP_NPRIO 256 * 2
 
 typedef struct {
-  index_t Max;             /* taille max de la fah (en nombre de points) */
-  int32_t Niv;             /* niveau a partir duquel des listes existent */
-  index_t Util;            /* nombre de points courant dans la fah */
-  index_t Maxutil;         /* nombre de points utilises max (au cours du temps) */
-  FahpElt *Tete[FAHP_NPRIO]; /* tableau des tetes de liste (la ou l'on insere) */
-  FahpElt *Queue;       /* queue de liste (la ou l'on preleve) */
-  FahpElt *Libre;       /* pile des cellules libres */
-  FahpElt Elts[1];      /* tableau des elements physiques */
+  index_t Max;     /* taille max de la fah (en nombre de points) */
+  int32_t Niv;     /* niveau a partir duquel des listes existent */
+  index_t Util;    /* nombre de points courant dans la fah */
+  index_t Maxutil; /* nombre de points utilises max (au cours du temps) */
+  FahpElt
+      *Tete[FAHP_NPRIO]; /* tableau des tetes de liste (la ou l'on insere) */
+  FahpElt *Queue;        /* queue de liste (la ou l'on preleve) */
+  FahpElt *Libre;        /* pile des cellules libres */
+  FahpElt Elts[1];       /* tableau des elements physiques */
 } Fahp;
 
 /* ============== */
 /* prototypes     */
 /* ============== */
 
-extern Fahp * CreeFahpVide(
-  index_t taillemax
-);
+extern Fahp *CreeFahpVide(index_t taillemax);
 
-extern void FahpFlush(
-  Fahp * L
-);
+extern void FahpFlush(Fahp *L);
 
-extern int32_t FahpVide(
-  Fahp * L
-);
+extern int32_t FahpVide(Fahp *L);
 
-extern int32_t FahpVideNiveau(
-  Fahp * L,
-  int32_t niv
-);
+extern int32_t FahpVideNiveau(Fahp *L, int32_t niv);
 
-extern int32_t FahpNiveau(
-  Fahp * L
-);
+extern int32_t FahpNiveau(Fahp *L);
 
-extern index_t FahpPop(
-  Fahp * L
-);
+extern index_t FahpPop(Fahp *L);
 
-extern index_t FahpFirst(
-  Fahp * L
-);
+extern index_t FahpFirst(Fahp *L);
 
-extern void FahpPush(
-  Fahp * L,
-  index_t Po,
-  int32_t Ni
-);
+extern void FahpPush(Fahp *L, index_t Po, int32_t Ni);
 
-extern void FahpTermine(
-  Fahp * L
-);
+extern void FahpTermine(Fahp *L);
 
-extern void FahpPrint(
-  Fahp * L
-);
+extern void FahpPrint(Fahp *L);
 #ifdef __cplusplus
 }
 #endif

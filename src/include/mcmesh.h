@@ -1,5 +1,5 @@
 /*
-Copyright ESIEE (2009) 
+Copyright ESIEE (2009)
 
 m.couprie@esiee.fr
 
@@ -7,16 +7,16 @@ This software is an image processing library whose purpose is to be
 used primarily for research and teaching.
 
 This software is governed by the CeCILL  license under French law and
-abiding by the rules of distribution of free software. You can  use, 
+abiding by the rules of distribution of free software. You can  use,
 modify and/ or redistribute the software under the terms of the CeCILL
 license as circulated by CEA, CNRS and INRIA at the following URL
-"http://www.cecill.info". 
+"http://www.cecill.info".
 
 As a counterpart to the access to the source code and  rights to copy,
 modify and redistribute granted by the license, users are provided only
 with a limited warranty  and the software's author,  the holder of the
 economic rights,  and the successive licensors  have only  limited
-liability. 
+liability.
 
 In this respect, the user's attention is drawn to the risks associated
 with loading,  using,  modifying and/or developing or reproducing the
@@ -25,9 +25,9 @@ that may mean  that it is complicated to manipulate,  and  that  also
 therefore means  that it is reserved for developers  and  experienced
 professionals having in-depth computer knowledge. Users are therefore
 encouraged to load and test the software's suitability as regards their
-requirements in conditions enabling the security of their systems and/or 
-data to be ensured and,  more generally, to use and operate it in the 
-same conditions as regards security. 
+requirements in conditions enabling the security of their systems and/or
+data to be ensured and,  more generally, to use and operate it in the
+same conditions as regards security.
 
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
@@ -44,16 +44,20 @@ extern "C" {
 #define MCM_MAXADJFACESEDGE 10
 
 typedef struct {
-  double x, y, z;    /* coordonnees */
-  double xp, yp, zp; /* coordonnees bis (utilisees aussi pour stocker la normale) */
-  double xo, yo, zo; /* coordonnees ter (pour memoriser la position originale) */
-                     // utilisees seulement par RegulMeshHC
+  double x, y, z; /* coordonnees */
+  double xp, yp,
+      zp; /* coordonnees bis (utilisees aussi pour stocker la normale) */
+  double xo, yo,
+      zo; /* coordonnees ter (pour memoriser la position originale) */
+          // utilisees seulement par RegulMeshHC
   int32_t nfaces;
-  int32_t face[MCM_MAXADJFACES]; /* indices des faces adjacentes (pas plus de MCM_MAXADJFACES) */
+  int32_t face[MCM_MAXADJFACES]; /* indices des faces adjacentes (pas plus de
+                                    MCM_MAXADJFACES) */
   int32_t nedges;
-  int32_t edge[MCM_MAXADJEDGES]; /* indices des cotes adjacents (pas plus de MCM_MAXADJEDGES) */
+  int32_t edge[MCM_MAXADJEDGES]; /* indices des cotes adjacents (pas plus de
+                                    MCM_MAXADJEDGES) */
 
-  float curv1, curv2; // Pour les courbures
+  float curv1, curv2;       // Pour les courbures
   uint8_t red, green, blue; // pour la couleur
   int32_t aux;
 } meshvertex;
@@ -65,48 +69,49 @@ typedef struct {
 } meshface;
 
 typedef struct {
-  int32_t v1, v2;        /* indices des sommets adjacents */
-  int32_t f1, f2;        /* indices des faces adjacentes */
-  double curv;       /* pour stocker la courbure (angle entre -pi et pi) */
+  int32_t v1, v2; /* indices des sommets adjacents */
+  int32_t f1, f2; /* indices des faces adjacentes */
+  double curv;    /* pour stocker la courbure (angle entre -pi et pi) */
 } meshedge2;
 
 typedef struct {
-  int32_t v1, v2;        /* indices des sommets adjacents */
+  int32_t v1, v2; /* indices des sommets adjacents */
   int32_t nfaces;
-  int32_t face[MCM_MAXADJFACESEDGE]; /* indices des faces adjacentes (pas plus de MCM_MAXADJFACESEDGE) */
+  int32_t face[MCM_MAXADJFACESEDGE]; /* indices des faces adjacentes (pas plus
+                                        de MCM_MAXADJFACESEDGE) */
 } meshedge;
 
 typedef struct {
-  int32_t max;        /* taille max du tableau de sommets */
-  int32_t cur;        /* taille courante du tableau de sommets */
-  uint8_t *lab;       /* tableau de labels associes aux sommets */
-  uint8_t *tmp;       /* tableau de valeurs associes aux sommets */
-  meshvertex v[1];    /* tableau des elements physiques */
+  int32_t max;     /* taille max du tableau de sommets */
+  int32_t cur;     /* taille courante du tableau de sommets */
+  uint8_t *lab;    /* tableau de labels associes aux sommets */
+  uint8_t *tmp;    /* tableau de valeurs associes aux sommets */
+  meshvertex v[1]; /* tableau des elements physiques */
 } meshtabvertices;
 
 typedef struct {
-  int32_t max;         /* taille max du tableau de faces */
-  int32_t cur;         /* taille courante du tableau de faces */
-  meshface f[1];       /* tableau des elements physiques */
+  int32_t max;   /* taille max du tableau de faces */
+  int32_t cur;   /* taille courante du tableau de faces */
+  meshface f[1]; /* tableau des elements physiques */
 } meshtabfaces;
 
 typedef struct {
-  int32_t max;         /* taille max du tableau de cotes */
-  int32_t cur;         /* taille courante du tableau de cotes */
-  meshedge2 e[1];      /* tableau des elements physiques */
+  int32_t max;    /* taille max du tableau de cotes */
+  int32_t cur;    /* taille courante du tableau de cotes */
+  meshedge2 e[1]; /* tableau des elements physiques */
 } meshtabedges2;
 
 typedef struct {
-  int32_t max;         /* taille max du tableau de cotes */
-  int32_t cur;         /* taille courante du tableau de cotes */
-  meshedge e[1];       /* tableau des elements physiques */
+  int32_t max;   /* taille max du tableau de cotes */
+  int32_t cur;   /* taille courante du tableau de cotes */
+  meshedge e[1]; /* tableau des elements physiques */
 } meshtabedges;
 
 typedef struct {
-  int32_t nvert;       /* nombre de sommets */
-  int32_t nedge;       /* nombre de cotes */
-  int32_t *lastneigh;  /* tableau des index des derniers successeurs */
-  int32_t *neigh;      /* tableau des successeurs */
+  int32_t nvert;      /* nombre de sommets */
+  int32_t nedge;      /* nombre de cotes */
+  int32_t *lastneigh; /* tableau des index des derniers successeurs */
+  int32_t *neigh;     /* tableau des successeurs */
 } meshtablinks;
 
 /* boite englobante */
@@ -125,7 +130,7 @@ typedef struct {
   meshtabfaces *Faces;
   meshtabedges *Edges;
   meshtablinks *Links;
-  Rbtp * RBTP;
+  Rbtp *RBTP;
 } MCM;
 
 extern meshtabvertices *Vertices;
@@ -137,38 +142,31 @@ extern meshtablinks *Links;
 /* prototypes */
 /* ==================================== */
 
-extern meshtabvertices * MCM_AllocVertices(int32_t taillemax);
-extern meshtabfaces * MCM_AllocFaces(int32_t taillemax);
-extern meshtabedges * MCM_AllocEdges(int32_t taillemax);
-extern meshtablinks * MCM_AllocLinks(int32_t nvert, int32_t nedge);
+extern meshtabvertices *MCM_AllocVertices(int32_t taillemax);
+extern meshtabfaces *MCM_AllocFaces(int32_t taillemax);
+extern meshtabedges *MCM_AllocEdges(int32_t taillemax);
+extern meshtablinks *MCM_AllocLinks(int32_t nvert, int32_t nedge);
 extern void MCM_ReAllocVertices(meshtabvertices **A);
 extern void MCM_ReAllocFaces(meshtabfaces **A);
 extern void MCM_ReAllocEdges(meshtabedges **A);
-extern MCM * MCM_Init(int32_t taillemax);
+extern MCM *MCM_Init(int32_t taillemax);
 extern void MCM_Termine(MCM *Mesh);
-extern int32_t MCM_AddVertexStraight(
-  MCM *M, double x, double y, double z, int32_t indface
-);
-extern int32_t MCM_AddVertexStraight2(
-  MCM *M, double x, double y, double z
-);
-extern int32_t MCM_AddVertex(MCM *M, double x, double y, double z, int32_t indface);
+extern int32_t MCM_AddVertexStraight(MCM *M, double x, double y, double z,
+                                     int32_t indface);
+extern int32_t MCM_AddVertexStraight2(MCM *M, double x, double y, double z);
+extern int32_t MCM_AddVertex(MCM *M, double x, double y, double z,
+                             int32_t indface);
 extern void MCM_VertexAddFace(MCM *M, int32_t indvert, int32_t indface);
 extern void MCM_VertexAddEdge(MCM *M, int32_t indvert, int32_t indedge);
 extern void MCM_VertexRemoveFace(MCM *M, int32_t indvert, int32_t indface);
-extern int32_t MCM_AddFace(MCM *M, 
-  double x1, double y1, double z1, 
-  double x2, double y2, double z2, 
-  double x3, double y3, double z3
-);
-extern int32_t MCM_AddFaceWithExistingVertices(
-  MCM *M, int32_t iv1, int32_t iv2, int32_t iv3
-);
-extern int32_t MCM_AddFace2(MCM *M, 
-  double x1, double y1, double z1, int32_t t1, 
-  double x2, double y2, double z2, int32_t t2,
-  double x3, double y3, double z3, int32_t t3
-);
+extern int32_t MCM_AddFace(MCM *M, double x1, double y1, double z1, double x2,
+                           double y2, double z2, double x3, double y3,
+                           double z3);
+extern int32_t MCM_AddFaceWithExistingVertices(MCM *M, int32_t iv1, int32_t iv2,
+                                               int32_t iv3);
+extern int32_t MCM_AddFace2(MCM *M, double x1, double y1, double z1, int32_t t1,
+                            double x2, double y2, double z2, int32_t t2,
+                            double x3, double y3, double z3, int32_t t3);
 extern int32_t MCM_AddEdge(MCM *M, int32_t v1, int32_t v2);
 extern void MCM_ComputeEdges(MCM *M);
 extern void MCM_VertexMerge2Faces(MCM *M, int32_t indvert);
@@ -179,16 +177,12 @@ extern void MCM_Print(MCM *M);
 
 extern void InitMesh(int32_t taillemax);
 extern void TermineMesh();
-extern meshtabedges2 * AllocEdges(int32_t taillemax);
-extern int32_t AddFace(double x1, double y1, double z1, 
-             double x2, double y2, double z2, 
-             double x3, double y3, double z3
-	     );
-extern int32_t AddFaceFixe(double x1, double y1, double z1, 
-                 double x2, double y2, double z2, 
-                 double x3, double y3, double z3,
-                 int32_t fix1, int32_t fix2, int32_t fix3
-	         );
+extern meshtabedges2 *AllocEdges(int32_t taillemax);
+extern int32_t AddFace(double x1, double y1, double z1, double x2, double y2,
+                       double z2, double x3, double y3, double z3);
+extern int32_t AddFaceFixe(double x1, double y1, double z1, double x2,
+                           double y2, double z2, double x3, double y3,
+                           double z3, int32_t fix1, int32_t fix2, int32_t fix3);
 extern void SaveCoords();
 extern void RestoreCoords();
 extern void ComputeEdges();

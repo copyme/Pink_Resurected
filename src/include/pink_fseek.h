@@ -33,7 +33,6 @@ The fact that you are presently reading this means that you have had
 knowledge of the CeCILL license and that you accept its terms.
 */
 
-
 #ifndef PINK_FSEEK_COMPAT_H
 #define PINK_FSEEK_COMPAT_H
 
@@ -43,28 +42,28 @@ knowledge of the CeCILL license and that you accept its terms.
  * (_WIN32 is defined by MSVC, MinGW, etc.)
  */
 #ifdef _WIN32
-    /* --- WINDOWS --- */
-    #include <io.h>
-    #include <stdlib.h>
+/* --- WINDOWS --- */
+#include <io.h>
+#include <stdlib.h>
 
-    /* Map to Windows specific 64-bit functions */
-    #define __pink__fseeko _fseeki64
-    #define __pink__ftello _ftelli64
+/* Map to Windows specific 64-bit functions */
+#define __pink__fseeko _fseeki64
+#define __pink__ftello _ftelli64
 
 #else
-    /* --- LINUX / UNIX / macOS --- */
+/* --- LINUX / UNIX / macOS --- */
 
-    /* Ensure fseeko is visible in strict standard mode */
-    #ifndef _POSIX_C_SOURCE
-    #define _POSIX_C_SOURCE 200809L
-    #endif
+/* Ensure fseeko is visible in strict standard mode */
+#ifndef _POSIX_C_SOURCE
+#define _POSIX_C_SOURCE 200809L
+#endif
 
-    #include <sys/types.h>
-    #include <unistd.h>
+#include <sys/types.h>
+#include <unistd.h>
 
-    /* Map to standard POSIX functions */
-    #define __pink__fseeko fseeko
-    #define __pink__ftello ftello
+/* Map to standard POSIX functions */
+#define __pink__fseeko fseeko
+#define __pink__ftello ftello
 
 #endif
 
