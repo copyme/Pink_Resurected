@@ -76,8 +76,7 @@ uint32_t read_size_on_disk(FILE *fd, uint64_t *rs, uint64_t *cs, uint64_t *d)
 //Handles P4, P5, P7, P8 images
 uint32_t crop_on_disk(FILE *fd, struct xvimage** image_decoupee, uint64_t cx, uint64_t cy, uint64_t cz, uint64_t width, uint64_t height, uint64_t dpth)
 {
-	char *buffer;
-	//uint32_t bufferlong[BUFFERSIZE];
+	char *buffer = NULL;
 	uint64_t c, largeur_max, hauteur_max, profondeur_max, type_image;
 	uint64_t rs, cs, d;
 	uint64_t supx, supy, supz;
