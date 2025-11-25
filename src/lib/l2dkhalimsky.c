@@ -302,19 +302,17 @@ int32_t l2dthin(struct xvimage * k, int32_t nsteps)
 */
 {
   struct xvimage * kp;
-  int32_t stablealpha, stablebeta;
-  int32_t i;
-  index_t rs, cs, N, x, y;
-  uint8_t * K;
-  uint8_t * KP;
+  int32_t stablealpha = 0, stablebeta = 0;
+  index_t x, y;
+  uint8_t * KP = NULL;
 
   ACCEPTED_TYPES1(k, VFF_TYP_1_BYTE);
   ONLY_2D(k);
 
-  rs = rowsize(k);
-  cs = colsize(k);
-  N = rs * cs;
-  K = UCHARDATA(k);
+  index_t rs = rowsize(k);
+  index_t cs = colsize(k);
+  index_t N = rs * cs;
+  uint8_t* K = UCHARDATA(k);
 
 #ifdef VERBOSE
   fprintf(stderr, "%s: Debut traitement\n", F_NAME);
@@ -331,7 +329,7 @@ int32_t l2dthin(struct xvimage * k, int32_t nsteps)
 
   if (nsteps == -1) nsteps = 1000000000;
 
-  for (i = 0; i < nsteps; i++)
+  for (int32_t i = 0; i < nsteps; i++)
   {
 #ifdef VERBOSE
     fprintf(stderr, "step %d\n", i);

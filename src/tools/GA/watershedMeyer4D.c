@@ -61,9 +61,7 @@ for the makers.
 #include <sys/types.h>
 #include <stdlib.h>
 #include <string.h>
-#include <mccodimage.h>
 #include <jccodimage.h>
-#include <mcimage.h>
 #include <jcimage.h>
 #include <llpemeyer4d.h>
 
@@ -75,7 +73,6 @@ int main(int32_t argc, char **argv)
   struct xvimage4D * marqueurs = NULL;
   struct xvimage4D * marqueursfond = NULL;
   struct xvimage4D * masque = NULL;
-  int32_t connex;
 
   if (argc != 9)
   {
@@ -118,7 +115,7 @@ int main(int32_t argc, char **argv)
       exit(1);
     }
   }
-  connex = atoi(argv[7]);
+  int32_t connex = atoi(argv[7]);
   
   if (connex == 8)
   {
