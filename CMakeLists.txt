@@ -57,7 +57,7 @@ target_link_libraries(pink PRIVATE m)
 
 if(PINK_WITH_TIFF)
 
-    find_package(Tiff 4.7 QUIET)
+    find_package(Tiff 4.5 QUIET)
 
     if(NOT Tiff_FOUND AND NOT TIFF_FOUND)
         find_package(TIFF REQUIRED)
