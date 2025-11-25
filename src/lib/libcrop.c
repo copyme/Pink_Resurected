@@ -31,7 +31,7 @@
 uint32_t read_size_on_disk(FILE *fd, uint64_t *rs, uint64_t *cs, uint64_t *d)
 {
 	char buffer[BUFFERSIZE];
-	uint32_t type_image,c;
+	uint32_t c;
 
 	/* Ouverture du fichier */
 	rewind(fd);
@@ -44,12 +44,6 @@ uint32_t read_size_on_disk(FILE *fd, uint64_t *rs, uint64_t *cs, uint64_t *d)
 		fprintf(stderr,"read_size_on_disk: invalid image format\n");
 		return(0);
     }
-
-	if (buffer[1]=='5')type_image = 5 ;
-	else if (buffer[1]=='7')type_image = 7;
-	else if(buffer[1]=='4')type_image = 4;
-	else if(buffer[1]=='8')type_image = 8;
-	else fprintf(stderr,"read_size_on_disk: invalid image format (2)\n");
 
 
 	/*On passe tous les commentaires (en espérant qu'il n'y ait pas de chiffres dans les commentaires
@@ -88,7 +82,7 @@ uint32_t crop_on_disk(FILE *fd, struct xvimage** image_decoupee, uint64_t cx, ui
 	uint64_t rs, cs, d;
 	uint64_t supx, supy, supz;
 	uint64_t jump_ligne, jump_plan, premierpoint;
-	uint64_t hauteur,largeur,profondeur, cpt_tableau, ndgmax, N;
+	uint64_t hauteur,largeur,profondeur, cpt_tableau, ndgmax;
 
 	cpt_tableau=0;
 	hauteur=0; largeur=0; profondeur=0;
@@ -148,9 +142,6 @@ uint32_t crop_on_disk(FILE *fd, struct xvimage** image_decoupee, uint64_t cx, ui
 	/* On lit le nombre maximum que peut prendre un voxel (255 pour une image en niveau de gris)*/
 	fgets(buffer,100, fd);
 	sscanf(buffer, "%ld", &ndgmax);
-
-	/* Nombre total de voxel (ou pixel) dans l'image */
-	N = rs * cs * d;
 
 	/* Initialisation des variables hauteur,largeur et profondeur en cas de debordement de l'image source */
 	largeur_max = width;
@@ -419,15 +410,10 @@ uint32_t crop_raw_on_disk(FILE *fd, struct xvimage* image_decoupee, uint64_t cx,
 uint32_t crop_raw_on_disk_to_disk(FILE *fd, FILE *image_decoupee, uint64_t cx, uint64_t cy, uint64_t cz, uint64_t width, uint64_t height, uint64_t dpth, uint64_t rs, uint64_t cs, uint64_t d, uint64_t header_size, uint64_t size_voxel, char compteur)
 {
 	char * buffer = NULL;
-	//uint32_t bufferlong[BUFFERSIZE];
 	uint64_t largeur_max, hauteur_max, profondeur_max;
 	uint64_t supx, supy, supz;
 	uint64_t jump_ligne, jump_plan, premierpoint;
-	uint64_t hauteur,largeur,profondeur, cpt_tableau;
-
-	cpt_tableau=0;
-	hauteur=0; largeur=0; profondeur=0;
-
+	uint64_t hauteur = 0,profondeur = 0;
 
 	/* Initialisation des variables hauteur,largeur et profondeur en cas de debordement de l'image source */
 	largeur_max = width;
