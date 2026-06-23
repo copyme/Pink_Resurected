@@ -2,13 +2,17 @@
 
 \brief extracts a 3D shortest path between two points (M. Postolski's operator)
 
-<B>Usage:</B> shortestpath3d in.pgm sX sY sZ eX eY eZ out.pgm
+<B>Usage:</B> shortestpath3d in.pgm sX sY sZ eX eY eZ out.pgm [out.list]
 
 <B>Description:</B>
 Pink interface to Michal Postolski's ShortestPath operator. Reads a 3D byte
 image, runs the wave-propagation shortest path between (sX,sY,sZ) and
 (eX,eY,eZ), and writes the extracted curve (voxels = 255, rest = 0) to a new
 image of the same dimensions.
+
+If the optional \b out.list argument is given, the path points are also
+written, ordered from START to END, in Pink list format 'B' (same as
+pgm2list): a "B n" header line followed by n lines of "x y z".
 
 <B>Types supported:</B> byte 3D
 
@@ -18,17 +22,19 @@ image of the same dimensions.
 #include <cstdio>
 #include <cstdlib>
 #include <cstdint>
+#include <vector>
 
 #include <mccodimage.h>
 #include <mcimage.h>
 
 #include "shortestpath.h"
+#include "list.h"
 
 int main(int argc, char **argv)
 {
-    if (argc != 9)
+    if ((argc != 9) && (argc != 10))
     {
-        fprintf(stderr, "usage: %s in.pgm sX sY sZ eX eY eZ out.pgm\n", argv[0]);
+        fprintf(stderr, "usage: %s in.pgm sX sY sZ eX eY eZ out.pgm [out.list]\n", argv[0]);
         exit(1);
     }
 
@@ -96,6 +102,38 @@ int main(int argc, char **argv)
                 od[(size_t)z * ps + (size_t)y * rs + x] = vol[x + 1][y + 1][z + 1];
 
     writeimage(out, argv[8]);
+
+    /* optional ordered point list (Pink 'B' format), start -> end */
+    if (argc == 10)
+    {
+        /* getPath() holds the voxels in back-trace order (END -> START),
+           in padded coordinates; collect, un-pad, then write reversed. */
+        std::vector<int> px, py, pz;
+        List *p = sp.getPath();
+        if (p != NULL)
+        {
+            p->next();                      /* move past sentinel head */
+            while (true)
+            {
+                px.push_back(p->getX() - 1);
+                py.push_back(p->getY() - 1);
+                pz.push_back(p->getZ() - 1);
+                if (p->isEnd()) break;
+                p->next();
+            }
+        }
+
+        FILE *fd = fopen(argv[9], "w");
+        if (!fd)
+        {
+            fprintf(stderr, "%s: cannot open file: %s\n", argv[0], argv[9]);
+            exit(1);
+        }
+        fprintf(fd, "B %d\n", (int)px.size());
+        for (int i = (int)px.size() - 1; i >= 0; i--)   /* reverse: START -> END */
+            fprintf(fd, "%d %d %d\n", px[i], py[i], pz[i]);
+        fclose(fd);
+    }
 
     freeimage(out);
     freeimage(image);

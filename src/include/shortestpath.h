@@ -24,6 +24,7 @@ class ShortestPath
     int sizeZ;
     int MAXCODE;
     List *list;
+    List *path;        // ordered path voxels, recorded during back-tracing
     int pointsCount;
 
     void addNeigbours(int ***field, int x, int y, int z, int metricF, int metricE, int metricV);
@@ -34,6 +35,12 @@ public:
     ShortestPath(unsigned char ***img, int sizeX, int sizeY, int sizeZ);
     ~ShortestPath(void);
     int getPointsCount(void);
+    /*!
+     * \brief Ordered path recorded by the last compute() call.
+     * Voxels are stored in back-trace order, i.e. from END to START.
+     * Returns NULL if compute() has not found a path yet.
+     */
+    List *getPath(void);
     /*!
      * \brief Extract the shortest path from (sX,sY,sZ) to (eX,eY,eZ).
      * \return true if a path was found, false otherwise.

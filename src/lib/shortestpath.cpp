@@ -8,10 +8,12 @@ ShortestPath::ShortestPath(unsigned char ***img, int sizeX, int sizeY, int sizeZ
         this->sizeZ = sizeZ;
 
         MAXCODE = sizeX*sizeY*sizeZ;
+        path = 0;
 }
 
 ShortestPath::~ShortestPath(void)
 {
+        if(path) delete path;
 }
 
 
@@ -80,6 +82,10 @@ bool ShortestPath::compute(int sX, int sY, int sZ, int eX, int eY, int eZ)
 
         img[x][y][z] = 255;
 
+        if(path) delete path;
+        path = new List();
+        path->pushBack(x, y, z);          // record END point first
+
         pointsCount = 1;
 
         int minCode;
@@ -110,6 +116,7 @@ bool ShortestPath::compute(int sX, int sY, int sZ, int eX, int eY, int eZ)
                 break;
             }
             img[newX][newY][newZ]=255;
+            path->pushBack(newX, newY, newZ);
             pointsCount++;
             x=newX; y=newY; z=newZ;
             if(minCode==1) break;
@@ -131,6 +138,11 @@ bool ShortestPath::compute(int sX, int sY, int sZ, int eX, int eY, int eZ)
 int ShortestPath::getPointsCount(void)
 {
     return pointsCount;
+}
+
+List *ShortestPath::getPath(void)
+{
+    return path;
 }
 
 void ShortestPath::addNeigbours(int ***field, int x, int y, int z, int metricF, int metricE, int metricV)
