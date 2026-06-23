@@ -1,11 +1,6 @@
 # Created by https://www.toptal.com/developers/gitignore/api/c++,linux,windows,macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=c++,linux,windows,macos
 
-########## Avoid commiting support scripts ##############################
-
-*.py
-
-
 ### C++ ###
 # Prerequisites
 *.d
