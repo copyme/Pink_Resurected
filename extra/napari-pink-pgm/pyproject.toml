@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "napari-pink-pgm"
+version = "0.1.0"
+description = "napari reader for Pink (extended) PGM 2D/3D images"
+requires-python = ">=3.9"
+dependencies = ["numpy", "npe2"]
+
+[project.entry-points."napari.manifest"]
+napari-pink-pgm = "napari_pink_pgm:napari.yaml"
+
+[tool.setuptools]
+packages = ["napari_pink_pgm"]
+
+[tool.setuptools.package-data]
+napari_pink_pgm = ["napari.yaml"]

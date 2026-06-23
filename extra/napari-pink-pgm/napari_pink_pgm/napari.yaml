@@ -1,0 +1,11 @@
+name: napari-pink-pgm
+display_name: Pink PGM 2D and 3D
+contributions:
+  commands:
+    - id: napari-pink-pgm.get_reader
+      title: Read Pink PGM
+      python_name: napari_pink_pgm._reader:napari_get_reader
+  readers:
+    - command: napari-pink-pgm.get_reader
+      filename_patterns: ['*.pgm', '*.pgm3d']
+      accepts_directories: false
